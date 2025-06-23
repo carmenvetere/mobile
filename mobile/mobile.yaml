@@ -4912,6 +4912,48 @@ views:
                           zoom: 1.25 !important;
                           --chip-background: var(--background-color-2);
                         }        
+          - type: conditional
+            conditions:
+              - condition: numeric_state
+                entity: sensor.nws_alerts_alerts
+                above: 0
+            card:
+              type: custom:expander-card
+              expanded: true
+              title-card-clickable: true
+              title-card:
+                type: custom:bubble-card
+                card_type: separator
+                name: Active Weather Alerts
+                icon: mdi:alert
+                rows: 0.75
+                styles: |
+                  .bubble-name {
+                    font-weight: bold !important;
+                  }
+                  .bubble-line {color);
+                    opacity: 0.1;
+                  }
+                  .card-content {
+                    padding-top: 7px !important;
+                  }      
+              cards:
+                - type: markdown
+                  content: >
+                    {% set alerts = state_attr('sensor.nws_alerts_alerts', 'Alerts') %} > 0 %}
+                      {% for alert in alerts %}
+                    ### {{ alert.Event }}
+                    **{{ alert.Headline }}**
+                    {{ alert.Description }}
+                    {% if alert.Instruction %}
+                    **Instructions:**
+                    {{ alert.Instruction }}
+                    {% endif %}
+                    Expires: "{{ alert.Expires | as_timestamp | timestamp_custom('%B %d, %Y at %I:%M %p') }}*"
+                    {% endfor %}
+                    {% else %}
+                    ✅ **No active weather alerts**
+                    {% endif %}
           - type: custom:stack-in-card
             mode: vertical
             keep:
