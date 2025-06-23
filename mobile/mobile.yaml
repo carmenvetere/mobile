@@ -6207,9 +6207,9 @@ views:
                       confirmation:
                         text: Are you sure you want to go off grid?
                   - type: custom:bubble-card
-                    entity: sensor.bayberry_backup_reserve
+                    entity: number.bayberry_backup_reserve
                     card_type: button
-                    button_type: state
+                    button_type: slider
                     name: Powerwall Reserve
                     card_layout: normal
                     show_state: true
@@ -6222,7 +6222,10 @@ views:
                         }
                     icon: mdi:battery-medium
                     tap_action:
-                      action: toggle
+                      action: more-info
+                    button_action:
+                      tap_action:
+                        action: more-info
     header:
       card:
         type: markdown

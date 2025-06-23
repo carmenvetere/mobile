@@ -104,6 +104,60 @@
                 - sensor.tesla_wall_connector_pcb_temperature
                 - sensor.tesla_wall_connector_power
                 - sensor.tesla_wall_connector_status
+#Alarm Triggered
+- type: conditional
+  conditions:
+    - condition: state
+      entity: alarm_control_panel.bayberry_alarm_v2
+      state: triggered
+  card:
+    type: custom:bubble-card
+    card_type: button
+    button_type: name
+    name: Alarm Triggered!
+    card_layout: normal
+    styles: |-
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #EF8C00 !important;
+        }
+    icon: mdi:shield-alert
+    button_action:
+      tap_action:
+        action: navigate
+        navigation_path: /dashboard-test/security
+    tap_action:
+      action: navigate
+      navigation_path: /dashboard-test/security
+#Storm Watch Active
+- type: conditional
+  conditions:
+    - condition: state
+      entity: binary_sensor.bayberry_storm_watch_active
+      state: "on"
+  card:
+    type: custom:bubble-card
+    card_type: button
+    button_type: name
+    name: Storm Watch Active!
+    card_layout: normal
+    styles: |-
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #EF8C00 !important;
+        }
+    icon: mdi:weather-lightning-rainy
+    tap_action:
+      action: more-info
+      entity: sensor.nws_alerts_alerts
+    button_action:
+      tap_action:
+        action: more-info
+        entity: sensor.nws_alerts_alerts
 #Utility Room Temperature Low
 - type: conditional
   conditions:
@@ -277,6 +331,29 @@
       tap_action:
         action: more-info
         entity: sensor.hot_water_availability
+#Virtual Power Plant Active
+- type: conditional
+  conditions:
+    - condition: state
+      entity: binary_sensor.bayberry_grid_services_active_2
+      state: "on"
+  card:
+    type: custom:bubble-card
+    card_type: button
+    button_type: name
+    name: Virtual Power Plant Active!
+    icon: mdi:solar-power
+    card_layout: normal
+    styles: |
+      .bubble-name { font-size: 16px !important; }
+      .bubble-icon { color: #F6CE46 !important; }
+    tap_action:
+      action: more-info
+      entity: sbinary_sensor.bayberry_grid_services_active_2
+    button_action:
+      tap_action:
+        action: more-info
+        entity: binary_sensor.bayberry_grid_services_active_2
 #Rain Alert - Pool Cover Pump
 - type: conditional
   conditions:
