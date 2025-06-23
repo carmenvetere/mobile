@@ -131,6 +131,33 @@
     tap_action:
       action: navigate
       navigation_path: /dashboard-test/security
+#NWS Weather Alerts
+- type: conditional
+  conditions:
+    - condition: numeric_state
+      entity: sensor.nws_alerts_alerts
+      above: 0
+  card:
+    type: custom:bubble-card
+    card_type: button
+    button_type: name
+    name: Active Weather Alert
+    card_layout: normal
+    styles: |-
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #EF8C00 !important;
+        }
+    icon: mdi:hurricane
+    tap_action:
+      action: navigate
+      navigation_path: dashboard-test/weather
+    button_action:
+      tap_action:
+        action: navigate
+        navigation_path: dashboard-test/weather
 #Storm Watch Active
 - type: conditional
   conditions:
