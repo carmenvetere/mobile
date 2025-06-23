@@ -153,11 +153,11 @@
     icon: mdi:weather-hurricane
     tap_action:
       action: navigate
-      navigation_path: mobile-dash/weather
+        navigation_path: /mobile-dash/weather
     button_action:
       tap_action:
         action: navigate
-        navigation_path: mobile-dash/weather
+        navigation_path: /mobile-dash/weather
 #Storm Watch Active
 - type: conditional
   conditions:
@@ -1141,11 +1141,11 @@
       confirmation:
         text: Did you just vacuum the pool and want to reset?
     button_action:
-      tap_action: null
-      action: call-service
-      service: script.reset_vacuum_timer
-      confirmation:
-        text: Did you just vacuum the pool and want to reset?
+      tap_action: 
+        action: call-service
+        service: script.reset_vacuum_timer
+        confirmation:
+          text: Did you just vacuum the pool and want to reset?
 # Dryer Recently Completed
 - type: conditional
   conditions:
