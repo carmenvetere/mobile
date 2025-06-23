@@ -461,13 +461,13 @@ views:
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: /dashboard-test/lights-main
+                        navigation_path: /mobile-dash/lights-main
                     sub_button:
                       - icon: mdi:chevron-right
                         state_background: false
                         tap_action:
                           action: navigate
-                          navigation_path: /dashboard-test/lights-main
+                          navigation_path: /mobile-dash/lights-main
                     card_layout: normal
                     styles: |-
                       .bubble-name {
@@ -475,7 +475,7 @@ views:
                             }
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/lights-main
+                      navigation_path: /mobile-dash/lights-main
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -484,13 +484,13 @@ views:
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: /dashboard-test/climate-main
+                        navigation_path: /mobile-dash/climate-main
                     sub_button:
                       - icon: mdi:chevron-right
                         state_background: false
                         tap_action:
                           action: navigate
-                          navigation_path: /dashboard-test/climate-main
+                          navigation_path: /mobile-dash/climate-main
                     card_layout: normal
                     styles: |-
                       .bubble-name {
@@ -498,7 +498,7 @@ views:
                         }
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/climate-main
+                      navigation_path: /mobile-dash/climate-main
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -507,13 +507,13 @@ views:
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: /dashboard-test/shades-main
+                        navigation_path: /mobile-dash/shades-main
                     sub_button:
                       - icon: mdi:chevron-right
                         state_background: false
                         tap_action:
                           action: navigate
-                          navigation_path: /dashboard-test/shades-main
+                          navigation_path: /mobile-dash/shades-main
                     card_layout: normal
                     styles: |-
                       .bubble-name {
@@ -521,7 +521,7 @@ views:
                         }
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/shades-main
+                      navigation_path: /mobile-dash/shades-main
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -530,13 +530,13 @@ views:
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: /dashboard-test/security
+                        navigation_path: /mobile-dash/security
                     sub_button:
                       - icon: mdi:chevron-right
                         state_background: false
                         tap_action:
                           action: navigate
-                          navigation_path: /dashboard-test/security
+                          navigation_path: /mobile-dash/security
                     card_layout: normal
                     styles: |-
                       .bubble-name {
@@ -544,7 +544,7 @@ views:
                         }
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/security
+                      navigation_path: /mobile-dash/security
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -553,13 +553,13 @@ views:
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: /dashboard-test/energy
+                        navigation_path: /mobile-dash/energy
                     sub_button:
                       - icon: mdi:chevron-right
                         state_background: false
                         tap_action:
                           action: navigate
-                          navigation_path: /dashboard-test/energy
+                          navigation_path: /mobile-dash/energy
                     card_layout: normal
                     styles: |-
                       .bubble-name {
@@ -567,7 +567,7 @@ views:
                         }
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/energy
+                      navigation_path: /mobile-dash/energy
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -576,13 +576,13 @@ views:
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: /dashboard-test/energy-main
+                        navigation_path: /mobile-dash/energy-main
                     sub_button:
                       - icon: mdi:chevron-right
                         state_background: false
                         tap_action:
                           action: navigate
-                          navigation_path: /dashboard-test/energy-main
+                          navigation_path: /mobile-dash/energy-main
                     card_layout: normal
                     styles: |-
                       .bubble-name {
@@ -590,7 +590,7 @@ views:
                         }
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/energy-main
+                      navigation_path: /mobile-dash/energy-main
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -599,13 +599,13 @@ views:
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: /dashboard-test/pool
+                        navigation_path: /mobile-dash/pool
                     sub_button:
                       - icon: mdi:chevron-right
                         state_background: false
                         tap_action:
                           action: navigate
-                          navigation_path: /dashboard-test/pool
+                          navigation_path: /mobile-dash/pool
                     card_layout: normal
                     styles: |-
                       .bubble-name {
@@ -613,7 +613,7 @@ views:
                         }
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/pool
+                      navigation_path: /mobile-dash/pool
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -622,13 +622,13 @@ views:
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: /dashboard-test/vacuum
+                        navigation_path: /mobile-dash/vacuum
                     sub_button:
                       - icon: mdi:chevron-right
                         state_background: false
                         tap_action:
                           action: navigate
-                          navigation_path: /dashboard-test/vacuum
+                          navigation_path: /mobile-dash/vacuum
                     card_layout: normal
                     styles: |-
                       .bubble-name {
@@ -636,7 +636,7 @@ views:
                         }
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/vacuum
+                      navigation_path: /mobile-dash/vacuum
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -645,13 +645,13 @@ views:
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: /dashboard-test/weather
+                        navigation_path: /mobile-dash/weather
                     sub_button:
                       - icon: mdi:chevron-right
                         state_background: false
                         tap_action:
                           action: navigate
-                          navigation_path: /dashboard-test/weather
+                          navigation_path: /mobile-dash/weather
                     card_layout: normal
                     styles: |-
                       .bubble-name {
@@ -659,7 +659,7 @@ views:
                         }
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/weather
+                      navigation_path: /mobile-dash/weather
                   - type: custom:bubble-card
                     card_type: button
                     button_type: name
@@ -668,13 +668,13 @@ views:
                     button_action:
                       tap_action:
                         action: navigate
-                        navigation_path: /dashboard-test/settings
+                        navigation_path: /mobile-dash/settings
                     sub_button:
                       - icon: mdi:chevron-right
                         state_background: false
                         tap_action:
                           action: navigate
-                          navigation_path: /dashboard-test/settings
+                          navigation_path: /mobile-dash/settings
                     card_layout: normal
                     styles: |-
                       .bubble-name {
@@ -682,7 +682,7 @@ views:
                         }
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/settings
+                      navigation_path: /mobile-dash/settings
     type: sections
     max_columns: 1
     cards: []
@@ -735,7 +735,7 @@ views:
                     content: Back
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/mobile-home
+                      navigation_path: /mobile-dash/mobile-home
                     icon: mdi:chevron-left
                     card_mod:
                       style: |
@@ -2919,7 +2919,7 @@ views:
                     content: Back
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/mobile-home
+                      navigation_path: /mobile-dash/mobile-home
                     icon: mdi:chevron-left
                     card_mod:
                       style: |
@@ -3571,7 +3571,7 @@ views:
                     content: Back
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/mobile-home
+                      navigation_path: /mobile-dash/mobile-home
                     icon: mdi:chevron-left
                     card_mod:
                       style: |
@@ -4315,7 +4315,7 @@ views:
                     content: Back
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/mobile-home
+                      navigation_path: /mobile-dash/mobile-home
                     icon: mdi:chevron-left
                     card_mod:
                       style: |
@@ -4616,7 +4616,7 @@ views:
                     content: Back
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/mobile-home
+                      navigation_path: /mobile-dash/mobile-home
                     icon: mdi:chevron-left
                     card_mod:
                       style: |
@@ -4904,7 +4904,7 @@ views:
                     content: Back
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/mobile-home
+                      navigation_path: /mobile-dash/mobile-home
                     icon: mdi:chevron-left
                     card_mod:
                       style: |
@@ -5213,7 +5213,7 @@ views:
             content: Back
             tap_action:
               action: navigate
-              navigation_path: /dashboard-test/mobile-home
+              navigation_path: /mobile-dash/mobile-home
             icon: mdi:chevron-left
             card_mod:
               style: |
@@ -5316,7 +5316,7 @@ views:
                     content: Back
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/mobile-home
+                      navigation_path: /mobile-dash/mobile-home
                     icon: mdi:chevron-left
                     card_mod:
                       style: |
@@ -6317,7 +6317,7 @@ views:
                     content: Back
                     tap_action:
                       action: navigate
-                      navigation_path: /dashboard-test/mobile-home
+                      navigation_path: /mobile-dash/mobile-home
                     icon: mdi:chevron-left
                     card_mod:
                       style: |
@@ -6578,7 +6578,7 @@ views:
             content: Back
             tap_action:
               action: navigate
-              navigation_path: /dashboard-test/mobile-home
+              navigation_path: /mobile-dash/mobile-home
             icon: mdi:chevron-left
             card_mod:
               style: |

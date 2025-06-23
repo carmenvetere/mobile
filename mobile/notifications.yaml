@@ -17,7 +17,7 @@
       .bubble-icon { color: #EA4D3D !important; }
     tap_action:
       action: navigate
-      navigation_path: /dashboard-test/energy
+      navigation_path: /mobile-dash/energy
 #Power Outage & Powerwall Charge Low
 - type: conditional
   conditions:
@@ -127,10 +127,10 @@
     button_action:
       tap_action:
         action: navigate
-        navigation_path: /dashboard-test/security
+        navigation_path: /mobile-dash/security
     tap_action:
       action: navigate
-      navigation_path: /dashboard-test/security
+      navigation_path: /mobile-dash/security
 #NWS Weather Alerts
 - type: conditional
   conditions:
@@ -141,7 +141,7 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    name: Active Weather Alert
+    name: Active Weather Alert!
     card_layout: normal
     styles: |-
       .bubble-name {
@@ -150,14 +150,14 @@
       .bubble-icon {
         color: #EF8C00 !important;
         }
-    icon: mdi:hurricane
+    icon: mdi:weather-hurricane
     tap_action:
       action: navigate
-      navigation_path: dashboard-test/weather
+      navigation_path: mobile-dash/weather
     button_action:
       tap_action:
         action: navigate
-        navigation_path: dashboard-test/weather
+        navigation_path: mobile-dash/weather
 #Storm Watch Active
 - type: conditional
   conditions:
