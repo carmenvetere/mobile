@@ -710,9 +710,9 @@ views:
             background: var(--secondary-background-color);
             color: var(--primary-text-color);
           }
-  - type: sections
+  - title: Lights - Main
+    type: sections
     max_columns: 1
-    title: Lights - Main
     path: lights-main
     icon: mdi:lightbulb
     dense_section_placement: true
@@ -2853,9 +2853,9 @@ views:
     badges: null
     theme: Bubble
     cards: []
-  - type: sections
+  - title: Climate - Main
+    type: sections
     max_columns: 1
-    title: Climate - Main
     path: climate-main
     icon: mdi:fan
     dense_section_placement: true
@@ -3505,9 +3505,9 @@ views:
     badges: []
     cards: []
     theme: Bubble
-  - type: sections
+  - title: Shades - Main
+    type: sections
     max_columns: 1
-    title: Shades - Main
     path: shades-main
     icon: mdi:roller-shade
     dense_section_placement: true
@@ -4249,7 +4249,8 @@ views:
             background: var(--secondary-background-color);
             color: var(--primary-text-color);
           }
-  - type: sections
+  - title: Security
+    type: sections
     max_columns: 1
     theme: Bubble
     path: security
@@ -4549,7 +4550,8 @@ views:
       badges_wrap: wrap
     badges: null
     cards: []
-  - type: sections
+  - title: Energy
+    type: sections
     max_columns: 1
     theme: Bubble
     path: energy
@@ -4835,9 +4837,9 @@ views:
       badges_wrap: wrap
     badges: null
     cards: []
-  - type: sections
+  - title: Weather
+    type: sections
     max_columns: 1
-    title: weather
     path: weather
     icon: mdi:weather-partly-cloudy
     theme: Bubble
@@ -5032,9 +5034,9 @@ views:
       badges_position: bottom
       badges_wrap: wrap
     badges: null
-  - type: sections
+  - title: Pool
+    type: sections
     max_columns: 1
-    title: pool
     path: pool
     icon: mdi:pool
     theme: Bubble
@@ -5247,9 +5249,9 @@ views:
               style: |
                 ha-card { zoom: 1.25 !important; } 
     cards: []
-  - type: sections
+  - title: Settings
+    type: sections
     max_columns: 1
-    title: settings
     path: settings
     icon: mdi:cog
     theme: Bubble
@@ -6248,7 +6250,8 @@ views:
       badges_wrap: wrap
     badges: null
     cards: []
-  - type: sections
+  - title: Music
+    type: sections
     max_columns: 1
     path: music
     icon: mdi:music
@@ -6355,9 +6358,9 @@ views:
       badges_wrap: wrap
     badges: null
     cards: []
-  - type: sections
+  - title: Vacuum
+    type: sections
     max_columns: 1
-    title: Vacuum
     path: vacuum
     icon: mdi:robot-vacuum
     theme: Bubble
@@ -6600,416 +6603,4 @@ views:
             card_mod:
               style: |
                 ha-card { zoom: 1.25 !important; }
-    cards: []
-  - type: sections
-    max_columns: 1
-    theme: Bubble
-    path: ''
-    sections:
-      - type: grid
-        cards:
-          - type: heading
-            heading: New section
-          - type: custom:bubble-card
-            card_type: separator
-            name: Living Room
-            icon: mdi:sofa
-            rows: 0.75
-            styles: |
-              .bubble-name {
-                font-size: 16px !important;  /* title */
-                font-weight: bold !important;
-              }
-              .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-              }
-              .card-content {
-                padding-top: 7px !important;
-              }
-            modules:
-              - separate_module_mobile_dash
-          - type: custom:bubble-card
-            card_type: button
-            button_type: slider
-            entity: light.kitchen_main_lights
-            name: Main Lights
-            icon: mdi:light-recessed
-            show_state: false
-            slider_live_update: true
-            tap_action:
-              action: toggle
-            scrolling_effect: false
-            use_accent_color: false
-            styles: |
-              .bubble-name {
-                  font-size: 16px !important;
-                }  
-                  .bubble-sub-button {
-                      font-size: 14px !important;
-                      font-weight: bold
-                    }  
-            sub_button:
-              - entity: light.kitchen_main_lights
-                show_state: true
-                show_attribute: true
-                show_icon: false
-                state_background: false
-                show_background: false
-                attribute: brightness
-            modules:
-              - light_card_mobile
-            read_only_slider: true
-            tap_to_slide: true
-    header:
-      card:
-        type: custom:stack-in-card
-        mode: vertical
-        cards:
-          - type: custom:stack-in-card
-            mode: horizontal
-            cards:
-              - type: markdown
-                content: |
-                  # Home
-                card_mod:
-                  style: >
-                    ha-card { background: none; box-shadow: none; padding: 0 0 0
-                    8px; }
-              - type: markdown
-                content: >
-                  <div
-                  style="display:flex;align-items:center;justify-content:flex-end;width:100%;">
-                    <ha-icon icon="{{ state_attr('weather.openweathermap','icon') }}" style="margin-right:6px;"></ha-icon>
-                    {{ (states('sensor.bayberry_tempest_temperature') | float | round(1)) }}°F
-                  </div>
-                card_mod:
-                  style: |
-                    ha-card {
-                      background: none; box-shadow: none;
-                      flex: 1 1 0 !important;
-                      padding: 0 8px 0 0;
-                      font-size: 28px; font-weight: 700;
-                    }
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                icon: mdi:shield-home
-                content: |-
-                  {{ states('alarm_control_panel.bayberry_alarm_v2')
-                       | replace('_', ' ')
-                       | title }}
-                entity: alarm_control_panel.bayberry_alarm_v2
-                tap_action:
-                  action: more-info
-                icon_color: >-
-                  {% if states('alarm_control_panel.bayberry_alarm_v2') ==
-                  'disarmed' %}
-                    green
-                  {% elif states('alarm_control_panel.bayberry_alarm_v2') ==
-                  'armed_home' %}
-                    orange
-                  {% elif states('alarm_control_panel.bayberry_alarm_v2') ==
-                  'armed_away' %}
-                    red
-                  {% else %}
-                    gray
-                  {% endif %}
-                card_mod:
-                  style: |
-                    ha-card {
-                      zoom: 1.25 !important;
-                    }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: switch.utility_room_ventilation_damper
-                    state: 'on'
-                chip:
-                  type: template
-                  content: Fresh Air
-                  entity: switch.utility_room_ventilation_damper
-                  tap_action:
-                    action: more-info
-                  icon: mdi:tailwind
-                  icon_color: blue
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }                      
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: binary_sensor.bayberry_storm_watch_active
-                    state: 'on'
-                chip:
-                  type: entity
-                  entity: sensor.powerwall_discharge_time
-                  icon: mdi:lightning-bolt-outline
-                  icon_color: green
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: binary_sensor.bayberry_storm_watch_active
-                    state: 'on'
-                chip:
-                  type: template
-                  icon: mdi:weather-hurricane
-                  entity: sensor.bayberry_charge
-                  tap_action:
-                    action: more-info
-                  icon_color: red
-                  content: Storm Watch Active
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: numeric_state
-                    entity: sensor.bayberry_tempest_wind_speed_average
-                    above: 10
-                chip:
-                  type: template
-                  icon: mdi:weather-windy
-                  entity: sensor.bayberry_tempest_wind_speed_average
-                  tap_action:
-                    action: more-info
-                  icon_color: cyan
-                  content: Windy!
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: template
-                    value_template: >
-                      {{
-                      states('switch.office_thermostat_office_emergency_heat')
-                      == 'on' or
-                          states('switch.basement_thermostat_basement_emergency_heat') == 'on' or
-                          states('switch.living_room_thermostat_living_room_emergency_heat') == 'on' or
-                          states('switch.master_bedroom_thermostat_master_bedroom_emergency_heat') == 'on' }}
-                chip:
-                  type: template
-                  icon: mdi:fire
-                  content: Aux Heat
-                  tap_action:
-                    action: more-info
-                  icon_color: red
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: sensor.omnilogic_pool_watersensor
-                    state_not: unknown
-                  - condition: state
-                    entity: sensor.omnilogic_pool_watersensor
-                    state_not: unavailable
-                chip:
-                  type: entity
-                  entity: sensor.omnilogic_pool_watersensor
-                  tap_action:
-                    action: more-info
-                  icon: mdi:pool-thermometer
-                  icon_color: cyan
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: binary_sensor.pool_cover
-                    state: 'on'
-                chip:
-                  type: template
-                  entity: binary_sensor.pool_cover
-                  content: Pool Open!
-                  icon: mdi:alert-circle-outline
-                  icon_color: amber
-                  tap_action:
-                    action: more-info
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: numeric_state
-                    entity: sensor.bayberry_percentage_charged
-                    below: 50
-                chip:
-                  type: entity
-                  entity: sensor.bayberry_percentage_charged
-                  tap_action:
-                    action: more-info
-                  icon: mdi:home-battery
-                  icon_color: amber
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: switch.bayberry_off_grid_operation
-                    state: 'on'
-                chip:
-                  type: entity
-                  entity: sensor.bayberry_charge
-                  icon: mdi:home-battery
-                  icon_color: red
-                  tap_action:
-                    action: more-info
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: binary_sensor.tesla_wall_connector_vehicle_connected
-                    state: 'off'
-                chip:
-                  type: entity
-                  entity: binary_sensor.tesla_wall_connector_vehicle_connected
-                  icon: mdi:ev-plug-tesla
-                  icon_color: red
-                  tap_action:
-                    action: none
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: sensor.tesla_wall_connector_status
-                    state: charging
-                  - condition: state
-                    entity: sensor.tesla_wall_connector_status
-                    state: charging (reduced)
-                chip:
-                  type: template
-                  content: Charging
-                  icon: mdi:ev-plug-tesla
-                  icon_color: green
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: sensor.front_load_washer
-                    state: 'on'
-                chip:
-                  type: entity
-                  entity: sensor.front_load_washer_remaining_time
-                  icon: mdi:washing-machine
-                  icon_color: light-blue
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: sensor.dryer
-                    state: 'on'
-                chip:
-                  type: entity
-                  entity: sensor.dryer_remaining_time
-                  icon: mdi:tumble-dryer
-                  icon_color: amber
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: input_boolean.dinner_party
-                    state: 'on'
-                chip:
-                  type: entity
-                  entity: input_boolean.dinner_party
-                  icon: mdi:glass-cocktail
-                  icon_color: amber
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: input_boolean.guest_mode
-                    state: 'on'
-                chip:
-                  type: entity
-                  entity: input_boolean.guest_mode
-                  icon: mdi:bed
-                  icon_color: amber
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-              - type: conditional
-                conditions:
-                  - condition: state
-                    entity: input_boolean.away_mode
-                    state: 'on'
-                chip:
-                  type: entity
-                  entity: input_boolean.away_mode
-                  icon: mdi:bag-suitcase
-                  icon_color: amber
-                  card_mod:
-                    style: |
-                      ha-card {
-                        zoom: 1.25 !important;
-                      }
-            card_mod:
-              style: |
-                :host {
-                  overflow-x: auto; overflow-y: hidden;
-                  padding: 8px 6px 10px;
-                }
-                :host .chips { flex-wrap: nowrap !important; }
-                :host .chip  { margin-right: 6px !important; flex-shrink: 0; }
-                ha-card { background: none; box-shadow: none; }
-      badges_position: disabled
-      layout: start
-      badges_wrap: scroll
-    card_mod:
-      style: |
-        /* round the entire header bubble */
-        :host stack-in-card {
-          border-radius: 24px;
-          background: var(--secondary-background-color);
-        }
     cards: []
