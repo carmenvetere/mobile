@@ -177,7 +177,7 @@ sections:
                 entity: input_boolean.guest_mode
                 name: Overnight Guests
                 icon: mdi:bed
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
@@ -199,7 +199,7 @@ sections:
                 entity: input_boolean.cleaners_mode
                 name: Cleaners Mode
                 icon: mdi:spray-bottle
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
@@ -221,7 +221,7 @@ sections:
                 entity: input_boolean.away_mode
                 name: Away
                 icon: mdi:bag-suitcase
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
@@ -285,7 +285,7 @@ sections:
                 entity: automation.enhanced_first_floor_climate_manager
                 name: Living Room Thermostat Schedule
                 icon: mdi:fan-clock
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
@@ -307,7 +307,7 @@ sections:
                 entity: automation.office_thermostat_schedule_v2
                 name: Office Thermostat Schedule
                 icon: mdi:fan-clock
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
@@ -329,7 +329,7 @@ sections:
                 entity: automation.bedroom_hvac_schedule
                 name: Bedroom Thermostat Schedule
                 icon: mdi:fan-clock
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
@@ -480,7 +480,7 @@ sections:
                 entity: automation.alarm_arm_away_when_everyone_leaves
                 name: Automatically Arm Away Mode When Leaving
                 icon: mdi:shield-lock
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
@@ -503,7 +503,7 @@ sections:
                   automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm
                 name: Automatically Arm Home Mode at 11pm
                 icon: mdi:shield-lock
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
@@ -525,7 +525,7 @@ sections:
                 entity: automation.alarm_disarm_upon_arriving_home
                 name: Automatically Disarm at 7am
                 icon: mdi:shield-lock-open
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
@@ -547,7 +547,7 @@ sections:
                 entity: automation.alarm_disarm_upon_arriving_home
                 name: Automatically Disarm When Arrive Home
                 icon: mdi:shield-lock-open
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
@@ -683,6 +683,7 @@ sections:
                     show_last_changed: false
                     show_state: true
                     show_background: false
+                    show_icon: false
                 button_action:
                   tap_action:
                     action: more-info
@@ -729,49 +730,67 @@ sections:
                 entity: automation.outdoor_motion_after_11pm_before_sunrise
                 name: Outdoor Lights Motion Detection - 11pm - Sunrise
                 icon: mdi:motion
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.outdoor_motion_after_11pm_before_sunrise
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.motion_bathroom_day
                 name: Bathroom Lights Motion - Day
                 icon: mdi:motion
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.motion_bathroom_day
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.motion_bathroom_lights_night
                 name: Bathroom Lights Motion - Night
                 icon: mdi:motion
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.motion_bathroom_lights_night
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -805,56 +824,74 @@ sections:
                 card_type: button
                 entity: automation.evening_lights_on_lux
                 name: Automatically Turn Lights On In Evening
-                icon: mdi:motion
-                show_state: true
+                icon: mdi:lightbulb-auto
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.evening_lights_on_lux
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.morning_lights_off_lux_over_5000_or_9am
                 name: Automatically Turn Lights Off in Morning
-                icon: mdi:motion
-                show_state: true
+                icon: mdi:lightbulb-auto
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.morning_lights_off_lux_over_5000_or_9am
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.11_00_pm_good_night
                 name: Automatically Set Good Night at 11PM
-                icon: mdi:motion
-                show_state: true
+                icon: mdi:lightbulb-auto
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.11_00_pm_good_night
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.sunset_outdoor_off
                 name: Automatically Turn Outdoor Lights On At Sunset
-                icon: mdi:motion
-                show_state: true
+                icon: mdi:lightbulb-auto
+                show_state: false
                 scrolling_effect: false
                 button_action:
                   tap_action:
@@ -862,26 +899,38 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.sunset_outdoor_off
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.outdoor_off_at_11pm
                 name: Automatically Turn Off Outdoor Lights at 11PM
                 icon: mdi:motion
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.outdoor_off_at_11pm
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -916,65 +965,89 @@ sections:
                 entity: automation.7_30_am_first_floor_shades_weekdays
                 name: 7:30AM First Floor Shades Open (Weekdays)
                 icon: mdi:roller-shade
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.7_30_am_first_floor_shades_weekdays
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.8_00_am_first_floor_shades_weekends
                 name: 8:00AM First Floor Shades Open (Weekends)
                 icon: mdi:roller-shade
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.8_00_am_first_floor_shades_weekends
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.800am_bedroom_hallway_shades
                 name: 8:00AM Bedroom Shades Open (Weekdays)
                 icon: mdi:roller-shade
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.800am_bedroom_hallway_shades
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.900am_bedroom_shades_open_weekends
                 name: 9:00AM Bedroom Shades Open (Weekends)
                 icon: mdi:roller-shade
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.900am_bedroom_shades_open_weekends
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.1_00_pm_first_floor_sun_shading
@@ -1005,16 +1078,22 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.bedroom_sun_shading
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.3_00_pm_living_room_side_shades
                 name: 3:00PM Living Room Shades Sun Position
                 icon: mdi:roller-shade
-                show_state: true
+                show_state: false
                 scrolling_effect: false
                 button_action:
                   tap_action:
@@ -1022,16 +1101,22 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.3_00_pm_living_room_side_shades
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.3_00pm_bedroom_back_shading
                 name: 3:00PM Bedroom Shades Sun Position
                 icon: mdi:roller-shade
-                show_state: true
+                show_state: false
                 scrolling_effect: false
                 button_action:
                   tap_action:
@@ -1039,16 +1124,22 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    } 
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.3_00pm_bedroom_back_shading
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.sunset_30_or_8_00_pm_close_shades
                 name: Evening Close All Shades
                 icon: mdi:roller-shade
-                show_state: true
+                show_state: false
                 scrolling_effect: false
                 button_action:
                   tap_action:
@@ -1056,10 +1147,16 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    } 
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.sunset_30_or_8_00_pm_close_shades
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -1094,17 +1191,23 @@ sections:
                 entity: automation.pool_heater_schedule
                 name: Pool Heater Schedule
                 icon: mdi:heat-wave
-                show_state: true
+                show_state: false
                 button_action:
                   tap_action:
                     action: toggle
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.pool_heater_schedule
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -1137,39 +1240,47 @@ sections:
               - type: custom:bubble-card
                 entity: switch.bayberry_off_grid_operation
                 card_type: button
-                button_type: switch
                 name: Go Off Grid
-                card_layout: normal
-                show_state: true
-                styles: |-
-                  .bubble-name {
-                    font-size: 16px !important;
-                      }
-                  .bubble-icon {
-                    color: #ff5252 !important;
-                    }
+                card_layout: large
+                show_state: false
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
                 icon: mdi:transmission-tower-off
+                sub_button:
+                  - entity: switch.bayberry_off_grid_operation
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
+                button_action:
+                  tap_action:
+                  action: toggle
+                  confirmation:
+                    text: Are you sure you want to go off grid?
                 tap_action:
                   action: toggle
                   confirmation:
                     text: Are you sure you want to go off grid?
               - type: custom:bubble-card
                 entity: number.bayberry_backup_reserve
-                card_type: button
-                button_type: slider
+                card_type: slider
                 name: Powerwall Reserve
-                card_layout: normal
-                show_state: true
-                styles: |-
-                  .bubble-name {
-                    font-size: 16px !important;
-                      }
-                  .bubble-icon {
-                    color: orange !important;
-                    }
-                icon: mdi:battery-medium
-                tap_action:
-                  action: more-info
-                button_action:
-                  tap_action:
-                    action: more-info
+                card_layout: large
+                show_state: false
+                slider_live_update: true
+                read_only_slider: false
+                tap_to_slide: true 
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: lnumber.bayberry_backup_reserve
+                    show_state: true
+                    show_attribute: false
+                    show_icon: false
+                    state_background: false
+                    show_background: false
