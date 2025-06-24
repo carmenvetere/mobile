@@ -345,7 +345,7 @@ views:
                 rows: 0.75
                 styles: |
                   .bubble-name {
-                    font-size: 24px !important;  /* title */
+                    font-size: 30px !important;  /* title */
                     font-weight: bold !important;
                   }
                   .bubble-line-background-color {
@@ -372,6 +372,16 @@ views:
                     show_state: true
                     show_icon: true
                     show_background: false
+                  - visibility:
+                      - condition: numeric_state
+                        entity: sensor.bayberry_tempest_wind_speed_average
+                        above: 5
+                    entity: sensor.bayberry_tempest_wind_speed
+                    show_background: false
+                    show_icon: true
+                    icon: mdi:weather-windy
+                    show_last_changed: false
+                    show_state: false
     icon: mdi:home
     path: mobile-home
     card_mod:
