@@ -324,8 +324,15 @@ views:
       badges_wrap: scroll
       card:
         type: markdown
-        content: |
-          # <ha-icon icon="mdi:home"></ha-icon> Home
+        content:  |
+          <div style="display: flex; justify-content: space-between; align-items: center; margin: 0; padding: 0;">
+            <h1 style="margin: 0; padding: 0; font-size: 2.5rem; font-weight: 400;">
+              <ha-icon icon="mdi:home"></ha-icon> Home
+            </h1>
+            <span style="font-size: 1.5rem; font-weight: 300; color: var(--secondary-text-color);">
+              {{ states('sensor.bayberry_tempest_temperature') | round(1) }}°F
+            </span>
+          </div>
     icon: mdi:home
     path: mobile-home
     card_mod:
