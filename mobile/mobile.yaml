@@ -325,7 +325,10 @@ views:
       card:
         type: markdown
         content:  |
-          <h1 style="display: flex; justify-content: space-between; align-items: center; margin: 0.67em 0;"><span><ha-icon icon="mdi:home"></ha-icon> Home</span><span style="font-size: 0.6em; font-weight: 300; color: var(--secondary-text-color);">{{ states('sensor.bayberry_tempest_temperature') | round(1) }}°F</span></h1>
+          <div style="position: relative;">
+            <h1 style="margin: 0.67em 0;"><ha-icon icon="mdi:home"></ha-icon> Home</h1>
+            <span style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); font-size: 1.5rem; font-weight: 300; color: var(--secondary-text-color);">{{ states('sensor.bayberry_tempest_temperature') | round(1) }}°F</span>
+          </div>
         style: |
           ha-card {
             background: var(--primary-background-color);
