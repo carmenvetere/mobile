@@ -1169,8 +1169,10 @@
     button_action:
       tap_action:
         action: more-info
+        entity: sensor.dryer
     tap_action:
       action: more-info
+      entity: sensor.dryer
 # Washer Recently Completed
 - type: conditional
   conditions:
@@ -1194,5 +1196,7 @@
     button_action:
       tap_action:
         action: more-info
+        entity: sensor.washer
     tap_action:
       action: more-info
+      entity: sensor.washer
