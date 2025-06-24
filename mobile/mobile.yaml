@@ -362,7 +362,7 @@ views:
                     }
                   .bubble-icon
                     {
-                      icon-height: 40px !important;
+                      icon-height: 50px !important;
                       }
                 sub_button:
                   - name: Temperature
@@ -4614,14 +4614,17 @@ views:
                 rows: 0.75
                 styles: |
                   .bubble-name {
-                    font-weight: bold !important;
+                  font-size: 20px !important;  /* title */
+                  font-weight: bold !important;
                   }
-                  .bubble-line {color);
-                    opacity: 0.1;
+                  .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
                   }
                   .card-content {
-                    padding-top: 7px !important;
-                  }      
+                  padding-top: 10px !important;
+                  padding-left: 10px !important;
+                  }  
               cards:
                 - type: markdown
                   content: |                    
