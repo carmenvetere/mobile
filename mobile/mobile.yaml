@@ -4,6 +4,11 @@ kiosk_mode:
     hide_sidebar: true
     hide_search: true
     hide_assistant: true
+  mobile_settings:
+    hide_header: true
+    hide_search: true
+    hide_sidebar: false
+    hide_overflow: true
 views:
   - title: Home
     sections:
@@ -4986,7 +4991,7 @@ views:
               style: |
                 ha-card { zoom: 1.25 !important; } 
     cards: []
-  - !include mobile/settings-view.yaml
+  - !include settings-view.yaml
   - title: Music
     type: sections
     max_columns: 1
