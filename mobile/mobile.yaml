@@ -323,18 +323,55 @@ views:
       badges_position: bottom
       badges_wrap: scroll
       card:
-        type: markdown
-        content:  |
-          <div style="display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px;">
-            <h1 style="margin: 0; font-size: 2rem;"><ha-icon icon="mdi:home"></ha-icon> Home</h1>
-            <div style="font-size: 1.5rem; font-weight: 300; color: var(--secondary-text-color);">{{ states('sensor.bayberry_tempest_temperature') | round(1) }}°F</div>
-          </div>
-        style: |
-          ha-card {
-            background: var(--primary-background-color);
-            border-radius: 20px;
-            padding: 0px 0px 0px 0px; /* top / sides / bottom */
-          }
+        type: custom:stack-in-card
+        mode: vertical
+        keep:
+          background: true
+          border_radius: true
+        card_mod:
+          style: |
+            ha-card {
+              background: "rgb(92, 83, 103)";
+              border-radius: 20px;
+              padding: 5px 12px 5px 12px;
+              }
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: custom:bubble-card
+                card_type: separator
+                name: Home
+                icon: mdi:home
+                rows: 0.75
+                styles: |
+                  .bubble-name {
+                    font-size: 24px !important;  /* title */
+                    font-weight: bold !important;
+                  }
+                  .bubble-line-background-color {
+                    background: var(--primary-text-color);
+                    opacity: 0.1;
+                  }
+                  .card-content {
+                    padding-top: 7px !important;
+                  }
+                  .bubble-sub-button 
+                    {
+                      font-size: 16px !important;
+                      font-weight: 700 !important;
+                    }
+                  .bubble-icon
+                    {
+                      icon-height: 40px !important;
+                      }
+                sub_button:
+                  - name: Temperature
+                    entity: sensor.bayberry_tempest_temperature
+                    icon: mdi:thermometer
+                    show_name: false
+                    show_state: true
+                    show_icon: true
+                    show_background: false
     icon: mdi:home
     path: mobile-home
     card_mod:
