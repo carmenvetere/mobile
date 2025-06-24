@@ -184,10 +184,16 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: input_boolean.guest_mode
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: input_boolean.cleaners_mode
@@ -200,10 +206,16 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: input_boolean.cleaners_mode
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: input_boolean.away_mode
@@ -216,10 +228,16 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: input_boolean.away_mode
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -250,6 +268,19 @@ sections:
           - type: vertical-stack
             cards:
               - type: custom:bubble-card
+                card_type: separator
+                name: Schedules
+                icon: mdi:clock-out
+                rows: 0.75
+                styles: >
+                  .bubble-name { font-size: 16px !important; font-weight:
+                  bold !important; }
+
+                  .bubble-line { background: var(--primary-text-color);
+                  opacity: 0.1; }
+
+                  .card-content { padding-top: 7px !important; }
+              - type: custom:bubble-card
                 card_type: button
                 entity: automation.enhanced_first_floor_climate_manager
                 name: Living Room Thermostat Schedule
@@ -261,10 +292,73 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.enhanced_first_floor_climate_manager
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
+              - type: custom:bubble-card
+                card_type: button
+                entity: automation.office_thermostat_schedule_v2
+                name: Office Thermostat Schedule
+                icon: mdi:fan-clock
+                show_state: true
+                button_action:
+                  tap_action:
+                    action: toggle
+                tap_action:
+                  action: toggle
+                card_layout: large
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.office_thermostat_schedule_v2
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
+              - type: custom:bubble-card
+                card_type: button
+                entity: automation.bedroom_hvac_schedule
+                name: Bedroom Thermostat Schedule
+                icon: mdi:fan-clock
+                show_state: true
+                button_action:
+                  tap_action:
+                    action: toggle
+                tap_action:
+                  action: toggle
+                card_layout: large
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.bedroom_hvac_schedule
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
+              - type: custom:bubble-card
+                card_type: separator
+                name: Fresh Air Controls
+                icon: mdi:tailwind
+                rows: 0.75
+                styles: >
+                  .bubble-name { font-size: 16px !important; font-weight:
+                  bold !important; }
+
+                  .bubble-line { background: var(--primary-text-color);
+                  opacity: 0.1; }
+
+                  .card-content { padding-top: 7px !important; }                                      
               - type: custom:bubble-card
                 card_type: button
                 button_type: slider
@@ -288,37 +382,18 @@ sections:
                       font-size: 16px !important;
                     }
               - type: custom:bubble-card
-                card_type: button
-                entity: automation.office_thermostat_schedule_v2
-                name: Office Thermostat Schedule
-                icon: mdi:fan-clock
-                show_state: true
-                button_action:
-                  tap_action:
-                    action: toggle
-                tap_action:
-                  action: toggle
-                card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: button
-                entity: automation.bedroom_hvac_schedule
-                name: Bedroom Thermostat Schedule
-                icon: mdi:fan-clock
-                show_state: true
-                button_action:
-                  tap_action:
-                    action: toggle
-                tap_action:
-                  action: toggle
-                card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                card_type: separator
+                name: Filter Maintenance
+                icon: mdi:air-filter
+                rows: 0.75
+                styles: >
+                  .bubble-name { font-size: 16px !important; font-weight:
+                  bold !important; }
+
+                  .bubble-line { background: var(--primary-text-color);
+                  opacity: 0.1; }
+
+                  .card-content { padding-top: 7px !important; } 
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
@@ -412,10 +487,16 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.alarm_arm_away_when_everyone_leaves
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: >-
@@ -429,10 +510,16 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.alarm_disarm_upon_arriving_home
@@ -445,10 +532,16 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.alarm_disarm_upon_arriving_home
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.alarm_disarm_upon_arriving_home
@@ -461,10 +554,16 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.alarm_disarm_upon_arriving_home
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -524,35 +623,78 @@ sections:
                     show_state: true
                     show_attribute: false
                     attribute: operation_mode
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+              - type: custom:bubble-card
+                card_type: button
+                button_type: name
+                entity: water_heater.smithy_2
+                name: Water Heater Away Mode
+                icon: mdi:leaf
+                card_layout: large
+                show_state: false
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: water_heater.smithy_2
+                    attribute: away_mode
+                    show_attribute: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
+                    tap_action:
+                      action: perform-action
+                      perform_action: script.toggle_water_heater_away_mode
+                button_action:
+                  tap_action:
+                      action: perform-action
+                      perform_action: script.toggle_water_heater_away_mode
+                tap_action:
+                      action: perform-action
+                      perform_action: script.toggle_water_heater_away_mode
+              - type: custom:bubble-card
+                card_type: separator
+                name: Water Heater Maintenance
+                icon: mdi:air-filter
+                rows: 0.75
+                styles: >
+                  .bubble-name { font-size: 16px !important; font-weight:
+                  bold !important; }
+
+                  .bubble-line { background: var(--primary-text-color);
+                  opacity: 0.1; }
+
+                  .card-content { padding-top: 7px !important; } 
+              - type: custom:bubble-card
+                card_type: button
+                button_type: state
+                modules:
+                  - default
+                entity: input_datetime.water_heater_last_flushed
+                show_state: false
+                card_layout: large
+                sub_button:
+                  - entity: input_datetime.water_heater_last_flushed
+                    state_background: false
+                    show_last_changed: false
+                    show_state: true
+                    show_background: false
+                button_action:
+                  tap_action:
+                    action: more-info
                 styles: |-
+                  .bubble-sub-button 
+                  {
+                    font-size: 14px !important;
+                    font-weight: 700 !important;
+                  }
                   .bubble-name {
                       font-size: 16px !important;
                     }
-              - type: custom:bubble-card
-                card_type: select
-                entity: water_heater.smithy_2
-                attribute: operation_mode
-                select_attribute: operation_list
-                name: Water-Heater Mode
-                icon: mdi:leaf
-                card_layout: large
-                show_state: true
-                styles: |
-                  .bubble-name {
-                    font-size: 16px !important;
-                  }
-              - type: custom:bubble-card
-                card_type: switch
-                entity: water_heater.smithy_2
-                attribute: away_mode
-                name: Water-Heater Away Mode
-                icon: mdi:leaf
-                card_layout: large
-                show_attribute: true
-                styles: |
-                  .bubble-name {
-                    font-size: 16px !important;
-                  }
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
