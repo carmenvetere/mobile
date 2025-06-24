@@ -1053,7 +1053,7 @@ sections:
                 entity: automation.1_00_pm_first_floor_sun_shading
                 name: 1:00PM First Floor Shades Sun Position
                 icon: mdi:roller-shade
-                show_state: true
+                show_state: false
                 scrolling_effect: false
                 button_action:
                   tap_action:
@@ -1061,16 +1061,22 @@ sections:
                 tap_action:
                   action: toggle
                 card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.1_00_pm_first_floor_sun_shading
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: automation.bedroom_sun_shading
                 name: 1:00PM Bedroom Shades Sun Position
                 icon: mdi:roller-shade
-                show_state: true
+                show_state: false
                 scrolling_effect: false
                 button_action:
                   tap_action:
@@ -1264,21 +1270,20 @@ sections:
                   confirmation:
                     text: Are you sure you want to go off grid?
               - type: custom:bubble-card
+                card_type: button
+                button_type: slider
                 entity: number.bayberry_backup_reserve
-                card_type: slider
-                name: Powerwall Reserve
+                name: Powerwall Minimum Reserve
                 card_layout: large
                 show_state: false
                 slider_live_update: true
                 read_only_slider: false
-                tap_to_slide: true 
+                tap_to_slide: true
                 styles: >
-                  .bubble-name { font-size: 16px !important; }
-
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
+                  .bubble-name { font-size: 16px !important; } .bubble-sub-button { font-size:
+                  14px !important; font-weight: bold; }
                 sub_button:
-                  - entity: lnumber.bayberry_backup_reserve
+                  - entity: number.bayberry_backup_reserve
                     show_state: true
                     show_attribute: false
                     show_icon: false
