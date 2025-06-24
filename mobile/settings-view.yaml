@@ -1289,3 +1289,116 @@ sections:
                     show_icon: false
                     state_background: false
                     show_background: false
+              - type: custom:bubble-card
+                card_type: separator
+                name: Energy Consumption
+                icon: mdi:clock-out
+                rows: 0.75
+                styles: >
+                  .bubble-name { font-size: 16px !important; font-weight:
+                  bold !important; }
+
+                  .bubble-line { background: var(--primary-text-color);
+                  opacity: 0.1; }
+
+                  .card-content { padding-top: 7px !important; }
+              - type: custom:bubble-card
+                card_type: button
+                button_type: name
+                entity: sensor.well_pump_energy
+                name: Well Pump Energy Consumed
+                card_layout: large
+                show_state: false
+                slider_live_update: true
+                read_only_slider: false
+                tap_to_slide: true
+                styles: >
+                  .bubble-name { font-size: 16px !important; } .bubble-sub-button { font-size:
+                  14px !important; font-weight: bold; }
+                sub_button:
+                  - entity: sensor.well_pump_energy
+                    show_state: true
+                    show_attribute: false
+                    show_icon: false
+                    state_background: false
+                    show_background: false
+                button_action:
+                  tap_action:
+                    action: more-info
+                tap_action:
+                  action: more-info
+              - type: custom:bubble-card
+                card_type: button
+                button_type: name
+                entity: sensor.pool_pump_energy
+                name: Pool Pump Energy Consumed
+                card_layout: large
+                show_state: false
+                slider_live_update: true
+                read_only_slider: false
+                tap_to_slide: true
+                styles: >
+                  .bubble-name { font-size: 16px !important; } .bubble-sub-button { font-size:
+                  14px !important; font-weight: bold; }
+                sub_button:
+                  - entity: sensor.pool_pump_energy
+                    show_state: true
+                    show_attribute: false
+                    show_icon: false
+                    state_background: false
+                    show_background: false
+                button_action:
+                  tap_action:
+                    action: more-info
+                tap_action:
+                  action: more-info
+              - type: custom:bubble-card
+                card_type: button
+                button_type: name
+                entity: sensor.smith_hotsensor.smithy_energy_usage_2
+                name: Water Heater Energy Consumed
+                card_layout: large
+                show_state: false
+                slider_live_update: true
+                read_only_slider: false
+                tap_to_slide: true
+                styles: >
+                  .bubble-name { font-size: 16px !important; } .bubble-sub-button { font-size:
+                  14px !important; font-weight: bold; }
+                sub_button:
+                  - entity: sensor.smithy_energy_usage_2
+                    show_state: true
+                    show_attribute: false
+                    show_icon: false
+                    state_background: false
+                    show_background: false
+                button_action:
+                  tap_action:
+                    action: more-info
+                tap_action:
+                  action: more-info
+              - type: custom:bubble-card
+                card_type: button
+                button_type: name
+                entity: sensor.tesla_wall_connector_energy
+                name: EV Charger Energy Consumed
+                card_layout: large
+                show_state: false
+                slider_live_update: true
+                read_only_slider: false
+                tap_to_slide: true
+                styles: >
+                  .bubble-name { font-size: 16px !important; } .bubble-sub-button { font-size:
+                  14px !important; font-weight: bold; }
+                sub_button:
+                  - entity: sensor.tesla_wall_connector_energy
+                    show_state: true
+                    show_attribute: false
+                    show_icon: false
+                    state_background: false
+                    show_background: false
+                button_action:
+                  tap_action:
+                    action: more-info
+                tap_action:
+                  action: more-info
