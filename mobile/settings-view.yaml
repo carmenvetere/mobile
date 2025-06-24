@@ -304,6 +304,28 @@ sections:
                     show_background: false
               - type: custom:bubble-card
                 card_type: button
+                entity: automation.basement_hvac_schedule
+                name: Basement Thermostat Schedule
+                icon: mdi:fan-clock
+                show_state: false
+                button_action:
+                  tap_action:
+                    action: toggle
+                tap_action:
+                  action: toggle
+                card_layout: large
+                styles: >
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-sub-button { font-size: 14px !important;
+                  font-weight: bold; }
+                sub_button:
+                  - entity: automation.basement_hvac_schedule
+                    show_state: true
+                    show_icon: false
+                    state_background: false
+                    show_background: false
+              - type: custom:bubble-card
+                card_type: button
                 entity: automation.office_thermostat_schedule_v2
                 name: Office Thermostat Schedule
                 icon: mdi:fan-clock
@@ -369,6 +391,28 @@ sections:
                 card_layout: large
                 sub_button:
                   - entity: input_number.living_room_fresh_air_min_temp
+                    show_state: true
+                    show_icon: false
+                    show_background: false
+                styles: |-
+                  .bubble-sub-button 
+                  {
+                    font-size: 14px !important;
+                    font-weight: 700 !important;
+                  }
+                  .bubble-name {
+                      font-size: 16px !important;
+                    }
+              - type: custom:bubble-card
+                card_type: button
+                button_type: slider
+                entity: input_number.basement_fresh_air_minimum_temp
+                show_last_changed: false
+                show_state: false
+                icon: mdi:home-thermometer-outline
+                card_layout: large
+                sub_button:
+                  - entity: input_number.basement_fresh_air_minimum_temp
                     show_state: true
                     show_icon: false
                     show_background: false
@@ -1292,7 +1336,7 @@ sections:
               - type: custom:bubble-card
                 card_type: separator
                 name: Energy Consumption
-                icon: mdi:clock-out
+                icon: mdi:lightning-bolt
                 rows: 0.75
                 styles: >
                   .bubble-name { font-size: 16px !important; font-weight:
