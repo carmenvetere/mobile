@@ -239,7 +239,7 @@
       conditions:
         - condition: state
           entity: binary_sensor.tesla_wall_connector_vehicle_connected
-          state: 'unplugged'
+          state: "off"
       chip:
         type: entity
         icon: mdi:ev-plug-tesla
