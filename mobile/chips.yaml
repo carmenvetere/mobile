@@ -262,7 +262,7 @@
           state: "charging"
         - condition: state
           entity: sensor.tesla_wall_connector_status
-          state: "charging (reduced)"
+          state: "charging_reduced"
       chip:
         type: template
         content: Charging
