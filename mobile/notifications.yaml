@@ -297,11 +297,11 @@
     card_type: button
     button_type: name
     entity: cover.garage_door_garage
-    name: Garage door open.
+    name: Garage door open
     card_layout: normal
     styles: |
-      .bubble-name {font-size: 16px !important;}
-      .bubble-icon {color: #F6CE46 !important;}
+      .bubble-name { font-size: 16px !important; }
+      .bubble-icon { color: #F6CE46 !important; }
     icon: mdi:garage-open
     tap_action:
       action: more-info
