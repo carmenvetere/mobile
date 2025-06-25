@@ -239,9 +239,9 @@
       conditions:
         - condition: state
           entity: binary_sensor.tesla_wall_connector_vehicle_connected
-          state: off
+          state: on
       chip:
-        type: entity
+        type: template
         icon: mdi:ev-plug-tesla
         icon_color: red
         card_mod:
