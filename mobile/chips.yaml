@@ -239,12 +239,15 @@
       conditions:
         - condition: state
           entity: binary_sensor.tesla_wall_connector_vehicle_connected
-          state: "on"
+          state: "off"
       chip:
         type: template
         icon: mdi:ev-plug-tesla
         entity: binary_sensor.tesla_wall_connector_vehicle_connected
         icon_color: red
+        content: Unplugged
+        tap_action:
+          action: more-info
         card_mod:
           style: |
             :host {
@@ -256,12 +259,16 @@
       conditions:
         - condition: state
           entity: sensor.tesla_wall_connector_status
-          state: charging
+          state: "charging"
         - condition: state
           entity: sensor.tesla_wall_connector_status
-          state: charging (reduced)
+          state: "charging (reduced)
       chip:
-        type: entity
+        type: template
+        content: Charging
+        entity: sensor.tesla_wall_connector_status
+        tap_action:
+          action: more-info
         icon: mdi:ev-plug-tesla
         icon_color: green
         card_mod:
