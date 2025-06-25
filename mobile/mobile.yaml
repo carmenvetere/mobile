@@ -3770,7 +3770,7 @@ views:
                         }
                   - type: custom:bubble-card
                     card_type: cover
-                    entity: cover.motionblind_ebae
+                    entity: cover.hallway_2
                     name: Hallway 2
                     icon: mdi:roller-shade
                     show_state: true
@@ -3778,7 +3778,7 @@ views:
                     tap_action:
                       action: toggle
                     sub_button:
-                      - entity: sensor.motionblind_ebae_battery
+                      - entity: sensor.hallway_2_battery
                         icon: mdi:battery
                         show_background: false
                         show_state: true

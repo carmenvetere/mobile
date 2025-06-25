@@ -807,13 +807,13 @@
 - type: conditional
   conditions:
     - condition: numeric_state
-      entity: sensor.motionblind_ebae_battery
+      entity: sensor.hallway_2_battery
       below: 20
   card:
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.motionblind_ebae_battery
+    entity: sensor.hallway_2_battery
     name: Bedroom hallway 2 shade battery low!
     card_layout: normal
     styles: |-
