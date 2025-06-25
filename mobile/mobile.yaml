@@ -55,11 +55,7 @@ views:
                 }
                 .card-content {
                   padding-top: 7px !important;
-                }
-            visibility:
-              - condition: number_state
-                entity: sensor.notification_alert_counter
-                above: 0                
+                }              
             cards:
               - type: vertical-stack
                 cards: !include notifications.yaml
