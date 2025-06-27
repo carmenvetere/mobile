@@ -4842,32 +4842,60 @@ views:
                     show_attribute: false
                     state_background: false
                     show_icon: false
+                styles: |
+                  .bubble-name {
+                    font-size: 16px !important;
+                    }
               - type: custom:bubble-card
-                card_type: select
+                name: Suction Level
+                icon: mdi:fan
+                card_type: button
                 card_layout: large
-                button_type: switch
+                button_type: state
                 entity: input_select.vacuum_suction_mode
-                show_state: true
+                show_state: false
+                sub_button:
+                  - entity: input_select.vacuum_suction_mode
+                    show_background: true
+                    show_attribute: false
+                    show_state: true
+                    show_icon: false                   
                 styles: |
                   .bubble-name {
                     font-size: 16px !important;
                     }
               - type: custom:bubble-card
-                card_type: select
+                name: Mop Intensity
+                icon: mdi:water
+                card_type: button
                 card_layout: large
-                button_type: switch
+                button_type: state
                 entity: select.roborock_s8_mop_intensity
-                show_state: true
+                show_state: false
+                sub_button:
+                  - entity: select.roborock_s8_mop_intensity
+                    show_background: true
+                    show_attribute: false
+                    show_state: true
+                    show_icon: false                   
                 styles: |
                   .bubble-name {
                     font-size: 16px !important;
                     }
               - type: custom:bubble-card
-                card_type: select
+                name: Mop Mode
+                icon: mdi:heating-coil
+                card_type: button
                 card_layout: large
-                button_type: switch
+                button_type: state
                 entity: select.roborock_s8_mop_mode
-                show_state: true
+                show_state: false
+                sub_button:
+                  - entity: select.roborock_s8_mop_mode
+                    show_background: true
+                    show_attribute: false
+                    show_state: true
+                    show_icon: false                   
                 styles: |
                   .bubble-name {
                     font-size: 16px !important;
