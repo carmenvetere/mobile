@@ -4720,47 +4720,47 @@ views:
     dense_section_placement: true
     header:
       card:
-      type: custom:stack-in-card
-      mode: vertical
-      keep:
-        background: true
-        border_radius: true
-      card_mod:
-        style: |
-          ha-card {
-            background: "rgb(92, 83, 103)";
-            border-radius: 20px;
-            padding: 5px 12px 5px 12px;
-            }
-      cards:
-        - type: vertical-stack
-          cards:
-            - type: custom:bubble-card
-              card_type: separator
-              name: Vacuum
-              icon: mdi:robot-vacuum
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 30px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line-background-color {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
-                .bubble-sub-button 
-                  {
-                    font-size: 16px !important;
-                    font-weight: 700 !important;
+        type: custom:stack-in-card
+        mode: vertical
+        keep:
+          background: true
+          border_radius: true
+        card_mod:
+          style: |
+            ha-card {
+              background: "rgb(92, 83, 103)";
+              border-radius: 20px;
+              padding: 5px 12px 5px 12px;
+              }
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: custom:bubble-card
+                card_type: separator
+                name: Vacuum
+                icon: mdi:robot-vacuum
+                rows: 0.75
+                styles: |
+                  .bubble-name {
+                    font-size: 30px !important;  /* title */
+                    font-weight: bold !important;
                   }
-                .bubble-icon
-                  {
-                    icon-height: 50px !important;
+                  .bubble-line-background-color {
+                    background: var(--primary-text-color);
+                    opacity: 0.1;
+                  }
+                  .card-content {
+                    padding-top: 7px !important;
+                  }
+                  .bubble-sub-button 
+                    {
+                      font-size: 16px !important;
+                      font-weight: 700 !important;
                     }
+                  .bubble-icon
+                    {
+                      icon-height: 50px !important;
+                      }
       layout: start
       badges_position: bottom
       badges_wrap: wrap
