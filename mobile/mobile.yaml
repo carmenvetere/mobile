@@ -4718,6 +4718,84 @@ views:
     icon: mdi:robot-vacuum
     theme: Bubble
     dense_section_placement: true
+    header:
+      card:
+      type: custom:stack-in-card
+      mode: vertical
+      keep:
+        background: true
+        border_radius: true
+      card_mod:
+        style: |
+          ha-card {
+            background: "rgb(92, 83, 103)";
+            border-radius: 20px;
+            padding: 5px 12px 5px 12px;
+            }
+      cards:
+        - type: vertical-stack
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Vacuum
+              icon: mdi:robot-vacuum
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                  font-size: 30px !important;  /* title */
+                  font-weight: bold !important;
+                }
+                .bubble-line-background-color {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }
+                .bubble-sub-button 
+                  {
+                    font-size: 16px !important;
+                    font-weight: 700 !important;
+                  }
+                .bubble-icon
+                  {
+                    icon-height: 50px !important;
+                    }
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            content: Back
+            tap_action:
+              action: navigate
+              navigation_path: /mobile-dash/mobile-home
+            icon: mdi:chevron-left
+            card_mod:
+              style: |
+                ha-card {
+                zoom: 1.25 !important;
+                 }   
+          - type: entity
+            entity: sensor.roborock_s8_battery
+            icon: mdi:battery
+            icon_color: amber
+            tap_action:
+              action: more-info
+            card_mod:
+              style: |
+                ha-card { zoom: 1.25 !important; }   
+          - type: entity
+            entity: sensor.roborock_s8_cleaning_progress
+            icon: mdi:robot-vacuum
+            icon_color: light-blue
+            tap_action:
+              action: more-info
+            card_mod:
+              style: |
+                ha-card { zoom: 1.25 !important; }
     sections:
       - type: custom:stack-in-card
         mode: vertical
@@ -4751,26 +4829,44 @@ views:
                   .card-content {
                     padding-top: 7px !important;
                   }
-              - type: custom:mushroom-vacuum-card
+              - type: custom:bubble-card
+                card_type: button
+                button_type: switch
                 entity: vacuum.roborock_s8
-                commands:
-                  - start_pause
-                  - return_home
-                  - stop
-                layout: horizontal
-                fill_container: false
-                card_mod:
-                  style: |
-                    ha-card {
-                      background: var(--background-color-2)
-                      }
+                scrolling_effect: false
+                show_state: true
+                show_attribute: true
+                attribute: battery_level
+                sub_button:
+                  - entity: vacuum.roborock_s8
+                    show_attribute: false
+                    state_background: false
+                    show_icon: false
               - type: custom:bubble-card
                 card_type: select
                 card_layout: large
                 button_type: switch
-                modules:
-                  - default
                 entity: input_select.vacuum_suction_mode
+                show_state: true
+                styles: |
+                  .bubble-name {
+                    font-size: 16px !important;
+                    }
+              - type: custom:bubble-card
+                card_type: select
+                card_layout: large
+                button_type: switch
+                entity: select.roborock_s8_mop_intensity
+                show_state: true
+                styles: |
+                  .bubble-name {
+                    font-size: 16px !important;
+                    }
+              - type: custom:bubble-card
+                card_type: select
+                card_layout: large
+                button_type: switch
+                entity: select.roborock_s8_mop_mode
                 show_state: true
                 styles: |
                   .bubble-name {
@@ -4916,44 +5012,4 @@ views:
                       background: var(--background-color-2)
                       border-radius: 10px;
                       }
-    header:
-      card:
-        type: markdown
-        text_only: true
-        content: '# Vacuum'
-      layout: start
-      badges_position: bottom
-      badges_wrap: wrap
-    badges:
-      - type: custom:mushroom-chips-card
-        chips:
-          - type: template
-            content: Back
-            tap_action:
-              action: navigate
-              navigation_path: /mobile-dash/mobile-home
-            icon: mdi:chevron-left
-            card_mod:
-              style: |
-                ha-card {
-                zoom: 1.25 !important;
-                 }   
-          - type: entity
-            entity: sensor.roborock_s8_battery
-            icon: mdi:battery
-            icon_color: amber
-            tap_action:
-              action: more-info
-            card_mod:
-              style: |
-                ha-card { zoom: 1.25 !important; }   
-          - type: entity
-            entity: sensor.roborock_s8_cleaning_progress
-            icon: mdi:robot-vacuum
-            icon_color: light-blue
-            tap_action:
-              action: more-info
-            card_mod:
-              style: |
-                ha-card { zoom: 1.25 !important; }
-    cards: []
+
