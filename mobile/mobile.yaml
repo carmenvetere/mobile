@@ -4906,17 +4906,17 @@ views:
                 button_type: state
                 modules:
                   - default
-                entity: script.clean_selected_rooms
+                entity: script.1750692869441
                 show_state: false
                 icon: mdi:play
                 tap_action:
                   action: perform-action
-                  perform_action: script.clean_selected_rooms
+                  perform_action: script.1750692869441
                   target: {}
                 button_action:
                   tap_action:
                     action: perform-action
-                    perform_action: script.clean_selected_rooms
+                    perform_action: script.1750692869441
                     target: {}
                 styles: |
                   .bubble-name {
