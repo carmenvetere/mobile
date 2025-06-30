@@ -4719,18 +4719,15 @@ views:
                     show_background: false
                 name: Chlorinator
                 icon: mdi:toggle-switch-variant
-                styles: |
+                styles: |-
+                  .bubble-sub-button 
+                  {
+                    font-size: 14px !important;
+                    font-weight: 700 !important;
+                  }
                   .bubble-name {
-                    font-size: 20px !important;  /* title */
-                    font-weight: bold !important;
-                  }
-                  .bubble-line {
-                    background: var(--primary-text-color);
-                    opacity: 0.1;
-                  }
-                  .card-content {
-                    padding-top: 7px !important;
-                  }
+                      font-size: 16px !important;
+                    }
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
