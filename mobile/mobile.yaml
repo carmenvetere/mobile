@@ -4716,14 +4716,28 @@ views:
                   - entity: number.omnilogic_pool_chlorinator_timed_percent
                     show_state: true
                     show_attribute: true
+                    show_background: false
                 name: Chlorinator
-                icon: mdi:pump
+                icon: mdi:toggle-switch-variant
+                styles: |
+                  .bubble-name {
+                    font-size: 20px !important;  /* title */
+                    font-weight: bold !important;
+                  }
+                  .bubble-line {
+                    background: var(--primary-text-color);
+                    opacity: 0.1;
+                  }
+                  .card-content {
+                    padding-top: 7px !important;
+                  }
               - type: custom:bubble-card
                 card_type: button
                 button_type: state
                 name: Average Salt Level
                 entity: sensor.omnilogic_pool_chlorinator_average_salt_level
                 show_state: false
+                icon: mdi:chart-line
                 card_layout: large
                 sub_button:
                   - entity: sensor.omnilogic_pool_chlorinator_average_salt_level
@@ -4731,6 +4745,7 @@ views:
                     show_last_changed: false
                     show_state: true
                     show_background: false
+                    show_icon: false
                 button_action:
                   tap_action:
                     action: more-info
