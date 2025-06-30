@@ -4546,8 +4546,11 @@ views:
                     tap_action:
                       action: more-info
                     card_mod:
-                      style: |
-                        ha-card { zoom: 1.25 !important; }   
+                        style: |
+                          :host {
+                            zoom: 1.25 !important;
+                            --chip-background: var(--background-color-2);
+                          }   
                   - type: template
                     entity: binary_sensor.pool_cover_pump
                     icon: mdi:water-pump
@@ -4557,8 +4560,11 @@ views:
                     tap_action:
                       action: more-info
                     card_mod:
-                      style: |
-                        ha-card { zoom: 1.25 !important; }
+                        style: |
+                          :host {
+                            zoom: 1.25 !important;
+                            --chip-background: var(--background-color-2);
+                          } 
       - type: custom:stack-in-card
         mode: vertical
         card_mod:
