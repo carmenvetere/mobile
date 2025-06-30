@@ -4591,6 +4591,15 @@ views:
                 card_type: button
                 entity: switch.omnilogic_pool_filter_pump
                 show_state: true
+                styles: |-
+                  .bubble-sub-button 
+                  {
+                    font-size: 14px !important;
+                    font-weight: 700 !important;
+                  }
+                  .bubble-name {
+                      font-size: 16px !important;
+                    }
                 sub_button:
                   - entity: number.omnilogic_pool_filter_pump_speed
                     show_state: true
@@ -4612,7 +4621,16 @@ views:
                 show_attribute: true
                 attribute: current_percent
                 slider_live_update: true
-                sub_button:
+                styles: |-
+                  .bubble-sub-button 
+                  {
+                    font-size: 14px !important;
+                    font-weight: 700 !important;
+                  }
+                  .bubble-name {
+                      font-size: 16px !important;
+                    }
+               sub_button:
                   - entity: button.omnilogic_pool_filter_pump_low_speed
                     name: Low
                     show_state: false
