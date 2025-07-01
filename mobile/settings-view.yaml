@@ -121,6 +121,7 @@ sections:
                       zoom: 1.25 !important;
                       --chip-background: var(--background-color-2);
                     }
+#Home Modes
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -238,6 +239,7 @@ sections:
                     show_icon: false
                     state_background: false
                     show_background: false
+#Climate
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -490,6 +492,7 @@ sections:
                   .bubble-name {
                       font-size: 16px !important;
                     }
+#Alarm
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -608,6 +611,7 @@ sections:
                     show_icon: false
                     state_background: false
                     show_background: false
+#Water Heater
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -740,6 +744,7 @@ sections:
                   .bubble-name {
                       font-size: 16px !important;
                     }
+#Motion
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -835,6 +840,7 @@ sections:
                     show_icon: false
                     state_background: false
                     show_background: false
+#Lights
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -975,6 +981,7 @@ sections:
                     show_icon: false
                     state_background: false
                     show_background: false
+#Shades
       - type: custom:expander-card
         expanded: false
         title-card-clickable: true
@@ -1094,8 +1101,8 @@ sections:
                     show_background: false
               - type: custom:bubble-card
                 card_type: button
-                entity: automation.1_00_pm_first_floor_sun_shading
-                name: 1:00PM First Floor Shades Sun Position
+                entity: automation.10_30_am_dining_room_shades
+                name: 10:30AM East Facing Shades Open Fully
                 icon: mdi:roller-shade
                 show_state: false
                 scrolling_effect: false
@@ -1117,8 +1124,8 @@ sections:
                     show_background: false
               - type: custom:bubble-card
                 card_type: button
-                entity: automation.bedroom_sun_shading
-                name: 1:00PM Bedroom Shades Sun Position
+                entity: automation.1_00_pm_first_floor_sun_shading
+                name: 1:00PM West Facing Shades Sun Shading
                 icon: mdi:roller-shade
                 show_state: false
                 scrolling_effect: false
@@ -1133,7 +1140,7 @@ sections:
                   .bubble-sub-button { font-size: 14px !important;
                   font-weight: bold; }
                 sub_button:
-                  - entity: automation.bedroom_sun_shading
+                  - entity: automation.1_00_pm_first_floor_sun_shading
                     show_state: true
                     show_icon: false
                     state_background: false
