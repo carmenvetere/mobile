@@ -283,29 +283,29 @@ sections:
                 tap_action:
                   action: navigate
                   navigation_path: /mobile-dash/energy
-              - type: custom:bubble-card
-                card_type: button
-                button_type: name
-                name: Music
-                icon: mdi:music
-                button_action:
-                  tap_action:
-                    action: navigate
-                    navigation_path: /mobile-dash/energy-main
-                sub_button:
-                  - icon: mdi:chevron-right
-                    state_background: false
-                    tap_action:
-                      action: navigate
-                      navigation_path: /mobile-dash/energy-main
-                card_layout: normal
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-                tap_action:
-                  action: navigate
-                  navigation_path: /mobile-dash/energy-main
+              # - type: custom:bubble-card
+              #   card_type: button
+              #   button_type: name
+              #   name: Music
+              #   icon: mdi:music
+              #   button_action:
+              #     tap_action:
+              #       action: navigate
+              #       navigation_path: /mobile-dash/energy-main
+              #   sub_button:
+              #     - icon: mdi:chevron-right
+              #       state_background: false
+              #       tap_action:
+              #         action: navigate
+              #         navigation_path: /mobile-dash/energy-main
+              #   card_layout: normal
+              #   styles: |-
+              #     .bubble-name {
+              #         font-size: 16px !important;
+              #       }
+              #   tap_action:
+              #     action: navigate
+              #     navigation_path: /mobile-dash/energy-main
               - type: custom:bubble-card
                 card_type: button
                 button_type: name
