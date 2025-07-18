@@ -54,6 +54,12 @@ header:
                   icon-height: 50px !important;
                   }
             sub_button:
+              - entity: weather.openweathermap
+                show_background: false
+                show_icon: true
+                show_state: false
+                show_name: false
+                show_last_changed: false
               - name: Temperature
                 entity: sensor.bayberry_tempest_temperature
                 icon: mdi:thermometer
