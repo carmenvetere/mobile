@@ -924,6 +924,15 @@ views:
                   style: |
                     ha-card {
                       overflow-x: auto;
+                      overflow-y: hidden;
+                    }
+                    ha-card > * {
+                      display: flex;
+                      flex-wrap: nowrap;
+                      gap: 8px;
+                    }
+                    ha-card > * > * {
+                      flex-shrink: 0;
                     }
                 chips:
                   - type: template
