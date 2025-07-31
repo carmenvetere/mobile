@@ -922,12 +922,16 @@ views:
               - type: custom:mushroom-chips-card
                 card_mod:
                   style: |
-                    mushroom-chips {
+                    ha-card {
+                      overflow: hidden;
+                    }
+                    .chip-container {
                       display: flex !important;
                       flex-wrap: nowrap !important;
                       overflow-x: auto !important;
+                      gap: 8px !important;
                     }
-                    mushroom-chip {
+                    .chip-container > * {
                       flex-shrink: 0 !important;
                     }
                 chips:
