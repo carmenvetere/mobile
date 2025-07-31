@@ -2,43 +2,7 @@
   card_mod:
     style: |
       ha-card {
-        overflow: hidden !important;
-      }
-      ha-card > * {
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        gap: 8px !important;
-      }
-      ha-card > * > * {
-        flex-shrink: 0 !important;
-      }
-      /* More aggressive targeting */
-      ha-card ::-webkit-scrollbar {
-        height: 4px;
-      }
-      ha-card ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ha-card ::-webkit-scrollbar-thumb {
-        background: transparent;
-        border-radius: 2px;
-      }
-      /* Try to target all possible chip containers */
-      mushroom-chips,
-      .chip-container,
-      [class*="chip"] {
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        width: 100% !important;
-      }
-      mushroom-chip,
-      [class*="chip"]:not([class*="container"]) {
-        flex-shrink: 0 !important;
-        white-space: nowrap !important;
+        overflow-x: auto;
       }
   chips:
 #Alarm Chip
