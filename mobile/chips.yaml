@@ -2,16 +2,16 @@
   card_mod:
     style: |
       ha-card {
-        overflow-x: auto;
-        overflow-y: hidden;
+        overflow: hidden;
       }
-      ha-card > * {
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 8px;
+      .chip-container {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        gap: 8px !important;
       }
-      ha-card > * > * {
-        flex-shrink: 0;
+      .chip-container > * {
+        flex-shrink: 0 !important;
       }
   chips:
 #Alarm Chip
