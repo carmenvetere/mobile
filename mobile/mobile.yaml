@@ -1119,22 +1119,30 @@ views:
                     padding-top: 7px !important;
                   }
               - type: custom:bubble-card
-                card_type: climate
-                entity: water_heater.omnilogic_pool_heater
-                name: Pool Heater Temp
+                card_type: button
+                button_type: slider
+                entity: input_number.pool_heater_setpoint
+                name: Pool Heater Set Temp
                 icon: mdi:water-boiler
                 show_state: false
+                card_layout: large
                 tap_action:
                   action: none
-                card_layout: large
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
                 styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-                  .bubble-temperature-display {
-                      font-size: 16px !important;
-                      font-weight: bold;
-                    }
+                  .bubble-name { font-size: 16px !important; }
+                  .bubble-temperature-display { font-size: 16px !important; font-weight: bold; }
+                  .bubble-sub-button { font-size:14px !important; font-weight: bold; }
+                sub_button:
+                  - entity: water_heater.omnilogic_pool_heater
+                    show_state: false
+                    show_attribute: true
+                    attribute: temperature
+                    show_icon: false
+                    show_background: false
               - type: custom:bubble-card
                 card_type: button
                 entity: water_heater.omnilogic_pool_heater
