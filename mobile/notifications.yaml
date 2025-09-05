@@ -92,7 +92,7 @@
       action: call-service
       service: browser_mod.popup
       data:
-        title: Tesla Wall Connector – Details
+        title: Tesla Wall Connector Details
         size: normal
         content:
           type: vertical-stack
@@ -296,6 +296,7 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
+    entity: cover.garage_door_garage
     name: Garage door open
     card_layout: normal
     styles: |
@@ -764,10 +765,9 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.bedroom_right_battery_0
     name: Bedroom right shade battery low!
     card_layout: normal
-    styles: |-
+    styles: |
       .bubble-name { font-size: 16px !important; }
       .bubble-icon { color: #F6CE46 !important; }
     icon: mdi:battery-alert
