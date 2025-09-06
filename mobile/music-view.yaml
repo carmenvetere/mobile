@@ -73,17 +73,22 @@ sections:
                       zoom: 1.25 !important;
                       --chip-background: var(--background-color-2);
                     }
-      - type: custom:mediocre-media-player-card
-        entity_id: media_player.living_room
-        use_art_colors: false
-        tap_opens_popup: true
-        speaker_group:
-          entity_id: media_player.living_room
-          entities:
-            - media_player.kitchen
-            - media_player.deck
-        search:
-          enabled: true
+      - type: custom:sonos-card
+        sections:
+          - player
+          - volumes
+          - grouping
+          - groups
+        favoritesItemsPerRow: 4
+        entityId: media_player.living_room
+        predefinedGroups:
+          - name: First Floor
+            media: ""
+            entities:
+              - player: media_player.living_room
+                volume: 10
+              - player: media_player.kitchen
+                volume: 10
 header:
   card:
     type: markdown
