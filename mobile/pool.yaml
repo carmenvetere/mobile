@@ -1,0 +1,373 @@
+title: Pool
+type: sections
+max_columns: 1
+path: pool
+icon: mdi:pool
+theme: Bubble
+dense_section_placement: true
+header:
+  card:
+    type: custom:stack-in-card
+    mode: vertical
+    keep:
+      background: true
+      border_radius: true
+    card_mod:
+      style: |
+        ha-card {
+          background: "rgb(92, 83, 103)";
+          border-radius: 20px;
+          padding: 5px 12px 5px 12px;
+          }
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:bubble-card
+            card_type: separator
+            name: Pool
+            icon: mdi:pool
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 30px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-line-background-color {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+              .bubble-sub-button 
+                {
+                  font-size: 16px !important;
+                  font-weight: 700 !important;
+                }
+              .bubble-icon
+                {
+                  icon-height: 50px !important;
+                  }
+  layout: start
+  badges_position: bottom
+  badges_wrap: wrap
+badges:
+cards: []  
+sections:
+  - type: grid
+    cards:
+      - type: custom:stack-in-card
+        mode: horizontal
+        card_mod:
+          style: |
+            ha-card {
+              background: "rgb(92, 83, 103)";
+              border-radius: 20px;
+              padding: 10px 5px 10px 5px; 
+              }
+        cards:
+          - type: custom:mushroom-chips-card
+            card_mod:
+              style: |
+                ha-card {
+                  overflow: hidden;
+                }
+                .chip-container {
+                  display: flex !important;
+                  flex-wrap: nowrap !important;
+                  overflow-x: auto !important;
+                  gap: 8px !important;
+                }
+                .chip-container > * {
+                  flex-shrink: 0 !important;
+                }
+            chips:
+              - type: template
+                content: Back
+                tap_action:
+                  action: navigate
+                  navigation_path: /mobile-dash/mobile-home
+                icon: mdi:chevron-left
+                card_mod:
+                  style: |
+                    :host {
+                      zoom: 1.25 !important;
+                      --chip-background: var(--background-color-2);
+                    }
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: sensor.omnilogic_pool_watersensor
+                    state_not: unknown
+                  - condition: state
+                    entity: sensor.omnilogic_pool_watersensor
+                    state_not: unavailable
+                chip:
+                  type: entity
+                  entity: sensor.omnilogic_pool_watersensor
+                  tap_action:
+                    action: more-info
+                  icon: mdi:pool-thermometer
+                  icon_color: cyan
+                  card_mod:
+                    style: |
+                      :host {
+                        zoom: 1.25 !important;
+                        --chip-background: var(--background-color-2);
+                      } 
+              - type: template
+                entity: binary_sensor.pool_cover
+                icon: mdi:garage-variant
+                icon_color: amber
+                content: |
+                  Pool Cover  {% if is_state(entity, 'off') %}
+                    Closed
+                  {% elif is_state(entity, 'on') %}
+                    Open
+                  {% else %}
+                    Unknown
+                  {% endif %}
+                tap_action:
+                  action: more-info
+                card_mod:
+                    style: |
+                      :host {
+                        zoom: 1.25 !important;
+                        --chip-background: var(--background-color-2);
+                      }   
+              - type: template
+                entity: binary_sensor.pool_cover_pump
+                icon: mdi:water-pump
+                icon_color: blue
+                content: |
+                  Cover Pump {{ states(entity) | title }}
+                tap_action:
+                  action: more-info
+                card_mod:
+                    style: |
+                      :host {
+                        zoom: 1.25 !important;
+                        --chip-background: var(--background-color-2);
+                      } 
+  - type: custom:stack-in-card
+    mode: vertical
+    card_mod:
+      style: |
+        ha-card {
+          background: "rgb(92, 83, 103)";
+          border-radius: 20px;
+          padding: 12px 12px 4px;       /* top / sides / bottom */
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:bubble-card
+            card_type: separator
+            name: Pump
+            icon: mdi:menu-open
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          - type: custom:bubble-card
+            card_type: button
+            entity: switch.omnilogic_pool_filter_pump
+            show_state: true
+            styles: |-
+              .bubble-sub-button 
+              {
+                font-size: 14px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-name {
+                  font-size: 16px !important;
+                }
+            sub_button:
+              - entity: number.omnilogic_pool_filter_pump_speed
+                show_state: true
+                show_attribute: true
+            name: Filter Pump
+            icon: mdi:pump
+          - type: custom:bubble-card
+            card_type: button
+            entity: number.omnilogic_pool_filter_pump_speed
+            button_type: slider
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            name: Pump Speed
+            show_state: true
+            show_attribute: true
+            attribute: current_percent
+            slider_live_update: true
+            styles: |-
+              .bubble-sub-button 
+              {
+                font-size: 14px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-name {
+                  font-size: 16px !important;
+                }
+            sub_button:
+              - entity: button.omnilogic_pool_filter_pump_low_speed
+                name: Low
+                show_state: false
+                show_name: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.omnilogic_pool_filter_pump_low_speed
+              - entity: button.omnilogic_pool_filter_pump_medium_speed
+                name: Medium
+                show_state: false
+                show_name: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.omnilogic_pool_filter_pump_medium_speed
+              - entity: button.omnilogic_pool_filter_pump_high_speed
+                name: High
+                show_state: false
+                show_name: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.omnilogic_pool_filter_pump_high_speed
+          - type: custom:bubble-card
+            card_type: separator
+            name: Heater
+            icon: mdi:menu-open
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          - type: custom:bubble-card
+            card_type: button
+            button_type: slider
+            entity: input_number.pool_heater_setpoint
+            name: Pool Heater Set Temp
+            icon: mdi:water-boiler
+            show_state: false
+            card_layout: large
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            styles: |-
+              .bubble-name { font-size: 16px !important; }
+              .bubble-temperature-display { font-size: 16px !important; font-weight: bold; }
+              .bubble-sub-button { font-size:14px !important; font-weight: bold; }
+            sub_button:
+              - entity: water_heater.omnilogic_pool_heater
+                show_state: false
+                show_attribute: true
+                attribute: temperature
+                show_icon: false
+                show_background: false
+          - type: custom:bubble-card
+            card_type: button
+            entity: water_heater.omnilogic_pool_heater
+            name: Pool Heater On/Off
+            icon: mdi:water-boiler
+            show_state: true
+            tap_action:
+              action: toggle
+            card_layout: large
+            styles: |-
+              .bubble-name {
+                  font-size: 16px !important;
+                }
+              .bubble-temperature-display {
+                  font-size: 16px !important;
+                  font-weight: bold;
+                }
+          - type: custom:bubble-card
+            card_type: separator
+            name: Chlorinator
+            icon: mdi:menu-open
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          - type: custom:bubble-card
+            card_type: button
+            entity: switch.omnilogic_pool_chlorinator
+            show_state: true
+            sub_button:
+              - entity: number.omnilogic_pool_chlorinator_timed_percent
+                show_state: true
+                show_attribute: true
+                show_background: false
+            name: Chlorinator
+            icon: mdi:toggle-switch-variant
+            styles: |-
+              .bubble-sub-button 
+              {
+                font-size: 14px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-name {
+                  font-size: 16px !important;
+                }
+          - type: custom:bubble-card
+            card_type: button
+            button_type: state
+            name: Average Salt Level
+            entity: sensor.omnilogic_pool_chlorinator_average_salt_level
+            show_state: false
+            icon: mdi:chart-line
+            card_layout: large
+            sub_button:
+              - entity: sensor.omnilogic_pool_chlorinator_average_salt_level
+                state_background: false
+                show_last_changed: false
+                show_state: true
+                show_background: false
+                show_icon: false
+            button_action:
+              tap_action:
+                action: more-info
+            styles: |-
+              .bubble-sub-button 
+              {
+                font-size: 14px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-name {
+                  font-size: 16px !important;
+                }
