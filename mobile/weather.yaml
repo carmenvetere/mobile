@@ -1,0 +1,249 @@
+title: Weather
+type: sections
+max_columns: 1
+path: weather
+icon: mdi:weather-partly-cloudy
+theme: Bubble
+dense_section_placement: true
+sections:
+  - type: grid
+    cards:
+      - type: custom:stack-in-card
+        mode: horizontal
+        card_mod:
+          style: |
+            ha-card {
+              background: "rgb(92, 83, 103)";
+              border-radius: 20px;
+              padding: 10px 5px 10px 5px; 
+              }
+        cards:
+          - type: custom:mushroom-chips-card
+            card_mod:
+              style: |
+                ha-card {
+                  overflow: hidden !important;
+                }
+                ha-card > * {
+                  display: flex !important;
+                  flex-wrap: nowrap !important;
+                  overflow-x: auto !important;
+                  overflow-y: hidden !important;
+                  gap: 8px !important;
+                }
+                ha-card > * > * {
+                  flex-shrink: 0 !important;
+                }
+                /* More aggressive targeting */
+                ha-card ::-webkit-scrollbar {
+                  height: 4px;
+                }
+                ha-card ::-webkit-scrollbar-track {
+                  background: transparent;
+                }
+                ha-card ::-webkit-scrollbar-thumb {
+                  background: rgba(255, 255, 255, 0.3);
+                  border-radius: 2px;
+                }
+                /* Try to target all possible chip containers */
+                mushroom-chips,
+                .chip-container,
+                [class*="chip"] {
+                  display: flex !important;
+                  flex-wrap: nowrap !important;
+                  overflow-x: auto !important;
+                  overflow-y: hidden !important;
+                  width: 100% !important;
+                }
+                mushroom-chip,
+                [class*="chip"]:not([class*="container"]) {
+                  flex-shrink: 0 !important;
+                  white-space: nowrap !important;
+                }
+            chips:
+              - type: template
+                content: Back
+                tap_action:
+                  action: navigate
+                  navigation_path: /mobile-dash/mobile-home
+                icon: mdi:chevron-left
+                card_mod:
+                  style: |
+                    :host {
+                      zoom: 1.25 !important;
+                      --chip-background: var(--background-color-2);
+                    }        
+      - type: conditional
+        conditions:
+          - condition: numeric_state
+            entity: sensor.nws_alerts_alerts
+            above: 0
+        card:
+          type: custom:expander-card
+          expanded: true
+          title-card-clickable: true
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Active Weather Alerts
+            icon: mdi:alert
+            rows: 0.75
+            styles: |
+              .bubble-name {
+              font-size: 20px !important;  /* title */
+              font-weight: bold !important;
+              }
+              .bubble-line {
+              background: var(--primary-text-color);
+              opacity: 0.1;
+              }
+              .card-content {
+              padding-top: 10px !important;
+              padding-left: 10px !important;
+              }  
+          cards:
+            - type: markdown
+              content: |                    
+                {% set alerts = state_attr('sensor.nws_alerts_alerts', 'Alerts') %}
+                {% if alerts and alerts|length > 0 %}
+                  {% for alert in alerts %}
+                ### {{ alert.Event }}
+                
+                **{{ alert.Headline }}**
+                
+                {{ alert.Description }}
+                
+                {% if alert.Instruction %}
+                **Instructions:**
+                {{ alert.Instruction }}
+                {% endif %}
+                
+                *Expires: {{ alert.Expires | as_timestamp | timestamp_custom('%B %d, %Y at %I:%M %p') }}*
+                
+                ---
+                  {% endfor %}
+                {% else %}
+                ✅ **No active weather alerts**
+                {% endif %}
+      - type: custom:stack-in-card
+        mode: vertical
+        keep:
+          background: true
+          border_radius: true
+        card_mod:
+          style: |
+            ha-card {
+              background: "rgb(92, 83, 103)";
+              border-radius: 20px;
+              padding: 12px 12px 4px;       /* top / sides / bottom */
+        cards:
+          - type: custom:bubble-card
+            card_type: separator
+            name: Live Weather
+            icon: mdi:weather-partly-cloudy
+            rows: 0.75
+            styles: |
+              .bubble-name {
+              font-size: 20px !important;  /* title */
+              font-weight: bold !important;
+              }
+              .bubble-line {
+              background: var(--primary-text-color);
+              opacity: 0.1;
+              }
+              .card-content {
+              padding-top: 10px !important;
+              padding-left: 10px !important;
+              }
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - graph: line
+                type: sensor
+                entity: sensor.bayberry_tempest_temperature
+                detail: 2
+                name: Temperature
+                theme: Bubble
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: var(--background-color-2);
+                      border-radius: 18px;
+                    }
+              - graph: line
+                type: sensor
+                entity: sensor.bayberry_tempest_humidity
+                detail: 1
+                name: Humidity
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: var(--background-color-2);
+                      border-radius: 18px;
+                    }
+              - graph: line
+                type: sensor
+                entity: sensor.bayberry_tempest_wind_speed_average
+                detail: 1
+                name: Average Wind Speed
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: var(--background-color-2);
+                      border-radius: 18px;
+                    }
+              - graph: line
+                type: sensor
+                entity: sensor.bayberry_tempest_wind_gust
+                detail: 1
+                name: Wind Gust
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: var(--background-color-2);
+                      border-radius: 18px;
+                    }
+              - graph: line
+                type: sensor
+                entity: sensor.bayberry_tempest_precipitation
+                detail: 1
+                name: Precipitation
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: var(--background-color-2);
+                      border-radius: 18px;
+                    }
+              - graph: line
+                type: sensor
+                entity: sensor.bayberry_tempest_illuminance
+                detail: 1
+                name: Illuminance
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: var(--background-color-2);
+                      border-radius: 18px;
+                    }
+header:
+  card:
+    type: markdown
+    content: |
+      # <ha-icon icon="mdi:weather-partly-cloudy"></ha-icon> Weather
+  layout: start
+card_mod:
+  style: |
+    .: |
+      .badge-container ha-state-label-badge {
+        --ha-label-badge-size: 58px;
+        --ha-label-badge-font-size: 18px;
+        --mdc-icon-size: 26px;
+        border-radius: 28px;
+        background: var(--secondary-background-color);
+        color: var(--primary-text-color);
+      }
+  layout: start
+  badges_position: bottom
+  badges_wrap: wrap
+badges: null
