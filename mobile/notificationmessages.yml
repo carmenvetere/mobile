@@ -1,0 +1,208 @@
+# ===========================================================
+#  Binary-sensor definitions for every dashboard notification
+# ===========================================================
+#
+#  - Copy this file to   config/template/notifications.yaml
+#  - Add `!include template/notifications.yaml` under the
+#    `template:` key in configuration.yaml  (or split dir)
+#  - Reload Template entities or restart HA.
+#
+#  Conventions:
+#    • entity_id  binary_sensor.notif_<slug>
+#    • attributes.message   = human-readable text
+#    • attributes.severity  = critical | warning | info
+#
+template:
+  - binary_sensor:
+# ---------- CRITICAL  (red) ----------------------------------------
+      - name: notify_power_outage
+        unique_id: notify_power_outage
+        state: "{{ is_state('binary_sensor.bayberry_grid_status','off') }}"
+        attributes:
+          message: "Power outage!"
+          severity: critical
+      - name: notify_powerwall_low
+        unique_id: notify_powerwall_low
+        state: >
+          {{ is_state('binary_sensor.bayberry_grid_status','off')
+             and (states('sensor.bayberry_charge')|int(0) < 25) }}
+        attributes:
+          message: "Powerwall charge low!"
+          severity: critical
+      - name: notify_tesla_connector_error
+        unique_id: notify_tesla_connector_error
+        state: "{{ is_state('sensor.tesla_wall_connector_status','error') }}"
+        attributes:
+          message: "Tesla Wall Connector error!"
+          severity: critical
+# ---------- WARNING  (orange) --------------------------------------
+      - name: notify_tesla_connector_reduced
+        unique_id: notify_tesla_connector_reduced
+        state: "{{ is_state('sensor.tesla_wall_connector_status','charging_reduced') }}"
+        attributes:
+          message: "Tesla Wall Connector charging reduced."
+          severity: warning
+      - name: notify_alarm_triggered
+        unique_id: notify_alarm_triggered
+        state: "{{ is_state('alarm_control_panel.bayberry_alarm_v2','triggered') }}"
+        attributes:
+          message: "Alarm triggered!"
+          severity: warning
+      - name: notify_weather_alert
+        unique_id: notify_weather_alert
+        state: "{{ states('sensor.nws_alerts_alerts')|int(0) > 0 }}"
+        attributes:
+          message: "Active weather alert!"
+          severity: warning
+      - name: notify_storm_watch_active
+        unique_id: notify_storm_watch_active
+        state: "{{ is_state('binary_sensor.bayberry_storm_watch_active','on') }}"
+        attributes:
+          message: "Storm Watch active!"
+          severity: warning
+      - name: notify_utility_room_temp_low
+        unique_id: notify_utility_room_temp_low
+        state: "{{ states('sensor.utility_room_temp_sensor_temperature')|float(999) < 55 }}"
+        attributes:
+          message: "Utility room temperature low!"
+          severity: warning
+      - name: notify_utility_room_temp_high
+        unique_id: notify_utility_room_temp_high
+        state: "{{ states('sensor.utility_room_temp_sensor_temperature')|float(0) > 80 }}"
+        attributes:
+          message: "Utility room temperature high!"
+          severity: warning
+      - name: notify_attic_temp_low
+        unique_id: notify_attic_temp_low
+        state: "{{ states('sensor.attic_temp_sensor_temperature')|float(999) < 55 }}"
+        attributes:
+          message: "Attic temperature low!"
+          severity: warning
+      - name: notify_attic_temp_high
+        unique_id: notify_attic_temp_high
+        state: "{{ states('sensor.attic_temp_sensor_temperature')|float(0) > 80 }}"
+        attributes:
+          message: "Attic temperature high!"
+          severity: warning
+# ---------- INFO  (yellow / blue) ----------------------------------
+      - name: notify_garage_open
+        unique_id: notify_garage_open
+        state: "{{ is_state('cover.garage_door_garage','open') }}"
+        attributes:
+          message: "Garage door open."
+          severity: info
+      - name: notify_vacuum_error
+        unique_id: notify_vacuum_error
+        state: "{{ not is_state('sensor.roborock_s8_vacuum_error','none') }}"
+        attributes:
+          message: "Roborock vacuum error!"
+          severity: info
+      - name: notify_low_hot_water
+        unique_id: notify_low_hot_water
+        state: "{{ states('sensor.smithy_hot_water_availability_2')|float(100) < 20 }}"
+        attributes:
+          message: "Hot water availability low!"
+          severity: info
+      - name: notify_virtual_power_plant
+        unique_id: notify_virtual_power_plant
+        state: "{{ is_state('binary_sensor.bayberry_grid_services_active_2','on') }}"
+        attributes:
+          message: "Virtual Power Plant event active."
+          severity: info
+      - name: notify_rain_pool_pump
+        unique_id: notify_rain_pool_pump
+        state: >
+          {{ is_state('sensor.bayberry_tempest_precipitation_type','rain')
+             and is_state('binary_sensor.pool_cover_pump','off') }}
+        attributes:
+          message: "Rain detected. Put pool cover pump out."
+          severity: info
+      - name: notify_low_pool_water
+        unique_id: notify_low_pool_water
+        state: "{{ is_state('input_boolean.low_pool_water_level','on') }}"
+        attributes:
+          message: "Pool water level low."
+          severity: info
+      - name: notify_pool_salt_low
+        unique_id: notify_pool_salt_low
+        state: "{{ states('sensor.omnilogic_pool_chlorinator_average_salt_level')|int(9999) < 2700 }}"
+        attributes:
+          message: "Pool salt level low."
+          severity: info
+      - name: notify_washer_tub_clean
+        unique_id: notify_washer_tub_clean
+        state: "{{ states('sensor.front_load_washer_tub_clean_counter')|int(0) > 30 }}"
+        attributes:
+          message: "Run washing machine clean cycle."
+          severity: info
+      - name: notify_attic_filter_replace
+        unique_id: notify_attic_filter_replace
+        state: "{{ states('sensor.upper_floor_hvac_filter_time_2')|int(0) > 2000 }}"
+        attributes:
+          message: "Replace attic HVAC filter."
+          severity: info
+      - name: notify_basement_filter_replace
+        unique_id: notify_basement_filter_replace
+        state: "{{ states('sensor.lower_floors_hvac_filter_time_2')|int(0) > 2000 }}"
+        attributes:
+          message: "Replace basement HVAC filter."
+          severity: info
+# --- battery-low sensors (all <20 %) -------------------------------
+{% set battery_entities = [
+  ('bedroom_back_1_battery',               'Bedroom Back 1 shade battery LOW!'),
+  ('back_2_battery',                       'Bedroom Back 2 shade battery LOW!'),
+  ('back_3_battery',                       'Bedroom Back 3 shade battery LOW!'),
+  ('bedroom_back_4_battery_0',             'Bedroom Back 4 shade battery LOW!'),
+  ('bedroom_back_5_battery_0',             'Bedroom Back 5 shade battery LOW!'),
+  ('side_left_battery_2',                  'Dining-room side-left shade battery LOW!'),
+  ('side_right_battery_0',                 'Dining-room side-right shade battery LOW!'),
+  ('dining_room_front_left_battery_0',     'Dining-room front-left shade battery LOW!'),
+  ('front_right_battery_0',                'Dining-room front-right shade battery LOW!'),
+  ('bedroom_right_battery_0',              'Bedroom Right shade battery LOW!'),
+  ('hallway_1_battery',                    'Bedroom hallway 1 shade battery LOW!'),
+  ('hallway_2_battery',                    'Bedroom hallway 2 shade battery LOW!'),
+  ('bedroom_left_battery_0',               'Bedroom Left shade battery LOW!'),
+  ('living_room_side_left_1_battery_0',    'Living-room side-left 1 shade battery LOW!'),
+  ('living_room_front_left_battery_0',     'Living-room front-left shade battery LOW!'),
+  ('living_room_side_left_2_battery_0',    'Living-room side-left 2 shade battery LOW!'),
+  ('living_room_side_right_1_battery_0',   'Living-room side-right 1 shade battery LOW!'),
+  ('living_room_side_right_2_battery_0',   'Living-room side-right 2 shade battery LOW!'),
+  ('living_room_front_right_battery',      'Living-room front-right shade battery LOW!'),
+  ('attic_temp_sensor_battery',            'Attic temp-sensor battery LOW!'),
+  ('front_door_battery',                   'Front-door sensor battery LOW!'),
+  ('kitchen_french_doors_battery',         'Kitchen French-doors sensor battery LOW!'),
+  ('living_room_french_doors_battery',     'Living-room French-doors sensor battery LOW!'),
+  ('mudroom_entry_battery',                'Mudroom entry-door sensor battery LOW!'),
+  ('mudroom_garage_battery',               'Mudroom garage-door sensor battery LOW!'),
+  ('utility_room_temp_sensor_battery',     'Utility-room temp-sensor battery LOW!')
+] %}
+{% for ent, msg in battery_entities %}
+      - name: notify_battery_{{ ent }}
+        unique_id: notify_battery_{{ ent }}
+        state: "{{ states('sensor.{{ ent }}')|int(100) < 20 }}"
+        attributes:
+          message: "{{ msg }}"
+          severity: info
+{% endfor %}
+# --- Pool vacuum timer --------------------------------------------
+      - name: notify_pool_needs_vacuum
+        unique_id: notify_pool_needs_vacuum
+        state: >
+          {{ states('sensor.hours_since_last_vacuum')|int(0) > 48
+             and is_state('binary_sensor.pool_season','on') }}
+        attributes:
+          message: "The pool needs to be vacuumed."
+          severity: info
+# --- Laundry completion -------------------------------------------
+      - name: notify_dryer_complete
+        unique_id: notify_dryer_complete
+        state: "{{ is_state('binary_sensor.dryer_recently_completed','on') }}"
+        attributes:
+          message: "Dryer complete."
+          severity: info
+      - name: notify_washer_complete
+        unique_id: notify_washer_complete
+        state: "{{ is_state('binary_sensor.washer_recently_completed','on') }}"
+        attributes:
+          message: "Washer complete."
+          severity: info
