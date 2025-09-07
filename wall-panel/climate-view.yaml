@@ -165,6 +165,7 @@ cards:
                       icon:
                         - color: white
             fresh:
+              card:
                 type: custom:button-card
                 entity: switch.utility_room_ventilation_damper
                 show_state: false
