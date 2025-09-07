@@ -62,7 +62,6 @@ cards:
             "on":
               card:
                 type: custom:button-card
-                entity: climate.basement_thermostat
                 show_state: false
                 show_name: false
                 show_icon: true
@@ -81,8 +80,6 @@ cards:
                     - width: 115px
                     - border-radius: 15px
                     - background-color: '#D7D9DF'
-                  card:hover:
-                    - background-color: '#DDE0E7'
                 state:
                   - operator: template
                     value: >
@@ -97,7 +94,6 @@ cards:
             auto:
               card:
                 type: custom:button-card
-                entity: climate.basement_thermostat
                 show_state: false
                 show_name: false
                 show_icon: true
@@ -116,8 +112,6 @@ cards:
                     - width: 115px
                     - border-radius: 15px
                     - background-color: '#D7D9DF'
-                  card:hover:
-                    - background-color: '#DDE0E7'
                 state:
                   - operator: template
                     value: >
@@ -150,8 +144,6 @@ cards:
                     - width: 115px
                     - border-radius: 15px
                     - background-color: '#D7D9DF'
-                  card:hover:
-                    - background-color: '#DDE0E7'
                 state:
                   - operator: template
                     value: >
@@ -173,7 +165,8 @@ cards:
                 icon: mdi:tailwind
                 size: 20%
                 tap_action: 
-                  action: switch.toggle
+                  action: perform-action
+                  perform_action: switch.toggle
                   target:
                     entity_id: switch.utility_room_ventilation_damper
                 styles:
@@ -182,8 +175,6 @@ cards:
                     - width: 115px
                     - border-radius: 15px
                     - background-color: '#D7D9DF'
-                  card:hover:
-                    - background-color: '#DDE0E7'
                 state:
                   - operator: template
                     value: >
