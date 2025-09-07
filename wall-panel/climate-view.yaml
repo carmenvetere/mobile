@@ -79,7 +79,7 @@ cards:
                   - operator: template
                     value: >
                       [[[
-                        return entity.attributes.fan_mode == 'on';
+                      return states['climate.basement_thermostat'].attributes.fan_mode == 'on';
                       ]]]
                     styles:
                       card:
