@@ -1426,7 +1426,7 @@ views:
           main:
             card:
               type: vertical-stack
-              cards: !include /mobile/notifications.yaml
+              cards: !include /config/mobile/notifications.yaml
           nav:
             card:
               type: custom:button-card
