@@ -44,7 +44,7 @@ cards:
           styles:
             card:
               - height: 48px
-              - width: 340px
+              - width: 480px
               - padding: 0
               - margin: 0
               - background-color: '#9D999D'
@@ -60,6 +60,7 @@ cards:
               card:
                 type: custom:button-card
                 name: On
+                layout: icon_name
                 show_state: false
                 show_icon: true
                 icon: mdi:fan
@@ -88,6 +89,7 @@ cards:
               card:
                 type: custom:button-card
                 name: Auto
+                layout: icon_name                
                 show_state: false
                 show_icon: true
                 icon: mdi:fan-auto
@@ -116,6 +118,7 @@ cards:
               card:
                 type: custom:button-card
                 name: Circulate
+                layout: icon_name
                 show_state: true
                 show_icon: true
                 icon: mdi:fan-clock
