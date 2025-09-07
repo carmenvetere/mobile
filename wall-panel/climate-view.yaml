@@ -125,4 +125,19 @@ cards:
                     - border-radius: 0px
                   name:
                     - font-size: 14px
+            fresh:
+              card:
+                type: custom:button-card
+                name: Fresh Air
+                layout: icon_name
+                show_state: true
+                show_icon: true
+                icon: mdi:tailwind
+                styles:
+                  card:
+                    - height: 40px
+                    - width: 110px
+                    - border-radius: 0px
+                  name:
+                    - font-size: 14px
       nav: !include footer-menu.yaml
