@@ -75,15 +75,15 @@ cards:
                     - background-color: '#D7D9DF'
                   card-hover:
                     - background-color: '#DDE0E7'
-                  state:
-                    - operator: template
-                      value: >
-                        [[[
-                          return entity.attributes.fan_mode == 'on';
-                        ]]]
-                      styles:
-                        card:
-                          - background-color: '#3399ff'
+                state:
+                  - operator: template
+                    value: >
+                      [[[
+                        return entity.attributes.fan_mode == 'on';
+                      ]]]
+                    styles:
+                      card:
+                        - background-color: '#3399ff'
             auto:
               card:
                 type: custom:button-card
