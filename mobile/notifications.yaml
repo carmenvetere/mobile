@@ -4,7 +4,7 @@
   conditions:
     - condition: state
       entity: binary_sensor.bayberry_grid_status
-      state: "on"
+      state: "off"
   card:
     type: custom:bubble-card
     card_type: button
