@@ -76,7 +76,9 @@ cards:
                     - operator: template
                       value: >
                         [[[
-                          return entity.attributes.fan_mode == 'on';
+                          const e = entity || hass.states['climate.basement_thermostat'];
+                          const fm = e?.attributes?.fan_mode ?? '';
+                          return fm === 'on';
                         ]]]
                       styles:
                         card:
