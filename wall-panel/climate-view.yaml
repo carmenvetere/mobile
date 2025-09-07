@@ -97,49 +97,102 @@ cards:
             auto:
               card:
                 type: custom:button-card
-                name: Auto
-                layout: icon_name                
+                entity: climate.basement_thermostat
                 show_state: false
+                show_name: false
                 show_icon: true
                 icon: mdi:fan-auto
+                size: 20%
+                tap_action: 
+                  action: perform-action
+                  perform_action: climate.set_fan_mode
+                  target:
+                    entity_id: climate.basement_thermostat
+                  data:
+                    fan_mode: auto
                 styles:
                   card:
-                    - height: 50px
+                    - height: 45px
                     - width: 115px
-                    - border-radius: 5px
+                    - border-radius: 15px
                     - background-color: '#D7D9DF'
-                  name:
-                    - font-size: 14px
+                  card:hover:
+                    - background-color: '#DDE0E7'
+                state:
+                  - operator: template
+                    value: >
+                      [[[
+                      return states['climate.basement_thermostat'].attributes.fan_mode == 'auto';
+                      ]]]
+                    styles:
+                      card:
+                        - background-color: '#3399ff'
+                      icon:
+                        - color: white
             circulate:
               card:
                 type: custom:button-card
-                name: Circulate
-                layout: icon_name
-                show_state: true
+                entity: climate.basement_thermostat
+                show_state: false
+                show_name: false
                 show_icon: true
                 icon: mdi:fan-clock
+                size: 20%
+                tap_action: 
+                  action: perform-action
+                  perform_action: climate.set_fan_mode
+                  target:
+                    entity_id: climate.basement_thermostat
+                  data:
+                    fan_mode: diffuse
                 styles:
                   card:
-                    - height: 50px
+                    - height: 45px
                     - width: 115px
-                    - border-radius: 5px
+                    - border-radius: 15px
                     - background-color: '#D7D9DF'
-                  name:
-                    - font-size: 14px
+                  card:hover:
+                    - background-color: '#DDE0E7'
+                state:
+                  - operator: template
+                    value: >
+                      [[[
+                      return states['climate.basement_thermostat'].attributes.fan_mode == 'diffuse';
+                      ]]]
+                    styles:
+                      card:
+                        - background-color: '#3399ff'
+                      icon:
+                        - color: white
             fresh:
-              card:
                 type: custom:button-card
-                name: Fresh Air
-                layout: icon_name
-                show_state: true
+                entity: switch.utility_room_ventilation_damper
+                show_state: false
+                show_name: false
                 show_icon: true
-                icon: mdi:tailwind
+                icon: mdi:fan-auto
+                size: 20%
+                tap_action: 
+                  action: switch.toggle
+                  target:
+                    entity_id: witch.utility_room_ventilation_damper
                 styles:
                   card:
-                    - height: 50px
+                    - height: 45px
                     - width: 115px
-                    - border-radius: 5px
+                    - border-radius: 15px
                     - background-color: '#D7D9DF'
-                  name:
-                    - font-size: 14px
+                  card:hover:
+                    - background-color: '#DDE0E7'
+                state:
+                  - operator: template
+                    value: >
+                      [[[
+                      return states['switch.utility_room_ventilation_damper'].state === 'on';
+                      ]]]
+                    styles:
+                      card:
+                        - background-color: '#3399ff'
+                      icon:
+                        - color: white
       nav: !include footer-menu.yaml
