@@ -46,15 +46,15 @@ cards:
               - height: 40px
               - width: 440px
               - padding: 0
-              - margin-left: 20px
-              - margin-right: 20px
+              - margin-left: 10px
+              - margin-right: 10px
               - margin-top: 0px
-              - border-radius: 5px
+              - border-radius: 10px
               - background-color: '#D7D9DF'
             grid:
               - grid-template-areas: |
                   "on auto circulate fresh"
-              - grid-template-columns: 110px 110px 110px 110px
+              - grid-template-columns: 115px 115px 115px 115px
               - grid-template-rows: 40px
               - column-gap: 0px
               - align-items: start
@@ -70,22 +70,11 @@ cards:
                 styles:
                   card:
                     - height: 40px
-                    - width: 110px
+                    - width: 115px
                     - border-radius: 5px
                     - background-color: '#D7D9DF'
                   name:
                     - font-size: 14px
-                state:
-                  - value: 'on'
-                    color: white
-                    styles:
-                      card:
-                        - background-color: '#3498db'
-                  - value: 'off'
-                    color: white
-                    styles:
-                      card:
-                        - background-color: '#D7D9DF'
             auto:
               card:
                 type: custom:button-card
@@ -97,22 +86,11 @@ cards:
                 styles:
                   card:
                     - height: 40px
-                    - width: 110px
+                    - width: 115px
                     - border-radius: 5px
                     - background-color: '#D7D9DF'
                   name:
                     - font-size: 14px
-                state:
-                  - value: 'on'
-                    color: white
-                    styles:
-                      card:
-                        - background-color: '#27ae60'
-                  - value: 'off'
-                    color: white
-                    styles:
-                      card:
-                        - background-color: '#D7D9DF'
             circulate:
               card:
                 type: custom:button-card
@@ -124,7 +102,7 @@ cards:
                 styles:
                   card:
                     - height: 40px
-                    - width: 110px
+                    - width: 115px
                     - border-radius: 5px
                     - background-color: '#D7D9DF'
                   name:
@@ -140,7 +118,7 @@ cards:
                 styles:
                   card:
                     - height: 40px
-                    - width: 110px
+                    - width: 115px
                     - border-radius: 5px
                     - background-color: '#D7D9DF'
                   name:
