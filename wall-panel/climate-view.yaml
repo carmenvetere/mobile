@@ -1,0 +1,304 @@
+title: Climate
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 0px
+        - padding-bottom: 5px
+        - padding-left: 0px
+        - margin: '-4px'
+        - padding-top: 0px
+        - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+        - height: 480px
+        - width: 480px
+      grid:
+        - grid-template-areas: |
+            "header"
+            "main"
+            "secondary"
+            "nav"
+        - grid-template-columns: auto
+        - grid-template-rows: 50px 340px 40px 50px
+        - align-items: start
+        - column-gap: 2px
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          styles:
+            card:
+              - border-radius: 0px
+              - padding-bottom: 5px
+              - padding-left: 0px
+              - margin: 0px
+              - padding-top: 0px
+              - height: 55px
+            grid:
+              - grid-template-areas: |
+                  "time gap1 alarm gap2 notifications gap3 temp"
+              - grid-template-columns: 140px 10px 150px 10px 80px 10px 80px
+              - grid-template-rows: 50px
+              - align-items: start
+              - column-gap: 1px
+          custom_fields:
+            time:
+              card:
+                type: custom:button-card
+                entity: sensor.time
+                show_icon: false
+                show_label: false
+                show_name: false
+                show_state: true
+                state_display: |
+                  [[[
+                    var timeString = states['sensor.time'].state;
+                    return new Date('1970-01-01T' + timeString + ':00').toLocaleTimeString([], {hour: 'numeric', minute:'2-digit'});
+                  ]]]       
+                styles:
+                  card:
+                    - border-radius: 0px
+                    - width: 140px
+                    - height: 50px
+                    - align-self: center
+                    - justify-self: start
+                  state:
+                    - font-size: 24px
+                    - font-weight: bold
+                    - padding-right: 20px
+            alarm:
+              card:
+                type: custom:button-card
+                entity: alarm_control_panel.bayberry_alarm_v2
+                size: 50%
+                layout: icon_state
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: true
+                styles:
+                  state:
+                    - font-size: 16px
+                    - font-weight: bold
+                    - padding-right: 20px
+                  card:
+                    - border-radius: 5px
+                    - padding: 2px
+                    - align-self: center
+                    - justify-self: center
+                    - width: 150px
+                    - height: 50px
+            notifications:
+              card:
+                type: custom:button-card
+                entity: sensor.notification_alert_counter
+                icon: mdi:bell
+                layout: icon_state
+                size: 100%
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: true
+                styles:
+                  state:
+                    - font-size: 16px
+                    - font-weight: bold
+                    - padding-right: 10px
+                  icon:
+                    - padding-left: 5px
+                  card:
+                    - border-radius: 5px
+                    - padding: 2px
+                    - width: 80px
+                    - height: 50px
+                    - align-self: center
+                    - justify-self: center
+            temp:
+              card:
+                type: custom:button-card
+                entity: sensor.bayberry_tempest_temperature
+                show_icon: true
+                layout: icon_state
+                show_state: true
+                show_label: false
+                show_name: false
+                size: 100%
+                state_display: |
+                  [[[
+                    var temp = states['sensor.bayberry_tempest_temperature'].state;
+                    return Math.round(temp) + '°F';
+                  ]]]
+                styles:
+                  state:
+                    - font-size: 16px
+                    - font-weight: bold
+                  card:
+                    - border-radius: 5px
+                    - padding-right: 20px
+                    - width: 80px
+                    - height: 50px
+                    - align-self: center
+                    - justify-self: center
+      main:
+        card:
+          type: thermostat
+          name: ' '
+          entity: climate.basement_thermostat
+          features:
+            - type: climate-hvac-modes
+          card_mod:
+            style: |
+              ha-card {
+                max-width: 480px;
+                max-height: 340px;
+                margin: 0 auto;
+              }
+      secondary:
+        card:
+          type: custom:button-card
+          styles:
+            card:
+              - height: 48px
+              - width: 340px
+              - padding: 0
+              - margin: 0
+              - background: 9D999D
+            grid:
+              - grid-template-areas: |
+                  "on auto circulate fresh"
+              - grid-template-columns: 120px 120px 120px 120px
+              - grid-template-rows: 30px
+              - column-gap: 0px
+              - align-items: stretch
+          custom_fields: null
+      nav:
+        card:
+          type: custom:button-card
+          styles:
+            card:
+              - border-radius: 5px
+              - padding-bottom: 5px
+              - padding-left: 0px
+              - margin: 0px
+              - padding-top: 0px
+              - height: 55px
+            grid:
+              - grid-template-areas: |
+                  "home lights climate music security energy shades other"
+              - grid-template-columns: 60px 60px 60px 60px 60px 60px 60px 60px
+              - grid-template-rows: 55px
+              - align-items: start
+              - column-gap: 0px
+          custom_fields:
+            home:
+              card:
+                type: custom:button-card
+                icon: mdi:home
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            lights:
+              card:
+                type: custom:button-card
+                icon: mdi:lightbulb
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            climate:
+              card:
+                type: custom:button-card
+                icon: mdi:thermometer-auto
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            music:
+              card:
+                type: custom:button-card
+                icon: mdi:music
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            energy:
+              card:
+                type: custom:button-card
+                icon: mdi:lightning-bolt
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            security:
+              card:
+                type: custom:button-card
+                icon: mdi:cctv
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            shades:
+              card:
+                type: custom:button-card
+                icon: mdi:roller-shade
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            other:
+              card:
+                type: custom:button-card
+                icon: mdi:dots-grid
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
