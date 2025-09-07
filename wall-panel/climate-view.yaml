@@ -55,7 +55,7 @@ cards:
               - grid-template-areas: |
                   "on auto circulate fresh"
               - grid-template-columns: 115px 115px 115px 115px
-              - grid-template-rows: 50px
+              - grid-template-rows: 45px
               - column-gap: 0px
               - align-items: start
           custom_fields:
@@ -67,9 +67,17 @@ cards:
                 show_name: false
                 show_icon: true
                 icon: mdi:fan
+                size: 70%
+                tap_action: 
+                  action: perform-action
+                    perform_action: climate.set_fan_mode
+                  target:
+                    entity_id: climate.basement_thermostat
+                  data:
+                    fan_mode: "on"
                 styles:
                   card:
-                    - height: 50px
+                    - height: 45px
                     - width: 115px
                     - border-radius: 15px
                     - background-color: '#D7D9DF'
