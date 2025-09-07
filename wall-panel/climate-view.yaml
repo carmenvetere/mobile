@@ -62,7 +62,9 @@ cards:
             "on":
               card:
                 type: custom:button-card
+                entity: climate.basement_thermostat
                 show_state: false
+                show_name: false
                 show_icon: true
                 icon: mdi:fan
                 styles:
@@ -77,9 +79,7 @@ cards:
                     - operator: template
                       value: >
                         [[[
-                          const e = entity || hass.states['climate.basement_thermostat'];
-                          const fm = e?.attributes?.fan_mode ?? '';
-                          return fm === 'on';
+                          return entity.attributes.fan_mode == 'on';
                         ]]]
                       styles:
                         card:
