@@ -49,6 +49,7 @@ cards:
               - margin-left: 20px
               - margin-right: 20px
               - margin-top: 0px
+              - border-radius: 5px
               - background-color: '#D7D9DF'
             grid:
               - grid-template-areas: |
@@ -58,7 +59,7 @@ cards:
               - column-gap: 0px
               - align-items: start
           custom_fields:
-            on:
+            "on":
               card:
                 type: custom:button-card
                 name: "On"
