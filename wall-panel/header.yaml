@@ -66,7 +66,12 @@ card:
       card:
         type: custom:button-card
         entity: sensor.notification_alert_counter
-        icon: mdi:bell
+        icon: >
+          [[[
+            const priority = states['sensor.notification_icon_priority'].state;
+            if (priority === 'critical' || priority === 'warning') return 'mdi:alert';
+            return 'mdi:bell';
+          ]]]
         layout: icon_state
         size: 100%
         show_icon: true
@@ -75,7 +80,7 @@ card:
         show_state: true
         tap_action:
           action: navigate
-          navigation_path: /mudroom-wall-panel/notifications
+          navigation_path: /mudroom-wall-panel-dash/notifications
         styles:
           state:
             - font-size: 16px
@@ -86,10 +91,9 @@ card:
             - color: >
                 [[[
                   const priority = states['sensor.notification_icon_priority'].state;
-                  if (priority === 'critical') return '#EA4D3D';  // Red - matches your critical notifications
-                  if (priority === 'warning') return '#FF8C00';   // Orange - for warning level
-                  if (priority === 'info') return '#F6CE46';      // Yellow - matches your battery alerts
-                  return 'var(--primary-text-color)';             // Default when no notifications
+                  if (priority === 'critical') return '#EA4D3D';  // Red - power outage, alarm triggered
+                  if (priority === 'warning') return '#FF8C00';   // Orange - weather alerts, storm watch
+                  return 'var(--primary-text-color)';             // Default when no high-priority notifications
                 ]]]
           card:
             - border-radius: 5px
