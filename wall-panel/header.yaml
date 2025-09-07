@@ -83,6 +83,14 @@ card:
             - padding-right: 10px
           icon:
             - padding-left: 5px
+            - color: >
+                [[[
+                  const priority = states['sensor.notification_icon_priority'].state;
+                  if (priority === 'critical') return '#EA4D3D';  // Red - matches your critical notifications
+                  if (priority === 'warning') return '#FF8C00';   // Orange - for warning level
+                  if (priority === 'info') return '#F6CE46';      // Yellow - matches your battery alerts
+                  return 'var(--primary-text-color)';             // Default when no notifications
+                ]]]
           card:
             - border-radius: 5px
             - padding: 2px
