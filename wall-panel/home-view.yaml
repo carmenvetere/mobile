@@ -23,7 +23,7 @@ cards:
         - align-items: start
         - column-gap: 2px
     custom_fields:
-      <<: !include header.yaml
+      header: !include header.yaml
       main:
         card:
           type: custom:button-card
