@@ -63,7 +63,6 @@ cards:
               card:
                 type: custom:button-card
                 name: "On"
-                layout: icon_name
                 show_state: false
                 show_icon: true
                 icon: mdi:fan
@@ -75,6 +74,7 @@ cards:
                     - background-color: '#D7D9DF'
                   name:
                     - font-size: 14px
+                    - font-weight: bold
                     - line-height: 1
                   grid:
                     - grid-template-areas: '"i n"'
@@ -83,7 +83,7 @@ cards:
                     - align-items: center
                     - column-gap: 6px
                   img_cell: 
-                    - margin: 0
+                    - margin: 0px
                   icon: 
                     - width: 20px
             auto:
