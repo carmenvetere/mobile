@@ -55,5 +55,76 @@ cards:
               - grid-template-rows: 40px
               - column-gap: 0px
               - align-items: stretch
-          custom_fields: {}
+          custom_fields:
+            on:
+              card:
+                type: custom:button-card
+                name: On
+                show_state: false
+                show_icon: true
+                icon: mdi:fan
+                styles:
+                  card:
+                    - height: 40px
+                    - width: 120px
+                    - border-radius: 0px
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                  name:
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'on'
+                    color: white
+                    styles:
+                      card:
+                        - background-color: '#3498db'
+                  - value: 'off'
+                    color: white
+                    styles:
+                      card:
+                        - background-color: '#95a5a6'
+            auto:
+              card:
+                type: custom:button-card
+                name: Auto
+                show_state: false
+                show_icon: true
+                icon: mdi:fan-auto
+                styles:
+                  card:
+                    - height: 40px
+                    - width: 120px
+                    - border-radius: 0px
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                  name:
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'on'
+                    color: white
+                    styles:
+                      card:
+                        - background-color: '#27ae60'
+                  - value: 'off'
+                    color: white
+                    styles:
+                      card:
+                        - background-color: '#95a5a6'
+            circulate:
+              card:
+                type: custom:button-card
+                name: Circulate
+                show_state: true
+                show_icon: true
+                icon: mdi:fan-clock
+                styles:
+                  card:
+                    - height: 40px
+                    - width: 120px
+                    - border-radius: 0px
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                  name:
+                    - font-size
       nav: !include footer-menu.yaml
