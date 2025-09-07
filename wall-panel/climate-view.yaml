@@ -62,7 +62,6 @@ cards:
             "on":
               card:
                 type: custom:button-card
-                name: "On"
                 show_state: false
                 show_icon: true
                 icon: mdi:fan
@@ -70,22 +69,23 @@ cards:
                   card:
                     - height: 50px
                     - width: 115px
-                    - border-radius: 5px
+                    - border-radius: 15px
                     - background-color: '#D7D9DF'
-                  name:
-                    - font-size: 14px
-                    - font-weight: bold
-                    - line-height: 1
-                  grid:
-                    - grid-template-areas: '"i n"'
-                    - grid-template-columns: auto auto
-                    - justify-content: center
-                    - align-items: center
-                    - column-gap: 6px
-                  img_cell: 
-                    - margin: 0px
-                  icon: 
-                    - width: 20px
+                  state:
+                    - operator: template
+                      value: >
+                        [[[
+                          return entity.attributes.fan_mode == 'on';
+                        ]]]
+                      styles:
+                        card:
+                          - background-color: '#3399ff'
+                card_mod:
+                  style: |
+                    ha-card:hover {
+                      background-color: #DDE0E7 !important; /* hover background */
+                      cursor: pointer;
+                    }
             auto:
               card:
                 type: custom:button-card
