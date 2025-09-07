@@ -12,9 +12,22 @@
     name: Power outage!
     icon: mdi:flash-alert
     card_layout: normal
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
     styles: |
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #EA4D3D !important; }
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #EA4D3D !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     tap_action:
       action: navigate
       navigation_path: /mobile-dash/energy
@@ -34,76 +47,25 @@
     name: Powerwall Charge Low!
     icon: mdi:battery-alert
     card_layout: normal
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
     styles: |
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #EA4D3D !important; }
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #EA4D3D !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     tap_action:
       action: more-info
       entity: sensor.powerwall_discharge_time
-#Tesla Wall Connector Error
-- type: conditional
-  conditions:
-    - condition: state
-      entity: sensor.tesla_wall_connector_status
-      state: "error"
-  card:
-    type: custom:bubble-card
-    card_type: button
-    button_type: name
-    name: Tesla Wall Connector Error!
-    icon: mdi:fuse-alert
-    card_layout: normal
-    styles: |
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #EA4D3D !important; }
-    tap_action:
-      action: call-service
-      service: browser_mod.popup
-      data:
-        title: Tesla Wall Connector – Details
-        size: normal
-        content:
-          type: vertical-stack
-          cards:
-            - type: entities
-              entities:
-                - sensor.tesla_wall_connector_handle_temperature
-                - sensor.tesla_wall_connector_mcu_temperature
-                - sensor.tesla_wall_connector_pcb_temperature
-                - sensor.tesla_wall_connector_power
-                - sensor.tesla_wall_connector_status
-#Tesla Wall Connector Charging Reduced
-- type: conditional
-  conditions:
-    - condition: state
-      entity: sensor.tesla_wall_connector_status
-      state: "charging_reduced"
-  card:
-    type: custom:bubble-card
-    card_type: button
-    button_type: name
-    name: Tesla Wall Connector Charging Reduced!
-    icon: mdi:connection
-    card_layout: normal
-    styles: |
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #EF8C00 !important; }
-    tap_action:
-      action: call-service
-      service: browser_mod.popup
-      data:
-        title: Tesla Wall Connector Details
-        size: normal
-        content:
-          type: vertical-stack
-          cards:
-            - type: entities
-              entities:
-                - sensor.tesla_wall_connector_handle_temperature
-                - sensor.tesla_wall_connector_mcu_temperature
-                - sensor.tesla_wall_connector_pcb_temperature
-                - sensor.tesla_wall_connector_power
-                - sensor.tesla_wall_connector_status
 #Alarm Triggered
 - type: conditional
   conditions:
@@ -116,12 +78,21 @@
     button_type: name
     name: Alarm Triggered!
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
-        color: #EF8C00 !important;
+        color: #EA4D3D !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:shield-alert
     button_action:
@@ -143,12 +114,21 @@
     button_type: name
     name: Active Weather Alert!
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #EF8C00 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:weather-hurricane
     tap_action:
@@ -170,12 +150,21 @@
     button_type: name
     name: Storm Watch Active!
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #EF8C00 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:weather-lightning-rainy
     tap_action:
@@ -197,12 +186,21 @@
     button_type: name
     name: Utility Room Temperature Low!
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #EF8C00 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:thermometer-alert
     button_action:
@@ -223,12 +221,21 @@
     button_type: name
     name: Utility Room Temperature High!
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #EF8C00 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:thermometer-alert
     button_action:
@@ -248,12 +255,21 @@
     button_type: name
     name: Attic Temperature Low!
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #EF8C00 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:thermometer-alert
     button_action:
@@ -273,12 +289,21 @@
     button_type: name
     name: Attic Temperature High!
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #EF8C00 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:thermometer-alert
     button_action:
@@ -296,12 +321,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: cover.garage_door_garage
     name: Garage door open
     card_layout: normal
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
     styles: |
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:garage-open
     tap_action:
       action: more-info
@@ -321,9 +358,22 @@
     name: Vacuum Error!
     icon: mdi:robot-vacuum-alert
     card_layout: normal
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
     styles: |
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     tap_action:
       action: more-info
       entity: image.roborock_s8_basement
@@ -344,9 +394,22 @@
     name: Low Hot Water Availability!
     icon: mdi:water-alert
     card_layout: normal
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
     styles: |
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     tap_action:
       action: more-info
       entity: sensor.hot_water_availability
@@ -367,9 +430,22 @@
     name: Virtual Power Plant Active!
     icon: mdi:solar-power
     card_layout: normal
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
     styles: |
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     tap_action:
       action: more-info
       entity: sbinary_sensor.bayberry_grid_services_active_2
@@ -392,12 +468,21 @@
     button_type: name
     name: Rain! Put the pool cover pump out.
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:weather-pouring
     button_action:
@@ -419,13 +504,22 @@
     button_type: name
     name: Low pool water level.
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
-            }
+          }
       .bubble-icon {
         color: #F6CE46 !important;
-          }
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:water-minus
     tap_action:
       action: more-info
@@ -446,13 +540,22 @@
     button_type: name
     name: Check the pool salt level.
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
-            }
+          }
       .bubble-icon {
         color: #F6CE46 !important;
-          }
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:alert
     button_action:
       tap_action:
@@ -473,12 +576,21 @@
     button_type: name
     name: Run washer clean cycle!
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:washing-machine-alert
     button_action:
@@ -498,15 +610,23 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.upper_floor_hvac_filter_time_2
     name: Replace the air filter in the attic HVAC.
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:air-filter
     button_action:
@@ -530,15 +650,23 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.lower_floors_hvac_filter_time_2
     name: Replace the air filter in the basement HVAC.
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:air-filter
     button_action:
@@ -563,16 +691,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.bedroom_back_1_battery
     name: Bedroom Back 1 shade battery low!
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
-      }
+          }
       .bubble-icon {
         color: #F6CE46 !important;
-      }
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -589,12 +725,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.back_2_battery
     name: Bedrom Back 2 shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -611,12 +759,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.back_3_battery
     name: Bedroom Back 3 shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -633,12 +793,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.bedroom_back_4_battery_0
     name: Bedroom Back 4 shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -655,12 +827,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.bedroom_back_5_battery_0
     name: Bedroom Back 5 shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -677,12 +861,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.side_left_battery_2
     name: Dining room side left shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -699,12 +895,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.side_right_battery_0
     name: Dining room side right shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -721,12 +929,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.dining_room_front_left_battery_0
     name: Dining room front left shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -743,12 +963,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.front_right_battery_0
     name: Dining room front right shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -767,9 +999,22 @@
     button_type: name
     name: Bedroom right shade battery low!
     card_layout: normal
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
     styles: |
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -786,12 +1031,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.hallway_1_battery
     name: Bedroom hallway 1 shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -808,12 +1065,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.hallway_2_battery
     name: Bedroom hallway 2 shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -830,12 +1099,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.bedroom_left_battery_0
     name: Bedroom left shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -852,12 +1133,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.living_room_side_left_1_battery_0
     name: Living Room side left 1 shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -874,12 +1167,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.living_room_front_left_battery_0
     name: Living Room front left shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -896,12 +1201,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.living_room_side_left_2_battery_0
     name: Living Room side left 2 shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -918,12 +1235,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.living_room_side_right_1_battery_0
     name: Living Room side right 1 shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -940,12 +1269,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.living_room_side_right_2_battery_0
     name: Living Room side right 2 shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -962,12 +1303,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.living_room_front_right_battery
     name: Living Room front right shade battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     button_action:
       tap_action:
@@ -984,12 +1337,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.attic_temp_sensor_battery
     name: Attic temp sensor battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     tap_action:
       action: more-info
@@ -1003,12 +1368,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.front_door_battery
     name: Front door sensor battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     tap_action:
       action: more-info
@@ -1022,12 +1399,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.kitchen_french_doors_battery
     name: Kitchen french doors sensor battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     tap_action:
       action: more-info
@@ -1041,12 +1430,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.living_room_french_doors_battery
     name: Living Room french doors sensor battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     tap_action:
       action: more-info
@@ -1060,12 +1461,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.mudroom_entry_battery
     name: Mudroom entry door sensor battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     tap_action:
       action: more-info
@@ -1079,12 +1492,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.mudroom_entry_battery
     name: Mudroom garage door sensor battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     tap_action:
       action: more-info
@@ -1098,12 +1523,24 @@
     type: custom:bubble-card
     card_type: button
     button_type: name
-    entity: sensor.utility_room_temp_sensor_battery
     name: Utility room temp sensor battery low!
     card_layout: normal
-    styles: |-
-      .bubble-name { font-size: 16px !important; }
-      .bubble-icon { color: #F6CE46 !important; }
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-icon {
+        color: #F6CE46 !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:battery-alert
     tap_action:
       action: more-info
@@ -1122,13 +1559,22 @@
     button_type: name
     name: The pool needs to be vacuumed.
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
-            }
+          }
       .bubble-icon {
         color: #4ebcff !important;
-          }
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        }
     icon: mdi:vacuum-outline
     tap_action:
       action: call-service
@@ -1153,12 +1599,21 @@
     button_type: name
     name: Dryer complete!
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #4ebcff !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:tumble-dryer-off
     button_action:
@@ -1180,12 +1635,21 @@
     button_type: name
     name: Washer complete!
     card_layout: normal
-    styles: |-
+    card_mod:
+        style: |
+          ha-card {
+            margin: 2px 10px 2px 10px!important;
+            border-radius: 5px !important;
+          }
+    styles: |
       .bubble-name {
         font-size: 16px !important;
           }
       .bubble-icon {
         color: #4ebcff !important;
+        }
+      .bubble-button-card-container {
+        border-radius: 15px !important;
         }
     icon: mdi:tumble-dryer-off
     button_action:
