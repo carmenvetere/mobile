@@ -27,6 +27,13 @@ cards:
         card:
           type: custom:simple-swipe-card
           auto_hide_pagination: 0
+          card_mod:
+            style: |
+              ha-card {
+                padding: 15px !important;
+                margin: 10px !important;
+                border-radius: 10px !important;
+              }
           cards:
             - show_state: false
               show_name: false
