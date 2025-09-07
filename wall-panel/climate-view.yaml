@@ -67,10 +67,10 @@ cards:
                 show_name: false
                 show_icon: true
                 icon: mdi:fan
-                size: 70%
+                size: 50%
                 tap_action: 
                   action: perform-action
-                    perform_action: climate.set_fan_mode
+                  perform_action: climate.set_fan_mode
                   target:
                     entity_id: climate.basement_thermostat
                   data:
@@ -92,6 +92,8 @@ cards:
                     styles:
                       card:
                         - background-color: '#3399ff'
+                      icon:
+                        - color: white
             auto:
               card:
                 type: custom:button-card
