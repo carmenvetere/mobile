@@ -43,7 +43,7 @@ cards:
           type: custom:button-card
           styles:
             card:
-              - height: 50px
+              - height: 42px
               - width: 456px
               - padding: 0
               - margin-left: 12px
@@ -75,6 +75,17 @@ cards:
                     - background-color: '#D7D9DF'
                   name:
                     - font-size: 14px
+                    - line-height: 1
+                  grid:
+                    - grid-template-areas: '"i n"'
+                    - grid-template-columns: auto auto
+                    - justify-content: center
+                    - align-items: center
+                    - column-gap: 6px
+                  img_cell: 
+                    - margin: 0
+                  icon: 
+                    - width: 20px
             auto:
               card:
                 type: custom:button-card
