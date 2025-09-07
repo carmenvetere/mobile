@@ -71,6 +71,8 @@ cards:
                     - width: 115px
                     - border-radius: 15px
                     - background-color: '#D7D9DF'
+                  card-hover:
+                    - background-color: '#DDE0E7'
                   state:
                     - operator: template
                       value: >
@@ -82,12 +84,6 @@ cards:
                       styles:
                         card:
                           - background-color: '#3399ff'
-                card_mod:
-                  style: |
-                    ha-card:hover {
-                      background-color: #DDE0E7 !important; /* hover background */
-                      cursor: pointer;
-                    }
             auto:
               card:
                 type: custom:button-card
