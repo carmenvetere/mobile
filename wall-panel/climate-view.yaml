@@ -132,7 +132,6 @@ cards:
             circulate:
               card:
                 type: custom:button-card
-                entity: climate.basement_thermostat
                 show_state: false
                 show_name: false
                 show_icon: true
@@ -171,12 +170,12 @@ cards:
                 show_state: false
                 show_name: false
                 show_icon: true
-                icon: mdi:fan-auto
+                icon: mdi:tailwind
                 size: 20%
                 tap_action: 
                   action: switch.toggle
                   target:
-                    entity_id: witch.utility_room_ventilation_damper
+                    entity_id: switch.utility_room_ventilation_damper
                 styles:
                   card:
                     - height: 45px
