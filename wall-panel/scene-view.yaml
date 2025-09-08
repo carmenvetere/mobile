@@ -1,0 +1,327 @@
+title: Home
+path: home-view
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 0px
+        - padding-bottom: 5px
+        - padding-left: 0px
+        - margin: '-4px'
+        - padding-top: 0px
+        - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+        - height: 480px
+        - width: 480px
+      grid:
+        - grid-template-areas: |
+            "header"
+            "main"
+            "nav"
+        - grid-template-columns: auto
+        - grid-template-rows: 50px 380px 50px
+        - align-items: start
+        - column-gap: 2px
+    custom_fields:
+      header: !include header.yaml
+      main:
+        card:
+          type: custom:button-card
+          styles:
+            card:
+              - border-radius: 5px
+              - padding-bottom: 5px
+              - padding-left: 0px
+              - margin: 0px
+              - padding-top: 0px
+              - height: 380px
+            grid:
+              - grid-template-areas: |
+                  "scene1 scene2 scene3"
+                  "scene4 scene5 scene6"
+              - grid-template-columns: 160px 160px 160px
+              - grid-template-rows: 185px 185px
+              - align-items: center
+              - column-gap: 0px
+          custom_fields:
+            scene1:
+              card:
+                type: custom:button-card
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: true
+                icon: mdi:human-greeting
+                label: Welcome
+                styles:
+                  card:
+                    - background: '#ccd0da'
+                    - margin-left: 10px
+                    - width: 150px
+                    - height: 170px
+                    - align-self: center
+                    - justify-self: start
+                  state:
+                    - font-size: 24px
+                    - font-weight: bold
+                    - padding-right: 30px
+                  label:
+                    - padding-bottom: 10px
+                    - font-size: 24px
+                    - font-weight: bold
+            scene2:
+              card:
+                type: custom:button-card
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: true
+                icon: mdi:lamps
+                label: Evening
+                styles:
+                  card:
+                    - background: '#ccd0da'
+                    - margin-left: 10px
+                    - width: 150px
+                    - height: 170px
+                    - align-self: center
+                    - justify-self: start
+                  state:
+                    - font-size: 24px
+                    - font-weight: bold
+                    - padding-right: 30px
+                  label:
+                    - padding-bottom: 10px
+                    - font-size: 24px
+                    - font-weight: bold
+            scene3:
+              card:
+                type: custom:button-card
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: true
+                icon: mdi:party-popper
+                label: Entertaining
+                styles:
+                  card:
+                    - background: '#ccd0da'
+                    - margin-left: 10px
+                    - width: 150px
+                    - height: 170px
+                    - align-self: center
+                    - justify-self: start
+                  state:
+                    - font-size: 24px
+                    - font-weight: bold
+                    - padding-right: 30px
+                  label:
+                    - padding-bottom: 10px
+                    - font-size: 24px
+                    - font-weight: bold
+            scene4:
+              card:
+                type: custom:button-card
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: true
+                icon: mdi:night-light
+                label: Nightlight
+                styles:
+                  card:
+                    - background: '#ccd0da'
+                    - margin-left: 10px
+                    - width: 150px
+                    - height: 170px
+                    - align-self: center
+                    - justify-self: start
+                  state:
+                    - font-size: 24px
+                    - font-weight: bold
+                    - padding-right: 30px
+                  label:
+                    - padding-bottom: 10px
+                    - font-size: 24px
+                    - font-weight: bold
+            scene5:
+              card:
+                type: custom:button-card
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: true
+                icon: mdi:waning-crescent
+                label: Goodnight
+                styles:
+                  card:
+                    - background: '#ccd0da'
+                    - margin-left: 10px
+                    - width: 150px
+                    - height: 170px
+                    - align-self: center
+                    - justify-self: start
+                  state:
+                    - font-size: 24px
+                    - font-weight: bold
+                    - padding-right: 30px
+                  label:
+                    - padding-bottom: 10px
+                    - font-size: 24px
+                    - font-weight: bold
+            scene6:
+              card:
+                type: custom:button-card
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: true
+                icon: mdi:chevron-right
+                label: All Lights
+                styles:
+                  card:
+                    - background: '#ccd0da'
+                    - margin-left: 10px
+                    - width: 150px
+                    - height: 170px
+                    - align-self: center
+                    - justify-self: start
+                  state:
+                    - font-size: 24px
+                    - font-weight: bold
+                    - padding-right: 30px
+                  label:
+                    - padding-bottom: 10px
+                    - font-size: 24px
+                    - font-weight: bold
+      nav:
+        card:
+          type: custom:button-card
+          styles:
+            card:
+              - border-radius: 5px
+              - padding-bottom: 5px
+              - padding-left: 0px
+              - margin: 0px
+              - padding-top: 0px
+              - height: 55px
+            grid:
+              - grid-template-areas: |
+                  "home lights climate music security energy shades other"
+              - grid-template-columns: 60px 60px 60px 60px 60px 60px 60px 60px
+              - grid-template-rows: 55px
+              - align-items: start
+              - column-gap: 0px
+          custom_fields:
+            home:
+              card:
+                type: custom:button-card
+                icon: mdi:home
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            lights:
+              card:
+                type: custom:button-card
+                icon: mdi:lightbulb
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            climate:
+              card:
+                type: custom:button-card
+                icon: mdi:thermometer-auto
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            music:
+              card:
+                type: custom:button-card
+                icon: mdi:music
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            energy:
+              card:
+                type: custom:button-card
+                icon: mdi:lightning-bolt
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            security:
+              card:
+                type: custom:button-card
+                icon: mdi:cctv
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            shades:
+              card:
+                type: custom:button-card
+                icon: mdi:roller-shade
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
+            other:
+              card:
+                type: custom:button-card
+                icon: mdi:dots-grid
+                show_icon: true
+                show_label: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - width: 60px
+                    - height: 55px
+                    - align-self: center
+                    - justify-self: center
