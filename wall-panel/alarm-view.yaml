@@ -1,0 +1,508 @@
+title: Alarm
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 0px
+        - padding-bottom: 5px
+        - padding-left: 0px
+        - margin: '-4px'
+        - padding-top: 0px
+        - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+        - height: 480px
+        - width: 480px
+      grid:
+        - grid-template-areas: |
+            "header"
+            "main"
+            "nav"
+        - grid-template-columns: auto
+        - grid-template-rows: 50px 380px 50px
+        - align-items: start
+        - column-gap: 2px
+    custom_fields:
+      header: !include header.yaml
+      main:
+        card:
+          type: custom:button-card
+          entity: alarm_control_panel.bayberry_alarm_v2
+          show_name: false
+          show_icon: false
+          show_state: false
+          styles:
+            card:
+              - height: 380px
+              - width: 456px
+              - padding: 12px
+              - margin: 0px
+              - border-radius: 0px
+              - background-color: transparent
+            grid:
+              - grid-template-areas: |
+                  "status"
+                  "display"
+                  "keypad"
+                  "controls"
+              - grid-template-columns: auto
+              - grid-template-rows: 60px 40px 180px 80px
+              - row-gap: 10px
+              - align-items: center
+              - justify-items: center
+          custom_fields:
+            # Status Display
+            status:
+              card:
+                type: custom:button-card
+                entity: alarm_control_panel.bayberry_alarm_v2
+                show_name: false
+                show_icon: true
+                show_state: true
+                state_display: |
+                  [[[
+                    const state = entity.state;
+                    if (state === 'disarmed') return 'DISARMED';
+                    if (state === 'armed_home') return 'ARMED HOME';
+                    if (state === 'armed_away') return 'ARMED AWAY';
+                    if (state === 'triggered') return 'TRIGGERED';
+                    if (state === 'pending') return 'PENDING';
+                    if (state === 'arming') return 'ARMING';
+                    return state.toUpperCase();
+                  ]]]
+                icon: |
+                  [[[
+                    const state = entity.state;
+                    if (state === 'disarmed') return 'mdi:shield-off';
+                    if (state === 'armed_home') return 'mdi:shield-home';
+                    if (state === 'armed_away') return 'mdi:shield-lock';
+                    if (state === 'triggered') return 'mdi:shield-alert';
+                    return 'mdi:shield';
+                  ]]]
+                styles:
+                  card:
+                    - height: 60px
+                    - width: 400px
+                    - border-radius: 10px
+                    - background-color: |
+                        [[[
+                          const state = entity.state;
+                          if (state === 'disarmed') return '#4CAF50';
+                          if (state === 'armed_home') return '#FF9800';
+                          if (state === 'armed_away') return '#F44336';
+                          if (state === 'triggered') return '#FF1744';
+                          return '#9E9E9E';
+                        ]]]
+                  icon:
+                    - color: white
+                    - size: 24px
+                  state:
+                    - color: white
+                    - font-size: 18px
+                    - font-weight: bold
+                    
+            # Code Display
+            display:
+              card:
+                type: custom:button-card
+                show_name: false
+                show_icon: false
+                show_state: true
+                entity: input_text.alarm_code_input
+                state_display: |
+                  [[[
+                    const code = states['input_text.alarm_code_input'].state;
+                    return code.replace(/./g, '●');
+                  ]]]
+                styles:
+                  card:
+                    - height: 40px
+                    - width: 200px
+                    - border-radius: 8px
+                    - background-color: '#333333'
+                    - border: 2px solid '#666666'
+                  state:
+                    - color: white
+                    - font-size: 24px
+                    - font-weight: bold
+                    - letter-spacing: 8px
+                    
+            # Number Keypad
+            keypad:
+              card:
+                type: custom:button-card
+                show_name: false
+                show_icon: false
+                show_state: false
+                styles:
+                  card:
+                    - height: 180px
+                    - width: 300px
+                    - background-color: transparent
+                    - border-radius: 0px
+                  grid:
+                    - grid-template-areas: |
+                        "n1 n2 n3"
+                        "n4 n5 n6"
+                        "n7 n8 n9"
+                        "clear n0 enter"
+                    - grid-template-columns: 90px 90px 90px
+                    - grid-template-rows: 40px 40px 40px 40px
+                    - gap: 5px
+                custom_fields:
+                  n1: &number_button
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: false
+                      show_state: false
+                      name: '1'
+                      tap_action:
+                        action: call-service
+                        service: input_text.set_value
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                          value: |
+                            [[[
+                              const current = states['input_text.alarm_code_input'].state;
+                              return current.length < 6 ? current + '1' : current;
+                            ]]]
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#E0E0E0'
+                          - border: 1px solid '#BDBDBD'
+                        name:
+                          - color: black
+                          - font-size: 20px
+                          - font-weight: bold
+                  n2:
+                    <<: *number_button
+                    card:
+                      <<: *number_button.card
+                      name: '2'
+                      tap_action:
+                        <<: *number_button.card.tap_action
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                          value: |
+                            [[[
+                              const current = states['input_text.alarm_code_input'].state;
+                              return current.length < 6 ? current + '2' : current;
+                            ]]]
+                  n3:
+                    <<: *number_button
+                    card:
+                      <<: *number_button.card
+                      name: '3'
+                      tap_action:
+                        <<: *number_button.card.tap_action
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                          value: |
+                            [[[
+                              const current = states['input_text.alarm_code_input'].state;
+                              return current.length < 6 ? current + '3' : current;
+                            ]]]
+                  n4:
+                    <<: *number_button
+                    card:
+                      <<: *number_button.card
+                      name: '4'
+                      tap_action:
+                        <<: *number_button.card.tap_action
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                          value: |
+                            [[[
+                              const current = states['input_text.alarm_code_input'].state;
+                              return current.length < 6 ? current + '4' : current;
+                            ]]]
+                  n5:
+                    <<: *number_button
+                    card:
+                      <<: *number_button.card
+                      name: '5'
+                      tap_action:
+                        <<: *number_button.card.tap_action
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                          value: |
+                            [[[
+                              const current = states['input_text.alarm_code_input'].state;
+                              return current.length < 6 ? current + '5' : current;
+                            ]]]
+                  n6:
+                    <<: *number_button
+                    card:
+                      <<: *number_button.card
+                      name: '6'
+                      tap_action:
+                        <<: *number_button.card.tap_action
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                          value: |
+                            [[[
+                              const current = states['input_text.alarm_code_input'].state;
+                              return current.length < 6 ? current + '6' : current;
+                            ]]]
+                  n7:
+                    <<: *number_button
+                    card:
+                      <<: *number_button.card
+                      name: '7'
+                      tap_action:
+                        <<: *number_button.card.tap_action
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                          value: |
+                            [[[
+                              const current = states['input_text.alarm_code_input'].state;
+                              return current.length < 6 ? current + '7' : current;
+                            ]]]
+                  n8:
+                    <<: *number_button
+                    card:
+                      <<: *number_button.card
+                      name: '8'
+                      tap_action:
+                        <<: *number_button.card.tap_action
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                          value: |
+                            [[[
+                              const current = states['input_text.alarm_code_input'].state;
+                              return current.length < 6 ? current + '8' : current;
+                            ]]]
+                  n9:
+                    <<: *number_button
+                    card:
+                      <<: *number_button.card
+                      name: '9'
+                      tap_action:
+                        <<: *number_button.card.tap_action
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                          value: |
+                            [[[
+                              const current = states['input_text.alarm_code_input'].state;
+                              return current.length < 6 ? current + '9' : current;
+                            ]]]
+                  n0:
+                    <<: *number_button
+                    card:
+                      <<: *number_button.card
+                      name: '0'
+                      tap_action:
+                        <<: *number_button.card.tap_action
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                          value: |
+                            [[[
+                              const current = states['input_text.alarm_code_input'].state;
+                              return current.length < 6 ? current + '0' : current;
+                            ]]]
+                  clear:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: true
+                      show_state: false
+                      icon: mdi:backspace
+                      tap_action:
+                        action: call-service
+                        service: input_text.set_value
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                          value: |
+                            [[[
+                              const current = states['input_text.alarm_code_input'].state;
+                              return current.slice(0, -1);
+                            ]]]
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#FFCDD2'
+                          - border: 1px solid '#BDBDBD'
+                        icon:
+                          - color: '#D32F2F'
+                          - size: 20px
+                  enter:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: true
+                      show_state: false
+                      icon: mdi:check
+                      tap_action:
+                        action: call-service
+                        service: script.alarm_code_entry
+                        service_data:
+                          code: |
+                            [[[
+                              return states['input_text.alarm_code_input'].state;
+                            ]]]
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#C8E6C9'
+                          - border: 1px solid '#BDBDBD'
+                        icon:
+                          - color: '#388E3C'
+                          - size: 20px
+                          
+            # Three-way Mode Controls (similar to climate view)
+            controls:
+              card:
+                type: custom:button-card
+                show_name: false
+                show_icon: false
+                show_state: false
+                styles:
+                  card:
+                    - height: 70px
+                    - width: 400px
+                    - padding: 0
+                    - margin: 0px
+                    - border-radius: 12px
+                    - background-color: '#D7D9DF'
+                  grid:
+                    - grid-template-areas: |
+                        "disarm home away"
+                    - grid-template-columns: 130px 130px 130px
+                    - grid-template-rows: 70px
+                    - column-gap: 5px
+                    - align-items: center
+                custom_fields:
+                  disarm:
+                    card:
+                      type: custom:button-card
+                      entity: alarm_control_panel.bayberry_alarm_v2
+                      show_state: false
+                      show_name: true
+                      show_icon: true
+                      name: DISARM
+                      icon: mdi:shield-off
+                      size: 25%
+                      tap_action:
+                        action: call-service
+                        service: alarm_control_panel.alarm_disarm
+                        service_data:
+                          entity_id: alarm_control_panel.bayberry_alarm_v2
+                          code: |
+                            [[[
+                              return states['input_text.alarm_code_input'].state;
+                            ]]]
+                      styles:
+                        card:
+                          - height: 65px
+                          - width: 125px
+                          - border-radius: 12px
+                          - background-color: '#D7D9DF'
+                        name:
+                          - font-size: 12px
+                          - font-weight: bold
+                          - color: black
+                        state:
+                          - operator: template
+                            value: >
+                              [[[
+                                return entity.state === 'disarmed';
+                              ]]]
+                            styles:
+                              card:
+                                - background-color: '#4CAF50'
+                              name:
+                                - color: white
+                              icon:
+                                - color: white
+                  home:
+                    card:
+                      type: custom:button-card
+                      entity: alarm_control_panel.bayberry_alarm_v2
+                      show_state: false
+                      show_name: true
+                      show_icon: true
+                      name: ARM HOME
+                      icon: mdi:shield-home
+                      size: 25%
+                      tap_action:
+                        action: call-service
+                        service: alarm_control_panel.alarm_arm_home
+                        service_data:
+                          entity_id: alarm_control_panel.bayberry_alarm_v2
+                          code: |
+                            [[[
+                              return states['input_text.alarm_code_input'].state;
+                            ]]]
+                      styles:
+                        card:
+                          - height: 65px
+                          - width: 125px
+                          - border-radius: 12px
+                          - background-color: '#D7D9DF'
+                        name:
+                          - font-size: 12px
+                          - font-weight: bold
+                          - color: black
+                        state:
+                          - operator: template
+                            value: >
+                              [[[
+                                return entity.state === 'armed_home';
+                              ]]]
+                            styles:
+                              card:
+                                - background-color: '#FF9800'
+                              name:
+                                - color: white
+                              icon:
+                                - color: white
+                  away:
+                    card:
+                      type: custom:button-card
+                      entity: alarm_control_panel.bayberry_alarm_v2
+                      show_state: false
+                      show_name: true
+                      show_icon: true
+                      name: ARM AWAY
+                      icon: mdi:shield-lock
+                      size: 25%
+                      tap_action:
+                        action: call-service
+                        service: alarm_control_panel.alarm_arm_away
+                        service_data:
+                          entity_id: alarm_control_panel.bayberry_alarm_v2
+                          code: |
+                            [[[
+                              return states['input_text.alarm_code_input'].state;
+                            ]]]
+                      styles:
+                        card:
+                          - height: 65px
+                          - width: 125px
+                          - border-radius: 12px
+                          - background-color: '#D7D9DF'
+                        name:
+                          - font-size: 12px
+                          - font-weight: bold
+                          - color: black
+                        state:
+                          - operator: template
+                            value: >
+                              [[[
+                                return entity.state === 'armed_away';
+                              ]]]
+                            styles:
+                              card:
+                                - background-color: '#F44336'
+                              name:
+                                - color: white
+                              icon:
+                                - color: white
+      nav: !include footer-menu.yaml
