@@ -476,12 +476,10 @@ cards:
                       tap_action:
                         action: call-service
                         service: alarm_control_panel.alarm_arm_away
-                        service_data:
+                        target:
                           entity_id: alarm_control_panel.bayberry_alarm_v2
-                          code: |
-                            [[[
-                              return states['input_text.alarm_code_input'].state;
-                            ]]]
+                        data:
+                          code: "{{ states('input_text.alarm_code_input') }}"
                       styles:
                         card:
                           - height: 65px
