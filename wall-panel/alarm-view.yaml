@@ -227,7 +227,7 @@ cards:
                   grid:
                     - grid-template-areas: |
                         "disarm home away"
-                    - grid-template-columns: 130px 130px 130px
+                    - grid-template-columns: 150px 150px 150px
                     - grid-template-rows: 70px
                     - column-gap: 5px
                     - align-items: center
@@ -257,7 +257,19 @@ cards:
                           - font-size: 12px
                           - font-weight: bold
                           - color: black
-                        state:
+                        state:                
+                        - operator: template
+                          value: >
+                            [[[
+                              return entity.state === 'disarmed';
+                            ]]]
+                          styles:
+                            card:
+                              - background-color: '#4CAF50'
+                            name:
+                              - color: white
+                            icon:
+                              - color: white
                   home:
                     card:
                       type: custom:button-card
