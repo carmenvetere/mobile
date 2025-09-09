@@ -60,38 +60,38 @@ cards:
                 show_state: true
                 state_display: |
                   [[[
-                    const state = entity.state;
-                    if (state === 'disarmed') return 'DISARMED';
-                    if (state === 'armed_home') return 'ARMED HOME';
-                    if (state === 'armed_away') return 'ARMED AWAY';
-                    if (state === 'triggered') return 'TRIGGERED';
-                    if (state === 'pending') return 'PENDING';
-                    if (state === 'arming') return 'ARMING';
-                    return state.toUpperCase();
+                    var state = states['alarm_control_panel.bayberry_alarm_v2'].state;
+                    if (state === 'armed_away') return 'Armed';
+                    if (state === 'armed_home') return 'Armed';
+                    if (state === 'disarmed') return 'Disarmed';
+                    if (state === 'pending') return 'Pending';
+                    if (state === 'arming') return 'Arming';
+                    if (state === 'triggered') return 'ALARM!';
+                    return state.charAt(0).toUpperCase() + state.slice(1);
                   ]]]
                 icon: |
                   [[[
-                    const state = entity.state;
+                    var state = states['alarm_control_panel.bayberry_alarm_v2'].state;
                     if (state === 'disarmed') return 'mdi:shield-off';
                     if (state === 'armed_home') return 'mdi:shield-home';
                     if (state === 'armed_away') return 'mdi:shield-lock';
                     if (state === 'triggered') return 'mdi:shield-alert';
                     return 'mdi:shield';
                   ]]]
+                icon_color: |
+                  [[[
+                    var state = states['alarm_control_panel.bayberry_alarm_v2'].state;
+                    if (state === 'disarmed') return 'green';
+                    if (state === 'armed_home') return 'orange';
+                    if (state === 'armed_away') return 'red';
+                    if (state === 'triggered') return 'red';
+                    return 'mdi:shield';
+                  ]]]  
                 styles:
                   card:
                     - height: 60px
                     - width: 400px
                     - border-radius: 10px
-                    - background-color: |
-                        [[[
-                          const state = entity.state;
-                          if (state === 'disarmed') return '#4CAF50';
-                          if (state === 'armed_home') return '#FF9800';
-                          if (state === 'armed_away') return '#F44336';
-                          if (state === 'triggered') return '#FF1744';
-                          return '#9E9E9E';
-                        ]]]
                   icon:
                     - color: white
                     - size: 24px
@@ -99,7 +99,6 @@ cards:
                     - color: white
                     - font-size: 18px
                     - font-weight: bold
-                    
             # Code Display
             display:
               card:
