@@ -219,7 +219,7 @@ cards:
                 styles:
                   card:
                     - height: 70px
-                    - width: 400px
+                    - width: 450px
                     - padding: 0
                     - margin: 0px
                     - border-radius: 12px
@@ -239,7 +239,7 @@ cards:
                       show_state: false
                       show_name: true
                       show_icon: true
-                      name: DISARM
+                      name: Disarm
                       icon: mdi:shield-off
                       size: 25%
                       tap_action:
@@ -250,7 +250,7 @@ cards:
                       styles:
                         card:
                           - height: 65px
-                          - width: 125px
+                          - width: 150px
                           - border-radius: 12px
                           - background-color: '#D7D9DF'
                         name:
@@ -273,7 +273,7 @@ cards:
                       show_state: false
                       show_name: true
                       show_icon: true
-                      name: ARM HOME
+                      name: Armed Home
                       icon: mdi:shield-home
                       size: 25%
                       tap_action:
@@ -284,14 +284,22 @@ cards:
                       styles:
                         card:
                           - height: 65px
-                          - width: 125px
+                          - width: 150px
                           - border-radius: 12px
                           - background-color: '#D7D9DF'
                         name:
                           - font-size: 12px
                           - font-weight: bold
                           - color: black
-                        state:
+                        state:                
+                          - value: 'ARMED_HOME'
+                            styles:
+                              card:
+                                - background-color: '#F44336'
+                              name:
+                                - color: white
+                              icon:
+                                - color: white
                   away:
                     card:
                       type: custom:button-card
@@ -299,7 +307,7 @@ cards:
                       show_state: false
                       show_name: true
                       show_icon: true
-                      name: ARM AWAY
+                      name: Armed Away
                       icon: mdi:shield-lock
                       size: 25%
                       tap_action:
@@ -311,15 +319,15 @@ cards:
                       styles:
                         card:
                           - height: 65px
-                          - width: 125px
+                          - width: 150px
                           - border-radius: 12px
                           - background-color: '#D7D9DF'
                         name:
                           - font-size: 12px
                           - font-weight: bold
                           - color: black
-                        state:
-                          - operator: template
+                        state:                
+                          - value: 'ARMED_AWAY'
                             styles:
                               card:
                                 - background-color: '#F44336'
