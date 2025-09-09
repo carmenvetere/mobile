@@ -107,11 +107,6 @@ cards:
                 show_icon: false
                 show_state: true
                 entity: input_text.alarm_code_input
-                state_display: |
-                  [[[
-                    const code = states['input_text.alarm_code_input'].state;
-                    return code.replace(/./g, '*');
-                  ]]]
                 styles:
                   card:
                     - height: 40px
