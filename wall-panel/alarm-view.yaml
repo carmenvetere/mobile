@@ -160,11 +160,6 @@ cards:
                         service: input_text.set_value
                         service_data:
                           entity_id: input_text.alarm_code_input
-                          value: |
-                            [[[
-                              const current = states['input_text.alarm_code_input'].state;
-                              return current.length < 6 ? current + '1' : current;
-                            ]]]
                       styles:
                         card:
                           - height: 40px
@@ -188,11 +183,6 @@ cards:
                         service: input_text.set_value
                         service_data:
                           entity_id: input_text.alarm_code_input
-                          value: |
-                            [[[
-                              const current = states['input_text.alarm_code_input'].state;
-                              return current.slice(0, -1);
-                            ]]]
                       styles:
                         card:
                           - height: 40px
@@ -214,10 +204,6 @@ cards:
                         action: call-service
                         service: script.alarm_code_entry
                         service_data:
-                          code: |
-                            [[[
-                              return states['input_text.alarm_code_input'].state;
-                            ]]]
                       styles:
                         card:
                           - height: 40px
@@ -267,10 +253,6 @@ cards:
                         service: alarm_control_panel.alarm_disarm
                         service_data:
                           entity_id: alarm_control_panel.bayberry_alarm_v2
-                          code: |
-                            [[[
-                              return states['input_text.alarm_code_input'].state;
-                            ]]]
                       styles:
                         card:
                           - height: 65px
@@ -282,18 +264,6 @@ cards:
                           - font-weight: bold
                           - color: black
                         state:
-                          - operator: template
-                            value: >
-                              [[[
-                                return entity.state === 'disarmed';
-                              ]]]
-                            styles:
-                              card:
-                                - background-color: '#4CAF50'
-                              name:
-                                - color: white
-                              icon:
-                                - color: white
                   home:
                     card:
                       type: custom:button-card
@@ -309,10 +279,6 @@ cards:
                         service: alarm_control_panel.alarm_arm_home
                         service_data:
                           entity_id: alarm_control_panel.bayberry_alarm_v2
-                          code: |
-                            [[[
-                              return states['input_text.alarm_code_input'].state;
-                            ]]]
                       styles:
                         card:
                           - height: 65px
@@ -324,18 +290,6 @@ cards:
                           - font-weight: bold
                           - color: black
                         state:
-                          - operator: template
-                            value: >
-                              [[[
-                                return entity.state === 'armed_home';
-                              ]]]
-                            styles:
-                              card:
-                                - background-color: '#FF9800'
-                              name:
-                                - color: white
-                              icon:
-                                - color: white
                   away:
                     card:
                       type: custom:button-card
@@ -352,7 +306,6 @@ cards:
                         target:
                           entity_id: alarm_control_panel.bayberry_alarm_v2
                         data:
-                          code: "{{ states('input_text.alarm_code_input') }}"
                       styles:
                         card:
                           - height: 65px
@@ -365,10 +318,6 @@ cards:
                           - color: black
                         state:
                           - operator: template
-                            value: >
-                              [[[
-                                return entity.state === 'armed_away';
-                              ]]]
                             styles:
                               card:
                                 - background-color: '#F44336'
