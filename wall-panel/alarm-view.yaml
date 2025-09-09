@@ -110,7 +110,7 @@ cards:
                 state_display: |
                   [[[
                     const code = states['input_text.alarm_code_input'].state;
-                    return code.replace(/./g, '●');
+                    return code.replace(/./g, '*');
                   ]]]
                 styles:
                   card:
