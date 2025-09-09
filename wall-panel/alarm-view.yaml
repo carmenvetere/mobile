@@ -111,14 +111,13 @@ cards:
                     - height: 40px
                     - width: 200px
                     - border-radius: 8px
-                    - background-color: '#333333'
+                    - background-color: '#FFFFFF'
                     - border: 2px solid '#666666'
                   state:
                     - color: white
                     - font-size: 24px
                     - font-weight: bold
-                    - letter-spacing: 8px
-                    
+                    - letter-spacing: 8px  
             # Number Keypad
             keypad:
               card:
@@ -159,12 +158,219 @@ cards:
                           - height: 40px
                           - width: 85px
                           - border-radius: 8px
-                          - background-color: '#E0E0E0'
+                          - background-color: '#DDE0E7'
                           - border: 1px solid '#BDBDBD'
                         name:
                           - color: black
                           - font-size: 20px
                           - font-weight: bold
+                  n2:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: false
+                      show_state: false
+                      name: '2'
+                      tap_action:
+                        action: call-service
+                        service: input_text.set_value
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#DDE0E7'
+                          - border: 1px solid '#BDBDBD'
+                        name:
+                          - color: black
+                          - font-size: 20px
+                          - font-weight: bold                          
+                  n3:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: false
+                      show_state: false
+                      name: '3'
+                      tap_action:
+                        action: call-service
+                        service: input_text.set_value
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#DDE0E7'
+                          - border: 1px solid '#BDBDBD'
+                        name:
+                          - color: black
+                          - font-size: 20px
+                          - font-weight: bold  
+                  n4:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: false
+                      show_state: false
+                      name: '4'
+                      tap_action:
+                        action: call-service
+                        service: input_text.set_value
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#DDE0E7'
+                          - border: 1px solid '#BDBDBD'
+                        name:
+                          - color: black
+                          - font-size: 20px
+                          - font-weight: bold  
+                  n5:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: false
+                      show_state: false
+                      name: '5'
+                      tap_action:
+                        action: call-service
+                        service: input_text.set_value
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#DDE0E7'
+                          - border: 1px solid '#BDBDBD'
+                        name:
+                          - color: black
+                          - font-size: 20px
+                          - font-weight: bold  
+                  n6:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: false
+                      show_state: false
+                      name: '6'
+                      tap_action:
+                        action: call-service
+                        service: input_text.set_value
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#DDE0E7'
+                          - border: 1px solid '#BDBDBD'
+                        name:
+                          - color: black
+                          - font-size: 20px
+                          - font-weight: bold 
+                  n7:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: false
+                      show_state: false
+                      name: '7'
+                      tap_action:
+                        action: call-service
+                        service: input_text.set_value
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#DDE0E7'
+                          - border: 1px solid '#BDBDBD'
+                        name:
+                          - color: black
+                          - font-size: 20px
+                          - font-weight: bold 
+                  n8:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: false
+                      show_state: false
+                      name: '8'
+                      tap_action:
+                        action: call-service
+                        service: input_text.set_value
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#DDE0E7'
+                          - border: 1px solid '#BDBDBD'
+                        name:
+                          - color: black
+                          - font-size: 20px
+                          - font-weight: bold 
+                  n9:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: false
+                      show_state: false
+                      name: '9'
+                      tap_action:
+                        action: call-service
+                        service: input_text.set_value
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#DDE0E7'
+                          - border: 1px solid '#BDBDBD'
+                        name:
+                          - color: black
+                          - font-size: 20px
+                          - font-weight: bold 
+                  n0:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: false
+                      show_state: false
+                      name: '0'
+                      tap_action:
+                        action: call-service
+                        service: input_text.set_value
+                        service_data:
+                          entity_id: input_text.alarm_code_input
+                      styles:
+                        card:
+                          - height: 40px
+                          - width: 85px
+                          - border-radius: 8px
+                          - background-color: '#DDE0E7'
+                          - border: 1px solid '#BDBDBD'
+                        name:
+                          - color: black
+                          - font-size: 20px
+                          - font-weight: bold 
                   clear:
                     card:
                       type: custom:button-card
@@ -179,7 +385,7 @@ cards:
                           entity_id: input_text.alarm_code_input
                       styles:
                         card:
-                          - height: 40px
+                          - height: 50px
                           - width: 85px
                           - border-radius: 8px
                           - background-color: '#FFCDD2'
@@ -200,7 +406,7 @@ cards:
                         service_data:
                       styles:
                         card:
-                          - height: 40px
+                          - height: 50px
                           - width: 85px
                           - border-radius: 8px
                           - background-color: '#C8E6C9'
