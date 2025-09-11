@@ -130,10 +130,10 @@ cards:
             card_mod:
               style: |
                 ha-card {
-                  padding-top: 3px;
-                  padding-bottom: 3px;
-                  padding-left: 15px;
-                  padding-right: 15px;
+                  padding-top: 3px !important;
+                  padding-bottom: 3px !important;
+                  padding-left: 15px !important;
+                  padding-right: 15px !important;
                 }
             cards:
               - type: vertical-stack
