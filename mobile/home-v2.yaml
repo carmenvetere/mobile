@@ -8,7 +8,7 @@ cards:
         - border-radius: 15px
         - padding-bottom: 5px
         - padding-left: 5px
-        - padding-top: 5px
+        - padding-top: 2px
         - height: auto
         - width: 400px
       grid:
@@ -28,7 +28,10 @@ cards:
           type: custom:button-card
           show_state: false
           show_name: false
+          show_icon: false
           styles:
+            card:
+              - background-color: transparent
             grid:
               - grid-template-areas: |
                   "name temperature"
@@ -43,13 +46,13 @@ cards:
                 show_state: false
                 show_name: false
                 show_icon: true
-                show_lable: true
+                show_label: true
                 layout: icon_label
                 icon: mdi:home
                 lable: Home
                 icon_color: var(--primary-text-color)
                 styles: 
-                  lable: 
+                  label: 
                     - font-size: 22px
                     - font-weight: bold
                   card:
