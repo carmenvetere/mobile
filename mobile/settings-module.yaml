@@ -392,6 +392,14 @@
       .card-content {
         padding-top: 7px !important;
       }
+  card_mod:
+    style: |
+      ha-card {
+        padding-top: 3px !important;
+        padding-bottom: 3px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+      }
   cards:
     - type: vertical-stack
       cards:
@@ -514,6 +522,14 @@
       }
       .card-content {
         padding-top: 7px !important;
+      }
+  card_mod:
+    style: |
+      ha-card {
+        padding-top: 3px !important;
+        padding-bottom: 3px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
       }
   cards:
     - type: vertical-stack
@@ -652,6 +668,14 @@
       .card-content {
         padding-top: 7px !important;
       }
+  card_mod:
+    style: |
+      ha-card {
+        padding-top: 3px !important;
+        padding-bottom: 3px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+      }
   cards:
     - type: vertical-stack
       cards:
@@ -750,6 +774,14 @@
       }
       .card-content {
         padding-top: 7px !important;
+      }
+  card_mod:
+    style: |
+      ha-card {
+        padding-top: 3px !important;
+        padding-bottom: 3px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
       }
   cards:
     - type: vertical-stack
@@ -894,6 +926,14 @@
       }
       .card-content {
         padding-top: 7px !important;
+      }
+  card_mod:
+    style: |
+      ha-card {
+        padding-top: 3px !important;
+        padding-bottom: 3px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
       }
   cards:
     - type: vertical-stack
@@ -1132,6 +1172,14 @@
       .card-content {
         padding-top: 7px !important;
       }
+  card_mod:
+    style: |
+      ha-card {
+        padding-top: 3px !important;
+        padding-bottom: 3px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+      }
   cards:
     - type: vertical-stack
       cards:
@@ -1184,6 +1232,15 @@
       }
       .card-content {
         padding-top: 7px !important;
+      }
+  card_mod:
+    style: |
+      ha-card {
+        padding-top: 3px !important;
+        padding-bottom: 3px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        background-color: var(--card-background-color-2) !important;
       }
   cards:
     - type: vertical-stack
