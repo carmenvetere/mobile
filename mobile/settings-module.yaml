@@ -165,6 +165,7 @@
           name: Living Room Thermostat Schedule
           icon: mdi:fan-clock
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -172,7 +173,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -187,6 +188,7 @@
           name: Basement Thermostat Schedule
           icon: mdi:fan-clock
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -194,7 +196,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -209,6 +211,7 @@
           name: Office Thermostat Schedule
           icon: mdi:fan-clock
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -216,7 +219,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -231,6 +234,7 @@
           name: Bedroom Thermostat Schedule
           icon: mdi:fan-clock
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -266,6 +270,7 @@
           entity: input_number.living_room_fresh_air_min_temp
           show_last_changed: false
           show_state: false
+          scrolling_effect: false
           icon: mdi:home-thermometer-outline
           card_layout: large
           sub_button:
@@ -288,6 +293,7 @@
           entity: input_number.basement_fresh_air_minimum_temp
           show_last_changed: false
           show_state: false
+          scrolling_effect: false
           icon: mdi:home-thermometer-outline
           card_layout: large
           sub_button:
@@ -324,6 +330,7 @@
             - default
           entity: sensor.upper_floor_hvac_filter_time_2
           show_state: false
+          scrolling_effect: false
           card_layout: large
           sub_button:
             - entity: sensor.upper_floor_hvac_filter_time_2
@@ -350,6 +357,7 @@
             - default
           entity: sensor.lower_floors_hvac_filter_time_2
           show_state: false
+          scrolling_effect: false
           card_layout: large
           sub_button:
             - entity: sensor.lower_floors_hvac_filter_time_2
@@ -405,6 +413,7 @@
           name: Automatically Arm Away Mode When Leaving
           icon: mdi:shield-lock
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -412,7 +421,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -428,6 +437,7 @@
           name: Automatically Arm Home Mode at 11pm
           icon: mdi:shield-lock
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -435,7 +445,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -450,6 +460,7 @@
           name: Automatically Disarm at 7am
           icon: mdi:shield-lock-open
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -457,7 +468,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -472,6 +483,7 @@
           name: Automatically Disarm When Arrive Home
           icon: mdi:shield-lock-open
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -479,7 +491,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -524,6 +536,7 @@
           name: Water Heater Temp
           icon: mdi:water-boiler
           show_state: false
+          scrolling_effect: false
           tap_action:
             action: toggle
           card_layout: large
@@ -541,6 +554,7 @@
           name: Water Heater Mode
           icon: mdi:leaf
           card_layout: large
+          scrolling_effect: false
           sub_button:
             - entity: water_heater.smithy_2
               select_attribute: operation_list
@@ -549,7 +563,7 @@
               show_attribute: false
               attribute: operation_mode
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
         - type: custom:bubble-card
@@ -560,8 +574,9 @@
           icon: mdi:leaf
           card_layout: large
           show_state: false
+          scrolling_effect: false
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -601,6 +616,7 @@
             - default
           entity: input_datetime.water_heater_last_flushed
           show_state: false
+          scrolling_effect: false
           card_layout: large
           sub_button:
             - entity: input_datetime.water_heater_last_flushed
@@ -657,6 +673,7 @@
           name: Outdoor Lights Motion Detection - 11pm - Sunrise
           icon: mdi:motion
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -664,7 +681,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -679,6 +696,7 @@
           name: Bathroom Lights Motion - Day
           icon: mdi:motion
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -686,7 +704,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -701,6 +719,7 @@
           name: Bathroom Lights Motion - Night
           icon: mdi:motion
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -708,7 +727,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -760,7 +779,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -775,6 +794,7 @@
           name: Automatically Turn Lights Off in Morning
           icon: mdi:lightbulb-auto
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -782,7 +802,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -797,6 +817,7 @@
           name: Automatically Set Good Night at 11PM
           icon: mdi:lightbulb-auto
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -804,7 +825,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -842,6 +863,7 @@
           name: Automatically Turn Off Outdoor Lights at 11PM
           icon: mdi:motion
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -849,7 +871,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -894,6 +916,7 @@
           name: 7:30AM First Floor Shades Open (Weekdays)
           icon: mdi:roller-shade
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -901,7 +924,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -916,6 +939,7 @@
           name: 8:00AM First Floor Shades Open (Weekends)
           icon: mdi:roller-shade
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -923,7 +947,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -938,6 +962,7 @@
           name: 8:00AM Bedroom Shades Open (Weekdays)
           icon: mdi:roller-shade
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -945,7 +970,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -960,6 +985,7 @@
           name: 9:00AM Bedroom Shades Open (Weekends)
           icon: mdi:roller-shade
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -967,7 +993,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -990,7 +1016,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -1013,7 +1039,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -1036,7 +1062,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -1059,7 +1085,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -1082,7 +1108,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -1127,6 +1153,7 @@
           name: Pool Heater Schedule
           icon: mdi:heat-wave
           show_state: false
+          scrolling_effect: false
           button_action:
             tap_action:
               action: toggle
@@ -1134,7 +1161,7 @@
             action: toggle
           card_layout: large
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
@@ -1179,8 +1206,9 @@
           name: Go Off Grid
           card_layout: large
           show_state: false
+          scrolling_effect: false
           styles: >
-            .bubble-name { font-size: 16px !important; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           icon: mdi:transmission-tower-off
@@ -1206,12 +1234,14 @@
           name: Powerwall Minimum Reserve
           card_layout: large
           show_state: false
+          scrolling_effect: false
           slider_live_update: true
           read_only_slider: false
           tap_to_slide: true
           styles: >
-            .bubble-name { font-size: 16px !important; } .bubble-sub-button { font-size:
-            14px !important; font-weight: bold; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
           sub_button:
             - entity: number.bayberry_backup_reserve
               show_state: true
@@ -1239,12 +1269,14 @@
           name: Well Pump Energy Consumed
           card_layout: large
           show_state: false
+          scrolling_effect: false
           slider_live_update: true
           read_only_slider: false
           tap_to_slide: true
           styles: >
-            .bubble-name { font-size: 16px !important; } .bubble-sub-button { font-size:
-            14px !important; font-weight: bold; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
           sub_button:
             - entity: sensor.well_pump_energy
               show_state: true
@@ -1264,12 +1296,14 @@
           name: Pool Pump Energy Consumed
           card_layout: large
           show_state: false
+          scrolling_effect: false
           slider_live_update: true
           read_only_slider: false
           tap_to_slide: true
           styles: >
-            .bubble-name { font-size: 16px !important; } .bubble-sub-button { font-size:
-            14px !important; font-weight: bold; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
           sub_button:
             - entity: sensor.pool_pump_energy
               show_state: true
@@ -1289,12 +1323,14 @@
           name: Water Heater Energy Consumed
           card_layout: large
           show_state: false
+          scrolling_effect: false
           slider_live_update: true
           read_only_slider: false
           tap_to_slide: true
           styles: >
-            .bubble-name { font-size: 16px !important; } .bubble-sub-button { font-size:
-            14px !important; font-weight: bold; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
           sub_button:
             - entity: sensor.smithy_energy_usage_2
               show_state: true
@@ -1314,12 +1350,14 @@
           name: EV Charger Energy Consumed
           card_layout: large
           show_state: false
+          scrolling_effect: false
           slider_live_update: true
           read_only_slider: false
           tap_to_slide: true
           styles: >
-            .bubble-name { font-size: 16px !important; } .bubble-sub-button { font-size:
-            14px !important; font-weight: bold; }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
           sub_button:
             - entity: sensor.tesla_wall_connector_energy
               show_state: true
