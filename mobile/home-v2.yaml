@@ -74,6 +74,7 @@ cards:
                 show_label: false
                 layout: icon_state
                 icon: mdi:thermometer
+                size: 100%
                 icon_color: var(--primary-text-color)
                 styles: 
                   state: 
@@ -83,7 +84,7 @@ cards:
                     - align-items: start
                     - justify-content: flex-end
                     - text-align: right
-                    - padding-right: 8px
+                    - padding-right: 15px
       chips:
         card: !include chips.yaml
       notifications:
