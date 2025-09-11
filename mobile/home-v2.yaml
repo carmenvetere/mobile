@@ -29,7 +29,6 @@ cards:
           show_state: false
           show_name: false
           styles:
-            card:
             grid:
               - grid-template-areas: |
                   "name" "temperature"
@@ -37,6 +36,22 @@ cards:
               - grid-template-rows: 60px
               - column-gap: 5px
             main:
+          custom_fields:
+            name:
+              card:
+                type: custom:button-card
+                show_state: false
+                show_name: false
+                show_icon: true
+                show_lable: true
+                layout: icon_label
+                icon: mdi:home
+                lable: Home
+                icon_color: var(--primary-text-color)
+                styles: 
+                  lable: 
+                    - font-size: 22px
+                    - font-weight: bold
       chips:
         card: !include chips.yaml
       notifications:
