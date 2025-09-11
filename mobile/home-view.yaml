@@ -3,32 +3,6 @@ icon: mdi:home
 theme: Bubble
 path: mobile-home
 type: custom:grid-layout
-card_mod:
-  style: |
-    ha-view {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    #view {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    .view {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    hui-view {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    hui-grid-layout {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    .layout {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
 cards:
   - type: custom:button-card
     styles:
@@ -66,7 +40,7 @@ cards:
             grid:
               - grid-template-areas: |
                   "name gap temperature"
-              - grid-template-columns: 120px 170px 110px
+              - grid-template-columns: 120px auto 110px
               - grid-template-rows: 60px
               - column-gap: 0px
             main:
