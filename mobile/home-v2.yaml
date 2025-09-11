@@ -38,7 +38,7 @@ cards:
             grid:
               - grid-template-areas: |
                   "name gap temperature"
-              - grid-template-columns: 120px 200px 80px
+              - grid-template-columns: 120px 180px 100px
               - grid-template-rows: 60px
               - column-gap: 0px
             main:
@@ -53,6 +53,7 @@ cards:
                 layout: icon_name
                 icon: mdi:home
                 name: Home
+                size: 50%
                 icon_color: var(--primary-text-color)
                 styles: 
                   name: 
