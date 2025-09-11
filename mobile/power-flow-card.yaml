@@ -14,7 +14,7 @@ card_mod:
     ha-card .value,
     ha-card [class*="value"],
     ha-card .power-value {
-      font-size: 14px !important;
+      font-size: 12px !important;
       font-weight: 600 !important;
     }
     /* Entity labels */
@@ -27,12 +27,12 @@ card_mod:
     /* Individual device text (smaller) */
     ha-card .individual *,
     ha-card [class*="individual"] * {
-      font-size: 11px !important;
+      font-size: 14px !important;
     }
     /* Secondary info text */
     ha-card .secondary,
     ha-card [class*="secondary"] {
-      font-size: 10px !important;
+      font-size: 12px !important;
       opacity: 0.8;
     }
 entities:
