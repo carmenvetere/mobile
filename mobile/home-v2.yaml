@@ -41,7 +41,7 @@ cards:
         card: !include chips.yaml
       notifications:
         card:
-        - type: conditional
+          type: conditional
           conditions:
             - condition: numeric_state
               entity: sensor.notification_alert_counter
@@ -84,7 +84,7 @@ cards:
                 cards: !include notifications.yaml
       menu:
         card:
-        - type: custom:stack-in-card
+          type: custom:stack-in-card
           mode: vertical
           card_mod:
             style: |
