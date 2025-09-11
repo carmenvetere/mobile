@@ -29,19 +29,7 @@ template:
         attributes:
           message: "Powerwall charge low!"
           severity: critical
-      - name: notify_tesla_connector_error
-        unique_id: notify_tesla_connector_error
-        state: "{{ is_state('sensor.tesla_wall_connector_status','error') }}"
-        attributes:
-          message: "Tesla Wall Connector error!"
-          severity: critical
 # ---------- WARNING  (orange) --------------------------------------
-      - name: notify_tesla_connector_reduced
-        unique_id: notify_tesla_connector_reduced
-        state: "{{ is_state('sensor.tesla_wall_connector_status','charging_reduced') }}"
-        attributes:
-          message: "Tesla Wall Connector charging reduced."
-          severity: warning
       - name: notify_alarm_triggered
         unique_id: notify_alarm_triggered
         state: "{{ is_state('alarm_control_panel.bayberry_alarm_v2','triggered') }}"
