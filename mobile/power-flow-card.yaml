@@ -15,19 +15,19 @@ card_mod:
     ha-card [class*="value"],
     ha-card .power-value {
       font-size: 12px !important;
-      font-weight: 600 !important;
+      font-weight: bold !important;
     }
     /* Entity labels */
     ha-card .label,
     ha-card [class*="label"],
     ha-card .entity-name {
-      font-size: 12px !important;
-      font-weight: 500 !important;
+      font-size: 14px !important;
+      font-weight: bold !important;
     }
     /* Individual device text (smaller) */
     ha-card .individual *,
     ha-card [class*="individual"] * {
-      font-size: 14px !important;
+      font-size: 12px !important;
     }
     /* Secondary info text */
     ha-card .secondary,
