@@ -8,6 +8,7 @@ cards:
         - border-radius: 15px
         - padding-bottom: 5px
         - padding-left: 5px
+        - padding-right: 5px
         - padding-top: 2px
         - height: auto
         - width: 400px
@@ -36,7 +37,7 @@ cards:
             grid:
               - grid-template-areas: |
                   "name gap temperature"
-              - grid-template-columns: 120px 220px 60px
+              - grid-template-columns: 120px 200px 80px
               - grid-template-rows: 60px
               - column-gap: 5px
             main:
