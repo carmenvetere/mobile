@@ -3,6 +3,20 @@ icon: mdi:home
 theme: Bubble
 path: mobile-home
 type: custom:grid-layout
+card_mod:
+  style: |
+    ha-view {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    #view {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    .view {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
 cards:
   - type: custom:button-card
     styles:
