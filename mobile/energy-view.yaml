@@ -42,7 +42,7 @@ cards:
             grid:
               - grid-template-areas: |
                   "name gap"
-              - grid-template-columns: 120px auto
+              - grid-template-columns: 150px auto
               - grid-template-rows: 60px
               - column-gap: 0px
             main:
@@ -171,24 +171,31 @@ cards:
                 padding-top: 7px !important;
               }
           cards:
-            - type: entities
-              card_mod:
-                style: |
-                  ha-card {
-                    /* increase all text inside this card */
-                    font-size: 16px;
-                    font-weight: bold;
-                    justify-content: left;
-                  }
-              entities:
-                - entity: sensor.solcast_pv_forecast_forecast_today
-                  name: Solar Forecast Today
-                - entity: sensor.solcast_pv_forecast_forecast_tomorrow
-                  name: Solar Forecast Tomorrow
-                - entity: sensor.rear_solar_array
-                  name: Live Rear Solar Array Production
-                - entity: sensor.front_solar_array
-                  name: Live Front Solar Array Production
+          - type: entities
+            card_mod:
+              style: |
+                ha-card {
+                  font-size: 16px;
+                  font-weight: bold;
+                  justify-content: left;
+                }
+                .card-content {
+                  text-align: left !important;
+                }
+                .entity, .entity__value, .entity__info, .info, .name {
+                  text-align: left !important;
+                  justify-content: flex-start !important;
+                  align-items: flex-start !important;
+                }
+            entities:
+              - entity: sensor.solcast_pv_forecast_forecast_today
+                name: Solar Forecast Today
+              - entity: sensor.solcast_pv_forecast_forecast_tomorrow
+                name: Solar Forecast Tomorrow
+              - entity: sensor.rear_solar_array
+                name: Live Rear Solar Array Production
+              - entity: sensor.front_solar_array
+                name: Live Front Solar Array Production
       power_flow:
         card: 
           type: custom:stack-in-card
@@ -231,34 +238,34 @@ cards:
                 border-radius: 20px;
                 padding: 10;
               }
-            cards:
-              - type: custom:bubble-card
-                card_type: separator
-                name: Power (last 24 hrs)
-                icon: mdi:flash
-                rows: 0.75
-                styles: |
-                  .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                  }
-                  .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                  }
-                  .card-content {
-                  padding-top: 10px !important;
-                  padding-left: 10px !important;
-                  }
-              - type: history-graph
-                entities:
-                  - entity: sensor.bayberry_site_power
-                    name: Grid
-                    color: 'rgb(0, 109, 143)'
-                  - entity: sensor.bayberry_solar_power
-                    name: Solar
-                    color: 'rgb(245, 236, 0)'
-                  - entity: sensor.bayberry_load_power
-                    name: Home
-                    color: 'var(--primary-text-color)'
-                hours_to_show: 24
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Power (last 24 hrs)
+              icon: mdi:flash
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: history-graph
+              entities:
+                - entity: sensor.bayberry_site_power
+                  name: Grid
+                  color: 'rgb(0, 109, 143)'
+                - entity: sensor.bayberry_solar_power
+                  name: Solar
+                  color: 'rgb(245, 236, 0)'
+                - entity: sensor.bayberry_load_power
+                  name: Home
+                  color: 'var(--primary-text-color)'
+              hours_to_show: 24
