@@ -1,5 +1,40 @@
 type: custom:power-flow-card-plus
 clickable_entities: true
+card_mod:
+  style: |
+    ha-card {
+      /* Override all text in the card to be smaller */
+      font-size: 14px !important;
+    }
+    /* Try multiple selectors to catch all text elements */
+    ha-card * {
+      font-size: 14px !important;
+    }
+    /* Main entity values */
+    ha-card .value,
+    ha-card [class*="value"],
+    ha-card .power-value {
+      font-size: 14px !important;
+      font-weight: 600 !important;
+    }
+    /* Entity labels */
+    ha-card .label,
+    ha-card [class*="label"],
+    ha-card .entity-name {
+      font-size: 12px !important;
+      font-weight: 500 !important;
+    }
+    /* Individual device text (smaller) */
+    ha-card .individual *,
+    ha-card [class*="individual"] * {
+      font-size: 11px !important;
+    }
+    /* Secondary info text */
+    ha-card .secondary,
+    ha-card [class*="secondary"] {
+      font-size: 10px !important;
+      opacity: 0.8;
+    }
 entities:
   battery:
     entity: sensor.bayberry_battery_power
@@ -41,7 +76,7 @@ entities:
     entity: sensor.bayberry_load_power
     subtract_individual: true
   individual:
-    - entity: sensor.tesla_wall_connector_power
+    - entity: sensor.wall_charger_power
       display_zero: false
       name: Car Charging
       icon: mdi:car-electric
