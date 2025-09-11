@@ -127,6 +127,14 @@ cards:
                 .card-content {
                   padding-top: 7px !important;
                 }              
+            card_mod:
+              style: |
+                ha-card {
+                  padding-top: 3px;
+                  padding-bottom: 3px;
+                  padding-left: 15px;
+                  padding-right: 15px;
+                }
             cards:
               - type: vertical-stack
                 cards: !include notifications.yaml
