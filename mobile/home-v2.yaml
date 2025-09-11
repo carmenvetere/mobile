@@ -1,0 +1,344 @@
+title: Home V2
+path: home-view-v2
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 15px
+        - padding-bottom: 5px
+        - padding-left: 5px
+        - padding-top: 5px
+        - height: auto
+        - width: 400px
+      grid:
+        - grid-template-areas: |
+            "header"
+            "chips"
+            "notifications"
+            "menu"
+        - grid-template-columns: auto
+        - grid-template-rows: 60px 60px 60px auto
+        - row-gap: 5px
+        - align-items: start
+        - column-gap: 2px
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          show_state: false
+          show_name: false
+          styles:
+            card:
+            grid:
+              - grid-template-areas: |
+                  "name" "temperature"
+              - grid-template-columns: auto auto
+              - grid-template-rows: 60px
+              - column-gap: 5px
+            main:
+      chips:
+        card: !include chips.yaml
+      notifications:
+        card:
+        - type: conditional
+          conditions:
+            - condition: numeric_state
+              entity: sensor.notification_alert_counter
+              above: 0
+          card:
+            type: custom:expander-card
+            expanded: false
+            title-card-clickable: true
+            title-card:
+              type: custom:bubble-card
+              card_type: separator
+              name: Notifications
+              icon: mdi:bell
+              sub_button:
+                - entity: sensor.notification_alert_counter
+                  show_icon: false
+                  show_state: true
+                  state_background: false
+                  show_background: false
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                  font-size: 20px !important;  /* title */
+                  font-weight: bold !important;
+                }
+                .bubble-sub-button 
+                {
+                  font-size: 20px !important;
+                  font-weight: 700 !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }              
+            cards:
+              - type: vertical-stack
+                cards: !include notifications.yaml
+      menu:
+        card:
+        - type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: "rgb(92, 83, 103)";
+                border-radius: 20px;
+                padding: 12px 12px 4px;       /* top / sides / bottom */
+          cards:
+            - type: vertical-stack
+              cards:
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: Menu
+                  icon: mdi:menu-open
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                      font-size: 20px !important;  /* title */
+                      font-weight: bold !important;
+                    }
+                    .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                    }
+                    .card-content {
+                      padding-top: 7px !important;
+                    }     
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Lights
+                  icon: mdi:lightbulb
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/lights-main
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/lights-main
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                          }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/lights-main
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Climate
+                  icon: mdi:fan
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/climate-main
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/climate-main
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                      }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/climate-main
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Shades
+                  icon: mdi:roller-shade
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/shades-main
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/shades-main
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                      }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/shades-main
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Music
+                  icon: mdi:music
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/music
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/music
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                      }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/music                  
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Security
+                  icon: mdi:cctv
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/security
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/security
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                      }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/security
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Energy
+                  icon: mdi:lightning-bolt
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/energy
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/energy
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                      }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/energy
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Pool
+                  icon: mdi:pool
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/pool
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/pool
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                      }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/pool
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Vacuum
+                  icon: mdi:vacuum
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/vacuum
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/vacuum
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                      }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/vacuum
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Weather
+                  icon: mdi:weather-partly-cloudy
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/weather
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/weather
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                      }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/weather
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Settings
+                  icon: mdi:cog
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/settings
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/settings
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                      }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/settings
