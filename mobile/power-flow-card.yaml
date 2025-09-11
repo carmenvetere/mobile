@@ -8,7 +8,8 @@ card_mod:
     }
     /* Try multiple selectors to catch all text elements */
     ha-card * {
-      font-size: 14px !important;
+      font-size: 12px !important;
+      font-weight: bold !important;
     }
     /* Main entity values */
     ha-card .value,
@@ -21,7 +22,7 @@ card_mod:
     ha-card .label,
     ha-card [class*="label"],
     ha-card .entity-name {
-      font-size: 14px !important;
+      font-size: 16px !important;
       font-weight: bold !important;
     }
     /* Individual device text (smaller) */
