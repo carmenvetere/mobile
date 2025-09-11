@@ -44,15 +44,15 @@ cards:
               card:
                 type: custom:button-card
                 show_state: false
-                show_name: false
+                show_name: true
                 show_icon: true
-                show_label: true
-                layout: icon_label
+                show_label: false
+                layout: icon_name
                 icon: mdi:home
-                lable: Home
+                name: Home
                 icon_color: var(--primary-text-color)
                 styles: 
-                  label: 
+                  name: 
                     - font-size: 22px
                     - font-weight: bold
                   card:
