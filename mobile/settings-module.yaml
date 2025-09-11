@@ -257,13 +257,9 @@
           icon: mdi:tailwind
           rows: 0.75
           styles: >
-            .bubble-name { font-size: 16px !important; font-weight:
-            bold !important; }
-
-            .bubble-line { background: var(--primary-text-color);
-            opacity: 0.1; }
-
-            .card-content { padding-top: 7px !important; }                                      
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }                                      
         - type: custom:bubble-card
           card_type: button
           button_type: slider
@@ -279,14 +275,9 @@
               show_icon: false
               show_background: false
           styles: |-
-            .bubble-sub-button 
-            {
-              font-size: 14px !important;
-              font-weight: 700 !important;
-            }
-            .bubble-name {
-                font-size: 16px !important;
-              }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
         - type: custom:bubble-card
           card_type: button
           button_type: slider
@@ -302,27 +293,18 @@
               show_icon: false
               show_background: false
           styles: |-
-            .bubble-sub-button 
-            {
-              font-size: 14px !important;
-              font-weight: 700 !important;
-            }
-            .bubble-name {
-                font-size: 16px !important;
-              }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
         - type: custom:bubble-card
           card_type: separator
           name: Filter Maintenance
           icon: mdi:air-filter
           rows: 0.75
           styles: >
-            .bubble-name { font-size: 16px !important; font-weight:
-            bold !important; }
-
-            .bubble-line { background: var(--primary-text-color);
-            opacity: 0.1; }
-
-            .card-content { padding-top: 7px !important; } 
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
         - type: custom:bubble-card
           card_type: button
           button_type: state
@@ -342,14 +324,9 @@
             tap_action:
               action: more-info
           styles: |-
-            .bubble-sub-button 
-            {
-              font-size: 14px !important;
-              font-weight: 700 !important;
-            }
-            .bubble-name {
-                font-size: 16px !important;
-              }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
         - type: custom:bubble-card
           card_type: button
           button_type: state
@@ -369,14 +346,9 @@
             tap_action:
               action: more-info
           styles: |-
-            .bubble-sub-button 
-            {
-              font-size: 14px !important;
-              font-weight: 700 !important;
-            }
-            .bubble-name {
-                font-size: 16px !important;
-              }
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
 #Alarm
 - type: custom:expander-card
   expanded: false
