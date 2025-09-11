@@ -10,43 +10,6 @@ layout:
   margin: 0px
   padding: 0px
   card_margin: 0px
-card_mod:
-  style: |
-    :host {
-      --ha-card-margin: 0px !important;
-    }
-    ha-view {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    #view {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    .view {
-      padding: 0 !important;
-      margin: 0 !important;
-      width: 100% !important;
-    }
-    hui-view {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    hui-sections-view {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    hui-sections-view .container {
-      padding: 0 !important;
-      margin: 0 !important;
-      max-width: 100% !important;
-      width: 100% !important;
-    }
-    .sections {
-      padding: 0 !important;
-      margin: 0 !important;
-      width: 100% !important;
-    }
 cards:
   - type: custom:button-card
     styles:
