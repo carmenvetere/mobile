@@ -38,7 +38,7 @@ cards:
             grid:
               - grid-template-areas: |
                   "name gap temperature"
-              - grid-template-columns: 120px 180px 100px
+              - grid-template-columns: 120px 170px 110px
               - grid-template-rows: 60px
               - column-gap: 0px
             main:
@@ -74,7 +74,7 @@ cards:
                 show_label: false
                 layout: icon_state
                 icon: mdi:thermometer
-                size: 50%
+                size: 60%
                 icon_color: var(--primary-text-color)
                 styles: 
                   state: 
@@ -82,7 +82,7 @@ cards:
                     - font-weight: bold
                   card:
                     - align-items: start
-                    - justify-content: flex-end
+                    - justify-content: right
                     - text-align: right
                     - padding-right: 15px
       chips:
