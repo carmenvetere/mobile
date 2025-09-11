@@ -1,0 +1,67 @@
+type: custom:power-flow-card-plus
+clickable_entities: true
+entities:
+  battery:
+    entity: sensor.bayberry_battery_power
+    state_of_charge: sensor.bayberry_charge
+    color:
+      consumption: '#2ECC71'
+      production: '#2ECC71'
+    color_icon: true
+    show_state_of_charge: true
+  grid:
+    entity: sensor.bayberry_site_power
+    color_icon: false
+    color:
+      consumption:
+        - 0
+        - 109
+        - 143
+      production:
+        - 96
+        - 96
+        - 96
+      color_value: true
+    power_outage:
+      icon_alert: mdi:flash-alert
+    use_metadata: false
+    invert_state: false
+    color_value: false
+    secondary_info:
+      entity: sensor.net_grid_export
+      unit_of_measurement: kWh
+  solar:
+    entity: sensor.bayberry_solar_power
+    color_icon: false
+    color:
+      - 245
+      - 236
+      - 0
+  home:
+    entity: sensor.bayberry_load_power
+    subtract_individual: true
+  individual:
+    - entity: sensor.tesla_wall_connector_power
+      display_zero: false
+      name: Car Charging
+      icon: mdi:car-electric
+      color: '#E74C3C'
+    - entity: sensor.well_pump_power
+      name: Well Pump
+      color: '#3ea4f0'
+      color_value: false
+      display_zero: false
+      icon: mdi:sprinkler-variant
+    - entity: sensor.omnilogic_pool_filter_pump_power
+      name: Pool Filter
+      color: '#5cb5e1'
+      color_value: false
+      display_zero: false
+      icon: mdi:pool
+display_zero_lines:
+  mode: show
+  transparency: 50
+  grey_color:
+    - 189
+    - 189
+    - 189
