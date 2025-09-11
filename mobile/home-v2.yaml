@@ -18,7 +18,7 @@ cards:
             "notifications"
             "menu"
         - grid-template-columns: auto
-        - grid-template-rows: 60px 60px 60px auto
+        - grid-template-rows: 60px 60px auto auto
         - row-gap: 5px
         - align-items: start
         - column-gap: 2px
@@ -52,6 +52,9 @@ cards:
                   lable: 
                     - font-size: 22px
                     - font-weight: bold
+                  card:
+                    - align-items: start
+                    - justify-content: start
       chips:
         card: !include chips.yaml
       notifications:
