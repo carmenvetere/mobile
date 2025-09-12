@@ -27,13 +27,16 @@ cards:
         card:
           type: custom:simple-swipe-card
           auto_hide_pagination: 0
+          view_mode: carousel
+          enable_auto_swipe: true
+          auto_swipe_interval: 2000
+          loop_mode: infinite
           card_mod:
             style: |
-              ha-card {
-                padding: 15px !important;
-                margin: 10px !important;
-                border-radius: 10px !important;
-              }
+              :host {
+                --simple-swipe-card-padding-left: 10px;
+                --simple-swipe-card-padding-right: 10px;
+                }
           cards:
             - show_state: false
               show_name: false
