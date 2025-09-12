@@ -1,0 +1,459 @@
+- type: vertical-stack
+  cards:
+    - type: custom:bubble-card
+      card_type: button
+      entity: sensor.scene_outdoor_on
+      name: Evening
+      icon: mdi:outdoor-lamp
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: scene.turn_on
+          target:
+            entity_id: scene.outdoor_on
+          data:
+            transition: 3
+      tap_action:
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.outdoor_on
+        data:
+          transition: 3
+      card_layout: large
+      styles: |
+        .bubble-name { font-size: 16px !important; }
+    - type: custom:bubble-card
+      card_type: button
+      entity: sensor.scene_outdoor_on_bright
+      name: Bright
+      icon: mdi:lightbulb-on
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: scene.turn_on
+          target:
+            entity_id: scene.outdoor_on_bright
+          data:
+            transition: 3
+      tap_action:
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.outdoor_on_bright
+        data:
+          transition: 3
+      card_layout: large
+      styles: |
+        .bubble-name { font-size: 16px !important; }
+    - type: custom:bubble-card
+      card_type: button
+      entity: sensor.scene_outdoor_off
+      name: All Off
+      icon: mdi:lightbulb-off-outline
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: scene.turn_on
+          target:
+            entity_id: scene.outdoor_off
+          data:
+            transition: 3
+      tap_action:
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.outdoor_off
+        data:
+          transition: 3
+      card_layout: large
+      styles: |
+        .bubble-name { font-size: 16px !important; }
+    - type: custom:bubble-card
+      card_type: separator
+      name: Front
+      icon: mdi:stairs
+      rows: 0.75
+      styles: >
+        .bubble-name { font-size: 16px !important; font-weight:
+        bold !important; }
+        .bubble-line { background: var(--primary-text-color);
+        opacity: 0.1; }
+        .card-content { padding-top: 7px !important; }
+    - type: custom:bubble-card
+      card_type: button
+      button_type: slider
+      entity: light.front_porch_overhead_light
+      name: Entry
+      icon: mdi:light-recessed
+      show_state: false
+      slider_live_update: false
+      read_only_slider: false
+      tap_to_slide: false
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: light.toggle
+          data:
+            brightness_pct: 25
+          target:
+            entity_id: light.front_porch_overhead_light
+      tap_action:
+        action: perform-action
+        perform_action: light.toggle
+        data:
+          brightness_pct: 25
+        target:
+          entity_id: light.front_porch_overhead_light
+      scrolling_effect: false
+      use_accent_color: false
+      styles: >
+        .bubble-name { font-size: 16px !important; }
+        .bubble-sub-button { font-size: 14px !important;
+        font-weight: bold; }
+      sub_button:
+        - entity: light.front_porch_overhead_light
+          show_state: true
+          show_attribute: true
+          show_icon: false
+          state_background: false
+          show_background: false
+          attribute: brightness
+      modules:
+        - light_card_mobile
+    - type: custom:bubble-card
+      card_type: button
+      button_type: switch
+      entity: switch.transformer_zone_1
+      name: Path
+      icon: mdi:lamp
+      show_state: false
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: switch.toggle
+          target:
+            entity_id: switch.transformer_zone_1
+      tap_action:
+        action: perform-action
+        perform_action: switch.toggle
+        target:
+          entity_id: switch.transformer_zone_1
+      scrolling_effect: false
+      use_accent_color: false
+      styles: |
+        .bubble-name { font-size: 16px !important; }
+        .bubble-sub-button { font-size: 14px !important;
+        font-weight: bold; }
+      sub_button:
+        - entity: switch.transformer_zone_1
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+    - type: custom:bubble-card
+      card_type: button
+      button_type: switch
+      entity: switch.transformer_zone_2
+      name: Tree Spotlights
+      icon: mdi:light-flood-up
+      show_state: false
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: switch.toggle
+          target:
+            entity_id: switch.transformer_zone_2
+      tap_action:
+        action: perform-action
+        perform_action: switch.toggle
+        target:
+          entity_id: switch.transformer_zone_2
+      scrolling_effect: false
+      use_accent_color: false
+      styles: |
+        .bubble-name { font-size: 16px !important; }
+        .bubble-sub-button { font-size: 14px !important;
+        font-weight: bold; }
+      sub_button:
+        - entity: switch.transformer_zone_2
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+    - type: custom:bubble-card
+      card_type: separator
+      name: Pool
+      icon: mdi:pool
+      rows: 0.75
+      styles: >
+        .bubble-name { font-size: 16px !important; font-weight:
+        bold !important; }
+        .bubble-line { background: var(--primary-text-color);
+        opacity: 0.1; }
+        .card-content { padding-top: 7px !important; }
+    - type: custom:bubble-card
+      card_type: button
+      button_type: slider
+      entity: light.patio_back_porch_lights
+      name: Door
+      icon: mdi:outdoor-lamp
+      show_state: false
+      slider_live_update: false
+      read_only_slider: false
+      tap_to_slide: false
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: light.toggle
+          data:
+            brightness_pct: 25
+          target:
+            entity_id: light.patio_back_porch_lights
+      tap_action:
+        action: perform-action
+        perform_action: light.toggle
+        data:
+          brightness_pct: 25
+        target:
+          entity_id: light.patio_back_porch_lights
+      scrolling_effect: false
+      use_accent_color: false
+      styles: >
+        .bubble-name { font-size: 16px !important; }
+        .bubble-sub-button { font-size: 14px !important;
+        font-weight: bold; }
+      sub_button:
+        - entity: light.patio_back_porch_lights
+          show_state: true
+          show_attribute: true
+          show_icon: false
+          state_background: false
+          show_background: false
+          attribute: brightness
+      modules:
+        - light_card_mobile
+    - type: custom:bubble-card
+      card_type: button
+      button_type: switch
+      entity: switch.transformer_zone_3
+      name: Retaining Wall
+      icon: mdi:light-flood-up
+      show_state: false
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: switch.toggle
+          target:
+            entity_id: switch.transformer_zone_3
+      tap_action:
+        action: perform-action
+        perform_action: switch.toggle
+        target:
+          entity_id: switch.transformer_zone_3
+      scrolling_effect: false
+      use_accent_color: false
+      styles: |
+        .bubble-name { font-size: 16px !important; }
+        .bubble-sub-button { font-size: 14px !important;
+        font-weight: bold; }                      
+      sub_button:
+        - entity: switch.transformer_zone_3
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+    - type: custom:bubble-card
+      card_type: button
+      button_type: slider
+      entity: light.omnilogic_pool_color_lights
+      name: Pool
+      icon: mdi:pool
+      show_state: false
+      slider_live_update: false
+      read_only_slider: false
+      tap_to_slide: false
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: light.toggle
+          data:
+            brightness_pct: 25
+          target:
+            entity_id: light.omnilogic_pool_color_lights
+      tap_action:
+        action: perform-action
+        perform_action: light.toggle
+        data:
+          brightness_pct: 25
+        target:
+          entity_id: light.omnilogic_pool_color_lights
+      scrolling_effect: false
+      use_accent_color: false
+      styles: >
+        .bubble-name { font-size: 16px !important; }
+        .bubble-sub-button { font-size: 14px !important;
+        font-weight: bold; }
+      sub_button:
+        - entity: light.omnilogic_pool_color_lights
+          show_state: true
+          show_attribute: true
+          show_icon: false
+          state_background: false
+          show_background: false
+          attribute: brightness
+      modules:
+        - light_card_mobile
+    - type: custom:bubble-card
+      card_type: separator
+      name: Driveway
+      icon: mdi:car-multiple
+      rows: 0.75
+      styles: >
+        .bubble-name { font-size: 16px !important; font-weight:
+        bold !important; }
+        .bubble-line { background: var(--primary-text-color);
+        opacity: 0.1; }
+        .card-content { padding-top: 7px !important; }
+    - type: custom:bubble-card
+      card_type: button
+      button_type: slider
+      entity: light.driveway_sconces
+      name: Deck and Driveway Sconces
+      icon: mdi:outdoor-lamp
+      show_state: false
+      slider_live_update: false
+      read_only_slider: false
+      tap_to_slide: false
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: light.toggle
+          data:
+            brightness_pct: 25
+          target:
+            entity_id: light.driveway_sconces
+      tap_action:
+        action: perform-action
+        perform_action: light.toggle
+        data:
+          brightness_pct: 25
+        target:
+          entity_id: light.driveway_sconces
+      scrolling_effect: false
+      use_accent_color: false
+      styles: >
+        .bubble-name { font-size: 16px !important; }
+        .bubble-sub-button { font-size: 14px !important;
+        font-weight: bold; }
+      sub_button:
+        - entity: light.driveway_sconces
+          show_state: true
+          show_attribute: true
+          show_icon: false
+          state_background: false
+          show_background: false
+          attribute: brightness
+      modules:
+        - light_card_mobile
+    - type: custom:bubble-card
+      card_type: button
+      button_type: switch
+      entity: switch.driveway_zone_2_2
+      name: Path
+      icon: mdi:lamp
+      show_state: false
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: switch.toggle
+          target:
+            entity_id: switch.driveway_zone_2_2
+      tap_action:
+        action: perform-action
+        perform_action: switch.toggle
+        target:
+          entity_id: switch.driveway_zone_2_2
+      scrolling_effect: false
+      use_accent_color: false
+      styles: |
+        .bubble-name { font-size: 16px !important; }
+        .bubble-sub-button { font-size: 14px !important;
+        font-weight: bold; }
+      sub_button:
+        - entity: switch.driveway_zone_2_2
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+    - type: custom:bubble-card
+      card_type: button
+      button_type: switch
+      entity: switch.driveway_zone_1_2
+      name: Tree Spotlights
+      icon: mdi:light-flood-up
+      show_state: false
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: switch.toggle
+          target:
+            entity_id: switch.driveway_zone_1_2
+      tap_action:
+        action: perform-action
+        perform_action: switch.toggle
+        target:
+          entity_id: switch.driveway_zone_1_2
+      scrolling_effect: false
+      use_accent_color: false
+      styles: |
+        .bubble-name { font-size: 16px !important; }
+        .bubble-sub-button { font-size: 14px !important;
+        font-weight: bold; }
+      sub_button:
+        - entity: switch.driveway_zone_1_2
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+    - type: custom:bubble-card
+      card_type: separator
+      name: Firepit
+      icon: mdi:fire
+      rows: 0.75
+      styles: >
+        .bubble-name { font-size: 16px !important; font-weight:
+        bold !important; }
+        .bubble-line { background: var(--primary-text-color);
+        opacity: 0.1; }
+        .card-content { padding-top: 7px !important; }
+    - type: custom:bubble-card
+      card_type: button
+      button_type: switch
+      entity: switch.driveway_zone_3_2
+      name: Path
+      icon: mdi:lamp
+      show_state: false
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: switch.toggle
+          target:
+            entity_id: switch.driveway_zone_3_2
+      tap_action:
+        action: perform-action
+        perform_action: switch.toggle
+        target:
+          entity_id: switch.driveway_zone_3_2
+      scrolling_effect: false
+      use_accent_color: false
+      styles: |
+        .bubble-name { font-size: 16px !important; }
+        .bubble-sub-button { font-size: 14px !important;
+        font-weight: bold; }
+      sub_button:
+        - entity: switch.driveway_zone_3_2
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false

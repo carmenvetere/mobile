@@ -1,2075 +1,232 @@
-title: Lights - Main
-type: sections
-max_columns: 1
-path: lights-main
+title: Lights
 icon: mdi:lightbulb
-dense_section_placement: true
-sections:
-  - type: grid
-    cards:
-      - type: custom:stack-in-card
-        mode: horizontal
-        card_mod:
-          style: |
-            ha-card {
-              background: "rgb(92, 83, 103)";
-              border-radius: 20px;
-              padding: 10px 5px 10px 5px; 
-              }
-        cards:
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                content: Back
-                tap_action:
-                  action: navigate
-                  navigation_path: /mobile-dash/mobile-home
-                icon: mdi:chevron-left
-                card_mod:
-                  style: |
-                    :host {
-                      zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
-                    }  
-              - type: entity
-                entity: sensor.count_of_lights
-                tap_action:
-                  action: more-info
-                icon: mdi:lightbulb
-                icon_color: amber
-                card_mod:
-                  style: |
-                    :host {
-                      zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
-                    }    
-      - type: custom:expander-card
-        expanded: true
-        title-card-clickable: true
-        title-card:
-          type: custom:bubble-card
-          card_type: separator
-          name: Scenes
-          icon: mdi:lightbulb-auto
-          rows: 0.75
-          styles: |
-            .bubble-name {
-              font-size: 20px !important;  /* title */
-              font-weight: bold !important;
-            }
-            .bubble-sub-button 
-            {
-              font-size: 20px !important;
-              font-weight: 700 !important;
-            }
-            .bubble-line {
-              background: var(--primary-text-color);
-              opacity: 0.1;
-            }
-            .card-content {
-              padding-top: 7px !important;
-            }
-        cards:
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_good_morning
-                name: Good Morning
-                icon: mdi:weather-sunset-up
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.good_morning_2
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.good_morning_2
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_first_floor_evening
-                name: Evening
-                icon: mdi:weather-sunset-down
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.evening
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.evening
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_first_floor_entertaining
-                name: Entertaining
-                icon: mdi:party-popper
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.entertaining
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.entertaining
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_emergency
-                name: Emergency
-                icon: mdi:hospital
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.emergency
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.emergency
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_nightlight
-                name: Nightlight
-                icon: mdi:lightbulb-night
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.nightlight
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.nightlight
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_good_night
-                name: Good Night
-                icon: mdi:moon-waning-crescent
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.good_night
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.good_night
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }   
-      - type: custom:expander-card
-        expanded: false
-        title-card-clickable: true
-        title-card:
-          type: custom:bubble-card
-          card_type: separator
-          name: First Floor
-          icon: mdi:home-floor-1
-          rows: 0.75
-          styles: |
-            .bubble-name {
-              font-size: 20px !important;  /* title */
-              font-weight: bold !important;
-            }
-            .bubble-sub-button 
-            {
-              font-size: 20px !important;
-              font-weight: 700 !important;
-            }
-            .bubble-line {
-              background: var(--primary-text-color);
-              opacity: 0.1;
-            }
-            .card-content {
-              padding-top: 7px !important;
-            }
-        cards:
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_first_floor_cleaning
-                name: Cleaning
-                icon: mdi:spray
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.first_floor_cleaning
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.first_floor_cleaning
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-              - type: custom:bubble-card
-                card_type: separator
-                name: Living Room
-                icon: mdi:sofa
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.living_room_main_lights
-                name: Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.living_room_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.living_room_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.living_room_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.living_room_floor_lamps
-                name: Floor Lamps
-                icon: mdi:floor-lamp
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.living_room_floor_lamps
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.living_room_floor_lamps
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.living_room_floor_lamps
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-              - type: custom:bubble-card
-                card_type: separator
-                name: Kitchen
-                icon: mdi:stove
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.kitchen_main_lights
-                name: Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.kitchen_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.kitchen_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.kitchen_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.kitchen_outer_wall
-                name: Outer Wall
-                icon: mdi:spotlight-beam
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.kitchen_outer_wall
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.kitchen_outer_wall
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.kitchen_outer_wall
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.kitchen_island_pendants
-                name: Island Pendants
-                icon: mdi:ceiling-light-multiple
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.kitchen_island_pendants
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.kitchen_island_pendants
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.kitchen_island_pendants
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.kitchen_window_seat_sconce
-                name: Window Seat Sconce
-                icon: mdi:wall-sconce
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.kitchen_window_seat_sconce
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.kitchen_window_seat_sconce
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.kitchen_window_seat_sconce
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-              - type: custom:bubble-card
-                card_type: separator
-                name: Dining Room
-                icon: mdi:food-fork-drink
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.dining_room_main_lights
-                name: Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.dining_room_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.dining_room_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.dining_room_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.dining_room_table_lamps
-                name: Table Lamps
-                icon: mdi:lamps
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.dining_room_table_lamps
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.dining_room_table_lamps
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.dining_room_table_lamps
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.dining_room_accent_lights
-                name: Accent Light
-                icon: mdi:spotlight-beam
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.dining_room_accent_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.dining_room_accent_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.dining_room_accent_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-      - type: custom:expander-card
-        expanded: false
-        title-card-clickable: true
-        title-card:
-          type: custom:bubble-card
-          card_type: separator
-          name: Basement
-          icon: mdi:home-floor-b
-          rows: 0.75
-          styles: >
-            .bubble-name { font-size: 20px !important; font-weight: bold
-            !important; }
-            .bubble-sub-button { font-size: 20px !important; font-weight:
-            700 !important; }
-            .bubble-line { background: var(--primary-text-color); opacity:
-            0.1; }
-            .card-content { padding-top: 7px !important; }
-        cards:
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_basement_entertaining
-                name: Entertaining
-                icon: mdi:party-popper
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.basement_entertaining
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.basement_entertaining
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_basement_evening
-                name: Evening
-                icon: mdi:lamp
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.basement_evening
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.basement_evening
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene2_basement_cleaning
-                name: Cleaning
-                icon: mdi:spray
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.basement_cleaning
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.basement_cleaning
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-              - type: custom:bubble-card
-                card_type: separator
-                name: Media Room
-                icon: mdi:sofa
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.gym_main_lights
-                name: Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.gym_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.gym_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.gym_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.media_room_table_lamp
-                name: Table Lamp
-                icon: mdi:floor-lamp
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.media_room_table_lamp
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.media_room_table_lamp
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.media_room_table_lamp
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: separator
-                name: Mudroom
-                icon: mdi:washing-machine
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.laundry_room_main_lights
-                name: Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.laundry_room_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.laundry_room_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.laundry_room_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: separator
-                name: Hallway
-                icon: mdi:bench
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.basement_hallway_main_lights
-                name: Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.basement_hallway_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.basement_hallway_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.basement_hallway_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: separator
-                name: Gym
-                icon: mdi:weight-lifter
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.gym_main_lights
-                name: Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.gym_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.gym_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.gym_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.stairs_main_lights
-                name: Stairs
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.stairs_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.stairs_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.stairs_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.stairs_spot_lights
-                name: Accent Light
-                icon: mdi:spotlight-beam
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.stairs_spot_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.stairs_spot_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.stairs_spot_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-      - type: custom:expander-card
-        expanded: false
-        title-card-clickable: true
-        title-card:
-          type: custom:bubble-card
-          card_type: separator
-          name: Second Floor
-          icon: mdi:home-floor-2
-          rows: 0.75
-          styles: >
-            .bubble-name { font-size: 20px !important; font-weight: bold
-            !important; }
-            .bubble-sub-button { font-size: 20px !important; font-weight:
-            700 !important; }
-            .bubble-line { background: var(--primary-text-color); opacity:
-            0.1; }
-            .card-content { padding-top: 7px !important; }
-        cards:
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_upstairs_evening
-                name: Evening
-                icon: mdi:lamp
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.upstairs_evening
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.upstairs_evening
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_nightlight
-                name: Nightlight
-                icon: mdi:lightbulb-night
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.nightlight
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.nightlight
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-              - type: custom:bubble-card
-                card_type: separator
-                name: Hallway
-                icon: mdi:stairs
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.upstairs_hallway_main_lights
-                name: Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.upstairs_hallway_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.upstairs_hallway_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.upstairs_hallway_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: separator
-                name: Office
-                icon: mdi:desk-lamp
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.office_main_lights
-                name: Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.office_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.office_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.office_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.office_floor_lamp
-                name: Floor Lamp
-                icon: mdi:floor-lamp
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.office_floor_lamp
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.office_floor_lamp
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.office_floor_lamp
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.eve_light_strip_a5a4
-                name: Desk Accent
-                icon: mdi:light-flood-down
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.eve_light_strip_a5a4
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.eve_light_strip_a5a4
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.eve_light_strip_a5a4
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: separator
-                name: Bedroom
-                icon: mdi:bench
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.master_bedroom_main_lights
-                name: Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.master_bedroom_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.master_bedroom_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.master_bedroom_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.master_bedroom_closet_light
-                name: Hallway Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.master_bedroom_closet_light
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.master_bedroom_closet_light
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.master_bedroom_closet_light
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.master_bedroom_sconces
-                name: Sconces
-                icon: mdi:wall-sconce
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.master_bedroom_sconces
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.master_bedroom_sconces
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.master_bedroom_sconces
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                entity: switch.bedroom_floor_lamp_switch
-                name: Floor Lamp
-                icon: mdi:floor-lamp
-                show_state: false
-                tap_action:
-                  action: perform-action
-                  perform_action: switch.toggle
-                  target:
-                    entity_id: switch.bedroom_floor_lamp_switch
-                scrolling_effect: false
-                use_accent_color: false
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-              - type: custom:bubble-card
-                card_type: separator
-                name: Primary Bathroom
-                icon: mdi:shower-head
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.master_bathroom_main_lights
-                name: Main Lights
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.master_bathroom_main_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.master_bathroom_main_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.master_bathroom_main_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.master_bathroom_vanity_lights
-                name: Vanity Lights
-                icon: mdi:wall-sconce
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.master_bathroom_vanity_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.master_bathroom_vanity_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.master_bathroom_vanity_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-      - type: custom:expander-card
-        expanded: false
-        title-card-clickable: true
-        title-card:
-          type: custom:bubble-card
-          card_type: separator
-          name: Outdoor
-          icon: mdi:outdoor-lamp
-          rows: 0.75
-          styles: >
-            .bubble-name { font-size: 20px !important; font-weight: bold
-            !important; }
-            .bubble-sub-button { font-size: 20px !important; font-weight:
-            700 !important; }
-            .bubble-line { background: var(--primary-text-color); opacity:
-            0.1; }
-            .card-content { padding-top: 7px !important; }
-        cards:
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_outdoor_on
-                name: Evening
-                icon: mdi:outdoor-lamp
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.outdoor_on
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.outdoor_on
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_outdoor_on_bright
-                name: Bright
-                icon: mdi:lightbulb-on
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.outdoor_on_bright
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.outdoor_on_bright
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_outdoor_off
-                name: All Off
-                icon: mdi:lightbulb-off-outline
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.outdoor_off
-                    data:
-                      transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.outdoor_off
-                  data:
-                    transition: 3
-                card_layout: large
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-              - type: custom:bubble-card
-                card_type: separator
-                name: Front
-                icon: mdi:stairs
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.front_porch_overhead_light
-                name: Entry
-                icon: mdi:light-recessed
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.front_porch_overhead_light
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.front_porch_overhead_light
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.front_porch_overhead_light
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: switch
-                entity: switch.transformer_zone_1
-                name: Path
-                icon: mdi:lamp
-                show_state: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: switch.toggle
-                    target:
-                      entity_id: switch.transformer_zone_1
-                tap_action:
-                  action: perform-action
-                  perform_action: switch.toggle
-                  target:
-                    entity_id: switch.transformer_zone_1
-                scrolling_effect: false
-                use_accent_color: false
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: switch.transformer_zone_1
-                    show_state: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-              - type: custom:bubble-card
-                card_type: button
-                button_type: switch
-                entity: switch.transformer_zone_2
-                name: Tree Spotlights
-                icon: mdi:light-flood-up
-                show_state: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: switch.toggle
-                    target:
-                      entity_id: switch.transformer_zone_2
-                tap_action:
-                  action: perform-action
-                  perform_action: switch.toggle
-                  target:
-                    entity_id: switch.transformer_zone_2
-                scrolling_effect: false
-                use_accent_color: false
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: switch.transformer_zone_2
-                    show_state: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-              - type: custom:bubble-card
-                card_type: separator
-                name: Pool
-                icon: mdi:pool
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.patio_back_porch_lights
-                name: Door
-                icon: mdi:outdoor-lamp
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.patio_back_porch_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.patio_back_porch_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.patio_back_porch_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: switch
-                entity: switch.transformer_zone_3
-                name: Retaining Wall
-                icon: mdi:light-flood-up
-                show_state: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: switch.toggle
-                    target:
-                      entity_id: switch.transformer_zone_3
-                tap_action:
-                  action: perform-action
-                  perform_action: switch.toggle
-                  target:
-                    entity_id: switch.transformer_zone_3
-                scrolling_effect: false
-                use_accent_color: false
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }                      
-                sub_button:
-                  - entity: switch.transformer_zone_3
-                    show_state: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.omnilogic_pool_color_lights
-                name: Pool
-                icon: mdi:pool
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.omnilogic_pool_color_lights
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.omnilogic_pool_color_lights
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.omnilogic_pool_color_lights
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: separator
-                name: Driveway
-                icon: mdi:car-multiple
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: slider
-                entity: light.driveway_sconces
-                name: Deck and Driveway Sconces
-                icon: mdi:outdoor-lamp
-                show_state: false
-                slider_live_update: false
-                read_only_slider: false
-                tap_to_slide: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: light.toggle
-                    data:
-                      brightness_pct: 25
-                    target:
-                      entity_id: light.driveway_sconces
-                tap_action:
-                  action: perform-action
-                  perform_action: light.toggle
-                  data:
-                    brightness_pct: 25
-                  target:
-                    entity_id: light.driveway_sconces
-                scrolling_effect: false
-                use_accent_color: false
-                styles: >
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: light.driveway_sconces
-                    show_state: true
-                    show_attribute: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-                    attribute: brightness
-                modules:
-                  - light_card_mobile
-              - type: custom:bubble-card
-                card_type: button
-                button_type: switch
-                entity: switch.driveway_zone_2_2
-                name: Path
-                icon: mdi:lamp
-                show_state: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: switch.toggle
-                    target:
-                      entity_id: switch.driveway_zone_2_2
-                tap_action:
-                  action: perform-action
-                  perform_action: switch.toggle
-                  target:
-                    entity_id: switch.driveway_zone_2_2
-                scrolling_effect: false
-                use_accent_color: false
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: switch.driveway_zone_2_2
-                    show_state: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-              - type: custom:bubble-card
-                card_type: button
-                button_type: switch
-                entity: switch.driveway_zone_1_2
-                name: Tree Spotlights
-                icon: mdi:light-flood-up
-                show_state: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: switch.toggle
-                    target:
-                      entity_id: switch.driveway_zone_1_2
-                tap_action:
-                  action: perform-action
-                  perform_action: switch.toggle
-                  target:
-                    entity_id: switch.driveway_zone_1_2
-                scrolling_effect: false
-                use_accent_color: false
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: switch.driveway_zone_1_2
-                    show_state: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-              - type: custom:bubble-card
-                card_type: separator
-                name: Firepit
-                icon: mdi:fire
-                rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 16px !important; font-weight:
-                  bold !important; }
-                  .bubble-line { background: var(--primary-text-color);
-                  opacity: 0.1; }
-                  .card-content { padding-top: 7px !important; }
-              - type: custom:bubble-card
-                card_type: button
-                button_type: switch
-                entity: switch.driveway_zone_3_2
-                name: Path
-                icon: mdi:lamp
-                show_state: false
-                button_action:
-                  tap_action:
-                    action: perform-action
-                    perform_action: switch.toggle
-                    target:
-                      entity_id: switch.driveway_zone_3_2
-                tap_action:
-                  action: perform-action
-                  perform_action: switch.toggle
-                  target:
-                    entity_id: switch.driveway_zone_3_2
-                scrolling_effect: false
-                use_accent_color: false
-                styles: |
-                  .bubble-name { font-size: 16px !important; }
-                  .bubble-sub-button { font-size: 14px !important;
-                  font-weight: bold; }
-                sub_button:
-                  - entity: switch.driveway_zone_3_2
-                    show_state: true
-                    show_icon: false
-                    state_background: false
-                    show_background: false
-header:
-  layout: start
-  badges_position: bottom
-  badges_wrap: scroll
-  card:
-    type: markdown
-    content: |
-      # <ha-icon icon="mdi:lightbulb"></ha-icon> Lights
-card_mod:
-  style: |
-    .: |
-      .badge-container ha-state-label-badge {
-        --ha-label-badge-size: 58px;
-        --ha-label-badge-font-size: 18px;
-        --mdc-icon-size: 26px;
-        border-radius: 28px;
-        background: var(--secondary-background-color);
-        color: var(--primary-text-color);
-      }
-badges: null
 theme: Bubble
-cards: []
+path: lights-main
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 15px
+        - padding-bottom: 5px
+        - padding-left: 5px
+        - padding-right: 10px
+        - padding-top: 2px
+        - margin: -8px
+        - height: auto
+        - width: 398px
+      grid:
+        - grid-template-areas: |
+            "header"
+            "chips"
+            "scenes"
+            "first"
+            "basement"
+            "second"
+            "outdoor"
+        - grid-template-columns: auto
+        - grid-template-rows: 60px 60px auto auto
+        - row-gap: 0px
+        - align-items: start
+        - column-gap: 2px
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          show_state: false
+          show_name: false
+          show_icon: false
+          styles:
+            card:
+              - background-color: transparent
+              - padding-bottom: 5px
+              - padding-top: 0px
+            grid:
+              - grid-template-areas: |
+                  "name gap"
+              - grid-template-columns: 150px auto
+              - grid-template-rows: 60px
+              - column-gap: 0px
+            main:
+          custom_fields:
+            name:
+              card:
+                type: custom:button-card
+                show_state: false
+                show_name: true
+                show_icon: true
+                show_label: false
+                layout: icon_name
+                icon: mdi:lightbulb
+                name: Lights
+                size: 60%
+                icon_color: var(--primary-text-color)
+                styles: 
+                  name: 
+                    - font-size: 22px
+                    - font-weight: bold
+                  card:
+                    - align-items: start
+                    - justify-content: flex-start 
+                    - text-align: left
+                    - padding-left: 8px
+      chips:
+        card:
+          type: custom:mushroom-chips-card
+          card_mod:
+            style: |
+              ha-card {
+                overflow: hidden !important;
+              }
+              ha-card > * {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                gap: 8px !important;
+              }
+              ha-card > * > * {
+                flex-shrink: 0 !important;
+              }
+              /* More aggressive targeting */
+              ha-card ::-webkit-scrollbar {
+                height: 4px;
+              }
+              ha-card ::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              ha-card ::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 2px;
+              }
+              /* Try to target all possible chip containers */
+              mushroom-chips,
+              .chip-container,
+              [class*="chip"] {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                width: 100% !important;
+              }
+              mushroom-chip,
+              [class*="chip"]:not([class*="container"]) {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+              }
+          chips:
+            - type: template
+              content: Back
+              tap_action:
+                action: navigate
+                navigation_path: /mobile-dash/mobile-home
+              icon: mdi:chevron-left
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color-2);
+                  }
+            - type: entity
+              entity: sensor.count_of_lights
+              tap_action:
+                action: more-info
+              icon: mdi:lightbulb
+              icon_color: amber
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color-2);
+                  }  
+      scenes:
+        card: !include modules/first-floor-scenes.yaml
+      first:
+        card: 
+        - type: custom:expander-card
+          expanded: false
+          title-card-clickable: true
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: First Floor
+            icon: mdi:home-floor-1
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          cards: !include modules/first-floor-lights-individual.yaml
+      basement:
+        card:
+        - type: custom:expander-card
+          expanded: false
+          title-card-clickable: true
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Basement
+            icon: mdi:home-floor-b
+            rows: 0.75
+            styles: >
+              .bubble-name { font-size: 20px !important; font-weight: bold
+              !important; }
+              .bubble-sub-button { font-size: 20px !important; font-weight:
+              700 !important; }
+              .bubble-line { background: var(--primary-text-color); opacity:
+              0.1; }
+              .card-content { padding-top: 7px !important; }
+          cards: !include modules/basement-lights-individual.yaml
+      second:
+        card:
+        - type: custom:expander-card
+          expanded: false
+          title-card-clickable: true
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Second Floor
+            icon: mdi:home-floor-2
+            rows: 0.75
+            styles: >
+              .bubble-name { font-size: 20px !important; font-weight: bold
+              !important; }
+              .bubble-sub-button { font-size: 20px !important; font-weight:
+              700 !important; }
+              .bubble-line { background: var(--primary-text-color); opacity:
+              0.1; }
+              .card-content { padding-top: 7px !important; }
+          cards: !include modules/second-floor-lights-individual.yaml
+      outdoor:
+        card:
+        - type: custom:expander-card
+          expanded: false
+          title-card-clickable: true
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Outdoor
+            icon: mdi:outdoor-lamp
+            rows: 0.75
+            styles: >
+              .bubble-name { font-size: 20px !important; font-weight: bold
+              !important; }
+              .bubble-sub-button { font-size: 20px !important; font-weight:
+              700 !important; }
+              .bubble-line { background: var(--primary-text-color); opacity:
+              0.1; }
+              .card-content { padding-top: 7px !important; }
+          cards: !include modules/outdoor-lights-individual.yaml

@@ -1,0 +1,179 @@
+- type: custom:expander-card
+  expanded: true
+  title-card-clickable: true
+  title-card:
+    type: custom:bubble-card
+    card_type: separator
+    name: Scenes
+    icon: mdi:lightbulb-auto
+    rows: 0.75
+    styles: |
+      .bubble-name {
+        font-size: 20px !important;  /* title */
+        font-weight: bold !important;
+      }
+      .bubble-sub-button 
+      {
+        font-size: 20px !important;
+        font-weight: 700 !important;
+      }
+      .bubble-line {
+        background: var(--primary-text-color);
+        opacity: 0.1;
+      }
+      .card-content {
+        padding-top: 7px !important;
+      }
+  cards:
+    - type: vertical-stack
+      cards:
+        - type: custom:bubble-card
+          card_type: button
+          entity: sensor.scene_good_morning
+          name: Good Morning
+          icon: mdi:weather-sunset-up
+          button_action:
+            tap_action:
+              action: perform-action
+              perform_action: scene.turn_on
+              target:
+                entity_id: scene.good_morning_2
+              data:
+                transition: 3
+          tap_action:
+            action: perform-action
+            perform_action: scene.turn_on
+            target:
+              entity_id: scene.good_morning_2
+            data:
+              transition: 3
+          card_layout: large
+          styles: |-
+            .bubble-name {
+                font-size: 16px !important;
+              }
+        - type: custom:bubble-card
+          card_type: button
+          entity: sensor.scene_first_floor_evening
+          name: Evening
+          icon: mdi:weather-sunset-down
+          button_action:
+            tap_action:
+              action: perform-action
+              perform_action: scene.turn_on
+              target:
+                entity_id: scene.evening
+              data:
+                transition: 3
+          tap_action:
+            action: perform-action
+            perform_action: scene.turn_on
+            target:
+              entity_id: scene.evening
+            data:
+              transition: 3
+          card_layout: large
+          styles: |-
+            .bubble-name {
+                font-size: 16px !important;
+              }
+        - type: custom:bubble-card
+          card_type: button
+          entity: sensor.scene_first_floor_entertaining
+          name: Entertaining
+          icon: mdi:party-popper
+          button_action:
+            tap_action:
+              action: perform-action
+              perform_action: scene.turn_on
+              target:
+                entity_id: scene.entertaining
+              data:
+                transition: 3
+          tap_action:
+            action: perform-action
+            perform_action: scene.turn_on
+            target:
+              entity_id: scene.entertaining
+            data:
+              transition: 3
+          card_layout: large
+          styles: |-
+            .bubble-name {
+                font-size: 16px !important;
+              }
+        - type: custom:bubble-card
+          card_type: button
+          entity: sensor.scene_emergency
+          name: Emergency
+          icon: mdi:hospital
+          button_action:
+            tap_action:
+              action: perform-action
+              perform_action: scene.turn_on
+              target:
+                entity_id: scene.emergency
+              data:
+                transition: 3
+          tap_action:
+            action: perform-action
+            perform_action: scene.turn_on
+            target:
+              entity_id: scene.emergency
+            data:
+              transition: 3
+          card_layout: large
+          styles: |-
+            .bubble-name {
+                font-size: 16px !important;
+              }
+        - type: custom:bubble-card
+          card_type: button
+          entity: sensor.scene_nightlight
+          name: Nightlight
+          icon: mdi:lightbulb-night
+          button_action:
+            tap_action:
+              action: perform-action
+              perform_action: scene.turn_on
+              target:
+                entity_id: scene.nightlight
+              data:
+                transition: 3
+          tap_action:
+            action: perform-action
+            perform_action: scene.turn_on
+            target:
+              entity_id: scene.nightlight
+            data:
+              transition: 3
+          card_layout: large
+          styles: |-
+            .bubble-name {
+                font-size: 16px !important;
+              }
+        - type: custom:bubble-card
+          card_type: button
+          entity: sensor.scene_good_night
+          name: Good Night
+          icon: mdi:moon-waning-crescent
+          button_action:
+            tap_action:
+              action: perform-action
+              perform_action: scene.turn_on
+              target:
+                entity_id: scene.good_night
+              data:
+                transition: 3
+          tap_action:
+            action: perform-action
+            perform_action: scene.turn_on
+            target:
+              entity_id: scene.good_night
+            data:
+              transition: 3
+          card_layout: large
+          styles: |-
+            .bubble-name {
+                font-size: 16px !important;
+              }
