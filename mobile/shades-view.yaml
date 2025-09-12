@@ -1,244 +1,199 @@
-title: Shades - Main
-type: sections
-max_columns: 1
-path: shades-main
+title: Shades
 icon: mdi:roller-shade
-dense_section_placement: true
-sections:
-  - type: grid
-    cards:
-      - type: custom:stack-in-card
-        mode: horizontal
-        card_mod:
-          style: |
-            ha-card {
-              background: "rgb(92, 83, 103)";
-              border-radius: 20px;
-              padding: 10px 5px 10px 5px; 
+theme: Bubble
+path: shades-main
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 15px
+        - padding-bottom: 5px
+        - padding-left: 5px
+        - padding-right: 10px
+        - padding-top: 2px
+        - margin: -8px
+        - height: auto
+        - width: 398px
+      grid:
+        - grid-template-areas: |
+            "header"
+            "chips"
+            "groups"
+            "first"
+            "bedroom"
+        - grid-template-columns: auto
+        - grid-template-rows: 60px 60px auto auto
+        - row-gap: 0px
+        - align-items: start
+        - column-gap: 2px
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          show_state: false
+          show_name: false
+          show_icon: false
+          styles:
+            card:
+              - background-color: transparent
+              - padding-bottom: 5px
+              - padding-top: 0px
+            grid:
+              - grid-template-areas: |
+                  "name gap"
+              - grid-template-columns: 150px auto
+              - grid-template-rows: 60px
+              - column-gap: 0px
+            main:
+          custom_fields:
+            name:
+              card:
+                type: custom:button-card
+                show_state: false
+                show_name: true
+                show_icon: true
+                show_label: false
+                layout: icon_name
+                icon: mdi:roller-shade
+                name: Shades
+                size: 60%
+                icon_color: var(--primary-text-color)
+                styles: 
+                  name: 
+                    - font-size: 22px
+                    - font-weight: bold
+                  card:
+                    - align-items: start
+                    - justify-content: flex-start 
+                    - text-align: left
+                    - padding-left: 8px
+      chips:
+        card:
+          type: custom:mushroom-chips-card
+          card_mod:
+            style: |
+              ha-card {
+                overflow: hidden !important;
               }
-        cards:
-          - type: custom:mushroom-chips-card
-            card_mod:
-              style: |
-                ha-card {
-                  overflow: hidden !important;
-                }
-                ha-card > * {
-                  display: flex !important;
-                  flex-wrap: nowrap !important;
-                  overflow-x: auto !important;
-                  overflow-y: hidden !important;
-                  gap: 8px !important;
-                }
-                ha-card > * > * {
-                  flex-shrink: 0 !important;
-                }
-                /* More aggressive targeting */
-                ha-card ::-webkit-scrollbar {
-                  height: 4px;
-                }
-                ha-card ::-webkit-scrollbar-track {
-                  background: transparent;
-                }
-                ha-card ::-webkit-scrollbar-thumb {
-                  background: rgba(255, 255, 255, 0.3);
-                  border-radius: 2px;
-                }
-                /* Try to target all possible chip containers */
-                mushroom-chips,
-                .chip-container,
-                [class*="chip"] {
-                  display: flex !important;
-                  flex-wrap: nowrap !important;
-                  overflow-x: auto !important;
-                  overflow-y: hidden !important;
-                  width: 100% !important;
-                }
-                mushroom-chip,
-                [class*="chip"]:not([class*="container"]) {
-                  flex-shrink: 0 !important;
-                  white-space: nowrap !important;
-                }
-            chips:
-              - type: template
-                content: Back
-                tap_action:
-                  action: navigate
-                  navigation_path: /mobile-dash/mobile-home
-                icon: mdi:chevron-left
-                card_mod:
-                  style: |
-                    :host {
-                      zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
-                    }
-      - type: custom:expander-card
-        expanded: true
-        title-card-clickable: true
-        title-card:
-          type: custom:bubble-card
-          card_type: separator
-          name: Groups
-          icon: mdi:roller-shade
-          rows: 0.75
-          styles: |
-            .bubble-name {
-              font-size: 20px !important;  /* title */
-              font-weight: bold !important;
-            }
-            .bubble-sub-button 
-            {
-              font-size: 20px !important;
-              font-weight: 700 !important;
-            }
-            .bubble-line {
-              background: var(--primary-text-color);
-              opacity: 0.1;
-            }
-            .card-content {
-              padding-top: 7px !important;
-            }
-        cards:
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.first_floor_all
-                name: First Floor - All
-                scrolling_effect: false
-                show_state: true
-                tap_action:
-                  action: toggle
-                button_action: {}
-                sub_button:
-                  - entity: cover.first_floor_all
-                    icon: mdi:sun-angle
-                    state_background: false
-                    show_state: false
-                    tap_action:
-                      action: perform-action
-                      perform_action: cover.set_cover_position
-                      target:
-                        entity_id: cover.first_floor_all
-                      data:
-                        position: 55
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.first_floor_front
-                name: First Floor - Front
-                scrolling_effect: false
-                show_state: true
-                tap_action:
-                  action: toggle
-                button_action: {}
-                sub_button:
-                  - entity: cover.first_floor_front
-                    icon: mdi:sun-angle
-                    state_background: false
-                    show_state: false
-                    tap_action:
-                      action: perform-action
-                      perform_action: cover.set_cover_position
-                      target:
-                        entity_id: cover.first_floor_front
-                      data:
-                        position: 55
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.living_room_side_shades
-                name: Living Room - Side
-                scrolling_effect: false
-                show_state: true
-                tap_action:
-                  action: toggle
-                button_action: {}
-                sub_button:
-                  - entity: cover.living_room_side_shades
-                    icon: mdi:sun-angle
-                    state_background: false
-                    show_state: false
-                    tap_action:
-                      action: perform-action
-                      perform_action: cover.set_cover_position
-                      target:
-                        entity_id: cover.living_room_side_shades
-                      data:
-                        position: 55
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.dining_room_side
-                name: Dining Room - Side
-                scrolling_effect: false
-                show_state: true
-                tap_action:
-                  action: toggle
-                button_action: {}
-                sub_button:
-                  - entity: cover.dining_room_side
-                    icon: mdi:sun-angle
-                    state_background: false
-                    show_state: false
-                    tap_action:
-                      action: perform-action
-                      perform_action: cover.set_cover_position
-                      target:
-                        entity_id: cover.dining_room_side
-                      data:
-                        position: 55
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-      - type: custom:expander-card
-        expanded: false
-        title-card-clickable: true
-        title-card:
-          type: custom:bubble-card
-          card_type: separator
-          name: First Floor
-          icon: mdi:home-floor-1
-          rows: 0.75
-          styles: |
-            .bubble-name {
-              font-size: 20px !important;  /* title */
-              font-weight: bold !important;
-            }
-            .bubble-sub-button 
-            {
-              font-size: 20px !important;
-              font-weight: 700 !important;
-            }
-            .bubble-line {
-              background: var(--primary-text-color);
-              opacity: 0.1;
-            }
-            .card-content {
-              padding-top: 7px !important;
-            }
-        cards:
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
+              ha-card > * {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                gap: 8px !important;
+              }
+              ha-card > * > * {
+                flex-shrink: 0 !important;
+              }
+              /* More aggressive targeting */
+              ha-card ::-webkit-scrollbar {
+                height: 4px;
+              }
+              ha-card ::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              ha-card ::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 2px;
+              }
+              /* Try to target all possible chip containers */
+              mushroom-chips,
+              .chip-container,
+              [class*="chip"] {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                width: 100% !important;
+              }
+              mushroom-chip,
+              [class*="chip"]:not([class*="container"]) {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+              }
+          chips:
+            - type: template
+              content: Back
+              tap_action:
+                action: navigate
+                navigation_path: /mobile-dash/mobile-home
+              icon: mdi:chevron-left
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color-2);
+                  }
+          groups:
+            card:
+              type: custom:stack-in-card
+              mode: vertical
+              card_mod:
+                style: |
+                  ha-card {
+                    background: "rgb(92, 83, 103)";
+                    border-radius: 20px;
+                    padding: 12px 12px 4px;       /* top / sides / bottom */
+              cards:
+                - type: vertical-stack
+                  cards: 
+                    - type: custom:bubble-card
+                      card_type: separator
+                      name: Living Room
+                      icon: mdi:sofa
+                      rows: 0.75
+                      styles: |
+                        .bubble-name {
+                          font-size: 16px !important;  /* title */
+                          font-weight: bold !important;
+                        }
+                        .bubble-line {
+                          background: var(--primary-text-color);
+                          opacity: 0.1;
+                        }
+                        .card-content {
+                          padding-top: 7px !important;
+                        }
+                    - !include modules/first-floor-shades-groups.yaml
+                    - type: custom:bubble-card
+                      card_type: separator
+                      name: Primary Bedroom
+                      icon: mdi:bed-king
+                      rows: 0.75
+                      styles: |
+                        .bubble-name {
+                          font-size: 16px !important;  /* title */
+                          font-weight: bold !important;
+                        }
+                        .bubble-line {
+                          background: var(--primary-text-color);
+                          opacity: 0.1;
+                        }
+                        .card-content {
+                          padding-top: 7px !important;
+                        }
+                    - !include modules/bedroom-shades-groups.yaml
+          first:
+            card:
+              type: custom:expander-card
+              expanded: false
+              title-card-clickable: true
+              title-card:
+                type: custom:bubble-card
                 card_type: separator
-                name: Living Room
-                icon: mdi:sofa
+                name: First Floor
+                icon: mdi:home-floor-1
                 rows: 0.75
                 styles: |
                   .bubble-name {
-                    font-size: 16px !important;  /* title */
+                    font-size: 20px !important;  /* title */
                     font-weight: bold !important;
+                  }
+                  .bubble-sub-button 
+                  {
+                    font-size: 20px !important;
+                    font-weight: 700 !important;
                   }
                   .bubble-line {
                     background: var(--primary-text-color);
@@ -247,303 +202,29 @@ sections:
                   .card-content {
                     padding-top: 7px !important;
                   }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.living_room_front_left_cover
-                name: Front Left
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.living_room_front_left_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.living_room_front_right
-                name: Front Right
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.living_room_front_right_battery
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.living_room_side_left_1_cover
-                name: Side Left 1
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.living_room_side_left_1_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.living_room_side_left_2_cover_2
-                name: Side Left 2
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.living_room_side_left_2_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.living_room_side_right_1_cover
-                name: Side Right 1
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.living_room_side_right_1_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.living_room_side_right_2_cover
-                name: Side Right 2
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.living_room_side_right_2_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
+              cards:
+                - type: vertical-stack
+                  cards: !include modules/first-floor-shades-individuals.yaml
+          bedroom:
+            card:
+              type: custom:expander-card
+              expanded: false
+              title-card-clickable: true
+              title-card:
+                type: custom:bubble-card
                 card_type: separator
-                name: Dining Room
-                icon: mdi:food-fork-drink
-                rows: 0.75
-                styles: |
-                  .bubble-name {
-                    font-size: 16px !important;  /* title */
-                    font-weight: bold !important;
-                  }
-                  .bubble-line {
-                    background: var(--primary-text-color);
-                    opacity: 0.1;
-                  }
-                  .card-content {
-                    padding-top: 7px !important;
-                  }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.front_right_cover
-                name: Front Right
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.front_right_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                button_type: slider
-                entity: cover.front_left_cover
-                name: Front Left
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.dining_room_front_left_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.side_right_cover
-                name: Side Right
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.side_right_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.side_left_cover
-                name: Side Left
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.side_left_battery_2
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-      - type: custom:expander-card
-        expanded: false
-        title-card-clickable: true
-        title-card:
-          type: custom:bubble-card
-          card_type: separator
-          name: Second Floor
-          icon: mdi:home-floor-2
-          rows: 0.75
-          styles: |
-            .bubble-name {
-              font-size: 20px !important;  /* title */
-              font-weight: bold !important;
-            }
-            .bubble-sub-button 
-            {
-              font-size: 20px !important;
-              font-weight: 700 !important;
-            }
-            .bubble-line {
-              background: var(--primary-text-color);
-              opacity: 0.1;
-            }
-            .card-content {
-              padding-top: 7px !important;
-            }
-        cards:
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: cover
-                button_type: slider
-                entity: cover.bedroom_side_shades
-                name: Bedroom Side
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: cover.bedroom_side_shades
-                    tap_action:
-                      action: perform-action
-                      perform_action: cover.set_cover_position
-                      target:
-                        entity_id: cover.bedroom_side_shades
-                      data:
-                        position: 55
-                    icon: mdi:sun-angle
-                    show_background: false
-                    show_state: false
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.bedroom_back
-                name: Bedroom Back
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: cover.bedroom_back
-                    tap_action:
-                      action: perform-action
-                      perform_action: cover.set_cover_position
-                      target:
-                        entity_id: cover.bedroom_back
-                      data:
-                        position: 55
-                    icon: mdi:sun-angle
-                    show_background: false
-                    show_state: false
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: separator
-                name: Bedroom
+                name: Primary Bedroom
                 icon: mdi:bed-king
                 rows: 0.75
                 styles: |
                   .bubble-name {
-                    font-size: 16px !important;  /* title */
+                    font-size: 20px !important;  /* title */
                     font-weight: bold !important;
+                  }
+                  .bubble-sub-button 
+                  {
+                    font-size: 20px !important;
+                    font-weight: 700 !important;
                   }
                   .bubble-line {
                     background: var(--primary-text-color);
@@ -552,193 +233,6 @@ sections:
                   .card-content {
                     padding-top: 7px !important;
                   }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.hallway_1
-                name: Hallway 1
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.hallway_1_battery
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.hallway_2
-                name: Hallway 2
-                icon: mdi:roller-shade
-                show_state: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.hallway_2_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.bedroom_right
-                name: Right
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.bedroom_right_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.bedroom_left
-                name: Left
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.bedroom_left_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.bedroom_back_1_cover
-                name: Back 1
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.bedroom_back_1_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.back_2
-                name: Back 2
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.back_2_battery
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.back_3
-                name: Back 3
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.back_3_battery
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.bedroom_back_4_cover
-                name: Back 4
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.bedroom_back_4_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-              - type: custom:bubble-card
-                card_type: cover
-                entity: cover.bedroom_back_5_cover
-                name: Back 5
-                icon: mdi:roller-shade
-                show_state: true
-                slider_live_update: true
-                card_layout: large
-                tap_action:
-                  action: toggle
-                sub_button:
-                  - entity: sensor.bedroom_back_5_battery_0
-                    icon: mdi:battery
-                    show_background: false
-                    show_state: true
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                    }
-badges: null
-theme: Bubble
-cards: []
-header:
-  card:
-    type: markdown
-    content: |
-      # <ha-icon icon="mdi:roller-shade"></ha-icon> Shades
-  layout: start
-card_mod:
-  style: |
-    .: |
-      .badge-container ha-state-label-badge {
-        --ha-label-badge-size: 58px;
-        --ha-label-badge-font-size: 18px;
-        --mdc-icon-size: 26px;
-        border-radius: 28px;
-        background: var(--secondary-background-color);
-        color: var(--primary-text-color);
-      }
+              cards:
+                - type: vertical-stack
+                  cards: !include modules/primary-bedroom-shades-individuals.yaml
