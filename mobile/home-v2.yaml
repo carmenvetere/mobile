@@ -86,7 +86,7 @@ cards:
                     - text-align: right
                     - padding-right: 15px
       chips:
-        card: !include chips.yaml
+        card: !include modules/chips.yaml
       notifications:
         card:
           type: conditional
@@ -137,7 +137,7 @@ cards:
                 }
             cards:
               - type: vertical-stack
-                cards: !include notifications.yaml
+                cards: !include modules/notifications.yaml
       menu:
         card:
           type: custom:stack-in-card
