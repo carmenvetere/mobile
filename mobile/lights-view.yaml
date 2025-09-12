@@ -169,7 +169,9 @@ cards:
               .card-content {
                 padding-top: 7px !important;
               }
-          cards: !include modules/first-floor-lights-individual.yaml
+          cards: 
+          - type: vertical-stack
+            cards: !include modules/first-floor-lights-individual.yaml
       basement:
         card:
         - type: custom:expander-card
