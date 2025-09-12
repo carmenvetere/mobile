@@ -29,11 +29,11 @@ cards:
           auto_hide_pagination: 0
           view_mode: single
           enable_auto_swipe: true
-          auto_swipe_interval: 2000
+          auto_swipe_interval: 3000
           card_mod:
             style: |
               :host {
-                --simple-swipe-card-padding-left: 10px;
+                --simple-swipe-card-padding-left: 7px;
                 --simple-swipe-card-padding-right: 10px;
                 }
           cards:
