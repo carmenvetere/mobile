@@ -1,0 +1,208 @@
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.living_room_front_left_cover
+  name: Front Left
+  icon: mdi:roller-shade
+  show_state: true
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.living_room_front_left_battery_0
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important;
+      }
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.living_room_front_right
+  name: Front Right
+  icon: mdi:roller-shade
+  show_state: true
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.living_room_front_right_battery
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important;
+      }
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.living_room_side_left_1_cover
+  name: Side Left 1
+  icon: mdi:roller-shade
+  show_state: true
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.living_room_side_left_1_battery_0
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important;
+      }
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.living_room_side_left_2_cover_2
+  name: Side Left 2
+  icon: mdi:roller-shade
+  show_state: true
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.living_room_side_left_2_battery_0
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important;
+      }
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.living_room_side_right_1_cover
+  name: Side Right 1
+  icon: mdi:roller-shade
+  show_state: true
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.living_room_side_right_1_battery_0
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important;
+      }
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.living_room_side_right_2_cover
+  name: Side Right 2
+  icon: mdi:roller-shade
+  show_state: true
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.living_room_side_right_2_battery_0
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important;
+      }
+- type: custom:bubble-card
+  card_type: separator
+  name: Dining Room
+  icon: mdi:food-fork-drink
+  rows: 0.75
+  styles: |
+    .bubble-name {
+      font-size: 16px !important;  /* title */
+      font-weight: bold !important;
+    }
+    .bubble-line {
+      background: var(--primary-text-color);
+      opacity: 0.1;
+    }
+    .card-content {
+      padding-top: 7px !important;
+    }
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.front_right_cover
+  name: Front Right
+  icon: mdi:roller-shade
+  show_state: true
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.front_right_battery_0
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important;
+      }
+- type: custom:bubble-card
+  card_type: cover
+  button_type: slider
+  entity: cover.front_left_cover
+  name: Front Left
+  icon: mdi:roller-shade
+  show_state: true
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.dining_room_front_left_battery_0
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important;
+      }
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.side_right_cover
+  name: Side Right
+  icon: mdi:roller-shade
+  show_state: true
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.side_right_battery_0
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important;
+      }
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.side_left_cover
+  name: Side Left
+  icon: mdi:roller-shade
+  show_state: true
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.side_left_battery_2
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important;
+      }
