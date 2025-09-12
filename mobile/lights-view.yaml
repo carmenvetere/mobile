@@ -191,7 +191,7 @@ cards:
               .bubble-line { background: var(--primary-text-color); opacity:
               0.1; }
               .card-content { padding-top: 7px !important; }
-          cards: !include modules/basement-lights-individual.yaml
+          card: !include modules/basement-lights-individual.yaml
       second:
         card:
         - type: custom:expander-card
