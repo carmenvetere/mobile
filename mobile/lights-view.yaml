@@ -170,8 +170,7 @@ cards:
                 padding-top: 7px !important;
               }
           cards: 
-          - type: vertical-stack
-            cards: !include modules/first-floor-lights-individual.yaml
+          - !include modules/first-floor-lights-individual.yaml
       basement:
         card:
         - type: custom:expander-card
@@ -191,7 +190,8 @@ cards:
               .bubble-line { background: var(--primary-text-color); opacity:
               0.1; }
               .card-content { padding-top: 7px !important; }
-          card: !include modules/basement-lights-individual.yaml
+          cards: 
+            - !include modules/basement-lights-individual.yaml
       second:
         card:
         - type: custom:expander-card
