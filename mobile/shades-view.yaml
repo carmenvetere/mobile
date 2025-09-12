@@ -155,7 +155,8 @@ cards:
                     .card-content {
                       padding-top: 7px !important;
                     }
-                - <<: !include modules/first-floor-shades-groups.yaml
+                - type: vertical-stack
+                  cards: !include modules/first-floor-shades-groups.yaml
                 - type: custom:bubble-card
                   card_type: separator
                   name: Primary Bedroom
@@ -173,7 +174,8 @@ cards:
                     .card-content {
                       padding-top: 7px !important;
                     }
-                - <<: !include modules/primary-bedroom-shades-groups.yaml
+                - type: vertical-stack
+                  cards: !include modules/primary-bedroom-shades-groups.yaml
       first:
         card:
           type: custom:expander-card
