@@ -1,18 +1,9 @@
-- type: vertical-stack
-  cards:
-  - type: custom:bubble-card
-    card_type: button
-    entity: sensor.scene_first_floor_cleaning
-    name: Cleaning
-    icon: mdi:spray
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: scene.turn_on
-        target:
-          entity_id: scene.first_floor_cleaning
-        data:
-          transition: 3
+- type: custom:bubble-card
+  card_type: button
+  entity: sensor.scene_first_floor_cleaning
+  name: Cleaning
+  icon: mdi:spray
+  button_action:
     tap_action:
       action: perform-action
       perform_action: scene.turn_on
@@ -20,38 +11,38 @@
         entity_id: scene.first_floor_cleaning
       data:
         transition: 3
-    card_layout: large
-    styles: |
-      .bubble-name { font-size: 16px !important; }
-  - type: custom:bubble-card
-    card_type: separator
-    name: Living Room
-    icon: mdi:sofa
-    rows: 0.75
-    styles: >
-      .bubble-name { font-size: 16px !important; font-weight:
-      bold !important; }
-      .bubble-line { background: var(--primary-text-color);
-      opacity: 0.1; }
-      .card-content { padding-top: 7px !important; }
-  - type: custom:bubble-card
-    card_type: button
-    button_type: slider
-    entity: light.living_room_main_lights
-    name: Main Lights
-    icon: mdi:light-recessed
-    show_state: false
-    slider_live_update: false
-    read_only_slider: false
-    tap_to_slide: false
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.living_room_main_lights
+  tap_action:
+    action: perform-action
+    perform_action: scene.turn_on
+    target:
+      entity_id: scene.first_floor_cleaning
+    data:
+      transition: 3
+  card_layout: large
+  styles: |
+    .bubble-name { font-size: 16px !important; }
+- type: custom:bubble-card
+  card_type: separator
+  name: Living Room
+  icon: mdi:sofa
+  rows: 0.75
+  styles: >
+    .bubble-name { font-size: 16px !important; font-weight:
+    bold !important; }
+    .bubble-line { background: var(--primary-text-color);
+    opacity: 0.1; }
+    .card-content { padding-top: 7px !important; }
+- type: custom:bubble-card
+  card_type: button
+  button_type: slider
+  entity: light.living_room_main_lights
+  name: Main Lights
+  icon: mdi:light-recessed
+  show_state: false
+  slider_live_update: false
+  read_only_slider: false
+  tap_to_slide: false
+  button_action:
     tap_action:
       action: perform-action
       perform_action: light.toggle
@@ -59,40 +50,40 @@
         brightness_pct: 25
       target:
         entity_id: light.living_room_main_lights
-    scrolling_effect: false
-    use_accent_color: false
-    styles: >
-      .bubble-name { font-size: 16px !important; }
-      .bubble-sub-button { font-size: 14px !important;
-      font-weight: bold; }
-    sub_button:
-      - entity: light.living_room_main_lights
-        show_state: true
-        show_attribute: true
-        show_icon: false
-        state_background: false
-        show_background: false
-        attribute: brightness
-    modules:
-      - light_card_mobile
-  - type: custom:bubble-card
-    card_type: button
-    button_type: slider
-    entity: light.living_room_floor_lamps
-    name: Floor Lamps
-    icon: mdi:floor-lamp
-    show_state: false
-    slider_live_update: false
-    read_only_slider: false
-    tap_to_slide: false
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.living_room_floor_lamps
+  tap_action:
+    action: perform-action
+    perform_action: light.toggle
+    data:
+      brightness_pct: 25
+    target:
+      entity_id: light.living_room_main_lights
+  scrolling_effect: false
+  use_accent_color: false
+  styles: >
+    .bubble-name { font-size: 16px !important; }
+    .bubble-sub-button { font-size: 14px !important;
+    font-weight: bold; }
+  sub_button:
+    - entity: light.living_room_main_lights
+      show_state: true
+      show_attribute: true
+      show_icon: false
+      state_background: false
+      show_background: false
+      attribute: brightness
+  modules:
+    - light_card_mobile
+- type: custom:bubble-card
+  card_type: button
+  button_type: slider
+  entity: light.living_room_floor_lamps
+  name: Floor Lamps
+  icon: mdi:floor-lamp
+  show_state: false
+  slider_live_update: false
+  read_only_slider: false
+  tap_to_slide: false
+  button_action:
     tap_action:
       action: perform-action
       perform_action: light.toggle
@@ -100,49 +91,49 @@
         brightness_pct: 25
       target:
         entity_id: light.living_room_floor_lamps
-    scrolling_effect: false
-    use_accent_color: false
-    styles: >
-      .bubble-name { font-size: 16px !important; }
-      .bubble-sub-button { font-size: 14px !important;
-      font-weight: bold; }
-    sub_button:
-      - entity: light.living_room_floor_lamps
-        show_state: true
-        show_attribute: true
-        show_icon: false
-        state_background: false
-        show_background: false
-        attribute: brightness
-  - type: custom:bubble-card
-    card_type: separator
-    name: Kitchen
-    icon: mdi:stove
-    rows: 0.75
-    styles: >
-      .bubble-name { font-size: 16px !important; font-weight:
-      bold !important; }
-      .bubble-line { background: var(--primary-text-color);
-      opacity: 0.1; }
-      .card-content { padding-top: 7px !important; }
-  - type: custom:bubble-card
-    card_type: button
-    button_type: slider
-    entity: light.kitchen_main_lights
-    name: Main Lights
-    icon: mdi:light-recessed
-    show_state: false
-    slider_live_update: false
-    read_only_slider: false
-    tap_to_slide: false
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.kitchen_main_lights
+  tap_action:
+    action: perform-action
+    perform_action: light.toggle
+    data:
+      brightness_pct: 25
+    target:
+      entity_id: light.living_room_floor_lamps
+  scrolling_effect: false
+  use_accent_color: false
+  styles: >
+    .bubble-name { font-size: 16px !important; }
+    .bubble-sub-button { font-size: 14px !important;
+    font-weight: bold; }
+  sub_button:
+    - entity: light.living_room_floor_lamps
+      show_state: true
+      show_attribute: true
+      show_icon: false
+      state_background: false
+      show_background: false
+      attribute: brightness
+- type: custom:bubble-card
+  card_type: separator
+  name: Kitchen
+  icon: mdi:stove
+  rows: 0.75
+  styles: >
+    .bubble-name { font-size: 16px !important; font-weight:
+    bold !important; }
+    .bubble-line { background: var(--primary-text-color);
+    opacity: 0.1; }
+    .card-content { padding-top: 7px !important; }
+- type: custom:bubble-card
+  card_type: button
+  button_type: slider
+  entity: light.kitchen_main_lights
+  name: Main Lights
+  icon: mdi:light-recessed
+  show_state: false
+  slider_live_update: false
+  read_only_slider: false
+  tap_to_slide: false
+  button_action:
     tap_action:
       action: perform-action
       perform_action: light.toggle
@@ -150,38 +141,38 @@
         brightness_pct: 25
       target:
         entity_id: light.kitchen_main_lights
-    scrolling_effect: false
-    use_accent_color: false
-    styles: >
-      .bubble-name { font-size: 16px !important; }
-      .bubble-sub-button { font-size: 14px !important;
-      font-weight: bold; }
-    sub_button:
-      - entity: light.kitchen_main_lights
-        show_state: true
-        show_attribute: true
-        show_icon: false
-        state_background: false
-        show_background: false
-        attribute: brightness
-  - type: custom:bubble-card
-    card_type: button
-    button_type: slider
-    entity: light.kitchen_outer_wall
-    name: Outer Wall
-    icon: mdi:spotlight-beam
-    show_state: false
-    slider_live_update: false
-    read_only_slider: false
-    tap_to_slide: false
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.kitchen_outer_wall
+  tap_action:
+    action: perform-action
+    perform_action: light.toggle
+    data:
+      brightness_pct: 25
+    target:
+      entity_id: light.kitchen_main_lights
+  scrolling_effect: false
+  use_accent_color: false
+  styles: >
+    .bubble-name { font-size: 16px !important; }
+    .bubble-sub-button { font-size: 14px !important;
+    font-weight: bold; }
+  sub_button:
+    - entity: light.kitchen_main_lights
+      show_state: true
+      show_attribute: true
+      show_icon: false
+      state_background: false
+      show_background: false
+      attribute: brightness
+- type: custom:bubble-card
+  card_type: button
+  button_type: slider
+  entity: light.kitchen_outer_wall
+  name: Outer Wall
+  icon: mdi:spotlight-beam
+  show_state: false
+  slider_live_update: false
+  read_only_slider: false
+  tap_to_slide: false
+  button_action:
     tap_action:
       action: perform-action
       perform_action: light.toggle
@@ -189,38 +180,38 @@
         brightness_pct: 25
       target:
         entity_id: light.kitchen_outer_wall
-    scrolling_effect: false
-    use_accent_color: false
-    styles: >
-      .bubble-name { font-size: 16px !important; }
-      .bubble-sub-button { font-size: 14px !important;
-      font-weight: bold; }
-    sub_button:
-      - entity: light.kitchen_outer_wall
-        show_state: true
-        show_attribute: true
-        show_icon: false
-        state_background: false
-        show_background: false
-        attribute: brightness
-  - type: custom:bubble-card
-    card_type: button
-    button_type: slider
-    entity: light.kitchen_island_pendants
-    name: Island Pendants
-    icon: mdi:ceiling-light-multiple
-    show_state: false
-    slider_live_update: false
-    read_only_slider: false
-    tap_to_slide: false
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.kitchen_island_pendants
+  tap_action:
+    action: perform-action
+    perform_action: light.toggle
+    data:
+      brightness_pct: 25
+    target:
+      entity_id: light.kitchen_outer_wall
+  scrolling_effect: false
+  use_accent_color: false
+  styles: >
+    .bubble-name { font-size: 16px !important; }
+    .bubble-sub-button { font-size: 14px !important;
+    font-weight: bold; }
+  sub_button:
+    - entity: light.kitchen_outer_wall
+      show_state: true
+      show_attribute: true
+      show_icon: false
+      state_background: false
+      show_background: false
+      attribute: brightness
+- type: custom:bubble-card
+  card_type: button
+  button_type: slider
+  entity: light.kitchen_island_pendants
+  name: Island Pendants
+  icon: mdi:ceiling-light-multiple
+  show_state: false
+  slider_live_update: false
+  read_only_slider: false
+  tap_to_slide: false
+  button_action:
     tap_action:
       action: perform-action
       perform_action: light.toggle
@@ -228,38 +219,38 @@
         brightness_pct: 25
       target:
         entity_id: light.kitchen_island_pendants
-    scrolling_effect: false
-    use_accent_color: false
-    styles: >
-      .bubble-name { font-size: 16px !important; }
-      .bubble-sub-button { font-size: 14px !important;
-      font-weight: bold; }
-    sub_button:
-      - entity: light.kitchen_island_pendants
-        show_state: true
-        show_attribute: true
-        show_icon: false
-        state_background: false
-        show_background: false
-        attribute: brightness
-  - type: custom:bubble-card
-    card_type: button
-    button_type: slider
-    entity: light.kitchen_window_seat_sconce
-    name: Window Seat Sconce
-    icon: mdi:wall-sconce
-    show_state: false
-    slider_live_update: false
-    read_only_slider: false
-    tap_to_slide: false
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.kitchen_window_seat_sconce
+  tap_action:
+    action: perform-action
+    perform_action: light.toggle
+    data:
+      brightness_pct: 25
+    target:
+      entity_id: light.kitchen_island_pendants
+  scrolling_effect: false
+  use_accent_color: false
+  styles: >
+    .bubble-name { font-size: 16px !important; }
+    .bubble-sub-button { font-size: 14px !important;
+    font-weight: bold; }
+  sub_button:
+    - entity: light.kitchen_island_pendants
+      show_state: true
+      show_attribute: true
+      show_icon: false
+      state_background: false
+      show_background: false
+      attribute: brightness
+- type: custom:bubble-card
+  card_type: button
+  button_type: slider
+  entity: light.kitchen_window_seat_sconce
+  name: Window Seat Sconce
+  icon: mdi:wall-sconce
+  show_state: false
+  slider_live_update: false
+  read_only_slider: false
+  tap_to_slide: false
+  button_action:
     tap_action:
       action: perform-action
       perform_action: light.toggle
@@ -267,49 +258,49 @@
         brightness_pct: 25
       target:
         entity_id: light.kitchen_window_seat_sconce
-    scrolling_effect: false
-    use_accent_color: false
-    styles: >
-      .bubble-name { font-size: 16px !important; }
-      .bubble-sub-button { font-size: 14px !important;
-      font-weight: bold; }
-    sub_button:
-      - entity: light.kitchen_window_seat_sconce
-        show_state: true
-        show_attribute: true
-        show_icon: false
-        state_background: false
-        show_background: false
-        attribute: brightness
-  - type: custom:bubble-card
-    card_type: separator
-    name: Dining Room
-    icon: mdi:food-fork-drink
-    rows: 0.75
-    styles: >
-      .bubble-name { font-size: 16px !important; font-weight:
-      bold !important; }
-      .bubble-line { background: var(--primary-text-color);
-      opacity: 0.1; }
-      .card-content { padding-top: 7px !important; }
-  - type: custom:bubble-card
-    card_type: button
-    button_type: slider
-    entity: light.dining_room_main_lights
-    name: Main Lights
-    icon: mdi:light-recessed
-    show_state: false
-    slider_live_update: false
-    read_only_slider: false
-    tap_to_slide: false
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.dining_room_main_lights
+  tap_action:
+    action: perform-action
+    perform_action: light.toggle
+    data:
+      brightness_pct: 25
+    target:
+      entity_id: light.kitchen_window_seat_sconce
+  scrolling_effect: false
+  use_accent_color: false
+  styles: >
+    .bubble-name { font-size: 16px !important; }
+    .bubble-sub-button { font-size: 14px !important;
+    font-weight: bold; }
+  sub_button:
+    - entity: light.kitchen_window_seat_sconce
+      show_state: true
+      show_attribute: true
+      show_icon: false
+      state_background: false
+      show_background: false
+      attribute: brightness
+- type: custom:bubble-card
+  card_type: separator
+  name: Dining Room
+  icon: mdi:food-fork-drink
+  rows: 0.75
+  styles: >
+    .bubble-name { font-size: 16px !important; font-weight:
+    bold !important; }
+    .bubble-line { background: var(--primary-text-color);
+    opacity: 0.1; }
+    .card-content { padding-top: 7px !important; }
+- type: custom:bubble-card
+  card_type: button
+  button_type: slider
+  entity: light.dining_room_main_lights
+  name: Main Lights
+  icon: mdi:light-recessed
+  show_state: false
+  slider_live_update: false
+  read_only_slider: false
+  tap_to_slide: false
+  button_action:
     tap_action:
       action: perform-action
       perform_action: light.toggle
@@ -317,38 +308,38 @@
         brightness_pct: 25
       target:
         entity_id: light.dining_room_main_lights
-    scrolling_effect: false
-    use_accent_color: false
-    styles: >
-      .bubble-name { font-size: 16px !important; }
-      .bubble-sub-button { font-size: 14px !important;
-      font-weight: bold; }
-    sub_button:
-      - entity: light.dining_room_main_lights
-        show_state: true
-        show_attribute: true
-        show_icon: false
-        state_background: false
-        show_background: false
-        attribute: brightness
-  - type: custom:bubble-card
-    card_type: button
-    button_type: slider
-    entity: light.dining_room_table_lamps
-    name: Table Lamps
-    icon: mdi:lamps
-    show_state: false
-    slider_live_update: false
-    read_only_slider: false
-    tap_to_slide: false
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.dining_room_table_lamps
+  tap_action:
+    action: perform-action
+    perform_action: light.toggle
+    data:
+      brightness_pct: 25
+    target:
+      entity_id: light.dining_room_main_lights
+  scrolling_effect: false
+  use_accent_color: false
+  styles: >
+    .bubble-name { font-size: 16px !important; }
+    .bubble-sub-button { font-size: 14px !important;
+    font-weight: bold; }
+  sub_button:
+    - entity: light.dining_room_main_lights
+      show_state: true
+      show_attribute: true
+      show_icon: false
+      state_background: false
+      show_background: false
+      attribute: brightness
+- type: custom:bubble-card
+  card_type: button
+  button_type: slider
+  entity: light.dining_room_table_lamps
+  name: Table Lamps
+  icon: mdi:lamps
+  show_state: false
+  slider_live_update: false
+  read_only_slider: false
+  tap_to_slide: false
+  button_action:
     tap_action:
       action: perform-action
       perform_action: light.toggle
@@ -356,38 +347,38 @@
         brightness_pct: 25
       target:
         entity_id: light.dining_room_table_lamps
-    scrolling_effect: false
-    use_accent_color: false
-    styles: >
-      .bubble-name { font-size: 16px !important; }
-      .bubble-sub-button { font-size: 14px !important;
-      font-weight: bold; }
-    sub_button:
-      - entity: light.dining_room_table_lamps
-        show_state: true
-        show_attribute: true
-        show_icon: false
-        state_background: false
-        show_background: false
-        attribute: brightness
-  - type: custom:bubble-card
-    card_type: button
-    button_type: slider
-    entity: light.dining_room_accent_lights
-    name: Accent Light
-    icon: mdi:spotlight-beam
-    show_state: false
-    slider_live_update: false
-    read_only_slider: false
-    tap_to_slide: false
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.dining_room_accent_lights
+  tap_action:
+    action: perform-action
+    perform_action: light.toggle
+    data:
+      brightness_pct: 25
+    target:
+      entity_id: light.dining_room_table_lamps
+  scrolling_effect: false
+  use_accent_color: false
+  styles: >
+    .bubble-name { font-size: 16px !important; }
+    .bubble-sub-button { font-size: 14px !important;
+    font-weight: bold; }
+  sub_button:
+    - entity: light.dining_room_table_lamps
+      show_state: true
+      show_attribute: true
+      show_icon: false
+      state_background: false
+      show_background: false
+      attribute: brightness
+- type: custom:bubble-card
+  card_type: button
+  button_type: slider
+  entity: light.dining_room_accent_lights
+  name: Accent Light
+  icon: mdi:spotlight-beam
+  show_state: false
+  slider_live_update: false
+  read_only_slider: false
+  tap_to_slide: false
+  button_action:
     tap_action:
       action: perform-action
       perform_action: light.toggle
@@ -395,17 +386,24 @@
         brightness_pct: 25
       target:
         entity_id: light.dining_room_accent_lights
-    scrolling_effect: false
-    use_accent_color: false
-    styles: >
-      .bubble-name { font-size: 16px !important; }
-      .bubble-sub-button { font-size: 14px !important;
-      font-weight: bold; }
-    sub_button:
-      - entity: light.dining_room_accent_lights
-        show_state: true
-        show_attribute: true
-        show_icon: false
-        state_background: false
-        show_background: false
-        attribute: brightness
+  tap_action:
+    action: perform-action
+    perform_action: light.toggle
+    data:
+      brightness_pct: 25
+    target:
+      entity_id: light.dining_room_accent_lights
+  scrolling_effect: false
+  use_accent_color: false
+  styles: >
+    .bubble-name { font-size: 16px !important; }
+    .bubble-sub-button { font-size: 14px !important;
+    font-weight: bold; }
+  sub_button:
+    - entity: light.dining_room_accent_lights
+      show_state: true
+      show_attribute: true
+      show_icon: false
+      state_background: false
+      show_background: false
+      attribute: brightness
