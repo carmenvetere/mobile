@@ -167,18 +167,18 @@ cards:
               .card-content {
                 padding-top: 7px !important;
               }
-            card_mod:
-              style: |
-                ha-card {
-                  border-radius: 20px !important;
-                  padding-top: 3px !important;
-                  margin-left: 5px !important;
-                  padding-bottom: 3px !important;
-                  margin-bottom: 10px !important;
-                  padding-left: 15px !important;
-                  padding-right: 15px !important;
-                  background-color: var(--background-color-2) !important;
-                }
+          card_mod:
+            style: |
+              ha-card {
+                border-radius: 20px !important;
+                padding-top: 3px !important;
+                margin-left: 5px !important;
+                padding-bottom: 3px !important;
+                margin-bottom: 10px !important;
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+                background-color: var(--background-color-2) !important;
+              }
           cards: !include modules/first-floor-scenes.yaml
       first:
         card: 
