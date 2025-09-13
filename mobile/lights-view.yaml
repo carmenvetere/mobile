@@ -140,7 +140,46 @@ cards:
                     --chip-background: var(--background-color-2);
                   }  
       scenes:
-        card: !include modules/first-floor-scenes.yaml
+        card:
+          type: custom:expander-card
+          expanded: true
+          title-card-clickable: true
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Scenes
+            icon: mdi:lightbulb-auto
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+            card_mod:
+              style: |
+                ha-card {
+                  border-radius: 20px !important;
+                  padding-top: 3px !important;
+                  margin-left: 5px !important;
+                  padding-bottom: 3px !important;
+                  margin-bottom: 10px !important;
+                  padding-left: 15px !important;
+                  padding-right: 15px !important;
+                  background-color: var(--background-color-2) !important;
+                }
+          cards: !include modules/first-floor-scenes.yaml
       first:
         card: 
           type: custom:expander-card
