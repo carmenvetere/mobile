@@ -90,57 +90,57 @@ cards:
                     - padding-right: 15px
       chips:
         card: !include modules/chips.yaml
-      notifications:
-        card:
-          type: conditional
-          conditions:
-            - condition: numeric_state
-              entity: sensor.notification_alert_counter
-              above: 0
-          card:
-            type: custom:expander-card
-            expanded: false
-            title-card-clickable: true
-            title-card:
-              type: custom:bubble-card
-              card_type: separator
-              name: Notifications
-              icon: mdi:bell
-              sub_button:
-                - entity: sensor.notification_alert_counter
-                  show_icon: false
-                  show_state: true
-                  state_background: false
-                  show_background: false
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-sub-button 
-                {
-                  font-size: 20px !important;
-                  font-weight: 700 !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }              
-            card_mod:
-              style: |
-                ha-card {
-                  padding-top: 3px !important;
-                  padding-bottom: 3px !important;
-                  padding-left: 15px !important;
-                  padding-right: 15px !important;
-                }
-            cards:
-              - type: vertical-stack
-                cards: !include modules/notifications.yaml
+      # notifications:
+      #   card:
+      #     type: conditional
+      #     conditions:
+      #       - condition: numeric_state
+      #         entity: sensor.notification_alert_counter
+      #         above: 0
+      #     card:
+      #       type: custom:expander-card
+      #       expanded: false
+      #       title-card-clickable: true
+      #       title-card:
+      #         type: custom:bubble-card
+      #         card_type: separator
+      #         name: Notifications
+      #         icon: mdi:bell
+      #         sub_button:
+      #           - entity: sensor.notification_alert_counter
+      #             show_icon: false
+      #             show_state: true
+      #             state_background: false
+      #             show_background: false
+      #         rows: 0.75
+      #         styles: |
+      #           .bubble-name {
+      #             font-size: 20px !important;  /* title */
+      #             font-weight: bold !important;
+      #           }
+      #           .bubble-sub-button 
+      #           {
+      #             font-size: 20px !important;
+      #             font-weight: 700 !important;
+      #           }
+      #           .bubble-line {
+      #             background: var(--primary-text-color);
+      #             opacity: 0.1;
+      #           }
+      #           .card-content {
+      #             padding-top: 7px !important;
+      #           }              
+      #       card_mod:
+      #         style: |
+      #           ha-card {
+      #             padding-top: 3px !important;
+      #             padding-bottom: 3px !important;
+      #             padding-left: 15px !important;
+      #             padding-right: 15px !important;
+      #           }
+      #       cards:
+      #         - type: vertical-stack
+      #           cards: !include modules/notifications.yaml
       menu:
         card:
           type: custom:stack-in-card
@@ -240,52 +240,52 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/shades-main
-                - type: custom:bubble-card
-                  card_type: button
-                  button_type: name
-                  name: Music
-                  icon: mdi:music
-                  button_action:
-                    tap_action:
-                      action: navigate
-                      navigation_path: /mobile-dash/music
-                  sub_button:
-                    - icon: mdi:chevron-right
-                      state_background: false
-                      tap_action:
-                        action: navigate
-                        navigation_path: /mobile-dash/music
-                  card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
-                  tap_action:
-                    action: navigate
-                    navigation_path: /mobile-dash/music                  
-                - type: custom:bubble-card
-                  card_type: button
-                  button_type: name
-                  name: Security
-                  icon: mdi:cctv
-                  button_action:
-                    tap_action:
-                      action: navigate
-                      navigation_path: /mobile-dash/security
-                  sub_button:
-                    - icon: mdi:chevron-right
-                      state_background: false
-                      tap_action:
-                        action: navigate
-                        navigation_path: /mobile-dash/security
-                  card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
-                  tap_action:
-                    action: navigate
-                    navigation_path: /mobile-dash/security
+                # - type: custom:bubble-card
+                #   card_type: button
+                #   button_type: name
+                #   name: Music
+                #   icon: mdi:music
+                #   button_action:
+                #     tap_action:
+                #       action: navigate
+                #       navigation_path: /mobile-dash/music
+                #   sub_button:
+                #     - icon: mdi:chevron-right
+                #       state_background: false
+                #       tap_action:
+                #         action: navigate
+                #         navigation_path: /mobile-dash/music
+                #   card_layout: normal
+                #   styles: |-
+                #     .bubble-name {
+                #         font-size: 16px !important;
+                #       }
+                #   tap_action:
+                #     action: navigate
+                #     navigation_path: /mobile-dash/music                  
+                # - type: custom:bubble-card
+                #   card_type: button
+                #   button_type: name
+                #   name: Security
+                #   icon: mdi:cctv
+                #   button_action:
+                #     tap_action:
+                #       action: navigate
+                #       navigation_path: /mobile-dash/security
+                #   sub_button:
+                #     - icon: mdi:chevron-right
+                #       state_background: false
+                #       tap_action:
+                #         action: navigate
+                #         navigation_path: /mobile-dash/security
+                #   card_layout: normal
+                #   styles: |-
+                #     .bubble-name {
+                #         font-size: 16px !important;
+                #       }
+                #   tap_action:
+                #     action: navigate
+                #     navigation_path: /mobile-dash/security
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -332,52 +332,52 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/pool
-                - type: custom:bubble-card
-                  card_type: button
-                  button_type: name
-                  name: Vacuum
-                  icon: mdi:vacuum
-                  button_action:
-                    tap_action:
-                      action: navigate
-                      navigation_path: /mobile-dash/vacuum
-                  sub_button:
-                    - icon: mdi:chevron-right
-                      state_background: false
-                      tap_action:
-                        action: navigate
-                        navigation_path: /mobile-dash/vacuum
-                  card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
-                  tap_action:
-                    action: navigate
-                    navigation_path: /mobile-dash/vacuum
-                - type: custom:bubble-card
-                  card_type: button
-                  button_type: name
-                  name: Weather
-                  icon: mdi:weather-partly-cloudy
-                  button_action:
-                    tap_action:
-                      action: navigate
-                      navigation_path: /mobile-dash/weather
-                  sub_button:
-                    - icon: mdi:chevron-right
-                      state_background: false
-                      tap_action:
-                        action: navigate
-                        navigation_path: /mobile-dash/weather
-                  card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
-                  tap_action:
-                    action: navigate
-                    navigation_path: /mobile-dash/weather
+                # - type: custom:bubble-card
+                #   card_type: button
+                #   button_type: name
+                #   name: Vacuum
+                #   icon: mdi:vacuum
+                #   button_action:
+                #     tap_action:
+                #       action: navigate
+                #       navigation_path: /mobile-dash/vacuum
+                #   sub_button:
+                #     - icon: mdi:chevron-right
+                #       state_background: false
+                #       tap_action:
+                #         action: navigate
+                #         navigation_path: /mobile-dash/vacuum
+                #   card_layout: normal
+                #   styles: |-
+                #     .bubble-name {
+                #         font-size: 16px !important;
+                #       }
+                #   tap_action:
+                #     action: navigate
+                #     navigation_path: /mobile-dash/vacuum
+                # - type: custom:bubble-card
+                #   card_type: button
+                #   button_type: name
+                #   name: Weather
+                #   icon: mdi:weather-partly-cloudy
+                #   button_action:
+                #     tap_action:
+                #       action: navigate
+                #       navigation_path: /mobile-dash/weather
+                #   sub_button:
+                #     - icon: mdi:chevron-right
+                #       state_background: false
+                #       tap_action:
+                #         action: navigate
+                #         navigation_path: /mobile-dash/weather
+                #   card_layout: normal
+                #   styles: |-
+                #     .bubble-name {
+                #         font-size: 16px !important;
+                #       }
+                #   tap_action:
+                #     action: navigate
+                #     navigation_path: /mobile-dash/weather
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
