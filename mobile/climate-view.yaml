@@ -169,524 +169,524 @@ cards:
                       zoom: 1.25 !important;
                       --chip-background: var(--background-color-2);
                     } 
-          first:
-            card:
-            - type: custom:expander-card
-              expanded: true
-              title-card-clickable: true
-              title-card:
-                type: custom:bubble-card
-                card_type: separator
-                name: First Floor
-                icon: mdi:home-floor-1
-                rows: 0.75
-                sub_button:
-                  - entity: sensor.living_room_thermostat_current_temperature
-                    show_state: true
-                    show_icon: true
-                    show_background: false
-                    visibility:
-                      - condition: screen
-                        media_query: '(min-width: 768px)'
-                  - entity: sensor.living_room_thermostat_current_humidity
-                    show_state: true
-                    show_background: false
-                    show_icon: true
-                    visibility:
-                      - condition: screen
-                        media_query: '(min-width: 1024px)'
-                styles: |
-                  .bubble-name {
-                    font-size: 20px !important;  /* title */
-                    font-weight: bold !important;
-                  }
-                  .bubble-sub-button 
-                  {
-                    font-size: 14px !important;
-                    font-weight: 700 !important;
-                  }
-                  .bubble-line {
-                    background: var(--primary-text-color);
-                    opacity: 0.1;
-                  }
-                  .card-content {
-                    padding-top: 7px !important;
-                  }
+      first:
+        card:
+        - type: custom:expander-card
+          expanded: true
+          title-card-clickable: true
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: First Floor
+            icon: mdi:home-floor-1
+            rows: 0.75
+            sub_button:
+              - entity: sensor.living_room_thermostat_current_temperature
+                show_state: true
+                show_icon: true
+                show_background: false
+                visibility:
+                  - condition: screen
+                    media_query: '(min-width: 768px)'
+              - entity: sensor.living_room_thermostat_current_humidity
+                show_state: true
+                show_background: false
+                show_icon: true
+                visibility:
+                  - condition: screen
+                    media_query: '(min-width: 1024px)'
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 14px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          cards:
+            - type: vertical-stack
               cards:
-                - type: vertical-stack
-                  cards:
-                    - type: custom:bubble-card
-                      card_type: climate
-                      name: Living Room Thermostat
-                      modules:
-                        - default
+                - type: custom:bubble-card
+                  card_type: climate
+                  name: Living Room Thermostat
+                  modules:
+                    - default
+                  show_state: false
+                  entity: climate.living_room_thermostat_homekit
+                  sub_button:
+                    - name: HVAC modes menu
+                      select_attribute: hvac_modes
+                      state_background: false
+                      show_arrow: true
+                      show_attribute: false
+                      show_state: true
+                    - entity: climate.living_room_thermostat
+                      select_attribute: fan_modes
+                      state_background: false
                       show_state: false
-                      entity: climate.living_room_thermostat_homekit
-                      sub_button:
-                        - name: HVAC modes menu
-                          select_attribute: hvac_modes
-                          state_background: false
-                          show_arrow: true
-                          show_attribute: false
-                          show_state: true
-                        - entity: climate.living_room_thermostat
-                          select_attribute: fan_modes
-                          state_background: false
-                          show_state: false
-                          show_attribute: true
-                          attribute: fan_mode
-                      show_icon: false
-                      scrolling_effect: false
-                      card_layout: large-sub-buttons-grid
-                      grid_options:
-                        rows: 2
-                      styles: |-
-                        .bubble-name {
-                        font-size: 16px !important;
-                        }
-                        .bubble-sub-button 
-                        {
-                          font-size: 12px !important;
-                          font-weight: 700 !important;
-                        }
-                        .bubble-temperature-display 
-                        {
-                          font-size: 14px !important;
-                          font-weight: 700 !important;
-                        }
-                    - type: custom:bubble-card
-                      card_type: button
-                      button_type: state
+                      show_attribute: true
+                      attribute: fan_mode
+                  show_icon: false
+                  scrolling_effect: false
+                  card_layout: large-sub-buttons-grid
+                  grid_options:
+                    rows: 2
+                  styles: |-
+                    .bubble-name {
+                    font-size: 16px !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 12px !important;
+                      font-weight: 700 !important;
+                    }
+                    .bubble-temperature-display 
+                    {
+                      font-size: 14px !important;
+                      font-weight: 700 !important;
+                    }
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: state
+                  icon: mdi:tailwind
+                  modules:
+                    - default
+                  entity: switch.utility_room_ventilation_damper
+                  name: Fresh Air Damper
+                  show_icon: false
+                  show_state: false
+                  sub_button:
+                    - entity: switch.utility_room_ventilation_damper
+                      show_state: true
                       icon: mdi:tailwind
-                      modules:
-                        - default
-                      entity: switch.utility_room_ventilation_damper
-                      name: Fresh Air Damper
-                      show_icon: false
-                      show_state: false
-                      sub_button:
-                        - entity: switch.utility_room_ventilation_damper
-                          show_state: true
-                          icon: mdi:tailwind
-                          tap_action:
-                            action: toggle
-                      styles: |-
-                        .bubble-name {
-                        font-size: 16px !important;
-                        }
-                        .bubble-sub-button 
-                        {
-                          font-size: 12px !important;
-                          font-weight: 700 !important;
-                        }
-          basement:
-            card:
-            - type: custom:expander-card
-              expanded: true
-              title-card-clickable: true
-              title-card:
-                type: custom:bubble-card
-                card_type: separator
-                name: Basement
-                icon: mdi:home-floor-b
-                rows: 0.75
-                sub_button:
-                  - entity: sensor.basement_thermostat_homekit_current_temperature
-                    show_state: true
-                    show_icon: true
-                    show_background: false
-                    visibility:
-                      - condition: screen
-                        media_query: '(min-width: 768px)'
-                  - entity: sensor.basement_thermostat_homekit_current_humidity
-                    show_state: true
-                    show_background: false
-                    show_icon: true
-                    visibility:
-                      - condition: screen
-                        media_query: '(min-width: 1024px)'
-                styles: |
-                  .bubble-name {
-                    font-size: 20px !important;  /* title */
-                    font-weight: bold !important;
-                  }
-                  .bubble-sub-button 
-                  {
-                    font-size: 14px !important;
-                    font-weight: 700 !important;
-                  }
-                  .bubble-line {
-                    background: var(--primary-text-color);
-                    opacity: 0.1;
-                  }
-                  .card-content {
-                    padding-top: 7px !important;
-                  }
+                      tap_action:
+                        action: toggle
+                  styles: |-
+                    .bubble-name {
+                    font-size: 16px !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 12px !important;
+                      font-weight: 700 !important;
+                    }
+      basement:
+        card:
+        - type: custom:expander-card
+          expanded: true
+          title-card-clickable: true
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Basement
+            icon: mdi:home-floor-b
+            rows: 0.75
+            sub_button:
+              - entity: sensor.basement_thermostat_homekit_current_temperature
+                show_state: true
+                show_icon: true
+                show_background: false
+                visibility:
+                  - condition: screen
+                    media_query: '(min-width: 768px)'
+              - entity: sensor.basement_thermostat_homekit_current_humidity
+                show_state: true
+                show_background: false
+                show_icon: true
+                visibility:
+                  - condition: screen
+                    media_query: '(min-width: 1024px)'
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 14px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          cards:
+            - type: vertical-stack
               cards:
-                - type: vertical-stack
-                  cards:
-                    - type: custom:bubble-card
-                      card_type: climate
-                      name: Hallway Thermostat
-                      modules:
-                        - default
+                - type: custom:bubble-card
+                  card_type: climate
+                  name: Hallway Thermostat
+                  modules:
+                    - default
+                  show_state: false
+                  entity: climate.basement_thermostat_homekit
+                  sub_button:
+                    - name: HVAC modes menu
+                      select_attribute: hvac_modes
+                      state_background: false
+                      show_arrow: true
+                      show_attribute: false
+                      show_state: true
+                    - entity: climate.basement_thermostat
+                      select_attribute: fan_modes
+                      state_background: false
                       show_state: false
-                      entity: climate.basement_thermostat_homekit
-                      sub_button:
-                        - name: HVAC modes menu
-                          select_attribute: hvac_modes
-                          state_background: false
-                          show_arrow: true
-                          show_attribute: false
-                          show_state: true
-                        - entity: climate.basement_thermostat
-                          select_attribute: fan_modes
-                          state_background: false
-                          show_state: false
-                          show_attribute: true
-                          attribute: fan_mode
-                      show_icon: false
-                      scrolling_effect: false
-                      card_layout: large-sub-buttons-grid
-                      grid_options:
-                        rows: 2
-                      styles: |-
-                        .bubble-name {
-                        font-size: 16px !important;
-                        }
-                        .bubble-sub-button 
-                        {
-                          font-size: 12px !important;
-                          font-weight: 700 !important;
-                        }
-                        .bubble-temperature-display 
-                        {
-                          font-size: 14px !important;
-                          font-weight: 700 !important;
-                        }
-                    - type: custom:bubble-card
-                      card_type: button
-                      button_type: state
-                      modules:
-                        - default
-                      entity: switch.basement_thermostat_family_room_priority
-                      name: Media Room Priority
-                      show_icon: false
-                      show_state: false
-                      sub_button:
-                        - entity: sensor.family_room_air_sensor_01_temperature_sensor
-                          show_state: true
-                          state_background: false
-                        - entity: sensor.family_room_air_sensor_01_humidity_sensor
-                          show_background: true
-                          show_state: true
-                          state_background: false
-                        - entity: switch.basement_thermostat_family_room_priority
-                          show_state: true
-                          icon: mdi:toggle-switch-variant
-                          tap_action:
-                            action: toggle
-                      styles: |-
-                        .bubble-name {
-                        font-size: 16px !important;
-                        }
-                        .bubble-sub-button 
-                        {
-                          font-size: 12px !important;
-                          font-weight: 700 !important;
-                        }
-          office:
-            card:
-            - type: custom:expander-card
-              expanded: true
-              title-card-clickable: true
-              title-card:
-                type: custom:bubble-card
-                card_type: separator
-                name: Office and Bedrooms
-                icon: mdi:home-floor-2
-                rows: 0.75
-                sub_button:
-                  - entity: sensor.office_thermostat_homekit_current_temperature
-                    show_state: true
-                    show_icon: true
-                    show_background: false
-                    visibility:
-                      - condition: screen
-                        media_query: '(min-width: 768px)'
-                styles: |
-                  .bubble-name {
-                    font-size: 20px !important;  /* title */
-                    font-weight: bold !important;
-                  }
-                  .bubble-sub-button 
-                  {
-                    font-size: 14px !important;
-                    font-weight: 700 !important;
-                  }
-                  .bubble-line {
-                    background: var(--primary-text-color);
-                    opacity: 0.1;
-                  }
-                  .card-content {
-                    padding-top: 7px !important;
-                  }
+                      show_attribute: true
+                      attribute: fan_mode
+                  show_icon: false
+                  scrolling_effect: false
+                  card_layout: large-sub-buttons-grid
+                  grid_options:
+                    rows: 2
+                  styles: |-
+                    .bubble-name {
+                    font-size: 16px !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 12px !important;
+                      font-weight: 700 !important;
+                    }
+                    .bubble-temperature-display 
+                    {
+                      font-size: 14px !important;
+                      font-weight: 700 !important;
+                    }
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: state
+                  modules:
+                    - default
+                  entity: switch.basement_thermostat_family_room_priority
+                  name: Media Room Priority
+                  show_icon: false
+                  show_state: false
+                  sub_button:
+                    - entity: sensor.family_room_air_sensor_01_temperature_sensor
+                      show_state: true
+                      state_background: false
+                    - entity: sensor.family_room_air_sensor_01_humidity_sensor
+                      show_background: true
+                      show_state: true
+                      state_background: false
+                    - entity: switch.basement_thermostat_family_room_priority
+                      show_state: true
+                      icon: mdi:toggle-switch-variant
+                      tap_action:
+                        action: toggle
+                  styles: |-
+                    .bubble-name {
+                    font-size: 16px !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 12px !important;
+                      font-weight: 700 !important;
+                    }
+      office:
+        card:
+        - type: custom:expander-card
+          expanded: true
+          title-card-clickable: true
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Office and Bedrooms
+            icon: mdi:home-floor-2
+            rows: 0.75
+            sub_button:
+              - entity: sensor.office_thermostat_homekit_current_temperature
+                show_state: true
+                show_icon: true
+                show_background: false
+                visibility:
+                  - condition: screen
+                    media_query: '(min-width: 768px)'
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 14px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          cards:
+            - type: vertical-stack
               cards:
-                - type: vertical-stack
-                  cards:
-                    - type: custom:bubble-card
-                      card_type: climate
-                      name: Office Thermostat
-                      modules:
-                        - default
+                - type: custom:bubble-card
+                  card_type: climate
+                  name: Office Thermostat
+                  modules:
+                    - default
+                  show_state: false
+                  entity: climate.office_thermostat_homekit
+                  sub_button:
+                    - name: HVAC modes menu
+                      select_attribute: hvac_modes
+                      state_background: false
+                      show_arrow: true
+                      show_attribute: false
+                      show_state: true
+                    - entity: climate.office_thermostat
+                      select_attribute: fan_modes
+                      state_background: false
                       show_state: false
-                      entity: climate.office_thermostat_homekit
-                      sub_button:
-                        - name: HVAC modes menu
-                          select_attribute: hvac_modes
-                          state_background: false
-                          show_arrow: true
-                          show_attribute: false
-                          show_state: true
-                        - entity: climate.office_thermostat
-                          select_attribute: fan_modes
-                          state_background: false
-                          show_state: false
-                          show_attribute: true
-                          attribute: fan_mode
-                      show_icon: false
-                      scrolling_effect: false
-                      card_layout: large-sub-buttons-grid
-                      grid_options:
-                        rows: 2
-                      styles: |-
-                        .bubble-name {
-                        font-size: 16px !important;
-                        }
-                        .bubble-sub-button 
-                        {
-                          font-size: 14px !important;
-                          font-weight: 700 !important;
-                        }
-                        .bubble-temperature-display 
-                        {
-                          font-size: 14px !important;
-                          font-weight: 700 !important;
-                        }
-                    - type: custom:bubble-card
-                      card_type: button
-                      button_type: state
-                      modules:
-                        - default
-                      entity: switch.office_thermostat_front_guest_bedroom_priority
-                      name: Front Guest Room Priority
-                      show_icon: false
-                      show_state: false
-                      sub_button:
-                        - entity: >-
-                            sensor.front_guest_bedroom_air_sensor_02_temperature_sensor
-                          show_state: true
-                          state_background: false
-                        - entity: >-
-                            sensor.front_guest_bedroom_air_sensor_02_humidity_sensor
-                          show_background: true
-                          show_state: true
-                          state_background: false
-                        - entity: switch.office_thermostat_front_guest_bedroom_priority
-                          show_state: true
-                          icon: mdi:toggle-switch-variant
-                          tap_action:
-                            action: toggle
-                      styles: |-
-                        .bubble-name {
-                        font-size: 16px !important;
-                        }
-                        .bubble-sub-button 
-                        {
-                          font-size: 12px !important;
-                          font-weight: 700 !important;
-                        }
-                    - type: custom:bubble-card
-                      card_type: button
-                      button_type: state
-                      modules:
-                        - default
-                      entity: switch.office_thermostat_front_guest_bedroom_priority
-                      name: Back Guest Room Priority
-                      show_icon: false
-                      show_state: false
-                      sub_button:
-                        - entity: sensor.guest_bedroom_air_sensor_01_temperature_sensor
-                          show_state: true
-                          state_background: false
-                        - entity: sensor.guest_bedroom_air_sensor_01_humidity_sensor
-                          show_background: true
-                          show_state: true
-                          state_background: false
-                        - entity: switch.office_thermostat_guest_bedroom_priority
-                          show_state: true
-                          icon: mdi:toggle-switch-variant
-                          tap_action:
-                            action: toggle
-                      styles: |-
-                        .bubble-name {
-                        font-size: 16px !important;
-                        }
-                        .bubble-sub-button 
-                        {
-                          font-size: 12px !important;
-                          font-weight: 700 !important;
-                        }
-                    - type: custom:bubble-card
-                      card_type: button
-                      button_type: state
-                      modules:
-                        - default
-                      entity: switch.office_thermostat_front_guest_bedroom_priority
-                      name: Office Priority
-                      show_icon: false
-                      show_state: false
-                      sub_button:
-                        - entity: sensor.office_thermostat_homekit_current_temperature
-                          show_state: true
-                          state_background: false
-                        - entity: sensor.office_thermostat_homekit_current_humidity
-                          show_background: true
-                          show_state: true
-                          state_background: false
-                        - entity: switch.office_thermostat_office_priority
-                          show_state: true
-                          icon: mdi:toggle-switch-variant
-                          tap_action:
-                            action: toggle
-                      styles: |-
-                        .bubble-name {
-                        font-size: 16px !important;
-                        }
-                        .bubble-sub-button 
-                        {
-                          font-size: 12px !important;
-                          font-weight: 700 !important;
-                        }
-          primbed:
-            card:
-            - type: custom:expander-card
-              expanded: true
-              title-card-clickable: true
-              title-card:
-                type: custom:bubble-card
-                card_type: separator
-                name: Primary Bed
-                icon: mdi:home-floor-2
-                rows: 0.75
-                sub_button:
-                  - entity: sensor.bedroom_thermostat_current_temperature
-                    show_state: true
-                    show_icon: true
-                    show_background: false
-                    visibility:
-                      - condition: screen
-                        media_query: '(min-width: 768px)'
-                  - entity: sensor.bedroom_thermostat_current_humidity
-                    show_state: true
-                    show_background: false
-                    show_icon: true
-                    visibility:
-                      - condition: screen
-                        media_query: '(min-width: 1024px)'
-                styles: |
-                  .bubble-name {
-                    font-size: 20px !important;  /* title */
-                    font-weight: bold !important;
-                  }
-                  .bubble-sub-button 
-                  {
-                    font-size: 14px !important;
-                    font-weight: 700 !important;
-                  }
-                  .bubble-line {
-                    background: var(--primary-text-color);
-                    opacity: 0.1;
-                  }
-                  .card-content {
-                    padding-top: 7px !important;
-                  }
+                      show_attribute: true
+                      attribute: fan_mode
+                  show_icon: false
+                  scrolling_effect: false
+                  card_layout: large-sub-buttons-grid
+                  grid_options:
+                    rows: 2
+                  styles: |-
+                    .bubble-name {
+                    font-size: 16px !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 14px !important;
+                      font-weight: 700 !important;
+                    }
+                    .bubble-temperature-display 
+                    {
+                      font-size: 14px !important;
+                      font-weight: 700 !important;
+                    }
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: state
+                  modules:
+                    - default
+                  entity: switch.office_thermostat_front_guest_bedroom_priority
+                  name: Front Guest Room Priority
+                  show_icon: false
+                  show_state: false
+                  sub_button:
+                    - entity: >-
+                        sensor.front_guest_bedroom_air_sensor_02_temperature_sensor
+                      show_state: true
+                      state_background: false
+                    - entity: >-
+                        sensor.front_guest_bedroom_air_sensor_02_humidity_sensor
+                      show_background: true
+                      show_state: true
+                      state_background: false
+                    - entity: switch.office_thermostat_front_guest_bedroom_priority
+                      show_state: true
+                      icon: mdi:toggle-switch-variant
+                      tap_action:
+                        action: toggle
+                  styles: |-
+                    .bubble-name {
+                    font-size: 16px !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 12px !important;
+                      font-weight: 700 !important;
+                    }
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: state
+                  modules:
+                    - default
+                  entity: switch.office_thermostat_front_guest_bedroom_priority
+                  name: Back Guest Room Priority
+                  show_icon: false
+                  show_state: false
+                  sub_button:
+                    - entity: sensor.guest_bedroom_air_sensor_01_temperature_sensor
+                      show_state: true
+                      state_background: false
+                    - entity: sensor.guest_bedroom_air_sensor_01_humidity_sensor
+                      show_background: true
+                      show_state: true
+                      state_background: false
+                    - entity: switch.office_thermostat_guest_bedroom_priority
+                      show_state: true
+                      icon: mdi:toggle-switch-variant
+                      tap_action:
+                        action: toggle
+                  styles: |-
+                    .bubble-name {
+                    font-size: 16px !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 12px !important;
+                      font-weight: 700 !important;
+                    }
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: state
+                  modules:
+                    - default
+                  entity: switch.office_thermostat_front_guest_bedroom_priority
+                  name: Office Priority
+                  show_icon: false
+                  show_state: false
+                  sub_button:
+                    - entity: sensor.office_thermostat_homekit_current_temperature
+                      show_state: true
+                      state_background: false
+                    - entity: sensor.office_thermostat_homekit_current_humidity
+                      show_background: true
+                      show_state: true
+                      state_background: false
+                    - entity: switch.office_thermostat_office_priority
+                      show_state: true
+                      icon: mdi:toggle-switch-variant
+                      tap_action:
+                        action: toggle
+                  styles: |-
+                    .bubble-name {
+                    font-size: 16px !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 12px !important;
+                      font-weight: 700 !important;
+                    }
+      primbed:
+        card:
+        - type: custom:expander-card
+          expanded: true
+          title-card-clickable: true
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Primary Bed
+            icon: mdi:home-floor-2
+            rows: 0.75
+            sub_button:
+              - entity: sensor.bedroom_thermostat_current_temperature
+                show_state: true
+                show_icon: true
+                show_background: false
+                visibility:
+                  - condition: screen
+                    media_query: '(min-width: 768px)'
+              - entity: sensor.bedroom_thermostat_current_humidity
+                show_state: true
+                show_background: false
+                show_icon: true
+                visibility:
+                  - condition: screen
+                    media_query: '(min-width: 1024px)'
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 14px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          cards:
+            - type: vertical-stack
               cards:
-                - type: vertical-stack
-                  cards:
-                    - type: custom:bubble-card
-                      card_type: climate
-                      name: Bedroom Thermostat
-                      modules:
-                        - default
+                - type: custom:bubble-card
+                  card_type: climate
+                  name: Bedroom Thermostat
+                  modules:
+                    - default
+                  show_state: false
+                  entity: climate.bedroom_thermostat
+                  sub_button:
+                    - name: HVAC modes menu
+                      select_attribute: hvac_modes
+                      state_background: false
+                      show_arrow: true
+                      show_attribute: false
+                      show_state: true
+                    - entity: climate.master_bedroom_thermostat
+                      select_attribute: fan_modes
+                      state_background: false
                       show_state: false
-                      entity: climate.bedroom_thermostat
-                      sub_button:
-                        - name: HVAC modes menu
-                          select_attribute: hvac_modes
-                          state_background: false
-                          show_arrow: true
-                          show_attribute: false
-                          show_state: true
-                        - entity: climate.master_bedroom_thermostat
-                          select_attribute: fan_modes
-                          state_background: false
-                          show_state: false
-                          show_attribute: true
-                          attribute: fan_mode
-                      show_icon: false
-                      scrolling_effect: false
-                      card_layout: large-sub-buttons-grid
-                      grid_options:
-                        rows: 2
-                      styles: |-
-                        .bubble-name {
-                        font-size: 16px !important;
-                        }
-                        .bubble-sub-button 
-                        {
-                          font-size: 12px !important;
-                          font-weight: 700 !important;
-                        }
-                        .bubble-sub-button .bubble-state {
-                          font-size: 12px !important;
-                          font-weight: 700 !important;
-                        }
-                        .bubble-temperature-display 
-                        {
-                          font-size: 14px !important;
-                          font-weight: 700 !important;
-                        }
-                    - type: custom:bubble-card
-                      card_type: button
-                      button_type: state
-                      modules:
-                        - default
-                      entity: switch.master_bedroom_thermostat_primary_bathroom_priority
-                      name: Bathroom Priority
-                      show_icon: false
-                      show_state: false
-                      sub_button:
-                        - entity: >-
-                            sensor.primary_bathroom_air_sensor_01_temperature_sensor
-                          show_state: true
-                          state_background: false
-                        - entity: sensor.primary_bathroom_air_sensor_01_humidity_sensor
-                          show_background: true
-                          show_state: true
-                          state_background: false
-                        - entity: >-
-                            switch.master_bedroom_thermostat_primary_bathroom_priority
-                          show_state: true
-                          icon: mdi:toggle-switch-variant
-                          tap_action:
-                            action: toggle
-                      styles: |-
-                        .bubble-name {
-                        font-size: 16px !important;
-                        }
-                        .bubble-sub-button 
-                        {
-                          font-size: 12px !important;
-                          font-weight: 700 !important;
-                        }
+                      show_attribute: true
+                      attribute: fan_mode
+                  show_icon: false
+                  scrolling_effect: false
+                  card_layout: large-sub-buttons-grid
+                  grid_options:
+                    rows: 2
+                  styles: |-
+                    .bubble-name {
+                    font-size: 16px !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 12px !important;
+                      font-weight: 700 !important;
+                    }
+                    .bubble-sub-button .bubble-state {
+                      font-size: 12px !important;
+                      font-weight: 700 !important;
+                    }
+                    .bubble-temperature-display 
+                    {
+                      font-size: 14px !important;
+                      font-weight: 700 !important;
+                    }
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: state
+                  modules:
+                    - default
+                  entity: switch.master_bedroom_thermostat_primary_bathroom_priority
+                  name: Bathroom Priority
+                  show_icon: false
+                  show_state: false
+                  sub_button:
+                    - entity: >-
+                        sensor.primary_bathroom_air_sensor_01_temperature_sensor
+                      show_state: true
+                      state_background: false
+                    - entity: sensor.primary_bathroom_air_sensor_01_humidity_sensor
+                      show_background: true
+                      show_state: true
+                      state_background: false
+                    - entity: >-
+                        switch.master_bedroom_thermostat_primary_bathroom_priority
+                      show_state: true
+                      icon: mdi:toggle-switch-variant
+                      tap_action:
+                        action: toggle
+                  styles: |-
+                    .bubble-name {
+                    font-size: 16px !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 12px !important;
+                      font-weight: 700 !important;
+                    }
