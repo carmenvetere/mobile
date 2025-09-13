@@ -174,7 +174,7 @@ cards:
               cards: !include modules/first-floor-lights-individual.yaml
       basement:
         card:
-        - type: custom:expander-card
+          type: custom:expander-card
           expanded: false
           title-card-clickable: true
           title-card:
@@ -195,7 +195,7 @@ cards:
             - !include modules/basement-lights-individual.yaml
       second:
         card:
-        - type: custom:expander-card
+          type: custom:expander-card
           expanded: false
           title-card-clickable: true
           title-card:
@@ -215,7 +215,7 @@ cards:
           cards: !include modules/second-floor-lights-individual.yaml
       outdoor:
         card:
-        - type: custom:expander-card
+          type: custom:expander-card
           expanded: false
           title-card-clickable: true
           title-card:
