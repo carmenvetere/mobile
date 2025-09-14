@@ -48,7 +48,7 @@
 #Notifications Chip
     - type: conditional
       conditions:
-        - condition: state
+        - condition: numeric_state
           entity: sensor.notification_alert_counter
           above: 0
       chip:
