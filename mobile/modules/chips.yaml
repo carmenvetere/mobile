@@ -71,7 +71,7 @@
               title: Dinner Party
               content:
               - type: vertical-stack
-                cards: !include modules/notifications.yaml
+                cards: !include notifications.yaml
         icon_color: >
                   [[[
                     const priority = states['sensor.notification_icon_priority'].state;
