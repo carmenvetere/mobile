@@ -1,23 +1,77 @@
 title: Security
-type: sections
-max_columns: 1
+icon: mdi:cctv
 theme: Bubble
 path: security
-icon: mdi:shield-home
-sections:
-- type: grid
-  cards:
-    - type: custom:stack-in-card
-      mode: horizontal
-      card_mod:
-        style: |
-          ha-card {
-            background: "rgb(92, 83, 103)";
-            border-radius: 20px;
-            padding: 10px 5px 10px 5px; 
-            }
-      cards:
-        - type: custom:mushroom-chips-card
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 15px
+        - padding-bottom: 5px
+        - padding-left: 5px
+        - padding-right: 10px
+        - padding-top: 2px
+#       - margin: -8px
+        - height: auto
+#        - width: 398px
+      grid:
+        - grid-template-areas: |
+            "header"
+            "chips"
+            "front"
+            "driveway"
+            "pool"
+            "recent"
+        - grid-template-columns: auto
+        - grid-template-rows: 60px 60px auto auto
+        - row-gap: 0px
+        - align-items: start
+        - column-gap: 2px
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          show_state: false
+          show_name: false
+          show_icon: false
+          styles:
+            card:
+              - background-color: transparent
+              - padding-bottom: 5px
+              - padding-top: 0px
+            grid:
+              - grid-template-areas: |
+                  "name gap"
+              - grid-template-columns: 150px auto
+              - grid-template-rows: 60px
+              - column-gap: 0px
+            main:
+          custom_fields:
+            name:
+              card:
+                type: custom:button-card
+                show_state: false
+                show_name: true
+                show_icon: true
+                show_label: false
+                layout: icon_name
+                icon: mdi:cctv
+                name: Security
+                size: 60%
+                icon_color: var(--primary-text-color)
+                styles: 
+                  name: 
+                    - font-size: 22px
+                    - font-weight: bold
+                  card:
+                    - align-items: start
+                    - justify-content: flex-start 
+                    - text-align: left
+                    - padding-left: 8px
+      chips:
+        card:
+          type: custom:mushroom-chips-card
           card_mod:
             style: |
               ha-card {
@@ -99,7 +153,7 @@ sections:
                   :host {
                     zoom: 1.25 !important;
                     --chip-background: var(--background-color-2);
-                  }   
+                  }  
             - type: template
               icon: mdi:door-closed
               entity: binary_sensor.all_doors_including_garage
@@ -125,177 +179,197 @@ sections:
                   :host {
                     zoom: 1.25 !important;
                     --chip-background: var(--background-color-2);
-                  }
-    - type: custom:expander-card
-      expanded: false
-      title-card-clickable: true
-      title-card:
-        type: custom:bubble-card
-        card_type: separator
-        name: Door Status
-        icon: mdi:lock
-        rows: 0.75
-        styles: |
-          .bubble-name {
-            font-size: 20px !important;  /* title */
-            font-weight: bold !important;
-          }
-          .bubble-sub-button 
-          {
-            font-size: 20px !important;
-            font-weight: 700 !important;
-          }
-          .bubble-line {
-            background: var(--primary-text-color);
-            opacity: 0.1;
-          }
-          .card-content {
-            padding-top: 7px !important;
-          }
-      cards:
-        - type: entities
+                  } 
+      front:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
           card_mod:
             style: |
               ha-card {
-                font-size: 16px;
-                font-weight: bold;
+                background: var(--ha-card-background);
+                border-radius: 20px;
+                padding: 10;
               }
-          entities:
-            - entity: binary_sensor.front_door
-            - entity: binary_sensor.living_room_french_doors
-            - entity: binary_sensor.kitchen_french_doors
-            - entity: binary_sensor.mudroom_entry_door
-            - entity: binary_sensor.mudroom_garage_door
-            - entity: cover.garage_door_garage
-    - type: custom:stack-in-card
-      mode: vertical
-      card_mod:
-        style: |
-          ha-card {
-            background: var(--ha-card-background);
-            border-radius: 20px;
-            padding: 10;
-          }
-      cards:
-        - type: custom:bubble-card
-          card_type: separator
-          name: Front
-          icon: mdi:cctv
-          rows: 0.75
-          styles: |
-            .bubble-name {
-            font-size: 20px !important;  /* title */
-            font-weight: bold !important;
-            }
-            .bubble-line {
-            background: var(--primary-text-color);
-            opacity: 0.1;
-            }
-            .card-content {
-            padding-top: 10px !important;
-            padding-left: 10px !important;
-            }
-        - type: picture-entity
-          show_state: false
-          show_name: false
-          camera_view: auto
-          fit_mode: cover
-          entity: camera.front_high_resolution_channel
-          camera_image: camera.front_high_resolution_channel
-    - type: custom:stack-in-card
-      mode: vertical
-      card_mod:
-        style: |
-          ha-card {
-            background: var(--ha-card-background);
-            border-radius: 20px;
-            padding: 10;
-          }
-      cards:
-        - type: custom:bubble-card
-          card_type: separator
-          name: Driveway
-          icon: mdi:cctv
-          rows: 0.75
-          styles: |
-            .bubble-name {
-            font-size: 20px !important;  /* title */
-            font-weight: bold !important;
-            }
-            .bubble-line {
-            background: var(--primary-text-color);
-            opacity: 0.1;
-            }
-            .card-content {
-            padding-top: 10px !important;
-            padding-left: 10px !important;
-            }
-        - type: picture-entity
-          show_state: false
-          show_name: false
-          camera_view: auto
-          fit_mode: cover
-          entity: camera.driveway_high_resolution_channel
-          camera_image: camera.driveway_high_resolution_channel
-    - type: custom:stack-in-card
-      mode: vertical
-      card_mod:
-        style: |
-          ha-card {
-            background: var(--ha-card-background);
-            border-radius: 20px;
-            padding: 10;
-          }
-      cards:
-        - type: custom:bubble-card
-          card_type: separator
-          name: Pool
-          icon: mdi:cctv
-          rows: 0.75
-          styles: |
-            .bubble-name {
-            font-size: 20px !important;  /* title */
-            font-weight: bold !important;
-            }
-            .bubble-line {
-            background: var(--primary-text-color);
-            opacity: 0.1;
-            }
-            .card-content {
-            padding-top: 10px !important;
-            padding-left: 10px !important;
-            }
-        - type: picture-entity
-          show_state: false
-          show_name: false
-          camera_view: auto
-          fit_mode: cover
-          entity: camera.pool_high_resolution_channel
-          camera_image: camera.pool_high_resolution_channel
-    - type: custom:llmvision-card
-      entity: calendar.llm_vision_timeline_2
-      number_of_hours: 168
-      number_of_events: 5
-      language: en
-      header: Recent Events
-header:
-card:
-  type: markdown
-  content: |
-    # <ha-icon icon="mdi:shield-home"></ha-icon> Security
-layout: start
-card_mod:
-style: |
-  .: |
-    .badge-container ha-state-label-badge {
-      --ha-label-badge-size: 58px;
-      --ha-label-badge-font-size: 18px;
-      --mdc-icon-size: 26px;
-      border-radius: 28px;
-      background: var(--secondary-background-color);
-      color: var(--primary-text-color);
-    }
-badges_position: bottom
-badges_wrap: wrap
-badges: null
-cards: []
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Front
+              icon: mdi:cctv
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: picture-entity
+              show_state: false
+              show_name: false
+              camera_view: auto
+              fit_mode: cover
+              entity: camera.front_high_resolution_channel
+              camera_image: camera.front_high_resolution_channel
+      driveway:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background);
+                border-radius: 20px;
+                padding: 10;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Driveway
+              icon: mdi:cctv
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: picture-entity
+              show_state: false
+              show_name: false
+              camera_view: auto
+              fit_mode: cover
+              entity: camera.driveway_high_resolution_channel
+              camera_image: camera.driveway_high_resolution_channel
+      pool:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background);
+                border-radius: 20px;
+                padding: 10;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Pool
+              icon: mdi:cctv
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: picture-entity
+              show_state: false
+              show_name: false
+              camera_view: auto
+              fit_mode: cover
+              entity: camera.pool_high_resolution_channel
+              camera_image: camera.pool_high_resolution_channel
+      recent:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background);
+                border-radius: 20px;
+                padding: 10;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Recent Events
+              icon: mdi:motion-sensor
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: custom:llmvision-card
+              entity: calendar.llm_vision_timeline_2
+              number_of_hours: 168
+              number_of_events: 5
+              language: en
+
+
+    # - type: custom:expander-card
+    #   expanded: false
+    #   title-card-clickable: true
+    #   title-card:
+    #     type: custom:bubble-card
+    #     card_type: separator
+    #     name: Door Status
+    #     icon: mdi:lock
+    #     rows: 0.75
+    #     styles: |
+    #       .bubble-name {
+    #         font-size: 20px !important;  /* title */
+    #         font-weight: bold !important;
+    #       }
+    #       .bubble-sub-button 
+    #       {
+    #         font-size: 20px !important;
+    #         font-weight: 700 !important;
+    #       }
+    #       .bubble-line {
+    #         background: var(--primary-text-color);
+    #         opacity: 0.1;
+    #       }
+    #       .card-content {
+    #         padding-top: 7px !important;
+    #       }
+    #   cards:
+    #     - type: entities
+    #       card_mod:
+    #         style: |
+    #           ha-card {
+    #             font-size: 16px;
+    #             font-weight: bold;
+    #           }
+    #       entities:
+    #         - entity: binary_sensor.front_door
+    #         - entity: binary_sensor.living_room_french_doors
+    #         - entity: binary_sensor.kitchen_french_doors
+    #         - entity: binary_sensor.mudroom_entry_door
+    #         - entity: binary_sensor.mudroom_garage_door
+    #         - entity: cover.garage_door_garage
+
+
+
+
