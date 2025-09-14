@@ -59,7 +59,7 @@
               if (priority === 'critical' || priority === 'warning') return 'mdi:alert';
               return 'mdi:bell';
             ]]]
-        content: "{{ states('sensor.notification_alert_counter') }}%"
+        content: "{{ states('sensor.notification_alert_counter') }}"
         entity: sensor.notification_alert_counter
         tap_action:
           action: fire-dom-event
@@ -70,7 +70,7 @@
               size: normal
               title: Notifications
               content:
-              - type: vertical-stack
+                type: vertical-stack
                 cards: !include notifications.yaml
         icon_color: >
                   [[[
