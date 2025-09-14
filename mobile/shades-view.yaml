@@ -140,6 +140,28 @@ cards:
               cards: 
                 - type: custom:bubble-card
                   card_type: separator
+                  name: Groups
+                  icon: mdi:roller-shade
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                      font-size: 20px !important;  /* title */
+                      font-weight: bold !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 20px !important;
+                      font-weight: 700 !important;
+                    }
+                    .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                    }
+                    .card-content {
+                      padding-top: 7px !important;
+                    }
+                - type: custom:bubble-card
+                  card_type: separator
                   name: Living Room
                   icon: mdi:sofa
                   rows: 0.75
