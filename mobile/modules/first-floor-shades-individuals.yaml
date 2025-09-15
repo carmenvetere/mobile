@@ -1,4 +1,21 @@
 - type: custom:bubble-card
+  card_type: separator
+  name: Living Room
+  icon: mdi:sofa
+  rows: 0.75
+  styles: |
+    .bubble-name {
+      font-size: 16px !important;  /* title */
+      font-weight: bold !important;
+    }
+    .bubble-line {
+      background: var(--primary-text-color);
+      opacity: 0.1;
+    }
+    .card-content {
+      padding-top: 7px !important;
+    }
+- type: custom:bubble-card
   card_type: cover
   entity: cover.living_room_front_left_cover
   name: Front Left
