@@ -25,6 +25,9 @@
     .bubble-name {
         font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
+      }      
 - type: custom:bubble-card
   card_type: cover
   entity: cover.bedroom_back
@@ -50,4 +53,7 @@
   styles: |-
     .bubble-name {
         font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
       }
