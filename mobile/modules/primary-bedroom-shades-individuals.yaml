@@ -21,6 +21,7 @@
   name: Hallway 1
   icon: mdi:roller-shade
   show_state: true
+  scrolling_effect: false
   slider_live_update: true
   card_layout: large
   tap_action:
@@ -32,7 +33,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
       }
 - type: custom:bubble-card
   card_type: cover
@@ -40,6 +44,8 @@
   name: Hallway 2
   icon: mdi:roller-shade
   show_state: true
+  scrolling_effect: false
+  slider_live_update: true
   card_layout: large
   tap_action:
     action: toggle
@@ -50,7 +56,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
       }
 - type: custom:bubble-card
   card_type: cover
@@ -58,6 +67,7 @@
   name: Right
   icon: mdi:roller-shade
   show_state: true
+  scrolling_effect: false
   slider_live_update: true
   card_layout: large
   tap_action:
@@ -69,7 +79,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
       }
 - type: custom:bubble-card
   card_type: cover
@@ -77,6 +90,7 @@
   name: Left
   icon: mdi:roller-shade
   show_state: true
+  scrolling_effect: false
   slider_live_update: true
   card_layout: large
   tap_action:
@@ -88,14 +102,17 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
 - type: custom:bubble-card
   card_type: cover
   entity: cover.bedroom_back_1_cover
   name: Back 1
   icon: mdi:roller-shade
   show_state: true
+  scrolling_effect: false
   slider_live_update: true
   card_layout: large
   tap_action:
@@ -107,14 +124,17 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
 - type: custom:bubble-card
   card_type: cover
   entity: cover.back_2
   name: Back 2
   icon: mdi:roller-shade
   show_state: true
+  scrolling_effect: false
   slider_live_update: true
   card_layout: large
   tap_action:
@@ -126,14 +146,17 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
 - type: custom:bubble-card
   card_type: cover
   entity: cover.back_3
   name: Back 3
   icon: mdi:roller-shade
   show_state: true
+  scrolling_effect: false
   slider_live_update: true
   card_layout: large
   tap_action:
@@ -145,7 +168,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
       }
 - type: custom:bubble-card
   card_type: cover
@@ -153,6 +179,7 @@
   name: Back 4
   icon: mdi:roller-shade
   show_state: true
+  scrolling_effect: false
   slider_live_update: true
   card_layout: large
   tap_action:
@@ -164,7 +191,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
       }
 - type: custom:bubble-card
   card_type: cover
@@ -172,6 +202,7 @@
   name: Back 5
   icon: mdi:roller-shade
   show_state: true
+  scrolling_effect: false
   slider_live_update: true
   card_layout: large
   tap_action:
@@ -183,5 +214,8 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
       }
