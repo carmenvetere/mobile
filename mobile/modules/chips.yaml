@@ -67,11 +67,38 @@
             service: browser_mod.popup
             data:
               dismissable: true
-              size: normal
+              size: classic
               title: Notifications
-              theme: Bubble
+              style: |
+                --popup-max-width: 90vw;
+                --popup-max-height: 90vh;
+                --popup-border-radius: 15px;
+                --popup-background-color: var(--ha-card-background);
+                --mdc-dialog-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+              card_mod:
+                style: |
+                  ha-dialog {
+                    --mdc-dialog-container-color: var(--ha-card-background);
+                    --mdc-dialog-heading-ink-color: var(--primary-text-color);
+                    border-radius: 15px !important;
+                  }
+                  ha-dialog .mdc-dialog__surface {
+                    border-radius: 15px !important;
+                    max-width: 90vw !important;
+                    max-height: 90vh !important;
+                    background: var(--ha-card-background) !important;
+                  }
+                  ha-dialog .mdc-dialog__content {
+                    padding: 0px !important;
+                  }
               content:
                 type: vertical-stack
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: var(--ha-card-background);
+                      border-radius: 15px;
+                    }
                 cards: !include notifications.yaml
         icon_color: >
                   [[[
