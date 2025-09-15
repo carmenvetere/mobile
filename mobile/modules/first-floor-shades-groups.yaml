@@ -24,6 +24,9 @@
     .bubble-name {
         font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
+      }
 - type: custom:bubble-card
   card_type: cover
   entity: cover.first_floor_front
@@ -48,6 +51,9 @@
   styles: |-
     .bubble-name {
         font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
       }
 - type: custom:bubble-card
   card_type: cover
@@ -74,6 +80,9 @@
     .bubble-name {
         font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
+      }
 - type: custom:bubble-card
   card_type: cover
   entity: cover.dining_room_side
@@ -98,4 +107,7 @@
   styles: |-
     .bubble-name {
         font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
       }
