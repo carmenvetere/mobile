@@ -4,6 +4,7 @@
   entity: cover.bedroom_side_shades
   name: Bedroom Side
   show_state: true
+  scrolling_effect: false
   slider_live_update: true
   card_layout: large
   tap_action:
@@ -22,13 +23,14 @@
       show_state: false
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
 - type: custom:bubble-card
   card_type: cover
   entity: cover.bedroom_back
   name: Bedroom Back
   show_state: true
+    scrolling_effect: false
   slider_live_update: true
   card_layout: large
   tap_action:
@@ -47,5 +49,5 @@
       show_state: false
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
