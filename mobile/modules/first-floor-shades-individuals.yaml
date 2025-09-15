@@ -15,7 +15,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
       }
 - type: custom:bubble-card
   card_type: cover
@@ -34,7 +37,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
       }
 - type: custom:bubble-card
   card_type: cover
@@ -53,8 +59,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
 - type: custom:bubble-card
   card_type: cover
   entity: cover.living_room_side_left_2_cover_2
@@ -72,8 +80,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
 - type: custom:bubble-card
   card_type: cover
   entity: cover.living_room_side_right_1_cover
@@ -91,8 +101,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
 - type: custom:bubble-card
   card_type: cover
   entity: cover.living_room_side_right_2_cover
@@ -110,8 +122,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
 - type: custom:bubble-card
   card_type: separator
   name: Dining Room
@@ -146,8 +160,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
 - type: custom:bubble-card
   card_type: cover
   button_type: slider
@@ -166,8 +182,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
 - type: custom:bubble-card
   card_type: cover
   entity: cover.side_right_cover
@@ -185,8 +203,10 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
 - type: custom:bubble-card
   card_type: cover
   entity: cover.side_left_cover
@@ -204,5 +224,7 @@
       show_state: true
   styles: |-
     .bubble-name {
-        font-size: 16px !important;
+        font-size: 16px !important; text-align: left !important;
       }
+    .bubble-state {
+        text-align: left !important;
