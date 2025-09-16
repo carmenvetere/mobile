@@ -73,7 +73,9 @@ cards:
         card:
           type: custom:simple-swipe-card
           auto_hide_pagination: 0
+          show_pagination: false
           view_mode: carousel
+          swipe_behavior: free
           enable_auto_swipe: false
           card_mod:
             style: |
