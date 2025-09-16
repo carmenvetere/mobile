@@ -72,8 +72,8 @@ cards:
           card_mod:
             style: |
               ha-card {
-                overflow: hidden !important;                           # Prevents content from spilling outside card bounds
-                margin-right: 10px !important;                        # Respects parent container's right padding
+                overflow: hidden !important;
+                #margin-right: 10px !important;                        # Respects parent container's right padding
               }
               ha-card > * {
                 display: flex !important;                             # Creates horizontal flex layout for chips
