@@ -97,73 +97,73 @@ cards:
                 flex-shrink: 1 !important;
                 min-width: 0 !important;
               }
-            chips:
-              - type: template
-                content: Back
-                tap_action:
-                  action: navigate
-                  navigation_path: /mobile-dash/mobile-home
-                icon: mdi:chevron-left
-                card_mod:
-                  style: |
-                    :host {
-                      zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
-                    }
-              - type: template
-                icon: mdi:shield-home
-                content: |-
-                  {{ states('alarm_control_panel.bayberry_alarm_v2')
-                        | replace('_', ' ')
-                        | title }}
-                entity: alarm_control_panel.bayberry_alarm_v2
-                tap_action:
-                  action: more-info
-                icon_color: >-
-                  {% if states('alarm_control_panel.bayberry_alarm_v2') ==
-                  'disarmed' %}
-                    green
-                  {% elif states('alarm_control_panel.bayberry_alarm_v2') ==
-                  'armed_home' %}
-                    orange
-                  {% elif states('alarm_control_panel.bayberry_alarm_v2') ==
-                  'armed_away' %}
-                    red
-                  {% else %}
-                    gray
-                  {% endif %}
-                card_mod:
-                  style: |
-                    :host {
-                      zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
-                    }  
-              - type: template
-                icon: mdi:door-closed
-                entity: binary_sensor.all_doors_including_garage
-                content: >-
-                  {% set s =
-                  states('binary_sensor.all_doors_including_garage') %} {{
-                  'Open' if s == 'on' else 'All Closed' if s == 'off' else s
-                  | replace('_', ' ') | title }}
-                tap_action:
-                  action: more-info
-                icon_color: >-
-                  {% if states('binary_sensor.all_doors_including_garage')
-                  == 'off' %}
-                    green
-                  {% elif states('binary_sensor.all_doors_including_garage')
-                  == 'on' %}
-                    amber
-                  {% else %}
-                    gray
-                  {% endif %}
-                card_mod:
-                  style: |
-                    :host {
-                      zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
-                    } 
+          chips:
+            - type: template
+              content: Back
+              tap_action:
+                action: navigate
+                navigation_path: /mobile-dash/mobile-home
+              icon: mdi:chevron-left
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color-2);
+                  }
+            - type: template
+              icon: mdi:shield-home
+              content: |-
+                {{ states('alarm_control_panel.bayberry_alarm_v2')
+                      | replace('_', ' ')
+                      | title }}
+              entity: alarm_control_panel.bayberry_alarm_v2
+              tap_action:
+                action: more-info
+              icon_color: >-
+                {% if states('alarm_control_panel.bayberry_alarm_v2') ==
+                'disarmed' %}
+                  green
+                {% elif states('alarm_control_panel.bayberry_alarm_v2') ==
+                'armed_home' %}
+                  orange
+                {% elif states('alarm_control_panel.bayberry_alarm_v2') ==
+                'armed_away' %}
+                  red
+                {% else %}
+                  gray
+                {% endif %}
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color-2);
+                  }  
+            - type: template
+              icon: mdi:door-closed
+              entity: binary_sensor.all_doors_including_garage
+              content: >-
+                {% set s =
+                states('binary_sensor.all_doors_including_garage') %} {{
+                'Open' if s == 'on' else 'All Closed' if s == 'off' else s
+                | replace('_', ' ') | title }}
+              tap_action:
+                action: more-info
+              icon_color: >-
+                {% if states('binary_sensor.all_doors_including_garage')
+                == 'off' %}
+                  green
+                {% elif states('binary_sensor.all_doors_including_garage')
+                == 'on' %}
+                  amber
+                {% else %}
+                  gray
+                {% endif %}
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color-2);
+                  } 
       front:
         card:
           type: custom:stack-in-card
