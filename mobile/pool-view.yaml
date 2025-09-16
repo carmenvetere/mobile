@@ -68,33 +68,60 @@ cards:
                     - padding-left: 8px
       chips:
         card:
-          type: custom:simple-swipe-card
-          auto_hide_pagination: 0
-          view_mode: carousel
-          enable_auto_swipe: false
+          type: custom:mushroom-chips-card
           card_mod:
             style: |
-              :host {
-                --simple-swipe-card-padding-left: 7px;
-                --simple-swipe-card-padding-right: 10px;
-                }
-          cards:
-          - type: custom:mushroom-chips-card
-            chips:
-              - type: template
-                content: Back
-                tap_action:
-                  action: navigate
-                  navigation_path: /mobile-dash/mobile-home
-                icon: mdi:chevron-left
-                card_mod:
-                  style: |
-                    :host {
-                      zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
-                    }
-          - type: custom:mushroom-chips-card
-            chips:
+              ha-card {
+                overflow: hidden !important;
+                margin-right: 10px !important;
+              }
+              ha-card > * {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                gap: 8px !important;
+              }
+              ha-card > * > * {
+                flex-shrink: 0 !important;
+              }
+              ha-card ::-webkit-scrollbar {
+                height: 4px;
+              }
+              ha-card ::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              ha-card ::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 2px;
+              }
+              mushroom-chips,
+              .chip-container,
+              [class*="chip"] {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                width: 100% !important;
+              }
+              mushroom-chip,
+              [class*="chip"]:not([class*="container"]) {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+              }
+          chips:
+            - type: template
+              content: Back
+              tap_action:
+                action: navigate
+                navigation_path: /mobile-dash/mobile-home
+              icon: mdi:chevron-left
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color-2);
+                  }
             - type: conditional
               conditions:
                 - condition: state
@@ -116,8 +143,6 @@ cards:
                       zoom: 1.25 !important;
                       --chip-background: var(--background-color-2);
                     } 
-          - type: custom:mushroom-chips-card
-            chips:
             - type: template
               entity: binary_sensor.pool_cover
               icon: mdi:garage-variant
@@ -138,8 +163,6 @@ cards:
                       zoom: 1.25 !important;
                       --chip-background: var(--background-color-2);
                     }   
-          - type: custom:mushroom-chips-card
-            chips:
             - type: template
               entity: binary_sensor.pool_cover_pump
               icon: mdi:water-pump
