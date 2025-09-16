@@ -10,11 +10,12 @@ cards:
         - border-radius: 15px
         - padding-bottom: 5px
         - padding-left: 5px
-        - padding-right: 20px
+        - padding-right: 10px
         - padding-top: 2px
         - margin: 0
         - height: auto
-#       - width: 398px
+        - box-sizing: border-box
+        - max-width: 100%
       grid:
         - grid-template-areas: |
             "header"
