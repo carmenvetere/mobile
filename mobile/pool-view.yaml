@@ -75,6 +75,7 @@ cards:
                 overflow: hidden !important;
                 max-width: 398px !important; 
                 margin-right: 10px !important;
+                box-sizing: border-box !important; 
               }
               ha-card > * {
                 display: flex !important;
