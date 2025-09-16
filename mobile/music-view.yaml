@@ -1,113 +1,159 @@
 title: Music
-type: sections
-max_columns: 1
-path: music
 icon: mdi:music
 theme: Bubble
-dense_section_placement: true
-sections:
-  - type: grid
-    cards:
-      - type: custom:stack-in-card
-        mode: horizontal
-        card_mod:
-          style: |
-            ha-card {
-              background: "rgb(92, 83, 103)";
-              border-radius: 20px;
-              padding: 10px 5px 10px 5px; 
+path: music
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 15px
+        - padding-bottom: 5px
+        - padding-left: 5px
+        - padding-right: 10px
+        - padding-top: 2px
+#       - margin: -8px
+        - height: auto
+#        - width: 398px
+      grid:
+        - grid-template-areas: |
+            "header"
+            "chips"
+            "music"
+        - grid-template-columns: auto
+        - grid-template-rows: 60px 60px auto auto
+        - row-gap: 0px
+        - align-items: start
+        - column-gap: 2px
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          show_state: false
+          show_name: false
+          show_icon: false
+          styles:
+            card:
+              - background-color: transparent
+              - padding-bottom: 5px
+              - padding-top: 0px
+            grid:
+              - grid-template-areas: |
+                  "name gap"
+              - grid-template-columns: 150px auto
+              - grid-template-rows: 60px
+              - column-gap: 0px
+            main:
+          custom_fields:
+            name:
+              card:
+                type: custom:button-card
+                show_state: false
+                show_name: true
+                show_icon: true
+                show_label: false
+                layout: icon_name
+                icon: mdi:music
+                name: Music
+                size: 60%
+                icon_color: var(--primary-text-color)
+                styles: 
+                  name: 
+                    - font-size: 22px
+                    - font-weight: bold
+                  card:
+                    - align-items: start
+                    - justify-content: flex-start 
+                    - text-align: left
+                    - padding-left: 8px
+      chips:
+        card:
+          type: custom:mushroom-chips-card
+          card_mod:
+            style: |
+              ha-card {
+                overflow: hidden !important;
               }
-        cards:
-          - type: custom:mushroom-chips-card
-            card_mod:
-              style: |
-                ha-card {
-                  overflow: hidden !important;
-                }
-                ha-card > * {
-                  display: flex !important;
-                  flex-wrap: nowrap !important;
-                  overflow-x: auto !important;
-                  overflow-y: hidden !important;
-                  gap: 8px !important;
-                }
-                ha-card > * > * {
-                  flex-shrink: 0 !important;
-                }
-                /* More aggressive targeting */
-                ha-card ::-webkit-scrollbar {
-                  height: 4px;
-                }
-                ha-card ::-webkit-scrollbar-track {
-                  background: transparent;
-                }
-                ha-card ::-webkit-scrollbar-thumb {
-                  background: rgba(255, 255, 255, 0.3);
-                  border-radius: 2px;
-                }
-                /* Try to target all possible chip containers */
-                mushroom-chips,
-                .chip-container,
-                [class*="chip"] {
-                  display: flex !important;
-                  flex-wrap: nowrap !important;
-                  overflow-x: auto !important;
-                  overflow-y: hidden !important;
-                  width: 100% !important;
-                }
-                mushroom-chip,
-                [class*="chip"]:not([class*="container"]) {
-                  flex-shrink: 0 !important;
-                  white-space: nowrap !important;
-                }
-            chips:
-              - type: template
-                content: Back
-                tap_action:
-                  action: navigate
-                  navigation_path: /mobile-dash/mobile-home
-                icon: mdi:chevron-left
-                card_mod:
-                  style: |
-                    :host {
-                      zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
-                    }
-      - type: custom:sonos-card
-        sections:
-          - player
-          - volumes
-          - grouping
-          - groups
-        favoritesItemsPerRow: 4
-        entityId: media_player.living_room
-        predefinedGroups:
-          - name: First Floor
-            media: ""
-            entities:
-              - player: media_player.living_room
-                volume: 10
-              - player: media_player.kitchen
-                volume: 10
-header:
-  card:
-    type: markdown
-    content: |
-      # <ha-icon icon="mdi:music"></ha-icon> Music
-  layout: start
-card_mod:
-  style: |
-    .: |
-      .badge-container ha-state-label-badge {
-        --ha-label-badge-size: 58px;
-        --ha-label-badge-font-size: 18px;
-        --mdc-icon-size: 26px;
-        border-radius: 28px;
-        background: var(--secondary-background-color);
-        color: var(--primary-text-color);
-      }
-  layout: start
-  badges_position: bottom
-  badges_wrap: wrap
-badges: null
-cards: []
+              ha-card > * {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                gap: 8px !important;
+              }
+              ha-card > * > * {
+                flex-shrink: 0 !important;
+              }
+              /* More aggressive targeting */
+              ha-card ::-webkit-scrollbar {
+                height: 4px;
+              }
+              ha-card ::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              ha-card ::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 2px;
+              }
+              /* Try to target all possible chip containers */
+              mushroom-chips,
+              .chip-container,
+              [class*="chip"] {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                width: 100% !important;
+              }
+              mushroom-chip,
+              [class*="chip"]:not([class*="container"]) {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+              }
+          chips:
+            - type: template
+              content: Back
+              tap_action:
+                action: navigate
+                navigation_path: /mobile-dash/mobile-home
+              icon: mdi:chevron-left
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color-2);
+                  }
+      music:
+        card:
+          type: custom:sonos-card
+          sections:
+            - player
+            - volumes
+            - grouping
+            - media browser
+          favoritesItemsPerRow: 4
+          entityId: media_player.living_room
+          predefinedGroups:
+            - name: First Floor
+              media: ""
+              entities:
+                - player: media_player.living_room
+                  volume: 10
+                - player: media_player.kitchen
+                  volume: 10
+            - name: First Floor & Deck
+              media: ""
+              entities:
+                - player: media_player.living_room
+                  volume: 10
+                - player: media_player.kitchen
+                  volume: 10
+                - player: media_player.deck
+                  volume: 20
+            - name: Deck & Pool
+              media: ""
+              entities:
+                - player: media_player.pool
+                  volume: 10
+                - player: media_player.deck
+                  volume: 20
