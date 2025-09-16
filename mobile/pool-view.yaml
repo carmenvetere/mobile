@@ -73,8 +73,6 @@ cards:
             style: |
               ha-card {
                 overflow: hidden !important;                           # Prevents content from spilling outside card bounds
-                max-width: 100% !important;                           # ← ADD: Ensures card doesn't exceed container width
-                box-sizing: border-box !important;                    # ← ADD: Includes padding/borders in width calculation
               }
               ha-card > * {
                 display: flex !important;                             # Creates horizontal flex layout for chips
@@ -82,7 +80,7 @@ cards:
                 overflow-x: auto !important;                          # Enables horizontal scrolling when content overflows
                 overflow-y: hidden !important;                        # Prevents vertical scrolling
                 gap: 8px !important;                                  # Adds 8px space between each chip
-                padding-right: 10px !important;                      # ← ADD: Respects parent's right margin/padding
+                padding-right: 10px !important;                      # Respects parent's right margin by adding scroll buffer
               }
               ha-card > * > * {
                 flex-shrink: 0 !important;                           # Prevents individual chips from shrinking below natural width
