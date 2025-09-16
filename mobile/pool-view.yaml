@@ -73,6 +73,7 @@ cards:
             style: |
               ha-card {
                 overflow: hidden !important;
+                max-width: 100% !important; 
                 margin-right: 10px !important;
               }
               ha-card > * {
