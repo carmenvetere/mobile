@@ -76,6 +76,9 @@ cards:
             style: |
               ha-card {
                 overflow: hidden !important;
+                max-width: calc(100vw - 30px) !important; 
+                margin-right: 10px !important;
+                box-sizing: border-box !important; 
               }
               ha-card > * {
                 display: flex !important;
@@ -87,7 +90,6 @@ cards:
               ha-card > * > * {
                 flex-shrink: 0 !important;
               }
-              /* More aggressive targeting */
               ha-card ::-webkit-scrollbar {
                 height: 4px;
               }
@@ -98,7 +100,6 @@ cards:
                 background: rgba(255, 255, 255, 0.3);
                 border-radius: 2px;
               }
-              /* Try to target all possible chip containers */
               mushroom-chips,
               .chip-container,
               [class*="chip"] {
@@ -106,7 +107,6 @@ cards:
                 flex-wrap: nowrap !important;
                 overflow-x: auto !important;
                 overflow-y: hidden !important;
-                width: 100% !important;
               }
               mushroom-chip,
               [class*="chip"]:not([class*="container"]) {
