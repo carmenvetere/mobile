@@ -15,6 +15,7 @@ cards:
 #        - margin: -8px
         - height: auto
 #        - width: 398px
+        - background-color: var(--background-color-2)
       grid:
         - grid-template-areas: |
             "header"
@@ -68,6 +69,7 @@ cards:
                     - justify-content: flex-start 
                     - text-align: left
                     - padding-left: 8px
+                    - background-color: transparent
       chips:
         card:
           type: custom:mushroom-chips-card
@@ -123,7 +125,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2);
                   }
       groups:
         card:
@@ -132,9 +134,10 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background: "rgb(92, 83, 103)";
+                background: var(--ha-card-background-2) !important;
                 border-radius: 20px;
                 padding: 3px 12px 4px;       /* top / sides / bottom */
+                }
           cards:
             - type: vertical-stack
               cards: 
@@ -203,6 +206,11 @@ cards:
           type: custom:expander-card
           expanded: false
           title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--ha-card-background-2) !important;
+              }
           title-card:
             type: custom:bubble-card
             card_type: separator
@@ -234,6 +242,11 @@ cards:
           type: custom:expander-card
           expanded: false
           title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--ha-card-background-2) !important;
+              }
           title-card:
             type: custom:bubble-card
             card_type: separator
