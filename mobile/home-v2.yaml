@@ -12,7 +12,7 @@ cards:
         - padding-top: 2px
         - height: auto
         - width: 400px
-        - background-color: '#E9EAEF'
+        - background-color: var(--background-color-2)
       grid:
         - grid-template-areas: |
             "header"
@@ -142,7 +142,7 @@ cards:
                 card_mod:
                   style: |
                     ha-card {
-                      background: '#DCE0E8' !important;
+                      background: var(--ha-card-background-2) !important;
                     }
       menu:
         card:
@@ -151,7 +151,7 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background: "#DCE0E8" !important;
+                background: var(--ha-card-background-2) !important;
                 border-radius: 20px;
                 padding: 12px 12px 4px;       /* top / sides / bottom */
           cards:
