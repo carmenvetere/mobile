@@ -15,6 +15,7 @@ cards:
 #        - margin: -8px
         - height: auto
 #        - width: 398px
+        - background-color: var(--background-color-2)
       grid:
         - grid-template-areas: |
             "header"
@@ -68,6 +69,7 @@ cards:
                     - justify-content: flex-start 
                     - text-align: left
                     - padding-left: 8px
+                    - background-color: transparent
       chips:
         card:
           type: custom:mushroom-chips-card
@@ -123,7 +125,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2);
                   }
             - type: conditional
               conditions:
@@ -141,12 +143,17 @@ cards:
                   style: |
                     :host {
                       zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2); 
+                      --chip-background: var(--ha-card-background-2); 
       solar_forecast:
         card: 
           type: custom:expander-card
           expanded: false
           title-card-clickable: true
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background-2);
+              }
           title-card:
             type: custom:bubble-card
             card_type: separator
@@ -192,10 +199,6 @@ cards:
                 name: Solar Forecast Today
               - entity: sensor.solcast_pv_forecast_forecast_tomorrow
                 name: Solar Forecast Tomorrow
-              - entity: sensor.rear_solar_array
-                name: Live Rear Solar Array Production
-              - entity: sensor.front_solar_array
-                name: Live Front Solar Array Production
       power_flow:
         card: 
           type: custom:stack-in-card
