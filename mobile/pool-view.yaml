@@ -16,6 +16,7 @@ cards:
         - height: auto
         - box-sizing: border-box
         - max-width: 98%
+        - background-color: var(--background-color-2)
       grid:
         - grid-template-areas: |
             "header"
@@ -67,6 +68,7 @@ cards:
                     - justify-content: flex-start 
                     - text-align: left
                     - padding-left: 8px
+                    - background-color: transparent
       chips:
         card:
           type: custom:mushroom-chips-card
@@ -122,7 +124,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2);
                   }
             - type: conditional
               conditions:
@@ -143,7 +145,7 @@ cards:
                   style: |
                     :host {
                       zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
+                      --chip-background: var(--ha-card-background-2);
                     } 
             - type: template
               entity: binary_sensor.pool_cover
@@ -163,7 +165,7 @@ cards:
                   style: |
                     :host {
                       zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
+                      --chip-background: var(--ha-card-background-2);
                     }   
             - type: template
               entity: binary_sensor.pool_cover_pump
@@ -177,7 +179,7 @@ cards:
                   style: |
                     :host {
                       zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
+                      --chip-background: var(--ha-card-background-2);
                     } 
       pool:
         card: 
@@ -186,7 +188,7 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background: "rgb(92, 83, 103)";
+                background: var(--ha-card-background-2);
                 border-radius: 20px;
                 padding: 12px 12px 4px;       /* top / sides / bottom */
           cards:
