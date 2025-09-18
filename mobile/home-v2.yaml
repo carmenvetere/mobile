@@ -65,6 +65,7 @@ cards:
                     - justify-content: flex-start 
                     - text-align: left
                     - padding-left: 8px
+                    - background-color: transparent
             temperature:
               card:
                 type: custom:button-card
@@ -86,6 +87,7 @@ cards:
                     - justify-content: right
                     - text-align: right
                     - padding-right: 15px
+                    - background-color: transparent
       chips:
         card: !include modules/chips.yaml
       notifications:
@@ -154,6 +156,7 @@ cards:
                 background: var(--ha-card-background-2) !important;
                 border-radius: 20px;
                 padding: 12px 12px 4px;       /* top / sides / bottom */
+                }
           cards:
             - type: vertical-stack
               cards:
