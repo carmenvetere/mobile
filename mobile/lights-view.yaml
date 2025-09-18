@@ -125,7 +125,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--background-color);
                   }
             - type: entity
               entity: sensor.count_of_lights
@@ -137,7 +137,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--background-color);
                   }  
       scenes:
         card:
@@ -177,7 +177,7 @@ cards:
                 margin-bottom: 10px !important;
                 padding-left: 15px !important;
                 padding-right: 15px !important;
-                background-color: var(--background-color-2) !important;
+                background-color: var(--background-color) !important;
               }
           cards: !include modules/first-floor-scenes.yaml
       first:
@@ -218,7 +218,7 @@ cards:
                 margin-bottom: 10px !important;
                 padding-left: 15px !important;
                 padding-right: 15px !important;
-                background-color: var(--background-color-2) !important;
+                background-color: var(--background-color) !important;
               }
           cards: 
             - type: vertical-stack
@@ -252,7 +252,7 @@ cards:
                 margin-bottom: 10px !important;
                 padding-left: 15px !important;
                 padding-right: 15px !important;
-                background-color: var(--background-color-2) !important;
+                background-color: var(--background-color) !important;
               }
           cards: 
             - !include modules/basement-lights-individual.yaml
@@ -285,7 +285,7 @@ cards:
                 margin-bottom: 10px !important;
                 padding-left: 15px !important;
                 padding-right: 15px !important;
-                background-color: var(--background-color-2) !important;
+                background-color: var(--background-color) !important;
               }
           cards: !include modules/second-floor-lights-individual.yaml
       outdoor:
@@ -317,6 +317,6 @@ cards:
                 margin-bottom: 10px !important;
                 padding-left: 15px !important;
                 padding-right: 15px !important;
-                background-color: var(--background-color-2) !important;
+                background-color: var(--background-color) !important;
               }
           cards: !include modules/outdoor-lights-individual.yaml
