@@ -68,6 +68,7 @@
         style: |
           :host {
             zoom: 1.25 !important;
+            background: var(--ha-card-background-2);
           } 
 #Notifications Chip
     - type: conditional
@@ -135,7 +136,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Powerwall Discharge Time if Grid Down
     - type: conditional
@@ -152,7 +153,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Powerwall Charge Level if Grid Down
     - type: conditional
@@ -172,7 +173,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Dinner Party Mode
     - type: conditional
@@ -189,7 +190,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Guest Mode
     - type: conditional
@@ -206,7 +207,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Away Mode
     - type: conditional
@@ -223,7 +224,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Pool Cover Status
     - type: conditional
@@ -243,7 +244,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Washer Time Remaining
     - type: conditional
@@ -260,7 +261,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Dryer Time Remaining
     - type: conditional
@@ -277,7 +278,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Pool Water Temperature
     - type: conditional
@@ -299,7 +300,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Vehicle Unplugged
     - type: conditional
@@ -319,7 +320,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Vehicle Charging
     - type: conditional
@@ -342,7 +343,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             } 
 #Fresh Air Ventilation
     - type: conditional
@@ -362,7 +363,7 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2);
             }        
 #Aux Heat Active
     - type: conditional
@@ -386,5 +387,5 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--background-color-2);
+              --chip-background: var(--ha-card-background-2)
             } 
