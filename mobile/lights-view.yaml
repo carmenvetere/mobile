@@ -125,7 +125,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color);
+                    --chip-background: var(--background-color-2);
                   }
             - type: entity
               entity: sensor.count_of_lights
@@ -137,7 +137,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color);
+                    --chip-background: var(--background-color-2);
                   }  
       scenes:
         card:
