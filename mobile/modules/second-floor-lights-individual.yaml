@@ -21,8 +21,10 @@
         data:
           transition: 3
       card_layout: large
+      scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; }
+        .bubble-state { text-align: left !important;}        
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_nightlight
@@ -44,8 +46,10 @@
         data:
           transition: 3
       card_layout: large
+      scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; }
+        .bubble-state { text-align: left !important;}
     - type: custom:bubble-card
       card_type: separator
       name: Hallway
@@ -88,6 +92,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.upstairs_hallway_main_lights
           show_state: true
@@ -140,6 +145,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.office_main_lights
           show_state: true
@@ -181,6 +187,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.office_floor_lamp
           show_state: true
@@ -222,6 +229,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.eve_light_strip_a5a4
           show_state: true
@@ -274,6 +282,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.master_bedroom_main_lights
           show_state: true
@@ -315,6 +324,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.master_bedroom_closet_light
           show_state: true
@@ -356,6 +366,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.master_bedroom_sconces
           show_state: true
@@ -381,6 +392,7 @@
       use_accent_color: false
       styles: |
         .bubble-name { font-size: 16px !important; }
+        .bubble-state { text-align: left !important;}
     - type: custom:bubble-card
       card_type: separator
       name: Primary Bathroom
@@ -423,6 +435,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.master_bathroom_main_lights
           show_state: true
@@ -464,6 +477,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.master_bathroom_vanity_lights
           show_state: true
