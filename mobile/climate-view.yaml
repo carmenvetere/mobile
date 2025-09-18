@@ -16,6 +16,7 @@ cards:
         - height: auto
         - box-sizing: border-box
         - max-width: 98%
+        - background-color: var(--background-color-2)
       grid:
         - grid-template-areas: |
             "header"
@@ -70,6 +71,7 @@ cards:
                     - justify-content: flex-start 
                     - text-align: left
                     - padding-left: 8px
+                    - background-color: transparent
       chips:
         card:
           type: custom:mushroom-chips-card
@@ -125,7 +127,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2);
                   }
             - type: entity
               entity: sensor.bayberry_tempest_temperature
@@ -137,7 +139,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2);
                   }    
             - type: entity
               entity: sensor.bayberry_tempest_humidity
@@ -149,7 +151,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2);
                   }  
             - type: conditional
               conditions:
@@ -168,13 +170,18 @@ cards:
                   style: |
                     :host {
                       zoom: 1.25 !important;
-                      --chip-background: var(--background-color-2);
+                      --chip-background: var(--ha-card-background-2);
                     } 
       first:
         card:
           type: custom:expander-card
           expanded: true
           title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--ha-card-background-2) !important;
+              }
           title-card:
             type: custom:bubble-card
             card_type: separator
@@ -285,6 +292,11 @@ cards:
           type: custom:expander-card
           expanded: true
           title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--ha-card-background-2) !important;
+              }
           title-card:
             type: custom:bubble-card
             card_type: separator
@@ -401,6 +413,11 @@ cards:
           type: custom:expander-card
           expanded: true
           title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--ha-card-background-2) !important;
+              }
           title-card:
             type: custom:bubble-card
             card_type: separator
@@ -574,6 +591,11 @@ cards:
           type: custom:expander-card
           expanded: true
           title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--ha-card-background-2) !important;
+              }
           title-card:
             type: custom:bubble-card
             card_type: separator
