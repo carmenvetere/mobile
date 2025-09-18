@@ -16,6 +16,7 @@ cards:
         - height: auto
 #        - width: 398px
         - box-shadow: none
+        - background-color: var(--background-color-2)
       grid:
         - grid-template-areas: |
             "header"
@@ -71,6 +72,7 @@ cards:
                     - justify-content: flex-start 
                     - text-align: left
                     - padding-left: 8px
+                    - background-color: transparent
       chips:
         card:
           type: custom:mushroom-chips-card
@@ -126,7 +128,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2);
                   }
             - type: entity
               entity: sensor.count_of_lights
@@ -138,7 +140,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2);
                   }  
       scenes:
         card:
@@ -178,7 +180,7 @@ cards:
                 margin-bottom: 10px !important;
                 padding-left: 15px !important;
                 padding-right: 15px !important;
-                background-color: var(--background-color-2) !important;
+                background-color: var(--ha-card-background-2) !important;
               }
           cards: !include modules/first-floor-scenes.yaml
       first:
@@ -219,7 +221,7 @@ cards:
                 margin-bottom: 10px !important;
                 padding-left: 15px !important;
                 padding-right: 15px !important;
-                background-color: var(--background-color-2) !important;
+                background-color: var(--ha-card-background-2) !important;
               }
           cards: 
             - type: vertical-stack
@@ -253,7 +255,7 @@ cards:
                 margin-bottom: 10px !important;
                 padding-left: 15px !important;
                 padding-right: 15px !important;
-                background-color: var(--background-color-2) !important;
+                background-color: var(--ha-card-background-2) !important;
               }
           cards: 
             - !include modules/basement-lights-individual.yaml
@@ -286,7 +288,7 @@ cards:
                 margin-bottom: 10px !important;
                 padding-left: 15px !important;
                 padding-right: 15px !important;
-                background-color: var(--background-color-2) !important;
+                background-color: var(--ha-card-background-2) !important;
               }
           cards: !include modules/second-floor-lights-individual.yaml
       outdoor:
@@ -318,6 +320,6 @@ cards:
                 margin-bottom: 10px !important;
                 padding-left: 15px !important;
                 padding-right: 15px !important;
-                background-color: var(--background-color-2) !important;
+                background-color: var(--ha-card-background-2) !important;
               }
           cards: !include modules/outdoor-lights-individual.yaml
