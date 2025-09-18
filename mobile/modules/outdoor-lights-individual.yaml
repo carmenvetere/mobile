@@ -21,8 +21,10 @@
         data:
           transition: 3
       card_layout: large
+      scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; }
+        .bubble-state { text-align: left !important;}
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_outdoor_on_bright
@@ -44,8 +46,10 @@
         data:
           transition: 3
       card_layout: large
+      scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; }
+        .bubble-state { text-align: left !important;}
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_outdoor_off
@@ -67,8 +71,10 @@
         data:
           transition: 3
       card_layout: large
+      scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; }
+        .bubble-state { text-align: left !important;} 
     - type: custom:bubble-card
       card_type: separator
       name: Front
@@ -111,6 +117,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.front_porch_overhead_light
           show_state: true
@@ -145,6 +152,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: switch.transformer_zone_1
           show_state: true
@@ -175,6 +183,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: switch.transformer_zone_2
           show_state: true
@@ -223,6 +232,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.patio_back_porch_lights
           show_state: true
@@ -257,6 +267,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }                      
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: switch.transformer_zone_3
           show_state: true
@@ -294,6 +305,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.omnilogic_pool_color_lights
           show_state: true
@@ -346,6 +358,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.driveway_sconces
           show_state: true
@@ -380,6 +393,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: switch.driveway_zone_2_2
           show_state: true
@@ -410,6 +424,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: switch.driveway_zone_1_2
           show_state: true
@@ -451,6 +466,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: switch.driveway_zone_3_2
           show_state: true

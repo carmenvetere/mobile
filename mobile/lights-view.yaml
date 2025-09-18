@@ -258,7 +258,8 @@ cards:
                 background-color: var(--ha-card-background-2) !important;
               }
           cards: 
-            - !include modules/basement-lights-individual.yaml
+          - type: vertical-stack
+            cards: !include modules/basement-lights-individual.yaml
       second:
         card:
           type: custom:expander-card

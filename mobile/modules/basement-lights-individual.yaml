@@ -21,8 +21,10 @@
         data:
           transition: 3
       card_layout: large
+      scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; }
+        .bubble-state { text-align: left !important;}
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_basement_evening
@@ -44,8 +46,10 @@
         data:
           transition: 3
       card_layout: large
+      scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; }
+        .bubble-state { text-align: left !important;}        
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene2_basement_cleaning
@@ -67,8 +71,10 @@
         data:
           transition: 3
       card_layout: large
+      scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; }
+        .bubble-state { text-align: left !important;}        
     - type: custom:bubble-card
       card_type: separator
       name: Media Room
@@ -111,6 +117,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.gym_main_lights
           show_state: true
@@ -152,6 +159,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.media_room_table_lamp
           show_state: true
@@ -204,6 +212,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.laundry_room_main_lights
           show_state: true
@@ -256,6 +265,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.basement_hallway_main_lights
           show_state: true
@@ -308,6 +318,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.gym_main_lights
           show_state: true
@@ -349,6 +360,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.stairs_main_lights
           show_state: true
@@ -390,6 +402,7 @@
         .bubble-name { font-size: 16px !important; }
         .bubble-sub-button { font-size: 14px !important;
         font-weight: bold; }
+        .bubble-state { text-align: left !important;}
       sub_button:
         - entity: light.stairs_spot_lights
           show_state: true
