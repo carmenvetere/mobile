@@ -230,6 +230,8 @@ cards:
                       show_attribute: true
                   name: Filter Pump
                   icon: mdi:pump
+                  modules:
+                  - Mobile Module Theme 
                 - type: custom:bubble-card
                   card_type: button
                   entity: number.omnilogic_pool_filter_pump_speed
@@ -282,6 +284,8 @@ cards:
                         perform_action: button.press
                         target:
                           entity_id: button.omnilogic_pool_filter_pump_high_speed
+                  modules:
+                  - Mobile Module Theme  
                 - type: custom:bubble-card
                   card_type: separator
                   name: Heater
@@ -324,6 +328,8 @@ cards:
                       attribute: temperature
                       show_icon: false
                       show_background: false
+                  modules:
+                  - Mobile Module Theme 
                 - type: custom:bubble-card
                   card_type: button
                   entity: water_heater.omnilogic_pool_heater
@@ -341,6 +347,8 @@ cards:
                         font-size: 16px !important;
                         font-weight: bold;
                       }
+                  modules:
+                  - Mobile Module Theme 
                 - type: custom:bubble-card
                   card_type: separator
                   name: Chlorinator
@@ -378,6 +386,8 @@ cards:
                     .bubble-name {
                         font-size: 16px !important;
                       }
+                  modules:
+                  - Mobile Module Theme 
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
@@ -405,3 +415,5 @@ cards:
                     .bubble-name {
                         font-size: 16px !important;
                       }
+                  modules:
+                  - Mobile Module Theme

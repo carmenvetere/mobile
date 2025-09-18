@@ -24,6 +24,8 @@
       scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; text-align: left !important;}
+      modules:
+      - Mobile Module Theme  
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_outdoor_on_bright
@@ -48,6 +50,8 @@
       scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; text-align: left !important; }
+      modules:
+      - Mobile Module Theme 
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_outdoor_off
@@ -72,6 +76,8 @@
       scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; text-align: left !important; }
+      modules:
+      - Mobile Module Theme 
     - type: custom:bubble-card
       card_type: separator
       name: Front
@@ -124,6 +130,8 @@
           attribute: brightness
       modules:
         - light_card_mobile
+      modules:
+      - Mobile Module Theme 
     - type: custom:bubble-card
       card_type: button
       button_type: switch
@@ -154,6 +162,8 @@
           show_icon: false
           state_background: false
           show_background: false
+      modules:
+      - Mobile Module Theme 
     - type: custom:bubble-card
       card_type: button
       button_type: switch
@@ -184,6 +194,8 @@
           show_icon: false
           state_background: false
           show_background: false
+      modules:
+      - Mobile Module Theme 
     - type: custom:bubble-card
       card_type: separator
       name: Pool
@@ -235,7 +247,8 @@
           show_background: false
           attribute: brightness
       modules:
-        - light_card_mobile
+      - Mobile Module Theme 
+
     - type: custom:bubble-card
       card_type: button
       button_type: switch
@@ -266,6 +279,8 @@
           show_icon: false
           state_background: false
           show_background: false
+      modules:
+      - Mobile Module Theme 
     - type: custom:bubble-card
       card_type: button
       button_type: slider
@@ -306,7 +321,7 @@
           show_background: false
           attribute: brightness
       modules:
-        - light_card_mobile
+      - Mobile Module Theme 
     - type: custom:bubble-card
       card_type: separator
       name: Driveway
@@ -358,7 +373,7 @@
           show_background: false
           attribute: brightness
       modules:
-        - light_card_mobile
+      - Mobile Module Theme 
     - type: custom:bubble-card
       card_type: button
       button_type: switch
@@ -389,6 +404,8 @@
           show_icon: false
           state_background: false
           show_background: false
+      modules:
+      - Mobile Module Theme 
     - type: custom:bubble-card
       card_type: button
       button_type: switch
@@ -419,6 +436,8 @@
           show_icon: false
           state_background: false
           show_background: false
+      modules:
+      - Mobile Module Theme 
     - type: custom:bubble-card
       card_type: separator
       name: Firepit
@@ -460,3 +479,5 @@
           show_icon: false
           state_background: false
           show_background: false
+      modules:
+      - Mobile Module Theme           
