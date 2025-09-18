@@ -16,6 +16,7 @@ cards:
         - height: auto
         - box-sizing: border-box
         - max-width: 98%
+        - background-color: var(--background-color-2)
       grid:
         - grid-template-areas: |
             "header"
@@ -70,6 +71,7 @@ cards:
                     - justify-content: flex-start 
                     - text-align: left
                     - padding-left: 8px
+                    - background-color: transparent
       chips:
         card:
           type: custom:mushroom-chips-card
@@ -125,7 +127,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2);
                   }
             - type: template
               icon: mdi:shield-home
@@ -153,7 +155,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2);
                   }  
             - type: template
               icon: mdi:door-closed
@@ -179,7 +181,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2);
                   } 
       front:
         card:
@@ -188,7 +190,7 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background: var(--ha-card-background);
+                background: var(--ha-card-background-2);
                 border-radius: 20px;
                 padding: 10;
               }
@@ -218,6 +220,12 @@ cards:
               fit_mode: cover
               entity: camera.front_high_resolution_channel
               camera_image: camera.front_high_resolution_channel
+              card_mod:
+                style: |
+                  ha-card {
+                    border-radius: 5px;
+                    padding: 5px;
+                  }
       driveway:
         card:
           type: custom:stack-in-card
