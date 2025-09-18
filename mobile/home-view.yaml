@@ -15,6 +15,7 @@ cards:
         - margin: 0
         - height: auto
 #        - width: 398px
+        - background-color: var(--background-color-2)
       grid:
         - grid-template-areas: |
             "header"
@@ -67,6 +68,7 @@ cards:
                     - justify-content: flex-start 
                     - text-align: left
                     - padding-left: 8px
+                    - background-color: transparent
             temperature:
               card:
                 type: custom:button-card
@@ -88,6 +90,7 @@ cards:
                     - justify-content: right
                     - text-align: right
                     - padding-right: 15px
+                    - background-color: transparent
       chips:
         card: !include modules/chips.yaml
       # notifications:
@@ -148,9 +151,10 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background: "rgb(92, 83, 103)";
+                background: var(--ha-card-background-2) !important;
                 border-radius: 20px;
-                padding: 3px 12px 4px;       /* top / sides / bottom */
+                padding: 3px 12px 4px;
+                }
           cards:
             - type: vertical-stack
               cards:
