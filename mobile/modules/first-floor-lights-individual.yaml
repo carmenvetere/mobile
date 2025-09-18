@@ -23,8 +23,6 @@
   styles: |
     .bubble-name {
       font-size: 16px !important;
-            }
-    .bubble-state {
       text-align: left !important;
        }
 - type: custom:bubble-card
@@ -66,11 +64,9 @@
   scrolling_effect: false
   use_accent_color: false
   styles: >
-    .bubble-name { font-size: 16px !important; }
+    .bubble-name { font-size: 16px !important; text-align: left !important;}
     .bubble-sub-button { font-size: 14px !important;
     font-weight: bold; }
-    .bubble-state { text-align: left !important;
-       }
   sub_button:
     - entity: light.living_room_main_lights
       show_state: true
@@ -109,11 +105,9 @@
   scrolling_effect: false
   use_accent_color: false
   styles: >
-    .bubble-name { font-size: 16px !important; }
+    .bubble-name { font-size: 16px !important; text-align: left !important;}
     .bubble-sub-button { font-size: 14px !important;
     font-weight: bold; }
-    .bubble-state { text-align: left !important;
-       }
   sub_button:
     - entity: light.living_room_floor_lamps
       show_state: true
@@ -161,11 +155,9 @@
   scrolling_effect: false
   use_accent_color: false
   styles: >
-    .bubble-name { font-size: 16px !important; }
+    .bubble-name { font-size: 16px !important; text-align: left !important;}
     .bubble-sub-button { font-size: 14px !important;
     font-weight: bold; }
-    .bubble-state { text-align: left !important;
-       }
   sub_button:
     - entity: light.kitchen_main_lights
       show_state: true
@@ -202,11 +194,9 @@
   scrolling_effect: false
   use_accent_color: false
   styles: >
-    .bubble-name { font-size: 16px !important; }
+    .bubble-name { font-size: 16px !important; text-align: left !important;}
     .bubble-sub-button { font-size: 14px !important;
     font-weight: bold; }
-    .bubble-state { text-align: left !important;
-       }
   sub_button:
     - entity: light.kitchen_outer_wall
       show_state: true
@@ -243,11 +233,9 @@
   scrolling_effect: false
   use_accent_color: false
   styles: >
-    .bubble-name { font-size: 16px !important; }
+    .bubble-name { font-size: 16px !important; text-align: left !important;}
     .bubble-sub-button { font-size: 14px !important;
-    font-weight: bold; }
-    .bubble-state { text-align: left !important;
-       }   
+    font-weight: bold; }   
   sub_button:
     - entity: light.kitchen_island_pendants
       show_state: true
@@ -284,11 +272,9 @@
   scrolling_effect: false
   use_accent_color: false
   styles: >
-    .bubble-name { font-size: 16px !important; }
+    .bubble-name { font-size: 16px !important; text-align: left !important;}
     .bubble-sub-button { font-size: 14px !important;
     font-weight: bold; }
-    .bubble-state { text-align: left !important;
-       }
   sub_button:
     - entity: light.kitchen_window_seat_sconce
       show_state: true
@@ -336,11 +322,9 @@
   scrolling_effect: false
   use_accent_color: false
   styles: >
-    .bubble-name { font-size: 16px !important; }
+    .bubble-name { font-size: 16px !important; text-align: left !important;}
     .bubble-sub-button { font-size: 14px !important;
     font-weight: bold; }
-    .bubble-state { text-align: left !important;
-       }
   sub_button:
     - entity: light.dining_room_main_lights
       show_state: true
@@ -377,11 +361,9 @@
   scrolling_effect: false
   use_accent_color: false
   styles: >
-    .bubble-name { font-size: 16px !important; }
+    .bubble-name { font-size: 16px !important; text-align: left !important;}
     .bubble-sub-button { font-size: 14px !important;
     font-weight: bold; }
-    .bubble-state { text-align: left !important;
-       }
   sub_button:
     - entity: light.dining_room_table_lamps
       show_state: true
@@ -418,11 +400,9 @@
   scrolling_effect: false
   use_accent_color: false
   styles: >
-    .bubble-name { font-size: 16px !important; }
+    .bubble-name { font-size: 16px !important; text-align: left !important;}
     .bubble-sub-button { font-size: 14px !important;
     font-weight: bold; }
-    .bubble-state { text-align: left !important;
-       }
   sub_button:
     - entity: light.dining_room_accent_lights
       show_state: true
