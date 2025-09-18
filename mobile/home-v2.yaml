@@ -137,15 +137,11 @@ cards:
                   padding-bottom: 3px !important;
                   padding-left: 15px !important;
                   padding-right: 15px !important;
+                  background: var(--ha-card-background-2) !important;
                 }
             cards:
               - type: vertical-stack
                 cards: !include modules/notifications.yaml
-                card_mod:
-                  style: |
-                    ha-card {
-                      background: var(--ha-card-background-2) !important;
-                    }
       menu:
         card:
           type: custom:stack-in-card
@@ -155,7 +151,7 @@ cards:
               ha-card {
                 background: var(--ha-card-background-2) !important;
                 border-radius: 20px;
-                padding: 12px 12px 4px;       /* top / sides / bottom */
+                padding: 12px 12px 4px;
                 }
           cards:
             - type: vertical-stack
