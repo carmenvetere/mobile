@@ -359,29 +359,29 @@ cards:
                 #   tap_action:
                 #     action: navigate
                 #     navigation_path: /mobile-dash/vacuum
-                # - type: custom:bubble-card
-                #   card_type: button
-                #   button_type: name
-                #   name: Weather
-                #   icon: mdi:weather-partly-cloudy
-                #   button_action:
-                #     tap_action:
-                #       action: navigate
-                #       navigation_path: /mobile-dash/weather
-                #   sub_button:
-                #     - icon: mdi:chevron-right
-                #       state_background: false
-                #       tap_action:
-                #         action: navigate
-                #         navigation_path: /mobile-dash/weather
-                #   card_layout: normal
-                #   styles: |-
-                #     .bubble-name {
-                #         font-size: 16px !important;
-                #       }
-                #   tap_action:
-                #     action: navigate
-                #     navigation_path: /mobile-dash/weather
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Weather
+                  icon: mdi:weather-partly-cloudy
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/weather
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/weather
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                      }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/weather
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
