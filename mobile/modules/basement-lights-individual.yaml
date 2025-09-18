@@ -24,6 +24,8 @@
       scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; text-align: left !important;}
+      modules:
+      - Mobile Module Theme    
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_basement_evening
@@ -48,6 +50,8 @@
       scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; text-align: left !important;}        
+      modules:
+      - Mobile Module Theme   
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene2_basement_cleaning
@@ -72,6 +76,8 @@
       scrolling_effect: false
       styles: |
         .bubble-name { font-size: 16px !important; text-align: left !important;}        
+      modules:
+      - Mobile Module Theme   
     - type: custom:bubble-card
       card_type: separator
       name: Media Room
@@ -123,7 +129,7 @@
           show_background: false
           attribute: brightness
       modules:
-        - light_card_mobile
+      - Mobile Module Theme   
     - type: custom:bubble-card
       card_type: button
       button_type: slider
@@ -164,7 +170,7 @@
           show_background: false
           attribute: brightness
       modules:
-        - light_card_mobile
+      - Mobile Module Theme   
     - type: custom:bubble-card
       card_type: separator
       name: Mudroom
@@ -216,7 +222,7 @@
           show_background: false
           attribute: brightness
       modules:
-        - light_card_mobile
+      - Mobile Module Theme   
     - type: custom:bubble-card
       card_type: separator
       name: Hallway
@@ -268,7 +274,7 @@
           show_background: false
           attribute: brightness
       modules:
-        - light_card_mobile
+      - Mobile Module Theme   
     - type: custom:bubble-card
       card_type: separator
       name: Gym
@@ -320,7 +326,7 @@
           show_background: false
           attribute: brightness
       modules:
-        - light_card_mobile
+      - Mobile Module Theme   
     - type: custom:bubble-card
       card_type: button
       button_type: slider
@@ -361,7 +367,7 @@
           show_background: false
           attribute: brightness
       modules:
-        - light_card_mobile
+      - Mobile Module Theme   
     - type: custom:bubble-card
       card_type: button
       button_type: slider
@@ -401,3 +407,5 @@
           state_background: false
           show_background: false
           attribute: brightness
+      modules:
+      - Mobile Module Theme   

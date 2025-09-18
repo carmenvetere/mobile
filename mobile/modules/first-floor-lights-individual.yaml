@@ -25,6 +25,8 @@
       font-size: 16px !important;
       text-align: left !important;
        }
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: separator
   name: Living Room
@@ -76,7 +78,7 @@
       show_background: false
       attribute: brightness
   modules:
-    - light_card_mobile
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: button
   button_type: slider
@@ -116,6 +118,8 @@
       state_background: false
       show_background: false
       attribute: brightness
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: separator
   name: Kitchen
@@ -166,6 +170,8 @@
       state_background: false
       show_background: false
       attribute: brightness
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: button
   button_type: slider
@@ -205,6 +211,8 @@
       state_background: false
       show_background: false
       attribute: brightness
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: button
   button_type: slider
@@ -244,6 +252,8 @@
       state_background: false
       show_background: false
       attribute: brightness
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: button
   button_type: slider
@@ -283,6 +293,8 @@
       state_background: false
       show_background: false
       attribute: brightness
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: separator
   name: Dining Room
@@ -333,6 +345,8 @@
       state_background: false
       show_background: false
       attribute: brightness
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: button
   button_type: slider
@@ -372,6 +386,8 @@
       state_background: false
       show_background: false
       attribute: brightness
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: button
   button_type: slider
@@ -411,3 +427,5 @@
       state_background: false
       show_background: false
       attribute: brightness
+  modules:
+  - Mobile Module Theme  

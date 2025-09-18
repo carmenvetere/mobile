@@ -15,6 +15,8 @@
     .card-content {
       padding-top: 7px !important;
     }
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: cover
   entity: cover.living_room_front_left_cover
@@ -38,6 +40,8 @@
     .bubble-state {
         text-align: left !important;
       }
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: cover
   entity: cover.living_room_front_right
@@ -61,6 +65,8 @@
     .bubble-state {
         text-align: left !important;
       }
+  modules:
+  - Mobile Module Theme
 - type: custom:bubble-card
   card_type: cover
   entity: cover.living_room_side_left_1_cover
@@ -84,6 +90,8 @@
     .bubble-state {
         text-align: left !important;
       }
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: cover
   entity: cover.living_room_side_left_2_cover_2
@@ -107,6 +115,8 @@
     .bubble-state {
         text-align: left !important;
       }
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: cover
   entity: cover.living_room_side_right_1_cover
@@ -130,6 +140,8 @@
     .bubble-state {
         text-align: left !important;
       }
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: cover
   entity: cover.living_room_side_right_2_cover
@@ -153,6 +165,8 @@
     .bubble-state {
         text-align: left !important;
       }
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: separator
   name: Dining Room
@@ -193,6 +207,8 @@
     .bubble-state {
         text-align: left !important;
       }
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: cover
   button_type: slider
@@ -217,6 +233,8 @@
     .bubble-state {
         text-align: left !important;
       }
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: cover
   entity: cover.side_right_cover
@@ -240,6 +258,8 @@
     .bubble-state {
         text-align: left !important;
       }
+  modules:
+  - Mobile Module Theme  
 - type: custom:bubble-card
   card_type: cover
   entity: cover.side_left_cover
@@ -263,3 +283,5 @@
     .bubble-state {
         text-align: left !important;
       }
+  modules:
+  - Mobile Module Theme  

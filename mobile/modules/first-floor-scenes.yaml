@@ -27,6 +27,8 @@
             font-size: 16px !important;
             text-align: left !important;
           }
+      modules:
+      - Mobile Module Theme            
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_first_floor_evening
@@ -83,6 +85,8 @@
             font-size: 16px !important;
             text-align: left !important;
           }
+      modules:
+      - Mobile Module Theme  
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_emergency
@@ -110,6 +114,8 @@
             font-size: 16px !important;
             text-align: left !important;
           }
+      modules:
+      - Mobile Module Theme  
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_nightlight
@@ -137,6 +143,8 @@
             font-size: 16px !important;
             text-align: left !important;
           }
+      modules:
+      - Mobile Module Theme  
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_good_night
@@ -164,3 +172,5 @@
             font-size: 16px !important;
             text-align: left !important;
           }
+      modules:
+      - Mobile Module Theme            
