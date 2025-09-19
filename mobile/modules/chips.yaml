@@ -94,6 +94,13 @@
               dismissable: true
               size: classic
               title: Notifications
+              icon: >-
+                {% set priority = states('sensor.notification_icon_priority') %}
+                {% if priority in ['critical', 'warning'] %}
+                  mdi:alert
+                {% else %}
+                  mdi:bell
+                {% endif %}
               style: |
                 --popup-max-width: 90vw;
                 --popup-max-height: 90vh;
@@ -103,8 +110,8 @@
               card_mod:
                 style: |
                   ha-dialog {
-                    --mdc-dialog-container-color: var(--ha-card-background);
-                    --mdc-dialog-heading-ink-color: var(--primary-text-color);
+                    --mdc-dialog-container-color: var(--ha-card-background) !important;
+                    --mdc-dialog-heading-ink-color: var(--primary-text-color) !important;
                     border-radius: 15px !important;
                   }
                   ha-dialog .mdc-dialog__surface {
@@ -115,6 +122,10 @@
                   }
                   ha-dialog .mdc-dialog__content {
                     padding: 0px !important;
+                  }
+                  ha-dialog .mdc-dialog__title {
+                    font-weight: bold !important;
+                    font-size: 1.2em !important;
                   }
               content:
                 type: vertical-stack
@@ -310,13 +321,36 @@
           state: "on"
       chip:
         type: template
-        icon: mdi:ev-plug-tesla
+        icon: mdi:ev-plug-type2
         entity: sensor.i4_xdrive40_charging_end_time
         icon_color: green
         content: >
           {{ as_timestamp(states('sensor.i4_xdrive40_charging_end_time')) | timestamp_custom('%-I:%M %p') }}
         tap_action:
           action: more-info
+          entity: sensor.i4_xdrive40_remaining_battery_percent
+        card_mod:
+          style: |
+            :host {
+              zoom: 1.25 !important;
+              --chip-background: var(--ha-card-background-2);
+            } 
+#Rivian Charge End Time
+    - type: conditional
+      conditions:
+        - condition: state
+          entity: binary_sensor.r1t_charging_status
+          state: "on"
+      chip:
+        type: template
+        icon: mdi:ev-plug-type2
+        entity: sensor.r1t_charging_time_remaining
+        icon_color: green
+        content: >
+          {{ (now() + timedelta(minutes=states('sensor.r1t_charging_time_remaining')|int(0))) | timestamp_custom('%-I:%M %p') }}
+        tap_action:
+          action: more-info
+          entity: sensor.r1t_battery_state_of_charge
         card_mod:
           style: |
             :host {
