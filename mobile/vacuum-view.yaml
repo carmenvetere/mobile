@@ -55,8 +55,8 @@ cards:
                 show_icon: true
                 show_label: false
                 layout: icon_name
-                icon: mdi:pool
-                name: Pool
+                icon: mdi:robot-vacuum
+                name: Vacuum
                 size: 60%
                 icon_color: var(--primary-text-color)
                 styles: 
@@ -154,7 +154,7 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background-color: var(--ha-card-background-2) !important;
+                background: var(--ha-card-background-2) !important;
                 border-radius: 15px !important;
               }
           cards:
