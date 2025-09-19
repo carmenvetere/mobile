@@ -136,6 +136,12 @@ cards:
           entityId: media_player.living_room
           heightpercentage: auto
           widthpercentage: auto
+          card_mod:
+            style: |
+              ha-card {
+                max-width: 98% !important;
+                border-radius: 8px !important;
+              }
           predefinedGroups:
             - name: First Floor
               media: ""
