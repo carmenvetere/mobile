@@ -336,29 +336,29 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/pool
-                # - type: custom:bubble-card
-                #   card_type: button
-                #   button_type: name
-                #   name: Vacuum
-                #   icon: mdi:vacuum
-                #   button_action:
-                #     tap_action:
-                #       action: navigate
-                #       navigation_path: /mobile-dash/vacuum
-                #   sub_button:
-                #     - icon: mdi:chevron-right
-                #       state_background: false
-                #       tap_action:
-                #         action: navigate
-                #         navigation_path: /mobile-dash/vacuum
-                #   card_layout: normal
-                #   styles: |-
-                #     .bubble-name {
-                #         font-size: 16px !important;
-                #       }
-                #   tap_action:
-                #     action: navigate
-                #     navigation_path: /mobile-dash/vacuum
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: name
+                  name: Vacuum
+                  icon: mdi:vacuum
+                  button_action:
+                    tap_action:
+                      action: navigate
+                      navigation_path: /mobile-dash/vacuum
+                  sub_button:
+                    - icon: mdi:chevron-right
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/vacuum
+                  card_layout: normal
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                      }
+                  tap_action:
+                    action: navigate
+                    navigation_path: /mobile-dash/vacuum
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
