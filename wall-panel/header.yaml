@@ -8,6 +8,7 @@ card:
       - margin: 0px
       - padding-top: 0px
       - height: 55px
+      - background-color: var(--ha-card-background-2) 
     grid:
       - grid-template-areas: |
           "time gap1 alarm gap2 notifications gap3 temp"
@@ -36,6 +37,7 @@ card:
             - height: 50px
             - align-self: center
             - justify-self: start
+            - background: transparent
           state:
             - font-size: 24px
             - font-weight: bold
@@ -73,6 +75,7 @@ card:
             - justify-self: center
             - width: 150px
             - height: 50px
+            - background: transparent
     notifications:
       card:
         type: custom:button-card
@@ -113,6 +116,7 @@ card:
             - height: 50px
             - align-self: center
             - justify-self: center
+            - background: transparent
     temp:
       card:
         type: custom:button-card
@@ -139,3 +143,4 @@ card:
             - height: 50px
             - align-self: center
             - justify-self: center
+            - background: transparent
