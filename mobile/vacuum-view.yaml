@@ -150,7 +150,8 @@ cards:
                   }
       vacuum:
         card:
-          type: vertical-stack
+          type: custom:stack-in-card
+          mode: vertical
           card_mod:
             style: |
               ha-card {
