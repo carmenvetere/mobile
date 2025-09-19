@@ -8,6 +8,7 @@ card:
       - margin: 0px
       - padding-top: 0px
       - height: 55px
+      - background-color: var(--ha-card-background-2)
     grid:
       - grid-template-areas: |
           "home lights climate music security energy shades other"
@@ -30,6 +31,7 @@ card:
             - height: 55px
             - align-self: center
             - justify-self: center
+            - background: transparent
     lights:
       card:
         type: custom:button-card
@@ -44,6 +46,7 @@ card:
             - height: 55px
             - align-self: center
             - justify-self: center
+            - background: transparent            
     climate:
       card:
         type: custom:button-card
@@ -58,6 +61,7 @@ card:
             - height: 55px
             - align-self: center
             - justify-self: center
+            - background: transparent
     music:
       card:
         type: custom:button-card
@@ -72,6 +76,7 @@ card:
             - height: 55px
             - align-self: center
             - justify-self: center
+            - background: transparent
     energy:
       card:
         type: custom:button-card
@@ -86,6 +91,7 @@ card:
             - height: 55px
             - align-self: center
             - justify-self: center
+            - background: transparent
     security:
       card:
         type: custom:button-card
@@ -100,6 +106,7 @@ card:
             - height: 55px
             - align-self: center
             - justify-self: center
+            - background: transparent
     shades:
       card:
         type: custom:button-card
@@ -114,6 +121,7 @@ card:
             - height: 55px
             - align-self: center
             - justify-self: center
+            - background: transparent
     other:
       card:
         type: custom:button-card
@@ -128,3 +136,4 @@ card:
             - height: 55px
             - align-self: center
             - justify-self: center
+            - background: transparent            
