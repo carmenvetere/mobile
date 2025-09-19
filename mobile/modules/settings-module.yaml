@@ -61,6 +61,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: input_boolean.guest_mode
@@ -83,6 +85,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: input_boolean.cleaners_mode
@@ -105,6 +109,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: input_boolean.away_mode
@@ -127,6 +133,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
 #Climate
 - type: custom:expander-card
   expanded: false
@@ -204,6 +212,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.basement_hvac_schedule
@@ -227,6 +237,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.office_thermostat_schedule_v2
@@ -250,6 +262,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.bedroom_hvac_schedule
@@ -273,6 +287,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: separator
           name: Fresh Air Controls
@@ -300,6 +316,8 @@
             .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           button_type: slider
@@ -318,6 +336,8 @@
             .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: separator
           name: Filter Maintenance
@@ -349,6 +369,8 @@
             .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           button_type: state
@@ -371,6 +393,8 @@
             .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
+          modules:
+          - Mobile Module Theme  
 #Alarm
 - type: custom:expander-card
   expanded: false
@@ -435,6 +459,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: >-
@@ -459,6 +485,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.alarm_disarm_upon_arriving_home
@@ -482,6 +510,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.alarm_disarm_upon_arriving_home
@@ -505,6 +535,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
 #Water Heater
 - type: custom:expander-card
   expanded: false
@@ -564,6 +596,8 @@
                 font-size: 16px !important;
                 font-weight: bold;
               }
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: climate
           entity: water_heater.smithy_2
@@ -582,6 +616,8 @@
             .bubble-name { font-size: 16px !important; text-align: left !important; }
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           button_type: name
@@ -612,6 +648,8 @@
           tap_action:
                 action: perform-action
                 perform_action: script.toggle_water_heater_away_mode
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: separator
           name: Water Heater Maintenance
@@ -653,6 +691,8 @@
             .bubble-name {
                 font-size: 16px !important;
               }
+          modules:
+          - Mobile Module Theme  
 #Motion
 - type: custom:expander-card
   expanded: false
@@ -717,6 +757,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.motion_bathroom_day
@@ -740,6 +782,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.motion_bathroom_lights_night
@@ -763,6 +807,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
 #Lights
 - type: custom:expander-card
   expanded: false
@@ -826,6 +872,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.morning_lights_off_lux_over_5000_or_9am
@@ -849,6 +897,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.11_00_pm_good_night
@@ -872,6 +922,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.sunset_outdoor_off
@@ -895,6 +947,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.outdoor_off_at_11pm
@@ -918,6 +972,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
 #Shades
 - type: custom:expander-card
   expanded: false
@@ -982,6 +1038,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.8_00_am_first_floor_shades_weekends
@@ -1005,6 +1063,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.800am_bedroom_hallway_shades
@@ -1028,6 +1088,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.900am_bedroom_shades_open_weekends
@@ -1051,6 +1113,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.10_30_am_dining_room_shades
@@ -1074,6 +1138,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.1_00_pm_first_floor_sun_shading
@@ -1097,6 +1163,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.3_00_pm_living_room_side_shades
@@ -1120,6 +1188,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.3_00pm_bedroom_back_shading
@@ -1143,6 +1213,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           entity: automation.sunset_30_or_8_00_pm_close_shades
@@ -1166,6 +1238,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
 #Pool
 - type: custom:expander-card
   expanded: false
@@ -1230,6 +1304,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
 #Energy
 - type: custom:expander-card
   expanded: false
@@ -1300,6 +1376,8 @@
             action: toggle
             confirmation:
               text: Are you sure you want to go off grid?
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           button_type: slider
@@ -1322,6 +1400,8 @@
               show_icon: false
               state_background: false
               show_background: false
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: separator
           name: Energy Consumption
@@ -1362,6 +1442,8 @@
               action: more-info
           tap_action:
             action: more-info
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           button_type: name
@@ -1389,6 +1471,8 @@
               action: more-info
           tap_action:
             action: more-info
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           button_type: name
@@ -1416,6 +1500,8 @@
               action: more-info
           tap_action:
             action: more-info
+          modules:
+          - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
           button_type: name
@@ -1443,3 +1529,5 @@
               action: more-info
           tap_action:
             action: more-info
+          modules:
+          - Mobile Module Theme              

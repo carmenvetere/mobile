@@ -69,6 +69,7 @@ cards:
                     - justify-content: flex-start 
                     - text-align: left
                     - padding-left: 8px
+                    -background-color: transparent
       chips:
         card:
           type: custom:mushroom-chips-card
@@ -138,6 +139,8 @@ cards:
           entityId: media_player.living_room
           heightpercentage: auto
           widthpercentage: auto
+          hidePlayerControlShuffleButton: true
+          hidePlayerControlRepeatButton: true
           card_mod:
             style: |
               ha-card {
