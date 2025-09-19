@@ -302,18 +302,19 @@
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
             } 
-#Vehicle Unplugged
+#BMW Charge End Time
     - type: conditional
       conditions:
         - condition: state
-          entity: binary_sensor.tesla_wall_connector_vehicle_connected
-          state: "off"
+          entity: binary_sensor.i4_xdrive40_charging_status
+          state: "charging"
       chip:
         type: template
         icon: mdi:ev-plug-tesla
-        entity: binary_sensor.tesla_wall_connector_vehicle_connected
-        icon_color: red
-        content: Unplugged
+        entity: sensor.i4_xdrive40_charging_end_time
+        icon_color: green
+        content: >
+          {{ as_timestamp(states('sensor.i4_xdrive40_charging_end_time')) | timestamp_custom('%-I:%M %p') }}
         tap_action:
           action: more-info
         card_mod:
