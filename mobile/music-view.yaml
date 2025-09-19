@@ -139,8 +139,8 @@ cards:
           card_mod:
             style: |
               ha-card {
-                max-width: 98vw !important;
-                width: 98% !important;
+                max-width: calc(100% - 20px) !important;
+                width: 100% !important;
                 box-sizing: border-box !important;
                 overflow: hidden !important;
                 border-radius: 8px !important;
