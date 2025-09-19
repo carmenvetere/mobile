@@ -1559,12 +1559,6 @@
     button_type: name
     name: The pool needs to be vacuumed.
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1574,6 +1568,8 @@
         }
       .bubble-button-card-container {
         border-radius: 15px !important;
+        margin: 2px 10px 2px 10px!important;
+        background-color: var(--ha-card-background) !important;
         }
     icon: mdi:vacuum-outline
     tap_action:
