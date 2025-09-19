@@ -16,6 +16,7 @@ cards:
         - height: auto
         - box-sizing: border-box
         - max-width: 98%
+        - background-color: var(--background-color-2)
       grid:
         - grid-template-areas: |
             "header"
@@ -44,6 +45,7 @@ cards:
               - grid-template-columns: 150px auto
               - grid-template-rows: 60px
               - column-gap: 0px
+              - background-color: transparent
             main:
           custom_fields:
             name:
@@ -122,7 +124,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--background-color-2);
+                    --chip-background: var(--ha-card-background-2) !important;
                   }
       music:
         card:
@@ -144,6 +146,7 @@ cards:
                 box-sizing: border-box !important;
                 overflow: hidden !important;
                 border-radius: 8px !important;
+                background-color: var(--ha-card-background-2) !important;
               }
           predefinedGroups:
             - name: First Floor
