@@ -83,7 +83,8 @@ card:
         icon: >
           [[[
             const priority = states['sensor.notification_icon_priority'].state;
-            if (priority === 'critical' || priority === 'warning') return 'mdi:alert';
+            if (priority === 'critical') return 'mdi:alert';
+            if (priority === 'warning') return 'mdi:bell-alert';
             return 'mdi:bell';
           ]]]
         layout: icon_state

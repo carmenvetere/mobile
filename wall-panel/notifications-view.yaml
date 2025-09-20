@@ -43,5 +43,5 @@ cards:
               padding-top: 7px !important;
             }      
         - type: vertical-stack
-          cards: !include /config/mobile/modules/notifications.yaml
+          cards: !include modules/notifications.yaml
       nav: !include footer-menu.yaml
