@@ -12,12 +12,6 @@
     name: Power outage!
     icon: mdi:flash-alert
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -47,12 +41,6 @@
     name: Powerwall Charge Low!
     icon: mdi:battery-alert
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -78,12 +66,6 @@
     button_type: name
     name: Alarm Triggered!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -114,12 +96,6 @@
     button_type: name
     name: Active Weather Alert!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -150,12 +126,6 @@
     button_type: name
     name: Storm Watch Active!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -186,12 +156,6 @@
     button_type: name
     name: Utility Room Temperature Low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -221,12 +185,6 @@
     button_type: name
     name: Utility Room Temperature High!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -255,12 +213,6 @@
     button_type: name
     name: Attic Temperature Low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -289,12 +241,6 @@
     button_type: name
     name: Attic Temperature High!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -323,12 +269,6 @@
     button_type: name
     name: Garage door open
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -358,12 +298,6 @@
     name: Vacuum Error!
     icon: mdi:robot-vacuum-alert
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -394,12 +328,6 @@
     name: Low Hot Water Availability!
     icon: mdi:water-alert
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -430,12 +358,6 @@
     name: Virtual Power Plant Active!
     icon: mdi:solar-power
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -468,12 +390,6 @@
     button_type: name
     name: Rain! Put the pool cover pump out.
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -504,12 +420,6 @@
     button_type: name
     name: Low pool water level.
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -540,12 +450,6 @@
     button_type: name
     name: Check the pool salt level.
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -576,12 +480,6 @@
     button_type: name
     name: Run washer clean cycle!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -612,12 +510,6 @@
     button_type: name
     name: Replace the air filter in the attic HVAC.
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -652,12 +544,6 @@
     button_type: name
     name: Replace the air filter in the basement HVAC.
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -693,12 +579,6 @@
     button_type: name
     name: Bedroom Back 1 shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -727,12 +607,6 @@
     button_type: name
     name: Bedrom Back 2 shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -761,12 +635,6 @@
     button_type: name
     name: Bedroom Back 3 shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -795,12 +663,6 @@
     button_type: name
     name: Bedroom Back 4 shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -829,12 +691,6 @@
     button_type: name
     name: Bedroom Back 5 shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -863,12 +719,6 @@
     button_type: name
     name: Dining room side left shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -897,12 +747,6 @@
     button_type: name
     name: Dining room side right shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -931,12 +775,6 @@
     button_type: name
     name: Dining room front left shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -965,12 +803,6 @@
     button_type: name
     name: Dining room front right shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -999,12 +831,6 @@
     button_type: name
     name: Bedroom right shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1033,12 +859,6 @@
     button_type: name
     name: Bedroom hallway 1 shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1067,12 +887,6 @@
     button_type: name
     name: Bedroom hallway 2 shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1101,12 +915,6 @@
     button_type: name
     name: Bedroom left shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1135,12 +943,6 @@
     button_type: name
     name: Living Room side left 1 shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1169,12 +971,6 @@
     button_type: name
     name: Living Room front left shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1203,12 +999,6 @@
     button_type: name
     name: Living Room side left 2 shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1237,12 +1027,6 @@
     button_type: name
     name: Living Room side right 1 shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1271,12 +1055,6 @@
     button_type: name
     name: Living Room side right 2 shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1305,12 +1083,6 @@
     button_type: name
     name: Living Room front right shade battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1339,12 +1111,6 @@
     button_type: name
     name: Attic temp sensor battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1370,12 +1136,6 @@
     button_type: name
     name: Front door sensor battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1401,12 +1161,6 @@
     button_type: name
     name: Kitchen french doors sensor battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1432,12 +1186,6 @@
     button_type: name
     name: Living Room french doors sensor battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1463,12 +1211,6 @@
     button_type: name
     name: Mudroom entry door sensor battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1494,12 +1236,6 @@
     button_type: name
     name: Mudroom garage door sensor battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1525,12 +1261,6 @@
     button_type: name
     name: Utility room temp sensor battery low!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1595,12 +1325,6 @@
     button_type: name
     name: Dryer complete!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
@@ -1631,12 +1355,6 @@
     button_type: name
     name: Washer complete!
     card_layout: normal
-    card_mod:
-        style: |
-          ha-card {
-            margin: 2px 10px 2px 10px!important;
-            border-radius: 15px !important;
-          }
     styles: |
       .bubble-name {
         font-size: 16px !important;
