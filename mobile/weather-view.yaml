@@ -186,6 +186,20 @@ cards:
                   {% else %}
                   ✅ **No active weather alerts**
                   {% endif %}
+                card_mod:
+                  style: |
+                    ha-card {
+                      text-align: left !important;
+                    }
+                    ha-markdown {
+                      text-align: left !important;
+                    }
+                    ha-markdown p, 
+                    ha-markdown h3, 
+                    ha-markdown h2, 
+                    ha-markdown h1 {
+                      text-align: left !important;
+                    }
       weather:
         card:
           type: custom:stack-in-card
