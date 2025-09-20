@@ -114,7 +114,7 @@
                     --mdc-dialog-container-color: var(--ha-card-background-2) !important;
                     --mdc-dialog-heading-ink-color: var(--primary-text-color) !important;
                     border-radius: 15px !important;
-                    background: var(--ha-card-background) !important;
+                    background: var(--ha-card-background-2) !important;
                   }
                   ha-dialog .mdc-dialog__surface {
                     border-radius: 15px !important;
@@ -134,7 +134,7 @@
                 card_mod:
                   style: |
                     ha-card {
-                      background: var(--ha-card-background);
+                      background: var(--ha-card-background-2);
                       border-radius: 15px;
                     }
                 cards: !include notifications.yaml
