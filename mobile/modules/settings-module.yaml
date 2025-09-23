@@ -352,12 +352,12 @@
           button_type: state
           modules:
             - default
-          entity: sensor.upper_floor_hvac_filter_time_2
+          entity: input_number.upper_floor_hvac_filter_hours
           show_state: false
           scrolling_effect: false
           card_layout: large
           sub_button:
-            - entity: sensor.upper_floor_hvac_filter_time_2
+            - entity: input_number.upper_floor_hvac_filter_hours
               state_background: false
               show_last_changed: false
               show_state: true
@@ -376,12 +376,12 @@
           button_type: state
           modules:
             - default
-          entity: sensor.lower_floors_hvac_filter_time_2
+          entity: input_number.lower_floors_hvac_filter_hours
           show_state: false
           scrolling_effect: false
           card_layout: large
           sub_button:
-            - entity: sensor.lower_floors_hvac_filter_time_2
+            - entity: input_number.lower_floors_hvac_filter_hours
               state_background: false
               show_last_changed: false
               show_state: true
