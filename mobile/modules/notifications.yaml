@@ -536,7 +536,7 @@
 - type: conditional
   conditions:
     - condition: numeric_state
-      entity: sensor.upper_floor_hvac_filter_time_2
+      entity: input_number.upper_floor_hvac_filter_hours
       above: 2000
   card:
     type: custom:bubble-card
@@ -572,7 +572,7 @@
 - type: conditional
   conditions:
     - condition: numeric_state
-      entity: sensor.lower_floors_hvac_filter_time_2
+      entity: input_number.upper_floor_hvac_filter_hours
       above: 2000
   card:
     type: custom:bubble-card
