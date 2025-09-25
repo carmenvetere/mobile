@@ -18,8 +18,10 @@ cards:
             "header"
             "chips"
             "front"
+            "front_right"
             "driveway"
             "pool"
+            "kimberly"
             "recent"
         - grid-template-columns: auto
         - grid-template-rows: 60px 60px auto auto
@@ -223,6 +225,50 @@ cards:
                     border-radius: 5px;
                     padding: 5px;
                   }
+      front_right:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background-2);
+                border-radius: 20px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Front Right
+              icon: mdi:cctv
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: picture-entity
+              show_state: false
+              show_name: false
+              camera_view: auto
+              fit_mode: cover
+              entity: camera.blueberry_high_resolution_channel
+              camera_image: camera.blueberry_high_resolution_channel
+              card_mod:
+                style: |
+                  ha-card {
+                    border-radius: 5px;
+                    padding: 5px;
+                  }
       driveway:
         card:
           type: custom:stack-in-card
@@ -305,6 +351,50 @@ cards:
               fit_mode: cover
               entity: camera.pool_high_resolution_channel
               camera_image: camera.pool_high_resolution_channel
+              card_mod:
+                style: |
+                  ha-card {
+                    border-radius: 5px;
+                    padding: 5px;
+                  }
+      kimberly:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background);
+                border-radius: 20px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Kimberly Side
+              icon: mdi:cctv
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: picture-entity
+              show_state: false
+              show_name: false
+              camera_view: auto
+              fit_mode: cover
+              entity: camera.kimberly_high_resolution_channel
+              camera_image: camera.kimberly_high_resolution_channel
               card_mod:
                 style: |
                   ha-card {
