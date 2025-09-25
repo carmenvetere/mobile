@@ -129,49 +129,18 @@ cards:
                   }
       music:
         card:
-          type: custom:sonos-card
-          sections:
-            - player
-            - volumes
-            - grouping
-            - media browser
-          favoritesItemsPerRow: 4
-          entityId: media_player.living_room
-          heightpercentage: auto
-          widthpercentage: auto
-          hidePlayerControlShuffleButton: true
-          hidePlayerControlRepeatButton: true
-          card_mod:
-            style: |
-              ha-card {
-                max-width: 95vw !important;
-                width: 95vw !important;
-                box-sizing: border-box !important;
-                overflow: hidden !important;
-                border-radius: 8px !important;
-                background-color: var(--ha-card-background-2) !important;
-              }
-          predefinedGroups:
-            - name: First Floor
-              media: ""
-              entities:
-                - player: media_player.living_room
-                  volume: 10
-                - player: media_player.kitchen
-                  volume: 10
-            - name: First Floor & Deck
-              media: ""
-              entities:
-                - player: media_player.living_room
-                  volume: 10
-                - player: media_player.kitchen
-                  volume: 10
-                - player: media_player.deck
-                  volume: 20
-            - name: Deck & Pool
-              media: ""
-              entities:
-                - player: media_player.pool
-                  volume: 10
-                - player: media_player.deck
-                  volume: 20
+          type: custom:mediocre-massive-media-player-card
+          entity_id: media_player.living_room_2
+          use_art_colors: true
+          mode: card
+          action: {}
+          speaker_group:
+            entity_id: media_player.living_room_2
+            entities:
+              - media_player.kitchen_2
+              - media_player.deck_2
+              - media_player.office_2
+              - media_player.mud_room_2
+          search:
+            enabled: true
+            show_favorites: true
