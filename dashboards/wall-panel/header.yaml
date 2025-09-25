@@ -45,7 +45,7 @@ card:
     alarm:
       card:
         type: custom:button-card
-        entity: alarm_control_panel.bayberry_alarm_v2
+        entity: alarm_control_panel.alarmo
         size: 50%
         layout: icon_state
         show_icon: true
@@ -54,7 +54,7 @@ card:
         show_state: true
         state_display: |
           [[[
-            var state = states['alarm_control_panel.bayberry_alarm_v2'].state;
+            var state = states['alarm_control_panel.alarmo'].state;
             if (state === 'armed_away') return 'Armed';
             if (state === 'armed_home') return 'Armed';
             if (state === 'disarmed') return 'Disarmed';
