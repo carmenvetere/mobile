@@ -229,7 +229,7 @@ cards:
                 padding-top: 10px !important;
                 padding-left: 10px !important;
                 }
-            - !include modules/power-flow-card.yaml
+            - !include /config/dashboards/modules/power-flow-card.yaml
       power_history:
         card:
           type: custom:stack-in-card
