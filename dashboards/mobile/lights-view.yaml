@@ -182,7 +182,8 @@ cards:
                 padding-right: 15px !important;
                 background-color: var(--ha-card-background-2) !important;
               }
-          cards: !include modules/first-floor-scenes.yaml
+          cards: !include /config/dashboards/modules/first-floor-scenes.yaml
+
       first:
         card: 
           type: custom:expander-card
@@ -225,7 +226,7 @@ cards:
               }
           cards: 
             - type: vertical-stack
-              cards: !include modules/first-floor-lights-individual.yaml
+              cards: !include /config/dashboards/modules/first-floor-lights-individual.yaml
       basement:
         card:
           type: custom:expander-card
@@ -259,7 +260,7 @@ cards:
               }
           cards: 
           - type: vertical-stack
-            cards: !include modules/basement-lights-individual.yaml
+            cards: !include /config/dashboards/modules/basement-lights-individual.yaml
       second:
         card:
           type: custom:expander-card
@@ -291,7 +292,7 @@ cards:
                 padding-right: 15px !important;
                 background-color: var(--ha-card-background-2) !important;
               }
-          cards: !include modules/second-floor-lights-individual.yaml
+          cards: !include /config/dashboards/modules/second-floor-lights-individual.yaml
       outdoor:
         card:
           type: custom:expander-card
@@ -323,4 +324,4 @@ cards:
                 padding-right: 15px !important;
                 background-color: var(--ha-card-background-2) !important;
               }
-          cards: !include modules/outdoor-lights-individual.yaml
+          cards: !include /config/dashboards/modules/outdoor-lights-individual.yaml
