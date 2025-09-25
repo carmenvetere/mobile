@@ -130,20 +130,20 @@ cards:
             - type: template
               icon: mdi:shield-home
               content: |-
-                {{ states('alarm_control_panel.bayberry_alarm_v2')
+                {{ states('alarm_control_panel.alarmo')
                       | replace('_', ' ')
                       | title }}
-              entity: alarm_control_panel.bayberry_alarm_v2
+              entity: alarm_control_panel.alarmo
               tap_action:
                 action: more-info
               icon_color: >-
-                {% if states('alarm_control_panel.bayberry_alarm_v2') ==
+                {% if states('alarm_control_panel.alarmo') ==
                 'disarmed' %}
                   green
-                {% elif states('alarm_control_panel.bayberry_alarm_v2') ==
+                {% elif states('alarm_control_panel.alarmo') ==
                 'armed_home' %}
                   orange
-                {% elif states('alarm_control_panel.bayberry_alarm_v2') ==
+                {% elif states('alarm_control_panel.alarmo') ==
                 'armed_away' %}
                   red
                 {% else %}
