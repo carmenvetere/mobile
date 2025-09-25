@@ -92,7 +92,8 @@ cards:
                     - padding-right: 15px
                     - background-color: transparent
       chips:
-        card: !include modules/chips.yaml
+        card: !include /config/dashboards/modules/chips.yaml
+
       # notifications:
       #   card:
       #     type: conditional
