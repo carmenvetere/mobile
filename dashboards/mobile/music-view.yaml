@@ -129,47 +129,205 @@ cards:
                   }
       music:
         card:
-          type: custom:simple-swipe-card
-          auto_hide_pagination: 0
-          view_mode: single
-          cards:
-            - type: custom:mediocre-massive-media-player-card
+          type: vertical-stack
+          cards:  
+            - type: custom:mediocre-media-player-card
               entity_id: media_player.living_room_2
               use_art_colors: true
-              mode: card
-              action: {}
+              tap_opens_popup: true
               speaker_group:
                 entity_id: media_player.living_room_2
                 entities:
-                  - media_player.kitchen_2
-                  - media_player.deck_2
-                  - media_player.office_2
-                  - media_player.mud_room_2
-                  - media_player.pool_2
-                  - media_player.primary_bathroom_2
-                  - media_player.primary_bedroom_2
-                  - media_player.media_room_2
-                  - media.player.gym_2
+                    - media_player.living_room_2
+                    - media_player.kitchen_2
+                    - media_player.deck_2
+                    - media_player.office_2
+                    - media_player.mud_room_2
+                    - media_player.pool_2
+                    - media_player.primary_bathroom_2
+                    - media_player.primary_bedroom_2
+                    - media_player.media_room_2
+                    - media.player.gym_2
               search:
                 enabled: true
-                show_favorites: true
-            - type: custom:mediocre-massive-media-player-card
-              entity_id: media_player.living_room_2
+                show_favorites: false
+            - type: custom:mediocre-media-player-card
+              entity_id: media_player.kitchen_2
               use_art_colors: true
-              mode: card
-              action: {}
+              tap_opens_popup: true
+              speaker_group:
+                entity_id: media_player.kitchen_2
+                entities:
+                    - media_player.living_room_2
+                    - media_player.kitchen_2
+                    - media_player.deck_2
+                    - media_player.office_2
+                    - media_player.mud_room_2
+                    - media_player.pool_2
+                    - media_player.primary_bathroom_2
+                    - media_player.primary_bedroom_2
+                    - media_player.media_room_2
+                    - media.player.gym_2
+              search:
+                enabled: true
+                show_favorites: false
+            - type: custom:mediocre-media-player-card
+              entity_id: media_player.pool_2
+              use_art_colors: true
+              tap_opens_popup: true
+              speaker_group:
+                entity_id: media_player.pool_2
+                entities:
+                    - media_player.living_room_2
+                    - media_player.kitchen_2
+                    - media_player.deck_2
+                    - media_player.office_2
+                    - media_player.mud_room_2
+                    - media_player.pool_2
+                    - media_player.primary_bathroom_2
+                    - media_player.primary_bedroom_2
+                    - media_player.media_room_2
+                    - media.player.gym_2
+              search:
+                enabled: true
+                show_favorites: false
+            - type: custom:mediocre-media-player-card
+              entity_id: media_player.deck_2
+              use_art_colors: true
+              tap_opens_popup: true
+              speaker_group:
+                entity_id: media_player.deck_2
+                entities:
+                    - media_player.living_room_2
+                    - media_player.kitchen_2
+                    - media_player.deck_2
+                    - media_player.office_2
+                    - media_player.mud_room_2
+                    - media_player.pool_2
+                    - media_player.primary_bathroom_2
+                    - media_player.primary_bedroom_2
+                    - media_player.media_room_2
+                    - media.player.gym_2
+              search:
+                enabled: true
+                show_favorites: false 
+            - type: custom:mediocre-media-player-card
+              entity_id: media_player.mud_room_2
+              use_art_colors: true
+              tap_opens_popup: true
+              speaker_group:
+                entity_id: media_player.mud_room_2
+                entities:
+                    - media_player.living_room_2
+                    - media_player.kitchen_2
+                    - media_player.deck_2
+                    - media_player.office_2
+                    - media_player.mud_room_2
+                    - media_player.pool_2
+                    - media_player.primary_bathroom_2
+                    - media_player.primary_bedroom_2
+                    - media_player.media_room_2
+                    - media.player.gym_2
+              search:
+                enabled: true
+                show_favorites: false
+            - type: custom:mediocre-media-player-card
+              entity_id: media_player.office_2
+              use_art_colors: true
+              tap_opens_popup: true
+              speaker_group:
+                entity_id: media_player.office_2
+                entities:
+                    - media_player.living_room_2
+                    - media_player.kitchen_2
+                    - media_player.deck_2
+                    - media_player.office_2
+                    - media_player.mud_room_2
+                    - media_player.pool_2
+                    - media_player.primary_bathroom_2
+                    - media_player.primary_bedroom_2
+                    - media_player.media_room_2
+                    - media.player.gym_2
+              search:
+                enabled: true
+                show_favorites: false
+            - type: custom:mediocre-media-player-card
+              entity_id: media_player.gym_2
+              use_art_colors: true
+              tap_opens_popup: true
+              speaker_group:
+                entity_id: media_player.gym_2
+                entities:
+                    - media_player.living_room_2
+                    - media_player.kitchen_2
+                    - media_player.deck_2
+                    - media_player.office_2
+                    - media_player.mud_room_2
+                    - media_player.pool_2
+                    - media_player.primary_bathroom_2
+                    - media_player.primary_bedroom_2
+                    - media_player.media_room_2
+                    - media.player.gym_2
+              search:
+                enabled: true
+                show_favorites: false
+            - type: custom:mediocre-media-player-card
+              entity_id: media_player.media_room_2
+              use_art_colors: true
+              tap_opens_popup: true
+              speaker_group:
+                entity_id: media_player.media_room_2
+                entities:
+                    - media_player.living_room_2
+                    - media_player.kitchen_2
+                    - media_player.deck_2
+                    - media_player.office_2
+                    - media_player.mud_room_2
+                    - media_player.pool_2
+                    - media_player.primary_bathroom_2
+                    - media_player.primary_bedroom_2
+                    - media_player.media_room_2
+                    - media.player.gym_2
+              search:
+                enabled: true
+                show_favorites: false
+            - type: custom:mediocre-media-player-card
+              entity_id: media_player.primary_bedroom_2
+              use_art_colors: true
+              tap_opens_popup: true
               speaker_group:
                 entity_id: media_player.primary_bedroom_2
                 entities:
-                  - media_player.kitchen_2
-                  - media_player.deck_2
-                  - media_player.office_2
-                  - media_player.mud_room_2
-                  - media_player.pool_2
-                  - media_player.primary_bathroom_2
-                  - media_player.living_room_2
-                  - media_player.media_room_2
-                  - media.player.gym_2
+                    - media_player.living_room_2
+                    - media_player.kitchen_2
+                    - media_player.deck_2
+                    - media_player.office_2
+                    - media_player.mud_room_2
+                    - media_player.pool_2
+                    - media_player.primary_bathroom_2
+                    - media_player.primary_bedroom_2
+                    - media_player.media_room_2
+                    - media.player.gym_2
               search:
                 enabled: true
-                show_favorites: true                
+                show_favorites: false 
+            - type: custom:mediocre-media-player-card
+              entity_id: media_player.primary_bathroom_2
+              use_art_colors: true
+              tap_opens_popup: true
+              speaker_group:
+                entity_id: media_player.primary_bathroom_2
+                entities:
+                    - media_player.living_room_2
+                    - media_player.kitchen_2
+                    - media_player.deck_2
+                    - media_player.office_2
+                    - media_player.mud_room_2
+                    - media_player.pool_2
+                    - media_player.primary_bathroom_2
+                    - media_player.primary_bedroom_2
+                    - media_player.media_room_2
+                    - media.player.gym_2
+              search:
+                enabled: true
+                show_favorites: false                                                                                                                                    

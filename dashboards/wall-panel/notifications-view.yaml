@@ -25,23 +25,25 @@ cards:
     custom_fields:
       header: !include header.yaml
       main:
-        cards:
-        - type: custom:bubble-card
-          card_type: separator
-          name: Notifications
-          rows: 0.5
-          styles: |
-            .bubble-name {
-              font-size: 14px !important;
-              font-weight: bold !important;
-            }
-            .bubble-line {
-              background: var(--primary-text-color);
-              opacity: 0.1;
-            }
-            .card-content {
-              padding-top: 7px !important;
-            }      
-        - type: vertical-stack
-          cards: !include /config/dashboards/modules/notifications.yaml
+        card:
+          type: vertical-stack
+          cards: 
+            - type: custom:bubble-card
+              card_type: separator
+              name: Notifications
+              rows: 0.5
+              styles: |
+                .bubble-name {
+                  font-size: 14px !important;
+                  font-weight: bold !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }      
+            - type: vertical-stack
+              cards: !include /config/dashboards/modules/notifications.yaml
       nav: !include footer-menu.yaml
