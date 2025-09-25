@@ -10,15 +10,15 @@ kiosk_mode:
     hide_sidebar: false
     hide_overflow: true
 views:
-  - !include home-view.yaml
-  - !include lights-view.yaml
-  - !include climate-view.yaml
-  - !include shades-view.yaml
-  - !include security-view.yaml
-  - !include energy-view.yaml
-  - !include weather-view.yaml
-  - !include pool-view.yaml
-  - !include settings-view.yaml
-  - !include music-view.yaml
-  - !include vacuum-view.yaml
-  - !include home-v2.yaml
+  - !include mobile/home-view.yaml
+  - !include mobile/lights-view.yaml
+  - !include mobile/climate-view.yaml
+  - !include mobile/shades-view.yaml
+  - !include mobile/security-view.yaml
+  - !include mobile/energy-view.yaml
+  - !include mobile/weather-view.yaml
+  - !include mobile/pool-view.yaml
+  - !include mobile/settings-view.yaml
+  - !include mobile/music-view.yaml
+  - !include mobile/vacuum-view.yaml
+  - !include mobile/home-v2.yaml
