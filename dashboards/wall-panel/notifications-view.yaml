@@ -31,6 +31,6 @@ cards:
           card_mod:
             style: |
               ha-card {
-                margin-right: 10px;
+                margin-right: 10px !important;
               }
       nav: !include footer-menu.yaml
