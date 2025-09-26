@@ -57,6 +57,7 @@ card:
             var state = states['alarm_control_panel.alarmo'].state;
             if (state === 'armed_away') return 'Armed';
             if (state === 'armed_home') return 'Armed';
+            if (state === 'armed_vacation') return 'Armed';
             if (state === 'disarmed') return 'Disarmed';
             if (state === 'pending') return 'Pending';
             if (state === 'arming') return 'Arming';

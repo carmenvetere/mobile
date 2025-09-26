@@ -27,6 +27,8 @@
     tap_action:
       action: navigate
       navigation_path: /mobile-dash/energy
+    modules:
+        - notifications_module  
 #Power Outage & Powerwall Charge Low
 - type: conditional
   conditions:
@@ -58,6 +60,8 @@
     tap_action:
       action: more-info
       entity: sensor.powerwall_discharge_time
+    modules:
+        - notifications_module  
 #Alarm Triggered
 - type: conditional
   conditions:
@@ -90,6 +94,8 @@
     tap_action:
       action: navigate
       navigation_path: /mobile-dash/security
+    modules:
+        - notifications_module  
 #NWS Weather Alerts
 - type: conditional
   conditions:
@@ -122,6 +128,8 @@
       tap_action:
         action: navigate
         navigation_path: /mobile-dash/weather
+    modules:
+        - notifications_module  
 #Storm Watch Active
 - type: conditional
   conditions:
@@ -154,6 +162,8 @@
       tap_action:
         action: more-info
         entity: sensor.nws_alerts_alerts
+    modules:
+        - notifications_module  
 #Utility Room Temperature Low
 - type: conditional
   conditions:
@@ -185,6 +195,8 @@
     tap_action:
       action: more-info
       entity: sensor.utility_room_temp_sensor_temperature
+    modules:
+        - notifications_module  
 #Utility Room Temperature High
 - type: conditional
   conditions:
@@ -215,6 +227,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 #Attic Temperature Low
 - type: conditional
   conditions:
@@ -245,6 +259,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 #Attic Temperature High
 - type: conditional
   conditions:
@@ -275,6 +291,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 #Garage Door Open
 - type: conditional
   conditions:
@@ -305,6 +323,8 @@
     button_action:
       tap_action:
         action: more-info
+    modules:
+        - notifications_module  
 #Vaccuum Error
 - type: conditional
   conditions:
@@ -337,6 +357,8 @@
       tap_action:
         action: more-info
         entity: image.roborock_s8_basement
+    modules:
+        - notifications_module  
 #Low Hot Water Availability
 - type: conditional
   conditions:
@@ -369,6 +391,8 @@
       tap_action:
         action: more-info
         entity: sensor.smithy_hot_water_availability_2
+    modules:
+        - notifications_module  
 #Virtual Power Plant Active
 - type: conditional
   conditions:
@@ -401,6 +425,8 @@
       tap_action:
         action: more-info
         entity: binary_sensor.bayberry_grid_services_active_2
+    modules:
+        - notifications_module  
 #Rain Alert - Pool Cover Pump
 - type: conditional
   conditions:
@@ -436,6 +462,8 @@
     tap_action:
       action: more-info
       entity: camera.pool_high_resolution_channel
+    modules:
+        - notifications_module  
 #Low Pool Water Level
 - type: conditional
   conditions:
@@ -468,6 +496,8 @@
       tap_action:
         action: more-info
         entity: camera.pool_high_resolution_channel
+    modules:
+        - notifications_module  
 #Pool Salt Level Low
 - type: conditional
   conditions:
@@ -500,6 +530,8 @@
     tap_action:
       action: more-info
       entity: sensor.omnilogic_pool_chlorinator_average_salt_level
+    modules:
+        - notifications_module  
 #Washing Machine Tub Clean Required
 - type: conditional
   conditions:
@@ -532,6 +564,8 @@
     tap_action:
       action: more-info
       entity: sensor.front_load_washer_tub_clean_counter
+    modules:
+        - notifications_module  
 #Attic HVAC Filter Replacement
 - type: conditional
   conditions:
@@ -568,6 +602,8 @@
       perform_action: script.reset_upper_floors_filter_runtime
       confirmation:
         text: Did you just replace it and want to reset it?
+    modules:
+        - notifications_module  
 #Basement HVAC Filter Replacement
 - type: conditional
   conditions:
@@ -605,6 +641,8 @@
       confirmation:
         text: Did you just replace it and want to reset it?
     scrolling_effect: false
+    modules:
+        - notifications_module  
 #Battery Low Notifications
 - type: conditional
   conditions:
@@ -635,6 +673,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Bedroom Back 2 Shade Battery Low
 - type: conditional
   conditions:
@@ -665,6 +705,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Bedroom Back 3 Shade Battery Low
 - type: conditional
   conditions:
@@ -695,6 +737,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Bedroom Back 4 Shade Battery Low
 - type: conditional
   conditions:
@@ -725,6 +769,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Bedroom Back 5 Shade Battery Low
 - type: conditional
   conditions:
@@ -755,6 +801,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Dining Room Side Left Shade Battery Low
 - type: conditional
   conditions:
@@ -785,6 +833,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Dining Room Side Right Shade Battery Low
 - type: conditional
   conditions:
@@ -815,6 +865,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Dining Room Front Left Shade Battery Low
 - type: conditional
   conditions:
@@ -845,6 +897,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Dining Room Front Right Shade Battery Low
 - type: conditional
   conditions:
@@ -875,6 +929,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Bedroom Right Shade Battery Low
 - type: conditional
   conditions:
@@ -905,6 +961,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Bedroom Hallway 1 Shade Battery Low
 - type: conditional
   conditions:
@@ -935,6 +993,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Bedroom Hallway 2 Shade Battery Low
 - type: conditional
   conditions:
@@ -965,6 +1025,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Bedroom Left Shade Battery Low
 - type: conditional
   conditions:
@@ -995,6 +1057,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Living Room Side Left 1 Shade Battery Low
 - type: conditional
   conditions:
@@ -1025,6 +1089,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Living Room Front Left Shade Battery Low
 - type: conditional
   conditions:
@@ -1055,6 +1121,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Living Room Side Right 1 Shade Battery Low
 - type: conditional
   conditions:
@@ -1085,6 +1153,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Living Room Side Right 1 Shade Battery Low
 - type: conditional
   conditions:
@@ -1115,6 +1185,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Living Room Side Right 2 Shade Battery Low
 - type: conditional
   conditions:
@@ -1145,6 +1217,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Living Room Front Right Shade Battery Low
 - type: conditional
   conditions:
@@ -1175,6 +1249,8 @@
         action: more-info
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Attic Temperature Sensor Battery Low
 - type: conditional
   conditions:
@@ -1202,6 +1278,8 @@
     icon: mdi:battery-alert
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 #Front Door Sensor Battery Low
 - type: conditional
   conditions:
@@ -1229,6 +1307,8 @@
     icon: mdi:battery-alert
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Kitchen French Doors Sensor Battery Low
 - type: conditional
   conditions:
@@ -1256,6 +1336,8 @@
     icon: mdi:battery-alert
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Living Room French Doors Sensor Battery Low
 - type: conditional
   conditions:
@@ -1283,6 +1365,8 @@
     icon: mdi:battery-alert
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Mudroom Entry Door Sensor Battery Low
 - type: conditional
   conditions:
@@ -1310,6 +1394,8 @@
     icon: mdi:battery-alert
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Mudroom Garage Door Sensor Battery Low
 - type: conditional
   conditions:
@@ -1337,6 +1423,8 @@
     icon: mdi:battery-alert
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 # Utility Room Temperature Sensor Battery Low
 - type: conditional
   conditions:
@@ -1364,6 +1452,8 @@
     icon: mdi:battery-alert
     tap_action:
       action: more-info
+    modules:
+        - notifications_module  
 #Pool Vacuum
 - type: conditional
   conditions:
@@ -1405,6 +1495,8 @@
         service: script.reset_vacuum_timer
         confirmation:
           text: Did you just vacuum the pool and want to reset?
+    modules:
+        - notifications_module  
 # Dryer Recently Completed
 - type: conditional
   conditions:
@@ -1437,6 +1529,8 @@
     tap_action:
       action: more-info
       entity: sensor.dryer
+    modules:
+        - notifications_module  
 # Washer Recently Completed
 - type: conditional
   conditions:
@@ -1469,3 +1563,5 @@
     tap_action:
       action: more-info
       entity: sensor.washer
+    modules:
+        - notifications_module  
