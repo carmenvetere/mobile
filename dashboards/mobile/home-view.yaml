@@ -415,7 +415,8 @@ cards:
         icon: mdi:bell-alert
         hash: "#notifications-chip"
         button_type: name
-        show_header: false  
+        show_header: false
+        bg_color: var(--ha-card-background-2)  
         styles: |
           .bubble-name {
             font-size: 16px !important;
