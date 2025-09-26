@@ -1,6 +1,8 @@
 title: Notifications
+theme: Bubble
+path: notifications-view
 type: custom:grid-layout
-path: notifications
+path: notifications-view
 cards:
   - type: custom:button-card
     styles:
@@ -27,23 +29,10 @@ cards:
       main:
         card:
           type: vertical-stack
-          cards: 
-            - type: custom:bubble-card
-              card_type: separator
-              name: Notifications
-              rows: 0.5
-              styles: |
-                .bubble-name {
-                  font-size: 14px !important;
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }      
-            - type: vertical-stack
-              cards: !include /config/dashboards/modules/notifications.yaml
+          cards: !include /config/dashboards/modules/notifications.yaml
+          card_mod:
+            style: |
+              ha-card {
+                padding-right: 10px;
+              }
       nav: !include footer-menu.yaml
