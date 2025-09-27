@@ -23,6 +23,7 @@ cards:
             "groups"
             "first"
             "bedroom"
+            "back_guest"
         - grid-template-columns: auto
         - grid-template-rows: 60px 60px auto auto
         - row-gap: 0px
@@ -201,6 +202,25 @@ cards:
                     }
                 - type: vertical-stack
                   cards: !include /config/dashboards/modules/primary-bedroom-shades-groups.yaml
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: Back Guest Bedroom
+                  icon: mdi:bed-king
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                      font-size: 16px !important;  /* title */
+                      font-weight: bold !important;
+                    }
+                    .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                    }
+                    .card-content {
+                      padding-top: 7px !important;
+                    }
+                - type: vertical-stack
+                  cards: !include /config/dashboards/modules/back-guest-bedroom-shades-group.yaml
       first:
         card:
           type: custom:expander-card
@@ -275,3 +295,40 @@ cards:
           cards:
             - type: vertical-stack
               cards: !include /config/dashboards/modules/primary-bedroom-shades-individuals.yaml
+      back_guest:
+        card:
+          type: custom:expander-card
+          expanded: false
+          title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--ha-card-background-2) !important;
+                margin-top: 5px !important;
+              }
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Back Guest Bedroom
+            icon: mdi:bed-king
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          cards:
+            - type: vertical-stack
+              cards: !include /config/dashboards/modules//config/dashboards/modules/back-guest-bedroom-shades-individuals.yaml

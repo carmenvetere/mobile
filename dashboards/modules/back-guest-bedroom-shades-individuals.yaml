@@ -1,0 +1,75 @@
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.back_guest_bedroom_side
+  name: Side
+  icon: mdi:roller-shade
+  show_state: true
+  scrolling_effect: false
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.back_guest_bedroom_battery
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
+      }
+  modules:
+  - Mobile Module Theme 
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.back_guest_bedroom_left
+  name: Back Left
+  icon: mdi:roller-shade
+  show_state: true
+  scrolling_effect: false
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.back_guest_bedroom_left_battery
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
+      }
+  modules:
+  - Mobile Module Theme 
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.back_guest_bedroom_right
+  name: Back Right
+  icon: mdi:roller-shade
+  show_state: true
+  scrolling_effect: false
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.back_guest_bedroom_right_battery
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  styles: |-
+    .bubble-name {
+        font-size: 16px !important; text-align: left !important;
+      }
+    .bubble-state {
+        text-align: left !important;
+      }
+  modules:
+  - Mobile Module Theme 
