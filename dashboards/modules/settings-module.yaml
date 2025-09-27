@@ -350,8 +350,6 @@
         - type: custom:bubble-card
           card_type: button
           button_type: state
-          modules:
-            - default
           entity: input_number.upper_floor_hvac_filter_hours
           show_state: false
           scrolling_effect: false
@@ -374,8 +372,6 @@
         - type: custom:bubble-card
           card_type: button
           button_type: state
-          modules:
-            - default
           entity: input_number.lower_floors_hvac_filter_hours
           show_state: false
           scrolling_effect: false
@@ -666,8 +662,6 @@
         - type: custom:bubble-card
           card_type: button
           button_type: state
-          modules:
-            - default
           entity: input_datetime.water_heater_last_flushed
           show_state: false
           scrolling_effect: false
@@ -1092,6 +1086,31 @@
           - Mobile Module Theme  
         - type: custom:bubble-card
           card_type: button
+          entity: automation.8am_back_guest_bedroom_shades_weekdays
+          name: 8:00AM Back Guest Bedroom Shades Open (Weekdays)
+          icon: mdi:roller-shade
+          show_state: false
+          scrolling_effect: false
+          button_action:
+            tap_action:
+              action: toggle
+          tap_action:
+            action: toggle
+          card_layout: large
+          styles: >
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
+          sub_button:
+            - entity: automation.8am_back_guest_bedroom_shades_weekdays
+              show_state: true
+              show_icon: false
+              state_background: false
+              show_background: false
+          modules:
+          - Mobile Module Theme  
+        - type: custom:bubble-card
+          card_type: button
           entity: automation.900am_bedroom_shades_open_weekends
           name: 9:00AM Bedroom Shades Open (Weekends)
           icon: mdi:roller-shade
@@ -1109,6 +1128,31 @@
             font-weight: bold; }
           sub_button:
             - entity: automation.900am_bedroom_shades_open_weekends
+              show_state: true
+              show_icon: false
+              state_background: false
+              show_background: false
+          modules:
+          - Mobile Module Theme  
+        - type: custom:bubble-card
+          card_type: button
+          entity: automation.9am_back_guest_bedroom_shades_weekends
+          name: 9:00AM Back Guest Bedroom Shades Open (Weekends)
+          icon: mdi:roller-shade
+          show_state: false
+          scrolling_effect: false
+          button_action:
+            tap_action:
+              action: toggle
+          tap_action:
+            action: toggle
+          card_layout: large
+          styles: >
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
+          sub_button:
+            - entity: automation.9am_back_guest_bedroom_shades_weekends
               show_state: true
               show_icon: false
               state_background: false
@@ -1218,7 +1262,7 @@
         - type: custom:bubble-card
           card_type: button
           entity: automation.sunset_30_or_8_00_pm_close_shades
-          name: Evening Close All Shades
+          name: Evening Close First Floor Shades
           icon: mdi:roller-shade
           show_state: false
           scrolling_effect: false
@@ -1239,7 +1283,57 @@
               state_background: false
               show_background: false
           modules:
-          - Mobile Module Theme  
+          - Mobile Module Theme
+        - type: custom:bubble-card
+          card_type: button
+          entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm
+          name: Evening Close Bedroom Shades
+          icon: mdi:roller-shade
+          show_state: false
+          scrolling_effect: false
+          button_action:
+            tap_action:
+              action: toggle
+          tap_action:
+            action: toggle
+          card_layout: large
+          styles: >
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
+          sub_button:
+            - entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm
+              show_state: true
+              show_icon: false
+              state_background: false
+              show_background: false
+          modules:
+          - Mobile Module Theme              
+        - type: custom:bubble-card
+          card_type: button
+          entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm
+          name: Evening Close Back Guest Bedroom Shades
+          icon: mdi:roller-shade
+          show_state: false
+          scrolling_effect: false
+          button_action:
+            tap_action:
+              action: toggle
+          tap_action:
+            action: toggle
+          card_layout: large
+          styles: >
+            .bubble-name { font-size: 16px !important; text-align: left !important; }
+            .bubble-sub-button { font-size: 14px !important;
+            font-weight: bold; }
+          sub_button:
+            - entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm
+              show_state: true
+              show_icon: false
+              state_background: false
+              show_background: false
+          modules:
+          - Mobile Module Theme   
 #Pool
 - type: custom:expander-card
   expanded: false
