@@ -2,7 +2,7 @@
   card_type: cover
   button_type: slider
   entity: cover.first_floor_all
-  name: First Floor - All
+  name: All Shades
   scrolling_effect: false
   show_state: true
   tap_action:
@@ -32,7 +32,7 @@
 - type: custom:bubble-card
   card_type: cover
   entity: cover.first_floor_front
-  name: First Floor - Front
+  name: Front Shades
   scrolling_effect: false
   show_state: true
   tap_action:
@@ -62,7 +62,7 @@
 - type: custom:bubble-card
   card_type: cover
   entity: cover.living_room_side_shades
-  name: Living Room - Side
+  name: Living Room Side Shades
   scrolling_effect: false
   show_state: true
   tap_action:
@@ -92,7 +92,7 @@
 - type: custom:bubble-card
   card_type: cover
   entity: cover.dining_room_side
-  name: Dining Room - Side
+  name: Dining Room Side Shades
   scrolling_effect: false
   show_state: true
   tap_action:
