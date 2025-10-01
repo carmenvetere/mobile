@@ -12,7 +12,7 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 homekit: !include homekit.yaml
-sensor: !include templates/sensors.yaml
+template: !include_dir_list templates/
 
 device_tracker:
   - platform: group
