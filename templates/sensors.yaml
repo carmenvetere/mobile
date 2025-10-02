@@ -2,7 +2,7 @@
 sensor:
   # Notification Alert Counter
   - name: "Notification Alert Counter"
-    unique_id: notification_alert_counter_1
+    unique_id: notification_alert_counter
     state: >
       {# ─── 1) Boolean rules (each evaluates to True/False) ─── #}
       {% set rules = [
@@ -195,11 +195,11 @@ sensor:
 trigger:
   - trigger: event
     event_type: bubble_card_update_modules
-sensor:
-  - name: "Bubble Card Modules"
-    unique_id: bubble_card_modules
-    state: "saved"
-    icon: "mdi:puzzle"
-    attributes:
-      modules: "{{ trigger.event.data.modules }}"
-      last_updated: "{{ trigger.event.data.last_updated }}"
+    sensor:
+      - name: "Bubble Card Modules"
+        unique_id: bubble_card_modules
+        state: "saved"
+        icon: "mdi:puzzle"
+        attributes:
+          modules: "{{ trigger.event.data.modules }}"
+          last_updated: "{{ trigger.event.data.last_updated }}"
