@@ -1,205 +1,205 @@
 # Template Sensors - Modern Syntax
-sensor:
-  # Notification Alert Counter
-  - name: "Notification Alert Counter"
-    unique_id: notification_alert_counter
-    state: >
-      {# ─── 1) Boolean rules (each evaluates to True/False) ─── #}
-      {% set rules = [
-        is_state('binary_sensor.bayberry_grid_status', 'off'),
-        is_state('binary_sensor.dryer_recently_completed', 'on'),
-        is_state('binary_sensor.washer_recently_completed', 'on'),
-        (is_state('sensor.bayberry_tempest_precipitation_type','rain')
-          and is_state('binary_sensor.pool_cover_pump','off')),
-        is_state('cover.garage_door_garage','open'),
-        is_state('input_boolean.low_pool_water_level','on'),
-        is_state('sensor.tesla_wall_connector_status','error'),
-        is_state('sensor.tesla_wall_connector_status','charging_reduced'),
-        (states('sensor.roborock_s8_vacuum_error') not in ['none','unknown','unavailable']),
-        (is_state('binary_sensor.bayberry_grid_status','off')
-          and states('sensor.bayberry_charge')|float(100) < 25),
-        states('sensor.nws_alerts_alerts')|int(0) > 0,
-        states('sensor.front_load_washer_tub_clean_counter')|int(0) > 30,
-        states('sensor.upper_floor_hvac_filter_time_2')|int(0) > 2000,
-        states('sensor.lower_floors_hvac_filter_time_2')|int(0) > 2000,
-        states('sensor.utility_room_temp_sensor_temperature')|float(99) < 55,
-        states('sensor.utility_room_temp_sensor_temperature')|float(0)  > 80,
-        states('sensor.attic_temp_sensor_temperature')|float(0)  > 80,
-        states('sensor.attic_temp_sensor_temperature')|float(99) < 55,
-        (states('sensor.hours_since_last_vacuum')|float(0) > 48
-          and is_state('binary_sensor.pool_season','on')),
-        states('sensor.omnilogic_pool_chlorinator_average_salt_level')|float(9999) < 2700,
-        states('sensor.smithy_hot_water_availability_2')|float(9999)   < 20
-      ] %}
-      {# ─── 2) Battery list and count (< 20%) ─── #}
-      {% set battery_sensors = expand(
-        'sensor.bedroom_back_1_battery',
-        'sensor.back_2_battery',
-        'sensor.back_3_battery',
-        'sensor.bedroom_back_4_battery_0',
-        'sensor.bedroom_back_5_battery_0',
-        'sensor.side_left_battery_2',
-        'sensor.side_right_battery_0',
-        'sensor.dining_room_front_left_battery_0',
-        'sensor.front_left_battery',
-        'sensor.front_right_battery_0',
-        'sensor.bedroom_right_battery_0',
-        'sensor.hallway_1_battery',
-        'sensor.motionblind_ebae_battery',
-        'sensor.bedroom_left_battery_0',
-        'sensor.living_room_side_left_1_battery_0',
-        'sensor.living_room_front_left_battery_0',
-        'sensor.living_room_side_left_2_battery_0',
-        'sensor.living_room_side_right_1_battery_0',
-        'sensor.living_room_side_right_2_battery_0',
-        'sensor.living_room_front_right_battery',
-        'sensor.attic_temp_sensor_battery',
-        'sensor.front_door_battery',
-        'sensor.kitchen_french_doors_battery',
-        'sensor.living_room_french_doors_battery',
-        'sensor.mudroom_entry_battery',
-        'sensor.mudroom_garage_battery',
-        'sensor.utility_room_temp_sensor_battery',
-        'sensor.back_guest_bedroom_side_battery',
-        'sensor.back_guest_bedroom_back_left_battery',
-        'sensor.back_guest_bedroom_back_right_battery'
-      ) %}
-      {% set low_batt = battery_sensors
-          | map(attribute='state') | map('float', 100) | select('lt', 20) | list %}
-      {% set low_batt_count = low_batt | count %}
-      {# ─── 3) Final count: sum of booleans + count of low batteries ─── #}
-      {{ (rules | map('int') | sum) + low_batt_count }}
-    unit_of_measurement: "alerts"
-    icon: mdi:alert-circle
-
-  # Roborock Sensors
-  - name: "Roborock S8 Filter Time Left"
-    unique_id: roborock_s8_filter_time_left_hours
-    unit_of_measurement: "hours"
-    state: "{{ (states('sensor.roborock_s8_filter_time_left') | float / 3600) | round(2) }}"
-
-  - name: "Roborock S8 Side Brush Time Left"
-    unique_id: roborock_s8_side_brush_time_left_hours
-    unit_of_measurement: "hours"
-    state: "{{ (states('sensor.roborock_s8_side_brush_time_left') | float / 3600) | round(2) }}"
-
-  - name: "Roborock S8 Main Brush Time Left"
-    unique_id: roborock_s8_main_brush_time_left_hours
-    unit_of_measurement: "hours"
-    state: "{{ (states('sensor.roborock_s8_main_brush_time_left') | float / 3600) | round(2) }}"
-
-  - name: "Roborock S8 Sensor Time Left"
-    unique_id: roborock_s8_sensor_time_left_hours
-    unit_of_measurement: "hours"
-    state: "{{ (states('sensor.roborock_s8_sensor_time_left') | float / 3600) | round(2) }}"
-
-  # Pool Vacuum Tracker
-  - name: "Hours Since Last Vacuum"
-    unique_id: hours_since_last_vacuum
-    unit_of_measurement: "hours"
-    state: >
-      {% if states('input_datetime.last_pool_vacuum') %}
-        {{ ((as_timestamp(now()) - as_timestamp(states.input_datetime.last_pool_vacuum.state)) / 3600) | round(1) }}
-      {% else %}
-        unknown
-      {% endif %}
-
-  # Lights Counter
-  - name: "Lights On Count"
-    unique_id: count_of_lights
-    state: >
-      {% set lights = [
-        'light.front_foyer_pendants',
-        'light.gym_main_lights',
-        'light.kitchen_island_pendants',
-        'light.kitchen_main_lights',
-        'light.kitchen_outer_wall',
-        'light.kitchen_window_seat_sconce',
-        'light.laundry_room_main_lights',
-        'light.living_room_floor_lamp_1',
-        'light.living_room_floor_lamp_2',
-        'light.living_room_main_lights',
-        'light.media_room_main_lights',
-        'light.media_room_table_lamp',
-        'light.office_floor_lamp',
-        'light.office_main_lights',
-        'light.upstairs_hallway_main_lights',
-        'light.basement_hallway_main_lights',
-        'light.dining_room_accent_lights',
-        'light.dining_room_main_lights',
-        'light.dining_room_table_lamps',
-        'light.driveway_sconces',
-        'light.front_porch_overhead_light',
-        'light.master_bathroom_main_lights',
-        'light.master_bathroom_vanity_lights',
-        'light.master_bedroom_main_lights',
-        'light.master_bedroom_sconces',
-        'light.master_bedroom_closet_light',
-        'light.patio_back_porch_lights',
-        'light.eve_light_strip_a5a4',
-        'switch.bedroom_floor_lamp_switch',
-        'switch.transformer_zone_1',
-        'switch.transformer_zone_2',
-        'switch.transformer_zone_3',
-        'switch.transformer_zone_1_2',
-        'switch.transformer_zone_2_2',
-        'switch.transformer_zone_3_2'
-      ] %}
-      {% set on_lights = lights | select('is_state', 'on') | list %}
-      {% if on_lights | length == 0 %}
-        All Off
-      {% else %}
-        {{ on_lights | length }}
-      {% endif %}
-
-  # Living Room Sonos Favorites
-  - name: "Living Room Favorites List"
-    unique_id: living_room_favorites
-    state: "Stored in attributes"
-    attributes:
-      favorites: >-
-        {% set data = [
-          {
-            'title': 'Hotel Costes Top 50',
-            'media_content_id': 'https://open.spotify.com/playlist/5jryH9aMgkcQruOslKX7Fc?si=32fc87b4459942fd'
-          },
-          {
-            'title': 'Spotify Chill Hits',
-            'media_content_id': 'https://open.spotify.com/playlist/37i9dQZF1DX4WYpdgoIcn6?si=1a312b90ce0d4c3f'
-          },
-          {
-            'title': 'MSNBC',
-            'media_content_id': 'x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8232&sn=5'
-          },
-          {
-            'title': 'Spotify Top 50 Australia',
-            'media_content_id': 'https://open.spotify.com/playlist/37i9dQZEVXbJPcfkRz0wJ0?si=a937cf6d25854469'
-          },
-          {
-            'title': 'Spotify Chill Mix',
-            'media_content_id': 'https://open.spotify.com/playlist/37i9dQZF1EVHGWrwldPRtj?si=22aa560ebee04a04'
-          }
+- sensor:
+    # Notification Alert Counter
+    - name: "Notification Alert Counter"
+      unique_id: notification_alert_counter
+      state: >
+        {# ─── 1) Boolean rules (each evaluates to True/False) ─── #}
+        {% set rules = [
+          is_state('binary_sensor.bayberry_grid_status', 'off'),
+          is_state('binary_sensor.dryer_recently_completed', 'on'),
+          is_state('binary_sensor.washer_recently_completed', 'on'),
+          (is_state('sensor.bayberry_tempest_precipitation_type','rain')
+            and is_state('binary_sensor.pool_cover_pump','off')),
+          is_state('cover.garage_door_garage','open'),
+          is_state('input_boolean.low_pool_water_level','on'),
+          is_state('sensor.tesla_wall_connector_status','error'),
+          is_state('sensor.tesla_wall_connector_status','charging_reduced'),
+          (states('sensor.roborock_s8_vacuum_error') not in ['none','unknown','unavailable']),
+          (is_state('binary_sensor.bayberry_grid_status','off')
+            and states('sensor.bayberry_charge')|float(100) < 25),
+          states('sensor.nws_alerts_alerts')|int(0) > 0,
+          states('sensor.front_load_washer_tub_clean_counter')|int(0) > 30,
+          states('sensor.upper_floor_hvac_filter_time_2')|int(0) > 2000,
+          states('sensor.lower_floors_hvac_filter_time_2')|int(0) > 2000,
+          states('sensor.utility_room_temp_sensor_temperature')|float(99) < 55,
+          states('sensor.utility_room_temp_sensor_temperature')|float(0)  > 80,
+          states('sensor.attic_temp_sensor_temperature')|float(0)  > 80,
+          states('sensor.attic_temp_sensor_temperature')|float(99) < 55,
+          (states('sensor.hours_since_last_vacuum')|float(0) > 48
+            and is_state('binary_sensor.pool_season','on')),
+          states('sensor.omnilogic_pool_chlorinator_average_salt_level')|float(9999) < 2700,
+          states('sensor.smithy_hot_water_availability_2')|float(9999)   < 20
         ] %}
-        {{ data }}
+        {# ─── 2) Battery list and count (< 20%) ─── #}
+        {% set battery_sensors = expand(
+          'sensor.bedroom_back_1_battery',
+          'sensor.back_2_battery',
+          'sensor.back_3_battery',
+          'sensor.bedroom_back_4_battery_0',
+          'sensor.bedroom_back_5_battery_0',
+          'sensor.side_left_battery_2',
+          'sensor.side_right_battery_0',
+          'sensor.dining_room_front_left_battery_0',
+          'sensor.front_left_battery',
+          'sensor.front_right_battery_0',
+          'sensor.bedroom_right_battery_0',
+          'sensor.hallway_1_battery',
+          'sensor.motionblind_ebae_battery',
+          'sensor.bedroom_left_battery_0',
+          'sensor.living_room_side_left_1_battery_0',
+          'sensor.living_room_front_left_battery_0',
+          'sensor.living_room_side_left_2_battery_0',
+          'sensor.living_room_side_right_1_battery_0',
+          'sensor.living_room_side_right_2_battery_0',
+          'sensor.living_room_front_right_battery',
+          'sensor.attic_temp_sensor_battery',
+          'sensor.front_door_battery',
+          'sensor.kitchen_french_doors_battery',
+          'sensor.living_room_french_doors_battery',
+          'sensor.mudroom_entry_battery',
+          'sensor.mudroom_garage_battery',
+          'sensor.utility_room_temp_sensor_battery',
+          'sensor.back_guest_bedroom_side_battery',
+          'sensor.back_guest_bedroom_back_left_battery',
+          'sensor.back_guest_bedroom_back_right_battery'
+        ) %}
+        {% set low_batt = battery_sensors
+            | map(attribute='state') | map('float', 100) | select('lt', 20) | list %}
+        {% set low_batt_count = low_batt | count %}
+        {# ─── 3) Final count: sum of booleans + count of low batteries ─── #}
+        {{ (rules | map('int') | sum) + low_batt_count }}
+      unit_of_measurement: "alerts"
+      icon: mdi:alert-circle
 
-  # WiFi QR Code
-  - name: "Wi-Fi QR Code"
-    unique_id: wifi_qr_code
-    state: >
-      {{ "WIFI:T:WPA;S:Auggie Guest;P:VonDogus78;H:false;" | urlencode }}
-    picture: >
-      {{ 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' ~
-          "WIFI:T:WPA;S:Auggie Guest;P:VonDogus78;H:false;" | urlencode }}
+    # Roborock Sensors
+    - name: "Roborock S8 Filter Time Left"
+      unique_id: roborock_s8_filter_time_left_hours
+      unit_of_measurement: "hours"
+      state: "{{ (states('sensor.roborock_s8_filter_time_left') | float / 3600) | round(2) }}"
+
+    - name: "Roborock S8 Side Brush Time Left"
+      unique_id: roborock_s8_side_brush_time_left_hours
+      unit_of_measurement: "hours"
+      state: "{{ (states('sensor.roborock_s8_side_brush_time_left') | float / 3600) | round(2) }}"
+
+    - name: "Roborock S8 Main Brush Time Left"
+      unique_id: roborock_s8_main_brush_time_left_hours
+      unit_of_measurement: "hours"
+      state: "{{ (states('sensor.roborock_s8_main_brush_time_left') | float / 3600) | round(2) }}"
+
+    - name: "Roborock S8 Sensor Time Left"
+      unique_id: roborock_s8_sensor_time_left_hours
+      unit_of_measurement: "hours"
+      state: "{{ (states('sensor.roborock_s8_sensor_time_left') | float / 3600) | round(2) }}"
+
+    # Pool Vacuum Tracker
+    - name: "Hours Since Last Vacuum"
+      unique_id: hours_since_last_vacuum
+      unit_of_measurement: "hours"
+      state: >
+        {% if states('input_datetime.last_pool_vacuum') %}
+          {{ ((as_timestamp(now()) - as_timestamp(states.input_datetime.last_pool_vacuum.state)) / 3600) | round(1) }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    # Lights Counter
+    - name: "Lights On Count"
+      unique_id: count_of_lights
+      state: >
+        {% set lights = [
+          'light.front_foyer_pendants',
+          'light.gym_main_lights',
+          'light.kitchen_island_pendants',
+          'light.kitchen_main_lights',
+          'light.kitchen_outer_wall',
+          'light.kitchen_window_seat_sconce',
+          'light.laundry_room_main_lights',
+          'light.living_room_floor_lamp_1',
+          'light.living_room_floor_lamp_2',
+          'light.living_room_main_lights',
+          'light.media_room_main_lights',
+          'light.media_room_table_lamp',
+          'light.office_floor_lamp',
+          'light.office_main_lights',
+          'light.upstairs_hallway_main_lights',
+          'light.basement_hallway_main_lights',
+          'light.dining_room_accent_lights',
+          'light.dining_room_main_lights',
+          'light.dining_room_table_lamps',
+          'light.driveway_sconces',
+          'light.front_porch_overhead_light',
+          'light.master_bathroom_main_lights',
+          'light.master_bathroom_vanity_lights',
+          'light.master_bedroom_main_lights',
+          'light.master_bedroom_sconces',
+          'light.master_bedroom_closet_light',
+          'light.patio_back_porch_lights',
+          'light.eve_light_strip_a5a4',
+          'switch.bedroom_floor_lamp_switch',
+          'switch.transformer_zone_1',
+          'switch.transformer_zone_2',
+          'switch.transformer_zone_3',
+          'switch.transformer_zone_1_2',
+          'switch.transformer_zone_2_2',
+          'switch.transformer_zone_3_2'
+        ] %}
+        {% set on_lights = lights | select('is_state', 'on') | list %}
+        {% if on_lights | length == 0 %}
+          All Off
+        {% else %}
+          {{ on_lights | length }}
+        {% endif %}
+
+    # Living Room Sonos Favorites
+    - name: "Living Room Favorites List"
+      unique_id: living_room_favorites
+      state: "Stored in attributes"
+      attributes:
+        favorites: >-
+          {% set data = [
+            {
+              'title': 'Hotel Costes Top 50',
+              'media_content_id': 'https://open.spotify.com/playlist/5jryH9aMgkcQruOslKX7Fc?si=32fc87b4459942fd'
+            },
+            {
+              'title': 'Spotify Chill Hits',
+              'media_content_id': 'https://open.spotify.com/playlist/37i9dQZF1DX4WYpdgoIcn6?si=1a312b90ce0d4c3f'
+            },
+            {
+              'title': 'MSNBC',
+              'media_content_id': 'x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8232&sn=5'
+            },
+            {
+              'title': 'Spotify Top 50 Australia',
+              'media_content_id': 'https://open.spotify.com/playlist/37i9dQZEVXbJPcfkRz0wJ0?si=a937cf6d25854469'
+            },
+            {
+              'title': 'Spotify Chill Mix',
+              'media_content_id': 'https://open.spotify.com/playlist/37i9dQZF1EVHGWrwldPRtj?si=22aa560ebee04a04'
+            }
+          ] %}
+          {{ data }}
+
+    # WiFi QR Code
+    - name: "Wi-Fi QR Code"
+      unique_id: wifi_qr_code
+      state: >
+        {{ "WIFI:T:WPA;S:Auggie Guest;P:VonDogus78;H:false;" | urlencode }}
+      picture: >
+        {{ 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' ~
+            "WIFI:T:WPA;S:Auggie Guest;P:VonDogus78;H:false;" | urlencode }}
 
 # Bubble Card Modules trigger sensor
-trigger:
-  - trigger: event
-    event_type: bubble_card_update_modules
-    sensor:
-      - name: "Bubble Card Modules"
-        unique_id: bubble_card_modules
-        state: "saved"
-        icon: "mdi:puzzle"
-        attributes:
-          modules: "{{ trigger.event.data.modules }}"
-          last_updated: "{{ trigger.event.data.last_updated }}"
+- trigger:
+    - trigger: event
+      event_type: bubble_card_update_modules
+      sensor:
+        - name: "Bubble Card Modules"
+          unique_id: bubble_card_modules
+          state: "saved"
+          icon: "mdi:puzzle"
+          attributes:
+            modules: "{{ trigger.event.data.modules }}"
+            last_updated: "{{ trigger.event.data.last_updated }}"
