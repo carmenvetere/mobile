@@ -38,13 +38,13 @@ cards:
           hidePlayerControlRepeatButton: true 
           hidePlayerControlShuffleButton: true
           card_mod:
-            style: |
-              ha-card {
-                background: var(--ha-card-background-2) !important;
-                padding-right: 10px !important;
-                border-radius: 0px !important;
-              }
-            style:
+            style: 
+              .: |
+                ha-card {
+                  background: var(--ha-card-background-2) !important;
+                  padding-right: 10px !important;
+                  border-radius: 0px !important;
+                }
               sonos-player$sonos-player-header$: |
                 .entity {
                   font-size: 16px !important;
