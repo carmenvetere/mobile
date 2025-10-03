@@ -71,7 +71,7 @@ cards:
                     - padding-left: 8px
                     - background-color: transparent
       chips:
-        card:
+        card: 
           type: custom:mushroom-chips-card
           card_mod:
             style: |
@@ -146,59 +146,35 @@ cards:
                       --chip-background: var(--ha-card-background-2); 
       solar_forecast:
         card: 
-          type: custom:expander-card
-          expanded: false
-          title-card-clickable: true
+          type: custom:stack-in-card
+          mode: vertical
           card_mod:
             style: |
               ha-card {
                 background-color: var(--ha-card-background-2) !important;
-              }
-          title-card:
-            type: custom:bubble-card
-            card_type: separator
-            name: Solar Forecast
-            icon: mdi:solar-power
-            rows: 0.75
-            styles: |
-              .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-              }
-              .bubble-sub-button 
-              {
-                font-size: 20px !important;
-                font-weight: 700 !important;
-              }
-              .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-              }
-              .card-content {
-                padding-top: 7px !important;
+                border-radius: 20px;
+                padding: 10;
               }
           cards:
-          - type: entities
-            card_mod:
-              style: |
-                ha-card {
-                  font-size: 16px;
-                  font-weight: bold;
-                  justify-content: left;
+            - type: custom:bubble-card
+              card_type: separator
+              name: Solar Forecast
+              icon: mdi:flash
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
                 }
                 .card-content {
-                  text-align: left !important;
+                padding-top: 10px !important;
+                padding-left: 10px !important;
                 }
-                .entity, .entity__value, .entity__info, .info, .name {
-                  text-align: left !important;
-                  justify-content: flex-start !important;
-                  align-items: flex-start !important;
-                }
-            entities:
-              - entity: sensor.solcast_pv_forecast_forecast_today
-                name: Solar Forecast Today
-              - entity: sensor.solcast_pv_forecast_forecast_tomorrow
-                name: Solar Forecast Tomorrow
+            - !include /config/dashboards/modules/solar-forecast-today.yaml
       power_flow:
         card: 
           type: custom:stack-in-card
