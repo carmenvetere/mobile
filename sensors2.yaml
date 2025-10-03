@@ -186,6 +186,44 @@
           {% endfor %}
           {{ ns.combined_list | to_json() }}
 
+    # Daily Well Pump Energy
+    - name: "Well Pump Daily Energy"
+      unique_id: well_pump_daily_energy
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      state: "{{ states('sensor.well_pump_energy') | float(0) }}"
+      
+    # Daily Pool Pump Energy
+    - name: "Pool Pump Daily Energy"
+      unique_id: pool_pump_daily_energy
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      state: "{{ states('sensor.pool_pump_energy') | float(0) }}"
+      
+    # Daily Hot Water Heater Energy
+    - name: "Hot Water Heater Daily Energy"
+      unique_id: hot_water_heater_daily_energy
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      state: "{{ states('sensor.smithy_energy_usage_2') | float(0) }}"
+    
+    # Calculate "Other" usage
+    - name: "Home Other Usage"
+      unique_id: home_other_usage
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      state: >
+        {% set total = states('sensor.bayberry_home_usage') | float(0) %}
+        {% set well = states('sensor.well_pump_energy') | float(0) %}
+        {% set pool = states('sensor.pool_pump_energy') | float(0) %}
+        {% set water = states('sensor.smithy_energy_usage_2') | float(0) %}
+        {% set ev = states('sensor.wall_charger_energy') | float(0) %}
+        {{ (total - well - pool - water) | max(0) }}
+
 - trigger:
     - trigger: event
       event_type: bubble_card_update_modules
