@@ -236,15 +236,4 @@ cards:
                 padding-top: 10px !important;
                 padding-left: 10px !important;
                 }
-            - type: history-graph
-              entities:
-                - entity: sensor.bayberry_site_power
-                  name: Grid
-                  color: 'rgb(0, 109, 143)'
-                - entity: sensor.bayberry_solar_power
-                  name: Solar
-                  color: 'rgb(245, 236, 0)'
-                - entity: sensor.bayberry_load_power
-                  name: Home
-                  color: 'var(--primary-text-color)'
-              hours_to_show: 24
+            - !include /config/dashboards/modules/24-hour-power-flow.yaml

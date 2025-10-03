@@ -1,0 +1,77 @@
+type: custom:apexcharts-card
+header:
+  show: true
+  show_states: true
+  colorize_states: true
+graph_span: 24h
+span:
+  start: hour
+  offset: "-24h"
+now:
+  show: true
+  label: Now
+apex_config:
+  chart:
+    type: area
+    stacked: false
+  stroke:
+    curve: smooth
+    width: 2
+  xaxis:
+    type: datetime
+  yaxis:
+    decimals: 1
+    labels:
+      formatter: |
+        EVAL:function(value) {
+          return value.toFixed(1) + ' kW';
+        }
+series:
+  - entity: sensor.bayberry_site_power
+    name: Grid
+    type: line
+    stroke_width: 2
+    color: rgb(0, 109, 143)
+    show:
+      in_header: false
+      legend_value: true
+  - entity: sensor.bayberry_solar_power
+    name: Solar
+    type: line
+    stroke_width: 2
+    color: Orange
+    show:
+      in_header: false
+  - entity: sensor.bayberry_load_power
+    name: Home
+    type: line
+    stroke_width: 2
+    color: var(--primary-text-color)
+    show:
+      in_header: false
+  - entity: sensor.bayberry_solar_generated
+    yaxis_id: header_only
+    name: Solar
+    stroke_width: 2
+    color: Orange
+    show:
+      legend_value: false
+      in_header: true
+      in_chart: false
+  - entity: sensor.bayberry_home_usage
+    yaxis_id: header_only
+    name: Home
+    stroke_width: 2
+    color: var(--primary-text-color)
+    show:
+      legend_value: true
+      in_header: true
+      in_chart: false
+  - entity: sensor.bayberry_grid_imported
+    name: Net Grid
+    color: rgb(0, 109, 143)
+    show:
+      in_header: true
+      in_chart: false
+    transform: |
+      return entity.state - hass.states['sensor.bayberry_grid_exported'].state;
