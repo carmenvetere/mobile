@@ -74,4 +74,6 @@ series:
       in_header: true
       in_chart: false
     transform: |
-      return entity.state - hass.states['sensor.bayberry_grid_exported'].state;
+      const imported = parseFloat(entity.state) || 0;
+      const exported = parseFloat(hass.states['sensor.bayberry_grid_exported'].state) || 0;
+      return imported - exported;
