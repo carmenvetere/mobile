@@ -185,30 +185,6 @@
             ] %}
           {% endfor %}
           {{ ns.combined_list | to_json() }}
-
-    # Daily Well Pump Energy
-    - name: "Well Pump Daily Energy"
-      unique_id: well_pump_daily_energy
-      unit_of_measurement: "kWh"
-      device_class: energy
-      state_class: total_increasing
-      state: "{{ states('sensor.well_pump_energy') | float(0) }}"
-      
-    # Daily Pool Pump Energy
-    - name: "Pool Pump Daily Energy"
-      unique_id: pool_pump_daily_energy
-      unit_of_measurement: "kWh"
-      device_class: energy
-      state_class: total_increasing
-      state: "{{ states('sensor.pool_pump_energy') | float(0) }}"
-      
-    # Daily Hot Water Heater Energy
-    - name: "Hot Water Heater Daily Energy"
-      unique_id: hot_water_heater_daily_energy
-      unit_of_measurement: "kWh"
-      device_class: energy
-      state_class: total_increasing
-      state: "{{ states('sensor.smithy_energy_usage_2') | float(0) }}"
     
     # Calculate "Other" usage
     - name: "Home Other Usage"
