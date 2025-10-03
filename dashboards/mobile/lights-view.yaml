@@ -131,7 +131,7 @@ cards:
                     --chip-background: var(--ha-card-background-2);
                   }
             - type: entity
-              entity: sensor.count_of_lights
+              entity: sensor.lights_on_count
               tap_action:
                 action: more-info
               icon: mdi:lightbulb
