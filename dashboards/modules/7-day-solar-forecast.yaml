@@ -1,0 +1,54 @@
+type: custom:apexcharts-card
+header:
+  show: true
+  show_states: true
+  colorize_states: true
+graph_span: 7d
+span:
+  offset: +6d
+apex_config:
+  chart:
+    type: bar
+  dataLabels:
+    enabled: true
+  xaxis:
+    type: datetime
+    labels:
+      format: ddd MMM dd
+  yaxis:
+    decimals: 1
+    labels:
+      formatter: |
+        EVAL:function(value) {
+          return value.toFixed(1) + ' kWh';
+        }
+series:
+  - entity: sensor.solcast_seven_day
+    name: Forecasted Solar Generation
+    type: column
+    color: "#FFA500"
+    data_generator: |
+      const now = new Date();
+      now.setHours(0, 0, 0, 0);
+      const daily = {};
+      entity.attributes.detailedForecast.forEach(item => {
+        const itemDate = new Date(item.period_start);
+        if (itemDate >= now) {
+          const day = itemDate.toISOString().split('T')[0];
+          // Convert kW to kWh by multiplying by 0.5 (30-minute periods)
+          daily[day] = (daily[day] || 0) + (item.pv_estimate * 0.5);
+        }
+      });
+      return Object.entries(daily)
+        .sort((a, b) => new Date(a[0]) - new Date(b[0]))
+        .map(([date, total]) => [new Date(date).getTime(), total]);
+    show:
+      in_header: false
+      in_chart: true
+  - entity: sensor.solcast_seven_day
+    name: 7-Day Solar Generation
+    yaxis_id: header_only
+    color: "#FFA500"
+    show:
+      in_header: true
+      in_chart: false

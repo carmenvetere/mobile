@@ -65,6 +65,16 @@ card:
             return state.charAt(0).toUpperCase() + state.slice(1);
           ]]]
         styles:
+          icon:
+            - color: |
+                [[[
+                  var state = states['alarm_control_panel.alarmo'].state;
+                  if (state === 'triggered') return 'red';
+                  if (state === 'armed_away' || state === 'armed_home' || state === 'armed_vacation') return 'orange';
+                  if (state === 'pending' || state === 'arming') return 'orange';
+                  if (state === 'disarmed') return 'var(--primary-text-color)';
+                  return 'var(--primary-text-color)';
+                ]]]
           state:
             - font-size: 16px
             - font-weight: bold
