@@ -35,4 +35,15 @@ cards:
             - media browser
           heightPercentage: 68
           entityId: media_player.mud_room
+          hidePlayerControlRepeatButton: true 
+          hidePlayerControlShuffleButton: true
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background-2) !important;
+              }
+              .entity__title {
+                font-size: 16px !important;
+                font-weight: bold !important;
+              }
       nav: !include footer-menu.yaml
