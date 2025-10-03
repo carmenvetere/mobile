@@ -65,7 +65,6 @@
         {% set low_batt_count = low_batt | count %}
         {# ─── 3) Final count: sum of booleans + count of low batteries ─── #}
         {{ (rules | map('int') | sum) + low_batt_count }}
-      unit_of_measurement: "alerts"
       icon: mdi:alert-circle
 
     - name: "Lights On Count"
