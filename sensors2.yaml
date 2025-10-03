@@ -124,3 +124,32 @@
         {% else %}
           unknown
         {% endif %}
+
+    - name: "Living Room Favorites List"
+      unique_id: living_room_favorites
+      state: "Stored in attributes"
+      attributes:
+        favorites: >-
+          {% set data = [
+            {
+              'title': 'Hotel Costes Top 50',
+              'media_content_id': 'https://open.spotify.com/playlist/5jryH9aMgkcQruOslKX7Fc?si=32fc87b4459942fd'
+            },
+            {
+              'title': 'Spotify Chill Hits',
+              'media_content_id': 'https://open.spotify.com/playlist/37i9dQZF1DX4WYpdgoIcn6?si=1a312b90ce0d4c3f'
+            },
+            {
+              'title': 'MSNBC',
+              'media_content_id': 'x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8232&sn=5'
+            },
+            {
+              'title': 'Spotify Top 50 Australia',
+              'media_content_id': 'https://open.spotify.com/playlist/37i9dQZEVXbJPcfkRz0wJ0?si=a937cf6d25854469'
+            },
+            {
+              'title': 'Spotify Chill Mix',
+              'media_content_id': 'https://open.spotify.com/playlist/37i9dQZF1EVHGWrwldPRtj?si=22aa560ebee04a04'
+            }
+          ] %}
+          {{ data }}
