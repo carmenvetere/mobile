@@ -154,8 +154,8 @@
           ] %}
           {{ data }}
 
-    - name: "Solcast Three Days"
-      unique_id: "solcast_three_day"
+    - name: "Solcast Seven Day"
+      unique_id: "solcast_seven_day"
       state: >
         {{
           states('sensor.solcast_pv_forecast_forecast_today') | float(0) +
@@ -168,7 +168,11 @@
           {%
             set days = state_attr('sensor.solcast_pv_forecast_forecast_today', 'detailedForecast') +
             state_attr('sensor.solcast_pv_forecast_forecast_tomorrow', 'detailedForecast') +
-            state_attr('sensor.solcast_pv_forecast_forecast_day_3', 'detailedForecast')
+            state_attr('sensor.solcast_pv_forecast_forecast_day_3', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_day_4', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_day_5', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_day_6', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_day_7', 'detailedForecast')
           %}
           {% set ns = namespace(combined_list=[]) %}
           {% for interval in days %}
