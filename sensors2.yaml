@@ -154,6 +154,35 @@
           ] %}
           {{ data }}
 
+    - name: "Solcast Three Days"
+      unique_id: "solcast_three_day"
+      state: >
+        {{
+          states('sensor.solcast_pv_forecast_forecast_today') | float(0) +
+          states('sensor.solcast_pv_forecast_forecast_tomorrow') | float(0) +
+          states('sensor.solcast_pv_forecast_forecast_day_3') | float(0)
+        }}
+      unit_of_measurement: "kWh"
+      attributes:
+        detailedForecast: >
+          {%
+            set days = state_attr('sensor.solcast_pv_forecast_forecast_today', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_tomorrow', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_day_3', 'detailedForecast')
+          %}
+          {% set ns = namespace(combined_list=[]) %}
+          {% for interval in days %}
+            {% set ns.combined_list = ns.combined_list + [
+              {
+                'period_start': interval['period_start'].isoformat(),
+                'pv_estimate': interval['pv_estimate'],
+                'pv_estimate10': interval['pv_estimate10'],
+                'pv_estimate90': interval['pv_estimate90'],
+              }
+            ] %}
+          {% endfor %}
+          {{ ns.combined_list | to_json() }}
+
 - trigger:
     - trigger: event
       event_type: bubble_card_update_modules
