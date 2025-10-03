@@ -179,25 +179,3 @@
             }
           ] %}
           {{ data }}
-
-    # WiFi QR Code
-    - name: "Wi-Fi QR Code"
-      unique_id: wifi_qr_code
-      state: >
-        {{ "WIFI:T:WPA;S:Auggie Guest;P:VonDogus78;H:false;" | urlencode }}
-      picture: >
-        {{ 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' ~
-            "WIFI:T:WPA;S:Auggie Guest;P:VonDogus78;H:false;" | urlencode }}
-
-# Bubble Card Modules trigger sensor
-- trigger:
-    - trigger: event
-      event_type: bubble_card_update_modules
-  sensor:
-    - name: "Bubble Card Modules"
-      unique_id: bubble_card_modules
-      state: "saved"
-      icon: "mdi:puzzle"
-      attributes:
-        modules: "{{ trigger.event.data.modules }}"
-        last_updated: "{{ trigger.event.data.last_updated }}"
