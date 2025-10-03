@@ -153,3 +153,15 @@
             }
           ] %}
           {{ data }}
+
+- trigger:
+    - trigger: event
+      event_type: bubble_card_update_modules
+  sensor:
+    - name: "Bubble Card Modules"
+      unique_id: bubble_card_modules
+      state: "saved"
+      icon: "mdi:puzzle"
+      attributes:
+        modules: "{{ trigger.event.data.modules }}"
+        last_updated: "{{ trigger.event.data.last_updated }}"
