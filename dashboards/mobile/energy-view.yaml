@@ -179,7 +179,7 @@ cards:
                - !include /config/dashboards/modules/solar-forecast-today.yaml
                - !include /config/dashboards/modules/7-day-solar-forecast.yaml
                - !include /config/dashboards/modules/24-hour-power-flow.yaml
-               - !include /config/dashboards/modeules/7-day-usage-history.yaml
+               - !include /config/dashboards/modules/7-day-usage-history.yaml
       power_flow:
         card: 
           type: custom:stack-in-card
