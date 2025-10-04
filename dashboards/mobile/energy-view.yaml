@@ -178,8 +178,9 @@ cards:
               card_mod:
                 style: |
                   :host {
-                    max-width: 500px;  /* Set your desired max width */
-                    margin: 0 auto;    /* Center the card if needed */
+                    width: 100%;
+                    max-width: 100%;
+                    box-sizing: border-box;
                   }
               cards:              
                - !include /config/dashboards/modules/solar-forecast-today.yaml
