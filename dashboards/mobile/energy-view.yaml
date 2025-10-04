@@ -157,7 +157,7 @@ cards:
           cards:
             - type: custom:bubble-card
               card_type: separator
-              name: Solar Forecast
+              name: Metrics
               icon: mdi:flash
               rows: 0.75
               styles: |
@@ -172,36 +172,11 @@ cards:
                 .card-content {
                 padding-top: 10px !important;
                 padding-left: 10px !important;
-                }
-            - type: custom:simple-swipe-card
-              auto_hide_pagination: 0
-              card_mod:
-                style: |
-                  :host {
-                    width: 100%;
-                    max-width: 800px;  /* Desktop max width */
-                    margin: 0 auto;
-                    box-sizing: border-box;
-                  }
-                  
-                  /* Mobile devices (screens smaller than 768px) */
-                  @media (max-width: 768px) {
-                    :host {
-                      max-width: 100%;  /* Full width on mobile */
-                    }
-                  }
-                  
-                  /* Tablet devices (between 768px and 1024px) */
-                  @media (min-width: 768px) and (max-width: 1024px) {
-                    :host {
-                      max-width: 600px;  /* Tablet max width */
-                    }
-                  }
-              cards:              
-               - !include /config/dashboards/modules/solar-forecast-today.yaml
-               - !include /config/dashboards/modules/7-day-solar-forecast.yaml
-               - !include /config/dashboards/modules/24-hour-power-flow.yaml
-               - !include /config/dashboards/modules/7-day-usage-history.yaml
+                }            
+            - !include /config/dashboards/modules/solar-forecast-today.yaml
+            - !include /config/dashboards/modules/7-day-solar-forecast.yaml
+            - !include /config/dashboards/modules/24-hour-power-flow.yaml
+            - !include /config/dashboards/modules/7-day-usage-history.yaml
       power_flow:
         card: 
           type: custom:stack-in-card
