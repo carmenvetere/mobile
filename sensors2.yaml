@@ -194,10 +194,9 @@
       state_class: total_increasing
       state: >
         {% set total = states('sensor.bayberry_home_usage') | float(0) %}
-        {% set well = states('sensor.well_pump_energy') | float(0) %}
+        {% set well = states('sensor.well_pump_energy2') | float(0) %}
         {% set pool = states('sensor.pool_pump_energy') | float(0) %}
         {% set water = states('sensor.smithy_energy_usage_2') | float(0) %}
-        {% set ev = states('sensor.wall_charger_energy') | float(0) %}
         {{ (total - well - pool - water) | max(0) }}
 
 - trigger:
