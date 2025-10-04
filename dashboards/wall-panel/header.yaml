@@ -47,7 +47,6 @@ card:
       card:
         type: custom:button-card
         entity: alarm_control_panel.alarmo
-        size: 50%
         layout: icon_state
         show_icon: true
         show_label: false
@@ -82,11 +81,9 @@ card:
             - padding-right: 0px
           card:
             - border-radius: 5px
-            - width: maax-content
             - padding: 2px
             - align-self: center
             - justify-self: start
-            - height: 100px
             - background: transparent
     chips:
       card: !include /config/dashboards/modules/chips.yaml
