@@ -13,7 +13,7 @@ card:
     grid:
       - grid-template-areas: |
           "time alarm chips temp"
-      - grid-template-columns: max-content max-content minmax(0,1fr) max-content
+      - grid-template-columns: 1fr 1fr 2fr 1fr
       - grid-template-rows: 100px
       - align-items: center
       - justify-items: start
