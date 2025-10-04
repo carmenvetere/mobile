@@ -20,9 +20,8 @@ cards:
         - grid-template-areas: |
             "header"
             "chips"
-            "solar_forecast"
             "power_flow"
-            "power_history"
+            "solar_forecast"
         - grid-template-columns: auto
         - grid-template-rows: 60px 60px auto auto
         - row-gap: 5px
@@ -174,7 +173,13 @@ cards:
                 padding-top: 10px !important;
                 padding-left: 10px !important;
                 }
-            - !include /config/dashboards/modules/solar-forecast-today.yaml
+            - type: custom:simple-swipe-card
+              auto_hide_pagination: 0
+              cards:              
+               - !include /config/dashboards/modules/solar-forecast-today.yaml
+               - !include /config/dashboards/modules/7-day-solar-forecast.yaml
+               - !include /config/dashboards/modules/24-hour-power-flow.yaml
+               - !include /config/dashboards/modeules/7-day-usage-history.yaml
       power_flow:
         card: 
           type: custom:stack-in-card
@@ -206,34 +211,3 @@ cards:
                 padding-left: 10px !important;
                 }
             - !include /config/dashboards/modules/power-flow-card.yaml
-      power_history:
-        card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background-color: var(--ha-card-background-2) !important;
-                border-radius: 20px;
-                padding: 10;
-              }
-          cards:
-            - type: custom:bubble-card
-              card_type: separator
-              name: Power (last 24 hrs)
-              icon: mdi:flash
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
-            - !include /config/dashboards/modules/24-hour-power-flow.yaml

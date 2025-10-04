@@ -1,0 +1,76 @@
+type: custom:apexcharts-card
+header:
+  show: true
+  show_states: true
+graph_span: 7d
+span:
+  start: day
+  offset: "-6d"
+apex_config:
+  chart:
+    type: bar
+    stacked: true
+  dataLabels:
+    enabled: true
+  xaxis:
+    type: datetime
+    labels:
+      format: ddd MMM dd
+  yaxis:
+    decimals: 1
+    labels:
+      formatter: |
+        EVAL:function(value) {
+          return value.toFixed(1) + ' kWh';
+        }
+series:
+  - entity: sensor.home_other_usage
+    name: Other
+    type: column
+    color: "#4C4F69"
+    group_by:
+      func: diff
+      duration: 1d
+    show:
+      legend_value: false
+      in_header: true
+  - entity: sensor.smithy_energy_usage_2
+    name: Hot Water
+    type: column
+    color: "#5D617A"
+    group_by:
+      func: diff
+      duration: 1d
+    show:
+      legend_value: false
+      in_header: true
+  - entity: sensor.wall_charger_energy
+    name: EV Charger
+    type: column
+    color: "#6E728A"
+    group_by:
+      func: diff
+      duration: 1d
+    show:
+      legend_value: false
+      in_header: true
+  - entity: sensor.well_pump_energy2
+    name: Well Pump
+    type: column
+    color: "#80849A"
+    group_by:
+      func: diff
+      duration: 1d
+    show:
+      legend_value: false
+      in_header: true
+  - entity: sensor.pool_pump_energy
+    name: Pool Pump
+    type: column
+    color: "#9498AC"
+    group_by:
+      func: diff
+      duration: 1d
+    show:
+      legend_value: false
+      in_header: true
