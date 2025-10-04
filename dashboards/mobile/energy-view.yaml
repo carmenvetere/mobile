@@ -175,6 +175,12 @@ cards:
                 }
             - type: custom:simple-swipe-card
               auto_hide_pagination: 0
+              card_mod:
+                style: |
+                  :host {
+                    max-width: 500px;  /* Set your desired max width */
+                    margin: 0 auto;    /* Center the card if needed */
+                  }
               cards:              
                - !include /config/dashboards/modules/solar-forecast-today.yaml
                - !include /config/dashboards/modules/7-day-solar-forecast.yaml
