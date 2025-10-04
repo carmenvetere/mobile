@@ -7,13 +7,13 @@ card:
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 55px
+      - height: 100px
       - background-color: var(--ha-card-background-2) 
     grid:
       - grid-template-areas: |
-          "time gap1 alarm gap2 notifications gap3 temp"
-      - grid-template-columns: 140px 10px 150px 10px 80px 10px 80px
-      - grid-template-rows: 50px
+          "time gap1 alarm gap2 chips gap3 temp"
+      - grid-template-columns: 1fr 10px 1fr 10px 1fr 10px 1fr
+      - grid-template-rows: 100px
       - align-items: start
       - column-gap: 1px
   custom_fields:
@@ -33,8 +33,8 @@ card:
         styles:
           card:
             - border-radius: 0px
-            - width: 140px
-            - height: 50px
+            - width: 100%
+            - height: 100px
             - align-self: center
             - justify-self: start
             - background: transparent
@@ -84,51 +84,52 @@ card:
             - padding: 2px
             - align-self: center
             - justify-self: center
-            - width: 150px
-            - height: 50px
+            - width: 100%
+            - height: 100px
             - background: transparent
-    notifications:
-      card:
-        type: custom:button-card
-        entity: sensor.notification_alert_counter
-        icon: >
-          [[[
-            const priority = states['sensor.notification_icon_priority'].state;
-            if (priority === 'critical') return 'mdi:alert';
-            if (priority === 'warning') return 'mdi:bell-alert';
-            return 'mdi:bell';
-          ]]]
-        layout: icon_state
-        size: 100%
-        show_icon: true
-        show_label: false
-        show_name: false
-        show_state: true
-        tap_action:
-          action: navigate
-          navigation_path: /mudroom-wall-panel-dash/notifications
-        styles:
-          state:
-            - font-size: 16px
-            - font-weight: bold
-            - padding-right: 10px
-          icon:
-            - padding-left: 5px
-            - color: >
-                [[[
-                  const priority = states['sensor.notification_icon_priority'].state;
-                  if (priority === 'critical') return '#EA4D3D';  // Red - power outage, alarm triggered
-                  if (priority === 'warning') return '#FF8C00';   // Orange - weather alerts, storm watch
-                  return 'var(--primary-text-color)';             // Default when no high-priority notifications
-                ]]]
-          card:
-            - border-radius: 5px
-            - padding: 2px
-            - width: 80px
-            - height: 50px
-            - align-self: center
-            - justify-self: center
-            - background: transparent
+    chips:
+      card: !include /config/dashboards/modules/chips.yaml
+      # card:
+      #   type: custom:button-card
+      #   entity: sensor.notification_alert_counter
+      #   icon: >
+      #     [[[
+      #       const priority = states['sensor.notification_icon_priority'].state;
+      #       if (priority === 'critical') return 'mdi:alert';
+      #       if (priority === 'warning') return 'mdi:bell-alert';
+      #       return 'mdi:bell';
+      #     ]]]
+      #   layout: icon_state
+      #   size: 100%
+      #   show_icon: true
+      #   show_label: false
+      #   show_name: false
+      #   show_state: true
+      #   tap_action:
+      #     action: navigate
+      #     navigation_path: /mudroom-wall-panel-dash/notifications
+      #   styles:
+      #     state:
+      #       - font-size: 16px
+      #       - font-weight: bold
+      #       - padding-right: 10px
+      #     icon:
+      #       - padding-left: 5px
+      #       - color: >
+      #           [[[
+      #             const priority = states['sensor.notification_icon_priority'].state;
+      #             if (priority === 'critical') return '#EA4D3D';  // Red - power outage, alarm triggered
+      #             if (priority === 'warning') return '#FF8C00';   // Orange - weather alerts, storm watch
+      #             return 'var(--primary-text-color)';             // Default when no high-priority notifications
+      #           ]]]
+      #     card:
+      #       - border-radius: 5px
+      #       - padding: 2px
+      #       - width: 80px
+      #       - height: 50px
+      #       - align-self: center
+      #       - justify-self: center
+      #       - background: transparent
     temp:
       card:
         type: custom:button-card
@@ -151,8 +152,8 @@ card:
           card:
             - border-radius: 5px
             - padding-right: 20px
-            - width: 80px
-            - height: 50px
+            - width: 100%
+            - height: 100px
             - align-self: center
             - justify-self: center
             - background: transparent
