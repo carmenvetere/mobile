@@ -1,11 +1,17 @@
 type: custom:apexcharts-card
 header:
   show: true
+  title: Today's Solar Forecast
   show_states: true
   colorize_states: true
 apex_config:
   chart:
     height: 300px
+  title: 
+    align: 'left'
+    style: 
+      font-size: 20px
+      font-weight: bold
   tooltip:
     enabled: true
     shared: true
