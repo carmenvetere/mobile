@@ -159,6 +159,11 @@
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
             }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Notifications Pop-up
     - type: vertical-stack
       cards:
@@ -207,7 +212,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Powerwall Charge Level if Grid Down
     - type: conditional
       conditions:
@@ -227,7 +237,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Dinner Party Mode
     - type: conditional
       conditions:
@@ -244,7 +259,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Guest Mode
     - type: conditional
       conditions:
@@ -261,7 +281,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Away Mode
     - type: conditional
       conditions:
@@ -278,7 +303,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Pool Cover Status
     - type: conditional
       conditions:
@@ -298,7 +328,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Washer Time Remaining
     - type: conditional
       conditions:
@@ -315,7 +350,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Dryer Time Remaining
     - type: conditional
       conditions:
@@ -332,7 +372,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Pool Water Temperature
     - type: conditional
       conditions:
@@ -354,7 +399,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #BMW Charge End Time
     - type: conditional
       conditions:
@@ -376,7 +426,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Rivian Charge End Time
     - type: conditional
       conditions:
@@ -398,7 +453,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Vehicle Charging
     - type: conditional
       conditions:
@@ -421,7 +481,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            } 
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
 #Fresh Air Ventilation
     - type: conditional
       conditions:
@@ -441,7 +506,12 @@
             :host {
               zoom: 1.25 !important;
               --chip-background: var(--ha-card-background-2);
-            }        
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }       
 #Aux Heat Active
     - type: conditional
       conditions:
@@ -464,5 +534,10 @@
           style: |
             :host {
               zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2)
-            } 
+              --chip-background: var(--ha-card-background-2);
+            }
+            @media (min-width: 768px) {
+              :host {
+                zoom: 1.75 !important;
+              }
+            }
