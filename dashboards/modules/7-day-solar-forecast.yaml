@@ -7,10 +7,17 @@ header:
 graph_span: 7d
 span:
   offset: +6d
+card_mod:
+  style: |
+    ha-card {
+      aspect-ratio: 2/1;
+      width: 100%;
+      max-height: 500px;
+    }
 apex_config:
   chart:
     type: bar
-    height: 400px
+    height: auto
   dataLabels:
     enabled: true
   xaxis:
