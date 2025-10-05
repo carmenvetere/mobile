@@ -1,5 +1,6 @@
 type: custom:apexcharts-card
 header:
+  title: 7 Day Solar Forecast
   show: true
   show_states: true
   colorize_states: true
@@ -9,6 +10,7 @@ span:
 apex_config:
   chart:
     type: bar
+    height: 50%
   dataLabels:
     enabled: true
   xaxis:
