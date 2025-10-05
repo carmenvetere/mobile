@@ -11,8 +11,10 @@ cards:
         - padding-left: 0px
         - padding-top: 0px
         - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-        - height: auto
-        - width: auto
+        - min-height: 100vh
+        - max-height: 100vh
+        - min-width: 100vh
+        - max-width: 100vh
       grid:
         - grid-template-areas: |
             "header header"
