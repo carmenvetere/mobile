@@ -69,7 +69,12 @@
           :host {
             zoom: 1.25 !important;
             --chip-background: var(--ha-card-background-2);
-          } 
+          }
+          @media (min-width: 768px) {
+            :host {
+              zoom: 2.0 !important;
+            }
+          }
 #Notifications Chip
     - type: conditional
       conditions:

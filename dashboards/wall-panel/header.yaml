@@ -35,12 +35,11 @@ card:
         styles:
           card:
             - border-radius: 0px
-            - height: 100px
             - align-self: center
             - justify-self: start
             - background: transparent
           state:
-            - font-size: 24px
+            - font-size: 28px
             - font-weight: bold
             - padding-left: 20px
     alarm:
@@ -66,6 +65,8 @@ card:
           ]]]
         styles:
           icon:
+            - width: 32px
+            - height: 32px
             - color: |
                 [[[
                   var state = states['alarm_control_panel.alarmo'].state;
@@ -78,7 +79,10 @@ card:
           state:
             - font-size: 18px
             - font-weight: bold
+            - padding-left: 8px
             - padding-right: 0px
+          grid:
+            - column-gap: 4px
           card:
             - border-radius: 5px
             - padding: 2px
@@ -144,7 +148,7 @@ card:
           ]]]
         styles:
           state:
-            - font-size: 24px
+            - font-size: 18px
             - font-weight: bold
           card:
             - align-self: center
