@@ -1,6 +1,7 @@
 type: custom:apexcharts-card
 header:
   show: true
+  title: Last 7 Days Home Usage
   show_states: true
 graph_span: 7d
 span:
@@ -10,6 +11,12 @@ apex_config:
   chart:
     type: bar
     stacked: true
+    height: 400px
+  title:
+    align: left
+    style:
+      fontSize: '18px'
+      fontWeight: 'bold'
   dataLabels:
     enabled: true
   xaxis:
