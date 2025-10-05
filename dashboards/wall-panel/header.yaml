@@ -13,7 +13,7 @@ card:
     grid:
       - grid-template-areas: |
           "time chips temp"
-      - grid-template-columns: 130px auto 130px
+      - grid-template-columns: 130px 1fr 130px
       - grid-template-rows: 100px
       - align-items: center
       - justify-items: start
