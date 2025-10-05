@@ -4,7 +4,7 @@ theme: Bubble
 type: custom:grid-layout
 cards:
   - type: custom:button-card
-    styles:
+    style:
       card:
         - border-radius: 0px
         - padding-bottom: 5px
@@ -13,8 +13,8 @@ cards:
         - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
         - min-height: 100vh
         - max-height: 100vh
-        - min-width: 100vh
-        - max-width: 100vh
+        - min-width: 100vw
+        - max-width: 100vw
       grid:
         - grid-template-areas: |
             "header header"
