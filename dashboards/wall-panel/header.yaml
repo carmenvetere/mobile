@@ -79,8 +79,6 @@ card:
           state:
             - font-size: 18px
             - font-weight: bold
-            - padding-left: 4px
-            - padding-right: 0px
           grid:
             - column-gap: 2px
           card:
@@ -154,3 +152,5 @@ card:
             - align-self: center
             - justify-self: end
             - background: transparent
+          grid:
+            - column-gap: 2px
