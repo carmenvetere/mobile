@@ -11,8 +11,6 @@ cards:
         - padding-left: 0px
         - padding-top: 0px
         - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-        - height: 100%
-        - width: 100%
       grid:
         - grid-template-areas: |
             "header header"
@@ -22,6 +20,7 @@ cards:
         - grid-template-rows: 75px auto 75px
         - align-items: start
         - column-gap: 2px
+        - row-gap: 5px
     custom_fields:
       header: !include header.yaml
       menu:
