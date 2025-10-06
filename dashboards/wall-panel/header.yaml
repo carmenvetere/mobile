@@ -161,6 +161,9 @@ card:
             - font-size: 18px
             - font-weight: bold
             - justify-self: start
+          icon:
+            - width: 24px
+            - height: 24px
           grid: 
             - column-gap: 5px
           img_cell:
@@ -168,6 +171,6 @@ card:
             - justify-content: end
           card:
             - align-self: center
-            - justify-self: start
+            - justify-self: center
             - background: transparent
             - width: 120px
