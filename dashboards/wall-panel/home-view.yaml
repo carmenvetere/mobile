@@ -18,11 +18,45 @@ cards:
             "header"
             "main"
             "nav"
-        - grid-template-columns: 1fr 2fr
-        - grid-template-rows: 75px auto 75px
+        - grid-template-columns: auto
+        - grid-template-rows: 50px 370px 50px
         - align-items: start
         - column-gap: 2px
         - row-gap: 5px
     custom_fields:
       header: !include header.yaml
+      main: 
+        card: 
+          type: custom: button-card
+          style: 
+            card: 
+              - border-radius: 15px
+              - width: 460px
+              - height: 380px
+            grid:
+              - grid-template-areas: |
+                  "scene1"
+                  "scene2"
+                  "scene3"
+                  "scene4"
+              - grid-template-columns: auto
+              - grid-template-rows: 85px 85px 85px 85px
+              - row-gap: 10px
+          custom_fields: 
+            scene1:
+              card: 
+                type: custom:button-card
+                icon: mdi:lightbulb
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: false
+                label: Morning
+                styles:
+                  card:
+                    - width: 460px
+                    - height: 85px
+                    - align-self: center
+                    - justify-self: start
+                    - background: transparent  
       nav: !include footer-menu.yaml
