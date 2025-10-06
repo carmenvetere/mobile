@@ -115,9 +115,14 @@ card:
           navigation_path: /mudroom-wall-panel-dash/notifications
         styles:
           state:
-            - font-size: 16px
+            - font-size: 18px
             - font-weight: bold
-            - padding-right: 10px
+            - justify-self: start
+          grid: 
+            - column-gap: 5px
+          img_cell:
+            - align-self: center
+            - justify-content: end
           icon:
             - width: 24px
             - height: 24px
@@ -152,16 +157,17 @@ card:
             return Math.round(temp) + '°F';
           ]]]
         styles:
-          icon:
-            - width: 24px
-            - height: 24px
           state:
             - font-size: 18px
             - font-weight: bold
+            - justify-self: start
+          grid: 
+            - column-gap: 5px
+          img_cell:
+            - align-self: center
+            - justify-content: end
           card:
             - align-self: center
             - justify-self: start
             - background: transparent
             - width: 120px
-          grid:
-            - column-gap: 2px
