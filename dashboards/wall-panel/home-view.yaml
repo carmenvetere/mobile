@@ -59,21 +59,24 @@ cards:
                     - height: 85px
                     - align-self: center
                     - justify-self: start
+                    - justify-content: start
                     - background-color: var(--ha-card-background)  
                     - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     - margin-left: 10px
                   grid:
                     - column-gap: 2px
+                    - justify-items: start
+                    - align-items: center 
                   label: 
                     - font-size: 24px
                     - font-weight: bold
-                    - align-self: center
+                    - align-self: start
                     - justify-self: start
                   img_cell:
                     - align-self: center
-                    - justify-content: end
+                    - justify-content: start
                   icon: 
-                    - width: 24px
-                    - height: 24px
+                    - width: 32px
+                    - height: 32px
                     - padding-left: 5px
       nav: !include footer-menu.yaml
