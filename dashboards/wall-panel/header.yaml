@@ -81,8 +81,16 @@ card:
           state:
             - font-size: 18px
             - font-weight: bold
+            - justify-self: start
+            - padding-right: 10px
           grid:
-            - column-gap: -10px
+            - grid-template-areas: '"i" "s"'
+            - grid-template-columns: 24px 124px
+            - grid-template-rows: auto
+            - column-gap: 2px
+          img_cell:
+            - align-self: center
+            - text-align: end
           card:
             - border-radius: 0px
             - width: 150px
