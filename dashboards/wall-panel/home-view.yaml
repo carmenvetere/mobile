@@ -62,4 +62,18 @@ cards:
                     - background-color: var(--ha-card-background)  
                     - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     - margin-left: 10px
+                  grid:
+                    - column-gap: 2px
+                  label: 
+                    - font-size: 24px
+                    - font-weight: bold
+                    - align-self: center
+                    - justify-self: start
+                  img_cell:
+                    - align-self: center
+                    - justify-content: end
+                  icon: 
+                    - width: 24px
+                    - height: 24px
+                    - padding-left: 5px
       nav: !include footer-menu.yaml
