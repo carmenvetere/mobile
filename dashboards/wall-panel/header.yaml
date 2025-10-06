@@ -40,7 +40,7 @@ card:
             - background: transparent
             - width: 120px
           state:
-            - font-size: 28px
+            - font-size: 18px
             - font-weight: bold
             - padding-left: 20px
     alarm:
@@ -66,8 +66,8 @@ card:
           ]]]
         styles:
           icon:
-            - width: 32px
-            - height: 32px
+            - width: 24px
+            - height: 24px
             - color: |
                 [[[
                   var state = states['alarm_control_panel.alarmo'].state;
@@ -101,7 +101,6 @@ card:
             return 'mdi:bell';
           ]]]
         layout: icon_state
-        size: 100%
         show_icon: true
         show_label: false
         show_name: false
@@ -115,6 +114,8 @@ card:
             - font-weight: bold
             - padding-right: 10px
           icon:
+            - width: 24px
+            - height: 24px
             - padding-left: 5px
             - color: >
                 [[[
@@ -146,6 +147,9 @@ card:
             return Math.round(temp) + '°F';
           ]]]
         styles:
+          icon:
+            - width: 24px
+            - height: 24px
           state:
             - font-size: 18px
             - font-weight: bold
