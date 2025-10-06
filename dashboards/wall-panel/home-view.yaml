@@ -59,5 +59,6 @@ cards:
                     - height: 85px
                     - align-self: center
                     - justify-self: start
-                    - background: transparent  
+                    - background-color: var(--ha-card-background)  
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       nav: !include footer-menu.yaml
