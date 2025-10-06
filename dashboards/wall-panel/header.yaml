@@ -12,9 +12,9 @@ card:
       - background-color: var(--ha-card-background-2) 
     grid:
       - grid-template-areas: |
-          "time chips temp"
-      - grid-template-columns: 120px 240px 120px
-      - grid-template-rows: 100px
+          "time alarm notifications temp"
+      - grid-template-columns: 120px 120px 120px 120px
+      - grid-template-rows: 50px
       - align-items: center
       - justify-items: start
       - column-gap: 10px
@@ -43,95 +43,94 @@ card:
             - font-size: 28px
             - font-weight: bold
             - padding-left: 20px
-    # alarm:
-    #   card:
-    #     type: custom:button-card
-    #     entity: alarm_control_panel.alarmo
-    #     layout: icon_state
-    #     show_icon: true
-    #     show_label: false
-    #     show_name: false
-    #     show_state: true
-    #     state_display: |
-    #       [[[
-    #         var state = states['alarm_control_panel.alarmo'].state;
-    #         if (state === 'armed_away') return 'Armed';
-    #         if (state === 'armed_home') return 'Armed';
-    #         if (state === 'armed_vacation') return 'Armed';
-    #         if (state === 'disarmed') return 'Disarmed';
-    #         if (state === 'pending') return 'Pending';
-    #         if (state === 'arming') return 'Arming';
-    #         if (state === 'triggered') return 'ALARM!';
-    #         return state.charAt(0).toUpperCase() + state.slice(1);
-    #       ]]]
-    #     styles:
-    #       icon:
-    #         - width: 32px
-    #         - height: 32px
-    #         - color: |
-    #             [[[
-    #               var state = states['alarm_control_panel.alarmo'].state;
-    #               if (state === 'triggered') return 'red';
-    #               if (state === 'armed_away' || state === 'armed_home' || state === 'armed_vacation') return 'orange';
-    #               if (state === 'pending' || state === 'arming') return 'orange';
-    #               if (state === 'disarmed') return 'var(--primary-text-color)';
-    #               return 'var(--primary-text-color)';
-    #             ]]]
-    #       state:
-    #         - font-size: 18px
-    #         - font-weight: bold
-    #       grid:
-    #         - column-gap: 2px
-    #       card:
-    #         - border-radius: 5px
-    #         - min-width: 120px
-    #         - padding: 2px
-    #         - align-self: center
-    #         - justify-self: start
-    #         - background: transparent
-    chips:
-      card: !include /config/dashboards/modules/chips.yaml
-      # card:
-      #   type: custom:button-card
-      #   entity: sensor.notification_alert_counter
-      #   icon: >
-      #     [[[
-      #       const priority = states['sensor.notification_icon_priority'].state;
-      #       if (priority === 'critical') return 'mdi:alert';
-      #       if (priority === 'warning') return 'mdi:bell-alert';
-      #       return 'mdi:bell';
-      #     ]]]
-      #   layout: icon_state
-      #   size: 100%
-      #   show_icon: true
-      #   show_label: false
-      #   show_name: false
-      #   show_state: true
-      #   tap_action:
-      #     action: navigate
-      #     navigation_path: /mudroom-wall-panel-dash/notifications
-      #   styles:
-      #     state:
-      #       - font-size: 16px
-      #       - font-weight: bold
-      #       - padding-right: 10px
-      #     icon:
-      #       - padding-left: 5px
-      #       - color: >
-      #           [[[
-      #             const priority = states['sensor.notification_icon_priority'].state;
-      #             if (priority === 'critical') return '#EA4D3D';  // Red - power outage, alarm triggered
-      #             if (priority === 'warning') return '#FF8C00';   // Orange - weather alerts, storm watch
-      #             return 'var(--primary-text-color)';             // Default when no high-priority notifications
-      #           ]]]
-      #     card:
-      #       - border-radius: 5px
-      #       - padding: 2px
-      #       - width: 80px
-      #       - height: 50px
-      #       - align-self: center
-      #       - justify-self: center
-      #       - background: transparent
+    alarm:
+      card:
+        type: custom:button-card
+        entity: alarm_control_panel.alarmo
+        layout: icon_state
+        show_icon: true
+        show_label: false
+        show_name: false
+        show_state: true
+        state_display: |
+          [[[
+            var state = states['alarm_control_panel.alarmo'].state;
+            if (state === 'armed_away') return 'Armed';
+            if (state === 'armed_home') return 'Armed';
+            if (state === 'armed_vacation') return 'Armed';
+            if (state === 'disarmed') return 'Disarmed';
+            if (state === 'pending') return 'Pending';
+            if (state === 'arming') return 'Arming';
+            if (state === 'triggered') return 'ALARM!';
+            return state.charAt(0).toUpperCase() + state.slice(1);
+          ]]]
+        styles:
+          icon:
+            - width: 32px
+            - height: 32px
+            - color: |
+                [[[
+                  var state = states['alarm_control_panel.alarmo'].state;
+                  if (state === 'triggered') return 'red';
+                  if (state === 'armed_away' || state === 'armed_home' || state === 'armed_vacation') return 'orange';
+                  if (state === 'pending' || state === 'arming') return 'orange';
+                  if (state === 'disarmed') return 'var(--primary-text-color)';
+                  return 'var(--primary-text-color)';
+                ]]]
+          state:
+            - font-size: 18px
+            - font-weight: bold
+          grid:
+            - column-gap: 2px
+          card:
+            - border-radius: 5px
+            - min-width: 120px
+            - padding: 2px
+            - align-self: center
+            - justify-self: start
+            - background: transparent
+    notifications:
+      card:
+        type: custom:button-card
+        entity: sensor.notification_alert_counter
+        icon: >
+          [[[
+            const priority = states['sensor.notification_icon_priority'].state;
+            if (priority === 'critical') return 'mdi:alert';
+            if (priority === 'warning') return 'mdi:bell-alert';
+            return 'mdi:bell';
+          ]]]
+        layout: icon_state
+        size: 100%
+        show_icon: true
+        show_label: false
+        show_name: false
+        show_state: true
+        tap_action:
+          action: navigate
+          navigation_path: /mudroom-wall-panel-dash/notifications
+        styles:
+          state:
+            - font-size: 16px
+            - font-weight: bold
+            - padding-right: 10px
+          icon:
+            - padding-left: 5px
+            - color: >
+                [[[
+                  const priority = states['sensor.notification_icon_priority'].state;
+                  if (priority === 'critical') return '#EA4D3D';  // Red - power outage, alarm triggered
+                  if (priority === 'warning') return '#FF8C00';   // Orange - weather alerts, storm watch
+                  return 'var(--primary-text-color)';             // Default when no high-priority notifications
+                ]]]
+          card:
+            - border-radius: 5px
+            - padding: 2px
+            - width: 80px
+            - height: 50px
+            - align-self: center
+            - justify-self: center
+            - background: transparent
     temp:
       card:
         type: custom:button-card
