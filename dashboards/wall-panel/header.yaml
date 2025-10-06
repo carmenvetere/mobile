@@ -82,7 +82,8 @@ card:
             - font-size: 18px
             - font-weight: bold
             - justify-self: start
-            - padding-right: 20px
+          grid: 
+            - column-gap: 5px
           img_cell:
             - align-self: center
             - justify-content: end
