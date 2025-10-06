@@ -7,12 +7,13 @@ card:
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 75px
+      - height: 50px
+      - width: 480px
       - background-color: var(--ha-card-background-2) 
     grid:
       - grid-template-areas: |
           "time chips temp"
-      - grid-template-columns: 130px auto 130px
+      - grid-template-columns: 120px 240px 120px
       - grid-template-rows: 100px
       - align-items: center
       - justify-items: start
@@ -37,7 +38,7 @@ card:
             - align-self: center
             - justify-self: start
             - background: transparent
-            - width: 130px
+            - width: 120px
           state:
             - font-size: 28px
             - font-weight: bold
@@ -153,6 +154,6 @@ card:
             - align-self: center
             - justify-self: start
             - background: transparent
-            - width: 130px
+            - width: 120px
           grid:
             - column-gap: 2px

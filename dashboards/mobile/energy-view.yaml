@@ -157,7 +157,7 @@ cards:
           cards:
             - type: custom:bubble-card
               card_type: separator
-              name: Metrics
+              name: Today's Solar Forecast
               icon: mdi:flash
               rows: 0.75
               styles: |
@@ -174,8 +174,62 @@ cards:
                 padding-left: 10px !important;
                 }            
             - !include /config/dashboards/modules/solar-forecast-today.yaml
+            - type: custom:bubble-card
+              card_type: separator
+              name: 7-Day Solar Forecast
+              icon: mdi:flash
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }  
             - !include /config/dashboards/modules/7-day-solar-forecast.yaml
+            - type: custom:bubble-card
+              card_type: separator
+              name: Last 24 Hours Power Flow
+              icon: mdi:flash
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }  
             - !include /config/dashboards/modules/24-hour-power-flow.yaml
+            - type: custom:bubble-card
+              card_type: separator
+              name: Last 7 Days Home Energy Usage
+              icon: mdi:flash
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }  
             - !include /config/dashboards/modules/7-day-usage-history.yaml
       power_flow:
         card: 
