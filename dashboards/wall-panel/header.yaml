@@ -48,6 +48,7 @@ card:
       card:
         type: custom:button-card
         entity: alarm_control_panel.alarmo
+        layout: icon_state
         show_icon: true
         show_label: false
         show_name: false
@@ -83,7 +84,6 @@ card:
             - justify-self: start
           grid: 
             - column-gap: 5px
-            - grid-template-areas: '"i" "s"'
             - grid-template-columns: 30px 95px
           img_cell:
             - align-self: center
