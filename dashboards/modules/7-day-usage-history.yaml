@@ -45,7 +45,7 @@ series:
     type: column
     color: "#5D617A"
     group_by:
-      func: diff
+      func: delta
       duration: 1d
     show:
       legend_value: false
