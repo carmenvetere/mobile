@@ -97,52 +97,58 @@ card:
             - background: transparent
     notifications:
       card:
-        type: custom:button-card
-        entity: sensor.notification_alert_counter
-        icon: >
-          [[[
-            const priority = states['sensor.notification_icon_priority'].state;
-            if (priority === 'critical') return 'mdi:alert';
-            if (priority === 'warning') return 'mdi:bell-alert';
-            return 'mdi:bell';
-          ]]]
-        layout: icon_state
-        show_icon: true
-        show_label: false
-        show_name: false
-        show_state: true
-        tap_action:
-          action: navigate
-          navigation_path: /mudroom-wall-panel-dash/notifications
-        styles:
-          state:
-            - font-size: 18px
-            - font-weight: bold
-            - justify-self: start
-          grid: 
-            - column-gap: 5px
-          img_cell:
-            - align-self: center
-            - justify-content: end
-          icon:
-            - width: 24px
-            - height: 24px
-            - padding-left: 5px
-            - color: >
-                [[[
-                  const priority = states['sensor.notification_icon_priority'].state;
-                  if (priority === 'critical') return '#EA4D3D';  // Red - power outage, alarm triggered
-                  if (priority === 'warning') return '#FF8C00';   // Orange - weather alerts, storm watch
-                  return 'var(--primary-text-color)';             // Default when no high-priority notifications
-                ]]]
-          card:
-            - border-radius: 5px
-            - padding: 2px
-            - width: 70px
-            - height: 50px
-            - align-self: center
-            - justify-self: center
-            - background: transparent
+        type: conditional
+        conditions:
+          - condition: numeric_state
+            entity: sensor.notification_alert_counter
+            above: 0
+        card:
+          type: custom:button-card
+          entity: sensor.notification_alert_counter
+          icon: >
+            [[[
+              const priority = states['sensor.notification_icon_priority'].state;
+              if (priority === 'critical') return 'mdi:alert';
+              if (priority === 'warning') return 'mdi:bell-alert';
+              return 'mdi:bell';
+            ]]]
+          layout: icon_state
+          show_icon: true
+          show_label: false
+          show_name: false
+          show_state: true
+          tap_action:
+            action: navigate
+            navigation_path: /mudroom-wall-panel-dash/notifications
+          styles:
+            state:
+              - font-size: 18px
+              - font-weight: bold
+              - justify-self: start
+            grid: 
+              - column-gap: 5px
+            img_cell:
+              - align-self: center
+              - justify-content: end
+            icon:
+              - width: 24px
+              - height: 24px
+              - padding-left: 5px
+              - color: >
+                  [[[
+                    const priority = states['sensor.notification_icon_priority'].state;
+                    if (priority === 'critical') return '#EA4D3D';  // Red - power outage, alarm triggered
+                    if (priority === 'warning') return '#FF8C00';   // Orange - weather alerts, storm watch
+                    return 'var(--primary-text-color)';             // Default when no high-priority notifications
+                  ]]]
+            card:
+              - border-radius: 5px
+              - padding: 2px
+              - width: 70px
+              - height: 50px
+              - align-self: center
+              - justify-self: center
+              - background: transparent
     modes: 
       card:
         type: custom:stack-in-card
