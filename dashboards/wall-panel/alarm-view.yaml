@@ -27,7 +27,7 @@ cards:
       main:
         card:
           type: custom:button-card
-          entity: alarm_control_panel.bayberry_alarm_v2
+          entity: alarm_control_panel.alarmo
           show_name: false
           show_icon: false
           show_state: false
@@ -395,7 +395,7 @@ cards:
                   disarm:
                     card:
                       type: custom:button-card
-                      entity: alarm_control_panel.bayberry_alarm_v2
+                      entity: alarm_control_panel.alarmo
                       show_state: false
                       show_name: true
                       show_icon: true
@@ -405,7 +405,7 @@ cards:
                         action: call-service
                         service: alarm_control_panel.alarm_disarm
                         service_data:
-                          entity_id: alarm_control_panel.bayberry_alarm_v2
+                          entity_id: alarm_control_panel.alarmo
                       styles:
                         card:
                           - height: 55px
@@ -423,7 +423,7 @@ cards:
                           - value: 'DISARMED'
                             styles:
                               card:
-                                - background-color: '#F44336'
+                                - background-color: 'green'
                               name:
                                 - color: white
                               icon:
@@ -431,7 +431,7 @@ cards:
                   home:
                     card:
                       type: custom:button-card
-                      entity: alarm_control_panel.bayberry_alarm_v2
+                      entity: alarm_control_panel.alarmo
                       show_state: false
                       show_name: true
                       show_icon: true
@@ -441,7 +441,7 @@ cards:
                         action: call-service
                         service: alarm_control_panel.alarm_arm_home
                         service_data:
-                          entity_id: alarm_control_panel.bayberry_alarm_v2
+                          entity_id: alarm_control_panel.alarmo
                       styles:
                         card:
                           - height: 55px
@@ -459,7 +459,7 @@ cards:
                           - value: 'ARMED_HOME'
                             styles:
                               card:
-                                - background-color: '#F44336'
+                                - background-color: 'orange'
                               name:
                                 - color: white
                               icon:
@@ -467,7 +467,7 @@ cards:
                   away:
                     card:
                       type: custom:button-card
-                      entity: alarm_control_panel.bayberry_alarm_v2
+                      entity: alarm_control_panel.alarmo
                       show_state: false
                       show_name: true
                       show_icon: true
@@ -477,7 +477,7 @@ cards:
                         action: call-service
                         service: alarm_control_panel.alarm_arm_away
                         target:
-                          entity_id: alarm_control_panel.bayberry_alarm_v2
+                          entity_id: alarm_control_panel.alarmo
                         data:
                       styles:
                         card:
@@ -496,7 +496,7 @@ cards:
                           - value: 'ARMED_AWAY'
                             styles:
                               card:
-                                - background-color: '#F44336'
+                                - background-color: 'red'
                               name:
                                 - color: white
                               icon:
