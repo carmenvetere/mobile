@@ -145,10 +145,6 @@ card:
             - background: transparent
     modes: 
       card: 
-        type: conditional
-        conditions: 
-          - entity: input_boolean.dinner_party
-            state: 'on'
         card:
           type: custom:button-card
           entity: input_boolean.dinner_party
@@ -174,7 +170,11 @@ card:
               - justify-self: center
               - background: transparent
               - width: 60px
-              - height: 50px     
+              - height: 50px
+              - opacity: >
+                [[[
+                  return states['input_boolean.dinner_party'].state === 'on' ? '1' : '0';
+                ]]]     
     temp:
       card:
         type: custom:button-card
