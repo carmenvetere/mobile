@@ -44,9 +44,11 @@ series:
     name: Hot Water
     type: column
     color: "#5D617A"
-    group_by:
-      func: diff
-      duration: 1d
+    statistics:
+      type: state
+      period: day
+      align: end
+    transform: "return x - hass.states['sensor.smithy_energy_usage_2'].attributes.last_reset_value || 0;"
     show:
       legend_value: false
       in_header: true
