@@ -51,55 +51,6 @@ cards:
               - align-items: center
               - justify-items: center
           custom_fields:
-            # Status Display
-            status:
-              card:
-                type: custom:button-card
-                entity: alarm_control_panel.bayberry_alarm_v2
-                show_name: false
-                show_icon: true
-                show_state: true
-                state_display: |
-                  [[[
-                    var state = states['alarm_control_panel.bayberry_alarm_v2'].state;
-                    if (state === 'armed_away') return 'Armed';
-                    if (state === 'armed_home') return 'Armed';
-                    if (state === 'disarmed') return 'Disarmed';
-                    if (state === 'pending') return 'Pending';
-                    if (state === 'arming') return 'Arming';
-                    if (state === 'triggered') return 'ALARM!';
-                    return state.charAt(0).toUpperCase() + state.slice(1);
-                  ]]]
-                icon: |
-                  [[[
-                    var state = states['alarm_control_panel.bayberry_alarm_v2'].state;
-                    if (state === 'disarmed') return 'mdi:shield-off';
-                    if (state === 'armed_home') return 'mdi:shield-home';
-                    if (state === 'armed_away') return 'mdi:shield-lock';
-                    if (state === 'triggered') return 'mdi:shield-alert';
-                    return 'mdi:shield';
-                  ]]]
-                icon_color: |
-                  [[[
-                    var state = states['alarm_control_panel.bayberry_alarm_v2'].state;
-                    if (state === 'disarmed') return 'green';
-                    if (state === 'armed_home') return 'orange';
-                    if (state === 'armed_away') return 'red';
-                    if (state === 'triggered') return 'red';
-                    return 'mdi:shield';
-                  ]]]  
-                styles:
-                  card:
-                    - height: 60px
-                    - width: 400px
-                    - border-radius: 10px
-                  icon:
-                    - color: white
-                    - size: 24px
-                  state:
-                    - color: white
-                    - font-size: 18px
-                    - font-weight: bold
             # Code Display
             display:
               card:
@@ -111,7 +62,7 @@ cards:
                 styles:
                   card:
                     - height: 40px
-                    - width: 200px
+                    - width: 300px
                     - border-radius: 8px
                     - background-color: '#FFFFFF'
                     - border: 2px solid '#666666'
@@ -129,7 +80,7 @@ cards:
                 show_state: false
                 styles:
                   card:
-                    - height: 180px
+                    - height: 260px
                     - width: 300px
                     - background-color: transparent
                     - border-radius: 0px
@@ -140,7 +91,7 @@ cards:
                         "n7 n8 n9"
                         "clear n0 enter"
                     - grid-template-columns: 90px 90px 90px
-                    - grid-template-rows: 40px 40px 40px 40px
+                    - grid-template-rows: 60px 60px 60px 60px
                     - row-gap: 5px
                     - column-gap: 5px
                 custom_fields:
