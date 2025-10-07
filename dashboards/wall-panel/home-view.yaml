@@ -33,7 +33,7 @@ cards:
               - border-radius: 15px
               - width: 480px
               - height: 380px
-              - padding: 3px
+              - padding-top: 5px
             grid:
               - grid-template-areas: |
                   "scene1"
@@ -76,6 +76,129 @@ cards:
                     - justify-self: start
                     - text-align: left
                     - padding-left: 10px   # <-- add this for spacing from the icon
+                    - align-self: center
+                  img_cell:
+                    - align-self: center
+                    - justify-content: start
+                    - padding-left: 5px
+                  icon: 
+                    - width: 36px
+                    - height: 36px
+                    - padding-left: 5px
+            scene2:
+              card: 
+                type: custom:button-card
+                icon: mdi:washing-machine
+                layout: icon_label
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: false
+                label: Laundry
+                styles:
+                  card:
+                    - width: 460px
+                    - height: 85px
+                    - align-self: center
+                    - justify-self: start
+                    - justify-content: start
+                    - text-align: left
+                    - background-color: var(--ha-card-background)  
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                    - margin-left: 10px
+                  grid:
+                    - grid-template-areas: '"i l"'
+                    - grid-template-columns: 40px 1fr
+                    - justify-items: start
+                    - align-items: center
+                  label: 
+                    - font-size: 24px
+                    - font-weight: bold
+                    - justify-self: start
+                    - text-align: left
+                    - padding-left: 10px
+                    - align-self: center
+                  img_cell:
+                    - align-self: center
+                    - justify-content: start
+                    - padding-left: 5px
+                  icon: 
+                    - width: 36px
+                    - height: 36px
+                    - padding-left: 5px
+            scene3:
+              card: 
+                type: custom:button-card
+                icon: mdi:spray-bottle
+                layout: icon_label
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: false
+                label: Cleaning
+                styles:
+                  card:
+                    - width: 460px
+                    - height: 85px
+                    - align-self: center
+                    - justify-self: start
+                    - justify-content: start
+                    - text-align: left
+                    - background-color: var(--ha-card-background)  
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                    - margin-left: 10px
+                  grid:
+                    - grid-template-areas: '"i l"'
+                    - grid-template-columns: 40px 1fr
+                    - justify-items: start
+                    - align-items: center
+                  label: 
+                    - font-size: 24px
+                    - font-weight: bold
+                    - justify-self: start
+                    - text-align: left
+                    - padding-left: 10px
+                    - align-self: center
+                  img_cell:
+                    - align-self: center
+                    - justify-content: start
+                    - padding-left: 5px
+                  icon: 
+                    - width: 36px
+                    - height: 36px
+                    - padding-left: 5px
+            scene4:
+              card: 
+                type: custom:button-card
+                icon: mdi:moon-waning-crescent
+                layout: icon_label
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: false
+                label: All Off
+                styles:
+                  card:
+                    - width: 460px
+                    - height: 85px
+                    - align-self: center
+                    - justify-self: start
+                    - justify-content: start
+                    - text-align: left
+                    - background-color: var(--ha-card-background)  
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                    - margin-left: 10px
+                  grid:
+                    - grid-template-areas: '"i l"'
+                    - grid-template-columns: 40px 1fr
+                    - justify-items: start
+                    - align-items: center
+                  label: 
+                    - font-size: 24px
+                    - font-weight: bold
+                    - justify-self: start
+                    - text-align: left
+                    - padding-left: 10px
                     - align-self: center
                   img_cell:
                     - align-self: center
