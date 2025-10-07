@@ -415,6 +415,7 @@ cards:
                         icon:
                           - width: 32px
                           - height: 32px
+                          - color: var(--primary-text-color)
                         name:
                           - font-size: 14px
                           - font-weight: bold
@@ -424,6 +425,7 @@ cards:
                           styles:
                             card:
                               - background-color: 'green'
+                              - opacity: 0.5
                             name:
                               - color: white
                             icon:
@@ -451,6 +453,7 @@ cards:
                         icon:
                           - width: 32px
                           - height: 32px
+                          - color: var(--primary-text-color)
                         name:
                           - font-size: 14px
                           - font-weight: bold
@@ -460,6 +463,7 @@ cards:
                           styles:
                             card:
                               - background-color: 'orange'
+                              - opacity: 0.5
                             name:
                               - color: white
                             icon:
@@ -488,6 +492,7 @@ cards:
                         icon:
                           - width: 32px
                           - height: 32px
+                          - color: var(--primary-text-color)
                         name:
                           - font-size: 14px
                           - font-weight: bold
@@ -497,6 +502,7 @@ cards:
                           styles:
                             card:
                               - background-color: 'red'
+                              - opacity: 0.5
                             name:
                               - color: white
                             icon:
