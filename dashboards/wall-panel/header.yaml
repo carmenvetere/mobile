@@ -172,9 +172,9 @@ card:
               - width: 60px
               - height: 50px
               - opacity: >
-                [[[
-                  return states['input_boolean.dinner_party'].state === 'on' ? '1' : '0';
-                ]]]     
+                  [[[
+                    return states['input_boolean.dinner_party'].state === 'on' ? '1' : '0';
+                  ]]]     
     temp:
       card:
         type: custom:button-card
