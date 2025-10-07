@@ -45,7 +45,7 @@ cards:
                   "keypad"
                   "controls"
               - grid-template-columns: auto
-              - grid-template-rows: 40px 250px 60px
+              - grid-template-rows: 40px 250px 55px
               - row-gap: 10px
               - align-items: center
               - justify-items: center
@@ -378,7 +378,7 @@ cards:
                 show_state: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 55px
                     - width: 450px
                     - padding-top: 0px
                     - margin: 0px
@@ -401,7 +401,6 @@ cards:
                       show_icon: true
                       name: Disarm
                       icon: mdi:shield-off
-                      size: 25%
                       tap_action:
                         action: call-service
                         service: alarm_control_panel.alarm_disarm
@@ -409,14 +408,17 @@ cards:
                           entity_id: alarm_control_panel.bayberry_alarm_v2
                       styles:
                         card:
-                          - height: 60px
+                          - height: 55px
                           - width: 150px
                           - border-radius: 12px
                           - background-color: '#D7D9DF'
+                        icon:
+                          - width: 32px
+                          - height: 32px
                         name:
-                          - font-size: 12px
+                          - font-size: 14px
                           - font-weight: bold
-                          - color: black
+                          - color: var(--primary-text-color)
                         state:                
                           - value: 'DISARMED'
                             styles:
@@ -435,7 +437,6 @@ cards:
                       show_icon: true
                       name: Armed Home
                       icon: mdi:shield-home
-                      size: 25%
                       tap_action:
                         action: call-service
                         service: alarm_control_panel.alarm_arm_home
@@ -443,14 +444,17 @@ cards:
                           entity_id: alarm_control_panel.bayberry_alarm_v2
                       styles:
                         card:
-                          - height: 60px
+                          - height: 55px
                           - width: 150px
                           - border-radius: 12px
                           - background-color: '#D7D9DF'
+                        icon:
+                          - width: 32px
+                          - height: 32px
                         name:
                           - font-size: 12px
                           - font-weight: bold
-                          - color: black
+                          - color: var(--primary-text-color)
                         state:                
                           - value: 'ARMED_HOME'
                             styles:
@@ -469,7 +473,6 @@ cards:
                       show_icon: true
                       name: Armed Away
                       icon: mdi:shield-lock
-                      size: 25%
                       tap_action:
                         action: call-service
                         service: alarm_control_panel.alarm_arm_away
@@ -478,14 +481,17 @@ cards:
                         data:
                       styles:
                         card:
-                          - height: 60px
+                          - height: 55px
                           - width: 150px
                           - border-radius: 12px
                           - background-color: '#D7D9DF'
+                        icon:
+                          - width: 32px
+                          - height: 32px
                         name:
                           - font-size: 12px
                           - font-weight: bold
-                          - color: black
+                          - color: var(--primary-text-color)
                         state:                
                           - value: 'ARMED_AWAY'
                             styles:
