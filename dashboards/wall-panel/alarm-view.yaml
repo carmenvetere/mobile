@@ -419,15 +419,15 @@ cards:
                           - font-size: 14px
                           - font-weight: bold
                           - color: var(--primary-text-color)
-                        state:                
-                          - value: 'DISARMED'
-                            styles:
-                              card:
-                                - background-color: 'green'
-                              name:
-                                - color: white
-                              icon:
-                                - color: white
+                      state:                
+                        - value: 'DISARMED'
+                          styles:
+                            card:
+                              - background-color: 'green'
+                            name:
+                              - color: white
+                            icon:
+                              - color: white
                   home:
                     card:
                       type: custom:button-card
@@ -455,15 +455,15 @@ cards:
                           - font-size: 14px
                           - font-weight: bold
                           - color: var(--primary-text-color)
-                        state:                
-                          - value: 'ARMED_HOME'
-                            styles:
-                              card:
-                                - background-color: 'orange'
-                              name:
-                                - color: white
-                              icon:
-                                - color: white
+                      state:                
+                        - value: 'ARMED_HOME'
+                          styles:
+                            card:
+                              - background-color: 'orange'
+                            name:
+                              - color: white
+                            icon:
+                              - color: white
                   away:
                     card:
                       type: custom:button-card
@@ -492,13 +492,13 @@ cards:
                           - font-size: 14px
                           - font-weight: bold
                           - color: var(--primary-text-color)
-                        state:                
-                          - value: 'ARMED_AWAY'
-                            styles:
-                              card:
-                                - background-color: 'red'
-                              name:
-                                - color: white
-                              icon:
-                                - color: white
+                      state:                
+                        - value: 'ARMED_AWAY'
+                          styles:
+                            card:
+                              - background-color: 'red'
+                            name:
+                              - color: white
+                            icon:
+                              - color: white
       nav: !include footer-menu.yaml
