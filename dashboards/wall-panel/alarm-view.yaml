@@ -399,7 +399,7 @@ cards:
                       show_state: false
                       show_name: true
                       show_icon: true
-                      name: Disarm
+                      name: Disarmed
                       icon: mdi:shield-off
                       tap_action:
                         action: call-service
@@ -420,7 +420,7 @@ cards:
                           - font-weight: bold
                           - color: var(--primary-text-color)
                       state:                
-                        - value: 'DISARMED'
+                        - value: 'disarmed'
                           styles:
                             card:
                               - background-color: 'green'
@@ -456,7 +456,7 @@ cards:
                           - font-weight: bold
                           - color: var(--primary-text-color)
                       state:                
-                        - value: 'ARMED_HOME'
+                        - value: 'armed_home'
                           styles:
                             card:
                               - background-color: 'orange'
@@ -493,7 +493,7 @@ cards:
                           - font-weight: bold
                           - color: var(--primary-text-color)
                       state:                
-                        - value: 'ARMED_AWAY'
+                        - value: 'armed_away'
                           styles:
                             card:
                               - background-color: 'red'
