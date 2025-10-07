@@ -84,10 +84,11 @@ card:
             - justify-self: start
           grid: 
             - column-gap: 5px
+            - grid-template-areas: '"i" "s"'
+            - grid-template-columns: 30px 95px
           img_cell:
             - align-self: center
             - justify-content: start
-            - width: 30px
           card:
             - border-radius: 0px
             - width: 130px
