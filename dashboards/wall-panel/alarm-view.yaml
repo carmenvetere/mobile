@@ -141,15 +141,16 @@ cards:
                         "clear n0 enter"
                     - grid-template-columns: 90px 90px 90px
                     - grid-template-rows: 40px 40px 40px 40px
-                    - gap: 5px
+                    - row-gap: 5px
+                    - column-gap: 5px
                 custom_fields:
                   n1:
                     card:
                       type: custom:button-card
-                      show_name: false
+                      show_label: true
                       show_icon: false
                       show_state: false
-                      name: '1'
+                      label: '1'
                       tap_action:
                         action: call-service
                         service: input_text.set_value
@@ -162,8 +163,8 @@ cards:
                           - border-radius: 8px
                           - background-color: '#DDE0E7'
                           - border: 1px solid '#BDBDBD'
-                        name:
-                          - color: black
+                        label:
+                          - color: var(--primary-text-color)
                           - font-size: 20px
                           - font-weight: bold
                   n2:
