@@ -85,7 +85,7 @@ cards:
                     - background-color: transparent
                     - border-radius: 0px
                     - padding-top: 0px
-                    - padding-left: 5px
+                    - padding-left: 10px
                   grid:
                     - grid-template-areas: |
                         "n1 n2 n3"
@@ -94,7 +94,7 @@ cards:
                         "clear n0 enter"
                     - grid-template-columns: 90px 90px 90px
                     - grid-template-rows: 60px 60px 60px 60px
-                    - row-gap: 3px
+                    - row-gap: 5px
                     - column-gap: 5px
                 custom_fields:
                   n1:
@@ -369,8 +369,7 @@ cards:
                           - border: 1px solid '#BDBDBD'
                         icon:
                           - color: '#388E3C'
-                          - size: 20px
-                          
+                          - size: 20px                          
             # Three-way Mode Controls (similar to climate view)
             controls:
               card:
@@ -380,7 +379,7 @@ cards:
                 show_state: false
                 styles:
                   card:
-                    - height: 70px
+                    - height: 60px
                     - width: 450px
                     - padding: 0
                     - margin: 0px
@@ -390,7 +389,7 @@ cards:
                     - grid-template-areas: |
                         "disarm home away"
                     - grid-template-columns: 150px 150px 150px
-                    - grid-template-rows: 70px
+                    - grid-template-rows: 60px
                     - column-gap: 5px
                     - align-items: center
                 custom_fields:
@@ -411,7 +410,7 @@ cards:
                           entity_id: alarm_control_panel.bayberry_alarm_v2
                       styles:
                         card:
-                          - height: 65px
+                          - height: 60px
                           - width: 150px
                           - border-radius: 12px
                           - background-color: '#D7D9DF'
@@ -445,7 +444,7 @@ cards:
                           entity_id: alarm_control_panel.bayberry_alarm_v2
                       styles:
                         card:
-                          - height: 65px
+                          - height: 60px
                           - width: 150px
                           - border-radius: 12px
                           - background-color: '#D7D9DF'
@@ -480,7 +479,7 @@ cards:
                         data:
                       styles:
                         card:
-                          - height: 65px
+                          - height: 60px
                           - width: 150px
                           - border-radius: 12px
                           - background-color: '#D7D9DF'
