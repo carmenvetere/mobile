@@ -145,7 +145,7 @@ card:
             - background: transparent
     modes: 
       card:
-        type: stack-in-card
+        type: custom:stack-in-card
         mode: horizontal
         cards:
         - type: conditional
@@ -171,7 +171,7 @@ card:
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
-                - justify-content: enter
+                - justify-content: center
               card:
                 - border-radius: 5px
                 - align-self: center
