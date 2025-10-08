@@ -1606,16 +1606,8 @@
     name: Dryer complete!
     card_layout: normal
     styles: |
-      .bubble-name {
-        font-size: 16px !important;
-          }
       .bubble-icon {
         color: #4ebcff !important;
-        }
-      .bubble-button-card-container {
-        border-radius: 15px !important;
-        margin: 2px 10px 2px 10px !important;
-        background-color: var(--ha-card-background-2) !important;
         }
     icon: mdi:tumble-dryer-off
     button_action:
