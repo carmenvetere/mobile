@@ -9,18 +9,20 @@ cards:
         - border-radius: 0px
         - padding-bottom: 5px
         - padding-left: 0px
-        - padding-top: 5px
-        - height: 480px
+        - padding-top: 0px
+        - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
         - width: 480px
+        - height: 480px
       grid:
         - grid-template-areas: |
             "header"
             "main"
             "nav"
         - grid-template-columns: auto
-        - grid-template-rows: 50px 380px 50px
+        - grid-template-rows: 50px 370px 50px
         - align-items: start
         - column-gap: 2px
+        - row-gap: 5px
     custom_fields:
       header: !include header.yaml
       main:
