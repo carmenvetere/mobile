@@ -54,13 +54,9 @@ cards:
 #Good Morning Button - only shows between 5am and 1 hour before sunset
                   - type: conditional
                     conditions:
-                      - condition: template
-                        value_template: >
-                          {% set current_time = now() %}
-                          {% set sunrise_time = today_at('05:00') %}
-                          {% set sunset_time = state_attr('sun.sun', 'next_setting') | as_datetime %}
-                          {% set one_hour_before_sunset = sunset_time - timedelta(hours=1) %}
-                          {{ sunrise_time <= current_time < one_hour_before_sunset }}
+                      - condition: state
+                        entity: binary_sensor.scene_show_morning
+                        state: 'on'
                     card:
                       type: custom:button-card
                       entity: sensor.scene_good_morning
@@ -121,18 +117,8 @@ cards:
                   - type: conditional
                     conditions:
                       - condition: state
-                        entity: binary_sensor.someone_home
+                        entity: binary_sensor.scene_show_basement_evening
                         state: 'on'
-                      - condition: state
-                        entity: input_boolean.dinner_party
-                        state: 'off'
-                      - condition: template
-                        value_template: >
-                          {% set current_time = now() %}
-                          {% set sunset_time = state_attr('sun.sun', 'next_setting') | as_datetime %}
-                          {% set one_hour_before_sunset = sunset_time - timedelta(hours=1) %}
-                          {% set eleven_pm = today_at('23:00') %}
-                          {{ one_hour_before_sunset <= current_time <= eleven_pm }}
                     card:
                       type: custom:button-card
                       entity: sensor.scene_basement_evening
@@ -193,18 +179,8 @@ cards:
                   - type: conditional
                     conditions:
                       - condition: state
-                        entity: binary_sensor.someone_home
+                        entity: binary_sensor.scene_show_basement_entertaining
                         state: 'on'
-                      - condition: state
-                        entity: input_boolean.dinner_party
-                        state: 'on'
-                      - condition: template
-                        value_template: >
-                          {% set current_time = now() %}
-                          {% set sunset_time = state_attr('sun.sun', 'next_setting') | as_datetime %}
-                          {% set one_hour_before_sunset = sunset_time - timedelta(hours=1) %}
-                          {% set eleven_pm = today_at('23:00') %}
-                          {{ one_hour_before_sunset <= current_time <= eleven_pm }}
                     card:
                       type: custom:button-card
                       entity: sensor.scene_basement_entertaining
@@ -265,16 +241,8 @@ cards:
                   - type: conditional
                     conditions:
                       - condition: state
-                        entity: binary_sensor.someone_home
+                        entity: binary_sensor.scene_show_welcome
                         state: 'on'
-                      - condition: template
-                        value_template: >
-                          {% set current_time = now() %}
-                          {% set sunset_time = state_attr('sun.sun', 'next_setting') | as_datetime %}
-                          {% set one_hour_before_sunset = sunset_time - timedelta(hours=1) %}
-                          {% set home_last_changed = states.binary_sensor.someone_home.last_changed %}
-                          {% set fifteen_min_ago = current_time - timedelta(minutes=15) %}
-                          {{ current_time >= one_hour_before_sunset and home_last_changed >= fifteen_min_ago }}
                     card:
                       type: custom:button-card
                       entity: sensor.scene_welcome
