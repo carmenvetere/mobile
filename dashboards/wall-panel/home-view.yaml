@@ -48,61 +48,289 @@ cards:
           custom_fields: 
             scene1:
               card: 
-                type: custom:button-card
-                entity: sensor.scene_good_morning
-                icon: mdi:lightbulb
-                layout: icon_label
-                show_icon: true
-                show_label: true
-                show_name: false
-                show_state: false
-                label: Morning
-                tap_action:
-                  action: call-service
-                  service: scene.turn_on
-                  target:
-                    entity_id: scene.good_morning_2
-                  data:
-                    transition: 3
-                styles:
-                  card:
-                    - width: 460px
-                    - height: 85px
-                    - align-self: center
-                    - justify-self: start
-                    - justify-content: start
-                    - text-align: left
-                    - background-color: var(--ha-card-background)  
-                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                    - margin-left: 10px
-                    - padding-left: 15px
-                  grid:
-                    - grid-template-areas: '"i l"'   # icon then label
-                    - grid-template-columns: 40px 1fr
-                    - justify-items: start
-                    - align-items: center
-                  label: 
-                    - font-size: 24px
-                    - font-weight: bold
-                    - justify-self: start
-                    - text-align: left
-                    - padding-left: 10px   # <-- add this for spacing from the icon
-                    - align-self: center
-                  img_cell:
-                    - align-self: center
-                    - justify-content: start
-                    - padding-left: 5px
-                  icon: 
-                    - width: 36px
-                    - height: 36px
-                    - padding-left: 5px
-                state:
-                  - value: 'off'
-                    color: default
-                  - value: 'on'
-                    styles:
-                      card:
-                      - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
+                type: custom:stack-in-card
+                mode: vertical
+                cards:
+#Good Morning Button - only shows between 5am and 1 hour before sunset
+                  - type: conditional
+                    conditions:
+                      - condition: template
+                        value_template: >
+                          {% set current_time = now() %}
+                          {% set sunrise_time = today_at('05:00') %}
+                          {% set sunset_time = state_attr('sun.sun', 'next_setting') | as_datetime %}
+                          {% set one_hour_before_sunset = sunset_time - timedelta(hours=1) %}
+                          {{ sunrise_time <= current_time < one_hour_before_sunset }}
+                    card:
+                      type: custom:button-card
+                      entity: sensor.scene_good_morning
+                      icon: mdi:coffee
+                      layout: icon_label
+                      show_icon: true
+                      show_label: true
+                      show_name: false
+                      show_state: false
+                      label: Morning
+                      tap_action:
+                        action: call-service
+                        service: scene.turn_on
+                        target:
+                          entity_id: scene.good_morning_2
+                        data:
+                          transition: 3
+                      styles:
+                        card:
+                          - width: 460px
+                          - height: 85px
+                          - align-self: center
+                          - justify-self: start
+                          - justify-content: start
+                          - text-align: left
+                          - background-color: var(--ha-card-background)  
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                          - margin-left: 10px
+                          - padding-left: 15px
+                        grid:
+                          - grid-template-areas: '"i l"'   # icon then label
+                          - grid-template-columns: 40px 1fr
+                          - justify-items: start
+                          - align-items: center
+                        label: 
+                          - font-size: 24px
+                          - font-weight: bold
+                          - justify-self: start
+                          - text-align: left
+                          - padding-left: 10px   # <-- add this for spacing from the icon
+                          - align-self: center
+                        img_cell:
+                          - align-self: center
+                          - justify-content: start
+                          - padding-left: 5px
+                        icon: 
+                          - width: 36px
+                          - height: 36px
+                          - padding-left: 5px
+                      state:
+                        - value: 'off'
+                          color: default
+                        - value: 'on'
+                          styles:
+                            card:
+                            - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
+#Evening Button - only shows if someone is home, dinner party mode is off, and between 1 hour before sunset and 11pm
+                  - type: conditional
+                    conditions:
+                      - condition: state
+                        entity: binary_sensor.someone_home
+                        state: 'on'
+                      - condition: state
+                        entity: input_boolean.dinner_party
+                        state: 'off'
+                      - condition: template
+                        value_template: >
+                          {% set current_time = now() %}
+                          {% set sunset_time = state_attr('sun.sun', 'next_setting') | as_datetime %}
+                          {% set one_hour_before_sunset = sunset_time - timedelta(hours=1) %}
+                          {% set eleven_pm = today_at('23:00') %}
+                          {{ one_hour_before_sunset <= current_time <= eleven_pm }}
+                    card:
+                      type: custom:button-card
+                      entity: sensor.scene_basement_evening
+                      icon: mdi:moon-waning-crescent
+                      layout: icon_label
+                      show_icon: true
+                      show_label: true
+                      show_name: false
+                      show_state: false
+                      label: Evening
+                      tap_action:
+                        action: call-service
+                        service: scene.turn_on
+                        target:
+                          entity_id: scene.basement_evening
+                        data:
+                          transition: 3
+                      styles:
+                        card:
+                          - width: 460px
+                          - height: 85px
+                          - align-self: center
+                          - justify-self: start
+                          - justify-content: start
+                          - text-align: left
+                          - background-color: var(--ha-card-background)  
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                          - margin-left: 10px
+                          - padding-left: 15px
+                        grid:
+                          - grid-template-areas: '"i l"'   # icon then label
+                          - grid-template-columns: 40px 1fr
+                          - justify-items: start
+                          - align-items: center
+                        label: 
+                          - font-size: 24px
+                          - font-weight: bold
+                          - justify-self: start
+                          - text-align: left
+                          - padding-left: 10px   # <-- add this for spacing from the icon
+                          - align-self: center
+                        img_cell:
+                          - align-self: center
+                          - justify-content: start
+                          - padding-left: 5px
+                        icon: 
+                          - width: 36px
+                          - height: 36px
+                          - padding-left: 5px
+                      state:
+                        - value: 'off'
+                          color: default
+                        - value: 'on'
+                          styles:
+                            card:
+                            - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
+#Entertaining Button - only shows if someone is home, dinner party mode is on, and between 1 hour before sunset and 11pm
+                  - type: conditional
+                    conditions:
+                      - condition: state
+                        entity: binary_sensor.someone_home
+                        state: 'on'
+                      - condition: state
+                        entity: input_boolean.dinner_party
+                        state: 'on'
+                      - condition: template
+                        value_template: >
+                          {% set current_time = now() %}
+                          {% set sunset_time = state_attr('sun.sun', 'next_setting') | as_datetime %}
+                          {% set one_hour_before_sunset = sunset_time - timedelta(hours=1) %}
+                          {% set eleven_pm = today_at('23:00') %}
+                          {{ one_hour_before_sunset <= current_time <= eleven_pm }}
+                    card:
+                      type: custom:button-card
+                      entity: sensor.scene_basement_entertaining
+                      icon: mdi:glass-cocktail
+                      layout: icon_label
+                      show_icon: true
+                      show_label: true
+                      show_name: false
+                      show_state: false
+                      label: Entertaining
+                      tap_action:
+                        action: call-service
+                        service: scene.turn_on
+                        target:
+                          entity_id: scene.basement_evening
+                        data:
+                          transition: 3
+                      styles:
+                        card:
+                          - width: 460px
+                          - height: 85px
+                          - align-self: center
+                          - justify-self: start
+                          - justify-content: start
+                          - text-align: left
+                          - background-color: var(--ha-card-background)  
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                          - margin-left: 10px
+                          - padding-left: 15px
+                        grid:
+                          - grid-template-areas: '"i l"'   # icon then label
+                          - grid-template-columns: 40px 1fr
+                          - justify-items: start
+                          - align-items: center
+                        label: 
+                          - font-size: 24px
+                          - font-weight: bold
+                          - justify-self: start
+                          - text-align: left
+                          - padding-left: 10px   # <-- add this for spacing from the icon
+                          - align-self: center
+                        img_cell:
+                          - align-self: center
+                          - justify-content: start
+                          - padding-left: 5px
+                        icon: 
+                          - width: 36px
+                          - height: 36px
+                          - padding-left: 5px
+                      state:
+                        - value: 'off'
+                          color: default
+                        - value: 'on'
+                          styles:
+                            card:
+                            - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
+#Welcome Button - only shows if someone is home and arrived within the last 15 minutes, between 1 hour before sunset and 11pm
+                  - type: conditional
+                    conditions:
+                      - condition: state
+                        entity: binary_sensor.someone_home
+                        state: 'on'
+                      - condition: template
+                        value_template: >
+                          {% set current_time = now() %}
+                          {% set sunset_time = state_attr('sun.sun', 'next_setting') | as_datetime %}
+                          {% set one_hour_before_sunset = sunset_time - timedelta(hours=1) %}
+                          {% set home_last_changed = states.binary_sensor.someone_home.last_changed %}
+                          {% set fifteen_min_ago = current_time - timedelta(minutes=15) %}
+                          {{ current_time >= one_hour_before_sunset and home_last_changed >= fifteen_min_ago }}
+                    card:
+                      type: custom:button-card
+                      entity: sensor.scene_welcome
+                      icon: mdi:human-greeting
+                      layout: icon_label
+                      show_icon: true
+                      show_label: true
+                      show_name: false
+                      show_state: false
+                      label: Welcome
+                      tap_action:
+                        action: call-service
+                        service: scene.turn_on
+                        target:
+                          entity_id: scene.welcome
+                        data:
+                          transition: 3
+                      styles:
+                        card:
+                          - width: 460px
+                          - height: 85px
+                          - align-self: center
+                          - justify-self: start
+                          - justify-content: start
+                          - text-align: left
+                          - background-color: var(--ha-card-background)  
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                          - margin-left: 10px
+                          - padding-left: 15px
+                        grid:
+                          - grid-template-areas: '"i l"'   # icon then label
+                          - grid-template-columns: 40px 1fr
+                          - justify-items: start
+                          - align-items: center
+                        label: 
+                          - font-size: 24px
+                          - font-weight: bold
+                          - justify-self: start
+                          - text-align: left
+                          - padding-left: 10px   # <-- add this for spacing from the icon
+                          - align-self: center
+                        img_cell:
+                          - align-self: center
+                          - justify-content: start
+                          - padding-left: 5px
+                        icon: 
+                          - width: 36px
+                          - height: 36px
+                          - padding-left: 5px
+                      state:
+                        - value: 'off'
+                          color: default
+                        - value: 'on'
+                          styles:
+                            card:
+                            - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
             scene2:
               card: 
                 type: custom:button-card
@@ -188,13 +416,21 @@ cards:
             scene4:
               card: 
                 type: custom:button-card
-                icon: mdi:moon-waning-crescent
+                entity: sensor.scene_good_night
+                icon: mdi:lightbulb-off
                 layout: icon_label
                 show_icon: true
                 show_label: true
                 show_name: false
                 show_state: false
                 label: All Off
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  target:
+                    entity_id: scene.good_night
+                  data:
+                    transition: 3
                 styles:
                   card:
                     - width: 460px
@@ -206,8 +442,9 @@ cards:
                     - background-color: var(--ha-card-background)  
                     - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     - margin-left: 10px
+                    - padding-left: 15px
                   grid:
-                    - grid-template-areas: '"i l"'
+                    - grid-template-areas: '"i l"'   # icon then label
                     - grid-template-columns: 40px 1fr
                     - justify-items: start
                     - align-items: center
@@ -216,7 +453,7 @@ cards:
                     - font-weight: bold
                     - justify-self: start
                     - text-align: left
-                    - padding-left: 10px
+                    - padding-left: 10px   # <-- add this for spacing from the icon
                     - align-self: center
                   img_cell:
                     - align-self: center
@@ -226,4 +463,11 @@ cards:
                     - width: 36px
                     - height: 36px
                     - padding-left: 5px
+                state:
+                  - value: 'off'
+                    color: default
+                  - value: 'on'
+                    styles:
+                      card:
+                      - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
       nav: !include footer-menu.yaml
