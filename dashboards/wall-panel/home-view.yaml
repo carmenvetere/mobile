@@ -341,45 +341,194 @@ cards:
                     - padding-left: 5px
             scene3:
               card: 
-                type: custom:button-card
-                icon: mdi:spray-bottle
-                layout: icon_label
-                show_icon: true
-                show_label: true
-                show_name: false
-                show_state: false
-                label: Cleaning
-                styles:
-                  card:
-                    - width: 460px
-                    - height: 85px
-                    - align-self: center
-                    - justify-self: start
-                    - justify-content: start
-                    - text-align: left
-                    - background-color: var(--background-color-2)  
-                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                    - margin-left: 10px
-                  grid:
-                    - grid-template-areas: '"i l"'
-                    - grid-template-columns: 40px 1fr
-                    - justify-items: start
-                    - align-items: center
-                  label: 
-                    - font-size: 24px
-                    - font-weight: bold
-                    - justify-self: start
-                    - text-align: left
-                    - padding-left: 10px
-                    - align-self: center
-                  img_cell:
-                    - align-self: center
-                    - justify-content: start
-                    - padding-left: 5px
-                  icon: 
-                    - width: 36px
-                    - height: 36px
-                    - padding-left: 5px
+                type: vertical-stack
+                cards:
+#Cleaning Button - only shows between Sunrise and 1 hour before sunset
+                  - type: conditional
+                    conditions:
+                      - condition: state
+                        entity: binary_sensor.scene_show_basement_cleaning
+                        state: 'on'
+                    card:
+                      type: custom:button-card
+                      entity: sensor.scene_basement_cleaning
+                      icon: mdi:spray-bottle
+                      layout: icon_label
+                      show_icon: true
+                      show_label: true
+                      show_name: false
+                      show_state: false
+                      label: Cleaning
+                      tap_action:
+                        action: call-service
+                        service: scene.turn_on
+                        target:
+                          entity_id: scene.basement_cleaning
+                        data:
+                          transition: 3
+                      styles:
+                        card:
+                          - width: 460px
+                          - height: 85px
+                          - align-self: center
+                          - justify-self: start
+                          - justify-content: start
+                          - text-align: left
+                          - background-color: var(--background-color-2)  
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                          - margin-left: 10px
+                          - padding-left: 15px
+                        grid:
+                          - grid-template-areas: '"i l"'   # icon then label
+                          - grid-template-columns: 40px 1fr
+                          - justify-items: start
+                          - align-items: center
+                        label: 
+                          - font-size: 24px
+                          - font-weight: bold
+                          - justify-self: start
+                          - text-align: left
+                          - padding-left: 10px   # <-- add this for spacing from the icon
+                          - align-self: center
+                        img_cell:
+                          - align-self: center
+                          - justify-content: start
+                          - padding-left: 5px
+                        icon: 
+                          - width: 36px
+                          - height: 36px
+                          - padding-left: 5px
+                      state:
+                        - value: 'off'
+                          color: default
+                        - value: 'on'
+                          styles:
+                            card:
+                              - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
+#Outdoor Off - only shows between 1 hour before sunset and sunrise, if outdoor lights on
+                  - type: conditional
+                    conditions:
+                      - condition: state
+                        entity: binary_sensor.scene_show_outdoor_off
+                        state: 'on'
+                    card:
+                      type: custom:button-card
+                      entity: sensor.scene_outdoor_off
+                      icon: mdi:outdoor-lamp
+                      layout: icon_label
+                      show_icon: true
+                      show_label: true
+                      show_name: false
+                      show_state: false
+                      label: Cleaning
+                      tap_action:
+                        action: call-service
+                        service: scene.turn_on
+                        target:
+                          entity_id: scene.outdoor_off
+                        data:
+                          transition: 3
+                      styles:
+                        card:
+                          - width: 460px
+                          - height: 85px
+                          - align-self: center
+                          - justify-self: start
+                          - justify-content: start
+                          - text-align: left
+                          - background-color: var(--background-color-2)  
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                          - margin-left: 10px
+                          - padding-left: 15px
+                        grid:
+                          - grid-template-areas: '"i l"'   # icon then label
+                          - grid-template-columns: 40px 1fr
+                          - justify-items: start
+                          - align-items: center
+                        label: 
+                          - font-size: 24px
+                          - font-weight: bold
+                          - justify-self: start
+                          - text-align: left
+                          - padding-left: 10px   # <-- add this for spacing from the icon
+                          - align-self: center
+                        img_cell:
+                          - align-self: center
+                          - justify-content: start
+                          - padding-left: 5px
+                        icon: 
+                          - width: 36px
+                          - height: 36px
+                          - padding-left: 5px
+                      state:
+                        - value: 'off'
+                          color: default
+                        - value: 'on'
+                          styles:
+                            card:
+                              - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
+#Outdoor On - only shows between 1 hour before sunset and sunrise, if outdoor lights off
+                  - type: conditional
+                    conditions:
+                      - condition: state
+                        entity: binary_sensor.scene_show_outdoor_on
+                        state: 'on'
+                    card:
+                      type: custom:button-card
+                      entity: sensor.scene_outdoor_on
+                      icon: mdi:outdoor-lamp
+                      layout: icon_label
+                      show_icon: true
+                      show_label: true
+                      show_name: false
+                      show_state: false
+                      label: Cleaning
+                      tap_action:
+                        action: call-service
+                        service: scene.turn_on
+                        target:
+                          entity_id: scene.outdoor_on
+                        data:
+                          transition: 3
+                      styles:
+                        card:
+                          - width: 460px
+                          - height: 85px
+                          - align-self: center
+                          - justify-self: start
+                          - justify-content: start
+                          - text-align: left
+                          - background-color: var(--background-color-2)  
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                          - margin-left: 10px
+                          - padding-left: 15px
+                        grid:
+                          - grid-template-areas: '"i l"'   # icon then label
+                          - grid-template-columns: 40px 1fr
+                          - justify-items: start
+                          - align-items: center
+                        label: 
+                          - font-size: 24px
+                          - font-weight: bold
+                          - justify-self: start
+                          - text-align: left
+                          - padding-left: 10px   # <-- add this for spacing from the icon
+                          - align-self: center
+                        img_cell:
+                          - align-self: center
+                          - justify-content: start
+                          - padding-left: 5px
+                        icon: 
+                          - width: 36px
+                          - height: 36px
+                          - padding-left: 5px
+                      state:
+                        - value: 'off'
+                          color: default
+                        - value: 'on'
+                          styles:
+                            card:
+                              - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
             scene4:
               card: 
                 type: custom:button-card
