@@ -41,12 +41,12 @@ cards:
               - background-color: transparent
             grid:
               - grid-template-areas: |
-                  "space"
                   "display"
+                  "space"
                   "keypad"
                   "controls"
               - grid-template-columns: auto
-              - grid-template-rows: 5px 40px 250px 55px
+              - grid-template-rows: 40px 5px 250px 55px
               - row-gap: 5px
               - align-items: center
               - justify-items: center
