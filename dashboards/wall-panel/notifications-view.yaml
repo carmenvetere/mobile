@@ -27,12 +27,28 @@ cards:
     custom_fields:
       header: !include header.yaml
       main:
-        card:
-          type: vertical-stack
-          cards: !include /config/dashboards/modules/notifications.yaml
-          card_mod:
-            style: |
-              ha-card {
-                padding-top: 10px !important;
-              }
+        card: 
+          type: custom:button-card
+          styles: 
+            card: 
+              - border-radius: 0px
+              - width: 480px
+              - height: 380px
+              - padding-top: 0px
+              - background: var(--background-color)
+            grid:
+              - grid-template-areas: |
+                  "notifications"
+              - grid-template-columns: auto
+              - grid-template-rows: 380px
+          custom_fields: 
+            notifications:
+              card:
+                type: vertical-stack
+                cards: !include /config/dashboards/modules/notifications.yaml
+                card_mod:
+                  style: |
+                    ha-card {
+                      padding-top: 10px !important;
+                    }
       nav: !include footer-menu.yaml
