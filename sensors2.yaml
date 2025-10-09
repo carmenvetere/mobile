@@ -209,7 +209,7 @@
         {% if sunset %}
           {% set sunset_time = as_datetime(sunset) %}
           {% set time_until_sunset = (sunset_time - now).total_seconds() / 3600 %}
-          {{ now >= start and (time_until_sunset > 1 or (time_until_sunset >= 0 and is_state('sun.sun', 'above_horizon'))) }}
+          {{ now >= start and time_until_sunset > 1 and time_until_sunset < 19 }}
         {% else %} 
           false 
         {% endif %}
@@ -222,7 +222,7 @@
         {% if sunset %}
           {% set sunset_time = as_datetime(sunset) %}
           {% set time_until_sunset = (sunset_time - now).total_seconds() / 3600 %}
-          {{ now >= start and (time_until_sunset > 1 or (time_until_sunset >= 0 and is_state('sun.sun', 'above_horizon'))) }}
+          {{ now >= start and time_until_sunset > 1 and time_until_sunset < 19 }}
         {% else %} 
           false 
         {% endif %}
