@@ -249,12 +249,10 @@
       unique_id: scene_show_basement_cleaning
       state: >
         {% set now = now() %}
-        {% set sunrise = state_attr('sun.sun','next_rising') %}
         {% set sunset = state_attr('sun.sun','next_setting') %}
-        {% if sunrise and sunset %}
-          {% set sunrise_time = as_datetime(sunrise) %}
+        {% if sunset %}
           {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
-          {{ sunrise_time <= now < one_hr_before_sunset }}
+          {{ is_state('sun.sun', 'above_horizon') and now < one_hr_before_sunset }}
         {% else %} 
           false 
         {% endif %}
@@ -264,17 +262,9 @@
       state: >
         {% set now = now() %}
         {% set sunset = state_attr('sun.sun','next_setting') %}
-        {% set sunrise = state_attr('sun.sun','next_rising') %}
-        {% if sunset and sunrise %}
+        {% if sunset %}
           {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
-          {% set sunrise_time = as_datetime(sunrise) %}
-          {% if sunset < sunrise %}
-            {# Currently daytime - check if within 1hr before sunset #}
-            {{ now >= one_hr_before_sunset and is_state('scene.outdoor_off', 'off') }}
-          {% else %}
-            {# Currently nighttime - check if before sunrise #}
-            {{ now < sunrise_time and is_state('scene.outdoor_off', 'off') }}
-          {% endif %}
+          {{ (now >= one_hr_before_sunset or is_state('sun.sun', 'below_horizon')) and is_state('scene.outdoor_off', 'off') }}
         {% else %} 
           false 
         {% endif %}
@@ -284,17 +274,9 @@
       state: >
         {% set now = now() %}
         {% set sunset = state_attr('sun.sun','next_setting') %}
-        {% set sunrise = state_attr('sun.sun','next_rising') %}
-        {% if sunset and sunrise %}
+        {% if sunset %}
           {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
-          {% set sunrise_time = as_datetime(sunrise) %}
-          {% if sunset < sunrise %}
-            {# Currently daytime - check if within 1hr before sunset #}
-            {{ now >= one_hr_before_sunset and is_state('scene.outdoor_off', 'on') }}
-          {% else %}
-            {# Currently nighttime - check if before sunrise #}
-            {{ now < sunrise_time and is_state('scene.outdoor_off', 'on') }}
-          {% endif %}
+          {{ (now >= one_hr_before_sunset or is_state('sun.sun', 'below_horizon')) and is_state('scene.outdoor_off', 'on') }}
         {% else %} 
           false 
         {% endif %}
