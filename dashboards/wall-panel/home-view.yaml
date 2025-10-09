@@ -631,7 +631,7 @@ cards:
                       show_label: true
                       show_name: false
                       show_state: false
-                      label: Cleaning
+                      label: Outdoor Off
                       tap_action:
                         action: call-service
                         service: scene.turn_on
@@ -672,12 +672,12 @@ cards:
                           - height: 36px
                           - padding-left: 5px
                       state:
-                        - value: 'off'
-                          color: default
                         - value: 'on'
+                          color: default
+                        - value: 'off'
                           styles:
                             card:
-                              - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
+                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
 #Outdoor On - only shows between 1 hour before sunset and sunrise, if outdoor lights off
                   - type: conditional
                     conditions:
