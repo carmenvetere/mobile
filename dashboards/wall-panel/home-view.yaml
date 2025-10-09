@@ -116,7 +116,7 @@ cards:
                         - value: 'on'
                           styles:
                             card:
-                            - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
+                              - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
 #Evening Button - only shows if someone is home, dinner party mode is off, and between 1 hour before sunset and 11pm
                   - type: conditional
                     conditions:
@@ -188,7 +188,7 @@ cards:
                         - value: 'on'
                           styles:
                             card:
-                            - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
+                              - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
 #Entertaining Button - only shows if someone is home, dinner party mode is on, and between 1 hour before sunset and 11pm
                   - type: conditional
                     conditions:
@@ -260,7 +260,7 @@ cards:
                         - value: 'on'
                           styles:
                             card:
-                            - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
+                              - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
 #Welcome Button - only shows if someone is home and arrived within the last 15 minutes, between 1 hour before sunset and 11pm
                   - type: conditional
                     conditions:
@@ -330,7 +330,7 @@ cards:
                         - value: 'on'
                           styles:
                             card:
-                            - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
+                              - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
             scene2:
               card: 
                 type: custom:button-card
