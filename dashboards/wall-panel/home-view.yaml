@@ -364,6 +364,68 @@ cards:
               card: 
                 type: vertical-stack
                 cards:
+#Laundry Scene - only show from 5am to 1 hr before sunset
+                  - type: conditional
+                    conditions:
+                      - condition: state
+                        entity: binary_sensor.scene_show_laundry
+                        state: 'on'
+                    card:
+                      type: custom:button-card
+                      entity: sensor.scene_basement_cleaning
+                      icon: mdi:washing-machine
+                      layout: icon_label
+                      show_icon: true
+                      show_label: true
+                      show_name: false
+                      show_state: false
+                      label: Laundry
+                      tap_action:
+                        action: call-service
+                        service: scene.turn_on
+                        target:
+                          entity_id: scene.basement_cleaning
+                        data:
+                          transition: 1
+                      styles:
+                        card:
+                          - width: 460px
+                          - height: 85px
+                          - align-self: center
+                          - justify-self: start
+                          - justify-content: start
+                          - text-align: left
+                          - background-color: var(--background-color-2)  
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                          - margin-left: 10px
+                          - padding-left: 15px
+                        grid:
+                          - grid-template-areas: '"i l"'   # icon then label
+                          - grid-template-columns: 40px 1fr
+                          - justify-items: start
+                          - align-items: center
+                        label: 
+                          - font-size: 24px
+                          - font-weight: bold
+                          - justify-self: start
+                          - text-align: left
+                          - padding-left: 10px   # <-- add this for spacing from the icon
+                          - align-self: center
+                        img_cell:
+                          - align-self: center
+                          - justify-content: start
+                          - padding-left: 5px
+                        icon: 
+                          - width: 36px
+                          - height: 36px
+                          - padding-left: 5px
+                      state:
+                        - value: 'off'
+                          color: default
+                        - value: 'on'
+                          styles:
+                            card:
+                              - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)  
 #Emergency Scene - only shows if Good Night Scene is on while 1 hr before sunset and 5am
                   - type: conditional
                     conditions:
