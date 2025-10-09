@@ -1,5 +1,5 @@
 title: Alarm
-theme: buttom
+theme: bubble
 path: alarm-view
 type: custom:grid-layout
 cards:
@@ -46,7 +46,7 @@ cards:
                   "controls"
               - grid-template-columns: auto
               - grid-template-rows: 40px 250px 55px
-              - row-gap: 10px
+              - row-gap: 5px
               - align-items: center
               - justify-items: center
           custom_fields:
