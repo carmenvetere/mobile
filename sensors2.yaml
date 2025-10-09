@@ -245,6 +245,60 @@
               and lc >= (now - timedelta(minutes=15)) }}
         {% else %} false {% endif %}
 
+    - name: scene_show_basement_cleaning
+      unique_id: scene_show_basement_cleaning
+      state: >
+        {% set now = now() %}
+        {% set sunrise = state_attr('sun.sun','next_rising') %}
+        {% set sunset = state_attr('sun.sun','next_setting') %}
+        {% if sunrise and sunset %}
+          {% set sunrise_time = as_datetime(sunrise) %}
+          {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
+          {{ sunrise_time <= now < one_hr_before_sunset }}
+        {% else %} 
+          false 
+        {% endif %}
+
+    - name: scene_show_outdoor_off
+      unique_id: scene_show_outdoor_off
+      state: >
+        {% set now = now() %}
+        {% set sunset = state_attr('sun.sun','next_setting') %}
+        {% set sunrise = state_attr('sun.sun','next_rising') %}
+        {% if sunset and sunrise %}
+          {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
+          {% set sunrise_time = as_datetime(sunrise) %}
+          {% if sunset < sunrise %}
+            {# Currently daytime - check if within 1hr before sunset #}
+            {{ now >= one_hr_before_sunset and is_state('scene.outdoor_off', 'off') }}
+          {% else %}
+            {# Currently nighttime - check if before sunrise #}
+            {{ now < sunrise_time and is_state('scene.outdoor_off', 'off') }}
+          {% endif %}
+        {% else %} 
+          false 
+        {% endif %}
+
+    - name: scene_show_outdoor_on
+      unique_id: scene_show_outdoor_on
+      state: >
+        {% set now = now() %}
+        {% set sunset = state_attr('sun.sun','next_setting') %}
+        {% set sunrise = state_attr('sun.sun','next_rising') %}
+        {% if sunset and sunrise %}
+          {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
+          {% set sunrise_time = as_datetime(sunrise) %}
+          {% if sunset < sunrise %}
+            {# Currently daytime - check if within 1hr before sunset #}
+            {{ now >= one_hr_before_sunset and is_state('scene.outdoor_off', 'on') }}
+          {% else %}
+            {# Currently nighttime - check if before sunrise #}
+            {{ now < sunrise_time and is_state('scene.outdoor_off', 'on') }}
+          {% endif %}
+        {% else %} 
+          false 
+        {% endif %}
+
 - trigger:
     - trigger: event
       event_type: bubble_card_update_modules
