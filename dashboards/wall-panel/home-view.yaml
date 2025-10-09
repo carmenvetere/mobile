@@ -430,7 +430,7 @@ cards:
                   - type: conditional
                     conditions:
                       - condition: state
-                        entity: binary_sensor.scene_show_outdoor_off
+                        entity: binary_sensor.scene_show_emergency
                         state: 'on'
                     card:
                       type: custom:button-card
