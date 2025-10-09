@@ -122,7 +122,7 @@ card:
           show_state: true
           tap_action:
             action: navigate
-            navigation_path: /mudroom-wall-panel-dash/notifications
+            navigation_path: /mudroom-wall-panel-dash/notifications-view
           styles:
             state:
               - font-size: 18px
@@ -152,9 +152,6 @@ card:
               - align-self: center
               - justify-self: center
               - background: transparent
-        tap_action:
-          action: navigate
-          navigation_path: /mudroom-wall-panel-dash/notifications-view
     modes: 
       card:
         type: custom:stack-in-card
