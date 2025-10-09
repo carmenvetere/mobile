@@ -37,12 +37,13 @@ cards:
               - background: var(--ha-card-background-2)
             grid:
               - grid-template-areas: |
+                  "space"
                   "scene1"
                   "scene2"
                   "scene3"
                   "scene4"
               - grid-template-columns: auto
-              - grid-template-rows: 85px 85px 85px 85px
+              - grid-template-rows: 5px 85px 85px 85px 85px
               - row-gap: 7px
           custom_fields: 
             scene1:
@@ -75,7 +76,6 @@ cards:
                     - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     - margin-left: 10px
                     - padding-left: 15px
-                    - padding-top: 5px
                   grid:
                     - grid-template-areas: '"i l"'   # icon then label
                     - grid-template-columns: 40px 1fr
