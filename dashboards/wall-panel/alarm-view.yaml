@@ -38,7 +38,7 @@ cards:
               - padding: 12px
               - margin: 0px
               - border-radius: 0px
-              - background-color: transparent
+              - background: var(--background-color)
             grid:
               - grid-template-areas: |
                   "display"
@@ -115,6 +115,7 @@ cards:
                           - width: 85px
                           - border-radius: 8px
                           - background-color: var(--ha-card-background-2)
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
                           - font-size: 20px

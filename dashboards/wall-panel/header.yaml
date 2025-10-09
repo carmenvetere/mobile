@@ -95,6 +95,9 @@ card:
             - align-self: center
             - justify-self: start
             - background: transparent
+        tap_action:
+          action: navigate
+          navigation_path: /mudroom-wall-panel-dash/alarm-view
     notifications:
       card:
         type: conditional
@@ -149,6 +152,9 @@ card:
               - align-self: center
               - justify-self: center
               - background: transparent
+        tap_action:
+          action: navigate
+          navigation_path: /mudroom-wall-panel-dash/notifications-view
     modes: 
       card:
         type: custom:stack-in-card
