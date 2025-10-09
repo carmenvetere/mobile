@@ -211,6 +211,16 @@
           {{ start <= now < one_hr_before }}
         {% else %} false {% endif %}
 
+    - name: scene_show_laundry
+      state: >
+        {% set now = now() %}
+        {% set start = today_at('05:00') %}
+        {% set ns = state_attr('sun.sun','next_setting') %}
+        {% if ns %}
+          {% set one_hr_before = as_datetime(ns) - timedelta(hours=1) %}
+          {{ start <= now < one_hr_before }}
+        {% else %} false {% endif %}
+
     - name: scene_show_basement_evening
       state: >
         {% set now = now() %}
