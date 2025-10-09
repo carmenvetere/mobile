@@ -205,55 +205,74 @@
       state: >
         {% set now = now() %}
         {% set start = today_at('05:00') %}
-        {% set ns = state_attr('sun.sun','next_setting') %}
-        {% if ns %}
-          {% set one_hr_before = as_datetime(ns) - timedelta(hours=1) %}
-          {{ start <= now < one_hr_before }}
-        {% else %} false {% endif %}
+        {% set sunset = state_attr('sun.sun','next_setting') %}
+        {% if sunset %}
+          {% set sunset_time = as_datetime(sunset) %}
+          {% set time_until_sunset = (sunset_time - now).total_seconds() / 3600 %}
+          {{ now >= start and (time_until_sunset > 1 or (time_until_sunset >= 0 and is_state('sun.sun', 'above_horizon'))) }}
+        {% else %} 
+          false 
+        {% endif %}
 
     - name: scene_show_laundry
       state: >
         {% set now = now() %}
         {% set start = today_at('05:00') %}
-        {% set ns = state_attr('sun.sun','next_setting') %}
-        {% if ns %}
-          {% set one_hr_before = as_datetime(ns) - timedelta(hours=1) %}
-          {{ start <= now < one_hr_before }}
-        {% else %} false {% endif %}
+        {% set sunset = state_attr('sun.sun','next_setting') %}
+        {% if sunset %}
+          {% set sunset_time = as_datetime(sunset) %}
+          {% set time_until_sunset = (sunset_time - now).total_seconds() / 3600 %}
+          {{ now >= start and (time_until_sunset > 1 or (time_until_sunset >= 0 and is_state('sun.sun', 'above_horizon'))) }}
+        {% else %} 
+          false 
+        {% endif %}
 
     - name: scene_show_basement_evening
       state: >
         {% set now = now() %}
-        {% set ns = state_attr('sun.sun','next_setting') %}
-        {% if ns %}
-          {% set one_hr_before = as_datetime(ns) - timedelta(hours=1) %}
+        {% set sunset = state_attr('sun.sun','next_setting') %}
+        {% set end_time = today_at('23:00') %}
+        {% if sunset %}
+          {% set sunset_time = as_datetime(sunset) %}
+          {% set time_until_sunset = (sunset_time - now).total_seconds() / 3600 %}
           {{ is_state('binary_sensor.someone_home','on')
               and is_state('input_boolean.dinner_party','off')
-              and one_hr_before <= now <= today_at('23:00') }}
-        {% else %} false {% endif %}
+              and ((time_until_sunset <= 1 and time_until_sunset >= 0) or is_state('sun.sun', 'below_horizon'))
+              and now < end_time }}
+        {% else %} 
+          false 
+        {% endif %}
 
     - name: scene_show__basement_entertaining
       state: >
         {% set now = now() %}
-        {% set ns = state_attr('sun.sun','next_setting') %}
-        {% if ns %}
-          {% set one_hr_before = as_datetime(ns) - timedelta(hours=1) %}
+        {% set sunset = state_attr('sun.sun','next_setting') %}
+        {% set end_time = today_at('23:00') %}
+        {% if sunset %}
+          {% set sunset_time = as_datetime(sunset) %}
+          {% set time_until_sunset = (sunset_time - now).total_seconds() / 3600 %}
           {{ is_state('binary_sensor.someone_home','on')
               and is_state('input_boolean.dinner_party','on')
-              and one_hr_before <= now <= today_at('23:00') }}
-        {% else %} false {% endif %}
+              and ((time_until_sunset <= 1 and time_until_sunset >= 0) or is_state('sun.sun', 'below_horizon'))
+              and now < end_time }}
+        {% else %} 
+          false 
+        {% endif %}
 
     - name: scene_show_welcome
       state: >
         {% set now = now() %}
-        {% set ns = state_attr('sun.sun','next_setting') %}
-        {% if ns %}
-          {% set one_hr_before = as_datetime(ns) - timedelta(hours=1) %}
+        {% set sunset = state_attr('sun.sun','next_setting') %}
+        {% if sunset %}
+          {% set sunset_time = as_datetime(sunset) %}
+          {% set time_until_sunset = (sunset_time - now).total_seconds() / 3600 %}
           {% set lc = states.binary_sensor.someone_home.last_changed %}
           {{ is_state('binary_sensor.someone_home','on')
-              and now >= one_hr_before
+              and ((time_until_sunset <= 1 and time_until_sunset >= 0) or is_state('sun.sun', 'below_horizon'))
               and lc >= (now - timedelta(minutes=15)) }}
-        {% else %} false {% endif %}
+        {% else %} 
+          false 
+        {% endif %}
 
     - name: scene_show_basement_cleaning
       unique_id: scene_show_basement_cleaning
@@ -273,8 +292,9 @@
         {% set now = now() %}
         {% set sunset = state_attr('sun.sun','next_setting') %}
         {% if sunset %}
-          {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
-          {{ (now >= one_hr_before_sunset or is_state('sun.sun', 'below_horizon')) and is_state('scene.outdoor_off', 'off') }}
+          {% set sunset_time = as_datetime(sunset) %}
+          {% set time_until_sunset = (sunset_time - now).total_seconds() / 3600 %}
+          {{ ((time_until_sunset <= 1 and time_until_sunset >= 0) or is_state('sun.sun', 'below_horizon')) and is_state('sensor.scene_outdoor_off', 'off') }}
         {% else %} 
           false 
         {% endif %}
@@ -285,8 +305,9 @@
         {% set now = now() %}
         {% set sunset = state_attr('sun.sun','next_setting') %}
         {% if sunset %}
-          {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
-          {{ (now >= one_hr_before_sunset or is_state('sun.sun', 'below_horizon')) and is_state('scene.outdoor_off', 'on') }}
+          {% set sunset_time = as_datetime(sunset) %}
+          {% set time_until_sunset = (sunset_time - now).total_seconds() / 3600 %}
+          {{ ((time_until_sunset <= 1 and time_until_sunset >= 0) or is_state('sun.sun', 'below_horizon')) and is_state('sensor.scene_outdoor_off', 'on') }}
         {% else %} 
           false 
         {% endif %}
@@ -299,7 +320,7 @@
         {% set end_time = today_at('05:00') %}
         {% if sunset %}
           {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
-          {{ (now >= one_hr_before_sunset or now < end_time) and is_state('sensor.scene_good_night', 'on') }}
+          {{ ((is_state('sun.sun', 'below_horizon') and now < end_time) or (now >= one_hr_before_sunset)) and is_state('sensor.scene_good_night', 'on') }}
         {% else %} 
           false 
         {% endif %}
@@ -320,7 +341,7 @@
         {% set end_time = today_at('23:00') %}
         {% if sunset %}
           {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
-          {{ now >= one_hr_before_sunset and now < end_time }}
+          {{ (is_state('sun.sun', 'below_horizon') and now < end_time) or (now >= one_hr_before_sunset and now < end_time) }}
         {% else %} 
           false 
         {% endif %}
