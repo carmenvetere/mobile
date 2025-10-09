@@ -294,6 +294,27 @@
           false 
         {% endif %}
 
+    - name: scene_show_nightlight_slot_1
+      unique_id: scene_show_nightlight_slot_1
+      state: >
+        {% set now = now() %}
+        {% set start_time = today_at('23:00') %}
+        {% set end_time = today_at('05:00') %}
+        {{ now >= start_time or now < end_time }}
+
+    - name: scene_show_nightlight_slot_2
+      unique_id: scene_show_nightlight_slot_2
+      state: >
+        {% set now = now() %}
+        {% set sunset = state_attr('sun.sun','next_setting') %}
+        {% set end_time = today_at('23:00') %}
+        {% if sunset %}
+          {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
+          {{ now >= one_hr_before_sunset and now < end_time }}
+        {% else %} 
+          false 
+        {% endif %}
+
 - trigger:
     - trigger: event
       event_type: bubble_card_update_modules
