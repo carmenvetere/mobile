@@ -281,6 +281,19 @@
           false 
         {% endif %}
 
+    - name: scene_show_emergency
+      unique_id: scene_show_emergency
+      state: >
+        {% set now = now() %}
+        {% set sunset = state_attr('sun.sun','next_setting') %}
+        {% set end_time = today_at('05:00') %}
+        {% if sunset %}
+          {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
+          {{ (now >= one_hr_before_sunset or now < end_time) and is_state('sensor.scene_good_night', 'on') }}
+        {% else %} 
+          false 
+        {% endif %}
+
 - trigger:
     - trigger: event
       event_type: bubble_card_update_modules
