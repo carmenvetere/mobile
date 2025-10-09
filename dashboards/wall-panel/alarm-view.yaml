@@ -27,7 +27,6 @@ cards:
       main:
         card:
           type: custom:button-card
-          entity: alarm_control_panel.alarmo
           show_name: false
           show_icon: false
           show_state: false
@@ -138,6 +137,7 @@ cards:
                           - width: 85px
                           - border-radius: 8px
                           - background-color: var(--ha-card-background-2)
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px                          
                         label:
                           - color: var(--primary-text-color)
                           - font-size: 20px
@@ -160,6 +160,7 @@ cards:
                           - width: 85px
                           - border-radius: 8px
                           - background-color: var(--ha-card-background-2)
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
                           - font-size: 20px
@@ -182,6 +183,7 @@ cards:
                           - width: 85px
                           - border-radius: 8px
                           - background-color: var(--ha-card-background-2)
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
                           - font-size: 20px
@@ -204,6 +206,7 @@ cards:
                           - width: 85px
                           - border-radius: 8px
                           - background-color: var(--ha-card-background-2)
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
                           - font-size: 20px
@@ -226,6 +229,7 @@ cards:
                           - width: 85px
                           - border-radius: 8px
                           - background-color: var(--ha-card-background-2)
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
                           - font-size: 20px
@@ -248,6 +252,7 @@ cards:
                           - width: 85px
                           - border-radius: 8px
                           - background-color: var(--ha-card-background-2)
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
                           - font-size: 20px
@@ -264,6 +269,7 @@ cards:
                         service: input_text.set_value
                         service_data:
                           entity_id: input_text.alarm_code_input
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                       styles:
                         card:
                           - height: 60px
@@ -286,6 +292,7 @@ cards:
                         service: input_text.set_value
                         service_data:
                           entity_id: input_text.alarm_code_input
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                       styles:
                         card:
                           - height: 60px
@@ -314,6 +321,7 @@ cards:
                           - width: 85px
                           - border-radius: 8px
                           - background-color: var(--ha-card-background-2)
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
                           - font-size: 20px
@@ -336,6 +344,7 @@ cards:
                           - width: 85px
                           - border-radius: 8px
                           - background-color: var(--ha-card-background-2)
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         icon:
                           - color: '#D32F2F'
                           - size: 20px
@@ -356,6 +365,7 @@ cards:
                           - width: 85px
                           - border-radius: 8px
                           - background-color: var(--ha-card-background-2)
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         icon:
                           - color: '#388E3C'
                           - size: 20px                          
