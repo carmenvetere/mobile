@@ -37,9 +37,8 @@ card:
             - height: 30px
             - color: |
                 [[[
-                  return window.location.hash.includes('home-view')
-                    ? 'var(--accent-color)' 
-                    : 'var(--primary-text-color)';
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('home-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
                 ]]]
         tap_action:
           action: navigate
