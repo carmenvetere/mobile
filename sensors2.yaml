@@ -193,19 +193,12 @@
       device_class: energy
       state_class: total_increasing
       state: >
-        availability: >
-          {{ not is_state('sensor.bayberry_home_usage', 'unavailable')
-            and not is_state('sensor.well_pump_energy2', 'unavailable')
-            and not is_state('sensor.pool_pump_energy', 'unavailable')
-            and not is_state('sensor.smithy_energy_usage_2', 'unavailable')
-            and not is_state('sensor.wall_charger_energy', 'unavailable') }}
-        state: >
-          {% set total = states('sensor.bayberry_home_usage') | float(0) %}
-          {% set well  = states('sensor.well_pump_energy2') | float(0) %}
-          {% set pool  = states('sensor.pool_pump_energy') | float(0) %}
-          {% set water = states('sensor.smithy_energy_usage_2') | float(0) %}
-          {% set ev    = states('sensor.wall_charger_energy') | float(0) %}
-          {{ [ total - well - pool - water - ev, 0 ] | max | round(2) }}
+        {% set total = states('sensor.bayberry_home_usage') | float(0) %}
+        {% set well  = states('sensor.well_pump_energy2') | float(0) %}
+        {% set pool  = states('sensor.pool_pump_energy') | float(0) %}
+        {% set water = states('sensor.smithy_energy_usage_2') | float(0) %}
+        {% set ev    = states('sensor.wall_charger_energy') | float(0) %}
+        {{ [ total - well - pool - water - ev, 0 ] | max | round(2) }}
 
 - binary_sensor:
     - name: scene_show_morning
