@@ -337,14 +337,16 @@
       unique_id: scene_show_nightlight_slot_2
       state: >
         {% set now = now() %}
-        {% set sunset = state_attr('sun.sun','next_setting') %}
-        {% set end_time = today_at('23:00') %}
-        {% if sunset %}
-          {% set one_hr_before_sunset = as_datetime(sunset) - timedelta(hours=1) %}
-          {{ (is_state('sun.sun', 'below_horizon') and now < end_time) or (now >= one_hr_before_sunset and now < end_time) }}
-        {% else %} 
-          false 
-        {% endif %}
+          {% set sunset = state_attr('sun.sun','next_setting') %}
+          {% set start_time = today_at('23:00') - timedelta(days=1) %}
+          {% set end_time = today_at('05:00') %}
+          {% if sunset %}
+            {% set sunset_time = as_datetime(sunset) %}
+            {% set time_until_sunset = (sunset_time - now).total_seconds() / 3600 %}
+            {{ ((time_until_sunset <= 1 and time_until_sunset >= 0) or (is_state('sun.sun', 'below_horizon') and now >= start_time)) and now < end_time }}
+          {% else %} 
+            false 
+          {% endif %}
 
 - trigger:
     - trigger: event
