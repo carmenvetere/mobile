@@ -43,18 +43,21 @@ cards:
                     box-shadow: none !important;
                   }
                     }
-                    .name {
-                      display: none !important;
-                    }
-                    .current {
-                      text-align: left !important;
-                    }
+                  .name {
+                    display: none !important;
+                  }
+                  .name-state {
+                    justify-content: flex-start !important;
+                  }
+                  .state {
+                    text-align: left !important;
+                  }
             - type: weather-forecast
               show_current: false
               show_forecast: true
               entity: weather.bayberry
               forecast_type: hourly
-              forecast_slots: 8
+              forecast_slots: 6
               tap_action:
                 action: none
               card_mod:
