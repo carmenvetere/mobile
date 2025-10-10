@@ -1,0 +1,38 @@
+title: Weather
+theme: Bubble
+path: weather-view
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 0px
+        - padding-bottom: 5px
+        - padding-left: 0px
+        - padding-top: 0px
+        - height: 480px
+        - width: 480px
+        - background: var(--background-color)
+      grid:
+        - grid-template-areas: |
+            "header"
+            "main"
+            "nav"
+        - grid-template-columns: auto
+        - grid-template-rows: 50px 380px 50px
+        - align-items: center
+        - column-gap: 0px
+    custom_fields:
+      header: !include header.yaml
+      main:
+        card:
+          type: weather-forecast
+          show_current: true
+          show_forecast: true
+          entity: weather.bayberry
+          forecast_type: daily
+          forecast_slots: 5
+          theme: Bubble
+          tap_action:
+            action: none
+      nav: !include footer-menu.yaml
