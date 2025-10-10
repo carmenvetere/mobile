@@ -26,13 +26,34 @@ cards:
       header: !include header.yaml
       main:
         card:
-          type: weather-forecast
-          show_current: true
-          show_forecast: true
-          entity: weather.bayberry
-          forecast_type: daily
-          forecast_slots: 5
-          theme: Bubble
-          tap_action:
-            action: none
+          type: vertical-stack
+          cards:
+            - type: weather-forecast
+              show_current: true
+              show_forecast: true
+              entity: weather.bayberry
+              forecast_type: daily
+              forecast_slots: 5
+              tap_action:
+                action: none
+              card_mod:
+                style: |
+                  ha-card {
+                    background: transparent !important;
+                    box-shadow: none !important;
+                  }
+            - type: weather-forecast
+              show_current: false
+              show_forecast: true
+              entity: weather.bayberry
+              forecast_type: hourly
+              forecast_slots: 8
+              tap_action:
+                action: none
+              card_mod:
+                style: |
+                  ha-card {
+                    background: transparent !important;
+                    box-shadow: none !important;
+                  }
       nav: !include footer-menu.yaml
