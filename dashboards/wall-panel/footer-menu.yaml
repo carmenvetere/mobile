@@ -36,6 +36,15 @@ card:
             - color: var(--primary-text-color)
             - width: 30px
             - height: 30px
+            - color: |
+                [[[
+                  return window.location.hash.includes('home-view')
+                    ? 'var(--accent-color)' 
+                    : 'var(--primary-text-color)';
+                ]]]
+        tap_action:
+          action: navigate
+          navigation_path: /mudroom-wall-panel-dash/home-view
     lights:
       card:
         type: custom:button-card
