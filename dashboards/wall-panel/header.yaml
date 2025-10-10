@@ -260,6 +260,9 @@ card:
             var temp = states['sensor.bayberry_tempest_temperature'].state;
             return Math.round(temp) + '°F';
           ]]]
+        tap_action:
+          action: navigate
+          navigation_path: /mudroom-wall-panel-dash/weather-view
         styles:
           state:
             - font-size: 18px
