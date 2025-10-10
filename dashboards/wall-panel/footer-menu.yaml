@@ -31,14 +31,18 @@ card:
             - height: 55px
             - align-self: center
             - justify-self: center
-            - background: transparent
+            - background: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('home-view') ? 'var(--primary-text-color)' : 'black';
+                ]]]
           icon:
             - width: 30px
             - height: 30px
             - color: |
                 [[[
                   const path = window.location.pathname + window.location.hash;
-                  return path.includes('home-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                  return path.includes('home-view') ? 'black' : 'var(--primary-text-color)';
                 ]]]
         tap_action:
           action: navigate
