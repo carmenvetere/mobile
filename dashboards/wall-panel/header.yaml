@@ -201,6 +201,7 @@ card:
             type: custom:button-card
             entity: input_boolean.guest_mode
             icon: mdi:king-bed
+            layout: icon
             show_icon: true
             show_label: false
             show_name: false
@@ -211,7 +212,7 @@ card:
               icon:
                 - width: 24px
                 - height: 24px
-                - color: white
+                - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
                 - justify-content: center
