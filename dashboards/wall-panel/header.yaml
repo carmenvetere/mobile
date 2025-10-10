@@ -156,6 +156,11 @@ card:
       card:
         type: custom:stack-in-card
         mode: horizontal
+        card_mod:
+          style: |
+            ha-card {
+              background: black !important;
+            }
         cards:
         - type: conditional
           conditions:
