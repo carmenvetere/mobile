@@ -41,22 +41,16 @@ entities:
     entity: sensor.bayberry_battery_power
     state_of_charge: sensor.bayberry_charge
     color:
-      consumption: '#2ECC71'
-      production: '#2ECC71'
+      consumption: '#327C7F'
+      production: '#327C7F'
     color_icon: true
     show_state_of_charge: true
   grid:
     entity: sensor.bayberry_site_power
     color_icon: false
     color:
-      consumption:
-        - 0
-        - 109
-        - 143
-      production:
-        - 96
-        - 96
-        - 96
+      consumption: var(--primary-text-color)
+      production: var(--primary-text-color)
       color_value: true
     power_outage:
       icon_alert: mdi:flash-alert
@@ -69,10 +63,7 @@ entities:
   solar:
     entity: sensor.bayberry_solar_power
     color_icon: false
-    color:
-      - 245
-      - 236
-      - 0
+    color: "#dd8e02"
   home:
     entity: sensor.bayberry_load_power
     subtract_individual: true
