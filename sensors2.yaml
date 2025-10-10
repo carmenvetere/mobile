@@ -237,7 +237,7 @@
           {% set time_until_sunset = (sunset_time - now).total_seconds() / 3600 %}
           {{ is_state('binary_sensor.someone_home','on')
               and is_state('input_boolean.dinner_party','off')
-              and ((time_until_sunset <= 1 and time_until_sunset >= 0) or is_state('sun.sun', 'below_horizon'))
+              and ((time_until_sunset <= 1 and time_until_sunset >= 0) or (is_state('sun.sun', 'below_horizon') and now.hour >= 12))
               and now < end_time }}
         {% else %} 
           false 
