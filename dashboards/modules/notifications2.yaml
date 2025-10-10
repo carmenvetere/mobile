@@ -1,0 +1,37 @@
+- type: custom:button-card
+  entity: sensor.nws_alerts_alerts
+  show_name: true
+  show_icon: true
+  name: Active Weather Alert!
+  icon: mdi:weather-hurricane
+  tap_action:
+    action: navigate
+    navigation_path: /mobile-dash/weather
+  show_state: false
+  show_label: false
+  state:
+    - operator: '>'
+      value: 0
+      styles:
+        card:
+          - background-color: var(--background-color-2)
+          - border-radius: 10px
+          - margin: 2px 10px 2px 10px
+          - max-width: 95%
+          - height: 50px
+          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+        icon:
+          - color: '#EF8C00'
+          - width: 24px
+          - height: 24px
+        name:
+          - color: var(--primary-text-color)
+          - font-weight: bold
+          - font-size: 14px
+  styles:
+    card:
+      - background: none
+      - border: none
+      - box-shadow: none
+      - height: 0px
+      - padding: 0

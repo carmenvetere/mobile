@@ -46,7 +46,7 @@ cards:
             notifications:
               card:
                 type: vertical-stack
-                cards: !include /config/dashboards/modules/notifications.yaml
+                cards: !include /config/dashboards/modules/notifications2.yaml
                 card_mod:
                   style: |
                     ha-card {
