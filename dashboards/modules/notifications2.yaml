@@ -1,46 +1,155 @@
+# Power Outage
 - type: custom:button-card
-  entity: sensor.nws_alerts_alerts
-  name: Active Weather Alert!
-  icon: mdi:weather-hurricane
-  tap_action:
-    action: navigate
-    navigation_path: /mobile-dash/weather
+  entity: binary_sensor.bayberry_grid_status
+  name: Power outage!
+  icon: mdi:flash-alert
+  layout: icon_name
   show_state: false
   show_label: false
   show_name: true
   show_icon: true
-  layout: icon_name
-  state:
-    - operator: '>'
-      value: 0
-      styles:
-        card:
-          - background-color: var(--background-color-2)
-          - border-radius: 10px
-          - margin: 2px 10px 2px 10px
-          - max-width: 95%
-          - height: 50px
-          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-          - justify-content: flex-start
-          - padding-left: 12px
-        grid:
-          - grid-template-areas: '"i n"'
-          - grid-template-columns: 32px auto
-          - align-items: center
-        icon:
-          - color: '#EF8C00'
-          - width: 28px
-          - height: 28px
-          - justify-self: start
-        name:
-          - color: var(--primary-text-color)
-          - font-weight: bold
-          - font-size: 18px
-          - justify-self: start
+  tap_action:
+    action: navigate
+    navigation_path: /mobile-dash/energy
+  visibility:
+    - condition: state
+      entity: binary_sensor.bayberry_grid_status
+      state: 'off'
   styles:
     card:
-      - background: none
-      - border: none
-      - box-shadow: none
-      - height: 0px
-      - padding: 0
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - align-items: center
+    icon:
+      - color: '#EA4D3D'
+      - width: 28px
+      - height: 28px
+      - justify-self: start
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Power Outage & Powerwall Charge Low
+- type: custom:button-card
+  entity: sensor.bayberry_charge
+  name: Powerwall Charge Low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+    entity: sensor.powerwall_discharge_time
+  visibility:
+    - condition: state
+      entity: binary_sensor.bayberry_grid_status
+      state: 'off'
+    - condition: numeric_state
+      entity: sensor.bayberry_charge
+      below: 25
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - align-items: center
+    icon:
+      - color: '#EA4D3D'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Alarm Triggered
+- type: custom:button-card
+  entity: alarm_control_panel.bayberry_alarm_v2
+  name: Alarm Triggered!
+  icon: mdi:shield-alert
+  layout: icon_name
+  tap_action:
+    action: navigate
+    navigation_path: /mobile-dash/security
+  visibility:
+    - condition: state
+      entity: alarm_control_panel.bayberry_alarm_v2
+      state: triggered
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - align-items: center
+    icon:
+      - color: '#EA4D3D'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# NWS Weather Alerts
+- type: custom:button-card
+  entity: sensor.nws_alerts_alerts
+  name: Active Weather Alert!
+  icon: mdi:weather-hurricane
+  layout: icon_name
+  tap_action:
+    action: navigate
+    navigation_path: /mobile-dash/weather
+  visibility:
+    - condition: numeric_state
+      entity: sensor.nws_alerts_alerts
+      above: 0
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - align-items: center
+    icon:
+      - color: '#EF8C00'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start      
