@@ -42,6 +42,13 @@ cards:
                     background: transparent !important;
                     box-shadow: none !important;
                   }
+                    }
+                    .name {
+                      display: none !important;
+                    }
+                    .current {
+                      text-align: left !important;
+                    }
             - type: weather-forecast
               show_current: false
               show_forecast: true
