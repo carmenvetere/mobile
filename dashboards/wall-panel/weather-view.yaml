@@ -20,7 +20,7 @@ cards:
             "nav"
         - grid-template-columns: auto
         - grid-template-rows: 50px 380px 50px
-        - align-items: center
+        - align-items: start
         - column-gap: 0px
     custom_fields:
       header: !include header.yaml
@@ -31,6 +31,7 @@ cards:
             - type: weather-forecast
               show_current: true
               show_forecast: true
+              name: ""
               entity: weather.bayberry
               forecast_type: daily
               forecast_slots: 5
@@ -43,12 +44,6 @@ cards:
                     box-shadow: none !important;
                   }
                     }
-                  .name {
-                    display: none !important;
-                    visibility: hidden !important;
-                    height: 0 !important;
-                    width: 0 !important;
-                  }
                   .name-state {
                     justify-content: flex-start !important;
                   }
