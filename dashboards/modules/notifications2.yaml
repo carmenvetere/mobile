@@ -165,61 +165,54 @@
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
-      - |
-        height: [[[ 
-          return window.location.pathname.includes('wall-panel-dash') 
-            ? '100px' 
-            : '50px'; 
-        ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - |
-        width: [[[ 
-          return window.location.pathname.includes('wall-panel-dash') 
-            ? '64px' 
-            : '32px'; 
-        ]]]
-      - |
-        height: [[[ 
-          return window.location.pathname.includes('wall-panel-dash') 
-            ? '64px' 
-            : '32px'; 
-        ]]]
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - |
-        grid-template-columns: [[[ 
-          return window.location.pathname.includes('wall-panel-dash') 
-            ? '64px auto' 
-            : '32px auto'; 
-        ]]]
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - |
-        width: [[[ 
-          return window.location.pathname.includes('wall-panel-dash') 
-            ? '56px' 
-            : '28px'; 
-        ]]]
-      - |
-        height: [[[ 
-          return window.location.pathname.includes('wall-panel-dash') 
-            ? '56px' 
-            : '28px'; 
-        ]]]
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
       - justify-self: start
-      - |
-        font-size: [[[ 
-          return window.location.pathname.includes('wall-panel-dash') 
-            ? '36px' 
-            : '18px'; 
-        ]]]     
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Storm Watch Active
 - type: custom:button-card
