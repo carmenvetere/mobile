@@ -210,12 +210,14 @@ cards:
                     data:
                       transition: 3
                   visibility:
-                  - condition: state
-                    entity: schedule.day_scene_buttons
-                    state: "on"
-                  - condition: numeric_state
-                    entity: sensor.sun_solar_elevation
-                    above: 4
+                    - condition: and
+                      conditions:
+                      - condition: state
+                        entity: schedule.day_scene_buttons
+                        state: "on"
+                      - condition: numeric_state
+                        entity: sensor.sun_solar_elevation
+                        above: 4
                   styles:
                     card:
                       - max-width: 95%
@@ -273,17 +275,19 @@ cards:
                     data:
                       transition: 3
                   visibility:
-                    - condition: and
+                    - condition: or
                       conditions:
-                        - condition: numeric_state
-                          entity: sensor.sun_solar_elevation
-                          below: 4
                         - condition: state
-                          entity: schedule.evening_scene_buttons
+                          entity: schedule.night_scene_buttons
                           state: "on"
-                    - condition: state
-                      entity: schedule.night_scene_buttons
-                      state: "on"
+                        - condition: and
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.sun_solar_elevation
+                              below: 4
+                            - condition: state
+                              entity: schedule.evening_scene_buttons
+                              state: "on"
                   styles:
                     card:
                       - max-width: 95%
@@ -345,12 +349,14 @@ cards:
                     data:
                       transition: 3
                   visibility:
-                  - condition: state
-                    entity: schedule.day_scene_buttons
-                    state: "on"
-                  - condition: numeric_state
-                    entity: sensor.sun_solar_elevation
-                    above: 4
+                    - condition: and
+                      conditions:
+                      - condition: state
+                        entity: schedule.day_scene_buttons
+                        state: "on"
+                      - condition: numeric_state
+                        entity: sensor.sun_solar_elevation
+                        above: 4
                   styles:
                     card:
                       - max-width: 95%
@@ -408,14 +414,19 @@ cards:
                     data:
                       transition: 3
                   visibility:
-                    - condition: and
+                    - condition: or
                       conditions:
-                        - condition: numeric_state
-                          entity: sensor.sun_solar_elevation
-                          below: 4
                         - condition: state
-                          entity: schedule.evening_scene_buttons
+                          entity: schedule.night_scene_buttons
                           state: "on"
+                        - condition: and
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.sun_solar_elevation
+                              below: 4
+                            - condition: state
+                              entity: schedule.evening_scene_buttons
+                              state: "on"
                   styles:
                     card:
                       - max-width: 95%
