@@ -141,11 +141,17 @@
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
       - align-items: center
-      - grid-template-rows: 50px
     icon:
       - color: '#EF8C00'
       - width: 28px
@@ -154,7 +160,7 @@
       - color: var(--primary-text-color)
       - font-weight: bold
       - font-size: 18px
-      - justify-self: start      
+      - justify-self: start       
 
 # Storm Watch Active
 - type: custom:button-card
