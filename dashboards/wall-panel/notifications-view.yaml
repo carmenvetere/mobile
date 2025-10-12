@@ -10,9 +10,8 @@ cards:
         - padding-bottom: 5px
         - padding-left: 0px
         - padding-top: 0px
-        - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-        - width: 480px
-        - height: 480px
+        - width: 750px
+        - height: 1334px
         - background: var(--background-color)
       grid:
         - grid-template-areas: |
@@ -20,10 +19,10 @@ cards:
             "main"
             "nav"
         - grid-template-columns: auto
-        - grid-template-rows: 50px 370px 50px
+        - grid-template-rows: 100px 1134px 100px
         - align-items: start
         - column-gap: 2px
-        - row-gap: 5px
+        - row-gap: 0px
     custom_fields:
       header: !include header.yaml
       main:
@@ -32,15 +31,15 @@ cards:
           styles: 
             card: 
               - border-radius: 0px
-              - width: 480px
-              - height: 380px
+              - width: 750px
+              - height: 1134px
               - padding-top: 0px
               - background: var(--background-color)
             grid:
               - grid-template-areas: |
                   "notifications"
               - grid-template-columns: auto
-              - grid-template-rows: 380px
+              - grid-template-rows: 1134px
               - align-items: start
           custom_fields: 
             notifications:

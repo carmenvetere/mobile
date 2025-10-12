@@ -53,6 +53,7 @@ cards:
               card:
                 type: horizontal-stack
                 cards:
+#Morning Scene - Only visible in the day
                 - type: custom:button-card
                   entity: sensor.scene_good_morning
                   icon: mdi:coffee
@@ -115,6 +116,7 @@ cards:
                       styles:
                         card:
                           - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+#Welcome Scene - Only visible in the evening and at night
                 - type: custom:button-card
                   entity: sensor.scene_welcome
                   icon: mdi:human-greeting
@@ -186,6 +188,7 @@ cards:
               card:
                 type: horizontal-stack
                 cards:
+#Working Scene - Only visible in the day
                 - type: custom:button-card
                   entity: sensor.scene_good_morning
                   icon: mdi:desk
@@ -248,6 +251,7 @@ cards:
                       styles:
                         card:
                           - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+#Basement Evening - Only visible in the evening
                 - type: custom:button-card
                   entity: sensor.scene_basement_evening
                   icon: mdi:lamps
@@ -319,6 +323,7 @@ cards:
               card:
                 type: horizontal-stack
                 cards:
+#Basement Cleaning - Only visible in the day 
                 - type: custom:button-card
                   entity: sensor.scene_basement_cleaning
                   icon: mdi:spray-bottle
@@ -381,6 +386,7 @@ cards:
                       styles:
                         card:
                           - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+#Basement Entertaining - Only visible in the evening
                 - type: custom:button-card
                   entity: sensor.scene_basement_entertaining
                   icon: mdi:glass-cocktail
@@ -445,6 +451,7 @@ cards:
                       styles:
                         card:
                           - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+#Emergency Button - Only visible at night
                 - type: custom:button-card
                   entity: sensor.scene_emergency
                   icon: mdi:hospital
@@ -507,6 +514,7 @@ cards:
                           - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
             scene4:
               card:
+#Nightlight Button
                 type: custom:button-card
                 entity: sensor.scene_nightlight
                 icon: mdi:moon-waxing-crescent
@@ -564,6 +572,7 @@ cards:
                         - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
             scene5:
               card:
+#Outdoor On/Off
                 type: custom:button-card
                 entity: sensor.scene_outdoor_on
                 icon: mdi:outdoor-lamp
@@ -577,9 +586,14 @@ cards:
                   action: call-service
                   service: scene.turn_on
                   target:
-                    entity_id: scene.outdoor_on
+                    entity_id: >
+                      [[[
+                        return states['sensor.scene_outdoor_on'].state === 'on' 
+                          ? 'scene.outdoor_off' 
+                          : 'scene.outdoor_on';
+                      ]]]
                   data:
-                    transition: 3
+                    transition: 0
                 styles:
                   card:
                     - max-width: 95%
@@ -621,6 +635,7 @@ cards:
                         - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
             scene6:
               card:
+#All Off
                 type: custom:button-card
                 entity: sensor.scene_good_night
                 icon: mdi:lightbulb-off
