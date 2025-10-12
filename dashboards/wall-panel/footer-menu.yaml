@@ -12,8 +12,8 @@ card:
     grid:
       - grid-template-areas: |
           "home lights climate music security energy shades other"
-      - grid-template-columns: 60px 60px 60px 60px 60px 60px 60px 60px
-      - grid-template-rows: 55px
+      - grid-template-columns: auto
+      - grid-template-rows: 125px
       - align-items: start
       - column-gap: 0px
   custom_fields:
@@ -27,8 +27,6 @@ card:
         show_state: false
         styles:
           card:
-            - width: 60px
-            - height: 55px
             - align-self: center
             - justify-self: center
             - border-radius: 0px
@@ -38,8 +36,6 @@ card:
                   return path.includes('home-view') ? 'var(--primary-text-color)' : 'black';
                 ]]]
           icon:
-            - width: 30px
-            - height: 30px
             - color: |
                 [[[
                   const path = window.location.pathname + window.location.hash;
@@ -58,8 +54,6 @@ card:
         show_state: false
         styles:
           card:
-            - width: 60px
-            - height: 55px
             - align-self: center
             - justify-self: center
             - background: transparent            
@@ -77,8 +71,6 @@ card:
         show_state: false
         styles:
           card:
-            - width: 60px
-            - height: 55px
             - align-self: center
             - justify-self: center
             - background: transparent
@@ -96,8 +88,6 @@ card:
         show_state: false
         styles:
           card:
-            - width: 60px
-            - height: 55px
             - align-self: center
             - justify-self: center
             - background: transparent
@@ -115,8 +105,6 @@ card:
         show_state: false
         styles:
           card:
-            - width: 60px
-            - height: 55px
             - align-self: center
             - justify-self: center
             - background: transparent
@@ -134,8 +122,6 @@ card:
         show_state: false
         styles:
           card:
-            - width: 60px
-            - height: 55px
             - align-self: center
             - justify-self: center
             - background: transparent
@@ -153,8 +139,6 @@ card:
         show_state: false
         styles:
           card:
-            - width: 60px
-            - height: 55px
             - align-self: center
             - justify-self: center
             - background: transparent
@@ -172,8 +156,6 @@ card:
         show_state: false
         styles:
           card:
-            - width: 60px
-            - height: 55px
             - align-self: center
             - justify-self: center
             - background: transparent            
