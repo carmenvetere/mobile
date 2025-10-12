@@ -193,7 +193,7 @@
       - column-gap: 2px
       - align-items: center
     icon:
-      - color: '#F6CE46'
+      - color: '#EF8C00'
       - width: |
                 [[[
                   const path = window.location.pathname + window.location.hash;
@@ -233,31 +233,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EF8C00'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
-      - justify-self: start      
+      - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
     
 # Utility Room Temperature Low
 - type: custom:button-card
@@ -278,31 +306,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EF8C00'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
-      - justify-self: start  
+      - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Utility Room Temperature High
 - type: custom:button-card
@@ -323,31 +379,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EF8C00'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
-      - justify-self: start  
+      - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Attic Temperature Low
 - type: custom:button-card
@@ -368,31 +452,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EF8C00'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
-      - justify-self: start  
+      - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Attic Temperature High
 - type: custom:button-card
@@ -413,31 +525,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EF8C00'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
-      - justify-self: start  
+      - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Garage Door Open
 - type: custom:button-card
@@ -458,32 +598,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
-      - justify-self: start  
-
+      - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 # Vacuum Error
 - type: custom:button-card
   entity: sensor.roborock_s8_vacuum_error
@@ -503,31 +670,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
-      - justify-self: start  
+      - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 #Low Hot Water Availability
 - type: custom:button-card
@@ -548,31 +743,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 #Virtual Power Plant Active
 - type: custom:button-card
@@ -593,31 +816,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 #Rain Alert - Pool Cover Pump
 - type: custom:button-card
@@ -641,31 +892,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 #Low Pool Water Level
 - type: custom:button-card
@@ -686,31 +965,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 #Pool Salt Level Low
 - type: custom:button-card
@@ -731,31 +1038,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 #Washing Machine Tub Clean Required
 - type: custom:button-card
@@ -776,31 +1111,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 #Attic HVAC Filter Replacement
 - type: custom:button-card
@@ -823,31 +1186,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 #Basement HVAC Filter Replacement
 - type: custom:button-card
@@ -870,31 +1261,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 #Battery Low Notifications - Bedroom Back 1
 - type: custom:button-card
@@ -914,31 +1333,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Bedroom Back 2 Shade Battery Low
 - type: custom:button-card
@@ -958,31 +1405,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Bedroom Back 3 Shade Battery Low
 - type: custom:button-card
@@ -1002,31 +1477,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Bedroom Back 4 Shade Battery Low
 - type: custom:button-card
@@ -1046,31 +1549,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Bedroom Back 5 Shade Battery Low
 - type: custom:button-card
@@ -1090,31 +1621,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Dining Room Side Left Shade Battery Low
 - type: custom:button-card
@@ -1134,31 +1693,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Dining Room Side Right Shade Battery Low
 - type: custom:button-card
@@ -1178,31 +1765,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Dining Room Front Left Shade Battery Low
 - type: custom:button-card
@@ -1222,31 +1837,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Dining Room Front Right Shade Battery Low
 - type: custom:button-card
@@ -1266,31 +1909,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Bedroom Right Shade Battery Low
 - type: custom:button-card
@@ -1310,31 +1981,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Bedroom Hallway 1 Shade Battery Low
 - type: custom:button-card
@@ -1354,31 +2053,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Bedroom Hallway 2 Shade Battery Low
 - type: custom:button-card
@@ -1398,32 +2125,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
-
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 # Bedroom Left Shade Battery Low
 - type: custom:button-card
   entity: sensor.bedroom_left_battery_0
@@ -1442,31 +2196,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Living Room Side Left 1 Shade Battery Low
 - type: custom:button-card
@@ -1486,31 +2268,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Living Room Front Left Shade Battery Low
 - type: custom:button-card
@@ -1530,31 +2340,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Living Room Side Left 2 Shade Battery Low
 - type: custom:button-card
@@ -1574,31 +2412,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Living Room Side Right 1 Shade Battery Low
 - type: custom:button-card
@@ -1618,31 +2484,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Living Room Side Right 2 Shade Battery Low
 - type: custom:button-card
@@ -1662,31 +2556,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Living Room Front Right Shade Battery Low
 - type: custom:button-card
@@ -1706,31 +2628,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Back Guest Bedroom Side Shade Battery Low
 - type: custom:button-card
@@ -1750,31 +2700,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Back Guest Bedroom Back Left Shade Battery Low
 - type: custom:button-card
@@ -1794,31 +2772,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Back Guest Bedroom Back Right Shade Battery Low
 - type: custom:button-card
@@ -1838,31 +2844,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Attic Temperature Sensor Battery Low
 - type: custom:button-card
@@ -1882,31 +2916,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 #Front Door Sensor Battery Low
 - type: custom:button-card
@@ -1926,31 +2988,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Kitchen French Doors Sensor Battery Low
 - type: custom:button-card
@@ -1970,31 +3060,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Living Room French Doors Sensor Battery Low
 - type: custom:button-card
@@ -2014,31 +3132,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Mudroom Entry Door Sensor Battery Low
 - type: custom:button-card
@@ -2058,31 +3204,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Mudroom Garage Door Sensor Battery Low
 - type: custom:button-card
@@ -2102,31 +3276,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Utility Room Temperature Sensor Battery Low
 - type: custom:button-card
@@ -2146,31 +3348,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
-      - width: 28px
-      - height: 28px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 #Pool Vacuum
 - type: custom:button-card
@@ -2196,31 +3426,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
-      - color: '#4ebcff'
-      - width: 28px
-      - height: 28px
+      - color: '#F6CE46'
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Dryer Recently Completed
 - type: custom:button-card
@@ -2241,31 +3499,59 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
-      - color: '#4ebcff'
-      - width: 28px
-      - height: 28px
+      - color: '#4EBCFF'
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
 
 # Washer Recently Completed
 - type: custom:button-card
@@ -2286,28 +3572,56 @@
       - border-radius: 10px
       - margin: 2px 10px 2px 10px
       - max-width: 95%
-      - height: 50px
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
       - padding-top: 2px
       - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
     img_cell:
       - align-self: center
       - justify-content: center
-      - width: 32px
-      - height: 32px
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
     grid:
       - grid-template-areas: '"i n"'
-      - grid-template-columns: 32px auto
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
       - column-gap: 2px
       - align-items: center
     icon:
-      - color: '#4ebcff'
-      - width: 28px
-      - height: 28px
+      - color: '#4EBCFF'
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
     name:
       - color: var(--primary-text-color)
       - font-weight: bold
-      - font-size: 18px
       - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
