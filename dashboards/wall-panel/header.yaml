@@ -125,7 +125,8 @@ card:
               - font-weight: bold
               - justify-self: start
             grid: 
-              - column-gap: 5px
+              - column-gap: 3px
+              - grid-template-columns: 42px auto
             img_cell:
               - align-self: center
               - justify-content: end
