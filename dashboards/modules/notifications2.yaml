@@ -25,10 +25,17 @@
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
-      - grid-template-rows: 50px
+      - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EA4D3D'
@@ -67,9 +74,17 @@
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
+      - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EA4D3D'
@@ -104,9 +119,17 @@
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
+      - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EA4D3D'
@@ -175,7 +198,7 @@
   visibility:
     - condition: state
       entity: binary_sensor.bayberry_storm_watch_active
-      state: 'off'
+      state: 'on'
   styles:
     card:
       - background-color: var(--background-color-2)
@@ -231,9 +254,17 @@
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
+      - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EF8C00'
@@ -268,9 +299,17 @@
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
+      - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EF8C00'
@@ -305,9 +344,17 @@
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
+      - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EF8C00'
@@ -342,9 +389,17 @@
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
+      - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EF8C00'
@@ -379,9 +434,17 @@
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
+      - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
@@ -416,9 +479,17 @@
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
+      - column-gap: 2px
       - align-items: center
     icon:
       - color: '#F6CE46'
@@ -429,3 +500,1786 @@
       - font-weight: bold
       - font-size: 18px
       - justify-self: start  
+
+#Low Hot Water Availability
+- type: custom:button-card
+  entity: sensor.smithy_hot_water_availability_2
+  name: Low Hot Water Availability!
+  icon: mdi:water-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+    entity: sensor.smithy_hot_water_availability_2
+  visibility:
+    - condition: numeric_state
+      entity: sensor.smithy_hot_water_availability_2
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+#Virtual Power Plant Active
+- type: custom:button-card
+  entity: binary_sensor.bayberry_grid_services_active_2
+  name: Virtual Power Plant Active!
+  icon: mdi:solar-power
+  layout: icon_name
+  tap_action:
+    action: more-info
+    entity: binary_sensor.bayberry_grid_services_active_2
+  visibility:
+    - condition: state
+      entity: binary_sensor.bayberry_grid_services_active_2
+      state: 'on'
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+#Rain Alert - Pool Cover Pump
+- type: custom:button-card
+  entity: sensor.bayberry_tempest_precipitation_type
+  name: Rain! Put the pool cover pump out.
+  icon: mdi:weather-pouring
+  layout: icon_name
+  tap_action:
+    action: more-info
+    entity: camera.pool_high_resolution_channel
+  visibility:
+    - condition: state
+      entity: sensor.bayberry_tempest_precipitation_type
+      state: rain
+    - condition: state
+      entity: binary_sensor.pool_cover_pump
+      state: 'off'
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+#Low Pool Water Level
+- type: custom:button-card
+  entity: input_boolean.low_pool_water_level
+  name: Low pool water level.
+  icon: mdi:water-minus
+  layout: icon_name
+  tap_action:
+    action: more-info
+    entity: camera.pool_high_resolution_channel
+  visibility:
+    - condition: state
+      entity: input_boolean.low_pool_water_level
+      state: 'on'
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+#Pool Salt Level Low
+- type: custom:button-card
+  entity: sensor.omnilogic_pool_chlorinator_average_salt_level
+  name: Check the pool salt level.
+  icon: mdi:alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+    entity: sensor.omnilogic_pool_chlorinator_average_salt_level
+  visibility:
+    - condition: numeric_state
+      entity: sensor.omnilogic_pool_chlorinator_average_salt_level
+      below: 2700
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+#Washing Machine Tub Clean Required
+- type: custom:button-card
+  entity: sensor.front_load_washer_tub_clean_counter
+  name: Run washer clean cycle!
+  icon: mdi:washing-machine-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+    entity: sensor.front_load_washer_tub_clean_counter
+  visibility:
+    - condition: numeric_state
+      entity: sensor.front_load_washer_tub_clean_counter
+      above: 30
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+#Attic HVAC Filter Replacement
+- type: custom:button-card
+  entity: input_number.upper_floor_hvac_filter_hours
+  name: Replace the air filter in the attic HVAC.
+  icon: mdi:air-filter
+  layout: icon_name
+  tap_action:
+    action: call-service
+    service: script.reset_upper_floors_filter_runtime
+    confirmation:
+      text: Did you just replace it and want to reset it?
+  visibility:
+    - condition: numeric_state
+      entity: input_number.upper_floor_hvac_filter_hours
+      above: 2000
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+#Basement HVAC Filter Replacement
+- type: custom:button-card
+  entity: input_number.lower_floor_hvac_filter_hours
+  name: Replace the air filter in the basement HVAC.
+  icon: mdi:air-filter
+  layout: icon_name
+  tap_action:
+    action: call-service
+    service: script.reset_lower_floors_filter_runtime
+    confirmation:
+      text: Did you just replace it and want to reset it?
+  visibility:
+    - condition: numeric_state
+      entity: input_number.upper_floor_hvac_filter_hours
+      above: 2000
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+#Battery Low Notifications - Bedroom Back 1
+- type: custom:button-card
+  entity: sensor.bedroom_back_1_battery
+  name: Bedroom Back 1 shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.bedroom_back_1_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Bedroom Back 2 Shade Battery Low
+- type: custom:button-card
+  entity: sensor.back_2_battery
+  name: Bedroom Back 2 shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.back_2_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Bedroom Back 3 Shade Battery Low
+- type: custom:button-card
+  entity: sensor.back_3_battery
+  name: Bedroom Back 3 shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.back_3_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Bedroom Back 4 Shade Battery Low
+- type: custom:button-card
+  entity: sensor.bedroom_back_4_battery_0
+  name: Bedroom Back 4 shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.bedroom_back_4_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Bedroom Back 5 Shade Battery Low
+- type: custom:button-card
+  entity: sensor.bedroom_back_5_battery_0
+  name: Bedroom Back 5 shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.bedroom_back_5_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Dining Room Side Left Shade Battery Low
+- type: custom:button-card
+  entity: sensor.side_left_battery_2
+  name: Dining room side left shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.side_left_battery_2
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Dining Room Side Right Shade Battery Low
+- type: custom:button-card
+  entity: sensor.side_right_battery_0
+  name: Dining room side right shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.side_right_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Dining Room Front Left Shade Battery Low
+- type: custom:button-card
+  entity: sensor.dining_room_front_left_battery_0
+  name: Dining room front left shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.dining_room_front_left_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Dining Room Front Right Shade Battery Low
+- type: custom:button-card
+  entity: sensor.front_right_battery_0
+  name: Dining room front right shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.front_right_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Bedroom Right Shade Battery Low
+- type: custom:button-card
+  entity: sensor.bedroom_right_battery_0
+  name: Bedroom right shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.bedroom_right_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Bedroom Hallway 1 Shade Battery Low
+- type: custom:button-card
+  entity: sensor.hallway_1_battery
+  name: Bedroom hallway 1 shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.hallway_1_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Bedroom Hallway 2 Shade Battery Low
+- type: custom:button-card
+  entity: sensor.hallway_2_battery
+  name: Bedroom hallway 2 shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.hallway_2_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Bedroom Left Shade Battery Low
+- type: custom:button-card
+  entity: sensor.bedroom_left_battery_0
+  name: Bedroom left shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.bedroom_left_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Living Room Side Left 1 Shade Battery Low
+- type: custom:button-card
+  entity: sensor.living_room_side_left_1_battery_0
+  name: Living Room side left 1 shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.living_room_side_left_1_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Living Room Front Left Shade Battery Low
+- type: custom:button-card
+  entity: sensor.living_room_front_left_battery_0
+  name: Living Room front left shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.living_room_front_left_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Living Room Side Left 2 Shade Battery Low
+- type: custom:button-card
+  entity: sensor.living_room_side_left_2_battery_0
+  name: Living Room side left 2 shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.living_room_side_left_2_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Living Room Side Right 1 Shade Battery Low
+- type: custom:button-card
+  entity: sensor.living_room_side_right_1_battery_0
+  name: Living Room side right 1 shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.living_room_side_right_1_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Living Room Side Right 2 Shade Battery Low
+- type: custom:button-card
+  entity: sensor.living_room_side_right_2_battery_0
+  name: Living Room side right 2 shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.living_room_side_right_2_battery_0
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Living Room Front Right Shade Battery Low
+- type: custom:button-card
+  entity: sensor.living_room_front_right_battery
+  name: Living Room front right shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.living_room_front_right_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Back Guest Bedroom Side Shade Battery Low
+- type: custom:button-card
+  entity: sensor.back_guest_bedroom_side_battery
+  name: Back Guest Bedroom side shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.back_guest_bedroom_side_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Back Guest Bedroom Back Left Shade Battery Low
+- type: custom:button-card
+  entity: sensor.back_guest_bedroom_back_left_battery
+  name: Back Guest Bedroom back left shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.back_guest_bedroom_back_left_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Back Guest Bedroom Back Right Shade Battery Low
+- type: custom:button-card
+  entity: sensor.back_guest_bedroom_back_right_battery
+  name: Back Guest Bedroom back right shade battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.back_guest_bedroom_back_right_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Attic Temperature Sensor Battery Low
+- type: custom:button-card
+  entity: sensor.attic_temp_sensor_battery
+  name: Attic temp sensor battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.attic_temp_sensor_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+#Front Door Sensor Battery Low
+- type: custom:button-card
+  entity: sensor.front_door_battery
+  name: Front door sensor battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.front_door_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Kitchen French Doors Sensor Battery Low
+- type: custom:button-card
+  entity: sensor.kitchen_french_doors_battery
+  name: Kitchen french doors sensor battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.kitchen_french_doors_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Living Room French Doors Sensor Battery Low
+- type: custom:button-card
+  entity: sensor.living_room_french_doors_battery
+  name: Living Room french doors sensor battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.living_room_french_doors_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Mudroom Entry Door Sensor Battery Low
+- type: custom:button-card
+  entity: sensor.mudroom_entry_battery
+  name: Mudroom entry door sensor battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.mudroom_entry_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Mudroom Garage Door Sensor Battery Low
+- type: custom:button-card
+  entity: sensor.mudroom_garage_battery
+  name: Mudroom garage door sensor battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.mudroom_garage_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Utility Room Temperature Sensor Battery Low
+- type: custom:button-card
+  entity: sensor.utility_room_temp_sensor_battery
+  name: Utility room temp sensor battery low!
+  icon: mdi:battery-alert
+  layout: icon_name
+  tap_action:
+    action: more-info
+  visibility:
+    - condition: numeric_state
+      entity: sensor.utility_room_temp_sensor_battery
+      below: 20
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+#Pool Vacuum
+- type: custom:button-card
+  entity: sensor.hours_since_last_vacuum
+  name: The pool needs to be vacuumed.
+  icon: mdi:vacuum-outline
+  layout: icon_name
+  tap_action:
+    action: call-service
+    service: script.reset_vacuum_timer
+    confirmation:
+      text: Did you just vacuum the pool and want to reset?
+  visibility:
+    - condition: numeric_state
+      entity: sensor.hours_since_last_vacuum
+      above: 48
+    - condition: state
+      entity: binary_sensor.pool_season
+      state: 'on'
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#4ebcff'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Dryer Recently Completed
+- type: custom:button-card
+  entity: binary_sensor.dryer_recently_completed
+  name: Dryer complete!
+  icon: mdi:tumble-dryer-off
+  layout: icon_name
+  tap_action:
+    action: more-info
+    entity: sensor.dryer
+  visibility:
+    - condition: state
+      entity: binary_sensor.dryer_recently_completed
+      state: 'on'
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#4ebcff'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
+
+# Washer Recently Completed
+- type: custom:button-card
+  entity: binary_sensor.washer_recently_completed
+  name: Washer complete!
+  icon: mdi:washing-machine
+  layout: icon_name
+  tap_action:
+    action: more-info
+    entity: sensor.washer
+  visibility:
+    - condition: state
+      entity: binary_sensor.washer_recently_completed
+      state: 'on'
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - height: 50px
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 32px auto
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#4ebcff'
+      - width: 28px
+      - height: 28px
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - font-size: 18px
+      - justify-self: start
