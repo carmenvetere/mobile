@@ -46,7 +46,7 @@ cards:
                   "scene6"
                   "space"
               - grid-template-columns: 750px
-              - grid-template-rows: 10px 50px 50px 50px 50px 50px 50px 10px
+              - grid-template-rows: 10px 165px 165px 165px 165px 165px 165px 10px
               - row-gap: 20px
           custom_fields: 
             scene1:
@@ -69,6 +69,8 @@ cards:
                     transition: 3
                 styles:
                   card:
+                    - max-width: 95%
+                    - height: 165px
                     - align-self: center
                     - justify-self: start
                     - justify-content: start
