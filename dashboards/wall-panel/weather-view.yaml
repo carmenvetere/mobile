@@ -71,6 +71,18 @@ cards:
                   .state {
                     text-align: left !important;
                   }
+                  .temp-attribute .temp {
+                    font-size: 40px !important;
+                    }
+                  .forecast .temp {
+                    font-size: 32px !important;
+                    }
+                  .forecast .templow {
+                    font-size: 32px !important;
+                    }
+                  .forecast div {
+                    font-size: 32px !important;
+                    }
             - type: weather-forecast
               show_current: false
               show_forecast: true
