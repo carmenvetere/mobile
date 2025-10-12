@@ -7,14 +7,14 @@ card:
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 125px
+      - height: 100px
       - width: 750px
       - background-color: black 
     grid:
       - grid-template-areas: |
           "time alarm notifications modes temp"
       - grid-template-columns: 2fr 3fr 1.5fr 1.5fr 2fr
-      - grid-template-rows: 125px
+      - grid-template-rows: 100px
       - align-items: center
       - justify-items: start
       - column-gap: 10px
