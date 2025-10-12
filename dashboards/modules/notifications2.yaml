@@ -28,6 +28,7 @@
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
+      - grid-template-rows: 50px
       - align-items: center
     icon:
       - color: '#EA4D3D'
@@ -144,6 +145,7 @@
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
       - align-items: center
+      - grid-template-rows: 50px
     icon:
       - color: '#EF8C00'
       - width: 28px
@@ -166,7 +168,7 @@
   visibility:
     - condition: state
       entity: binary_sensor.bayberry_storm_watch_active
-      state: 'on'
+      state: 'off'
   styles:
     card:
       - background-color: var(--background-color-2)
