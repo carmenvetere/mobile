@@ -40,12 +40,13 @@ cards:
               - background: var(--background-color)
             grid:
               - grid-template-areas: |
+                  "space1"
                   "display"
-                  "space"
+                  "space2"
                   "keypad"
                   "controls"
               - grid-template-columns: auto
-              - grid-template-rows: 100px 15px 500px 100px
+              - grid-template-rows: 20px 100px 15px 500px 100px
               - row-gap: 5px
               - align-items: center
               - justify-items: center
