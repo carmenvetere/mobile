@@ -134,8 +134,8 @@ cards:
                     data:
                       transition: 3
                   visibility:
-                    - condition: and
-                      conditions:
+                    - condition: OR
+                      conditions: AND
                         - condition: numeric_state
                           entity: sensor.sun_solar_elevation
                           below: 4
