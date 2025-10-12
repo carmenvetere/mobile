@@ -80,8 +80,8 @@ cards:
                 show_state: false
                 styles:
                   card:
-                    - height: 260px
-                    - width: 300px
+                    - height: 500px
+                    - width: 670px
                     - background-color: transparent
                     - border-radius: 0px
                     - padding-top: 0px
@@ -92,10 +92,10 @@ cards:
                         "n4 n5 n6"
                         "n7 n8 n9"
                         "clear n0 enter"
-                    - grid-template-columns: 90px 90px 90px
-                    - grid-template-rows: 60px 60px 60px 60px
-                    - row-gap: 5px
-                    - column-gap: 5px
+                    - grid-template-columns: 160px 160px 160px
+                    - grid-template-rows: 160px 160px 160px 160px
+                    - row-gap: 10px
+                    - column-gap: 10px
                 custom_fields:
                   n1:
                     card:
