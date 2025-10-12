@@ -65,8 +65,8 @@ card:
           ]]]
         styles:
           icon:
-            - width: 24px
-            - height: 24px
+            - width: 32px
+            - height: 32px
             - color: |
                 [[[
                   var state = states['alarm_control_panel.alarmo'].state;
@@ -77,19 +77,17 @@ card:
                   return 'var(--primary-text-color)';
                 ]]]
           state:
-            - font-size: 18px
+            - font-size: 28px
             - font-weight: bold
             - justify-self: start
           grid: 
             - column-gap: 3px
-            - grid-template-columns: 30px 97px
+            - grid-template-columns: 42px auto
           img_cell:
             - align-self: center
             - justify-content: start
           card:
             - border-radius: 0px
-            - width: 130px
-            - height: 50px
             - align-self: center
             - justify-self: start
             - background: transparent
@@ -132,8 +130,8 @@ card:
               - align-self: center
               - justify-content: end
             icon:
-              - width: 24px
-              - height: 24px
+              - width: 32px
+              - height: 32px
               - padding-left: 5px
               - color: >
                   [[[
