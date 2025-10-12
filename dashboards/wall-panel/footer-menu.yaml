@@ -7,13 +7,13 @@ card:
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 125px
+      - height: 100px
       - background-color: black
     grid:
       - grid-template-areas: |
           "home lights climate music security energy shades other"
       - grid-template-columns: auto
-      - grid-template-rows: 125px
+      - grid-template-rows: 100px
       - align-items: center
       - column-gap: 0px
   custom_fields:
