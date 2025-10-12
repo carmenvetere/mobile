@@ -29,6 +29,24 @@ cards:
         card:
           type: vertical-stack
           cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Current Weather
+              icon: mdi:weather-partly-cloudy
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 28px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
             - type: weather-forecast
               show_current: true
               show_forecast: true
@@ -43,6 +61,7 @@ cards:
                   ha-card {
                     background: transparent !important;
                     box-shadow: none !important;
+                    font-size: 24px !important;
                   }
                     }
                   .name-state {
