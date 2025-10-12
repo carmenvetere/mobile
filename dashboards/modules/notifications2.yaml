@@ -151,6 +151,7 @@
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
+      - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EF8C00'
@@ -195,6 +196,7 @@
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
+      - column-gap: 2px
       - align-items: center
     icon:
       - color: '#EF8C00'
@@ -204,7 +206,7 @@
       - color: var(--primary-text-color)
       - font-weight: bold
       - font-size: 18px
-      - justify-self: start    
+      - justify-self: start      
     
 # Utility Room Temperature Low
 - type: custom:button-card
