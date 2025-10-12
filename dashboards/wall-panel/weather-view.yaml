@@ -29,6 +29,7 @@ cards:
         card:
           type: vertical-stack
           cards:
+            - type: custom:gap-card
             - type: custom:bubble-card
               card_type: separator
               name: Current Weather
