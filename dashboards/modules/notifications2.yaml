@@ -177,6 +177,11 @@
       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
       - justify-content: flex-start
       - padding-left: 12px
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: 32px
+      - height: 32px
     grid:
       - grid-template-areas: '"i n"'
       - grid-template-columns: 32px auto
