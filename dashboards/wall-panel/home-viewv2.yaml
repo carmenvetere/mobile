@@ -32,7 +32,7 @@ cards:
             card: 
               - border-radius: 0px
               - width: 750px
-              - height: 1084px
+              - height: 1134px
               - padding-top: 0px
               - background: var(--background-color)
             grid:
@@ -50,67 +50,58 @@ cards:
               - row-gap: 20px
           custom_fields: 
             scene1:
-              card: 
-                type: vertical-stack
-                cards:
-#Good Morning Button - only shows between 5am and 1 hour before sunset
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_morning
-                        state: 'on'
-                    card:
-                      type: custom:button-card
-                      entity: sensor.scene_good_morning
-                      icon: mdi:coffee
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Morning
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.good_morning_2
-                        data:
-                          transition: 3
-                      styles:
-                        card:
-                          - max-width: 95%
-                          - max-height: 100%
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 80px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 72px
-                          - height: 72px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+              card:
+                type: custom:button-card
+                entity: sensor.scene_good_morning
+                icon: mdi:coffee
+                layout: icon_label
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: false
+                label: Morning
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  target:
+                    entity_id: scene.good_morning_2
+                  data:
+                    transition: 3
+                styles:
+                  card:
+                    - max-width: 95%
+                    - max-height: 100%
+                    - align-self: center
+                    - justify-self: start
+                    - justify-content: start
+                    - text-align: left
+                    - background-color: var(--background-color-2)  
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                  grid:
+                    - grid-template-areas: '"i l"'   # icon then label
+                    - grid-template-columns: 80px 1fr
+                    - justify-items: start
+                    - align-items: center
+                  label: 
+                    - font-size: 24px
+                    - font-weight: bold
+                    - justify-self: start
+                    - text-align: left
+                    - padding-left: 10px   # <-- add this for spacing from the icon
+                    - align-self: center
+                  img_cell:
+                    - align-self: center
+                    - justify-content: start
+                    - padding-left: 5px
+                  icon: 
+                    - width: 72px
+                    - height: 72px
+                    - padding-left: 5px
+                state:
+                  - value: 'off'
+                    color: default
+                  - value: 'on'
+                    styles:
+                      card:
+                        - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
       nav: !include footer-menu.yaml
