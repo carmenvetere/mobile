@@ -94,6 +94,8 @@ cards:
                         "clear n0 enter"
                     - grid-template-columns: 160px 160px 160px
                     - grid-template-rows: 160px 160px 160px 160px
+                    - align-items: center
+                    - justify-items: center
                     - row-gap: 10px
                     - column-gap: 10px
                 custom_fields:
@@ -118,7 +120,7 @@ cards:
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
-                          - font-size: 54px
+                          - font-size: 68px
                           - font-weight: bold
                   n2:
                     card:
