@@ -31,7 +31,7 @@ cards:
           cards:
             - type: custom:bubble-card
               card_type: separator
-              name: Current Weather
+              name: Current Weather & 5-Day Forecast
               icon: mdi:weather-partly-cloudy
               rows: 0.75
               styles: |
@@ -82,6 +82,24 @@ cards:
                   .forecast div {
                     font-size: 32px !important;
                     }
+           - type: custom:bubble-card
+              card_type: separator
+              name: Hourly Forecast
+              icon: mdi:weather-partly-cloudy
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 28px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 20px !important;
+                padding-left: 10px !important;
+                }
             - type: weather-forecast
               show_current: false
               show_forecast: true
@@ -95,5 +113,25 @@ cards:
                   ha-card {
                     background: transparent !important;
                     box-shadow: none !important;
+                    font-size: 32px !important;
                   }
+                    }
+                  .name-state {
+                    justify-content: flex-start !important;
+                  }
+                  .state {
+                    text-align: left !important;
+                  }
+                  .temp-attribute .temp {
+                    font-size: 40px !important;
+                    }
+                  .forecast .temp {
+                    font-size: 32px !important;
+                    }
+                  .forecast .templow {
+                    font-size: 32px !important;
+                    }
+                  .forecast div {
+                    font-size: 32px !important;
+                    }
       nav: !include footer-menu.yaml
