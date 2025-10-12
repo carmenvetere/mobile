@@ -163,4 +163,175 @@ cards:
                     styles:
                       card:
                         - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+            scene3:
+              card:
+                type: custom:button-card
+                entity: sensor.scene_basement_cleaning
+                icon: mdi:spray-bottle
+                layout: icon_label
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: false
+                label: Evening
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  target:
+                    entity_id: scene.basement_cleaning
+                  data:
+                    transition: 3
+                styles:
+                  card:
+                    - max-width: 95%
+                    - height: 160px
+                    - margin-left: 18px
+                    - padding-left: 10px
+                    - align-self: center
+                    - justify-self: start
+                    - justify-content: start
+                    - text-align: left
+                    - background-color: var(--background-color-2)  
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                  grid:
+                    - grid-template-areas: '"i l"'   # icon then label
+                    - grid-template-columns: 80px 1fr
+                    - justify-items: start
+                    - align-items: center
+                  label: 
+                    - font-size: 46px
+                    - font-weight: bold
+                    - justify-self: start
+                    - text-align: left
+                    - padding-left: 10px   # <-- add this for spacing from the icon
+                    - align-self: center
+                  img_cell:
+                    - align-self: center
+                    - justify-content: start
+                    - padding-left: 5px
+                  icon: 
+                    - width: 54px
+                    - height: 54px
+                    - padding-left: 5px
+                state:
+                  - value: 'off'
+                    color: default
+                  - value: 'on'
+                    styles:
+                      card:
+                        - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+            scene5:
+              card:
+                type: custom:button-card
+                entity: sensor.scene_outdoor_on
+                icon: mdi:outdoor-lamp
+                layout: icon_label
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: false
+                label: Outdoor 
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  target:
+                    entity_id: scene.outdoor_on
+                  data:
+                    transition: 3
+                styles:
+                  card:
+                    - max-width: 95%
+                    - height: 160px
+                    - margin-left: 18px
+                    - padding-left: 10px
+                    - align-self: center
+                    - justify-self: start
+                    - justify-content: start
+                    - text-align: left
+                    - background-color: var(--background-color-2)  
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                  grid:
+                    - grid-template-areas: '"i l"'   # icon then label
+                    - grid-template-columns: 80px 1fr
+                    - justify-items: start
+                    - align-items: center
+                  label: 
+                    - font-size: 46px
+                    - font-weight: bold
+                    - justify-self: start
+                    - text-align: left
+                    - padding-left: 10px   # <-- add this for spacing from the icon
+                    - align-self: center
+                  img_cell:
+                    - align-self: center
+                    - justify-content: start
+                    - padding-left: 5px
+                  icon: 
+                    - width: 54px
+                    - height: 54px
+                    - padding-left: 5px
+                state:
+                  - value: 'off'
+                    color: default
+                  - value: 'on'
+                    styles:
+                      card:
+                        - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+            scene6:
+              card:
+                type: custom:button-card
+                entity: sensor.scene_good_night
+                icon: mdi:lightbulb-off
+                layout: icon_label
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: false
+                label: All Off 
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  target:
+                    entity_id: scene.good_night
+                  data:
+                    transition: 3
+                styles:
+                  card:
+                    - max-width: 95%
+                    - height: 160px
+                    - margin-left: 18px
+                    - padding-left: 10px
+                    - align-self: center
+                    - justify-self: start
+                    - justify-content: start
+                    - text-align: left
+                    - background-color: var(--background-color-2)  
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                  grid:
+                    - grid-template-areas: '"i l"'   # icon then label
+                    - grid-template-columns: 80px 1fr
+                    - justify-items: start
+                    - align-items: center
+                  label: 
+                    - font-size: 46px
+                    - font-weight: bold
+                    - justify-self: start
+                    - text-align: left
+                    - padding-left: 10px   # <-- add this for spacing from the icon
+                    - align-self: center
+                  img_cell:
+                    - align-self: center
+                    - justify-content: start
+                    - padding-left: 5px
+                  icon: 
+                    - width: 54px
+                    - height: 54px
+                    - padding-left: 5px
+                state:
+                  - value: 'off'
+                    color: default
+                  - value: 'on'
+                    styles:
+                      card:
+                        - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
       nav: !include footer-menu.yaml
