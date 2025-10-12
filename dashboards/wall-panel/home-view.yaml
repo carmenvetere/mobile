@@ -117,6 +117,7 @@ cards:
                     - value: 'on'
                       styles:
                         card:
+                          - background-color: var(--accent-color)
                           - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
 #Welcome Scene - Only visible in the evening and at night
                 - type: custom:button-card
@@ -187,6 +188,7 @@ cards:
                     - value: 'on'
                       styles:
                         card:
+                          - background-color: var(--accent-color)
                           - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
             scene2:
               card:
@@ -256,6 +258,7 @@ cards:
                     - value: 'on'
                       styles:
                         card:
+                          - background-color: var(--accent-color)
                           - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
 #Basement Evening - Only visible in the evening
                 - type: custom:button-card
@@ -396,6 +399,7 @@ cards:
                     - value: 'on'
                       styles:
                         card:
+                          - background-color: var(--accent-color)
                           - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
 #Basement Entertaining - Only visible in the evening
                 - type: custom:button-card
@@ -466,6 +470,7 @@ cards:
                     - value: 'on'
                       styles:
                         card:
+                          - background-color: var(--accent-color)
                           - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
 #Emergency Button - Only visible at night
                 - type: custom:button-card
@@ -527,6 +532,7 @@ cards:
                     - value: 'on'
                       styles:
                         card:
+                          - background-color: var(--accent-color)
                           - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
             scene4:
               card:
@@ -585,6 +591,7 @@ cards:
                   - value: 'on'
                     styles:
                       card:
+                        - background-color: var(--accent-color)
                         - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
             scene5:
               card:
@@ -648,6 +655,7 @@ cards:
                   - value: 'on'
                     styles:
                       card:
+                        - background-color: var(--accent-color)
                         - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
             scene6:
               card:
@@ -706,5 +714,6 @@ cards:
                   - value: 'on'
                     styles:
                       card:
+                        - background-color: var(--accent-color)
                         - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
       nav: !include footer-menu.yaml
