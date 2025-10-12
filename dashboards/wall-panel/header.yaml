@@ -174,8 +174,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 24px
-                - height: 24px
+                - width: 32px
+                - height: 32px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -184,9 +184,7 @@ card:
                 - border-radius: 5px
                 - align-self: center
                 - justify-self: center
-                - background: transparent
-                - width: 60px
-                - height: 50px   
+                - background: transparent 
         - type: conditional
           conditions:
             - entity: input_boolean.guest_mode
@@ -203,8 +201,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 24px
-                - height: 24px
+                - width: 32px
+                - height: 32px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -214,8 +212,6 @@ card:
                 - align-self: center
                 - justify-self: center
                 - background-color: black
-                - width: 60px
-                - height: 50px
         - type: conditional
           conditions:
             - entity: input_boolean.cleaners_mode
@@ -232,8 +228,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 24px
-                - height: 24px
+                - width: 32px
+                - height: 32px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -243,8 +239,6 @@ card:
                 - align-self: center
                 - justify-self: center
                 - background: transparent
-                - width: 60px
-                - height: 50px
     temp:
       card:
         type: custom:button-card
@@ -264,12 +258,12 @@ card:
           navigation_path: /mudroom-wall-panel-dash/weather-view
         styles:
           state:
-            - font-size: 18px
+            - font-size: 28px
             - font-weight: bold
             - justify-self: start
           icon:
-            - width: 24px
-            - height: 24px
+            - width: 32px
+            - height: 32px
           grid: 
             - column-gap: 5px
           img_cell:
@@ -280,5 +274,3 @@ card:
             - align-self: center
             - justify-self: center
             - background: transparent
-            - width: 100px
-            - height: 50px
