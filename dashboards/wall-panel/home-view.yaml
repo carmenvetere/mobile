@@ -1,5 +1,5 @@
-title: Home
-path: home-view
+title: HomeV2
+path: home-viewv2
 theme: Bubble
 type: custom:grid-layout
 cards:
@@ -10,8 +10,8 @@ cards:
         - padding-bottom: 5px
         - padding-left: 0px
         - padding-top: 0px
-        - width: 480px
-        - height: 480px
+        - width: 750px
+        - height: 1334px
         - background: var(--background-color)
       grid:
         - grid-template-areas: |
@@ -19,7 +19,7 @@ cards:
             "main"
             "nav"
         - grid-template-columns: auto
-        - grid-template-rows: 50px 380px 50px
+        - grid-template-rows: 100px 1134px 100px
         - align-items: start
         - column-gap: 2px
         - row-gap: 0px
@@ -31,8 +31,8 @@ cards:
           styles: 
             card: 
               - border-radius: 0px
-              - width: 480px
-              - height: 380px
+              - width: 750px
+              - height: 1134px
               - padding-top: 0px
               - background: var(--background-color)
             grid:
@@ -42,741 +42,514 @@ cards:
                   "scene2"
                   "scene3"
                   "scene4"
-              - grid-template-columns: auto
-              - grid-template-rows: 5px 85px 85px 85px 85px
-              - row-gap: 7px
+                  "scene5"
+                  "scene6"
+                  "space2"
+              - grid-template-columns: 750px
+              - grid-template-rows: 10px 165px 165px 165px 165px 165px 165px 10px
+              - row-gap: 20px
           custom_fields: 
             scene1:
-              card: 
-                type: vertical-stack
+              card:
+                type: horizontal-stack
                 cards:
-#Good Morning Button - only shows between 5am and 1 hour before sunset
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_morning
-                        state: 'on'
+#Morning Scene - Only visible in the day
+                - type: custom:button-card
+                  entity: sensor.scene_good_morning
+                  icon: mdi:coffee
+                  layout: icon_label
+                  show_icon: true
+                  show_label: true
+                  show_name: false
+                  show_state: false
+                  label: Morning
+                  tap_action:
+                    action: call-service
+                    service: scene.turn_on
+                    target:
+                      entity_id: scene.good_morning_2
+                    data:
+                      transition: 3
+                  visibility:
+                  - condition: state
+                    entity: schedule.day_scene_buttons
+                    state: "on"
+                  - condition: numeric_state
+                    entity: sensor.sun_solar_elevation
+                    above: 4
+                  styles:
                     card:
-                      type: custom:button-card
-                      entity: sensor.scene_good_morning
-                      icon: mdi:coffee
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Morning
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.good_morning_2
-                        data:
-                          transition: 3
+                      - max-width: 95%
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
+                      - align-self: center
+                      - justify-self: start
+                      - justify-content: start
+                      - text-align: left
+                      - background-color: var(--background-color-2)  
+                      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                    grid:
+                      - grid-template-areas: '"i l"'   # icon then label
+                      - grid-template-columns: 80px 1fr
+                      - justify-items: start
+                      - align-items: center
+                    label: 
+                      - font-size: 46px
+                      - font-weight: bold
+                      - justify-self: start
+                      - text-align: left
+                      - padding-left: 10px   # <-- add this for spacing from the icon
+                      - align-self: center
+                    img_cell:
+                      - align-self: center
+                      - justify-content: start
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
+                  state:
+                    - value: 'off'
+                      color: default
+                    - value: 'on'
                       styles:
                         card:
-                          - width: 460px
-                          - height: 85px
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                          - margin-left: 10px
-                          - padding-left: 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 40px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 36px
-                          - height: 36px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
-#Evening Button - only shows if someone is home, dinner party mode is off, and between 1 hour before sunset and 11pm
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_basement_evening
-                        state: 'on'
+                          - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+#Welcome Scene - Only visible in the evening and at night
+                - type: custom:button-card
+                  entity: sensor.scene_welcome
+                  icon: mdi:human-greeting
+                  layout: icon_label
+                  show_icon: true
+                  show_label: true
+                  show_name: false
+                  show_state: false
+                  label: Morning
+                  tap_action:
+                    action: call-service
+                    service: scene.turn_on
+                    target:
+                      entity_id: scene.welcome
+                    data:
+                      transition: 3
+                  visibility:
+                    - condition: and
+                      conditions:
+                        - condition: numeric_state
+                          entity: sensor.sun_solar_elevation
+                          below: 4
+                        - condition: state
+                          entity: schedule.evening_scene_buttons
+                          state: "on"
+                    - condition: state
+                      entity: schedule.night_scene_buttons
+                      state: "on"
+                  styles:
                     card:
-                      type: custom:button-card
-                      entity: sensor.scene_basement_evening
-                      icon: mdi:moon-waning-crescent
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Evening
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.basement_evening
-                        data:
-                          transition: 3
+                      - max-width: 95%
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
+                      - align-self: center
+                      - justify-self: start
+                      - justify-content: start
+                      - text-align: left
+                      - background-color: var(--background-color-2)  
+                      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                    grid:
+                      - grid-template-areas: '"i l"'   # icon then label
+                      - grid-template-columns: 80px 1fr
+                      - justify-items: start
+                      - align-items: center
+                    label: 
+                      - font-size: 46px
+                      - font-weight: bold
+                      - justify-self: start
+                      - text-align: left
+                      - padding-left: 10px   # <-- add this for spacing from the icon
+                      - align-self: center
+                    img_cell:
+                      - align-self: center
+                      - justify-content: start
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
+                  state:
+                    - value: 'off'
+                      color: default
+                    - value: 'on'
                       styles:
                         card:
-                          - width: 460px
-                          - height: 85px
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                          - margin-left: 10px
-                          - padding-left: 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 40px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 36px
-                          - height: 36px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
-#Entertaining Button - only shows if someone is home, dinner party mode is on, and between 1 hour before sunset and 11pm
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_basement_entertaining
-                        state: 'on'
-                    card:
-                      type: custom:button-card
-                      entity: sensor.scene_basement_entertaining
-                      icon: mdi:glass-cocktail
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Entertaining
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.basement_evening
-                        data:
-                          transition: 3
-                      styles:
-                        card:
-                          - width: 460px
-                          - height: 85px
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                          - margin-left: 10px
-                          - padding-left: 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 40px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 36px
-                          - height: 36px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,178,102,0.7)
-#Welcome Button - only shows if someone is home and arrived within the last 15 minutes, between 1 hour before sunset and 11pm
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_welcome
-                        state: 'on'
-                    card:
-                      type: custom:button-card
-                      entity: sensor.scene_welcome
-                      icon: mdi:human-greeting
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Welcome
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.welcome
-                        data:
-                          transition: 3
-                      styles:
-                        card:
-                          - width: 460px
-                          - height: 85px
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                          - margin-left: 10px
-                          - padding-left: 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 40px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 36px
-                          - height: 36px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
-#Nightlight Button - only shows from 11pm to 5am
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_nightlight_slot_1
-                        state: 'on'
-                    card:
-                      type: custom:button-card
-                      entity: sensor.scene_nightlight
-                      icon: mdi:lightbulb-night
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Nightlight
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.nightlight
-                        data:
-                          transition: 1
-                      styles:
-                        card:
-                          - width: 460px
-                          - height: 85px
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                          - margin-left: 10px
-                          - padding-left: 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 40px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 36px
-                          - height: 36px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)  
+                          - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
             scene2:
-              card: 
-                type: vertical-stack
+              card:
+                type: horizontal-stack
                 cards:
-#Laundry Scene - only show from 5am to 1 hr before sunset
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_laundry
-                        state: 'on'
+#Working Scene - Only visible in the day
+                - type: custom:button-card
+                  entity: sensor.scene_good_morning
+                  icon: mdi:desk
+                  layout: icon_label
+                  show_icon: true
+                  show_label: true
+                  show_name: false
+                  show_state: false
+                  label: Working
+                  tap_action:
+                    action: call-service
+                    service: scene.turn_on
+                    target:
+                      entity_id: scene.good_morning_2
+                    data:
+                      transition: 3
+                  visibility:
+                  - condition: state
+                    entity: schedule.day_scene_buttons
+                    state: "on"
+                  - condition: numeric_state
+                    entity: sensor.sun_solar_elevation
+                    above: 4
+                  styles:
                     card:
-                      type: custom:button-card
-                      entity: sensor.scene_basement_cleaning
-                      icon: mdi:washing-machine
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Laundry
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.basement_cleaning
-                        data:
-                          transition: 1
+                      - max-width: 95%
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
+                      - align-self: center
+                      - justify-self: start
+                      - justify-content: start
+                      - text-align: left
+                      - background-color: var(--background-color-2)  
+                      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                    grid:
+                      - grid-template-areas: '"i l"'   # icon then label
+                      - grid-template-columns: 80px 1fr
+                      - justify-items: start
+                      - align-items: center
+                    label: 
+                      - font-size: 46px
+                      - font-weight: bold
+                      - justify-self: start
+                      - text-align: left
+                      - padding-left: 10px   # <-- add this for spacing from the icon
+                      - align-self: center
+                    img_cell:
+                      - align-self: center
+                      - justify-content: start
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
+                  state:
+                    - value: 'off'
+                      color: default
+                    - value: 'on'
                       styles:
                         card:
-                          - width: 460px
-                          - height: 85px
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                          - margin-left: 10px
-                          - padding-left: 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 40px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 36px
-                          - height: 36px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)  
-#Emergency Scene - only shows if Good Night Scene is on while 1 hr before sunset and 5am
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_emergency
-                        state: 'on'
+                          - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+#Basement Evening - Only visible in the evening
+                - type: custom:button-card
+                  entity: sensor.scene_basement_evening
+                  icon: mdi:lamps
+                  layout: icon_label
+                  show_icon: true
+                  show_label: true
+                  show_name: false
+                  show_state: false
+                  label: Evening
+                  tap_action:
+                    action: call-service
+                    service: scene.turn_on
+                    target:
+                      entity_id: scene.basement_evening
+                    data:
+                      transition: 3
+                  visibility:
+                    - condition: and
+                      conditions:
+                        - condition: numeric_state
+                          entity: sensor.sun_solar_elevation
+                          below: 4
+                        - condition: state
+                          entity: schedule.evening_scene_buttons
+                          state: "on"
+                    - condition: state
+                      entity: schedule.night_scene_buttons
+                      state: "on"
+                  styles:
                     card:
-                      type: custom:button-card
-                      entity: sensor.scene_emergency
-                      icon: mdi:hospital
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Emergency
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.emergency
-                        data:
-                          transition: 1
+                      - max-width: 95%
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
+                      - align-self: center
+                      - justify-self: start
+                      - justify-content: start
+                      - text-align: left
+                      - background-color: var(--background-color-2)  
+                      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                    grid:
+                      - grid-template-areas: '"i l"'   # icon then label
+                      - grid-template-columns: 80px 1fr
+                      - justify-items: start
+                      - align-items: center
+                    label: 
+                      - font-size: 46px
+                      - font-weight: bold
+                      - justify-self: start
+                      - text-align: left
+                      - padding-left: 10px   # <-- add this for spacing from the icon
+                      - align-self: center
+                    img_cell:
+                      - align-self: center
+                      - justify-content: start
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
+                  state:
+                    - value: 'off'
+                      color: default
+                    - value: 'on'
                       styles:
                         card:
-                          - width: 460px
-                          - height: 85px
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                          - margin-left: 10px
-                          - padding-left: 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 40px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 36px
-                          - height: 36px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)                
-#Nightlight Button - only shows from 1hr before sunset to 11pm
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_nightlight_slot_2
-                        state: 'on'
-                    card:
-                      type: custom:button-card
-                      entity: sensor.scene_nightlight
-                      icon: mdi:lightbulb-night
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Nightlight
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.nightlight
-                        data:
-                          transition: 1
-                      styles:
-                        card:
-                          - width: 460px
-                          - height: 85px
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                          - margin-left: 10px
-                          - padding-left: 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 40px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 36px
-                          - height: 36px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5) 
+                          - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
             scene3:
-              card: 
-                type: vertical-stack
+              card:
+                type: horizontal-stack
                 cards:
-#Cleaning Button - only shows between Sunrise and 1 hour before sunset
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_basement_cleaning
-                        state: 'on'
+#Basement Cleaning - Only visible in the day 
+                - type: custom:button-card
+                  entity: sensor.scene_basement_cleaning
+                  icon: mdi:spray-bottle
+                  layout: icon_label
+                  show_icon: true
+                  show_label: true
+                  show_name: false
+                  show_state: false
+                  label: Evening
+                  tap_action:
+                    action: call-service
+                    service: scene.turn_on
+                    target:
+                      entity_id: scene.basement_cleaning
+                    data:
+                      transition: 3
+                  visibility:
+                  - condition: state
+                    entity: schedule.day_scene_buttons
+                    state: "on"
+                  - condition: numeric_state
+                    entity: sensor.sun_solar_elevation
+                    above: 4
+                  styles:
                     card:
-                      type: custom:button-card
-                      entity: sensor.scene_basement_cleaning
-                      icon: mdi:spray-bottle
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Cleaning
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.basement_cleaning
-                        data:
-                          transition: 3
+                      - max-width: 95%
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
+                      - align-self: center
+                      - justify-self: start
+                      - justify-content: start
+                      - text-align: left
+                      - background-color: var(--background-color-2)  
+                      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                    grid:
+                      - grid-template-areas: '"i l"'   # icon then label
+                      - grid-template-columns: 80px 1fr
+                      - justify-items: start
+                      - align-items: center
+                    label: 
+                      - font-size: 46px
+                      - font-weight: bold
+                      - justify-self: start
+                      - text-align: left
+                      - padding-left: 10px   # <-- add this for spacing from the icon
+                      - align-self: center
+                    img_cell:
+                      - align-self: center
+                      - justify-content: start
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
+                  state:
+                    - value: 'off'
+                      color: default
+                    - value: 'on'
                       styles:
                         card:
-                          - width: 460px
-                          - height: 85px
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                          - margin-left: 10px
-                          - padding-left: 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 40px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 36px
-                          - height: 36px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
-#Outdoor Off - only shows between 1 hour before sunset and sunrise, if outdoor lights on
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_outdoor_off
-                        state: 'on'
+                          - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+#Basement Entertaining - Only visible in the evening
+                - type: custom:button-card
+                  entity: sensor.scene_basement_entertaining
+                  icon: mdi:glass-cocktail
+                  layout: icon_label
+                  show_icon: true
+                  show_label: true
+                  show_name: false
+                  show_state: false
+                  label: Entertaining
+                  tap_action:
+                    action: call-service
+                    service: scene.turn_on
+                    target:
+                      entity_id: scene.basement_entertaining
+                    data:
+                      transition: 3
+                  visibility:
+                    - condition: and
+                      conditions:
+                        - condition: numeric_state
+                          entity: sensor.sun_solar_elevation
+                          below: 4
+                        - condition: state
+                          entity: schedule.evening_scene_buttons
+                          state: "on"
+                  styles:
                     card:
-                      type: custom:button-card
-                      entity: sensor.scene_outdoor_off
-                      icon: mdi:outdoor-lamp
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Outdoor Off
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.outdoor_off
-                        data:
-                          transition: 3
+                      - max-width: 95%
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
+                      - align-self: center
+                      - justify-self: start
+                      - justify-content: start
+                      - text-align: left
+                      - background-color: var(--background-color-2)  
+                      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                    grid:
+                      - grid-template-areas: '"i l"'   # icon then label
+                      - grid-template-columns: 80px 1fr
+                      - justify-items: start
+                      - align-items: center
+                    label: 
+                      - font-size: 46px
+                      - font-weight: bold
+                      - justify-self: start
+                      - text-align: left
+                      - padding-left: 10px   # <-- add this for spacing from the icon
+                      - align-self: center
+                    img_cell:
+                      - align-self: center
+                      - justify-content: start
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
+                  state:
+                    - value: 'off'
+                      color: default
+                    - value: 'on'
                       styles:
                         card:
-                          - width: 460px
-                          - height: 85px
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                          - margin-left: 10px
-                          - padding-left: 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 40px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 36px
-                          - height: 36px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
-#Outdoor On - only shows between 1 hour before sunset and sunrise, if outdoor lights off
-                  - type: conditional
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.scene_show_outdoor_on
-                        state: 'on'
+                          - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+#Emergency Button - Only visible at night
+                - type: custom:button-card
+                  entity: sensor.scene_emergency
+                  icon: mdi:hospital
+                  layout: icon_label
+                  show_icon: true
+                  show_label: true
+                  show_name: false
+                  show_state: false
+                  label: Emergency
+                  tap_action:
+                    action: call-service
+                    service: scene.turn_on
+                    target:
+                      entity_id: scene.emergency
+                    data:
+                      transition: 3
+                  visibility:
+                      conditions:
+                        - condition: state
+                          entity: schedule.night_scene_buttons
+                          state: "on"
+                  styles:
                     card:
-                      type: custom:button-card
-                      entity: sensor.scene_outdoor_on
-                      icon: mdi:outdoor-lamp
-                      layout: icon_label
-                      show_icon: true
-                      show_label: true
-                      show_name: false
-                      show_state: false
-                      label: Outdoor On
-                      tap_action:
-                        action: call-service
-                        service: scene.turn_on
-                        target:
-                          entity_id: scene.outdoor_on
-                        data:
-                          transition: 3
+                      - max-width: 95%
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
+                      - align-self: center
+                      - justify-self: start
+                      - justify-content: start
+                      - text-align: left
+                      - background-color: var(--background-color-2)  
+                      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                    grid:
+                      - grid-template-areas: '"i l"'   # icon then label
+                      - grid-template-columns: 80px 1fr
+                      - justify-items: start
+                      - align-items: center
+                    label: 
+                      - font-size: 46px
+                      - font-weight: bold
+                      - justify-self: start
+                      - text-align: left
+                      - padding-left: 10px   # <-- add this for spacing from the icon
+                      - align-self: center
+                    img_cell:
+                      - align-self: center
+                      - justify-content: start
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
+                  state:
+                    - value: 'off'
+                      color: default
+                    - value: 'on'
                       styles:
                         card:
-                          - width: 460px
-                          - height: 85px
-                          - align-self: center
-                          - justify-self: start
-                          - justify-content: start
-                          - text-align: left
-                          - background-color: var(--background-color-2)  
-                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                          - margin-left: 10px
-                          - padding-left: 15px
-                        grid:
-                          - grid-template-areas: '"i l"'   # icon then label
-                          - grid-template-columns: 40px 1fr
-                          - justify-items: start
-                          - align-items: center
-                        label: 
-                          - font-size: 24px
-                          - font-weight: bold
-                          - justify-self: start
-                          - text-align: left
-                          - padding-left: 10px   # <-- add this for spacing from the icon
-                          - align-self: center
-                        img_cell:
-                          - align-self: center
-                          - justify-content: start
-                          - padding-left: 5px
-                        icon: 
-                          - width: 36px
-                          - height: 36px
-                          - padding-left: 5px
-                      state:
-                        - value: 'off'
-                          color: default
-                        - value: 'on'
-                          styles:
-                            card:
-                              - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+                          - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
             scene4:
-              card: 
+              card:
+#Nightlight Button
                 type: custom:button-card
-                entity: sensor.scene_good_night
-                icon: mdi:lightbulb-off
+                entity: sensor.scene_nightlight
+                icon: mdi:moon-waxing-crescent
                 layout: icon_label
                 show_icon: true
                 show_label: true
                 show_name: false
                 show_state: false
-                label: All Off
+                label: Night Light 
                 tap_action:
                   action: call-service
                   service: scene.turn_on
                   target:
-                    entity_id: scene.good_night
+                    entity_id: scene.nightlight
                   data:
                     transition: 3
                 styles:
                   card:
-                    - width: 460px
-                    - height: 85px
+                    - max-width: 95%
+                    - height: 160px
+                    - margin-left: 18px
+                    - padding-left: 10px
                     - align-self: center
                     - justify-self: start
                     - justify-content: start
                     - text-align: left
                     - background-color: var(--background-color-2)  
                     - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-                    - margin-left: 10px
-                    - padding-left: 15px
                   grid:
                     - grid-template-areas: '"i l"'   # icon then label
-                    - grid-template-columns: 40px 1fr
+                    - grid-template-columns: 80px 1fr
                     - justify-items: start
                     - align-items: center
                   label: 
-                    - font-size: 24px
+                    - font-size: 46px
                     - font-weight: bold
                     - justify-self: start
                     - text-align: left
@@ -787,8 +560,8 @@ cards:
                     - justify-content: start
                     - padding-left: 5px
                   icon: 
-                    - width: 36px
-                    - height: 36px
+                    - width: 54px
+                    - height: 54px
                     - padding-left: 5px
                 state:
                   - value: 'off'
@@ -796,5 +569,126 @@ cards:
                   - value: 'on'
                     styles:
                       card:
-                      - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+                        - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+            scene5:
+              card:
+#Outdoor On/Off
+                type: custom:button-card
+                entity: sensor.scene_outdoor_on
+                icon: mdi:outdoor-lamp
+                layout: icon_label
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: false
+                label: Outdoor 
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  target:
+                    entity_id: >
+                      [[[
+                        return states['sensor.scene_outdoor_on'].state === 'on' 
+                          ? 'scene.outdoor_off' 
+                          : 'scene.outdoor_on';
+                      ]]]
+                  data:
+                    transition: 0
+                styles:
+                  card:
+                    - max-width: 95%
+                    - height: 160px
+                    - margin-left: 18px
+                    - padding-left: 10px
+                    - align-self: center
+                    - justify-self: start
+                    - justify-content: start
+                    - text-align: left
+                    - background-color: var(--background-color-2)  
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                  grid:
+                    - grid-template-areas: '"i l"'   # icon then label
+                    - grid-template-columns: 80px 1fr
+                    - justify-items: start
+                    - align-items: center
+                  label: 
+                    - font-size: 46px
+                    - font-weight: bold
+                    - justify-self: start
+                    - text-align: left
+                    - padding-left: 10px   # <-- add this for spacing from the icon
+                    - align-self: center
+                  img_cell:
+                    - align-self: center
+                    - justify-content: start
+                    - padding-left: 5px
+                  icon: 
+                    - width: 54px
+                    - height: 54px
+                    - padding-left: 5px
+                state:
+                  - value: 'off'
+                    color: default
+                  - value: 'on'
+                    styles:
+                      card:
+                        - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
+            scene6:
+              card:
+#All Off
+                type: custom:button-card
+                entity: sensor.scene_good_night
+                icon: mdi:lightbulb-off
+                layout: icon_label
+                show_icon: true
+                show_label: true
+                show_name: false
+                show_state: false
+                label: All Off 
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  target:
+                    entity_id: scene.good_night
+                  data:
+                    transition: 3
+                styles:
+                  card:
+                    - max-width: 95%
+                    - height: 160px
+                    - margin-left: 18px
+                    - padding-left: 10px
+                    - align-self: center
+                    - justify-self: start
+                    - justify-content: start
+                    - text-align: left
+                    - background-color: var(--background-color-2)  
+                    - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                  grid:
+                    - grid-template-areas: '"i l"'   # icon then label
+                    - grid-template-columns: 80px 1fr
+                    - justify-items: start
+                    - align-items: center
+                  label: 
+                    - font-size: 46px
+                    - font-weight: bold
+                    - justify-self: start
+                    - text-align: left
+                    - padding-left: 10px   # <-- add this for spacing from the icon
+                    - align-self: center
+                  img_cell:
+                    - align-self: center
+                    - justify-content: start
+                    - padding-left: 5px
+                  icon: 
+                    - width: 54px
+                    - height: 54px
+                    - padding-left: 5px
+                state:
+                  - value: 'off'
+                    color: default
+                  - value: 'on'
+                    styles:
+                      card:
+                        - box-shadow: 0 0 3px 3px rgba(255,255,255,0.5)
       nav: !include footer-menu.yaml
