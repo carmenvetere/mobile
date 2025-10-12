@@ -37,9 +37,10 @@ cards:
               - background: var(--background-color)
             grid:
               - grid-template-areas: |
+                  "space"
                   "notifications"
               - grid-template-columns: auto
-              - grid-template-rows: 1134px
+              - grid-template-rows: 20px 1114px
               - align-items: start
           custom_fields: 
             notifications:
