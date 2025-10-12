@@ -69,8 +69,6 @@ cards:
                     transition: 3
                 styles:
                   card:
-                    - max-width: 95%
-                    - max-height: 100%
                     - align-self: center
                     - justify-self: start
                     - justify-content: start
@@ -94,8 +92,8 @@ cards:
                     - justify-content: start
                     - padding-left: 5px
                   icon: 
-                    - width: 72px
-                    - height: 72px
+                    - width: 54px
+                    - height: 54px
                     - padding-left: 5px
                 state:
                   - value: 'off'
