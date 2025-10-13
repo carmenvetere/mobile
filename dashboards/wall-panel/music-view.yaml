@@ -87,6 +87,7 @@ cards:
                   sonos-media-browser$ sonos-media-browser-icons$: |
                     .title {            
                       color: var(--primary-text-color);!important;
-                      background-color: var(--ha-card-background-2) !important; 
+                      background-color: var(--ha-card-background-2) !important;
+                      font-size: 18px !important; 
                     } 
       nav: !include footer-menu.yaml
