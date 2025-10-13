@@ -12,15 +12,11 @@
         .container {
           align-items: center !important;
         }
-        .info {
-          width: 100% !important;
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 6px !important;
-        }
         .primary, .secondary {
           display: block !important;
           text-align: left !important;
+        }
+        .primary { margin-bottom: 6px !important; 
         }
       mushroom-state-info$: |
         .container {
