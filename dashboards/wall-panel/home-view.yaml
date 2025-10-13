@@ -76,9 +76,9 @@ cards:
                       - condition: state
                         entity: schedule.day_scene_buttons
                         state: "on"
-                      - condition: numeric_state
-                        entity: sensor.sun_solar_elevation
-                        above: 4
+                      - condition: state
+                        entity: schedule.evening_scene_buttons
+                        state: "off"
                   styles:
                     card:
                       - max-width: 95%
