@@ -7,14 +7,32 @@
   show_brightness_control: true
   collapsible_controls: false
   card_mod:
-    style: |
-      ha-card {
-        border-radius: 10px !important;
-        height: 125px !important;
-        --card-primary-font-size: 28px;
-        --card-secondary-font-size: 20px;
-        --card-primary-font-weight: bold;
-      }
+    style:
+      mushroom-state-info$: |
+        .container {
+          align-items: start !important;
+        }
+      mushroom-shape-icon$: |
+        .shape {
+          --shape-color: var(--accent-color) !important;
+        }
+      mushroom-light-brightness-control$: |
+        mushroom-slider {
+          --main-color: #E6BA63 !important;
+          --bg-color: var(--accent-color) !important;
+        }
+      .: |
+        ha-card {
+          border-radius: 10px !important;
+          height: 75px !important;
+          background: var(--background-color-2);
+          --card-primary-font-size: 18px;
+          --card-secondary-font-size: 14px;
+          --card-primary-font-weight: bold;
+        }
+        ha-state-icon {
+          color: #E6BA63 !important;
+        }
 - type: custom:mushroom-light-card
   entity: light.basement_hallway_main_lights
   name: Hallway
@@ -24,14 +42,32 @@
   show_brightness_control: true
   collapsible_controls: false
   card_mod:
-    style: |
-      ha-card {
-        border-radius: 10px !important;
-        height: 125px !important;
-        --card-primary-font-size: 28px;
-        --card-secondary-font-size: 20px;
-        --card-primary-font-weight: bold;
-      }
+    style:
+      mushroom-state-info$: |
+        .container {
+          align-items: start !important;
+        }
+      mushroom-shape-icon$: |
+        .shape {
+          --shape-color: var(--accent-color) !important;
+        }
+      mushroom-light-brightness-control$: |
+        mushroom-slider {
+          --main-color: #E6BA63 !important;
+          --bg-color: var(--accent-color) !important;
+        }
+      .: |
+        ha-card {
+          border-radius: 10px !important;
+          height: 75px !important;
+          background: var(--background-color-2);
+          --card-primary-font-size: 18px;
+          --card-secondary-font-size: 14px;
+          --card-primary-font-weight: bold;
+        }
+        ha-state-icon {
+          color: #E6BA63 !important;
+        }
 - type: custom:mushroom-light-card
   entity: light.gym_main_lights
   name: Media Room
@@ -41,14 +77,32 @@
   show_brightness_control: true
   collapsible_controls: false
   card_mod:
-    style: |
-      ha-card {
-        border-radius: 10px !important;
-        height: 125px !important;
-        --card-primary-font-size: 28px;
-        --card-secondary-font-size: 20px;
-        --card-primary-font-weight: bold;
-      }
+    style:
+      mushroom-state-info$: |
+        .container {
+          align-items: start !important;
+        }
+      mushroom-shape-icon$: |
+        .shape {
+          --shape-color: var(--accent-color) !important;
+        }
+      mushroom-light-brightness-control$: |
+        mushroom-slider {
+          --main-color: #E6BA63 !important;
+          --bg-color: var(--accent-color) !important;
+        }
+      .: |
+        ha-card {
+          border-radius: 10px !important;
+          height: 75px !important;
+          background: var(--background-color-2);
+          --card-primary-font-size: 18px;
+          --card-secondary-font-size: 14px;
+          --card-primary-font-weight: bold;
+        }
+        ha-state-icon {
+          color: #E6BA63 !important;
+        }
 - type: custom:mushroom-light-card
   entity: light.media_room_table_lamp
   name: Table Lamp
@@ -58,14 +112,32 @@
   show_brightness_control: true
   collapsible_controls: false
   card_mod:
-    style: |
-      ha-card {
-        border-radius: 10px !important;
-        height: 125px !important;
-        --card-primary-font-size: 28px;
-        --card-secondary-font-size: 20px;
-        --card-primary-font-weight: bold;
-      }
+    style:
+      mushroom-state-info$: |
+        .container {
+          align-items: start !important;
+        }
+      mushroom-shape-icon$: |
+        .shape {
+          --shape-color: var(--accent-color) !important;
+        }
+      mushroom-light-brightness-control$: |
+        mushroom-slider {
+          --main-color: #E6BA63 !important;
+          --bg-color: var(--accent-color) !important;
+        }
+      .: |
+        ha-card {
+          border-radius: 10px !important;
+          height: 75px !important;
+          background: var(--background-color-2);
+          --card-primary-font-size: 18px;
+          --card-secondary-font-size: 14px;
+          --card-primary-font-weight: bold;
+        }
+        ha-state-icon {
+          color: #E6BA63 !important;
+        }
 - type: custom:mushroom-light-card
   entity: light.media_room_main_lights
   name: Gym
@@ -75,14 +147,32 @@
   show_brightness_control: true
   collapsible_controls: false
   card_mod:
-    style: |
-      ha-card {
-        border-radius: 10px !important;
-        height: 125px !important;
-        --card-primary-font-size: 28px;
-        --card-secondary-font-size: 20px;
-        --card-primary-font-weight: bold;
-      }
+    style:
+      mushroom-state-info$: |
+        .container {
+          align-items: start !important;
+        }
+      mushroom-shape-icon$: |
+        .shape {
+          --shape-color: var(--accent-color) !important;
+        }
+      mushroom-light-brightness-control$: |
+        mushroom-slider {
+          --main-color: #E6BA63 !important;
+          --bg-color: var(--accent-color) !important;
+        }
+      .: |
+        ha-card {
+          border-radius: 10px !important;
+          height: 75px !important;
+          background: var(--background-color-2);
+          --card-primary-font-size: 18px;
+          --card-secondary-font-size: 14px;
+          --card-primary-font-weight: bold;
+        }
+        ha-state-icon {
+          color: #E6BA63 !important;
+        }
 - type: custom:mushroom-light-card
   entity: light.stairs_spot_lights
   name: Painting Accent
@@ -92,14 +182,32 @@
   show_brightness_control: true
   collapsible_controls: false
   card_mod:
-    style: |
-      ha-card {
-        border-radius: 10px !important;
-        height: 125px !important;
-        --card-primary-font-size: 28px;
-        --card-secondary-font-size: 20px;
-        --card-primary-font-weight: bold;
-      }
+    style:
+      mushroom-state-info$: |
+        .container {
+          align-items: start !important;
+        }
+      mushroom-shape-icon$: |
+        .shape {
+          --shape-color: var(--accent-color) !important;
+        }
+      mushroom-light-brightness-control$: |
+        mushroom-slider {
+          --main-color: #E6BA63 !important;
+          --bg-color: var(--accent-color) !important;
+        }
+      .: |
+        ha-card {
+          border-radius: 10px !important;
+          height: 75px !important;
+          background: var(--background-color-2);
+          --card-primary-font-size: 18px;
+          --card-secondary-font-size: 14px;
+          --card-primary-font-weight: bold;
+        }
+        ha-state-icon {
+          color: #E6BA63 !important;
+        }
 - type: custom:mushroom-light-card
   entity: light.stairs_main_lights
   name: Stairs
@@ -109,11 +217,29 @@
   show_brightness_control: true
   collapsible_controls: false
   card_mod:
-    style: |
-      ha-card {
-        border-radius: 10px !important;
-        height: 125px !important;
-        --card-primary-font-size: 28px;
-        --card-secondary-font-size: 20px;
-        --card-primary-font-weight: bold;
-      }
+    style:
+      mushroom-state-info$: |
+        .container {
+          align-items: start !important;
+        }
+      mushroom-shape-icon$: |
+        .shape {
+          --shape-color: var(--accent-color) !important;
+        }
+      mushroom-light-brightness-control$: |
+        mushroom-slider {
+          --main-color: #E6BA63 !important;
+          --bg-color: var(--accent-color) !important;
+        }
+      .: |
+        ha-card {
+          border-radius: 10px !important;
+          height: 75px !important;
+          background: var(--background-color-2);
+          --card-primary-font-size: 18px;
+          --card-secondary-font-size: 14px;
+          --card-primary-font-weight: bold;
+        }
+        ha-state-icon {
+          color: #E6BA63 !important;
+        }
