@@ -56,7 +56,13 @@ card:
             - justify-self: center
             - background: transparent            
           icon:
-            - color: var(--primary-text-color)
+            - color: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('lights-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                ]]]
+            - height: 64px
+            - width: 64px
     climate:
       card:
         type: custom:button-card
@@ -71,7 +77,13 @@ card:
             - justify-self: center
             - background: transparent
           icon:
-            - color: var(--primary-text-color)
+            - color: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('climate-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                ]]]
+            - height: 64px
+            - width: 64px
     music:
       card:
         type: custom:button-card
@@ -86,7 +98,13 @@ card:
             - justify-self: center
             - background: transparent
           icon:
-            - color: var(--primary-text-color)
+            - color: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('music-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                ]]]
+            - height: 64px
+            - width: 64px
     energy:
       card:
         type: custom:button-card
@@ -101,7 +119,13 @@ card:
             - justify-self: center
             - background: transparent
           icon:
-            - color: var(--primary-text-color)
+            - color: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('energy-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                ]]]
+            - height: 64px
+            - width: 64px
     security:
       card:
         type: custom:button-card
@@ -116,7 +140,13 @@ card:
             - justify-self: center
             - background: transparent
           icon:
-            - color: var(--primary-text-color)
+            - color: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('security-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                ]]]
+            - height: 64px
+            - width: 64px
     shades:
       card:
         type: custom:button-card
@@ -131,7 +161,13 @@ card:
             - justify-self: center
             - background: transparent
           icon:
-            - color: var(--primary-text-color)
+            - color: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('shades-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                ]]]
+            - height: 64px
+            - width: 64px
     other:
       card:
         type: custom:button-card
@@ -146,4 +182,10 @@ card:
             - justify-self: center
             - background: transparent            
           icon:
-            - color: var(--primary-text-color)           
+            - color: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('other-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                ]]]
+            - height: 64px
+            - width: 64px       
