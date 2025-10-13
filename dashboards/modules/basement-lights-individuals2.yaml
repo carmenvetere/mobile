@@ -8,12 +8,23 @@
   collapsible_controls: false
   card_mod:
     style:
+      mushroom-state-item$: |
+        .container {
+          align-items: flex-start !important;
+        }
+        .info {
+          width: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 6px !important;
+        }
+        .primary, .secondary {
+          display: block !important;
+          text-align: left !important;
+        }
       mushroom-state-info$: |
         .container {
           align-items: start !important;
-        }
-        .primary {
-          margin-bottom: 6px !important; 
         }
       mushroom-shape-icon$: |
         .shape {
