@@ -80,4 +80,8 @@ cards:
                       font-size: 28px !important;
                       font-weight: bold !important;
                     }
+                  sonos-media-browser$: |
+                    sonos-media-browser-header {
+                      display: none;
+                    }
       nav: !include footer-menu.yaml
