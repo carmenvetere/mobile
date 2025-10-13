@@ -9,29 +9,42 @@
   card_mod:
     style:
       mushroom-state-item$: |
-        .container {
-          align-items: center !important;
+        .info {
+          width: 100% !important;
+          display: grid !important;
+          justify-items: start !important;   /* 👈 key */
+          align-items: start !important;
           text-align: left !important;
+          row-gap: 6px;                      /* space between name & state */
         }
-        .secondary { 
+        .primary,
+        .secondary {
+          justify-self: start !important;    /* ensure each line hugs left */
           text-align: left !important;
-          line-height: 24px !important;
-          margin-bottom: 5px !important; 
-        }  
+          width: 100% !important;
+        }
+        .container {
+          align-items: flex-start !important; /* icon + text align at top/left */
+        }
       mushroom-state-info$: |
-        .container {
-          align-items: center !important;
+        :host {
+          text-align: left !important;            /* << key override */
         }
-        .primary { 
+        .info {
+          width: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;     /* make the stack hug left */
+          gap: 6px;                               /* space between name/state */
+        }
+        .primary,
+        .secondary {
           text-align: left !important;
-          line-height: 36px !important;
-          margin-bottom: 8px !important; 
+          align-self: flex-start !important;
+          width: 100% !important;
+          align-items: center !important;
+          line-height: 32px !important;
         }   
-        .secondary { 
-          justify-items: start !important;
-          line-height: 24px !important;
-          margin-bottom: 5px !important; 
-        }          
       mushroom-shape-icon$: |
         .shape {
           --shape-color: var(--accent-color) !important;
@@ -47,13 +60,14 @@
           height: 125px !important;
           background: var(--background-color-2);
           box-shadow: rgba(0,0,0,.35) 0px 5px 15px;
+          max-width: 95% !important;
+          margin-left: 2.5% !important;
           --card-primary-font-size: 32px;
           --card-secondary-font-size: 24px;
           --card-primary-font-weight: bold;
         }
         ha-state-icon {
           color: #E6BA63 !important;
-          --icon-symbol-size: 36px;
         }
 - type: custom:mushroom-light-card
   entity: light.basement_hallway_main_lights
