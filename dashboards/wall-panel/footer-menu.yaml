@@ -27,9 +27,11 @@ card:
         show_state: false
         styles:
           card:
-            - align-self: center
-            - justify-self: center
-            - border-radius: 0px
+          - align-self: stretch
+          - justify-self: center
+          - border-radius: 0px
+          - height: 100%
+          - width: 100%
             - background: |
                 [[[
                   const path = window.location.pathname + window.location.hash;
