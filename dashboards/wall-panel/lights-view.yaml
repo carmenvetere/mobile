@@ -1,0 +1,32 @@
+title: Lights
+theme: Bubble
+path: lights-view
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 0px
+        - padding-bottom: 5px
+        - padding-left: 0px
+        - padding-top: 0px
+        - width: 750px
+        - height: 1334px
+        - background: var(--background-color)
+      grid:
+        - grid-template-areas: |
+            "header"
+            "main"
+            "nav"
+        - grid-template-columns: auto
+        - grid-template-rows: 100px 1134px 100px
+        - align-items: start
+        - column-gap: 2px
+        - row-gap: 0px
+    custom_fields:
+      header: !include header.yaml
+      main:
+        card:
+          type: vertical-stack
+          cards: !include /config/dashboards/modules/basement-lights-individuals1.yaml
+      nav: !include footer-menu.yaml

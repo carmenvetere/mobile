@@ -1,0 +1,119 @@
+- type: custom:mushroom-light-card
+  entity: light.laundry_room_main_lights
+  name: Laundry Room
+  icon: mdi:light-recessed
+  fill_container: true
+  layout: horizontal
+  show_brightness_control: true
+  collapsible_controls: false
+  card_mod:
+    style: |
+      ha-card {
+        border-radius: 10px !important;
+        height: 75px !important;
+        --card-primary-font-size: 18px;
+        --card-secondary-font-size: 14px;
+        --card-primary-font-weight: bold;
+      }
+- type: custom:mushroom-light-card
+  entity: light.basement_hallway_main_lights
+  name: Hallway
+  icon: mdi:light-recessed
+  fill_container: true
+  layout: horizontal
+  show_brightness_control: true
+  collapsible_controls: false
+  card_mod:
+    style: |
+      ha-card {
+        border-radius: 10px !important;
+        height: 75px !important;
+        --card-primary-font-size: 18px;
+        --card-secondary-font-size: 14px;
+        --card-primary-font-weight: bold;
+      }
+- type: custom:mushroom-light-card
+  entity: light.gym_main_lights
+  name: Media Room
+  icon: mdi:light-recessed
+  fill_container: true
+  layout: horizontal
+  show_brightness_control: true
+  collapsible_controls: false
+  card_mod:
+    style: |
+      ha-card {
+        border-radius: 10px !important;
+        height: 75px !important;
+        --card-primary-font-size: 18px;
+        --card-secondary-font-size: 14px;
+        --card-primary-font-weight: bold;
+      }
+- type: custom:mushroom-light-card
+  entity: light.media_room_table_lamp
+  name: Table Lamp
+  icon: mdi:lamp
+  fill_container: true
+  layout: horizontal
+  show_brightness_control: true
+  collapsible_controls: false
+  card_mod:
+    style: |
+      ha-card {
+        border-radius: 10px !important;
+        height: 75px !important;
+        --card-primary-font-size: 18px;
+        --card-secondary-font-size: 14px;
+        --card-primary-font-weight: bold;
+      }
+- type: custom:mushroom-light-card
+  entity: light.media_room_main_lights
+  name: Gym
+  icon: mdi:light-recessed
+  fill_container: true
+  layout: horizontal
+  show_brightness_control: true
+  collapsible_controls: false
+  card_mod:
+    style: |
+      ha-card {
+        border-radius: 10px !important;
+        height: 75px !important;
+        --card-primary-font-size: 18px;
+        --card-secondary-font-size: 14px;
+        --card-primary-font-weight: bold;
+      }
+- type: custom:mushroom-light-card
+  entity: light.stairs_spot_lights
+  name: Painting Accent
+  icon: mdi:spotlight-beam
+  fill_container: true
+  layout: horizontal
+  show_brightness_control: true
+  collapsible_controls: false
+  card_mod:
+    style: |
+      ha-card {
+        border-radius: 10px !important;
+        height: 75px !important;
+        --card-primary-font-size: 18px;
+        --card-secondary-font-size: 14px;
+        --card-primary-font-weight: bold;
+      }
+- type: custom:mushroom-light-card
+  entity: light.stairs_main_lights
+  name: Stairs
+  icon: mdi:spotlight-beam
+  fill_container: true
+  layout: horizontal
+  show_brightness_control: true
+  collapsible_controls: false
+  card_mod:
+    style: |
+      ha-card {
+        border-radius: 10px !important;
+        height: 75px !important;
+        --card-primary-font-size: 18px;
+        --card-secondary-font-size: 14px;
+        --card-primary-font-weight: bold;
+      }
