@@ -12,6 +12,9 @@
         .container {
           align-items: start !important;
         }
+        .primary {
+          margin-bottom: 6px !important; 
+        }
       mushroom-shape-icon$: |
         .shape {
           --shape-color: var(--accent-color) !important;
@@ -26,8 +29,8 @@
           border-radius: 10px !important;
           height: 125px !important;
           background: var(--background-color-2);
-          --card-primary-font-size: 28px;
-          --card-secondary-font-size: 18px;
+          --card-primary-font-size: 32px;
+          --card-secondary-font-size: 24px;
           --card-primary-font-weight: bold;
         }
         ha-state-icon {
