@@ -80,7 +80,7 @@ cards:
                               state: "on"
                             - condition: state
                               entity: schedule.evening_scene_buttons
-                              state: "on"
+                              state: "off"
                         - condition: and
                           conditions:
                             - condition: numeric_state
