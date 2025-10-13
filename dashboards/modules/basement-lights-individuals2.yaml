@@ -69,6 +69,7 @@
         }
         ha-state-icon {
           color: #E6BA63 !important;
+          --icon-symbol-size: 36px;
         }
 - type: custom:mushroom-light-card
   entity: light.basement_hallway_main_lights
@@ -80,10 +81,43 @@
   collapsible_controls: false
   card_mod:
     style:
-      mushroom-state-info$: |
-        .container {
+      mushroom-state-item$: |
+        .info {
+          width: 100% !important;
+          display: grid !important;
+          justify-items: start !important;   /* 👈 key */
           align-items: start !important;
+          text-align: left !important;
+          row-gap: 6px;                      /* space between name & state */
         }
+        .primary,
+        .secondary {
+          justify-self: start !important;    /* ensure each line hugs left */
+          text-align: left !important;
+          width: 100% !important;
+        }
+        .container {
+          align-items: center !important; /* icon + text align at top/left */
+        }
+      mushroom-state-info$: |
+        :host {
+          text-align: left !important;            /* << key override */
+        }
+        .info {
+          width: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;     /* make the stack hug left */
+          gap: 6px;                               /* space between name/state */
+        }
+        .primary,
+        .secondary {
+          text-align: left !important;
+          align-self: flex-start !important;
+          width: 100% !important;
+          align-items: center !important;
+          line-height: 32px !important;
+        }   
       mushroom-shape-icon$: |
         .shape {
           --shape-color: var(--accent-color) !important;
@@ -98,12 +132,17 @@
           border-radius: 10px !important;
           height: 125px !important;
           background: var(--background-color-2);
-          --card-primary-font-size: 28px;
-          --card-secondary-font-size: 18px;
+          box-shadow: rgba(0,0,0,.35) 0px 5px 15px;
+          max-width: 95% !important;
+          margin-left: 2.5% !important;
+          margin-top: 10px !important;
+          --card-primary-font-size: 32px;
+          --card-secondary-font-size: 24px;
           --card-primary-font-weight: bold;
         }
         ha-state-icon {
           color: #E6BA63 !important;
+          --icon-symbol-size: 36px;
         }
 - type: custom:mushroom-light-card
   entity: light.gym_main_lights
@@ -115,10 +154,43 @@
   collapsible_controls: false
   card_mod:
     style:
-      mushroom-state-info$: |
-        .container {
+      mushroom-state-item$: |
+        .info {
+          width: 100% !important;
+          display: grid !important;
+          justify-items: start !important;   /* 👈 key */
           align-items: start !important;
+          text-align: left !important;
+          row-gap: 6px;                      /* space between name & state */
         }
+        .primary,
+        .secondary {
+          justify-self: start !important;    /* ensure each line hugs left */
+          text-align: left !important;
+          width: 100% !important;
+        }
+        .container {
+          align-items: center !important; /* icon + text align at top/left */
+        }
+      mushroom-state-info$: |
+        :host {
+          text-align: left !important;            /* << key override */
+        }
+        .info {
+          width: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;     /* make the stack hug left */
+          gap: 6px;                               /* space between name/state */
+        }
+        .primary,
+        .secondary {
+          text-align: left !important;
+          align-self: flex-start !important;
+          width: 100% !important;
+          align-items: center !important;
+          line-height: 32px !important;
+        }   
       mushroom-shape-icon$: |
         .shape {
           --shape-color: var(--accent-color) !important;
@@ -133,12 +205,17 @@
           border-radius: 10px !important;
           height: 125px !important;
           background: var(--background-color-2);
-          --card-primary-font-size: 28px;
-          --card-secondary-font-size: 18px;
+          box-shadow: rgba(0,0,0,.35) 0px 5px 15px;
+          max-width: 95% !important;
+          margin-left: 2.5% !important;
+          margin-top: 10px !important;
+          --card-primary-font-size: 32px;
+          --card-secondary-font-size: 24px;
           --card-primary-font-weight: bold;
         }
         ha-state-icon {
           color: #E6BA63 !important;
+          --icon-symbol-size: 36px;
         }
 - type: custom:mushroom-light-card
   entity: light.media_room_table_lamp
@@ -150,10 +227,43 @@
   collapsible_controls: false
   card_mod:
     style:
-      mushroom-state-info$: |
-        .container {
+      mushroom-state-item$: |
+        .info {
+          width: 100% !important;
+          display: grid !important;
+          justify-items: start !important;   /* 👈 key */
           align-items: start !important;
+          text-align: left !important;
+          row-gap: 6px;                      /* space between name & state */
         }
+        .primary,
+        .secondary {
+          justify-self: start !important;    /* ensure each line hugs left */
+          text-align: left !important;
+          width: 100% !important;
+        }
+        .container {
+          align-items: center !important; /* icon + text align at top/left */
+        }
+      mushroom-state-info$: |
+        :host {
+          text-align: left !important;            /* << key override */
+        }
+        .info {
+          width: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;     /* make the stack hug left */
+          gap: 6px;                               /* space between name/state */
+        }
+        .primary,
+        .secondary {
+          text-align: left !important;
+          align-self: flex-start !important;
+          width: 100% !important;
+          align-items: center !important;
+          line-height: 32px !important;
+        }   
       mushroom-shape-icon$: |
         .shape {
           --shape-color: var(--accent-color) !important;
@@ -168,12 +278,17 @@
           border-radius: 10px !important;
           height: 125px !important;
           background: var(--background-color-2);
-          --card-primary-font-size: 28px;
-          --card-secondary-font-size: 18px;
+          box-shadow: rgba(0,0,0,.35) 0px 5px 15px;
+          max-width: 95% !important;
+          margin-left: 2.5% !important;
+          margin-top: 10px !important;
+          --card-primary-font-size: 32px;
+          --card-secondary-font-size: 24px;
           --card-primary-font-weight: bold;
         }
         ha-state-icon {
           color: #E6BA63 !important;
+          --icon-symbol-size: 36px;
         }
 - type: custom:mushroom-light-card
   entity: light.media_room_main_lights
@@ -185,10 +300,43 @@
   collapsible_controls: false
   card_mod:
     style:
-      mushroom-state-info$: |
-        .container {
+      mushroom-state-item$: |
+        .info {
+          width: 100% !important;
+          display: grid !important;
+          justify-items: start !important;   /* 👈 key */
           align-items: start !important;
+          text-align: left !important;
+          row-gap: 6px;                      /* space between name & state */
         }
+        .primary,
+        .secondary {
+          justify-self: start !important;    /* ensure each line hugs left */
+          text-align: left !important;
+          width: 100% !important;
+        }
+        .container {
+          align-items: center !important; /* icon + text align at top/left */
+        }
+      mushroom-state-info$: |
+        :host {
+          text-align: left !important;            /* << key override */
+        }
+        .info {
+          width: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;     /* make the stack hug left */
+          gap: 6px;                               /* space between name/state */
+        }
+        .primary,
+        .secondary {
+          text-align: left !important;
+          align-self: flex-start !important;
+          width: 100% !important;
+          align-items: center !important;
+          line-height: 32px !important;
+        }   
       mushroom-shape-icon$: |
         .shape {
           --shape-color: var(--accent-color) !important;
@@ -203,12 +351,17 @@
           border-radius: 10px !important;
           height: 125px !important;
           background: var(--background-color-2);
-          --card-primary-font-size: 28px;
-          --card-secondary-font-size: 18px;
+          box-shadow: rgba(0,0,0,.35) 0px 5px 15px;
+          max-width: 95% !important;
+          margin-left: 2.5% !important;
+          margin-top: 10px !important;
+          --card-primary-font-size: 32px;
+          --card-secondary-font-size: 24px;
           --card-primary-font-weight: bold;
         }
         ha-state-icon {
           color: #E6BA63 !important;
+          --icon-symbol-size: 36px;
         }
 - type: custom:mushroom-light-card
   entity: light.stairs_spot_lights
@@ -220,11 +373,43 @@
   collapsible_controls: false
   card_mod:
     style:
-      mushroom-state-info$: |
-        .container {
+      mushroom-state-item$: |
+        .info {
+          width: 100% !important;
+          display: grid !important;
+          justify-items: start !important;   /* 👈 key */
           align-items: start !important;
-          padding: 10px 10px 10px 10px !important;
+          text-align: left !important;
+          row-gap: 6px;                      /* space between name & state */
         }
+        .primary,
+        .secondary {
+          justify-self: start !important;    /* ensure each line hugs left */
+          text-align: left !important;
+          width: 100% !important;
+        }
+        .container {
+          align-items: center !important; /* icon + text align at top/left */
+        }
+      mushroom-state-info$: |
+        :host {
+          text-align: left !important;            /* << key override */
+        }
+        .info {
+          width: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;     /* make the stack hug left */
+          gap: 6px;                               /* space between name/state */
+        }
+        .primary,
+        .secondary {
+          text-align: left !important;
+          align-self: flex-start !important;
+          width: 100% !important;
+          align-items: center !important;
+          line-height: 32px !important;
+        }   
       mushroom-shape-icon$: |
         .shape {
           --shape-color: var(--accent-color) !important;
@@ -237,11 +422,14 @@
       .: |
         ha-card {
           border-radius: 10px !important;
-          padding-left: 15px !important;
           height: 125px !important;
           background: var(--background-color-2);
-          --card-primary-font-size: 28px;
-          --card-secondary-font-size: 18px;
+          box-shadow: rgba(0,0,0,.35) 0px 5px 15px;
+          max-width: 95% !important;
+          margin-left: 2.5% !important;
+          margin-top: 10px !important;
+          --card-primary-font-size: 32px;
+          --card-secondary-font-size: 24px;
           --card-primary-font-weight: bold;
         }
         ha-state-icon {
@@ -258,10 +446,43 @@
   collapsible_controls: false
   card_mod:
     style:
-      mushroom-state-info$: |
-        .container {
+      mushroom-state-item$: |
+        .info {
+          width: 100% !important;
+          display: grid !important;
+          justify-items: start !important;   /* 👈 key */
           align-items: start !important;
+          text-align: left !important;
+          row-gap: 6px;                      /* space between name & state */
         }
+        .primary,
+        .secondary {
+          justify-self: start !important;    /* ensure each line hugs left */
+          text-align: left !important;
+          width: 100% !important;
+        }
+        .container {
+          align-items: center !important; /* icon + text align at top/left */
+        }
+      mushroom-state-info$: |
+        :host {
+          text-align: left !important;            /* << key override */
+        }
+        .info {
+          width: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;     /* make the stack hug left */
+          gap: 6px;                               /* space between name/state */
+        }
+        .primary,
+        .secondary {
+          text-align: left !important;
+          align-self: flex-start !important;
+          width: 100% !important;
+          align-items: center !important;
+          line-height: 32px !important;
+        }   
       mushroom-shape-icon$: |
         .shape {
           --shape-color: var(--accent-color) !important;
@@ -276,10 +497,15 @@
           border-radius: 10px !important;
           height: 125px !important;
           background: var(--background-color-2);
-          --card-primary-font-size: 28px;
-          --card-secondary-font-size: 18px;
+          box-shadow: rgba(0,0,0,.35) 0px 5px 15px;
+          max-width: 95% !important;
+          margin-left: 2.5% !important;
+          margin-top: 10px !important;
+          --card-primary-font-size: 32px;
+          --card-secondary-font-size: 24px;
           --card-primary-font-weight: bold;
         }
         ha-state-icon {
           color: #E6BA63 !important;
+          --icon-symbol-size: 36px;
         }
