@@ -30,16 +30,12 @@ card:
             - align-self: center
             - justify-self: center
             - border-radius: 0px
-            - background: |
-                [[[
-                  const path = window.location.pathname + window.location.hash;
-                  return path.includes('home-view') ? 'var(--primary-text-color)' : 'black';
-                ]]]
+            - background: transparent
           icon:
             - color: |
                 [[[
                   const path = window.location.pathname + window.location.hash;
-                  return path.includes('home-view') ? 'black' : 'var(--primary-text-color)';
+                  return path.includes('home-view') ? '#B9BAB6' : 'var(--primary-text-color)';
                 ]]]
         tap_action:
           action: navigate
