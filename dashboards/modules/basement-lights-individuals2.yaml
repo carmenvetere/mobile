@@ -1,21 +1,3 @@
-- type: custom:bubble-card
-  card_type: separator
-  name: Laundry Room
-  icon: mdi:washing-machine
-  rows: 0.75
-  styles: |
-    .bubble-name {
-    font-size: 28px !important;  /* title */
-    font-weight: bold !important;
-    }
-    .bubble-line {
-    background: var(--primary-text-color);
-    opacity: 0.1;
-    }
-    .card-content {
-    padding-top: 20px !important;
-    padding-left: 10px !important;
-    }
 - type: custom:mushroom-light-card
   entity: light.laundry_room_main_lights
   name: Laundry Room
@@ -51,24 +33,6 @@
         ha-state-icon {
           color: #E6BA63 !important;
         }
-- type: custom:bubble-card
-  card_type: separator
-  name: Hallway
-  icon: mdi:washing-machine
-  rows: 0.75
-  styles: |
-    .bubble-name {
-    font-size: 28px !important;  /* title */
-    font-weight: bold !important;
-    }
-    .bubble-line {
-    background: var(--primary-text-color);
-    opacity: 0.1;
-    }
-    .card-content {
-    padding-top: 20px !important;
-    padding-left: 10px !important;
-    }
 - type: custom:mushroom-light-card
   entity: light.basement_hallway_main_lights
   name: Hallway
@@ -104,24 +68,6 @@
         ha-state-icon {
           color: #E6BA63 !important;
         }
-- type: custom:bubble-card
-  card_type: separator
-  name: Media Room
-  icon: mdi:washing-machine
-  rows: 0.75
-  styles: |
-    .bubble-name {
-    font-size: 28px !important;  /* title */
-    font-weight: bold !important;
-    }
-    .bubble-line {
-    background: var(--primary-text-color);
-    opacity: 0.1;
-    }
-    .card-content {
-    padding-top: 20px !important;
-    padding-left: 10px !important;
-    }
 - type: custom:mushroom-light-card
   entity: light.gym_main_lights
   name: Media Room
@@ -192,24 +138,6 @@
         ha-state-icon {
           color: #E6BA63 !important;
         }
-- type: custom:bubble-card
-  card_type: separator
-  name: Gym
-  icon: mdi:washing-machine
-  rows: 0.75
-  styles: |
-    .bubble-name {
-    font-size: 28px !important;  /* title */
-    font-weight: bold !important;
-    }
-    .bubble-line {
-    background: var(--primary-text-color);
-    opacity: 0.1;
-    }
-    .card-content {
-    padding-top: 20px !important;
-    padding-left: 10px !important;
-    }
 - type: custom:mushroom-light-card
   entity: light.media_room_main_lights
   name: Gym
