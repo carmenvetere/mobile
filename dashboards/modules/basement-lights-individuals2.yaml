@@ -11,17 +11,27 @@
       mushroom-state-item$: |
         .container {
           align-items: center !important;
-        }
-        .primary, .secondary {
-          display: block !important;
           text-align: left !important;
         }
-        .primary { margin-bottom: 6px !important; 
-        }
+        .secondary { 
+          text-align: left !important;
+          line-height: 24px !important;
+          margin-bottom: 5px !important; 
+        }  
       mushroom-state-info$: |
         .container {
           align-items: center !important;
         }
+        .primary { 
+          text-align: left !important;
+          line-height: 36px !important;
+          margin-bottom: 8px !important; 
+        }   
+        .secondary { 
+          justify-items: start !important;
+          line-height: 24px !important;
+          margin-bottom: 5px !important; 
+        }          
       mushroom-shape-icon$: |
         .shape {
           --shape-color: var(--accent-color) !important;
@@ -36,6 +46,7 @@
           border-radius: 10px !important;
           height: 125px !important;
           background: var(--background-color-2);
+          box-shadow: rgba(0,0,0,.35) 0px 5px 15px;
           --card-primary-font-size: 32px;
           --card-secondary-font-size: 24px;
           --card-primary-font-weight: bold;
