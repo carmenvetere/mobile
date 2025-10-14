@@ -163,7 +163,7 @@
           states('sensor.solcast_pv_forecast_forecast_day_4') | float(0) +
           states('sensor.solcast_pv_forecast_forecast_day_5') | float(0) +
           states('sensor.solcast_pv_forecast_forecast_day_6') | float(0) +
-          states('sensor.solcast_pv_forecast_forecast_day_7 ) | float(0)
+          states('sensor.solcast_pv_forecast_forecast_day_7') | float(0)
         }}
       unit_of_measurement: "kWh"
       attributes:
