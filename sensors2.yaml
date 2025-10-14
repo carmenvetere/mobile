@@ -191,6 +191,7 @@
       unique_id: home_other_usage
       unit_of_measurement: "kWh"
       device_class: energy
+      state_class: measurement
       state: >
         {% set total = states('sensor.bayberry_home_usage') | float(0) %}
         {% set well  = states('sensor.well_pump_energy2') | float(0) %}
