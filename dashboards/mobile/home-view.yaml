@@ -180,7 +180,7 @@ cards:
                   entity: sensor.scene_good_morning
                   icon: mdi:coffee
                   layout: icon_label
-                  size: 100%
+                  size: 50%
                   show_icon: true
                   show_label: true
                   show_name: false
@@ -206,7 +206,7 @@ cards:
                       - background-color: var(--ha-card-background)
                       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     grid:
-                      - grid-template-areas: "\"i l\""
+                      - grid-template-areas: '"i l"'
                       - grid-template-columns: 40px 1fr
                       - justify-items: start
                       - align-items: center
