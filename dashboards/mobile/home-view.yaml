@@ -176,12 +176,19 @@ cards:
                     .card-content {
                       padding-top: 7px !important;
                     }
-              - type: custom:bubble-card
-                card_type: button
-                entity: sensor.scene_good_morning
-                name: Morning
-                icon: mdi:weather-sunset-up
-                button_action:
+                - type: custom:bubble-card
+                  card_type: button
+                  entity: sensor.scene_good_morning
+                  name: Morning
+                  icon: mdi:weather-sunset-up
+                  button_action:
+                    tap_action:
+                      action: perform-action
+                      perform_action: scene.turn_on
+                      target:
+                        entity_id: scene.good_morning_2
+                      data:
+                        transition: 3
                   tap_action:
                     action: perform-action
                     perform_action: scene.turn_on
@@ -189,22 +196,15 @@ cards:
                       entity_id: scene.good_morning_2
                     data:
                       transition: 3
-                tap_action:
-                  action: perform-action
-                  perform_action: scene.turn_on
-                  target:
-                    entity_id: scene.good_morning_2
-                  data:
-                    transition: 3
-                card_layout: large
-                scrolling_effect: false
-                styles: |-
-                  .bubble-name {
-                      font-size: 16px !important;
-                      text-align: left !important;
-                    }
-                modules:
-                - Mobile Module Theme   
+                  card_layout: large
+                  scrolling_effect: false
+                  styles: |-
+                    .bubble-name {
+                        font-size: 16px !important;
+                        text-align: left !important;
+                      }
+                  modules:
+                  - Mobile Module Theme   
                 - type: custom:bubble-card
                   card_type: separator
                   name: Menu
