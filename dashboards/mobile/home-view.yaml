@@ -182,10 +182,9 @@ cards:
                   name: Morning
                   icon: mdi:weather-sunset-up
                   visibility:
-                    conditions:
-                      - condition: state
-                        entity: input_boolean.day_scene_buttons
-                        state: "on"
+                    - condition: state
+                      entity: input_boolean.day_scene_buttons
+                      state: "on"
                   button_action:
                     tap_action:
                       action: perform-action
