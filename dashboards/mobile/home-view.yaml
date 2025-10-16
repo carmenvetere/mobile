@@ -315,13 +315,13 @@ cards:
                   icon: mdi:lightbulb-night
                   visibility:
                     - condition: or
-                        conditions: 
-                        - condition: state
-                          entity: input_boolean.night_scene_buttons
-                          state: "on"                  
-                        - condition: state
-                          entity: input_boolean.evening_scene_buttons
-                          state: "on" 
+                      conditions: 
+                      - condition: state
+                        entity: input_boolean.night_scene_buttons
+                        state: "on"                  
+                      - condition: state
+                        entity: input_boolean.evening_scene_buttons
+                        state: "on" 
                   button_action:
                     tap_action:
                       action: perform-action
