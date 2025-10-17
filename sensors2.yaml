@@ -204,15 +204,6 @@
         {% set ev    = states('sensor.wall_charger_energy') | float(0) %}
         {{ [ total - well - pool - water - ev ] | max | round(2) }}
 
-    - platform: integration
-      source: sensor.pool_pump_power
-      name: "Pool Pump Energy"
-      unique_id: pool_pump_energy
-      unit_prefix: k
-      unit_time: h
-      round: 2
-      availability: "{{ true }}"
-
 - trigger:
     - trigger: event
       event_type: bubble_card_update_modules
