@@ -70,16 +70,16 @@ series:
     show:
       legend_value: false
       in_header: false
-  - entity: sensor.pool_pump_energy
-    name: Pool Pump
-    type: column
-    color: "#9498AC"
-    group_by:
-      func: diff
-      duration: 1d
-    show:
-      legend_value: false
-      in_header: false
+  # - entity: sensor.pool_pump_energy
+  #   name: Pool Pump
+  #   type: column
+  #   color: "#9498AC"
+  #   group_by:
+  #     func: diff
+  #     duration: 1d
+  #   show:
+  #     legend_value: false
+  #     in_header: false
   - entity: sensor.home_other_usage
     name: Other
     type: column
@@ -124,14 +124,14 @@ series:
       legend_value: false
       in_header: true
       in_chart: false
-  - entity: sensor.pool_pump_energy
-    name: Pool Pump
-    type: column
-    color: "#9498AC"
-    group_by:
-      func: diff
-      duration: 7d
-    show:
-      legend_value: false
-      in_header: true
-      in_chart: false
+  # - entity: sensor.pool_pump_energy
+  #   name: Pool Pump
+  #   type: column
+  #   color: "#9498AC"
+  #   group_by:
+  #     func: diff
+  #     duration: 7d
+  #   show:
+  #     legend_value: false
+  #     in_header: true
+  #     in_chart: false

@@ -127,14 +127,3 @@ lovelace:
 homeassistant:
   media_dirs:
     llmvision: /config/media/llmvision
-
-sensor:
-  - platform: integration
-    source: sensor.pool_pump_power
-    name: "Pool Pump Energy"
-    unique_id: pool_pump_energy
-    unit_prefix: k
-    unit_time: h  # This is required with unit_prefix!
-    round: 2
-    method: left
-    availability: "{{ true }}"
