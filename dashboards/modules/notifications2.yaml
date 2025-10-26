@@ -2109,7 +2109,7 @@
 
 # Bedroom Hallway 2 Shade Battery Low
 - type: custom:button-card
-  entity: sensor.hallway_2_battery
+  entity: sensor.hallway_2_battery_0
   name: Bedroom hallway 2 shade battery low!
   icon: mdi:battery-alert
   layout: icon_name
@@ -2117,7 +2117,7 @@
     action: more-info
   visibility:
     - condition: numeric_state
-      entity: sensor.hallway_2_battery
+      entity: sensor.hallway_2_battery_0
       below: 20
   styles:
     card:
