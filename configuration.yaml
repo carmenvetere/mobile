@@ -36,7 +36,7 @@ input_number:
     step: 1
     mode: box
 
-  hvac_baseline_kw:
+  lower_hvac_baseline_kw:
     name: HVAC Baseline (kW, when idle)
     min: 0
     max: 5
@@ -45,7 +45,7 @@ input_number:
     unit_of_measurement: kW
     initial: 0.847
 
-  hvac_delta_heat_1zone_kw:
+  lower_hvac_delta_heat_1zone_kw:
     name: HVAC Δ Heat 1 zone (kW)
     min: 0
     max: 5
@@ -54,7 +54,7 @@ input_number:
     unit_of_measurement: kW
     initial: 1.34
 
-  hvac_delta_heat_2zones_kw:
+  lower_hvac_delta_heat_2zones_kw:
     name: HVAC Δ Heat 2 zones (kW)
     min: 0
     max: 5
@@ -63,7 +63,7 @@ input_number:
     unit_of_measurement: kW
     initial: 1.49
 
-  hvac_delta_cool_1zone_kw:
+  lower_hvac_delta_cool_1zone_kw:
     name: HVAC Δ Cool 1 zone (kW)
     min: 0
     max: 5
@@ -72,7 +72,7 @@ input_number:
     unit_of_measurement: kW
     initial: 0.70  # placeholder until you have more cooling data
 
-  hvac_delta_cool_2zones_kw:
+  lower_hvac_delta_cool_2zones_kw:
     name: HVAC Δ Cool 2 zones (kW)
     min: 0
     max: 5
