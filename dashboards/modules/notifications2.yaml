@@ -738,7 +738,7 @@
   visibility:
     - condition: numeric_state
       entity: sensor.months_since_last_hot_water_flush
-      above: 5
+      above: 5.9
   styles:
     card:
       - background-color: var(--background-color-2)
