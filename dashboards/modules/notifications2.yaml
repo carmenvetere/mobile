@@ -724,6 +724,81 @@
                   return path.includes('wall-panel-dash') ? '36px' : '18px';
                 ]]]
 
+#Flush Hot Water Heater Alert
+- type: custom:button-card
+  entity: input_datetime.water_heater_last_flushed
+  name: Flush Hot Water Heater!
+  icon: mdi:water-alert
+  layout: icon_name
+  tap_action:
+    action: call-service
+    service: script.reset_hot_water_last_flushed_date
+    confirmation:
+      text: Did you just flush the hot water heater and want to reset?
+  visibility:
+    - condition: numeric_state
+      entity: sensor.months_since_last_hot_water_flush
+      above: 5
+  styles:
+    card:
+      - background-color: var(--background-color-2)
+      - border-radius: 10px
+      - margin: 2px 10px 2px 10px
+      - max-width: 95%
+      - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+      - justify-content: flex-start
+      - padding-left: 12px
+      - padding-top: 2px
+      - padding-bottom: 2px
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '100px' : '50px';
+                ]]]
+    img_cell:
+      - align-self: center
+      - justify-content: center
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '64px' : '32px';
+                ]]]
+      - column-gap: 2px
+      - align-items: center
+    icon:
+      - color: '#F6CE46'
+      - width: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+      - height: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '56px' : '28px';
+                ]]]
+    name:
+      - color: var(--primary-text-color)
+      - font-weight: bold
+      - justify-self: start
+      - font-size: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('wall-panel-dash') ? '36px' : '18px';
+                ]]]
+
 #Low Hot Water Availability
 - type: custom:button-card
   entity: sensor.smithy_hot_water_availability_2
