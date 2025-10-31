@@ -16,7 +16,7 @@
             and states('sensor.bayberry_charge')|float(100) < 25),
           (states('sensor.nws_alerts_alerts') not in ['unknown','unavailable'] and states('sensor.nws_alerts_alerts')|int(0) > 0),
           states('sensor.front_load_washer_tub_clean_counter')|int(0) > 30,
-          states('sensor.months_since_last_hot_water_flush')|float(0) > 5,
+          states('sensor.months_since_last_hot_water_flush')|float(0) > 5.9,
           states('sensor.upper_floor_hvac_filter_time_2')|int(0) > 2000,
           states('sensor.lower_floors_hvac_filter_time_2')|int(0) > 2000,
           states('sensor.utility_room_temp_sensor_temperature')|float(99) < 55,
