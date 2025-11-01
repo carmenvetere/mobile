@@ -3,21 +3,21 @@ card:
   styles:
     card:
       - border-radius: 0px
-      - padding-bottom: 15px
+      - padding-bottom: 8px
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 100px
-      - width: 750px
-      - background-color: black 
+      - height: 50px
+      - width: 480px
+      - background-color: black
     grid:
       - grid-template-areas: |
           "time alarm notifications modes temp"
       - grid-template-columns: 2fr 3fr 1.5fr 1.5fr 2fr
-      - grid-template-rows: 100px
+      - grid-template-rows: 50px
       - align-items: center
       - justify-items: start
-      - column-gap: 10px
+      - column-gap: 5px
   custom_fields:
     time:
       card:
@@ -39,9 +39,9 @@ card:
             - justify-self: start
             - background: transparent
           state:
-            - font-size: 28px
+            - font-size: 14px
             - font-weight: bold
-            - padding-left: 10px
+            - padding-left: 5px
     alarm:
       card:
         type: custom:button-card
@@ -65,8 +65,8 @@ card:
           ]]]
         styles:
           icon:
-            - width: 32px
-            - height: 32px
+            - width: 16px
+            - height: 16px
             - color: |
                 [[[
                   var state = states['alarm_control_panel.alarmo'].state;
@@ -77,12 +77,12 @@ card:
                   return 'var(--primary-text-color)';
                 ]]]
           state:
-            - font-size: 28px
+            - font-size: 14px
             - font-weight: bold
             - justify-self: start
-          grid: 
-            - column-gap: 3px
-            - grid-template-columns: 42px auto
+          grid:
+            - column-gap: 2px
+            - grid-template-columns: 21px auto
           img_cell:
             - align-self: center
             - justify-content: start
@@ -121,18 +121,18 @@ card:
             navigation_path: /mudroom-wall-panel-dash/notifications-view
           styles:
             state:
-              - font-size: 28px
+              - font-size: 14px
               - font-weight: bold
               - justify-self: start
             grid: 
-              - column-gap: 3px
-              - grid-template-columns: 42px auto
+              - column-gap: 2px
+              - grid-template-columns: 21px auto
             img_cell:
               - align-self: center
               - justify-content: end
             icon:
-              - width: 32px
-              - height: 32px
+              - width: 16px
+              - height: 16px
               - padding-left: 5px
               - color: >
                   [[[
@@ -175,8 +175,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 32px
-                - height: 32px
+                - width: 16px
+                - height: 16px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -202,8 +202,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 32px
-                - height: 32px
+                - width: 16px
+                - height: 16px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -229,8 +229,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 32px
-                - height: 32px
+                - width: 16px
+                - height: 16px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -259,15 +259,15 @@ card:
           navigation_path: /mudroom-wall-panel-dash/weather-view
         styles:
           state:
-            - font-size: 28px
+            - font-size: 14px
             - font-weight: bold
             - justify-self: start
           icon:
-            - width: 32px
-            - height: 32px
-          grid: 
-            - column-gap: 3px
-            - grid-template-columns: 42px auto
+            - width: 16px
+            - height: 16px
+          grid:
+            - column-gap: 2px
+            - grid-template-columns: 21px auto
           img_cell:
             - align-self: center
             - justify-content: end
