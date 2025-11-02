@@ -7,14 +7,14 @@ card:
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 50px
-      - width: 480px
+      - height: 100px
+      - width: 750px
       - background-color: black 
     grid:
       - grid-template-areas: |
           "time alarm notifications modes temp"
-      - grid-template-columns: 80px 130px 70px 60px 100px
-      - grid-template-rows: 50px
+      - grid-template-columns: 2fr 3fr 1.5fr 1.5fr 2fr
+      - grid-template-rows: 100px
       - align-items: center
       - justify-items: start
       - column-gap: 10px
@@ -38,10 +38,8 @@ card:
             - align-self: center
             - justify-self: start
             - background: transparent
-            - width: 80px
-            - height: 50px
           state:
-            - font-size: 18px
+            - font-size: 28px
             - font-weight: bold
             - padding-left: 10px
     alarm:
@@ -67,8 +65,8 @@ card:
           ]]]
         styles:
           icon:
-            - width: 24px
-            - height: 24px
+            - width: 32px
+            - height: 32px
             - color: |
                 [[[
                   var state = states['alarm_control_panel.alarmo'].state;
@@ -79,19 +77,17 @@ card:
                   return 'var(--primary-text-color)';
                 ]]]
           state:
-            - font-size: 18px
+            - font-size: 28px
             - font-weight: bold
             - justify-self: start
           grid: 
             - column-gap: 3px
-            - grid-template-columns: 30px 97px
+            - grid-template-columns: 42px auto
           img_cell:
             - align-self: center
             - justify-content: start
           card:
             - border-radius: 0px
-            - width: 130px
-            - height: 50px
             - align-self: center
             - justify-self: start
             - background: transparent
@@ -125,17 +121,18 @@ card:
             navigation_path: /mudroom-wall-panel-dash/notifications-view
           styles:
             state:
-              - font-size: 18px
+              - font-size: 28px
               - font-weight: bold
               - justify-self: start
             grid: 
-              - column-gap: 5px
+              - column-gap: 3px
+              - grid-template-columns: 42px auto
             img_cell:
               - align-self: center
               - justify-content: end
             icon:
-              - width: 24px
-              - height: 24px
+              - width: 32px
+              - height: 32px
               - padding-left: 5px
               - color: >
                   [[[
@@ -147,8 +144,6 @@ card:
             card:
               - border-radius: 5px
               - padding: 2px
-              - width: 70px
-              - height: 50px
               - align-self: center
               - justify-self: center
               - background: transparent
@@ -180,8 +175,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 24px
-                - height: 24px
+                - width: 32px
+                - height: 32px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -190,9 +185,7 @@ card:
                 - border-radius: 5px
                 - align-self: center
                 - justify-self: center
-                - background: transparent
-                - width: 60px
-                - height: 50px   
+                - background: transparent 
         - type: conditional
           conditions:
             - entity: input_boolean.guest_mode
@@ -209,8 +202,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 24px
-                - height: 24px
+                - width: 32px
+                - height: 32px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -220,8 +213,6 @@ card:
                 - align-self: center
                 - justify-self: center
                 - background-color: black
-                - width: 60px
-                - height: 50px
         - type: conditional
           conditions:
             - entity: input_boolean.cleaners_mode
@@ -238,8 +229,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 24px
-                - height: 24px
+                - width: 32px
+                - height: 32px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -249,8 +240,6 @@ card:
                 - align-self: center
                 - justify-self: center
                 - background: transparent
-                - width: 60px
-                - height: 50px
     temp:
       card:
         type: custom:button-card
@@ -270,14 +259,15 @@ card:
           navigation_path: /mudroom-wall-panel-dash/weather-view
         styles:
           state:
-            - font-size: 18px
+            - font-size: 28px
             - font-weight: bold
             - justify-self: start
           icon:
-            - width: 24px
-            - height: 24px
+            - width: 32px
+            - height: 32px
           grid: 
-            - column-gap: 5px
+            - column-gap: 3px
+            - grid-template-columns: 42px auto
           img_cell:
             - align-self: center
             - justify-content: end
@@ -286,5 +276,3 @@ card:
             - align-self: center
             - justify-self: center
             - background: transparent
-            - width: 100px
-            - height: 50px

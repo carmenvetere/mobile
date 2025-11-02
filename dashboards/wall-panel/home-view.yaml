@@ -10,8 +10,8 @@ cards:
         - padding-bottom: 5px
         - padding-left: 0px
         - padding-top: 0px
-        - width: 480px
-        - height: 480px
+        - width: 750px
+        - height: 1334px
         - background: var(--background-color)
       grid:
         - grid-template-areas: |
@@ -19,7 +19,7 @@ cards:
             "main"
             "nav"
         - grid-template-columns: auto
-        - grid-template-rows: 50px 380px 50px
+        - grid-template-rows: 100px 1134px 100px
         - align-items: start
         - column-gap: 2px
         - row-gap: 0px
@@ -28,11 +28,11 @@ cards:
       main: 
         card: 
           type: custom:button-card
-          styles:
-            card:
+          styles: 
+            card: 
               - border-radius: 0px
-              - width: 480px
-              - height: 380px
+              - width: 750px
+              - height: 1134px
               - padding-top: 0px
               - background: var(--background-color)
             grid:
@@ -45,9 +45,9 @@ cards:
                   "scene5"
                   "scene6"
                   "space2"
-              - grid-template-columns: 480px
-              - grid-template-rows: 5px 57px 57px 57px 57px 57px 57px 6px
-              - row-gap: 5px
+              - grid-template-columns: 750px
+              - grid-template-rows: 10px 165px 165px 165px 165px 165px 165px 10px
+              - row-gap: 20px
           custom_fields: 
             scene1:
               card:
@@ -92,35 +92,35 @@ cards:
                   styles:
                     card:
                       - max-width: 95%
-                      - height: 55px
-                      - margin-left: 8px
-                      - padding-left: 4px
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
                       - align-self: center
                       - justify-self: start
                       - justify-content: start
                       - text-align: left
-                      - background-color: var(--background-color-2)
+                      - background-color: var(--background-color-2)  
                       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     grid:
                       - grid-template-areas: '"i l"'   # icon then label
-                      - grid-template-columns: 32px 1fr
+                      - grid-template-columns: 80px 1fr
                       - justify-items: start
                       - align-items: center
-                    label:
-                      - font-size: 18px
+                    label: 
+                      - font-size: 46px
                       - font-weight: bold
                       - justify-self: start
                       - text-align: left
-                      - padding-left: 4px   # <-- add this for spacing from the icon
+                      - padding-left: 10px   # <-- add this for spacing from the icon
                       - align-self: center
                     img_cell:
                       - align-self: center
                       - justify-content: start
-                      - padding-left: 2px
-                    icon:
-                      - width: 22px
-                      - height: 22px
-                      - padding-left: 2px
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
                   state:
                     - value: 'off'
                       color: default
@@ -163,35 +163,35 @@ cards:
                   styles:
                     card:
                       - max-width: 95%
-                      - height: 55px
-                      - margin-left: 8px
-                      - padding-left: 4px
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
                       - align-self: center
                       - justify-self: start
                       - justify-content: start
                       - text-align: left
-                      - background-color: var(--background-color-2)
+                      - background-color: var(--background-color-2)  
                       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     grid:
                       - grid-template-areas: '"i l"'   # icon then label
-                      - grid-template-columns: 32px 1fr
+                      - grid-template-columns: 80px 1fr
                       - justify-items: start
                       - align-items: center
-                    label:
-                      - font-size: 18px
+                    label: 
+                      - font-size: 46px
                       - font-weight: bold
                       - justify-self: start
                       - text-align: left
-                      - padding-left: 4px   # <-- add this for spacing from the icon
+                      - padding-left: 10px   # <-- add this for spacing from the icon
                       - align-self: center
                     img_cell:
                       - align-self: center
                       - justify-content: start
-                      - padding-left: 2px
-                    icon:
-                      - width: 22px
-                      - height: 22px
-                      - padding-left: 2px
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
                   state:
                     - value: 'off'
                       color: default
@@ -243,35 +243,35 @@ cards:
                   styles:
                     card:
                       - max-width: 95%
-                      - height: 55px
-                      - margin-left: 8px
-                      - padding-left: 4px
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
                       - align-self: center
                       - justify-self: start
                       - justify-content: start
                       - text-align: left
-                      - background-color: var(--background-color-2)
+                      - background-color: var(--background-color-2)  
                       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     grid:
                       - grid-template-areas: '"i l"'   # icon then label
-                      - grid-template-columns: 32px 1fr
+                      - grid-template-columns: 80px 1fr
                       - justify-items: start
                       - align-items: center
-                    label:
-                      - font-size: 18px
+                    label: 
+                      - font-size: 46px
                       - font-weight: bold
                       - justify-self: start
                       - text-align: left
-                      - padding-left: 4px   # <-- add this for spacing from the icon
+                      - padding-left: 10px   # <-- add this for spacing from the icon
                       - align-self: center
                     img_cell:
                       - align-self: center
                       - justify-content: start
-                      - padding-left: 2px
-                    icon:
-                      - width: 22px
-                      - height: 22px
-                      - padding-left: 2px
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
                   state:
                     - value: 'off'
                       color: default
@@ -314,35 +314,35 @@ cards:
                   styles:
                     card:
                       - max-width: 95%
-                      - height: 55px
-                      - margin-left: 8px
-                      - padding-left: 4px
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
                       - align-self: center
                       - justify-self: start
                       - justify-content: start
                       - text-align: left
-                      - background-color: var(--background-color-2)
+                      - background-color: var(--background-color-2)  
                       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     grid:
                       - grid-template-areas: '"i l"'   # icon then label
-                      - grid-template-columns: 32px 1fr
+                      - grid-template-columns: 80px 1fr
                       - justify-items: start
                       - align-items: center
-                    label:
-                      - font-size: 18px
+                    label: 
+                      - font-size: 46px
                       - font-weight: bold
                       - justify-self: start
                       - text-align: left
-                      - padding-left: 4px   # <-- add this for spacing from the icon
+                      - padding-left: 10px   # <-- add this for spacing from the icon
                       - align-self: center
                     img_cell:
                       - align-self: center
                       - justify-content: start
-                      - padding-left: 2px
-                    icon:
-                      - width: 22px
-                      - height: 22px
-                      - padding-left: 2px
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
                   state:
                     - value: 'off'
                       color: default
@@ -394,35 +394,35 @@ cards:
                   styles:
                     card:
                       - max-width: 95%
-                      - height: 55px
-                      - margin-left: 8px
-                      - padding-left: 4px
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
                       - align-self: center
                       - justify-self: start
                       - justify-content: start
                       - text-align: left
-                      - background-color: var(--background-color-2)
+                      - background-color: var(--background-color-2)  
                       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     grid:
                       - grid-template-areas: '"i l"'   # icon then label
-                      - grid-template-columns: 32px 1fr
+                      - grid-template-columns: 80px 1fr
                       - justify-items: start
                       - align-items: center
-                    label:
-                      - font-size: 18px
+                    label: 
+                      - font-size: 46px
                       - font-weight: bold
                       - justify-self: start
                       - text-align: left
-                      - padding-left: 4px   # <-- add this for spacing from the icon
+                      - padding-left: 10px   # <-- add this for spacing from the icon
                       - align-self: center
                     img_cell:
                       - align-self: center
                       - justify-content: start
-                      - padding-left: 2px
-                    icon:
-                      - width: 22px
-                      - height: 22px
-                      - padding-left: 2px
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
                   state:
                     - value: 'off'
                       color: default
@@ -465,35 +465,35 @@ cards:
                   styles:
                     card:
                       - max-width: 95%
-                      - height: 55px
-                      - margin-left: 8px
-                      - padding-left: 4px
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
                       - align-self: center
                       - justify-self: start
                       - justify-content: start
                       - text-align: left
-                      - background-color: var(--background-color-2)
+                      - background-color: var(--background-color-2)  
                       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     grid:
                       - grid-template-areas: '"i l"'   # icon then label
-                      - grid-template-columns: 32px 1fr
+                      - grid-template-columns: 80px 1fr
                       - justify-items: start
                       - align-items: center
-                    label:
-                      - font-size: 18px
+                    label: 
+                      - font-size: 46px
                       - font-weight: bold
                       - justify-self: start
                       - text-align: left
-                      - padding-left: 4px   # <-- add this for spacing from the icon
+                      - padding-left: 10px   # <-- add this for spacing from the icon
                       - align-self: center
                     img_cell:
                       - align-self: center
                       - justify-content: start
-                      - padding-left: 2px
-                    icon:
-                      - width: 22px
-                      - height: 22px
-                      - padding-left: 2px
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
                   state:
                     - value: 'off'
                       color: default
@@ -527,35 +527,35 @@ cards:
                   styles:
                     card:
                       - max-width: 95%
-                      - height: 55px
-                      - margin-left: 8px
-                      - padding-left: 4px
+                      - height: 160px
+                      - margin-left: 18px
+                      - padding-left: 10px
                       - align-self: center
                       - justify-self: start
                       - justify-content: start
                       - text-align: left
-                      - background-color: var(--background-color-2)
+                      - background-color: var(--background-color-2)  
                       - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                     grid:
                       - grid-template-areas: '"i l"'   # icon then label
-                      - grid-template-columns: 32px 1fr
+                      - grid-template-columns: 80px 1fr
                       - justify-items: start
                       - align-items: center
-                    label:
-                      - font-size: 18px
+                    label: 
+                      - font-size: 46px
                       - font-weight: bold
                       - justify-self: start
                       - text-align: left
-                      - padding-left: 4px   # <-- add this for spacing from the icon
+                      - padding-left: 10px   # <-- add this for spacing from the icon
                       - align-self: center
                     img_cell:
                       - align-self: center
                       - justify-content: start
-                      - padding-left: 2px
-                    icon:
-                      - width: 22px
-                      - height: 22px
-                      - padding-left: 2px
+                      - padding-left: 5px
+                    icon: 
+                      - width: 54px
+                      - height: 54px
+                      - padding-left: 5px
                   state:
                     - value: 'off'
                       color: default
@@ -586,35 +586,35 @@ cards:
                 styles:
                   card:
                     - max-width: 95%
-                    - height: 55px
-                    - margin-left: 8px
-                    - padding-left: 4px
+                    - height: 160px
+                    - margin-left: 18px
+                    - padding-left: 10px
                     - align-self: center
                     - justify-self: start
                     - justify-content: start
                     - text-align: left
-                    - background-color: var(--background-color-2)
+                    - background-color: var(--background-color-2)  
                     - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                   grid:
                     - grid-template-areas: '"i l"'   # icon then label
-                    - grid-template-columns: 32px 1fr
+                    - grid-template-columns: 80px 1fr
                     - justify-items: start
                     - align-items: center
-                  label:
-                    - font-size: 18px
+                  label: 
+                    - font-size: 46px
                     - font-weight: bold
                     - justify-self: start
                     - text-align: left
-                    - padding-left: 4px   # <-- add this for spacing from the icon
+                    - padding-left: 10px   # <-- add this for spacing from the icon
                     - align-self: center
                   img_cell:
                     - align-self: center
                     - justify-content: start
-                    - padding-left: 2px
-                  icon:
-                    - width: 22px
-                    - height: 22px
-                    - padding-left: 2px
+                    - padding-left: 5px
+                  icon: 
+                    - width: 54px
+                    - height: 54px
+                    - padding-left: 5px
                 state:
                   - value: 'off'
                     color: default
@@ -650,35 +650,35 @@ cards:
                 styles:
                   card:
                     - max-width: 95%
-                    - height: 55px
-                    - margin-left: 8px
-                    - padding-left: 4px
+                    - height: 160px
+                    - margin-left: 18px
+                    - padding-left: 10px
                     - align-self: center
                     - justify-self: start
                     - justify-content: start
                     - text-align: left
-                    - background-color: var(--background-color-2)
+                    - background-color: var(--background-color-2)  
                     - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                   grid:
                     - grid-template-areas: '"i l"'   # icon then label
-                    - grid-template-columns: 32px 1fr
+                    - grid-template-columns: 80px 1fr
                     - justify-items: start
                     - align-items: center
-                  label:
-                    - font-size: 18px
+                  label: 
+                    - font-size: 46px
                     - font-weight: bold
                     - justify-self: start
                     - text-align: left
-                    - padding-left: 4px   # <-- add this for spacing from the icon
+                    - padding-left: 10px   # <-- add this for spacing from the icon
                     - align-self: center
                   img_cell:
                     - align-self: center
                     - justify-content: start
-                    - padding-left: 2px
-                  icon:
-                    - width: 22px
-                    - height: 22px
-                    - padding-left: 2px
+                    - padding-left: 5px
+                  icon: 
+                    - width: 54px
+                    - height: 54px
+                    - padding-left: 5px
                 state:
                   - value: 'off'
                     color: default
@@ -709,35 +709,35 @@ cards:
                 styles:
                   card:
                     - max-width: 95%
-                    - height: 55px
-                    - margin-left: 8px
-                    - padding-left: 4px
+                    - height: 160px
+                    - margin-left: 18px
+                    - padding-left: 10px
                     - align-self: center
                     - justify-self: start
                     - justify-content: start
                     - text-align: left
-                    - background-color: var(--background-color-2)
+                    - background-color: var(--background-color-2)  
                     - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                   grid:
                     - grid-template-areas: '"i l"'   # icon then label
-                    - grid-template-columns: 32px 1fr
+                    - grid-template-columns: 80px 1fr
                     - justify-items: start
                     - align-items: center
-                  label:
-                    - font-size: 18px
+                  label: 
+                    - font-size: 46px
                     - font-weight: bold
                     - justify-self: start
                     - text-align: left
-                    - padding-left: 4px   # <-- add this for spacing from the icon
+                    - padding-left: 10px   # <-- add this for spacing from the icon
                     - align-self: center
                   img_cell:
                     - align-self: center
                     - justify-content: start
-                    - padding-left: 2px
-                  icon:
-                    - width: 22px
-                    - height: 22px
-                    - padding-left: 2px
+                    - padding-left: 5px
+                  icon: 
+                    - width: 54px
+                    - height: 54px
+                    - padding-left: 5px
                 state:
                   - value: 'off'
                     color: default
