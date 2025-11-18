@@ -223,14 +223,14 @@ cards:
                       action: perform-action
                       perform_action: scene.turn_on
                       target:
-                        entity_id: scene.good_night
+                        entity_id: scene.evening
                       data:
                         transition: 3
                   tap_action:
                     action: perform-action
                     perform_action: scene.turn_on
                     target:
-                      entity_id: scene.good_night
+                      entity_id: scene.evening
                     data:
                       transition: 3
                   card_layout: large
