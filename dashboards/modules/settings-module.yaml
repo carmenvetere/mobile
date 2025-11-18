@@ -191,7 +191,7 @@
             .card-content { padding-top: 7px !important; }
         - type: custom:bubble-card
           card_type: button
-          entity: automation.enhanced_first_floor_climate_manager
+          entity: automation.living_room_hvac_schedule_v3
           name: Living Room Thermostat Schedule
           icon: mdi:fan-clock
           show_state: false
@@ -207,7 +207,7 @@
             .bubble-sub-button { font-size: 14px !important;
             font-weight: bold; }
           sub_button:
-            - entity: automation.enhanced_first_floor_climate_manager
+            - entity: automation.living_room_hvac_schedule_v3
               show_state: true
               show_icon: false
               state_background: false
