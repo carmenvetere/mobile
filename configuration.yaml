@@ -168,7 +168,5 @@ lovelace:
       type: module
     - url: /hacsfiles/weather-radar-card/weather-radar-card.js 
       type: module 
-      
-homeassistant:
-  media_dirs:
-    llmvision: /config/media/llmvision/snapshots
+    - url: /hacsfiles/Drag-And-Drop-Card/drag-and-drop-card.js 
+      type: module
