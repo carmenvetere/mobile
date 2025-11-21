@@ -1,7 +1,7 @@
 - type: custom:bubble-card
   card_type: cover
   button_type: slider
-  entity: cover.back_guest_bedroom_shades
+  entity: cover.front_guest_bedroom_shades
   name: All Shades
   show_state: true
   scrolling_effect: false
@@ -10,12 +10,12 @@
   tap_action:
     action: toggle
   sub_button:
-    - entity: cover.back_guest_bedroom_shades
+    - entity: cover.front_guest_bedroom_shades
       tap_action:
         action: perform-action
         perform_action: cover.set_cover_position
         target:
-          entity_id: cover.back_guest_bedroom_shades
+          entity_id: cover.front_guest_bedroom_shades
         data:
           position: 55
       icon: mdi:sun-angle
