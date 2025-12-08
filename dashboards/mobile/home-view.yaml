@@ -211,7 +211,7 @@ cards:
                   - Mobile Module Theme   
                 - type: custom:bubble-card
                   card_type: button
-                  entity: sensor.scene_first_floor_evening
+                  entity: switch.evening_stateful_scene
                   name: First Floor Evening
                   icon: mdi:moon-waning-crescent
                   visibility:
@@ -220,19 +220,9 @@ cards:
                       state: "on"                  
                   button_action:
                     tap_action:
-                      action: perform-action
-                      perform_action: scene.turn_on
-                      target:
-                        entity_id: scene.evening
-                      data:
-                        transition: 3
+                      action: toggle
                   tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.evening
-                    data:
-                      transition: 3
+                    action: toggle
                   card_layout: large
                   scrolling_effect: false
                   styles: |-
@@ -241,7 +231,7 @@ cards:
                         text-align: left !important;
                       }
                   modules:
-                  - Mobile Module Theme 
+                  - mobile_lights_scenes 
                 - type: custom:bubble-card
                   card_type: button
                   entity: sensor.scene_basement_evening
