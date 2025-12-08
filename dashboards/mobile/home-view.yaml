@@ -178,7 +178,7 @@ cards:
                     }
                 - type: custom:bubble-card
                   card_type: button
-                  entity: sensor.scene_good_morning
+                  entity: switch.good_morning_stateful_scene
                   name: Morning
                   icon: mdi:weather-sunset-up
                   visibility:
@@ -187,28 +187,13 @@ cards:
                       state: "on"
                   button_action:
                     tap_action:
-                      action: perform-action
-                      perform_action: scene.turn_on
-                      target:
-                        entity_id: scene.good_morning_2
-                      data:
-                        transition: 3
+                      action: toggle
                   tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.good_morning_2
-                    data:
-                      transition: 3
+                    action: toggle
                   card_layout: large
                   scrolling_effect: false
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                        text-align: left !important;
-                      }
                   modules:
-                  - Mobile Module Theme   
+                  - mobile_lights_scenes   
                 - type: custom:bubble-card
                   card_type: button
                   entity: switch.evening_stateful_scene
@@ -288,73 +273,33 @@ cards:
                   - mobile_lights_scenes 
                 - type: custom:bubble-card
                   card_type: button
-                  entity: sensor.scene_outdoor_on
+                  entity: switch.outdoor_on_stateful_scene
                   name: Outdoor
                   icon: mdi:coach-lamp
                   button_action:
                     tap_action:
-                      action: perform-action
-                      perform_action: scene.turn_on
-                      target:
-                        entity_id: >
-                          [[[
-                            return states['sensor.scene_outdoor_on'].state === 'on' 
-                              ? 'scene.outdoor_off' 
-                              : 'scene.outdoor_on';
-                          ]]]
-                      data:
-                        transition: 3
+                      action: toggle
                   tap_action:
                     tap_action:
-                      action: perform-action
-                      perform_action: scene.turn_on
-                      target:
-                        entity_id: >
-                          [[[
-                            return states['sensor.scene_outdoor_on'].state === 'on' 
-                              ? 'scene.outdoor_off' 
-                              : 'scene.outdoor_on';
-                          ]]]
-                      data:
-                        transition: 3
+                      action: toggle
                   card_layout: large
                   scrolling_effect: false
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                        text-align: left !important;
-                      }
                   modules:
-                  - Mobile Module Theme 
+                  - mobile_lights_scenes 
                 - type: custom:bubble-card
                   card_type: button
-                  entity: sensor.scene_good_night
+                  entity: switch.good_night_stateful_scene
                   name: All Off
                   icon: mdi:lightbulb-off
                   button_action:
                     tap_action:
-                      action: perform-action
-                      perform_action: scene.turn_on
-                      target:
-                        entity_id: scene.good_night
-                      data:
-                        transition: 3
+                      action: toggle
                   tap_action:
-                    action: perform-action
-                    perform_action: scene.turn_on
-                    target:
-                      entity_id: scene.good_night
-                    data:
-                      transition: 3
+                    action: toggle
                   card_layout: large
                   scrolling_effect: false
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                        text-align: left !important;
-                      }
                   modules:
-                  - Mobile Module Theme 
+                  - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: separator
                   name: Menu
