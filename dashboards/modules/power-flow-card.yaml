@@ -91,6 +91,12 @@ entities:
       color_value: false
       display_zero: false
       icon: mdi:heat-pump 
+    - entity: sensor.upper_hvac_estimated_power
+      name: Upper HVAC
+      color: '#f39c12'
+      color_value: false
+      display_zero: false
+      icon: mdi:heat-pump 
 display_zero_lines:
   mode: show
   transparency: 50
