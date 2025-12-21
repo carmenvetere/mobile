@@ -205,54 +205,171 @@
         {% set ev    = states('sensor.wall_charger_energy') | float(0) %}
         {{ [ total - well - pool - water - ev ] | max | round(2) }}
 
-    - name: "Lower HVAC Zones Calling"
-      state: >-
-        {% set b = states('climate.basement_thermostat_homekit') %}
-        {% set l = states('climate.living_room_thermostat_homekit') %}
-        {% set ba = state_attr('climate.basement_thermostat_homekit','hvac_action') %}
-        {% set la = state_attr('climate.living_room_thermostat_homekit','hvac_action') %}
-        {% set zones = (ba != 'idle')|int + (la != 'idle')|int %}
-        {{ zones }}
-      device_class: enum
-      attributes:
-        basement_action: "{{ state_attr('climate.basement_thermostat_homekit','hvac_action') }}"
-        living_action: "{{ state_attr('climate.living_room_thermostat_homekit','hvac_action') }}"
-
-    - name: "Lower HVAC Mode Inferred"
-      state: >-
-        {% set ba = state_attr('climate.basement_thermostat_homekit','hvac_action') %}
-        {% set la = state_attr('climate.living_room_thermostat_homekit','hvac_action') %}
-        {% if ba == 'heating' or la == 'heating' %} heating
-        {% elif ba == 'cooling' or la == 'cooling' %} cooling
-        {% else %} idle
-        {% endif %}
-      icon: >-
-        {% if this.state == 'heating' %} mdi:fire
-        {% elif this.state == 'cooling' %} mdi:snowflake
-        {% else %} mdi:power-standby
-        {% endif %}
-
-    - name: "Lower HVAC Estimated Power"
+    # -------------------------------------------------------------------------
+    # Upper Floor HVAC Unit (Office + Master Bedroom)
+    # -------------------------------------------------------------------------
+    - name: "Upper HVAC Estimated Power"
+      unique_id: upper_hvac_estimated_power
       unit_of_measurement: "kW"
       device_class: power
       state_class: measurement
-      state: >-
-        {% set mode = states('sensor.lower_hvac_mode_inferred') %}
-        {% set zones = states('sensor.lower_hvac_zones_calling')|int(0) %}
-        {% set base = states('input_number.lower_hvac_baseline_kw')|float(0) %}
-        {% if mode == 'heating' %}
-          {% set z1 = states('input_number.lower_hvac_delta_heat_1zone_kw')|float(0) %}
-          {% set z2 = states('input_number.lower_hvac_delta_heat_2zones_kw')|float(0) %}
-        {% elif mode == 'cooling' %}
-          {% set z1 = states('input_number.lower_hvac_delta_cool_1zone_kw')|float(0) %}
-          {% set z2 = states('input_number.lower_hvac_delta_cool_2zones_kw')|float(0) %}
+      icon: mdi:heat-pump
+      state: >
+        {% set office_heating = is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') %}
+        {% set master_heating = is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+        {% set unit_active = office_heating or master_heating %}
+        
+        {% if not unit_active %}
+          0
         {% else %}
-          {% set z1 = 0.0 %}{% set z2 = 0.0 %}
+          {# Get cycle start time #}
+          {% set cycle_start = states('input_datetime.hvac_upper_cycle_start') %}
+          {% if cycle_start in ['unknown', 'unavailable', ''] %}
+            1.5
+          {% else %}
+            {% set start_ts = as_timestamp(cycle_start, 0) %}
+            {% set now_ts = as_timestamp(now()) %}
+            {% set duration_min = ((now_ts - start_ts) / 60) | float(0) %}
+            
+            {# Check for gas backup mode (outdoor < 20°F) #}
+            {% set outdoor_temp = states('sensor.bayberry_temperature') | float(40) %}
+            {% set gas_mode = outdoor_temp < 20 %}
+            
+            {% if gas_mode %}
+              {# Gas furnace mode - only blower fan running (~0.3-0.5 kW) #}
+              0.4
+            {% else %}
+              {# Heat pump mode - power ramps with duration #}
+              {# Base: 1.5 kW, ramp: +0.08 kW/min, cap: 4.5 kW #}
+              {% set base_power = 1.5 %}
+              {% set ramp_rate = 0.08 %}
+              {% set max_power = 4.5 %}
+              {% set estimated = base_power + (duration_min * ramp_rate) %}
+              {{ [estimated, max_power] | min | round(2) }}
+            {% endif %}
+          {% endif %}
         {% endif %}
-        {% if zones == 0 %} 0
-        {% elif zones == 1 %} {{ (base + z1) | round(3) }}
-        {% else %} {{ (base + z2) | round(3) }}
+      attributes:
+        cycle_duration_min: >
+          {% set office_heating = is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') %}
+          {% set master_heating = is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+          {% set unit_active = office_heating or master_heating %}
+          {% if not unit_active %}
+            0
+          {% else %}
+            {% set cycle_start = states('input_datetime.hvac_upper_cycle_start') %}
+            {% if cycle_start in ['unknown', 'unavailable', ''] %}
+              0
+            {% else %}
+              {% set start_ts = as_timestamp(cycle_start, 0) %}
+              {% set now_ts = as_timestamp(now()) %}
+              {{ ((now_ts - start_ts) / 60) | round(1) }}
+            {% endif %}
+          {% endif %}
+        zones_calling: >
+          {% set zones = [] %}
+          {% if is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') %}
+            {% set zones = zones + ['office'] %}
+          {% endif %}
+          {% if is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+            {% set zones = zones + ['master'] %}
+          {% endif %}
+          {{ zones | join(', ') if zones else 'none' }}
+        heating_mode: >
+          {% set outdoor_temp = states('sensor.bayberry_temperature') | float(40) %}
+          {% if outdoor_temp < 20 %}
+            gas_backup
+          {% else %}
+            heat_pump
+          {% endif %}
+
+    # -------------------------------------------------------------------------
+    # Lower Floor HVAC Unit (Living Room + Basement)
+    # -------------------------------------------------------------------------
+    - name: "Lower HVAC Estimated Power"
+      unique_id: lower_hvac_estimated_power
+      unit_of_measurement: "kW"
+      device_class: power
+      state_class: measurement
+      icon: mdi:heat-pump
+      state: >
+        {% set living_heating = is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') %}
+        {% set basement_heating = is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+        {% set unit_active = living_heating or basement_heating %}
+        
+        {% if not unit_active %}
+          0
+        {% else %}
+          {% set cycle_start = states('input_datetime.hvac_lower_cycle_start') %}
+          {% if cycle_start in ['unknown', 'unavailable', ''] %}
+            1.5
+          {% else %}
+            {% set start_ts = as_timestamp(cycle_start, 0) %}
+            {% set now_ts = as_timestamp(now()) %}
+            {% set duration_min = ((now_ts - start_ts) / 60) | float(0) %}
+            
+            {% set outdoor_temp = states('sensor.bayberry_temperature') | float(40) %}
+            {% set gas_mode = outdoor_temp < 20 %}
+            
+            {% if gas_mode %}
+              0.4
+            {% else %}
+              {% set base_power = 1.5 %}
+              {% set ramp_rate = 0.08 %}
+              {% set max_power = 4.5 %}
+              {% set estimated = base_power + (duration_min * ramp_rate) %}
+              {{ [estimated, max_power] | min | round(2) }}
+            {% endif %}
+          {% endif %}
         {% endif %}
+      attributes:
+        cycle_duration_min: >
+          {% set living_heating = is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') %}
+          {% set basement_heating = is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+          {% set unit_active = living_heating or basement_heating %}
+          {% if not unit_active %}
+            0
+          {% else %}
+            {% set cycle_start = states('input_datetime.hvac_lower_cycle_start') %}
+            {% if cycle_start in ['unknown', 'unavailable', ''] %}
+              0
+            {% else %}
+              {% set start_ts = as_timestamp(cycle_start, 0) %}
+              {% set now_ts = as_timestamp(now()) %}
+              {{ ((now_ts - start_ts) / 60) | round(1) }}
+            {% endif %}
+          {% endif %}
+        zones_calling: >
+          {% set zones = [] %}
+          {% if is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') %}
+            {% set zones = zones + ['living_room'] %}
+          {% endif %}
+          {% if is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+            {% set zones = zones + ['basement'] %}
+          {% endif %}
+          {{ zones | join(', ') if zones else 'none' }}
+        heating_mode: >
+          {% set outdoor_temp = states('sensor.bayberry_temperature') | float(40) %}
+          {% if outdoor_temp < 20 %}
+            gas_backup
+          {% else %}
+            heat_pump
+          {% endif %}
+
+    - name: "Upper HVAC Heating"
+      unique_id: upper_hvac_heating
+      device_class: running
+      state: >
+        {{ is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
+            is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') }}
+
+    - name: "Lower HVAC Heating"
+      unique_id: lower_hvac_heating
+      device_class: running
+      state: >
+        {{ is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
+            is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') }}
+
 
 - trigger:
     - trigger: event
