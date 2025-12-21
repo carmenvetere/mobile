@@ -358,14 +358,12 @@
 
     - name: "Upper HVAC Heating"
       unique_id: upper_hvac_heating
-      device_class: running
       state: >
         {{ is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
             is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') }}
 
     - name: "Lower HVAC Heating"
       unique_id: lower_hvac_heating
-      device_class: running
       state: >
         {{ is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
             is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') }}
