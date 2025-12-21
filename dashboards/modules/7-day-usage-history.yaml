@@ -87,17 +87,17 @@ series:
     show:
       legend_value: false
       in_header: false
-  - entity: sensor.pool_pump_energy
-    name: Pool Pump
-    type: column
-    color: "#9498AC"
-    group_by:
-      func: diff
-      duration: 1d
-    transform: "return (x == null || isNaN(x)) ? 0 : Math.max(x, 0);"
-    show:
-      legend_value: false
-      in_header: false
+  # - entity: sensor.pool_pump_energy
+  #   name: Pool Pump
+  #   type: column
+  #   color: "#9498AC"
+  #   group_by:
+  #     func: diff
+  #     duration: 1d
+  #   transform: "return (x == null || isNaN(x)) ? 0 : Math.max(x, 0);"
+  #   show:
+  #     legend_value: false
+  #     in_header: false
   # ===========================================
   # 7-DAY TOTALS (shown in header only)
   # ===========================================
