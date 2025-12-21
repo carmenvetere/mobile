@@ -1,3 +1,16 @@
+# =============================================================================
+# Energy Usage Chart - Fixed
+# =============================================================================
+#
+# Changes:
+#   - Uses corrected sensor.home_other_usage (with total_increasing state_class)
+#   - Pool pump uses transform to handle unavailable state
+#   - Consistent use of 'diff' for all cumulative energy sensors
+#
+# Note: If hot water sensor resets or has gaps, you may need 'delta' instead
+# of 'diff' for that one sensor (delta sums positive changes, ignoring resets)
+# =============================================================================
+
 type: custom:apexcharts-card
 header:
   show: true
@@ -30,6 +43,9 @@ apex_config:
           return value.toFixed(1) + ' kWh';
         }
 series:
+  # ===========================================
+  # DAILY BARS (shown in chart)
+  # ===========================================
   - entity: sensor.home_other_usage
     name: Other
     type: column
@@ -37,6 +53,7 @@ series:
     group_by:
       func: diff
       duration: 1d
+    transform: "return Math.max(x, 0);"
     show:
       legend_value: false
       in_header: false
@@ -70,16 +87,20 @@ series:
     show:
       legend_value: false
       in_header: false
-  # - entity: sensor.pool_pump_energy
-  #   name: Pool Pump
-  #   type: column
-  #   color: "#9498AC"
-  #   group_by:
-  #     func: diff
-  #     duration: 1d
-  #   show:
-  #     legend_value: false
-  #     in_header: false
+  - entity: sensor.pool_pump_energy
+    name: Pool Pump
+    type: column
+    color: "#9498AC"
+    group_by:
+      func: diff
+      duration: 1d
+    transform: "return (x == null || isNaN(x)) ? 0 : Math.max(x, 0);"
+    show:
+      legend_value: false
+      in_header: false
+  # ===========================================
+  # 7-DAY TOTALS (shown in header only)
+  # ===========================================
   - entity: sensor.home_other_usage
     name: Other
     type: column
@@ -87,6 +108,7 @@ series:
     group_by:
       func: diff
       duration: 7d
+    transform: "return Math.max(x, 0);"
     show:
       legend_value: false
       in_header: true
@@ -124,14 +146,15 @@ series:
       legend_value: false
       in_header: true
       in_chart: false
-  # - entity: sensor.pool_pump_energy
-  #   name: Pool Pump
-  #   type: column
-  #   color: "#9498AC"
-  #   group_by:
-  #     func: diff
-  #     duration: 7d
-  #   show:
-  #     legend_value: false
-  #     in_header: true
-  #     in_chart: false
+  - entity: sensor.pool_pump_energy
+    name: Pool Pump
+    type: column
+    color: "#9498AC"
+    group_by:
+      func: diff
+      duration: 7d
+    transform: "return (x == null || isNaN(x)) ? 0 : Math.max(x, 0);"
+    show:
+      legend_value: false
+      in_header: true
+      in_chart: false

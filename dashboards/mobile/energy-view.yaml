@@ -212,25 +212,25 @@ cards:
                 padding-left: 10px !important;
                 }  
             - !include /config/dashboards/modules/24-hour-power-flow.yaml
-            # - type: custom:bubble-card
-            #   card_type: separator
-            #   name: Last 7 Days Home Energy Usage
-            #   icon: mdi:flash
-            #   rows: 0.75
-            #   styles: |
-            #     .bubble-name {
-            #     font-size: 20px !important;  /* title */
-            #     font-weight: bold !important;
-            #     }
-            #     .bubble-line {
-            #     background: var(--primary-text-color);
-            #     opacity: 0.1;
-            #     }
-            #     .card-content {
-            #     padding-top: 10px !important;
-            #     padding-left: 10px !important;
-            #     }  
-            # - !include /config/dashboards/modules/7-day-usage-history.yaml
+            - type: custom:bubble-card
+              card_type: separator
+              name: Last 7 Days Home Energy Usage
+              icon: mdi:flash
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }  
+            - !include /config/dashboards/modules/7-day-usage-history.yaml
       power_flow:
         card: 
           type: custom:stack-in-card
