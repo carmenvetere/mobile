@@ -146,15 +146,15 @@ series:
       legend_value: false
       in_header: true
       in_chart: false
-  - entity: sensor.pool_pump_energy
-    name: Pool Pump
-    type: column
-    color: "#9498AC"
-    group_by:
-      func: diff
-      duration: 7d
-    transform: "return (x == null || isNaN(x)) ? 0 : Math.max(x, 0);"
-    show:
-      legend_value: false
-      in_header: true
-      in_chart: false
+  # - entity: sensor.pool_pump_energy
+  #   name: Pool Pump
+  #   type: column
+  #   color: "#9498AC"
+  #   group_by:
+  #     func: diff
+  #     duration: 7d
+  #   transform: "return (x == null || isNaN(x)) ? 0 : Math.max(x, 0);"
+  #   show:
+  #     legend_value: false
+  #     in_header: true
+  #     in_chart: false
