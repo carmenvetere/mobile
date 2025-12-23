@@ -119,7 +119,7 @@ sections:
                       border-radius: 20px;
                       padding: 10px 5px 10px 5px; 
                     }
-                cards: !include chips.yaml
+                cards: !include /config/dashboards/modules/chips.yaml
 
               # Notifications Card
               - type: conditional
@@ -161,7 +161,7 @@ sections:
                       }
                   cards:
                     - type: vertical-stack
-                      cards: !include notifications.yaml
+                      cards: !include /config/dashboards/modules/notifications.yaml
 
               # Menu Card
               - type: custom:stack-in-card
