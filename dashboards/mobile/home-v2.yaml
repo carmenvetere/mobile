@@ -156,18 +156,16 @@ cards:
                 border-radius: 20px;
                 padding: 3px 12px 4px;
                 }
+              :host {
+                  max-width: 100%;
+                }
+                @media (min-width: 600px) {
+                  :host {
+                    max-width: 300px;
+                  }
+                }
           cards:
             - type: vertical-stack
-              card_mod:
-                style: |
-                  :host {
-                    max-width: 100%;
-                  }
-                  @media (min-width: 600px) {
-                    :host {
-                      max-width: 300px;
-                    }
-                  }
               cards:
                 - type: custom:bubble-card
                   card_type: separator
