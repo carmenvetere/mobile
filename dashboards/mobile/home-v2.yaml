@@ -27,6 +27,12 @@ cards:
         - row-gap: 0px
         - align-items: start
         - column-gap: 2px
+      custom_fields:
+        menu:
+          - max-width: 100%
+          - justify-self: center
+          - '@media (min-width: 600px)':
+              max-width: 300px
     custom_fields:
       header:
         card:
@@ -155,14 +161,6 @@ cards:
                 background: var(--ha-card-background-2) !important;
                 border-radius: 20px;
                 padding: 3px 12px 4px;
-                }
-              :host {
-                  max-width: 100%;
-                }
-                @media (min-width: 600px) {
-                  :host {
-                    max-width: 300px;
-                  }
                 }
           cards:
             - type: vertical-stack
