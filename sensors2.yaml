@@ -371,6 +371,135 @@
         {{ is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
             is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') }}
 
+    # Current HVAC state category
+    - name: "HVAC State"
+      unique_id: hvac_diag_state
+      icon: mdi:heat-pump
+      state: >
+        {% set upper = is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+        {% set lower = is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+        {% if upper and lower %}both
+        {% elif upper %}upper_only
+        {% elif lower %}lower_only
+        {% else %}idle{% endif %}
+
+    # Power readings filtered by HVAC state
+    # These will show "unknown" when not in the matching state
+    
+    - name: "Power When Idle"
+      unique_id: hvac_diag_power_idle
+      unit_of_measurement: "kW"
+      device_class: power
+      state_class: measurement
+      icon: mdi:flash
+      state: >
+        {% set upper = is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+        {% set lower = is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+        {% if not upper and not lower %}
+          {{ states('sensor.bayberry_load_power') | float(none) }}
+        {% else %}
+          {{ none }}
+        {% endif %}
+      availability: >
+        {% set upper = is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+        {% set lower = is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+        {{ not upper and not lower and states('sensor.bayberry_load_power') not in ['unknown', 'unavailable'] }}
+
+    - name: "Power When Upper Only"
+      unique_id: hvac_diag_power_upper_only
+      unit_of_measurement: "kW"
+      device_class: power
+      state_class: measurement
+      icon: mdi:flash
+      state: >
+        {% set upper = is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+        {% set lower = is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+        {% if upper and not lower %}
+          {{ states('sensor.bayberry_load_power') | float(none) }}
+        {% else %}
+          {{ none }}
+        {% endif %}
+      availability: >
+        {% set upper = is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+        {% set lower = is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+        {{ upper and not lower and states('sensor.bayberry_load_power') not in ['unknown', 'unavailable'] }}
+
+    - name: "Power When Lower Only"
+      unique_id: hvac_diag_power_lower_only
+      unit_of_measurement: "kW"
+      device_class: power
+      state_class: measurement
+      icon: mdi:flash
+      state: >
+        {% set upper = is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+        {% set lower = is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+        {% if lower and not upper %}
+          {{ states('sensor.bayberry_load_power') | float(none) }}
+        {% else %}
+          {{ none }}
+        {% endif %}
+      availability: >
+        {% set upper = is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+        {% set lower = is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+        {{ lower and not upper and states('sensor.bayberry_load_power') not in ['unknown', 'unavailable'] }}
+
+    - name: "Power When Both Units"
+      unique_id: hvac_diag_power_both
+      unit_of_measurement: "kW"
+      device_class: power
+      state_class: measurement
+      icon: mdi:flash
+      state: >
+        {% set upper = is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+        {% set lower = is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+        {% if upper and lower %}
+          {{ states('sensor.bayberry_load_power') | float(none) }}
+        {% else %}
+          {{ none }}
+        {% endif %}
+      availability: >
+        {% set upper = is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') %}
+        {% set lower = is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
+                        is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') %}
+        {{ upper and lower and states('sensor.bayberry_load_power') not in ['unknown', 'unavailable'] }}
+
+    # Also track outdoor temp for correlation
+    - name: "HVAC Diagnostic Outdoor Temp"
+      unique_id: hvac_diag_outdoor_temp
+      unit_of_measurement: "°F"
+      device_class: temperature
+      state: "{{ states('sensor.bayberry_temperature') | float(none) }}"
+
+- binary_sensor:
+    # Track which units are currently heating
+    - name: "HVAC Upper Active"
+      unique_id: hvac_diag_upper_active
+      state: >
+        {{ is_state_attr('climate.office_thermostat_homekit', 'hvac_action', 'heating') or
+            is_state_attr('climate.master_bedroom_thermostat', 'hvac_action', 'heating') }}
+
+    - name: "HVAC Lower Active"
+      unique_id: hvac_diag_lower_active
+      state: >
+        {{ is_state_attr('climate.living_room_thermostat_homekit', 'hvac_action', 'heating') or
+            is_state_attr('climate.basement_thermostat_homekit', 'hvac_action', 'heating') }}
 
 - trigger:
     - trigger: event
