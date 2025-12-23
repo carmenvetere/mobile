@@ -1,5 +1,7 @@
-title: Home V2
-path: home-view-v2
+title: Home
+icon: mdi:home
+theme: Bubble
+path: mobile-home
 type: custom:grid-layout
 cards:
   - type: custom:button-card
@@ -8,10 +10,11 @@ cards:
         - border-radius: 15px
         - padding-bottom: 5px
         - padding-left: 5px
-        - padding-right: 10px
+        - padding-right: 5px
         - padding-top: 2px
+        - margin: 0
         - height: auto
-        - width: 400px
+#       - width: 398px
         - background-color: var(--background-color-2)
       grid:
         - grid-template-areas: |
@@ -39,7 +42,7 @@ cards:
             grid:
               - grid-template-areas: |
                   "name gap temperature"
-              - grid-template-columns: 120px 170px 110px
+              - grid-template-columns: 120px auto 110px
               - grid-template-rows: 60px
               - column-gap: 0px
             main:
@@ -89,59 +92,59 @@ cards:
                     - padding-right: 15px
                     - background-color: transparent
       chips:
-        card: !include modules/chips.yaml
-      notifications:
-        card:
-          type: conditional
-          conditions:
-            - condition: numeric_state
-              entity: sensor.notification_alert_counter
-              above: 0
-          card:
-            type: custom:expander-card
-            expanded: false
-            title-card-clickable: true
-            title-card:
-              type: custom:bubble-card
-              card_type: separator
-              name: Notifications
-              icon: mdi:bell
-              sub_button:
-                - entity: sensor.notification_alert_counter
-                  show_icon: false
-                  show_state: true
-                  state_background: false
-                  show_background: false
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-sub-button 
-                {
-                  font-size: 20px !important;
-                  font-weight: 700 !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }              
-            card_mod:
-              style: |
-                ha-card {
-                  padding-top: 3px !important;
-                  padding-bottom: 3px !important;
-                  padding-left: 15px !important;
-                  padding-right: 15px !important;
-                  background: var(--ha-card-background-2) !important;
-                }
-            cards:
-              - type: vertical-stack
-                cards: !include modules/notifications.yaml
+        card: !include /config/dashboards/modules/chips.yaml
+
+      # notifications:
+      #   card:
+      #     type: conditional
+      #     conditions:
+      #       - condition: numeric_state
+      #         entity: sensor.notification_alert_counter
+      #         above: 0
+      #     card:
+      #       type: custom:expander-card
+      #       expanded: false
+      #       title-card-clickable: true
+      #       title-card:
+      #         type: custom:bubble-card
+      #         card_type: separator
+      #         name: Notifications
+      #         icon: mdi:bell
+      #         sub_button:
+      #           - entity: sensor.notification_alert_counter
+      #             show_icon: false
+      #             show_state: true
+      #             state_background: false
+      #             show_background: false
+      #         rows: 0.75
+      #         styles: |
+      #           .bubble-name {
+      #             font-size: 20px !important;  /* title */
+      #             font-weight: bold !important;
+      #           }
+      #           .bubble-sub-button 
+      #           {
+      #             font-size: 20px !important;
+      #             font-weight: 700 !important;
+      #           }
+      #           .bubble-line {
+      #             background: var(--primary-text-color);
+      #             opacity: 0.1;
+      #           }
+      #           .card-content {
+      #             padding-top: 7px !important;
+      #           }              
+      #       card_mod:
+      #         style: |
+      #           ha-card {
+      #             padding-top: 3px !important;
+      #             padding-bottom: 3px !important;
+      #             padding-left: 15px !important;
+      #             padding-right: 15px !important;
+      #           }
+      #       cards:
+      #         - type: vertical-stack
+      #           cards: !include modules/notifications.yaml
       menu:
         card:
           type: custom:stack-in-card
@@ -151,11 +154,152 @@ cards:
               ha-card {
                 background: var(--ha-card-background-2) !important;
                 border-radius: 20px;
-                padding: 12px 12px 4px;
+                padding: 3px 12px 4px;
                 }
           cards:
             - type: vertical-stack
               cards:
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: Scenes
+                  icon: mdi:lamps
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                      font-size: 20px !important;  /* title */
+                      font-weight: bold !important;
+                    }
+                    .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                    }
+                    .card-content {
+                      padding-top: 7px !important;
+                    }
+                - type: custom:bubble-card
+                  card_type: button
+                  entity: switch.good_morning_stateful_scene
+                  name: Morning
+                  icon: mdi:weather-sunset-up
+                  visibility:
+                    - condition: state
+                      entity: input_boolean.day_scene_buttons
+                      state: "on"
+                  button_action:
+                    tap_action:
+                      action: toggle
+                  tap_action:
+                    action: toggle
+                  card_layout: large
+                  scrolling_effect: false
+                  modules:
+                  - mobile_lights_scenes   
+                - type: custom:bubble-card
+                  card_type: button
+                  entity: switch.evening_stateful_scene
+                  name: First Floor Evening
+                  icon: mdi:moon-waning-crescent
+                  visibility:
+                    - condition: state
+                      entity: input_boolean.evening_scene_buttons
+                      state: "on"                  
+                  button_action:
+                    tap_action:
+                      action: toggle
+                  tap_action:
+                    action: toggle
+                  card_layout: large
+                  scrolling_effect: false
+                  modules:
+                  - mobile_lights_scenes 
+                - type: custom:bubble-card
+                  card_type: button
+                  entity: switch.basement_evening_stateful_scene
+                  name: Basement Evening
+                  icon: mdi:moon-waning-crescent
+                  visibility:
+                    - condition: state
+                      entity: input_boolean.evening_scene_buttons
+                      state: "on"                  
+                  button_action:
+                    tap_action:
+                      action: toggle
+                  tap_action:
+                    action: toggle
+                  card_layout: large
+                  scrolling_effect: false
+                  modules:
+                  - mobile_lights_scenes 
+                - type: custom:bubble-card
+                  card_type: button
+                  entity: switch.emergency_stateful_scene
+                  name: Emergency
+                  icon: mdi:hospital
+                  visibility:
+                    - condition: state
+                      entity: input_boolean.night_scene_buttons
+                      state: "on"                  
+                  button_action:
+                    tap_action:
+                      action: toggle
+                  tap_action:
+                    action: toggle
+                  card_layout: large
+                  scrolling_effect: false
+                  modules:
+                  - mobile_lights_scenes 
+                - type: custom:bubble-card
+                  card_type: button
+                  entity: switch.nightlight_stateful_scene
+                  name: Nightlight
+                  icon: mdi:lightbulb-night
+                  visibility:
+                    - condition: or
+                      conditions: 
+                      - condition: state
+                        entity: input_boolean.night_scene_buttons
+                        state: "on"                  
+                      - condition: state
+                        entity: input_boolean.evening_scene_buttons
+                        state: "on" 
+                  button_action:
+                    tap_action:
+                      action: toggle
+                  tap_action:
+                    action: toggle
+                  card_layout: large
+                  scrolling_effect: false
+                  modules:
+                  - mobile_lights_scenes 
+                - type: custom:bubble-card
+                  card_type: button
+                  entity: switch.outdoor_on_stateful_scene
+                  name: Outdoor
+                  icon: mdi:coach-lamp
+                  button_action:
+                    tap_action:
+                      action: toggle
+                  tap_action:
+                    tap_action:
+                      action: toggle
+                  card_layout: large
+                  scrolling_effect: false
+                  modules:
+                  - mobile_lights_scenes 
+                - type: custom:bubble-card
+                  card_type: button
+                  entity: switch.good_night_stateful_scene
+                  name: All Off
+                  icon: mdi:lightbulb-off
+                  button_action:
+                    tap_action:
+                      action: toggle
+                  tap_action:
+                    action: toggle
+                  card_layout: large
+                  scrolling_effect: false
+                  modules:
+                  - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: separator
                   name: Menu
@@ -403,3 +547,36 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/settings
+#Notifications Pop-up
+  - type: vertical-stack
+    cards:
+      - type: custom:bubble-card
+        card_type: pop-up
+        name: Notifications
+        icon: mdi:bell-alert
+        hash: "#notifications-chip"
+        button_type: name
+        show_header: false
+        bg_color: var(--ha-card-background-2)  
+        styles: |
+          .bubble-name {
+            font-size: 16px !important;
+              }
+          .bubble-button-card-container {
+            margin: 2px 10px 2px 10px !important;
+            background-color: var(--ha-card-background-2) !important;
+            }
+      - type: custom:bubble-card
+        card_type: separator
+        name: Notifications
+        icon: mdi:bell-alert
+        styles: |
+          .bubble-name {
+            font-size: 16px !important;
+              }
+          .bubble-button-card-container {
+            margin: 2px 10px 2px 10px !important;
+            background-color: var(--ha-card-background-2) !important;
+            }
+      - type: vertical-stack
+        cards: !include /config/dashboards/modules/notifications2.yaml    
