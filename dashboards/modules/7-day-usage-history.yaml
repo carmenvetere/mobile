@@ -53,7 +53,6 @@ series:
     group_by:
       func: diff
       duration: 1d
-    transform: "return Math.max(x, 0);"
     show:
       legend_value: false
       in_header: false
@@ -108,7 +107,6 @@ series:
     group_by:
       func: diff
       duration: 3d
-    transform: "return Math.max(x, 0);"
     show:
       legend_value: false
       in_header: true
