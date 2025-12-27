@@ -1200,31 +1200,31 @@
     modules:
         - notifications_module  
 # Dryer Recently Completed
-- type: conditional
-  conditions:
-    - condition: state
-      entity: binary_sensor.dryer_recently_completed
-      state: "on"
-  card:
-    type: custom:bubble-card
-    card_type: button
-    button_type: name
-    name: Dryer complete!
-    card_layout: normal
-    styles: |
-      .bubble-icon {
-        color: #4ebcff !important;
-        }
-    icon: mdi:tumble-dryer-off
-    button_action:
-      tap_action:
-        action: more-info
-        entity: sensor.dryer
-    tap_action:
-      action: more-info
-      entity: sensor.dryer
-    modules:
-        - notifications_module  
+# - type: conditional
+#   conditions:
+#     - condition: state
+#       entity: binary_sensor.dryer_recently_completed
+#       state: "on"
+#   card:
+#     type: custom:bubble-card
+#     card_type: button
+#     button_type: name
+#     name: Dryer complete!
+#     card_layout: normal
+#     styles: |
+#       .bubble-icon {
+#         color: #4ebcff !important;
+#         }
+#     icon: mdi:tumble-dryer-off
+#     button_action:
+#       tap_action:
+#         action: more-info
+#         entity: sensor.dryer
+#     tap_action:
+#       action: more-info
+#       entity: sensor.dryer
+#     modules:
+#         - notifications_module  
 # Washer Recently Completed
 - type: conditional
   conditions:
