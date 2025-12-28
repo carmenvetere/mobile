@@ -29,7 +29,7 @@ cards:
         - column-gap: 2px
       custom_fields:
         menu:
-          - width: 50%
+          - width: 100px
     custom_fields:
       header:
         card:
@@ -96,58 +96,6 @@ cards:
                     - background-color: transparent
       chips:
         card: !include /config/dashboards/modules/chips.yaml
-
-      # notifications:
-      #   card:
-      #     type: conditional
-      #     conditions:
-      #       - condition: numeric_state
-      #         entity: sensor.notification_alert_counter
-      #         above: 0
-      #     card:
-      #       type: custom:expander-card
-      #       expanded: false
-      #       title-card-clickable: true
-      #       title-card:
-      #         type: custom:bubble-card
-      #         card_type: separator
-      #         name: Notifications
-      #         icon: mdi:bell
-      #         sub_button:
-      #           - entity: sensor.notification_alert_counter
-      #             show_icon: false
-      #             show_state: true
-      #             state_background: false
-      #             show_background: false
-      #         rows: 0.75
-      #         styles: |
-      #           .bubble-name {
-      #             font-size: 20px !important;  /* title */
-      #             font-weight: bold !important;
-      #           }
-      #           .bubble-sub-button 
-      #           {
-      #             font-size: 20px !important;
-      #             font-weight: 700 !important;
-      #           }
-      #           .bubble-line {
-      #             background: var(--primary-text-color);
-      #             opacity: 0.1;
-      #           }
-      #           .card-content {
-      #             padding-top: 7px !important;
-      #           }              
-      #       card_mod:
-      #         style: |
-      #           ha-card {
-      #             padding-top: 3px !important;
-      #             padding-bottom: 3px !important;
-      #             padding-left: 15px !important;
-      #             padding-right: 15px !important;
-      #           }
-      #       cards:
-      #         - type: vertical-stack
-      #           cards: !include modules/notifications.yaml
       menu:
         card:
           type: custom:stack-in-card
