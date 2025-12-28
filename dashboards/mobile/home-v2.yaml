@@ -18,12 +18,13 @@ cards:
         - background-color: var(--background-color-2)
       grid:
         - grid-template-areas: |
-            "header"
-            "chips"
-            "notifications"
-            "menu"
-        - grid-template-columns: auto
-        - grid-template-rows: 60px 60px auto auto
+            "header header"            
+            "chips chips"
+            "notifications notifications"
+            "menu energy"
+            "menu music"
+        - grid-template-columns: 33% 64%
+        - grid-template-rows: 60px 60px auto auto auto
         - row-gap: 0px
         - align-items: start
         - column-gap: 2px
