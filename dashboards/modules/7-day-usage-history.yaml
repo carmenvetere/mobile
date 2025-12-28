@@ -15,10 +15,10 @@ type: custom:apexcharts-card
 header:
   show: true
   show_states: true
-graph_span: 3d
+graph_span: 7d
 span:
   start: day
-  offset: "-1d"
+  offset: "-6d"
 apex_config:
   chart:
     type: bar
@@ -106,7 +106,7 @@ series:
     color: "#4C4F69"
     group_by:
       func: diff
-      duration: 3d
+      duration: 7d
     show:
       legend_value: false
       in_header: true
@@ -117,7 +117,7 @@ series:
     color: "#5D617A"
     group_by:
       func: delta
-      duration: 3d
+      duration: 7d
     show:
       legend_value: false
       in_header: true
@@ -128,7 +128,7 @@ series:
     color: "#6E728A"
     group_by:
       func: diff
-      duration: 3d
+      duration: 7d
     show:
       legend_value: false
       in_header: true
@@ -139,7 +139,7 @@ series:
     color: "#80849A"
     group_by:
       func: diff
-      duration: 3d
+      duration: 7d
     show:
       legend_value: false
       in_header: true
