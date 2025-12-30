@@ -23,7 +23,7 @@ cards:
             "notifications notifications"
             "menu energy"
             "menu music"
-        - grid-template-columns: 200px auto
+        - grid-template-columns: 1fr 2fr
         - grid-template-rows: 60px 60px auto auto auto
         - row-gap: 0px
         - align-items: start
@@ -104,7 +104,6 @@ cards:
                 background: var(--ha-card-background-2) !important;
                 border-radius: 20px;
                 padding: 3px 12px 4px;
-                width: 200px !important;
                 }
           cards:
             - type: vertical-stack
