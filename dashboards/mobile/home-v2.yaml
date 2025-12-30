@@ -497,6 +497,8 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/settings
+      energy:
+        card: !include /config/dashboards/modules/power-flow-card.yaml
 #Notifications Pop-up
   - type: vertical-stack
     cards:
