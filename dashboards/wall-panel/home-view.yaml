@@ -27,8 +27,7 @@ cards:
     custom_fields:
       header: !include header.yaml
       main: 
-        card: 
-        - !include 
+        card: !include 
             - /config/dashboards/modules/dynamic-scenes.yaml
             - module_name: wall_panel_lights_scenes
       nav: !include footer-menu.yaml
