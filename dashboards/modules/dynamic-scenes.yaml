@@ -1,6 +1,7 @@
 # lovelace_gen
 type: vertical-stack
 cards:
+#Good Morning Scene - All Displays in Morning
   - type: custom:bubble-card
     card_type: button
     entity: switch.good_morning_stateful_scene
@@ -19,6 +20,29 @@ cards:
     scrolling_effect: false
     modules:
     - {{ module_name }}  
+# Basement Cleaning - Basement Wall Panel Day
+{% if dashboard == 'basement_wall_panel' %}
+  - type: custom:bubble-card
+    card_type: button
+    entity: switch.basement_cleaning_stateful_scene
+    name: Cleaning
+    icon: mdi:spray-bottle
+    visibility:
+      - condition: state
+        entity: input_boolean.day_scene_buttons
+        state: "on"                  
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+{% endif %}
+# First Floor Evening Scene - Mobile in Evening
+{% if dashboard == 'mobile' %}
   - type: custom:bubble-card
     card_type: button
     entity: switch.evening_stateful_scene
@@ -37,6 +61,8 @@ cards:
     scrolling_effect: false
     modules:
     - {{ module_name }}
+{% endif %}
+# Basement Evening Scene - All in Evening
   - type: custom:bubble-card
     card_type: button
     entity: switch.basement_evening_stateful_scene
@@ -55,6 +81,7 @@ cards:
     scrolling_effect: false
     modules:
     - {{ module_name }}
+# Emergency Scene - All Displays Night
   - type: custom:bubble-card
     card_type: button
     entity: switch.emergency_stateful_scene
@@ -73,6 +100,7 @@ cards:
     scrolling_effect: false
     modules:
     - {{ module_name }}
+# Nightlight Scene - All Displays Evening and Night
   - type: custom:bubble-card
     card_type: button
     entity: switch.nightlight_stateful_scene
@@ -96,6 +124,7 @@ cards:
     scrolling_effect: false
     modules:
     - {{ module_name }}
+#Outdoor Scene - All Displays All Times
   - type: custom:bubble-card
     card_type: button
     entity: switch.outdoor_on_stateful_scene
@@ -111,6 +140,7 @@ cards:
     scrolling_effect: false
     modules:
     - {{ module_name }}
+# All Off Scene - All Displays All Times    
   - type: custom:bubble-card
     card_type: button
     entity: switch.good_night_stateful_scene
