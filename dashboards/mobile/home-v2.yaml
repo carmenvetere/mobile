@@ -500,6 +500,13 @@ cards:
         card:
           type: custom:simple-swipe-card
           auto_hide_pagination: 0
+          card_mod:
+          style: |
+            :host {
+              width: 100%;
+              max-width: 100%;
+              min-width: 0;
+            }
           cards:
             - type: custom:stack-in-card
               mode: vertical
