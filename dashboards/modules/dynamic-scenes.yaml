@@ -83,6 +83,7 @@ cards:
     modules:
     - {{ module_name }}
 {% endif %}
+{% if dashboard == 'basement_wall_panel' %}
 # Welcome Evening Scene - Basement Wall Panel in Evening
   - type: custom:bubble-card
     card_type: button
@@ -121,6 +122,7 @@ cards:
     scrolling_effect: false
     modules:
     - {{ module_name }}
+{% endif %}
 # Emergency Scene - All Displays Night
   - type: custom:bubble-card
     card_type: button
