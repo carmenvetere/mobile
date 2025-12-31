@@ -498,36 +498,96 @@ cards:
                     navigation_path: /mobile-dash/settings
       energy:
         card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background-color: var(--ha-card-background-2) !important;
-                border-radius: 20px;
-                padding: 10;
-              }
+          type: custom:simple-swipe-card
+          auto_hide_pagination: 0
           cards:
-            - type: custom:bubble-card
-              card_type: separator
-              name: Live Power Flow
-              icon: mdi:flash
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
-            - !include /config/dashboards/modules/power-flow-card.yaml
-
+            - type: custom:stack-in-card
+              mode: vertical
+              card_mod:
+                style: |
+                  ha-card {
+                    background-color: var(--ha-card-background-2) !important;
+                    border-radius: 20px;
+                    padding: 10;
+                  }
+              cards:
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: Live Power Flow
+                  icon: mdi:flash
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                    font-size: 20px !important;  /* title */
+                    font-weight: bold !important;
+                    }
+                    .bubble-line {
+                    background: var(--primary-text-color);
+                    opacity: 0.1;
+                    }
+                    .card-content {
+                    padding-top: 10px !important;
+                    padding-left: 10px !important;
+                    }
+                - !include /config/dashboards/modules/power-flow-card.yaml
+            - type: custom:stack-in-card
+              mode: vertical
+              card_mod:
+                style: |
+                  ha-card {
+                    background-color: var(--ha-card-background-2) !important;
+                    border-radius: 20px;
+                    padding: 10;
+                  }
+              cards:
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: Solar Forecast
+                  icon: mdi:flash
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                    font-size: 20px !important;  /* title */
+                    font-weight: bold !important;
+                    }
+                    .bubble-line {
+                    background: var(--primary-text-color);
+                    opacity: 0.1;
+                    }
+                    .card-content {
+                    padding-top: 10px !important;
+                    padding-left: 10px !important;
+                    }
+                - !include /config/dashboards/modules/7-day-solar-forecast.yaml
+            - type: custom:stack-in-card
+              mode: vertical
+              card_mod:
+                style: |
+                  ha-card {
+                    background-color: var(--ha-card-background-2) !important;
+                    border-radius: 20px;
+                    padding: 10;
+                  }
+              cards:
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: Energy Usage
+                  icon: mdi:flash
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                    font-size: 20px !important;  /* title */
+                    font-weight: bold !important;
+                    }
+                    .bubble-line {
+                    background: var(--primary-text-color);
+                    opacity: 0.1;
+                    }
+                    .card-content {
+                    padding-top: 10px !important;
+                    padding-left: 10px !important;
+                    }
+                - !include /config/dashboards/modules/7-day-usage-history.yaml
 #Notifications Pop-up
   - type: vertical-stack
     cards:
