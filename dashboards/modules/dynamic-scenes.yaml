@@ -1,124 +1,126 @@
-- type: custom:bubble-card
-  card_type: button
-  entity: switch.good_morning_stateful_scene
-  name: Morning
-  icon: mdi:weather-sunset-up
-  visibility:
-    - condition: state
-      entity: input_boolean.day_scene_buttons
-      state: "on"
-  button_action:
+type: vertical-stack
+cards:
+  - type: custom:bubble-card
+    card_type: button
+    entity: switch.good_morning_stateful_scene
+    name: Morning
+    icon: mdi:weather-sunset-up
+    visibility:
+      - condition: state
+        entity: input_boolean.day_scene_buttons
+        state: "on"
+    button_action:
+      tap_action:
+        action: toggle
     tap_action:
       action: toggle
-  tap_action:
-    action: toggle
-  card_layout: large
-  scrolling_effect: false
-  modules:
-  - mobile_lights_scenes   
-- type: custom:bubble-card
-  card_type: button
-  entity: switch.evening_stateful_scene
-  name: First Floor Evening
-  icon: mdi:moon-waning-crescent
-  visibility:
-    - condition: state
-      entity: input_boolean.evening_scene_buttons
-      state: "on"                  
-  button_action:
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}  
+  - type: custom:bubble-card
+    card_type: button
+    entity: switch.evening_stateful_scene
+    name: First Floor Evening
+    icon: mdi:moon-waning-crescent
+    visibility:
+      - condition: state
+        entity: input_boolean.evening_scene_buttons
+        state: "on"                  
+    button_action:
+      tap_action:
+        action: toggle
     tap_action:
       action: toggle
-  tap_action:
-    action: toggle
-  card_layout: large
-  scrolling_effect: false
-  modules:
-  - mobile_lights_scenes 
-- type: custom:bubble-card
-  card_type: button
-  entity: switch.basement_evening_stateful_scene
-  name: Basement Evening
-  icon: mdi:moon-waning-crescent
-  visibility:
-    - condition: state
-      entity: input_boolean.evening_scene_buttons
-      state: "on"                  
-  button_action:
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+  - type: custom:bubble-card
+    card_type: button
+    entity: switch.basement_evening_stateful_scene
+    name: Basement Evening
+    icon: mdi:moon-waning-crescent
+    visibility:
+      - condition: state
+        entity: input_boolean.evening_scene_buttons
+        state: "on"                  
+    button_action:
+      tap_action:
+        action: toggle
     tap_action:
       action: toggle
-  tap_action:
-    action: toggle
-  card_layout: large
-  scrolling_effect: false
-  modules:
-  - mobile_lights_scenes 
-- type: custom:bubble-card
-  card_type: button
-  entity: switch.emergency_stateful_scene
-  name: Emergency
-  icon: mdi:hospital
-  visibility:
-    - condition: state
-      entity: input_boolean.night_scene_buttons
-      state: "on"                  
-  button_action:
-    tap_action:
-      action: toggle
-  tap_action:
-    action: toggle
-  card_layout: large
-  scrolling_effect: false
-  modules:
-  - mobile_lights_scenes 
-- type: custom:bubble-card
-  card_type: button
-  entity: switch.nightlight_stateful_scene
-  name: Nightlight
-  icon: mdi:lightbulb-night
-  visibility:
-    - condition: or
-      conditions: 
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+  - type: custom:bubble-card
+    card_type: button
+    entity: switch.emergency_stateful_scene
+    name: Emergency
+    icon: mdi:hospital
+    visibility:
       - condition: state
         entity: input_boolean.night_scene_buttons
         state: "on"                  
-      - condition: state
-        entity: input_boolean.evening_scene_buttons
-        state: "on" 
-  button_action:
+    button_action:
+      tap_action:
+        action: toggle
     tap_action:
       action: toggle
-  tap_action:
-    action: toggle
-  card_layout: large
-  scrolling_effect: false
-  modules:
-  - mobile_lights_scenes 
-- type: custom:bubble-card
-  card_type: button
-  entity: switch.outdoor_on_stateful_scene
-  name: Outdoor
-  icon: mdi:coach-lamp
-  button_action:
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+  - type: custom:bubble-card
+    card_type: button
+    entity: switch.nightlight_stateful_scene
+    name: Nightlight
+    icon: mdi:lightbulb-night
+    visibility:
+      - condition: or
+        conditions: 
+        - condition: state
+          entity: input_boolean.night_scene_buttons
+          state: "on"                  
+        - condition: state
+          entity: input_boolean.evening_scene_buttons
+          state: "on" 
+    button_action:
+      tap_action:
+        action: toggle
     tap_action:
       action: toggle
-  tap_action:
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+  - type: custom:bubble-card
+    card_type: button
+    entity: switch.outdoor_on_stateful_scene
+    name: Outdoor
+    icon: mdi:coach-lamp
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      tap_action:
+        action: toggle
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+  - type: custom:bubble-card
+    card_type: button
+    entity: switch.good_night_stateful_scene
+    name: All Off
+    icon: mdi:lightbulb-off
+    button_action:
+      tap_action:
+        action: toggle
     tap_action:
       action: toggle
-  card_layout: large
-  scrolling_effect: false
-  modules:
-  - mobile_lights_scenes 
-- type: custom:bubble-card
-  card_type: button
-  entity: switch.good_night_stateful_scene
-  name: All Off
-  icon: mdi:lightbulb-off
-  button_action:
-    tap_action:
-      action: toggle
-  tap_action:
-    action: toggle
-  card_layout: large
-  scrolling_effect: false
-  modules:
-  - mobile_lights_scenes
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - mobile_lights_scenes
