@@ -20,10 +20,10 @@ cards:
             "main"
             "nav"
         - grid-template-columns: 720px
-        - grid-template-rows: 100px 1080px 100px
+        - grid-template-rows: 100px 1050px 100px
         - align-items: start
         - column-gap: 2px
-        - row-gap: 0px
+        - row-gap: 15px
     custom_fields:
       header: !include header.yaml
       main: 
