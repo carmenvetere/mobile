@@ -129,7 +129,7 @@ cards:
             - !include 
               - /config/dashboards/modules/dynamic-scenes.yaml
               - module_name: wall_panel_lights_scenes
-              dashboard: basement_wall_panel
+                dashboard: basement_wall_panel
                 - type: custom:bubble-card
                   card_type: separator
                   name: Menu
