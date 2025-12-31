@@ -115,6 +115,12 @@ lovelace:
       icon: mdi:cellphone
       show_in_sidebar: true
       filename: dashboards/mobile/mobile.yaml 
+    desktop-dash:
+      mode: yaml
+      title: "Desktop - YAML"
+      icon: mdi:desktop-classic
+      show_in_sidebar: true
+      filename: dashboards/desktop/desktop.yaml 
     mudroom-wall-panel-dash:
       mode: yaml
       title: Mudroom Wall Panel - YAML
