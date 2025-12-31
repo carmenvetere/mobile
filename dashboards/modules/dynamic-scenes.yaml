@@ -62,6 +62,46 @@ cards:
     modules:
     - {{ module_name }}
 {% endif %}
+# First Floor Entertaining Scene - Mobile in Evening
+{% if dashboard == 'mobile' %}
+  - type: custom:bubble-card
+    card_type: button
+    entity: switch.entertaining_stateful_scene
+    name: FEntertaining
+    icon: mdi:glass-cocktail
+    visibility:
+      - condition: state
+        entity: input_boolean.evening_scene_buttons
+        state: "on"                  
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+{% endif %}
+# Welcome Evening Scene - Basement Wall Panel in Evening
+  - type: custom:bubble-card
+    card_type: button
+    entity: switch.welcome_stateful_scene
+    name: Welcome
+    icon: mdi:human-greeting
+    visibility:
+      - condition: state
+        entity: input_boolean.evening_scene_buttons
+        state: "on"                  
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
 # Basement Evening Scene - All in Evening
   - type: custom:bubble-card
     card_type: button
