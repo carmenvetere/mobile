@@ -516,6 +516,10 @@ cards:
                     background-color: var(--ha-card-background-2) !important;
                     border-radius: 20px;
                     padding: 10;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    min-width: 0 !important;
+                    overflow: hidden !important;
                   }
               cards:
                 - type: custom:bubble-card
@@ -545,6 +549,10 @@ cards:
                     background-color: var(--ha-card-background-2) !important;
                     border-radius: 20px;
                     padding: 10;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    min-width: 0 !important;
+                    overflow: hidden !important;
                   }
               cards:
                 - type: custom:bubble-card
@@ -574,6 +582,10 @@ cards:
                     background-color: var(--ha-card-background-2) !important;
                     border-radius: 20px;
                     padding: 10;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    min-width: 0 !important;
+                    overflow: hidden !important;
                   }
               cards:
                 - type: custom:bubble-card
