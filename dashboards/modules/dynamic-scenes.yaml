@@ -4,7 +4,6 @@ cards:
 #Good Morning Scene - All Displays in Morning
   - type: custom:bubble-card
     card_type: button
-    button_type: name
     entity: switch.good_morning_stateful_scene
     name: Morning
     icon: mdi:weather-sunset-up
