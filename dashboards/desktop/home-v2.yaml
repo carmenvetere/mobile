@@ -126,10 +126,7 @@ cards:
                     .card-content {
                       padding-top: 7px !important;
                     }
-            - !include 
-              - /config/dashboards/modules/dynamic-scenes.yaml
-              - module_name: wall_panel_lights_scenes
-                dashboard: basement_wall_panel
+                - !include [/config/dashboards/modules/dynamic-scenes.yaml, {module_name: wall_panel_lights_scenes}]
                 - type: custom:bubble-card
                   card_type: separator
                   name: Menu
