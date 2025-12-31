@@ -126,7 +126,7 @@ cards:
                     .card-content {
                       padding-top: 7px !important;
                     }
-                - !include [/config/dashboards/modules/dynamic-scenes.yaml, {module_name: mobile_lights_scenes} {dashboard: mobile}]
+                - !include [/config/dashboards/modules/dynamic-scenes.yaml, {module_name: mobile_lights_scenes, dashboard: mobile}]
                 - type: custom:bubble-card
                   card_type: separator
                   name: Menu
