@@ -125,9 +125,7 @@ cards:
                     .card-content {
                       padding-top: 7px !important;
                     }
-                - !include 
-                    - /config/dashboards/modules/dynamic-scenes.yaml
-                    - module_name: wall_panel_scenes
+                - !include /config/dashboards/modules/dynamic-scenes.yaml
                 - type: custom:bubble-card
                   card_type: separator
                   name: Menu
