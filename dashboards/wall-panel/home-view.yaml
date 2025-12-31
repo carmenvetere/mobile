@@ -1,3 +1,4 @@
+# lovelace_gen
 title: Home
 path: home-view
 theme: Bubble
@@ -27,6 +28,7 @@ cards:
       header: !include header.yaml
       main: 
         card: 
-          type: vertical-stack
-          cards: !include /config/dashboards/modules/dynamic-scenes.yaml
+        - !include 
+            - /config/dashboards/modules/dynamic-scenes.yaml
+            - module_name: wall_panel_lights_scenes
       nav: !include footer-menu.yaml
