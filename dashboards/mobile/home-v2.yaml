@@ -497,7 +497,37 @@ cards:
                     action: navigate
                     navigation_path: /mobile-dash/settings
       energy:
-        card: !include /config/dashboards/modules/power-flow-card.yaml
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background-color: var(--ha-card-background-2) !important;
+                border-radius: 20px;
+                padding: 10;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Live Power Flow
+              icon: mdi:flash
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - !include /config/dashboards/modules/power-flow-card.yaml
+
 #Notifications Pop-up
   - type: vertical-stack
     cards:
