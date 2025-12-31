@@ -503,9 +503,15 @@ cards:
           card_mod:
           style: |
             :host {
-              width: 100%;
-              max-width: 100%;
-              min-width: 0;
+              width: 100% !important;
+              max-width: 100% !important;
+              min-width: 0 !important;
+              box-sizing: border-box !important;
+            }
+            ha-card {
+              width: 100% !important;
+              max-width: 100% !important;
+              overflow: hidden !important;
             }
           cards:
             - type: custom:stack-in-card
