@@ -442,12 +442,10 @@
       conditions:
         - condition: template
           value_template: >
-            {{
-            states('switch.office_thermostat_office_emergency_heat')
-            == 'on' or
-                states('switch.basement_thermostat_basement_emergency_heat') == 'on' or
-                states('switch.living_room_thermostat_living_room_emergency_heat') == 'on' or
-                states('switch.master_bedroom_thermostat_master_bedroom_emergency_heat') == 'on' }}
+            {{ states('switch.office_thermostat_office_emergency_heat') == 'on' or
+               states('switch.basement_thermostat_basement_emergency_heat') == 'on' or
+               states('switch.living_room_thermostat_living_room_emergency_heat') == 'on' or
+               states('switch.master_bedroom_thermostat_master_bedroom_emergency_heat') == 'on' }}
       chip:
         type: template
         icon: mdi:fire
