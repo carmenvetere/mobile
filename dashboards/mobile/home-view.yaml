@@ -169,6 +169,8 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/lights-main
+                  modules:
+                    - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -192,6 +194,8 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/climate-main
+                  modules:
+                    - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -215,6 +219,8 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/shades-main
+                  modules:
+                    - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -238,6 +244,8 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/music                  
+                  modules:
+                    - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -261,6 +269,8 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/security
+                  modules:
+                    - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -284,6 +294,8 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/energy
+                  modules:
+                    - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -307,6 +319,8 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/pool
+                  modules:
+                    - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -330,6 +344,8 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/vacuum
+                  modules:
+                    - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -353,6 +369,8 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/weather
+                  modules:
+                    - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -376,6 +394,8 @@ cards:
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/settings
+                  modules:
+                    - mobile_lights_scenes
 #Notifications Pop-up
   - type: vertical-stack
     cards:
