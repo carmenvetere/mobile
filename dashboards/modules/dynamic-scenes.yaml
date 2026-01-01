@@ -123,7 +123,6 @@ cards:
     - {{ module_name }}
 {% endif %}
 {% if dashboard == 'basement_wall_panel' %}
-
 # Emergency Scene - All Displays Night
   - type: custom:bubble-card
     card_type: button
