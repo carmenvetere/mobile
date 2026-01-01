@@ -20,7 +20,7 @@ cards:
             "nav"
         - grid-template-columns: auto
         - grid-template-rows: 100px 1050px 100px
-        - align-items: start
+        - align-items: center
         - column-gap: 2px
         - row-gap: 15px
     custom_fields:
@@ -49,9 +49,17 @@ cards:
                 controlsLargeIcons: true
                 hideControlRepeatButton: true
                 hideControlShuffleButton: true
+              heightPercentage: 120
               card_mod:
                 refresh_interval: 2
-                style:
+                style: |
+                  :host {
+                    --mdc-icon-color: var(--primary-text-color) !important;
+                    --secondary-text-color: var(--primary-text-color) !important;
+                    --paper-item-icon-color: var(--primary-text-color) !important;
+                    --mdc-theme-primary: var(--primary-text-color) !important;
+                    --mdc-icon-button-ink-color: var(--primary-text-color) !important;
+                  }
                   sonos-player$ sonos-player-header$: |
                     .song {
                       color: var(--primary-text-color) !important;
