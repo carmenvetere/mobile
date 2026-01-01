@@ -10,8 +10,8 @@ cards:
         - padding-bottom: 5px
         - padding-left: 0px
         - padding-top: 0px
-        - width: 750px
-        - height: 1334px
+        - width: 720px
+        - height: 1280px
         - background: var(--background-color)
       grid:
         - grid-template-areas: |
@@ -19,7 +19,7 @@ cards:
             "main"
             "nav"
         - grid-template-columns: auto
-        - grid-template-rows: 100px 1134px 100px
+        - grid-template-rows: 100px 1050px 100px
         - align-items: start
         - column-gap: 2px
         - row-gap: 0px
@@ -28,5 +28,5 @@ cards:
       main:
         card:
           type: vertical-stack
-          cards: !include /config/dashboards/modules/basement-lights-individuals2.yaml
+          cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: wall_panel_lights_scenes, dashboard: basement_wall_panel}]
       nav: !include footer-menu.yaml

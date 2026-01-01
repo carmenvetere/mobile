@@ -1,3 +1,4 @@
+# lovelace_gen
 - type: vertical-stack
   cards:
     - type: custom:bubble-card
@@ -22,10 +23,8 @@
           transition: 3
       card_layout: large
       scrolling_effect: false
-      styles: |
-        .bubble-name { font-size: 16px !important; text-align: left !important;}
       modules:
-      - Mobile Module Theme    
+      - {{ module_name }} 
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene_basement_evening
@@ -48,10 +47,8 @@
           transition: 3
       card_layout: large
       scrolling_effect: false
-      styles: |
-        .bubble-name { font-size: 16px !important; text-align: left !important;}        
       modules:
-      - Mobile Module Theme   
+      - {{ module_name }} 
     - type: custom:bubble-card
       card_type: button
       entity: sensor.scene2_basement_cleaning
@@ -74,10 +71,8 @@
           transition: 3
       card_layout: large
       scrolling_effect: false
-      styles: |
-        .bubble-name { font-size: 16px !important; text-align: left !important;}        
       modules:
-      - Mobile Module Theme   
+      - {{ module_name }}  
     - type: custom:bubble-card
       card_type: separator
       name: Media Room
@@ -116,10 +111,6 @@
           entity_id: light.gym_main_lights
       scrolling_effect: false
       use_accent_color: false
-      styles: >
-        .bubble-name { font-size: 16px !important; text-align: left !important;}
-        .bubble-sub-button { font-size: 14px !important;
-        font-weight: bold; }
       sub_button:
         - entity: light.gym_main_lights
           show_state: true
@@ -129,7 +120,7 @@
           show_background: false
           attribute: brightness
       modules:
-      - Mobile Module Theme   
+      - {{ module_name }}  
     - type: custom:bubble-card
       card_type: button
       button_type: slider
@@ -157,10 +148,6 @@
           entity_id: light.media_room_table_lamp
       scrolling_effect: false
       use_accent_color: false
-      styles: >
-        .bubble-name { font-size: 16px !important; text-align: left !important;}
-        .bubble-sub-button { font-size: 14px !important;
-        font-weight: bold; }
       sub_button:
         - entity: light.media_room_table_lamp
           show_state: true
@@ -170,7 +157,7 @@
           show_background: false
           attribute: brightness
       modules:
-      - Mobile Module Theme   
+      - {{ module_name }}  
     - type: custom:bubble-card
       card_type: separator
       name: Mudroom
@@ -209,10 +196,6 @@
           entity_id: light.laundry_room_main_lights
       scrolling_effect: false
       use_accent_color: false
-      styles: >
-        .bubble-name { font-size: 16px !important; text-align: left !important;}
-        .bubble-sub-button { font-size: 14px !important;
-        font-weight: bold; }
       sub_button:
         - entity: light.laundry_room_main_lights
           show_state: true
@@ -222,7 +205,7 @@
           show_background: false
           attribute: brightness
       modules:
-      - Mobile Module Theme   
+      - {{ module_name }}  
     - type: custom:bubble-card
       card_type: separator
       name: Hallway
@@ -261,10 +244,6 @@
           entity_id: light.basement_hallway_main_lights
       scrolling_effect: false
       use_accent_color: false
-      styles: >
-        .bubble-name { font-size: 16px !important; text-align: left !important;}
-        .bubble-sub-button { font-size: 14px !important;
-        font-weight: bold; }
       sub_button:
         - entity: light.basement_hallway_main_lights
           show_state: true
@@ -274,7 +253,7 @@
           show_background: false
           attribute: brightness
       modules:
-      - Mobile Module Theme   
+      - {{ module_name }}   
     - type: custom:bubble-card
       card_type: separator
       name: Gym
@@ -313,10 +292,6 @@
           entity_id: light.gym_main_lights
       scrolling_effect: false
       use_accent_color: false
-      styles: >
-        .bubble-name { font-size: 16px !important; text-align: left !important;}
-        .bubble-sub-button { font-size: 14px !important;
-        font-weight: bold; }
       sub_button:
         - entity: light.gym_main_lights
           show_state: true
@@ -326,7 +301,7 @@
           show_background: false
           attribute: brightness
       modules:
-      - Mobile Module Theme   
+      - {{ module_name }}   
     - type: custom:bubble-card
       card_type: button
       button_type: slider
@@ -354,10 +329,6 @@
           entity_id: light.stairs_main_lights
       scrolling_effect: false
       use_accent_color: false
-      styles: >
-        .bubble-name { font-size: 16px !important; text-align: left !important;}
-        .bubble-sub-button { font-size: 14px !important;
-        font-weight: bold; }
       sub_button:
         - entity: light.stairs_main_lights
           show_state: true
@@ -367,7 +338,7 @@
           show_background: false
           attribute: brightness
       modules:
-      - Mobile Module Theme   
+      - {{ module_name }}   
     - type: custom:bubble-card
       card_type: button
       button_type: slider
@@ -395,10 +366,6 @@
           entity_id: light.stairs_spot_lights
       scrolling_effect: false
       use_accent_color: false
-      styles: >
-        .bubble-name { font-size: 16px !important; text-align: left !important;}
-        .bubble-sub-button { font-size: 14px !important;
-        font-weight: bold; }
       sub_button:
         - entity: light.stairs_spot_lights
           show_state: true
@@ -408,4 +375,4 @@
           show_background: false
           attribute: brightness
       modules:
-      - Mobile Module Theme   
+      - {{ module_name }}   
