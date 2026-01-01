@@ -52,57 +52,60 @@ cards:
               heightPercentage: 120
               card_mod:
                 refresh_interval: 2
-                style: |
-                  :host {
-                    --mdc-icon-color: var(--primary-text-color) !important;
-                    --secondary-text-color: var(--primary-text-color) !important;
-                    --paper-item-icon-color: var(--primary-text-color) !important;
-                    --mdc-theme-primary: var(--primary-text-color) !important;
-                    --mdc-icon-button-ink-color: var(--primary-text-color) !important;
-                  }
+                style:
+                  .: |
+                    :host {
+                      --mdc-icon-color: var(--primary-text-color) !important;
+                      --secondary-text-color: var(--primary-text-color) !important;
+                      --paper-item-icon-color: var(--primary-text-color) !important;
+                      --mdc-theme-primary: var(--primary-text-color) !important;
+                      --mdc-icon-button-ink-color: var(--primary-text-color) !important;
+                    }
+                    ha-card {
+                      background: var(--background-color-2) !important;
+                    }  
                   sonos-player$ sonos-player-header$: |
                     .song {
                       color: var(--primary-text-color) !important;
                       font-size: 18px !important;
                       font-weight: bold !important;
-                      }
+                    }
                     .entity {
                       color: var(--primary-text-color) !important;
                       font-size: 14px !important;
                       font-weight: 600 !important;
-                      }
+                    }
                     .artist-album {
                       color: var(--primary-text-color) !important;
                       font-size: 14px !important;
                       font-weight: 500 !important;
-                      }   
+                    }   
                   sonos-player$ sonos-player-header$ sonos-progress$: |
                     .progress {
                       color: var(--primary-text-color) !important;
                       font-size: 16px !important;
                       font-weight: bold !important;
                       --paper-progress-active-color: var(--primary-text-color) !important;
-                      }
+                    }
                     .progress-bar {
-                      background-color: var (--primary-text-color) !important;
-                      }
+                      background-color: var(--primary-text-color) !important;
+                    }
                   sonos-player$ sonos-player-controls$ sonos-volume$: |
-                    .volume-level  {
-                      font-size: 14px !important;$
+                    .volume-level {
+                      font-size: 14px !important;
                       font-weight: bold !important;
-                      margin-right
                     }
                     .volume-slider {
                       margin-right: 25px !important;
-                      }
+                    }
                   sonos-media-browser$ sonos-favorites-list$ sonos-media-row$: |
                     .title {            
                       font-size: 16px !important;
                     }  
                     .button {            
                       border-radius: 15px !important;
-                      color: white; !important;
+                      background: var(--ha-card-background-2) !important;
                       height: 60px !important;
                       margin: 10px !important;      
-                    }    
+                    }
       nav: !include footer-menu.yaml
