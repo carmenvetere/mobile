@@ -61,6 +61,7 @@ cards:
     modules:
     - {{ module_name }}
 # Basement Evening Scene - All in Evening
+{% if dashboard == 'basement_wall_panel' %}
   - type: custom:bubble-card
     card_type: button
     entity: switch.basement_evening_stateful_scene
@@ -122,7 +123,6 @@ cards:
     modules:
     - {{ module_name }}
 {% endif %}
-{% if dashboard == 'basement_wall_panel' %}
 # Emergency Scene - All Displays Night
   - type: custom:bubble-card
     card_type: button
