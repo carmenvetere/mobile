@@ -42,7 +42,7 @@ cards:
     - {{ module_name }}
 {% endif %}
 # First Floor Evening Scene - Mobile in Evening
-{% if dashboard == 'mobile' %}
+{% if dashboard == ['mobile', 'basement_wall_panel'] %}
   - type: custom:bubble-card
     card_type: button
     entity: switch.evening_stateful_scene
@@ -63,7 +63,7 @@ cards:
     - {{ module_name }}
 {% endif %}
 # First Floor Entertaining Scene - Mobile in Evening
-{% if dashboard == 'mobile' %}
+{% if dashboard == ['mobile', 'basement_wall_panel'] %}
   - type: custom:bubble-card
     card_type: button
     entity: switch.entertaining_stateful_scene
