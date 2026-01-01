@@ -12,7 +12,6 @@ kiosk_mode:
     hide_overflow: true
 views:
   - !include home-view.yaml
-  - !include home-v2.yaml
   - !include lights-view.yaml
   - !include climate-view.yaml
   - !include shades-view.yaml
