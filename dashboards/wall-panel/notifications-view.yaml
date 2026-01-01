@@ -31,8 +31,8 @@ cards:
           styles: 
             card: 
               - border-radius: 0px
-              - width: 750px
-              - height: 1134px
+              - width: 720px
+              - height: 1050px
               - padding-top: 0px
               - background: var(--background-color)
             grid:
@@ -40,7 +40,7 @@ cards:
                   "space"
                   "notifications"
               - grid-template-columns: auto
-              - grid-template-rows: 20px 1114px
+              - grid-template-rows: 20px 1030px
               - align-items: start
           custom_fields: 
             notifications:
