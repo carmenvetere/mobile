@@ -2,21 +2,10 @@
 - type: vertical-stack
   cards:
     - type: custom:bubble-card
-      card_type: separator
-      name: Media Room
-      icon: mdi:sofa
-      rows: 0.75
-      styles: >
-        .bubble-name { font-size: 16px !important; font-weight:
-        bold !important; }
-        .bubble-line { background: var(--primary-text-color);
-        opacity: 0.1; }
-        .card-content { padding-top: 7px !important; }
-    - type: custom:bubble-card
       card_type: button
       button_type: slider
       entity: light.gym_main_lights
-      name: Main Lights
+      name: Media Room Main Lights
       icon: mdi:light-recessed
       show_state: false
       slider_live_update: false
@@ -53,7 +42,7 @@
       card_type: button
       button_type: slider
       entity: light.media_room_table_lamp
-      name: Table Lamp
+      name: Media Room Table Lamp
       icon: mdi:floor-lamp
       show_state: false
       slider_live_update: false
@@ -87,21 +76,10 @@
       modules:
       - {{ module_name }}  
     - type: custom:bubble-card
-      card_type: separator
-      name: Mudroom
-      icon: mdi:washing-machine
-      rows: 0.75
-      styles: >
-        .bubble-name { font-size: 16px !important; font-weight:
-        bold !important; }
-        .bubble-line { background: var(--primary-text-color);
-        opacity: 0.1; }
-        .card-content { padding-top: 7px !important; }
-    - type: custom:bubble-card
       card_type: button
       button_type: slider
       entity: light.laundry_room_main_lights
-      name: Main Lights
+      name: Mud Room Main Lights
       icon: mdi:light-recessed
       show_state: false
       slider_live_update: false
@@ -135,21 +113,10 @@
       modules:
       - {{ module_name }}  
     - type: custom:bubble-card
-      card_type: separator
-      name: Hallway
-      icon: mdi:bench
-      rows: 0.75
-      styles: >
-        .bubble-name { font-size: 16px !important; font-weight:
-        bold !important; }
-        .bubble-line { background: var(--primary-text-color);
-        opacity: 0.1; }
-        .card-content { padding-top: 7px !important; }
-    - type: custom:bubble-card
       card_type: button
       button_type: slider
       entity: light.basement_hallway_main_lights
-      name: Main Lights
+      name: Hallway Main Lights
       icon: mdi:light-recessed
       show_state: false
       slider_live_update: false
@@ -183,21 +150,10 @@
       modules:
       - {{ module_name }}   
     - type: custom:bubble-card
-      card_type: separator
-      name: Gym
-      icon: mdi:weight-lifter
-      rows: 0.75
-      styles: >
-        .bubble-name { font-size: 16px !important; font-weight:
-        bold !important; }
-        .bubble-line { background: var(--primary-text-color);
-        opacity: 0.1; }
-        .card-content { padding-top: 7px !important; }
-    - type: custom:bubble-card
       card_type: button
       button_type: slider
       entity: light.gym_main_lights
-      name: Main Lights
+      name: Gym Main Lights
       icon: mdi:light-recessed
       show_state: false
       slider_live_update: false
@@ -234,7 +190,7 @@
       card_type: button
       button_type: slider
       entity: light.stairs_main_lights
-      name: Stairs
+      name: Basement Stairs
       icon: mdi:light-recessed
       show_state: false
       slider_live_update: false
@@ -271,7 +227,7 @@
       card_type: button
       button_type: slider
       entity: light.stairs_spot_lights
-      name: Accent Light
+      name: Stairs Accent Light
       icon: mdi:spotlight-beam
       show_state: false
       slider_live_update: false
