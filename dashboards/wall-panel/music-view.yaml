@@ -106,13 +106,6 @@ cards:
                 refresh_interval: 2
                 style:
                   .: |
-                    :host {
-                      --mdc-icon-color: var(--primary-text-color) !important;
-                      --secondary-text-color: var(--primary-text-color) !important;
-                      --paper-item-icon-color: var(--primary-text-color) !important;
-                      --mdc-theme-primary: var(--primary-text-color) !important;
-                      --mdc-icon-button-ink-color: var(--primary-text-color) !important;
-                    }
                     ha-card {
                       background: var(--background-color-2) !important;
                       margin-left: 10px !important;
