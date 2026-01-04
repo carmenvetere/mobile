@@ -112,7 +112,7 @@ cards:
                       maring-right: 10px !important;
                       max-width: 96% !important;
                     }  
-                  sonos-media-browser$ sonos-favorites-list$ sonos-media-row$: |
+                  sonos-media-browser$ sonos-favorites-list$: |
                     .header {
                       font-size: 24px !important;
                       font-weight: bold !important;
@@ -120,7 +120,8 @@ cards:
                     }
                     .artwork {
                       display: none !important;
-                    }
+                    }              
+                  sonos-media-browser$ sonos-favorites-list$ sonos-media-row$: |
                     .title {            
                       font-size: 24px !important;
                     }  
