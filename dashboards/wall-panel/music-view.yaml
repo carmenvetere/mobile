@@ -47,7 +47,6 @@ cards:
                 controlsLargeIcons: true
                 hideControlRepeatButton: true
                 hideControlShuffleButton: true
-              heightPercentage: 145
               card_mod:
                 refresh_interval: 2
                 style:
@@ -61,7 +60,6 @@ cards:
                     }
                     ha-card {
                       background: var(--background-color-2) !important;
-                      width: 710px !important;
                     }  
                   sonos-player$ sonos-player-header$: |
                     .song {
