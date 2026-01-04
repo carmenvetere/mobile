@@ -1,3 +1,4 @@
+# lovelace_gen
 title: Lights
 theme: Bubble
 path: lights-view
@@ -34,7 +35,7 @@ cards:
               card_type: button
               button_type: name
               entity: light.gym_main_lights
-              name: Other
+              name: Other Lights
               icon: mdi:light-recessed
               show_state: false
               slider_live_update: false
