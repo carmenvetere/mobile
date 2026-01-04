@@ -20,6 +20,27 @@ cards:
     scrolling_effect: false
     modules:
     - {{ module_name }}  
+# Basement Working - Basement Wall Panel Day
+{% if dashboard == 'basement_wall_panel' %}
+  - type: custom:bubble-card
+    card_type: button
+    entity: switch.basement_cleaning_stateful_scene
+    name: Working
+    icon: mdi:desk-lamp
+    visibility:
+      - condition: state
+        entity: input_boolean.day_scene_buttons
+        state: "on"                  
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+{% endif %}
 # Basement Cleaning - Basement Wall Panel Day
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:bubble-card
