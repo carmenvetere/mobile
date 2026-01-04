@@ -31,14 +31,9 @@ cards:
           cards:
             - type: custom:sonos-card
               sections:
-                - media browser
                 - player
                 - volumes
               entityId: media_player.mud_room
-              mediaBrowser:
-                hideHeader: false
-                onlyFavorites: true
-                itemsPerRow: 1
               startSection: player
               player:
                 artworkAsBackground: false
@@ -62,7 +57,7 @@ cards:
                       background: var(--background-color-2) !important;
                       margin-left: 10px !important;
                       maring-right: 10px !important;
-                      max-width: 98% !important;
+                      max-width: 96% !important;
                     }  
                   sonos-player$ sonos-player-header$: |
                     .song {
@@ -98,6 +93,32 @@ cards:
                     .volume-slider {
                       margin-right: 25px !important;
                     }
+            - type: custom:sonos-card
+              sections:
+                - media browser
+              entityId: media_player.mud_room
+              mediaBrowser:
+                hideHeader: false
+                onlyFavorites: true
+                itemsPerRow: 1
+              startSection: media browser
+              card_mod:
+                refresh_interval: 2
+                style:
+                  .: |
+                    :host {
+                      --mdc-icon-color: var(--primary-text-color) !important;
+                      --secondary-text-color: var(--primary-text-color) !important;
+                      --paper-item-icon-color: var(--primary-text-color) !important;
+                      --mdc-theme-primary: var(--primary-text-color) !important;
+                      --mdc-icon-button-ink-color: var(--primary-text-color) !important;
+                    }
+                    ha-card {
+                      background: var(--background-color-2) !important;
+                      margin-left: 10px !important;
+                      maring-right: 10px !important;
+                      max-width: 96% !important;
+                    }  
                   sonos-media-browser$ sonos-favorites-list$ sonos-media-row$: |
                     .title {            
                       font-size: 24px !important;
