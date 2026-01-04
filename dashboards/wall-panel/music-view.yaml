@@ -113,6 +113,9 @@ cards:
                       max-width: 96% !important;
                     }  
                   sonos-media-browser$ sonos-favorites-list$ sonos-media-row$: |
+                    .artwork {
+                      display: none !important;
+                    }
                     .title {            
                       font-size: 24px !important;
                     }  
