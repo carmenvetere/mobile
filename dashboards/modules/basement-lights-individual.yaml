@@ -152,7 +152,7 @@
     - type: custom:bubble-card
       card_type: button
       button_type: slider
-      entity: light.gym_main_lights
+      entity: light.media_room_main_lights
       name: Gym Main Lights
       icon: mdi:light-recessed
       show_state: false
@@ -166,18 +166,18 @@
           data:
             brightness_pct: 25
           target:
-            entity_id: light.gym_main_lights
+            entity_id: light.media_room_main_lights
       tap_action:
         action: perform-action
         perform_action: light.toggle
         data:
           brightness_pct: 25
         target:
-          entity_id: light.gym_main_lights
+          entity_id: light.media_room_main_lights
       scrolling_effect: false
       use_accent_color: false
       sub_button:
-        - entity: light.gym_main_lights
+        - entity: light.media_room_main_lights
           show_state: true
           show_attribute: true
           show_icon: false
@@ -288,4 +288,3 @@
       modules:
         - {{ module_name }}
 {% endif %}
-    
