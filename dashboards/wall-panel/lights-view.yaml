@@ -30,10 +30,10 @@ cards:
         card:
           type: vertical-stack
           cards: 
-              - !include
-                - /config/dashboards/modules/basement-lights-individual.yaml
-                - module_name: wall_panel_lights_scenes
-                  dashboard: basement_wall_panel
+            - !include
+              - /config/dashboards/modules/basement-lights-individual.yaml
+              - module_name: wall_panel_lights_scenes
+                dashboard: basement_wall_panel
             - type: custom:bubble-card
               card_type: button
               button_type: name
