@@ -106,29 +106,89 @@ cards:
                 refresh_interval: 2
                 style:
                   .: |
-                    ha-card {
-                      background: var(--background-color-2) !important;
-                      margin-left: 10px !important;
-                      maring-right: 10px !important;
-                      max-width: 96% !important;
-                    }  
-                  sonos-media-browser$ sonos-favorites-list$: |
-                    .header {
-                      font-size: 24px !important;
-                      font-weight: bold !important;
-                      background-color: var(--background-color-2) !important;
+                    :host {
+                      --mdc-icon-color: var(--primary-text-color) !important;
+                      --secondary-text-color: var(--primary-text-color) !important;
+                      --paper-item-icon-color: var(--primary-text-color) !important;
+                      --mdc-theme-primary: var(--primary-text-color) !important;
+                      --mdc-icon-button-ink-color: var(--primary-text-color) !important;
                     }
-                    .artwork {
-                      display: none !important;
-                    }              
-                  sonos-media-browser$ sonos-favorites-list$ sonos-media-row$: |
-                    .title {            
-                      font-size: 24px !important;
+                    ha-card {
+                      background: var(--background-color-2) !important; 
                     }  
-                    .button {            
+                  sonos-player$ sonos-player-header$: |
+                    .song {
+                      color: var(--primary-text-color) !important;
+                      font-size: 18px !important;
+                      font-weight: bold !important;
+                    }
+                    .entity {
+                      color: var(--primary-text-color) !important;
+                      font-size: 14px !important;
+                      font-weight: 600 !important;
+                    }
+                    .artist-album {
+                      color: var(--primary-text-color) !important;
+                      font-size: 14px !important;
+                      font-weight: 500 !important;
+                    }   
+                  sonos-player$ sonos-player-header$ sonos-progress$: |
+                    .progress {
+                      color: var(--primary-text-color) !important;
+                      font-size: 16px !important;
+                      font-weight: bold !important;
+                      --paper-progress-active-color: var(--primary-text-color) !important;
+                    }
+                    .progress-bar {
+                      background-color: var(--primary-text-color) !important;
+                    }
+                  sonos-player$ sonos-player-controls$ sonos-volume$: |
+                    .volume-level {
+                      font-size: 14px !important;
+                      font-weight: bold !important;
+                    }
+                    .volume-slider {
+                      margin-right: 25px !important;
+                    }
+                  sonos-media-browser$: |
+                    .header {
+                      font-size: 22px !important;
+                      font-weight: bold !important;
+                      background-color: var(--background-color2) !important;
+                      }
+                  sonos-media-browser$ sonos-favorites-icons$: |
+                    .icons {
+                      padding-top: 10px !important;
+                    }
+                    .thumbnail {
+                      display: none !important;
+                      height: 0 !important;
+                      padding: 0 !important;
+                      margin: 0 !important;
+                    }
+                    .title {
+                      font-size: 20px !important;
+                      height: 100% !important;
+                      display: flex !important;
+                      align-items: center !important;
+                      justify-content: left !important;
+                      padding-left: 30px !important;
+                      background-color: var(--ha-card-background-2) !important;
+                    }
+                    .button {
                       border-radius: 15px !important;
                       background: var(--ha-card-background-2) !important;
-                      height: 50px !important;
-                      margin: 10px !important;      
+                      height: 60px !important;
+                      margin: 10px !important;
+                      max-width: 95% !important;
+                      display: flex !important;
+                      align-items: center !important;
+                      justify-content: flex-start !important;
+                    }
+                    ha-control-button {
+                      height: 75px !important;
+                      max-width: 95% !important;
+                      margin-left: 12px !important;
+                      background-image: none !important;
                     }
       nav: !include footer-menu.yaml
