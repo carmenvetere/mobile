@@ -16,10 +16,11 @@ cards:
       grid:
         - grid-template-areas: |
             "header"
-            "main"
+            "player"
+            "favorites"
             "nav"
         - grid-template-columns: 720px
-        - grid-template-rows: 100px 1050px 100px
+        - grid-template-rows: 100px 510px 510px 100px
         - align-items: start
         - column-gap: 2px
         - row-gap: 15px
