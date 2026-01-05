@@ -58,8 +58,9 @@ cards:
                       margin-left: 10px !important;
                       margin-right: 10px !important;
                       max-width: 96% !important;
+                      height: 525px !important;
                     }  
-                  sonos-player$ sonos-player-header$: |
+                  sonos-player$ sonos-player-hasdfeader$: |
                     .song {
                       color: var(--primary-text-color) !important;
                       font-size: 28px !important;
@@ -118,6 +119,7 @@ cards:
                       margin-left: 10px !important;
                       margin-right: 10px !important;
                       max-width: 96% !important;
+                      height: 525px !important;
                     }  
                   sonos-player$ sonos-player-header$: |
                     .song {
