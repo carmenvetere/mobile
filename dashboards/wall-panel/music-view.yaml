@@ -99,6 +99,8 @@ cards:
             - type: custom:sonos-card
               sections:
                 - media browser
+                - volumes
+                - grouping
               entityId: media_player.office
               mediaBrowser:
                 hideHeader: false
