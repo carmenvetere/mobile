@@ -11,9 +11,11 @@ cards:
         - padding-bottom: 5px
         - padding-left: 0px
         - padding-top: 0px
+        - margin-left: -4px
+        - margin-top: -4px        
         - width: 720px
         - height: 1280px
-        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) %);
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 70%);
       grid:
         - grid-template-areas: |
             "header"
@@ -26,9 +28,9 @@ cards:
         - row-gap: 15px
     custom_fields:
       header: !include header.yaml
-      main: 
-        # card: !include 
-        #     - /config/dashboards/modules/dynamic-scenes.yaml
-        #     - module_name: wall_panel_lights_scenes
-        #       dashboard: basement_wall_panel
+      # main: 
+      #   card: !include 
+      #       - /config/dashboards/modules/dynamic-scenes.yaml
+      #       - module_name: wall_panel_lights_scenes
+      #         dashboard: basement_wall_panel
       nav: !include footer-menu.yaml
