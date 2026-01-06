@@ -149,7 +149,11 @@ cards:
                       --mdc-icon-button-ink-color: var(--primary-text-color) !important;
                     }
                     ha-card {
-                      background: var(--background-color-2) !important; 
+                      background: var(--background-color-2) !important;
+                      margin-left: 10px !important;
+                      margin-right: 10px !important;
+                      max-width: 96% !important;
+                      max-height: 96% !important;
                     }  
                   sonos-player$ sonos-player-header$: |
                     .song {
