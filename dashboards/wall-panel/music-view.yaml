@@ -2,6 +2,12 @@ title: Music
 theme: Bubble
 path: music-view
 type: custom:grid-layout
+card_mod:
+  style:
+    grid-layout$: |
+      #root {
+        margin: 0 !important;
+      }
 cards:
   - type: custom:button-card
     styles:
