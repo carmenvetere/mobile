@@ -2,13 +2,8 @@ title: Music
 theme: Bubble
 path: music-view
 type: custom:grid-layout
-card_mod:
-  style:
-    hui-grid-view$: |
-      #root {
-        margin: 0 !important;
-        padding: 0 !important;
-      }
+style:
+  margin: 0
 cards:
   - type: custom:button-card
     styles:
