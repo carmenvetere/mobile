@@ -464,7 +464,7 @@
 - type: conditional
   conditions:
     - condition: numeric_state
-      entity: input_number.lower_floor_hvac_filter_hours
+      entity: input_number.lower_floors_hvac_filter_hours
       above: 2000
   card:
     type: custom:bubble-card
