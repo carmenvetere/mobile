@@ -35,7 +35,7 @@ cards:
               sections:
                 - player
                 - volumes
-              entityId: media_player.mud_room
+              entityId: media_player.office
               startSection: player
               player:
                 artworkAsBackground: false
@@ -156,7 +156,7 @@ cards:
                       margin-left: 10px !important;
                       margin-right: 10px !important;
                       max-width: 96% !important;
-                      max-height: 96% !important;
+                      max-height: 510px !important;
                     }  
                   sonos-player$ sonos-player-header$: |
                     .song {
