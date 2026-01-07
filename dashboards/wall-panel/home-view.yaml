@@ -28,9 +28,7 @@ cards:
         - row-gap: 15px
       custom_fields:
         main:
-          - display: flex
-          - justify-content: center
-          - width: 100%
+          - margin-left: 60px
     custom_fields:
       header: !include header.yaml
       main: 
