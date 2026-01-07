@@ -260,6 +260,7 @@
           attribute: brightness
       modules:
       - {{ module_name }}   
+# Other Lights - Basement Wall Panel Dashboard Link
 {% if dashboard == 'basement_wall_panel' %}
     - type: custom:bubble-card
       card_type: button
