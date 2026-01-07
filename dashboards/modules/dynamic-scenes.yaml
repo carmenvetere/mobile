@@ -72,6 +72,9 @@ cards:
       - condition: state
         entity: input_boolean.evening_scene_buttons
         state: "on"                  
+      - condition: state
+        entity: input_boolean.night_scene_buttons
+        state: "on"  
     button_action:
       tap_action:
         action: toggle
