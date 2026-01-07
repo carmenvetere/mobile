@@ -14,7 +14,7 @@ cards:
         - margin-top: -4px
         - width: 720px
         - height: 1280px
-        - background: black
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header"
@@ -44,7 +44,7 @@ cards:
                 controlsLargeIcons: true
                 hideControlRepeatButton: true
                 hideControlShuffleButton: true
-                hidePlayerArtwork: true
+                hideArtwork: true
               card_mod:
                 refresh_interval: 2
                 style:
@@ -57,7 +57,7 @@ cards:
                       --mdc-icon-button-ink-color: var(--primary-text-color) !important;
                     }
                     ha-card {
-                      background: var(--background-color-2) !important;
+                      background: '#626569' !important;
                       margin-left: 10px !important;
                       margin-right: 10px !important;
                       max-width: 96% !important;
@@ -155,7 +155,7 @@ cards:
                       --mdc-icon-button-ink-color: var(--primary-text-color) !important;
                     }
                     ha-card {
-                      background: var(--background-color-2) !important;
+                      background: '#626569' !important;
                       margin-left: 10px !important;
                       margin-right: 10px !important;
                       max-width: 96% !important;
