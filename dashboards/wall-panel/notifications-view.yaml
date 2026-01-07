@@ -29,29 +29,11 @@ cards:
       header: !include header.yaml
       main:
         card: 
-          type: custom:button-card
-          styles: 
-            card: 
-              - border-radius: 0px
-              - width: 720px
-              - height: 1050px
-              - padding-top: 0px
-              - background: var(--background-color)
-            grid:
-              - grid-template-areas: |
-                  "space"
-                  "notifications"
-              - grid-template-columns: auto
-              - grid-template-rows: 20px 1030px
-              - align-items: start
-          custom_fields: 
-            notifications:
-              card:
-                type: vertical-stack
-                cards: !include /config/dashboards/modules/notifications2.yaml
-                card_mod:
-                  style: |
-                    ha-card {
-                      padding-top: 20px !important;
-                    }
+          type: vertical-stack
+          cards: !include /config/dashboards/modules/notifications2.yaml
+          card_mod:
+            style: |
+              ha-card {
+                padding-top: 20px !important;
+              }
       nav: !include footer-menu.yaml
