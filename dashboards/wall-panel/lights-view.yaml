@@ -13,7 +13,7 @@ cards:
         - padding-top: 0px
         - width: 720px
         - height: 1280px
-        - background: var(--background-color)
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header"
@@ -24,6 +24,9 @@ cards:
         - align-items: start
         - column-gap: 2px
         - row-gap: 15px
+      custom_fields:
+        main:
+          - margin-left: 100px
     custom_fields:
       header: !include header.yaml
       main:
