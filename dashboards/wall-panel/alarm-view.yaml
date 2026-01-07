@@ -10,9 +10,11 @@ cards:
         - padding-bottom: 5px
         - padding-left: 0px
         - padding-top: 0px
+        - margin-left: -4px
+        - margin-top: -4px
         - width: 720px
         - height: 1280px
-        - background: var(--background-color)
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header"
@@ -37,7 +39,7 @@ cards:
               - width: 720px
               - height: 1050px
               - padding-top: 0px
-              - background: var(--background-color)
+              - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
             grid:
               - grid-template-areas: |
                   "space1"
@@ -115,7 +117,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
@@ -138,7 +140,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
@@ -161,7 +163,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
@@ -184,7 +186,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
@@ -207,7 +209,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
@@ -230,7 +232,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
@@ -253,7 +255,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
@@ -276,7 +278,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
@@ -299,7 +301,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
@@ -322,7 +324,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
@@ -345,7 +347,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         icon:
                           - color: '#D32F2F'
@@ -366,7 +368,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         icon:
                           - color: '#388E3C'
@@ -381,15 +383,15 @@ cards:
                 styles:
                   card:
                     - height: 125px
-                    - width: 720px
+                    - width: 690px
                     - padding-top: 0px
                     - margin-top: 0px
                     - border-radius: 12px
-                    - background-color: var(--ha-card-background-2)
+                    - background-color: #626569
                   grid:
                     - grid-template-areas: |
                         "disarm home away"
-                    - grid-template-columns: 240px 240px 240px
+                    - grid-template-columns: 230px 230px 230px
                     - grid-template-rows: 125px
                     - column-gap: 5px
                     - align-items: center
@@ -411,9 +413,9 @@ cards:
                       styles:
                         card:
                           - height: 125px
-                          - width: 240px
+                          - width: 230px
                           - border-radius: 12px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                         icon:
                           - width: 68px
                           - height: 68px
@@ -449,9 +451,9 @@ cards:
                       styles:
                         card:
                           - height: 125px
-                          - width: 240px
+                          - width: 230px
                           - border-radius: 12px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                         icon:
                           - width: 68px
                           - height: 68px
@@ -488,9 +490,9 @@ cards:
                       styles:
                         card:
                           - height: 125px
-                          - width: 240px
+                          - width: 230px
                           - border-radius: 12px
-                          - background-color: var(--ha-card-background-2)
+                          - background-color: #626569
                         icon:
                           - width: 68px
                           - height: 68px
