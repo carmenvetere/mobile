@@ -108,16 +108,18 @@ cards:
                       show_state: false
                       label: '1'
                       tap_action:
-                        action: call-service
-                        service: input_text.set_value
-                        service_data:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
                           entity_id: input_text.alarm_code_input
+                        data:
+                          value: "1"
                       styles:
                         card:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: #626569
+                          - background-color: '#626569'
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
