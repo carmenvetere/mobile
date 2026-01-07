@@ -133,10 +133,12 @@ cards:
                       show_state: false
                       label: '2'
                       tap_action:
-                        action: call-service
-                        service: input_text.set_value
-                        service_data:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
                           entity_id: input_text.alarm_code_input
+                        data:
+                          value: "2"
                       styles:
                         card:
                           - height: 160px
@@ -156,10 +158,12 @@ cards:
                       show_state: false
                       label: '3'
                       tap_action:
-                        action: call-service
-                        service: input_text.set_value
-                        service_data:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
                           entity_id: input_text.alarm_code_input
+                        data:
+                          value: "3"
                       styles:
                         card:
                           - height: 160px
@@ -179,10 +183,12 @@ cards:
                       show_state: false
                       label: '4'
                       tap_action:
-                        action: call-service
-                        service: input_text.set_value
-                        service_data:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
                           entity_id: input_text.alarm_code_input
+                        data:
+                          value: "4"
                       styles:
                         card:
                           - height: 160px
@@ -202,10 +208,12 @@ cards:
                       show_state: false
                       label: '5'
                       tap_action:
-                        action: call-service
-                        service: input_text.set_value
-                        service_data:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
                           entity_id: input_text.alarm_code_input
+                        data:
+                          value: "5"
                       styles:
                         card:
                           - height: 160px
@@ -225,10 +233,12 @@ cards:
                       show_state: false
                       label: '6'
                       tap_action:
-                        action: call-service
-                        service: input_text.set_value
-                        service_data:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
                           entity_id: input_text.alarm_code_input
+                        data:
+                          value: "6"
                       styles:
                         card:
                           - height: 160px
@@ -248,10 +258,12 @@ cards:
                       show_state: false
                       label: '7'
                       tap_action:
-                        action: call-service
-                        service: input_text.set_value
-                        service_data:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
                           entity_id: input_text.alarm_code_input
+                        data:
+                          value: "7"
                       styles:
                         card:
                           - height: 160px
@@ -271,10 +283,12 @@ cards:
                       show_state: false
                       label: '8'
                       tap_action:
-                        action: call-service
-                        service: input_text.set_value
-                        service_data:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
                           entity_id: input_text.alarm_code_input
+                        data:
+                          value: "8"
                       styles:
                         card:
                           - height: 160px
@@ -294,10 +308,12 @@ cards:
                       show_state: false
                       label: '9'
                       tap_action:
-                        action: call-service
-                        service: input_text.set_value
-                        service_data:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
                           entity_id: input_text.alarm_code_input
+                        data:
+                          value: "9"
                       styles:
                         card:
                           - height: 160px
@@ -317,10 +333,12 @@ cards:
                       show_state: false
                       label: '0'
                       tap_action:
-                        action: call-service
-                        service: input_text.set_value
-                        service_data:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
                           entity_id: input_text.alarm_code_input
+                        data:
+                          value: "0"
                       styles:
                         card:
                           - height: 160px
@@ -340,10 +358,12 @@ cards:
                       show_state: false
                       icon: mdi:backspace
                       tap_action:
-                        action: call-service
-                        service: input_text.set_value
-                        service_data:
-                          entity_id: input_text.alarm_code_input
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: "{{ states('input_text.alarm_code_input')[:-1] }}"
+                        data:
+                          value: "6"
                       styles:
                         card:
                           - height: 160px
@@ -362,9 +382,8 @@ cards:
                       show_state: false
                       icon: mdi:check
                       tap_action:
-                        action: call-service
-                        service: script.alarm_code_entry
-                        service_data:
+                        action: perform-action
+                        perform_action: script.alarm_code_entry
                       styles:
                         card:
                           - height: 160px
