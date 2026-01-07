@@ -1317,7 +1317,7 @@
 
 #Basement HVAC Filter Replacement
 - type: custom:button-card
-  entity: input_number.lower_floor_hvac_filter_hours
+  entity: input_number.lower_floors_hvac_filter_hours
   name: Replace the air filter in the basement HVAC.
   icon: mdi:air-filter
   layout: icon_name
@@ -1328,7 +1328,7 @@
       text: Did you just replace it and want to reset it?
   visibility:
     - condition: numeric_state
-      entity: input_number.lower_floor_hvac_filter_hours
+      entity: input_number.lower_floors_hvac_filter_hours
       above: 2000
   styles:
     card:
