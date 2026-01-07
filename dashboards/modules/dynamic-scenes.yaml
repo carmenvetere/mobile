@@ -69,8 +69,14 @@ cards:
     name: Welcome
     icon: mdi:human-greeting
     visibility:
-      - condition: template
-        value_template: "{{ is_state('input_boolean.evening_scene_buttons', 'on') or is_state('input_boolean.night_scene_buttons', 'on') }}"
+      - condition: or
+        conditions:
+          - condition: state
+            entity: input_boolean.night_scene_buttons
+            state: "on"
+          - condition: state
+            entity: input_boolean.evening_scene_buttons
+            state: "on"
     button_action:
       tap_action:
         action: toggle
