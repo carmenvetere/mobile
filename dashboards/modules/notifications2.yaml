@@ -1328,7 +1328,7 @@
       text: Did you just replace it and want to reset it?
   visibility:
     - condition: numeric_state
-      entity: input_number.upper_floor_hvac_filter_hours
+      entity: input_number.lower_floor_hvac_filter_hours
       above: 2000
   styles:
     card:
