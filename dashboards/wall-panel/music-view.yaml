@@ -43,7 +43,7 @@ cards:
             controlsLargeIcons: true
             hideControlRepeatButton: true
             hideControlShuffleButton: true
-          heightPercentage: 140
+          heightPercentage: 160
           card_mod:
             refresh_interval: 2
             style:
@@ -56,7 +56,7 @@ cards:
                   --mdc-icon-button-ink-color: var(--primary-text-color) !important;
                 }
                 ha-card {
-                  background: #626569 !important;
+                  background: rgba(98, 101, 105, 0.7) !important;
                   margin-left: 10px !important;
                   margin-right: 10px !important;
                   max-width: 96% !important;
