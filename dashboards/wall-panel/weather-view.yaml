@@ -21,7 +21,7 @@ cards:
             "main"
             "nav"
         - grid-template-columns: 720px
-        - grid-template-rows: 100px auto 100px
+        - grid-template-rows: 100px 1050 100px
         - align-items: start
         - column-gap: 2px
         - row-gap: 15px
@@ -114,7 +114,7 @@ cards:
                 font-weight: bold !important;
                 }
                 .bubble-line {
-                background: var(--primary-text-color);
+                background: transparent !important;
                 opacity: 0.1;
                 }
                 .card-content {
@@ -237,4 +237,9 @@ cards:
               show_marker: false
               show_playback: true
               show_zoom: true
+              card_mod:
+                style: |
+                  ha-card {
+                    max-height: 400px !important;
+                    }
       nav: !include footer-menu.yaml
