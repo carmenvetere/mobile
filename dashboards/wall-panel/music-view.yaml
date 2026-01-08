@@ -137,7 +137,9 @@ cards:
                 }
                 .volume-slider {
                   margin-right: 25px !important;
+                  --control-slider-thickness: 80px !important;
                 }
+
               sonos-media-browser$: |
                 .header {
                   font-size: 22px !important;
