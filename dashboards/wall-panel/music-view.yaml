@@ -96,7 +96,6 @@ cards:
                   --paper-item-icon-color: white !important;
                   --mdc-theme-primary: var(--primary-text-color) !important;
                   --mdc-icon-button-ink-color: white !important;
-                  --control-slider-thickness: 60px !important;
                 }
                 ha-card {
                   background: rgba(98, 101, 105, 0.7) !important;
@@ -139,10 +138,13 @@ cards:
                   margin-right: 25px !important;
                   --control-slider-thickness: 80px !important;
                 }
+                ha-control-slider {
+                  --control-slider-thickness: 60px !important;
+                }
 
               sonos-media-browser$: |
                 .header {
-                  font-size: 22px !important;
+                  font-size: 26px !important;
                   font-weight: bold !important;
                   background-color: #626569 !important;
                   }
