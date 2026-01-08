@@ -90,15 +90,15 @@ cards:
             refresh_interval: 2
             style:
               .: |
-                :host {
-                  --mdc-icon-color: white !important;
-                  --secondary-text-color: white !important;
-                  --paper-item-icon-color: white !important;
-                  --mdc-theme-primary: var(--primary-text-color) !important;
-                  --mdc-icon-button-ink-color: white !important;
-                }
+                # :host {
+                #   --mdc-icon-color: white !important;
+                #   --secondary-text-color: white !important;
+                #   --paper-item-icon-color: white !important;
+                #   --mdc-theme-primary: var(--primary-text-color) !important;
+                #   --mdc-icon-button-ink-color: white !important;
+                # }
                 ha-card {
-                  background: rgba(98, 101, 105, 0.7) !important;
+                  # background: rgba(98, 101, 105, 0.7) !important;
                   margin-left: 10px !important;
                   margin-right: 10px !important;
                   max-width: 96% !important;
