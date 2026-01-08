@@ -103,6 +103,10 @@ cards:
                   margin-right: 10px !important;
                   max-width: 96% !important;
                 }  
+              sonos-player$: |
+                .controls {
+                  margin: 0 7rem !important;
+                }
               sonos-player$ sonos-player-header$: |
                 .song {
                   color: var(--primary-text-color) !important;
