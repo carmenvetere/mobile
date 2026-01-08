@@ -10,9 +10,11 @@ cards:
         - padding-bottom: 5px
         - padding-left: 0px
         - padding-top: 0px
+        - margin-left: -4px
+        - margin-top: -4px
         - width: 720px
         - height: 1280px
-        - background: var(--background-color)
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header"
