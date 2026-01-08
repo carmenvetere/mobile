@@ -113,7 +113,7 @@ cards:
                         target:
                           entity_id: input_text.alarm_code_input
                         data:
-                          value: "{{ states('input_text.alarm_code_input') }}1"
+                          value: '[[[ return states["input_text.alarm_code_input"].state + "1" ]]]'
                       styles:
                         card:
                           - height: 160px
@@ -361,9 +361,9 @@ cards:
                         action: perform-action
                         perform_action: input_text.set_value
                         target:
-                          entity_id: "{{ states('input_text.alarm_code_input')[:-1] }}"
+                          entity_id: input_text.alarm_code_input
                         data:
-                          value: "6"
+                          value: '[[[ return states["input_text.alarm_code_input"].state.slice(0, -1) ]]]'
                       styles:
                         card:
                           - height: 160px
