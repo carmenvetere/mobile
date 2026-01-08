@@ -35,6 +35,7 @@ cards:
               sections:
                 - player
                 - volumes
+                - media browser
               entityId: media_player.office
               startSection: player
               player:
@@ -44,7 +45,8 @@ cards:
                 controlsLargeIcons: true
                 hideControlRepeatButton: true
                 hideControlShuffleButton: true
-                hideArtwork: true
+                hideArtwork: 
+              heightPercentage: 140
               card_mod:
                 refresh_interval: 2
                 style:
@@ -97,143 +99,115 @@ cards:
                     .volume-slider {
                       margin-right: 25px !important;
                     }
-            - type: custom:sonos-card
-              sections:
-                - media browser
-                - volumes
-                - grouping
-              entityId: media_player.office
-              mediaBrowser:
-                hideHeader: false
-                onlyFavorites: true
-                itemsPerRow: 1
-                favorites:
-                  exclude: null
-                  topItems: []
-                  hideTitleForThumbnailIcons: false
-                  sortByType: true
-                  hideSonosFavorites: true
-                  customFavorites:
-                    all:
-                      - title: MS NOW
-                        media_content_id: >-
-                          x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8200&sn=5
-                        media_content_type: siriusxm
-                      - title: 1 Hotel South Beach Poolside Playlist
-                        media_content_id: >-
-                          x-sonos-spotify:playlist:7z1cddbJ1L62FZpTVZBj2i?si=92255a8128cd450f?sid=12&flags=8232&sn=9
-                        media_content_type: playlist
-                      - title: Top 50 - United Kingdom
-                        media_content_id: >-
-                          x-sonos-spotify:playlist:1QM1qz09ZzsAPiXphF1l4S?si=29a715d35f304d07?sid=12&flags=8232&sn=9
-                        media_content_type: playlist
-                      - title: Top 50 - Australia
-                        media_content_id: >-
-                          x-sonos-spotify:playlist:37i9dQZEVXbJPcfkRz0wJ0?si=29a715d35f304d07?sid=12&flags=8232&sn=9
-                        media_content_type: playlist
-                      - title: Pool Mix - 2025
-                        media_content_id: >-
-                          x-sonos-spotify:playlist:2rA0wj0dnIyj1A5Uaoogaa?si=29a715d35f304d07?sid=12&flags=8232&sn=9
-                        media_content_type: playlist
-                      - title: Hotel Costes Radio
-                        media_content_id: >-
-                          x-sonos-spotify:playlist:37i9dQZF1E4mWbHqaowOUP?si=29a715d35f304d07?sid=12&flags=8232&sn=9
-                        media_content_type: playlist
-                      - title: Pop & Dance Mix
-                        media_content_id: >-
-                          x-sonosapi-hls-static:channel-xtra%3adc93524a-aa6d-b0c4-0d53-caabac97500c%3a15ebc9ab-82ba-0dd1-0276-d408113397df?sid=37&flags=32768&sn=5
-                        media_content_type: siriusxm
-              card_mod:
-                refresh_interval: 2
-                style:
-                  .: |
-                    :host {
-                      --mdc-icon-color: var(--primary-text-color) !important;
-                      --secondary-text-color: var(--primary-text-color) !important;
-                      --paper-item-icon-color: var(--primary-text-color) !important;
-                      --mdc-theme-primary: var(--primary-text-color) !important;
-                      --mdc-icon-button-ink-color: var(--primary-text-color) !important;
-                    }
-                    ha-card {
-                      background: '#626569' !important;
-                      margin-left: 10px !important;
-                      margin-right: 10px !important;
-                      max-width: 96% !important;
-                      max-height: 510px !important;
-                    }  
-                  sonos-player$ sonos-player-header$: |
-                    .song {
-                      color: var(--primary-text-color) !important;
-                      font-size: 18px !important;
-                      font-weight: bold !important;
-                    }
-                    .entity {
-                      color: var(--primary-text-color) !important;
-                      font-size: 14px !important;
-                      font-weight: 600 !important;
-                    }
-                    .artist-album {
-                      color: var(--primary-text-color) !important;
-                      font-size: 14px !important;
-                      font-weight: 500 !important;
-                    }   
-                  sonos-player$ sonos-player-header$ sonos-progress$: |
-                    .progress {
-                      color: var(--primary-text-color) !important;
-                      font-size: 16px !important;
-                      font-weight: bold !important;
-                      --paper-progress-active-color: var(--primary-text-color) !important;
-                    }
-                    .progress-bar {
-                      background-color: var(--primary-text-color) !important;
-                    }
-                  sonos-player$ sonos-player-controls$ sonos-volume$: |
-                    .volume-level {
-                      font-size: 14px !important;
-                      font-weight: bold !important;
-                    }
-                    .volume-slider {
-                      margin-right: 25px !important;
-                    }
-                  sonos-media-browser$: |
-                    .header {
-                      font-size: 22px !important;
-                      font-weight: bold !important;
-                      background-color: var(--background-color2) !important;
-                      }
-                  sonos-media-browser$ sonos-favorites-icons$: |
-                    .icons {
-                      padding-top: 10px !important;
-                    }
-                    .thumbnail {
-                      display: none !important;
-                      height: 0 !important;
-                      padding: 0 !important;
-                      margin: 0 !important;
-                    }
-                    .title {
-                      font-size: 20px !important;
-                      height: 100% !important;
-                      display: flex !important;
-                      align-items: center !important;
-                      justify-content: left !important;
-                      padding-left: 30px !important;
-                      background-color: var(--ha-card-background-2) !important;
-                    }
-                    .button {
-                      border-radius: 15px !important;
-                      background: var(--ha-card-background-2) !important;
-                      height: 60px !important;
-                      margin: 10px !important;
-                      max-width: 95% !important;
-                      display: flex !important;
-                      align-items: center !important;
-                      justify-content: flex-start !important;
-                    }
-                    ha-control-button {
-                      height: 75px !important;
-                      max-width: 95% !important;
-                      margin-left: 12px !important;
-                      background-image: none !important;
-                    }
+            # - type: custom:sonos-card
+            #   sections:
+            #     - media browser
+            #     - volumes
+            #     - grouping
+            #   entityId: media_player.office
+            #   mediaBrowser:
+            #     hideHeader: false
+            #     onlyFavorites: true
+            #     itemsPerRow: 1
+            #     favorites:
+            #       exclude: null
+            #       topItems: []
+            #       hideTitleForThumbnailIcons: false
+            #       sortByType: true
+            #       hideSonosFavorites: true
+            #       customFavorites:
+            #         all: !include /config/dashboards/modules/custom_favorites.yaml
+            #   card_mod:
+            #     refresh_interval: 2
+            #     style:
+            #       .: |
+            #         :host {
+            #           --mdc-icon-color: var(--primary-text-color) !important;
+            #           --secondary-text-color: var(--primary-text-color) !important;
+            #           --paper-item-icon-color: var(--primary-text-color) !important;
+            #           --mdc-theme-primary: var(--primary-text-color) !important;
+            #           --mdc-icon-button-ink-color: var(--primary-text-color) !important;
+            #         }
+            #         ha-card {
+            #           background: '#626569' !important;
+            #           margin-left: 10px !important;
+            #           margin-right: 10px !important;
+            #           max-width: 96% !important;
+            #           max-height: 510px !important;
+            #         }  
+            #       sonos-player$ sonos-player-header$: |
+            #         .song {
+            #           color: var(--primary-text-color) !important;
+            #           font-size: 18px !important;
+            #           font-weight: bold !important;
+            #         }
+            #         .entity {
+            #           color: var(--primary-text-color) !important;
+            #           font-size: 14px !important;
+            #           font-weight: 600 !important;
+            #         }
+            #         .artist-album {
+            #           color: var(--primary-text-color) !important;
+            #           font-size: 14px !important;
+            #           font-weight: 500 !important;
+            #         }   
+            #       sonos-player$ sonos-player-header$ sonos-progress$: |
+            #         .progress {
+            #           color: var(--primary-text-color) !important;
+            #           font-size: 16px !important;
+            #           font-weight: bold !important;
+            #           --paper-progress-active-color: var(--primary-text-color) !important;
+            #         }
+            #         .progress-bar {
+            #           background-color: var(--primary-text-color) !important;
+            #         }
+            #       sonos-player$ sonos-player-controls$ sonos-volume$: |
+            #         .volume-level {
+            #           font-size: 14px !important;
+            #           font-weight: bold !important;
+            #         }
+            #         .volume-slider {
+            #           margin-right: 25px !important;
+            #         }
+            #       sonos-media-browser$: |
+            #         .header {
+            #           font-size: 22px !important;
+            #           font-weight: bold !important;
+            #           background-color: var(--background-color2) !important;
+            #           }
+            #       sonos-media-browser$ sonos-favorites-icons$: |
+            #         .icons {
+            #           padding-top: 10px !important;
+            #         }
+            #         .thumbnail {
+            #           display: none !important;
+            #           height: 0 !important;
+            #           padding: 0 !important;
+            #           margin: 0 !important;
+            #         }
+            #         .title {
+            #           font-size: 20px !important;
+            #           height: 100% !important;
+            #           display: flex !important;
+            #           align-items: center !important;
+            #           justify-content: left !important;
+            #           padding-left: 30px !important;
+            #           background-color: var(--ha-card-background-2) !important;
+            #         }
+            #         .button {
+            #           border-radius: 15px !important;
+            #           background: var(--ha-card-background-2) !important;
+            #           height: 60px !important;
+            #           margin: 10px !important;
+            #           max-width: 95% !important;
+            #           display: flex !important;
+            #           align-items: center !important;
+            #           justify-content: flex-start !important;
+            #         }
+            #         ha-control-button {
+            #           height: 75px !important;
+            #           max-width: 95% !important;
+            #           margin-left: 12px !important;
+            #           background-image: none !important;
+            #         }
       nav: !include footer-menu.yaml
