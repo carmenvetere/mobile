@@ -113,7 +113,7 @@ cards:
                         target:
                           entity_id: input_text.alarm_code_input
                         data:
-                          value: "1"
+                          value: "{{ states('input_text.alarm_code_input') }}1"
                       styles:
                         card:
                           - height: 160px
@@ -138,7 +138,7 @@ cards:
                         target:
                           entity_id: input_text.alarm_code_input
                         data:
-                          value: "2"
+                          value: "{{ states('input_text.alarm_code_input') }}2"
                       styles:
                         card:
                           - height: 160px
@@ -163,7 +163,7 @@ cards:
                         target:
                           entity_id: input_text.alarm_code_input
                         data:
-                          value: "3"
+                          value: "{{ states('input_text.alarm_code_input') }}3"
                       styles:
                         card:
                           - height: 160px
@@ -188,7 +188,7 @@ cards:
                         target:
                           entity_id: input_text.alarm_code_input
                         data:
-                          value: "4"
+                          value: "{{ states('input_text.alarm_code_input') }}4"
                       styles:
                         card:
                           - height: 160px
@@ -213,7 +213,7 @@ cards:
                         target:
                           entity_id: input_text.alarm_code_input
                         data:
-                          value: "5"
+                          value: "{{ states('input_text.alarm_code_input') }}5"
                       styles:
                         card:
                           - height: 160px
@@ -238,7 +238,7 @@ cards:
                         target:
                           entity_id: input_text.alarm_code_input
                         data:
-                          value: "6"
+                          value: "{{ states('input_text.alarm_code_input') }}6"
                       styles:
                         card:
                           - height: 160px
@@ -263,7 +263,7 @@ cards:
                         target:
                           entity_id: input_text.alarm_code_input
                         data:
-                          value: "7"
+                          value: "{{ states('input_text.alarm_code_input') }}7"
                       styles:
                         card:
                           - height: 160px
@@ -288,7 +288,7 @@ cards:
                         target:
                           entity_id: input_text.alarm_code_input
                         data:
-                          value: "8"
+                          value: "{{ states('input_text.alarm_code_input') }}8"
                       styles:
                         card:
                           - height: 160px
@@ -313,7 +313,7 @@ cards:
                         target:
                           entity_id: input_text.alarm_code_input
                         data:
-                          value: "9"
+                          value: "{{ states('input_text.alarm_code_input') }}9"
                       styles:
                         card:
                           - height: 160px
@@ -338,7 +338,7 @@ cards:
                         target:
                           entity_id: input_text.alarm_code_input
                         data:
-                          value: "0"
+                          value: "{{ states('input_text.alarm_code_input') }}0"
                       styles:
                         card:
                           - height: 160px
