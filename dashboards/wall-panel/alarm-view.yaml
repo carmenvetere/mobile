@@ -383,7 +383,7 @@ cards:
                       icon: mdi:check
                       tap_action:
                         action: perform-action
-                        perform_action: script.alarm_code_entry
+                        perform_action: script.alarm_keypad_disarm
                       styles:
                         card:
                           - height: 160px
