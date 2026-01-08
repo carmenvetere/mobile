@@ -38,7 +38,7 @@ cards:
                   above: 0
               card:
                 type: custom:expander-card
-                expanded: true
+                expanded: false
                 title-card-clickable: true
                 card_mod:
                   style: |
@@ -241,6 +241,6 @@ cards:
               card_mod:
                 style: |
                   ha-card {
-                    max-height: 310px !important;
+                    max-height: 300px !important;
                   }
       nav: !include footer-menu.yaml
