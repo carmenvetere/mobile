@@ -136,9 +136,6 @@ cards:
                 .volume-slider {
                   --control-slider-thickness: 80px !important;
                 }
-#                ha-control-slider {
-#                  --control-slider-thickness: 60px !important;
-#                }
               sonos-media-browser$: |
                 .header {
                   font-size: 26px !important;
@@ -166,7 +163,7 @@ cards:
                 }
                 .button {
                   border-radius: 15px !important;
-                  background: var(--background-color-2) !important;
+                  background-color: var(--background-color-2) !important;
                   height: 80px !important;
                   margin: 10px !important;
                   max-width: 95% !important;
