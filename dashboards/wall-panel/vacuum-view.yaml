@@ -205,55 +205,30 @@ cards:
                   action: more-info
             suction:
               card:
-                type: custom:button-card
-                entity: vacuum.roborock_s8
-                show_state: false
-                show_name: true
-                show_icon: false
+                type: custom:bubble-card
+                card_type: select
+                show_state: true
+                sub_button:
+                  main: []
+                  bottom: []
+                entity: select.roborock_s8_mop_mode
+                modules:
+                  - wall_panel_vacuum_select
                 name: Suction
-                label: |
-                  [[[
-                    return states['vacuum.roborock_s8'].attributes.fan_speed || 'Unknown';
-                  ]]]
-                show_label: true
-                styles:
-                  card:
-                    - background-color: "#C0C4C5"
-                    - border-radius: 20px
-                    - height: 70px
-                    - width: 320px
-                  name:
-                    - font-size: 20px
-                    - font-weight: bold
-                    - color: "#656469"
-                  label:
-                    - font-size: 16px
-                    - color: "#656469"
-                tap_action:
-                  action: more-info
+                scrolling_effect: false
             mop:
               card:
-                type: custom:button-card
-                entity: select.roborock_s8_mop_intensity
+                type: custom:bubble-card
+                card_type: select
                 show_state: true
-                show_name: true
-                show_icon: false
-                name: Mop
-                styles:
-                  card:
-                    - background-color: "#C0C4C5"
-                    - border-radius: 20px
-                    - height: 70px
-                    - width: 320px
-                  name:
-                    - font-size: 20px
-                    - font-weight: bold
-                    - color: "#656469"
-                  state:
-                    - font-size: 16px
-                    - color: "#656469"
-                tap_action:
-                  action: more-info
+                sub_button:
+                  main: []
+                  bottom: []
+                entity: select.roborock_s8_mop_mode
+                modules:
+                  - wall_panel_vacuum_select
+                name: Mop Mode
+                scrolling_effect: false
             all:
               card:
                 type: custom:button-card
