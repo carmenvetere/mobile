@@ -34,7 +34,7 @@ cards:
             - player
             - volumes
             - media browser
-          entityId: media_player.office
+          entityId: media_player.mud_room
           startSection: player
           player:
             artworkAsBackground: false
@@ -86,6 +86,31 @@ cards:
           heightPercentage: 185
           footerHeight: 8
           sectionButtonIconSize: 6
+          groups:
+            title: Speaker Groups
+            backgroundColor: "#C0C4C5"
+            compact: false
+            speakersFontSize: 1.5
+            titleFontSize: 1
+          grouping:
+            skipApplyButton: true
+          predefinedGroups:
+            - name: Outside
+              media: ""
+              entities:
+                - player: media_player.pool
+                  volume: 20
+                - player: media_player.deck
+                  volume: 30
+            - name: All Basement
+              media: ""
+              entities:
+                - player: media_player.gym
+                  volume: 10
+                - player: media_player.mud_room
+                  volume: 10
+                - player: media_player.media_room
+                  volume: 10
           card_mod:
             refresh_interval: 2
             style:
