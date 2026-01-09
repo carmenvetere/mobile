@@ -241,6 +241,6 @@ cards:
               card_mod:
                 style: |
                   ha-card {
-                    max-height: 300px !important;
+                    max-height: {{ '300px' if states('sensor.nws_alerts_alerts') | int > 0 else '400px' }} !important;
                   }
       nav: !include footer-menu.yaml
