@@ -493,6 +493,15 @@ cards:
                               - color: white
                             icon:
                               - color: white
+                        - value: 'armed_night'
+                          styles:
+                            card:
+                              - background-color: 'orange'
+                              - opacity: 0.5
+                            name:
+                              - color: white
+                            icon:
+                              - color: white
                   away:
                     card:
                       type: custom:button-card
@@ -524,6 +533,15 @@ cards:
                           - color: var(--primary-text-color)
                       state:                
                         - value: 'armed_away'
+                          styles:
+                            card:
+                              - background-color: 'red'
+                              - opacity: 0.5
+                            name:
+                              - color: white
+                            icon:
+                              - color: white
+                        - value: 'armed_night'
                           styles:
                             card:
                               - background-color: 'red'
