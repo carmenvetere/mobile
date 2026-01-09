@@ -29,4 +29,379 @@ cards:
       header: !include header.yaml
       main:
         card:
+          type: custom:button-card
+          styles:
+            card:
+              - width: 700px
+              - height: 1050px
+              - background-color: "#656469"
+              - border-radius: 30px
+              - margin-left: 10px
+              - padding: 15px
+            grid:
+              - grid-template-areas: |
+                  "title title title title title title"
+                  "map map map map map map"
+                  "start start battery battery progress progress"
+                  "suction suction suction mop mop mop"
+                  "all all all gym gym gym"
+                  "hallway hallway hallway media media media"
+                  "mudroom mudroom mudroom bathroom bathroom bathroom"
+              - grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
+              - grid-template-rows: 60px 300px 80px 80px 80px 80px 80px
+              - column-gap: 10px
+              - row-gap: 15px
+              - align-items: center
+              - justify-items: center
+              - padding: 15px
+          custom_fields:
+            title:
+              card:
+                type: custom:button-card
+                show_state: false
+                show_name: true
+                show_icon: false
+                name: Roborock S8
+                styles:
+                  card:
+                    - background-color: transparent
+                    - height: 50px
+                  name:
+                    - font-size: 32px
+                    - font-weight: bold
+                    - color: "#C43C2C"
+            map:
+              card:
+                type: picture-entity
+                entity: image.roborock_s8_basement
+                show_state: false
+                show_name: false
+                camera_view: auto
+                card_mod:
+                  style: |
+                    ha-card {
+                      background-color: #C0C4C5 !important;
+                      border-radius: 25px !important;
+                      width: 640px !important;
+                      height: 280px !important;
+                      overflow: hidden !important;
+                    }
+                    img {
+                      object-fit: contain !important;
+                    }
+            start:
+              card:
+                type: vertical-stack
+                cards:
+                  - type: conditional
+                    conditions:
+                      - entity: vacuum.roborock_s8
+                        state_not: cleaning
+                    card:
+                      type: custom:button-card
+                      entity: vacuum.roborock_s8
+                      show_state: false
+                      show_name: true
+                      show_icon: true
+                      name: Start
+                      icon: mdi:play
+                      size: 50%
+                      tap_action:
+                        action: call-service
+                        service: vacuum.start
+                        service_data:
+                          entity_id: vacuum.roborock_s8
+                      styles:
+                        card:
+                          - background-color: "#C0C4C5"
+                          - border-radius: 20px
+                          - height: 70px
+                          - width: 200px
+                        name:
+                          - font-size: 20px
+                          - font-weight: bold
+                          - color: "#656469"
+                        icon:
+                          - color: "#656469"
+                          - width: 40px
+                          - height: 40px
+                  - type: conditional
+                    conditions:
+                      - entity: vacuum.roborock_s8
+                        state: cleaning
+                    card:
+                      type: custom:button-card
+                      entity: vacuum.roborock_s8
+                      show_state: false
+                      show_name: true
+                      show_icon: true
+                      name: Start
+                      icon: mdi:pause
+                      size: 50%
+                      tap_action:
+                        action: call-service
+                        service: vacuum.pause
+                        service_data:
+                          entity_id: vacuum.roborock_s8
+                      styles:
+                        card:
+                          - background-color: "#E6E2DC"
+                          - border-radius: 20px
+                          - height: 70px
+                          - width: 200px
+                        name:
+                          - font-size: 20px
+                          - font-weight: bold
+                          - color: "#656469"
+                        icon:
+                          - color: "#656469"
+                          - width: 40px
+                          - height: 40px
+            battery:
+              card:
+                type: custom:button-card
+                entity: sensor.roborock_s8_battery
+                show_state: true
+                show_name: true
+                show_icon: false
+                name: Battery
+                styles:
+                  card:
+                    - background-color: "#C0C4C5"
+                    - border-radius: 20px
+                    - height: 70px
+                    - width: 200px
+                  name:
+                    - font-size: 20px
+                    - font-weight: bold
+                    - color: "#656469"
+                  state:
+                    - font-size: 18px
+                    - color: "#656469"
+                tap_action:
+                  action: more-info
+            progress:
+              card:
+                type: custom:button-card
+                entity: sensor.roborock_s8_cleaning_progress
+                show_state: true
+                show_name: true
+                show_icon: false
+                name: Progress
+                styles:
+                  card:
+                    - background-color: "#C0C4C5"
+                    - border-radius: 20px
+                    - height: 70px
+                    - width: 200px
+                  name:
+                    - font-size: 20px
+                    - font-weight: bold
+                    - color: "#656469"
+                  state:
+                    - font-size: 18px
+                    - color: "#656469"
+                tap_action:
+                  action: more-info
+            suction:
+              card:
+                type: custom:button-card
+                entity: vacuum.roborock_s8
+                show_state: false
+                show_name: true
+                show_icon: false
+                name: Suction
+                label: |
+                  [[[
+                    return states['vacuum.roborock_s8'].attributes.fan_speed || 'Unknown';
+                  ]]]
+                show_label: true
+                styles:
+                  card:
+                    - background-color: "#C0C4C5"
+                    - border-radius: 20px
+                    - height: 70px
+                    - width: 320px
+                  name:
+                    - font-size: 20px
+                    - font-weight: bold
+                    - color: "#656469"
+                  label:
+                    - font-size: 16px
+                    - color: "#656469"
+                tap_action:
+                  action: more-info
+            mop:
+              card:
+                type: custom:button-card
+                entity: select.roborock_s8_mop_intensity
+                show_state: true
+                show_name: true
+                show_icon: false
+                name: Mop
+                styles:
+                  card:
+                    - background-color: "#C0C4C5"
+                    - border-radius: 20px
+                    - height: 70px
+                    - width: 320px
+                  name:
+                    - font-size: 20px
+                    - font-weight: bold
+                    - color: "#656469"
+                  state:
+                    - font-size: 16px
+                    - color: "#656469"
+                tap_action:
+                  action: more-info
+            all:
+              card:
+                type: custom:button-card
+                entity: input_boolean.basement_vacuum_all
+                show_state: false
+                show_name: true
+                show_icon: false
+                name: All
+                tap_action:
+                  action: toggle
+                styles:
+                  card:
+                    - background-color: "#C0C4C5"
+                    - border-radius: 20px
+                    - height: 70px
+                    - width: 320px
+                  name:
+                    - font-size: 22px
+                    - font-weight: bold
+                    - color: "#656469"
+                state:
+                  - value: "on"
+                    styles:
+                      card:
+                        - background-color: "#E6E2DC"
+            gym:
+              card:
+                type: custom:button-card
+                entity: input_boolean.vacuum_gym
+                show_state: false
+                show_name: true
+                show_icon: false
+                name: Gym
+                tap_action:
+                  action: toggle
+                styles:
+                  card:
+                    - background-color: "#C0C4C5"
+                    - border-radius: 20px
+                    - height: 70px
+                    - width: 320px
+                  name:
+                    - font-size: 22px
+                    - font-weight: bold
+                    - color: "#656469"
+                state:
+                  - value: "on"
+                    styles:
+                      card:
+                        - background-color: "#E6E2DC"
+            hallway:
+              card:
+                type: custom:button-card
+                entity: input_boolean.vacuum_hallway
+                show_state: false
+                show_name: true
+                show_icon: false
+                name: Hallway
+                tap_action:
+                  action: toggle
+                styles:
+                  card:
+                    - background-color: "#C0C4C5"
+                    - border-radius: 20px
+                    - height: 70px
+                    - width: 320px
+                  name:
+                    - font-size: 22px
+                    - font-weight: bold
+                    - color: "#656469"
+                state:
+                  - value: "on"
+                    styles:
+                      card:
+                        - background-color: "#E6E2DC"
+            media:
+              card:
+                type: custom:button-card
+                entity: input_boolean.vacuum_media_room
+                show_state: false
+                show_name: true
+                show_icon: false
+                name: Media Room
+                tap_action:
+                  action: toggle
+                styles:
+                  card:
+                    - background-color: "#C0C4C5"
+                    - border-radius: 20px
+                    - height: 70px
+                    - width: 320px
+                  name:
+                    - font-size: 22px
+                    - font-weight: bold
+                    - color: "#656469"
+                state:
+                  - value: "on"
+                    styles:
+                      card:
+                        - background-color: "#E6E2DC"
+            mudroom:
+              card:
+                type: custom:button-card
+                entity: input_boolean.vacuum_mud_room
+                show_state: false
+                show_name: true
+                show_icon: false
+                name: Mud Room
+                tap_action:
+                  action: toggle
+                styles:
+                  card:
+                    - background-color: "#C0C4C5"
+                    - border-radius: 20px
+                    - height: 70px
+                    - width: 320px
+                  name:
+                    - font-size: 22px
+                    - font-weight: bold
+                    - color: "#656469"
+                state:
+                  - value: "on"
+                    styles:
+                      card:
+                        - background-color: "#E6E2DC"
+            bathroom:
+              card:
+                type: custom:button-card
+                entity: input_boolean.vacuum_basement_bath
+                show_state: false
+                show_name: true
+                show_icon: false
+                name: Bathroom
+                tap_action:
+                  action: toggle
+                styles:
+                  card:
+                    - background-color: "#C0C4C5"
+                    - border-radius: 20px
+                    - height: 70px
+                    - width: 320px
+                  name:
+                    - font-size: 22px
+                    - font-weight: bold
+                    - color: "#656469"
+                state:
+                  - value: "on"
+                    styles:
+                      card:
+                        - background-color: "#E6E2DC"
       nav: !include footer-menu.yaml
