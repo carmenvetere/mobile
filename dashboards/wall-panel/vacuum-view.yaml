@@ -1,6 +1,6 @@
-title: Music
+title: Vacuum
 theme: Wall Panel
-path: music-view
+path: vacuum-view
 type: custom:grid-layout
 cards:
   - type: custom:button-card
@@ -29,26 +29,4 @@ cards:
       header: !include header.yaml
       main:
         card:
-         type: custom:button-card
-         styles:
-          card:
-            - width: 700px
-            - height: 1050px
-            - background: var(--background-color)
-          grid: 
-            - grid-template-areas: |
-                "header header header"
-                "map map map"
-                "start battery progress"
-                "suction mop"
-                "all mudroom"
-                "gym hallway"
-                "media bathroom"
-            - grid-template-columns: 720px
-            - grid-template-rows: 100px 1050px 100px
-            - align-items: start
-            - column-gap: 2px
-            - row-gap: 15px
-
-
       nav: !include footer-menu.yaml
