@@ -1,0 +1,54 @@
+title: Music
+theme: Wall Panel
+path: music-view
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 0px
+        - padding-bottom: 5px
+        - padding-left: 0px
+        - padding-top: 0px
+        - margin-left: -4px
+        - margin-top: -4px
+        - width: 720px
+        - height: 1280px
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
+      grid:
+        - grid-template-areas: |
+            "header"
+            "main"
+            "nav"
+        - grid-template-columns: 720px
+        - grid-template-rows: 100px 1050px 100px
+        - align-items: start
+        - column-gap: 2px
+        - row-gap: 15px
+    custom_fields:
+      header: !include header.yaml
+      main:
+        card:
+         type: custom:button-card
+         styles:
+          card:
+            - width: 700px
+            - height: 1050px
+            - background: var(--background-color)
+          grid: 
+            - grid-template-areas: |
+                "header header header"
+                "map map map"
+                "start battery progress"
+                "suction mop"
+                "all mudroom"
+                "gym hallway"
+                "media bathroom"
+            - grid-template-columns: 720px
+            - grid-template-rows: 100px 1050px 100px
+            - align-items: start
+            - column-gap: 2px
+            - row-gap: 15px
+
+
+      nav: !include footer-menu.yaml

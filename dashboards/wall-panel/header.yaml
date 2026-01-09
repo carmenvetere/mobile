@@ -60,8 +60,9 @@ card:
             if (state === 'armed_away') return 'Armed';
             if (state === 'armed_home') return 'Armed';
             if (state === 'armed_vacation') return 'Armed';
+            if (state === 'armed_night') return 'Armed';
             if (state === 'disarmed') return 'Disarmed';
-            if (state === 'pending') return 'Pending';
+            if (state === 'pending') return 'Enter Code';
             if (state === 'arming') return 'Arming';
             if (state === 'triggered') return 'ALARM!';
             return state.charAt(0).toUpperCase() + state.slice(1);
