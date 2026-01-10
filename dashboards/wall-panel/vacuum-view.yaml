@@ -71,22 +71,10 @@ cards:
                     - font-size: 32px
                     - font-weight: bold
                     - color: "#C43C2C"
-            vacuum_status:
-              card:
-                type: custom:button-card
-                entity: vacuum.roborock_s8
-                show_state: true
-                show_name: false
-                show_icon: false
-                styles:
-                  card:
-                    - background-color: transparent
-                    - height: 30px
-                  state:
-                    - font-size: 24px
-                    - font-weight: bold
-                    - color: white
-                    - text-transform: capitalize
+            vacuum_status: |
+              [[[
+                return `<span style="font-size: 24px; font-weight: bold; color: white; text-transform: capitalize;">${states['vacuum.roborock_s8'].state}</span>`;
+              ]]]
             map:
               card:
                 type: picture-entity
