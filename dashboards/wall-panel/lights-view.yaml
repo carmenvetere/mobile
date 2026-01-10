@@ -36,5 +36,5 @@ cards:
       main:
         card:
           type: vertical-stack
-          cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: wall_panel_lights_scenes, dashboard: basement_wall_panel}]
+          cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: wall_panel_lights, dashboard: basement_wall_panel}]
       nav: !include footer-menu.yaml
