@@ -25,12 +25,6 @@ cards:
         - align-items: start
         - column-gap: 2px
         - row-gap: 15px
-      custom_fields:
-        vacuum_status:
-          - font-size: 24px
-          - font-weight: bold
-          - text-transform: capitalize
-          - color: white
     custom_fields:
       header: !include header.yaml
       main:
@@ -79,7 +73,7 @@ cards:
                     - color: white
             status: |
                 [[[
-                  return `<span style="...">${states['vacuum.roborock_s8'].state}</span>`;
+                  return `<span style="font-size: 24px; font-weight: bold; color: white; text-transform: capitalize;">${states['vacuum.roborock_s8'].state}</span>`;
                 ]]]
             map:
               card:
