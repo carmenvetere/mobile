@@ -131,10 +131,11 @@ cards:
                     card:
                       type: custom:button-card
                       entity: vacuum.roborock_s8
+                      layout: name_icon
                       show_state: false
                       show_name: true
                       show_icon: true
-                      name: Start
+                      name: Pause
                       icon: mdi:pause
                       size: 50%
                       tap_action:
