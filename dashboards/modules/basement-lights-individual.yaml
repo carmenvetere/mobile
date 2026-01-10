@@ -7,7 +7,14 @@
       name: Media Room Main Lights      
       button_type: switch
       sub_button:
-        main: []
+        main:
+          - entity: light.gym_main_lights
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
         bottom:
           - entity: light.gym_main_lights
             sub_button_type: slider
