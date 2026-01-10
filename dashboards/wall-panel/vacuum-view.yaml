@@ -80,7 +80,7 @@ cards:
                 card_mod:
                   style: |
                     ha-card {
-                      background-color: #C0C4C5 !important;
+                      background-color: transparent !important;
                       border-radius: 25px !important;
                       width: 640px !important;
                       height: 450px !important;
@@ -336,7 +336,8 @@ cards:
                   - value: "on"
                     styles:
                       card:
-                        - background-color: "#E6E2DC"
+#                        - background-color: "#E6E2DC"
+                        - box-shadow: box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
             mudroom:
               card:
                 type: custom:button-card
