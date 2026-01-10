@@ -236,7 +236,7 @@ cards:
             all:
               card:
                 type: custom:button-card
-                entity: input_boolean.basement_vacuum_all
+                entity: input_boolean.vacuum_basement_all
                 show_state: false
                 show_name: true
                 show_icon: false
@@ -288,7 +288,7 @@ cards:
             hallway:
               card:
                 type: custom:button-card
-                entity: input_boolean.vacuum_hallway
+                entity: input_boolean.vacuum_basement_hallway
                 show_state: false
                 show_name: true
                 show_icon: false
@@ -340,7 +340,7 @@ cards:
             mudroom:
               card:
                 type: custom:button-card
-                entity: input_boolean.vacuum_mud_room
+                entity: input_boolean.vacuum_mudroom
                 show_state: false
                 show_name: true
                 show_icon: false
