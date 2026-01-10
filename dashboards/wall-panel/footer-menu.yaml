@@ -157,7 +157,7 @@ card:
     vacuum:
       card:
         type: custom:button-card
-        icon: mdi:robot-vacuum
+        icon: mdi:vacuum
         show_icon: true
         show_label: false
         show_name: false
@@ -175,6 +175,9 @@ card:
                 ]]]
             - height: 64px
             - width: 64px
+        tap_action:
+          action: navigate
+          navigation_path: /mudroom-wall-panel-dash/vacuum-view
     # other:
     #   card:
     #     type: custom:button-card
