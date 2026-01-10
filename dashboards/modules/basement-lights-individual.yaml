@@ -5,6 +5,7 @@
       card_type: button
       entity: light.gym_main_lights
       name: Media Room Main Lights      
+      icon: mdi:light-recessed
       button_type: switch
       sub_button:
         main:
@@ -45,53 +46,43 @@
             brightness_pct: 25
           target:
             entity_id: light.gym_main_lights
-    # - type: custom:bubble-card
-    #   card_type: button
-    #   button_type: slider
-    #   entity: light.gym_main_lights
-    #   name: Media Room Main Lights
-    #   icon: mdi:light-recessed
-    #   show_state: false
-    #   slider_live_update: false
-    #   read_only_slider: false
-    #   tap_to_slide: false
-    #   button_action:
-    #     tap_action:
-    #       action: perform-action
-    #       perform_action: light.toggle
-    #       data:
-    #         brightness_pct: 25
-    #       target:
-    #         entity_id: light.gym_main_lights
-    #   tap_action:
-    #     action: perform-action
-    #     perform_action: light.toggle
-    #     data:
-    #       brightness_pct: 25
-    #     target:
-    #       entity_id: light.gym_main_lights
-    #   scrolling_effect: false
-    #   use_accent_color: false
-    #   sub_button:
-    #     - entity: light.gym_main_lights
-    #       show_state: true
-    #       show_attribute: true
-    #       show_icon: false
-    #       state_background: false
-    #       show_background: false
-    #       attribute: brightness
-    #   modules:
-    #   - {{ module_name }}  
     - type: custom:bubble-card
       card_type: button
-      button_type: slider
       entity: light.media_room_table_lamp
-      name: Media Room Table Lamp
-      icon: mdi:floor-lamp
-      show_state: false
-      slider_live_update: false
-      read_only_slider: false
-      tap_to_slide: false
+      name: Media Room Table Lamp 
+      icon: mdi:floor-lamp    
+      button_type: switch
+      sub_button:
+        main:
+          - entity: light.media_room_table_lamp
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+        bottom:
+          - entity: light.media_room_table_lamp
+            sub_button_type: slider
+            show_attribute: true
+            attribute: brightness
+            light_background: false
+            show_background: true
+            state_background: true
+            slider_fill_orientation: left
+            slider_value_position: right
+            light_slider_type: brightness
+            slider_live_update: true
+            read_only_slider: false
+            allow_light_slider_to_0: true
+            show_state: false
+            use_accent_color: true
+            light_transition: false
+            content_layout: icon-left
+            always_visible: true
+            invert_slider_value: false
+      modules:
+        - {{ module_name }} 
       button_action:
         tap_action:
           action: perform-action
@@ -100,35 +91,43 @@
             brightness_pct: 25
           target:
             entity_id: light.media_room_table_lamp
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.media_room_table_lamp
-      scrolling_effect: false
-      use_accent_color: false
-      sub_button:
-        - entity: light.media_room_table_lamp
-          show_state: true
-          show_attribute: true
-          show_icon: false
-          state_background: false
-          show_background: false
-          attribute: brightness
-      modules:
-      - {{ module_name }}  
     - type: custom:bubble-card
       card_type: button
-      button_type: slider
       entity: light.laundry_room_main_lights
-      name: Mud Room Main Lights
-      icon: mdi:light-recessed
-      show_state: false
-      slider_live_update: false
-      read_only_slider: false
-      tap_to_slide: false
+      name: Mud Room Main Lights 
+      icon: mdi:light-recessed   
+      button_type: switch
+      sub_button:
+        main:
+          - entity: light.laundry_room_main_lights
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+        bottom:
+          - entity: light.laundry_room_main_lights
+            sub_button_type: slider
+            show_attribute: true
+            attribute: brightness
+            light_background: false
+            show_background: true
+            state_background: true
+            slider_fill_orientation: left
+            slider_value_position: right
+            light_slider_type: brightness
+            slider_live_update: true
+            read_only_slider: false
+            allow_light_slider_to_0: true
+            show_state: false
+            use_accent_color: true
+            light_transition: false
+            content_layout: icon-left
+            always_visible: true
+            invert_slider_value: false
+      modules:
+        - {{ module_name }} 
       button_action:
         tap_action:
           action: perform-action
@@ -137,35 +136,43 @@
             brightness_pct: 25
           target:
             entity_id: light.laundry_room_main_lights
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.laundry_room_main_lights
-      scrolling_effect: false
-      use_accent_color: false
-      sub_button:
-        - entity: light.laundry_room_main_lights
-          show_state: true
-          show_attribute: true
-          show_icon: false
-          state_background: false
-          show_background: false
-          attribute: brightness
-      modules:
-      - {{ module_name }}  
     - type: custom:bubble-card
       card_type: button
-      button_type: slider
       entity: light.basement_hallway_main_lights
-      name: Hallway Main Lights
-      icon: mdi:light-recessed
-      show_state: false
-      slider_live_update: false
-      read_only_slider: false
-      tap_to_slide: false
+      name: Basement Hallway Main Lights 
+      icon: mdi:light-recessed   
+      button_type: switch
+      sub_button:
+        main:
+          - entity: light.basement_hallway_main_lights
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+        bottom:
+          - entity: light.basement_hallway_main_lights
+            sub_button_type: slider
+            show_attribute: true
+            attribute: brightness
+            light_background: false
+            show_background: true
+            state_background: true
+            slider_fill_orientation: left
+            slider_value_position: right
+            light_slider_type: brightness
+            slider_live_update: true
+            read_only_slider: false
+            allow_light_slider_to_0: true
+            show_state: false
+            use_accent_color: true
+            light_transition: false
+            content_layout: icon-left
+            always_visible: true
+            invert_slider_value: false
+      modules:
+        - {{ module_name }} 
       button_action:
         tap_action:
           action: perform-action
@@ -174,35 +181,43 @@
             brightness_pct: 25
           target:
             entity_id: light.basement_hallway_main_lights
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.basement_hallway_main_lights
-      scrolling_effect: false
-      use_accent_color: false
-      sub_button:
-        - entity: light.basement_hallway_main_lights
-          show_state: true
-          show_attribute: true
-          show_icon: false
-          state_background: false
-          show_background: false
-          attribute: brightness
-      modules:
-      - {{ module_name }}   
     - type: custom:bubble-card
       card_type: button
-      button_type: slider
       entity: light.media_room_main_lights
-      name: Gym Main Lights
-      icon: mdi:light-recessed
-      show_state: false
-      slider_live_update: false
-      read_only_slider: false
-      tap_to_slide: false
+      name: Gym Main Lights 
+      icon: mdi:light-recessed   
+      button_type: switch
+      sub_button:
+        main:
+          - entity: light.media_room_main_lights
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+        bottom:
+          - entity: light.media_room_main_lights
+            sub_button_type: slider
+            show_attribute: true
+            attribute: brightness
+            light_background: false
+            show_background: true
+            state_background: true
+            slider_fill_orientation: left
+            slider_value_position: right
+            light_slider_type: brightness
+            slider_live_update: true
+            read_only_slider: false
+            allow_light_slider_to_0: true
+            show_state: false
+            use_accent_color: true
+            light_transition: false
+            content_layout: icon-left
+            always_visible: true
+            invert_slider_value: false
+      modules:
+        - {{ module_name }} 
       button_action:
         tap_action:
           action: perform-action
@@ -211,35 +226,43 @@
             brightness_pct: 25
           target:
             entity_id: light.media_room_main_lights
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.media_room_main_lights
-      scrolling_effect: false
-      use_accent_color: false
-      sub_button:
-        - entity: light.media_room_main_lights
-          show_state: true
-          show_attribute: true
-          show_icon: false
-          state_background: false
-          show_background: false
-          attribute: brightness
-      modules:
-      - {{ module_name }}   
     - type: custom:bubble-card
       card_type: button
-      button_type: slider
       entity: light.stairs_main_lights
-      name: Basement Stairs
-      icon: mdi:light-recessed
-      show_state: false
-      slider_live_update: false
-      read_only_slider: false
-      tap_to_slide: false
+      name: Basement Stairs 
+      icon: mdi:light-recessed   
+      button_type: switch
+      sub_button:
+        main:
+          - entity: light.stairs_main_lights
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+        bottom:
+          - entity: light.stairs_main_lights
+            sub_button_type: slider
+            show_attribute: true
+            attribute: brightness
+            light_background: false
+            show_background: true
+            state_background: true
+            slider_fill_orientation: left
+            slider_value_position: right
+            light_slider_type: brightness
+            slider_live_update: true
+            read_only_slider: false
+            allow_light_slider_to_0: true
+            show_state: false
+            use_accent_color: true
+            light_transition: false
+            content_layout: icon-left
+            always_visible: true
+            invert_slider_value: false
+      modules:
+        - {{ module_name }} 
       button_action:
         tap_action:
           action: perform-action
@@ -248,35 +271,43 @@
             brightness_pct: 25
           target:
             entity_id: light.stairs_main_lights
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.stairs_main_lights
-      scrolling_effect: false
-      use_accent_color: false
-      sub_button:
-        - entity: light.stairs_main_lights
-          show_state: true
-          show_attribute: true
-          show_icon: false
-          state_background: false
-          show_background: false
-          attribute: brightness
-      modules:
-      - {{ module_name }}   
     - type: custom:bubble-card
       card_type: button
-      button_type: slider
       entity: light.stairs_spot_lights
-      name: Stairs Accent Light
+      name: Basement Stairs Accent
       icon: mdi:spotlight-beam
-      show_state: false
-      slider_live_update: false
-      read_only_slider: false
-      tap_to_slide: false
+      button_type: switch
+      sub_button:
+        main:
+          - entity: light.stairs_spot_lights
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+        bottom:
+          - entity: light.stairs_spot_lights
+            sub_button_type: slider
+            show_attribute: true
+            attribute: brightness
+            light_background: false
+            show_background: true
+            state_background: true
+            slider_fill_orientation: left
+            slider_value_position: right
+            light_slider_type: brightness
+            slider_live_update: true
+            read_only_slider: false
+            allow_light_slider_to_0: true
+            show_state: false
+            use_accent_color: true
+            light_transition: false
+            content_layout: icon-left
+            always_visible: true
+            invert_slider_value: false
+      modules:
+        - {{ module_name }} 
       button_action:
         tap_action:
           action: perform-action
@@ -284,26 +315,7 @@
           data:
             brightness_pct: 25
           target:
-            entity_id: light.stairs_spot_lights
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.stairs_spot_lights
-      scrolling_effect: false
-      use_accent_color: false
-      sub_button:
-        - entity: light.stairs_spot_lights
-          show_state: true
-          show_attribute: true
-          show_icon: false
-          state_background: false
-          show_background: false
-          attribute: brightness
-      modules:
-      - {{ module_name }}   
+            entity_id: light.stairs_spot_lights 
 # Other Lights - Basement Wall Panel Dashboard Link
 {% if dashboard == 'basement_wall_panel' %}
     - type: custom:bubble-card
@@ -331,5 +343,5 @@
             action: navigate
             navigation_path: /mudroom-wall-panel-dash/other-lights-view
       modules:
-        - {{ module_name }}
+        - wall_panel_scenes
 {% endif %}
