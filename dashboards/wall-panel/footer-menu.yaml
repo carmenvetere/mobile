@@ -59,7 +59,7 @@ card:
             - color: |
                 [[[
                   const path = window.location.pathname + window.location.hash;
-                  return path.includes('lights-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                  return path.includes('lights-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
             - height: 64px
             - width: 64px
@@ -83,7 +83,7 @@ card:
     #         - color: |
     #             [[[
     #               const path = window.location.pathname + window.location.hash;
-    #               return path.includes('climate-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+    #               return path.includes('climate-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
     #             ]]]
     #         - height: 64px
     #         - width: 64px
@@ -104,7 +104,7 @@ card:
             - color: |
                 [[[
                   const path = window.location.pathname + window.location.hash;
-                  return path.includes('music-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                  return path.includes('music-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
             - height: 64px
             - width: 64px
@@ -128,7 +128,7 @@ card:
     #         - color: |
     #             [[[
     #               const path = window.location.pathname + window.location.hash;
-    #               return path.includes('energy-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+    #               return path.includes('energy-view') ? ''var(--background-color)' : 'var(--primary-text-color)';
     #             ]]]
     #         - height: 64px
     #         - width: 64px
@@ -150,7 +150,7 @@ card:
     #         - color: |
     #             [[[
     #               const path = window.location.pathname + window.location.hash;
-    #               return path.includes('security-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+    #               return path.includes('security-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
     #             ]]]
     #         - height: 64px
     #         - width: 64px
@@ -171,7 +171,7 @@ card:
             - color: |
                 [[[
                   const path = window.location.pathname + window.location.hash;
-                  return path.includes('vacuum-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                  return path.includes('vacuum-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
             - height: 64px
             - width: 64px
@@ -195,7 +195,7 @@ card:
     #         - color: |
     #             [[[
     #               const path = window.location.pathname + window.location.hash;
-    #               return path.includes('other-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+    #               return path.includes('other-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
     #             ]]]
     #         - height: 64px
     #         - width: 64px       
