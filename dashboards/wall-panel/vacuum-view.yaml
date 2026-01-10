@@ -211,7 +211,7 @@ cards:
                 sub_button:
                   main: []
                   bottom: []
-                entity: select.roborock_s8_mop_mode
+                entity: input_select.vacuum_suction
                 modules:
                   - wall_panel_vacuum_select
                 name: Suction
