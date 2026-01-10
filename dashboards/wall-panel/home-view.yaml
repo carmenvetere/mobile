@@ -23,7 +23,7 @@ cards:
             "nav"
         - grid-template-columns: 720px
         - grid-template-rows: 100px 1050px 100px
-        - align-items: center
+        - align-items: start
         - column-gap: 2px
         - row-gap: 15px
       custom_fields:
@@ -34,6 +34,6 @@ cards:
       main: 
         card: !include 
             - /config/dashboards/modules/dynamic-scenes.yaml
-            - module_name: wall_panel_lights_scenes
+            - module_name: wall_panel_scenes
               dashboard: basement_wall_panel
       nav: !include footer-menu.yaml
