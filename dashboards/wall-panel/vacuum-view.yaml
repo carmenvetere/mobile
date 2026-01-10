@@ -130,7 +130,7 @@ cards:
                           - color: "#656469"
                           - align-self: end
                           - padding-bottom: 2px
-                          - padding-top: 2px
+                          - padding-top: 4px
                         icon:
                           - color: "#656469"
                           - width: 40px
@@ -192,7 +192,7 @@ cards:
                     - font-size: 18px
                     - color: "#656469"
                 tap_action:
-                  action: more-info
+                  action: none
             progress:
               card:
                 type: custom:button-card
@@ -216,7 +216,7 @@ cards:
                     - font-size: 18px
                     - color: "#656469"
                 tap_action:
-                  action: more-info
+                  action: none
             suction:
               card:
                 type: custom:bubble-card
