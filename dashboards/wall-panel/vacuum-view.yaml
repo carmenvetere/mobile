@@ -71,20 +71,23 @@ cards:
                     - font-size: 32px
                     - font-weight: bold
                     - color: white
-            status:
-                type: custom:button-card
-                show_state: true
-                entity: vacuum.roborock_s8
-                show_name: false
-                show_icon: false
-                styles:
-                  card:
-                    - background-color: transparent
-                    - height: 30px
-                  state:
-                    - font-size: 24px
-                    - font-weight: bold
-                    - color: white
+            status: |
+                [[[
+                  return `<span style="...">${states['vacuum.roborock_s8'].state}</span>`;
+                ]]]
+                # type: custom:button-card
+                # show_state: true
+                # entity: vacuum.roborock_s8
+                # show_name: false
+                # show_icon: false
+                # styles:
+                #   card:
+                #     - background-color: transparent
+                #     - height: 30px
+                #   state:
+                #     - font-size: 24px
+                #     - font-weight: bold
+                #     - color: white
             map:
               card:
                 type: picture-entity
