@@ -25,6 +25,12 @@ cards:
         - align-items: start
         - column-gap: 2px
         - row-gap: 15px
+      custom_fields:
+        vacuum_status:
+          - font-size: 24px
+          - font-weight: bold
+          - text-transform: capitalize
+          - color: white
     custom_fields:
       header: !include header.yaml
       main:
