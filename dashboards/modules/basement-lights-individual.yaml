@@ -3,14 +3,33 @@
   cards:
     - type: custom:bubble-card
       card_type: button
-      button_type: slider
       entity: light.gym_main_lights
-      name: Media Room Main Lights
-      icon: mdi:light-recessed
-      show_state: false
-      slider_live_update: false
-      read_only_slider: false
-      tap_to_slide: false
+      name: Media Room Main Lights      
+      button_type: switch
+      sub_button:
+        main: []
+        bottom:
+          - entity: light.gym_main_lights
+            sub_button_type: slider
+            show_attribute: true
+            attribute: brightness
+            light_background: false
+            show_background: true
+            state_background: true
+            slider_fill_orientation: left
+            slider_value_position: right
+            light_slider_type: brightness
+            slider_live_update: true
+            read_only_slider: false
+            allow_light_slider_to_0: true
+            show_state: false
+            use_accent_color: true
+            light_transition: false
+            content_layout: icon-left
+            always_visible: true
+            invert_slider_value: false
+      modules:
+        - wall_panel_lights_scenes
       button_action:
         tap_action:
           action: perform-action
@@ -19,25 +38,43 @@
             brightness_pct: 25
           target:
             entity_id: light.gym_main_lights
-      tap_action:
-        action: perform-action
-        perform_action: light.toggle
-        data:
-          brightness_pct: 25
-        target:
-          entity_id: light.gym_main_lights
-      scrolling_effect: false
-      use_accent_color: false
-      sub_button:
-        - entity: light.gym_main_lights
-          show_state: true
-          show_attribute: true
-          show_icon: false
-          state_background: false
-          show_background: false
-          attribute: brightness
-      modules:
-      - {{ module_name }}  
+    # - type: custom:bubble-card
+    #   card_type: button
+    #   button_type: slider
+    #   entity: light.gym_main_lights
+    #   name: Media Room Main Lights
+    #   icon: mdi:light-recessed
+    #   show_state: false
+    #   slider_live_update: false
+    #   read_only_slider: false
+    #   tap_to_slide: false
+    #   button_action:
+    #     tap_action:
+    #       action: perform-action
+    #       perform_action: light.toggle
+    #       data:
+    #         brightness_pct: 25
+    #       target:
+    #         entity_id: light.gym_main_lights
+    #   tap_action:
+    #     action: perform-action
+    #     perform_action: light.toggle
+    #     data:
+    #       brightness_pct: 25
+    #     target:
+    #       entity_id: light.gym_main_lights
+    #   scrolling_effect: false
+    #   use_accent_color: false
+    #   sub_button:
+    #     - entity: light.gym_main_lights
+    #       show_state: true
+    #       show_attribute: true
+    #       show_icon: false
+    #       state_background: false
+    #       show_background: false
+    #       attribute: brightness
+    #   modules:
+    #   - {{ module_name }}  
     - type: custom:bubble-card
       card_type: button
       button_type: slider
