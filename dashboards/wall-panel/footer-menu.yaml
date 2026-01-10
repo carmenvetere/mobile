@@ -11,7 +11,7 @@ card:
       - background-color: black
     grid:
       - grid-template-areas: |
-          "home lights music climate security energy shades other"
+          "home lights music climate security energy vacuum other"
       - grid-template-columns: auto
       - grid-template-rows: 100px
       - align-items: center
@@ -154,27 +154,27 @@ card:
     #             ]]]
     #         - height: 64px
     #         - width: 64px
-    # shades:
-    #   card:
-    #     type: custom:button-card
-    #     icon: mdi:roller-shade
-    #     show_icon: true
-    #     show_label: false
-    #     show_name: false
-    #     show_state: false
-    #     styles:
-    #       card:
-    #         - align-self: center
-    #         - justify-self: center
-    #         - background: transparent
-    #       icon:
-    #         - color: |
-    #             [[[
-    #               const path = window.location.pathname + window.location.hash;
-    #               return path.includes('shades-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
-    #             ]]]
-    #         - height: 64px
-    #         - width: 64px
+    vacuum:
+      card:
+        type: custom:button-card
+        icon: mdi:robot-vacuum
+        show_icon: true
+        show_label: false
+        show_name: false
+        show_state: false
+        styles:
+          card:
+            - align-self: center
+            - justify-self: center
+            - background: transparent
+          icon:
+            - color: |
+                [[[
+                  const path = window.location.pathname + window.location.hash;
+                  return path.includes('vacuum-view') ? 'var(--accent-color)' : 'var(--primary-text-color)';
+                ]]]
+            - height: 64px
+            - width: 64px
     # other:
     #   card:
     #     type: custom:button-card
