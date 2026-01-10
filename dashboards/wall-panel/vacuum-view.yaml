@@ -49,7 +49,7 @@ cards:
                   "hallway hallway hallway media media media"
                   "mudroom mudroom mudroom bathroom bathroom bathroom"
               - grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
-              - grid-template-rows: 60px 50px 450px 80px 80px 80px 80px 80px
+              - grid-template-rows: 60px 30px 450px 80px 80px 80px 80px 80px
               - column-gap: 10px
               - row-gap: 10px
               - align-items: center
@@ -80,7 +80,7 @@ cards:
                 styles:
                   card:
                     - background-color: transparent
-                    - height: 40px
+                    - height: 30px
                   name:
                     - font-size: 24px
                     - font-weight: bold
