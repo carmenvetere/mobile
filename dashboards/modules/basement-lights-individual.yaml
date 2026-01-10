@@ -36,7 +36,7 @@
             always_visible: true
             invert_slider_value: false
       modules:
-        - wall_panel_lights_scenes
+        - {{ module_name }} 
       button_action:
         tap_action:
           action: perform-action
