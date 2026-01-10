@@ -107,10 +107,8 @@ cards:
                       icon: mdi:play
                       size: 50%
                       tap_action:
-                        action: call-service
-                        service: vacuum.start
-                        service_data:
-                          entity_id: vacuum.roborock_s8
+                        action: perform-action
+                        perform_action: script.1750692869441
                       styles:
                         card:
                           - background-color: "#C0C4C5"
@@ -140,9 +138,9 @@ cards:
                       icon: mdi:pause
                       size: 50%
                       tap_action:
-                        action: call-service
-                        service: vacuum.pause
-                        service_data:
+                        action: perform-action
+                        perform_action: vacuum.pause
+                        target:
                           entity_id: vacuum.roborock_s8
                       styles:
                         card:
