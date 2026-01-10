@@ -41,7 +41,7 @@ cards:
             grid:
               - grid-template-areas: |
                   "title title title title title title"
-                  "state state state state state state"
+                  "status status status status status status"
                   "map map map map map map"
                   "start start battery battery progress progress"
                   "suction suction suction mop mop mop"
@@ -71,7 +71,7 @@ cards:
                     - font-size: 32px
                     - font-weight: bold
                     - color: white
-            state:
+            status:
                 type: custom:button-card
                 show_state: true
                 entity: vacuum.roborock_s8
@@ -81,7 +81,7 @@ cards:
                   card:
                     - background-color: transparent
                     - height: 30px
-                  name:
+                  state:
                     - font-size: 24px
                     - font-weight: bold
                     - color: white
