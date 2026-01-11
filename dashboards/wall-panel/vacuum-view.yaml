@@ -116,7 +116,7 @@ cards:
                         perform_action: script.1750692869441
                       styles:
                         card:
-                          - background-color: var(--background-color2)
+                          - background-color: var(--ha-card-background)
                           - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
                           - border-radius: 20px
                           - height: 70px
@@ -132,7 +132,7 @@ cards:
                           - padding-bottom: 2px
                           - padding-top: 4px
                         icon:
-                          - color: ar(--secondary-text-color)
+                          - color: var(--secondary-text-color)
                           - width: 40px
                           - height: 40px
                           - align-self: start
