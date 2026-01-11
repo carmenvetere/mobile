@@ -138,7 +138,6 @@ cards:
                 }
                 .volume-slider {
                   --control-slider-thickness: 80px !important;
-                  --control-slider-color: var(--secondary-text-color) !important;
                 }
               sonos-media-browser$: |
                 .header {
@@ -163,11 +162,12 @@ cards:
                   align-items: center !important;
                   justify-content: left !important;
                   padding-left: 30px !important;
+                  padding-top: 10px !important;
                   background-color: var(--background-color) !important;
                 }
                 .button {
                   border-radius: 15px !important;
-                  background: var(--background-color-2) !important;
+                  background-color: var(--background-color-2) !important;
                   height: 80px !important;
                   margin: 10px !important;
                   max-width: 95% !important;
