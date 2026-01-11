@@ -19,7 +19,7 @@ command_line:
       name: living_room_favorites
       unique_id: living_room_favorites
       command: >-
-        python3 -c "import yaml, json; data = yaml.safe_load(open('/config/custom-favorites.yaml')); print(json.dumps({'favorites': data, 'count': len(data)}))"
+        python3 -c "import yaml, json; data = yaml.safe_load(open('/config/dashboards/modules/custom-favorites.yaml')); print(json.dumps({'favorites': data, 'count': len(data)}))"
       value_template: "{{ value_json.count }} favorites"
       json_attributes:
         - favorites
