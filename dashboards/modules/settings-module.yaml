@@ -1144,31 +1144,6 @@
     - type: custom:bubble-card
       card_type: button
       button_type: name
-      entity: sensor.smithy_energy_usage_2
-      name: Water Heater Energy Consumed
-      card_layout: large
-      show_state: false
-      scrolling_effect: false
-      slider_live_update: true
-      read_only_slider: false
-      tap_to_slide: true
-      sub_button:
-        - entity: sensor.smithy_energy_usage_2
-          show_state: true
-          show_attribute: false
-          show_icon: false
-          state_background: false
-          show_background: false
-      button_action:
-        tap_action:
-          action: more-info
-      tap_action:
-        action: more-info
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      button_type: name
       entity: sensor.tesla_wall_connector_energy
       name: EV Charger Energy Consumed
       card_layout: large
