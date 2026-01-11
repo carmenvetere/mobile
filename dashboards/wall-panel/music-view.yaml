@@ -102,6 +102,9 @@ cards:
                   max-width: 96% !important;
                   background-color: var(--background-color) !important;
                 }  
+                ha-control-slider {
+                  --control-slider-color: var(--primary-text-color) !important;
+                }
               sonos-player$ sonos-player-header$: |
                 .song {
                   color: var(--primary-text-color) !important;
