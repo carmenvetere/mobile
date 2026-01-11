@@ -194,6 +194,7 @@ cards:
               sonos-grouping$: |
                 .name {
                   font-size: 24px !important;
+                  font-weight: bold !important;
                   text-align: left !important;
                   justify-content: flex-start !important;
                 }
@@ -202,6 +203,7 @@ cards:
                 }
                 .name-and-volume {
                   align-items: flex-start !important;
+                  background-color: var(--background-color-2) !important;
                 }
               sonos-grouping$ sonos-grouping-button$: |
                 ha-control-button {
