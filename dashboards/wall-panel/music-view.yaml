@@ -213,6 +213,7 @@ cards:
                 }
                 .volume {
                   --control-slider-thickness: 20px !important;
+                  --control-slider-background: var(--background-color) !important;
                   margin-left: 10px !important;
                   margin-right: 10px !important;
                 }
@@ -224,12 +225,6 @@ cards:
                   font-size: 20px !important;
                   font-weight: bold !important;
                 }
-              sonos-grouping$ sonos-volume$: |
-                .volume {
-                  --control-slider-thickness: 20px !important;
-                  --mdc-icon-button-size: 40px !important;
-                  --mdc-icon-size: 24px !important;
-                } 
               sonos-grouping$ sonos-grouping-button$ ha-control-button$: |
                 .button {
                   background: var(--primary-color) !important;
