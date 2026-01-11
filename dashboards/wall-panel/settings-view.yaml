@@ -33,6 +33,7 @@ cards:
           type: vertical-stack
           cards: !include 
               - /config/dashboards/modules/settings-module.yaml
-              - module_name: wall_panel_notifications
+              - separator_module: wall_panel_separator_module
+                settings_module: wall_panel_settings_module
                 dashboard: basement_wall_panel`
       nav: !include footer-menu.yaml
