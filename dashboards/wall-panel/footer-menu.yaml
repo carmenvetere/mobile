@@ -198,4 +198,7 @@ card:
                   return path.includes('settings-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
             - height: 64px
-            - width: 64px       
+            - width: 64px
+        tap_action:
+          action: navigate
+          navigation_path: /mudroom-wall-panel-dash/settings-view       
