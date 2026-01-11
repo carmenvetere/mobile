@@ -94,14 +94,8 @@
   cards:
     - type: custom:bubble-card
       card_type: separator
-      name: Climate
+      name: Climate - Schedules
       icon: mdi:fan
-      modules:
-        - "{{ separator_module }}"
-    - type: custom:bubble-card
-      card_type: separator
-      name: Schedules
-      icon: mdi:clock-out
       modules:
         - "{{ separator_module }}"
     - type: custom:bubble-card
@@ -190,7 +184,7 @@
         - "{{ settings_module }}"
     - type: custom:bubble-card
       card_type: separator
-      name: Fresh Air Controls
+      name: Climate - Fresh Air Controls
       icon: mdi:tailwind
       modules:
         - "{{ separator_module }}"
@@ -228,7 +222,7 @@
         - "{{ settings_module }}"
     - type: custom:bubble-card
       card_type: separator
-      name: Filter Maintenance
+      name: Climate - Filter Maintenance
       icon: mdi:air-filter
       modules:
         - "{{ separator_module }}"
@@ -268,7 +262,6 @@
           action: more-info
       modules:
         - "{{ settings_module }}"
-
 #Alarm
 - type: vertical-stack
   cards:
@@ -364,70 +357,70 @@
         - "{{ settings_module }}"
 
 #Water Heater
-- type: vertical-stack
-  cards:
-    - type: custom:bubble-card
-      card_type: separator
-      name: Water Heater
-      icon: mdi:water-boiler
-      modules:
-        - "{{ separator_module }}"
-    - type: custom:bubble-card
-      card_type: climate
-      entity: water_heater.smithy_2
-      name: Water Heater Temp
-      icon: mdi:water-boiler
-      show_state: false
-      scrolling_effect: false
-      tap_action:
-        action: toggle
-      card_layout: large
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: climate
-      entity: water_heater.smithy_2
-      name: Water Heater Mode
-      icon: mdi:leaf
-      card_layout: large
-      scrolling_effect: false
-      sub_button:
-        - entity: water_heater.smithy_2
-          select_attribute: operation_list
-          state_background: false
-          show_state: true
-          show_attribute: false
-          attribute: operation_mode
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      button_type: name
-      entity: water_heater.smithy_2
-      name: Water Heater Away Mode
-      icon: mdi:leaf
-      card_layout: large
-      show_state: false
-      scrolling_effect: false
-      sub_button:
-        - entity: water_heater.smithy_2
-          attribute: away_mode
-          show_attribute: true
-          show_icon: false
-          state_background: false
-          show_background: false
-          tap_action:
-            action: perform-action
-            perform_action: script.toggle_water_heater_away_mode
-      button_action:
-        tap_action:
-          action: perform-action
-          perform_action: script.toggle_water_heater_away_mode
-      tap_action:
-        action: perform-action
-        perform_action: script.toggle_water_heater_away_mode
-      modules:
-        - "{{ settings_module }}"
+# - type: vertical-stack
+#   cards:
+#     - type: custom:bubble-card
+#       card_type: separator
+#       name: Water Heater
+#       icon: mdi:water-boiler
+#       modules:
+#         - "{{ separator_module }}"
+#     - type: custom:bubble-card
+#       card_type: climate
+#       entity: water_heater.smithy_2
+#       name: Water Heater Temp
+#       icon: mdi:water-boiler
+#       show_state: false
+#       scrolling_effect: false
+#       tap_action:
+#         action: toggle
+#       card_layout: large
+#       modules:
+#         - "{{ settings_module }}"
+#     - type: custom:bubble-card
+#       card_type: climate
+#       entity: water_heater.smithy_2
+#       name: Water Heater Mode
+#       icon: mdi:leaf
+#       card_layout: large
+#       scrolling_effect: false
+#       sub_button:
+#         - entity: water_heater.smithy_2
+#           select_attribute: operation_list
+#           state_background: false
+#           show_state: true
+#           show_attribute: false
+#           attribute: operation_mode
+#       modules:
+#         - "{{ settings_module }}"
+#     - type: custom:bubble-card
+#       card_type: button
+#       button_type: name
+#       entity: water_heater.smithy_2
+#       name: Water Heater Away Mode
+#       icon: mdi:leaf
+#       card_layout: large
+#       show_state: false
+#       scrolling_effect: false
+#       sub_button:
+#         - entity: water_heater.smithy_2
+#           attribute: away_mode
+#           show_attribute: true
+#           show_icon: false
+#           state_background: false
+#           show_background: false
+#           tap_action:
+#             action: perform-action
+#             perform_action: script.toggle_water_heater_away_mode
+#       button_action:
+#         tap_action:
+#           action: perform-action
+#           perform_action: script.toggle_water_heater_away_mode
+#       tap_action:
+#         action: perform-action
+#         perform_action: script.toggle_water_heater_away_mode
+#       modules:
+#         - "{{ settings_module }}"
     - type: custom:bubble-card
       card_type: separator
       name: Water Heater Maintenance
@@ -507,8 +500,8 @@
         - "{{ settings_module }}"
     - type: custom:bubble-card
       card_type: button
-      entity: automation.motion_bathroom_lights_night
-      name: Bathroom Lights Motion - Night
+      entity: automation.gym_motion_sensor
+      name: Gym Motion Lights
       icon: mdi:motion
       show_state: false
       scrolling_effect: false
@@ -519,7 +512,7 @@
         action: toggle
       card_layout: large
       sub_button:
-        - entity: automation.motion_bathroom_lights_night
+        - entity: automation.gym_motion_sensor
           show_state: true
           show_icon: false
           state_background: false
@@ -622,7 +615,28 @@
     - type: custom:bubble-card
       card_type: button
       entity: automation.outdoor_off_at_11pm
-      name: Automatically Turn Off Outdoor Lights at 11PM
+      name: Automatically Turn Off Outdoor Lights at Midnight
+      icon: mdi:motion
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.outdoor_off_at_11pm
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.11_00pm_turn_off_landscape_spotlights_s_th
+      name: Automatically Turn Off Outdoor Spotlights Lights at 11PM (Sun-Thurs)
       icon: mdi:motion
       show_state: false
       scrolling_effect: false
@@ -695,7 +709,7 @@
     - type: custom:bubble-card
       card_type: button
       entity: automation.800am_bedroom_hallway_shades
-      name: 8:00AM Bedroom Shades Open (Weekdays)
+      name: 8:00AM Primary Bedroom Shades Open (Weekdays)
       icon: mdi:roller-shade
       show_state: false
       scrolling_effect: false
@@ -736,8 +750,29 @@
         - "{{ settings_module }}"
     - type: custom:bubble-card
       card_type: button
+      entity: automation.8_00_am_front_guest_bedroom_shades_weekdays
+      name: 8:00AM Front Guest Bedroom Shades Open (Weekdays)
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.8_00_am_front_guest_bedroom_shades_weekdays
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
       entity: automation.900am_bedroom_shades_open_weekends
-      name: 9:00AM Bedroom Shades Open (Weekends)
+      name: 9:00AM Primary Bedroom Shades Open (Weekends)
       icon: mdi:roller-shade
       show_state: false
       scrolling_effect: false
@@ -770,6 +805,27 @@
       card_layout: large
       sub_button:
         - entity: automation.9am_back_guest_bedroom_shades_weekends
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.9_00_am_front_guest_bedroom_shades_weekends_2
+      name: 9:00AM Front Guest Bedroom Shades Open (Weekends)
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.9_00_am_front_guest_bedroom_shades_weekends_2
           show_state: true
           show_icon: false
           state_background: false
@@ -923,7 +979,27 @@
           show_background: false
       modules:
         - "{{ settings_module }}"
-
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm
+      name: Evening Close Front Guest Bedroom Shades
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
 #Pool
 - type: vertical-stack
   cards:
