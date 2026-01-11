@@ -176,9 +176,24 @@ cards:
                   background-color: var(--background-color-2) !important;
                 }
                 ha-control-button {
-                  height: 75px !important;
+                  height: 80px !important;
                   max-width: 95% !important;
                   margin-left: 12px !important;
                   background-image: none !important;
                 }
+              sonos-group$: |
+                mwc-list-item {
+                  background: var(--background-color-2) !important;
+                  height: 80px !important;
+                }
+                .row {
+                  height: 100% !important;
+                }
+                .speakers {
+                  font-size: 24px !important;
+                }
+                .song-title {
+                  font-size: 20px !important;
+                }
+
       nav: !include footer-menu.yaml
