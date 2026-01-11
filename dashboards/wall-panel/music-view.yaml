@@ -90,16 +90,17 @@ cards:
             style:
               .: |
                 :host {
-                  --mdc-icon-color: white !important;
-                  --secondary-text-color: white !important;
-                  --paper-item-icon-color: white !important;
+                  --mdc-icon-color: var(--text-color) !important;
+                  --secondary-text-color: var(--secondary-text-color) !important;
+                  --paper-item-icon-color: var(--secondary-text-color) !important;
                   --mdc-theme-primary: var(--primary-text-color) !important;
-                  --mdc-icon-button-ink-color: white !important;
+                  --mdc-icon-button-ink-color: var(--secondary-text-color) !important;
                 }
                 ha-card {
                   margin-left: 10px !important;
                   margin-right: 10px !important;
                   max-width: 96% !important;
+                  background-color: var(--background-color) !important;
                 }  
               sonos-player$ sonos-player-header$: |
                 .song {
@@ -134,6 +135,7 @@ cards:
                 }
                 .volume-slider {
                   --control-slider-thickness: 80px !important;
+                  --control-slider-color: var(--secondary-text-color) !important;
                 }
               sonos-media-browser$: |
                 .header {
