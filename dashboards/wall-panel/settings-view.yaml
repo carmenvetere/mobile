@@ -31,9 +31,5 @@ cards:
       main:
         card: 
           type: vertical-stack
-          cards: !include 
-              - /config/dashboards/modules/settings-module.yaml
-              - separator_module: wall_panel_separator
-                settings_module: wall_panel_settings_module
-                dashboard: basement_wall_panel`
+          cards: !include [/config/dashboards/modules/settings-module.yaml, {separator_module: wall_panel_separator, settings_module: wall_panel_settings_module}]
       nav: !include footer-menu.yaml
