@@ -34,7 +34,7 @@ cards:
             card:
               - width: 700px
               - height: 1050px
-              - background-color: "#656469"
+              - background-color: var(--background-color)
               - border-radius: 30px
               - margin-left: 10px
               - padding: 15px
@@ -70,10 +70,10 @@ cards:
                   name:
                     - font-size: 32px
                     - font-weight: bold
-                    - color: white
+                    - color: var(--text-color)
             status: |
                 [[[
-                  return `<span style="font-size: 24px; font-weight: bold; color: white; text-transform: capitalize;">${states['vacuum.roborock_s8'].state}</span>`;
+                  return `<span style="font-size: 24px; font-weight: bold; color: 'var(--text-color)'; text-transform: capitalize;">${states['vacuum.roborock_s8'].state}</span>`;
                 ]]]
             map:
               card:
@@ -116,7 +116,7 @@ cards:
                         perform_action: script.1750692869441
                       styles:
                         card:
-                          - background-color: "#C0C4C5"
+                          - background-color: var(--background-color2)
                           - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
                           - border-radius: 20px
                           - height: 70px
@@ -127,12 +127,12 @@ cards:
                         name:
                           - font-size: 20px
                           - font-weight: bold
-                          - color: "#656469"
+                          - color: var(--secondary-text-color)
                           - align-self: end
                           - padding-bottom: 2px
                           - padding-top: 4px
                         icon:
-                          - color: "#656469"
+                          - color: ar(--secondary-text-color)
                           - width: 40px
                           - height: 40px
                           - align-self: start
