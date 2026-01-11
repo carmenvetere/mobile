@@ -197,6 +197,8 @@ cards:
                   font-weight: bold !important;
                   text-align: left !important;
                   justify-content: flex-start !important;
+                  margin-left: 10px !important;
+                  margin-top: 10px !important;
                 }
                 .item {
                   justify-content: flex-start !important;
@@ -217,7 +219,7 @@ cards:
               sonos-grouping$ sonos-grouping-button$: |
                 ha-control-button {
                   background: var(--background-color-2) !important;
-                  height: 100px !important;
+                  height: 80px !important;
                   border-radius: 15px !important;
                   font-size: 20px !important;
                   font-weight: bold !important;
@@ -226,6 +228,5 @@ cards:
                 .button {
                   background: var(--primary-color) !important;
                   border-radius: 15px !important;
-                  height: 80px !important;
                 }
       nav: !include footer-menu.yaml
