@@ -1,1627 +1,1116 @@
 #Home Modes
-- type: custom:expander-card
-  expanded: false
-  title-card-clickable: true
-  title-card:
-    type: custom:bubble-card
-    card_type: separator
-    name: Home Modes
-    icon: mdi:home-automation
-    rows: 0.75
-    styles: |
-      .bubble-name {
-        font-size: 20px !important;  /* title */
-        font-weight: bold !important;
-      }
-      .bubble-sub-button 
-      {
-        font-size: 20px !important;
-        font-weight: 700 !important;
-      }
-      .bubble-line {
-        background: var(--primary-text-color);
-        opacity: 0.1;
-      }
-      .card-content {
-        padding-top: 7px !important;
-      }
-  card_mod:
-    style: |
-      ha-card {
-        border-radius: 20px !important;
-        padding-top: 3px !important;
-        margin-left: 5px !important;
-        padding-bottom: 3px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        background-color: var(--ha-card-background-2) !important;
-      }
+- type: vertical-stack
   cards:
-    - type: vertical-stack
-      cards:
-        - type: custom:bubble-card
-          card_type: button
-          entity: input_boolean.dinner_party
-          name: Dinner Party
-          icon: mdi:party-popper
-          show_state: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: input_boolean.dinner_party
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: input_boolean.guest_mode
-          name: Overnight Guests
-          icon: mdi:bed
-          show_state: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: input_boolean.guest_mode
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: input_boolean.cleaners_mode
-          name: Cleaners Mode
-          icon: mdi:spray-bottle
-          show_state: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: input_boolean.cleaners_mode
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: input_boolean.away_mode
-          name: Away
-          icon: mdi:bag-suitcase
-          show_state: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: input_boolean.away_mode
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
+    - type: custom:bubble-card
+      card_type: separator
+      name: Home Modes
+      icon: mdi:home-automation
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: input_boolean.dinner_party
+      name: Dinner Party
+      icon: mdi:party-popper
+      show_state: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: input_boolean.dinner_party
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: input_boolean.guest_mode
+      name: Overnight Guests
+      icon: mdi:bed
+      show_state: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: input_boolean.guest_mode
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: input_boolean.cleaners_mode
+      name: Cleaners Mode
+      icon: mdi:spray-bottle
+      show_state: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: input_boolean.cleaners_mode
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: input_boolean.away_mode
+      name: Away
+      icon: mdi:bag-suitcase
+      show_state: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: input_boolean.away_mode
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+
 #Climate
-- type: custom:expander-card
-  expanded: false
-  title-card-clickable: true
-  title-card:
-    type: custom:bubble-card
-    card_type: separator
-    name: Climate
-    icon: mdi:fan
-    rows: 0.75
-    styles: |
-      .bubble-name {
-        font-size: 20px !important;  /* title */
-        font-weight: bold !important;
-      }
-      .bubble-sub-button 
-      {
-        font-size: 20px !important;
-        font-weight: 700 !important;
-      }
-      .bubble-line {
-        background: var(--primary-text-color);
-        opacity: 0.1;
-      }
-      .card-content {
-        padding-top: 7px !important;
-      }
-  card_mod:
-    style: |
-      ha-card {
-        border-radius: 20px !important;
-        padding-top: 3px !important;
-        margin-left: 5px !important;
-        padding-bottom: 3px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        background-color: var(--ha-card-background-2) !important;
-      }
+- type: vertical-stack
   cards:
-    - type: vertical-stack
-      cards:
-        - type: custom:bubble-card
-          card_type: separator
-          name: Schedules
-          icon: mdi:clock-out
-          rows: 0.75
-          styles: >
-            .bubble-name { font-size: 16px !important; font-weight:
-            bold !important; }
-
-            .bubble-line { background: var(--primary-text-color);
-            opacity: 0.1; }
-
-            .card-content { padding-top: 7px !important; }
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.living_room_hvac_schedule_v3
-          name: Living Room Thermostat Schedule
-          icon: mdi:fan-clock
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.living_room_hvac_schedule_v3
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.basement_hvac_schedule
-          name: Basement Thermostat Schedule
-          icon: mdi:fan-clock
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.basement_hvac_schedule
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.office_thermostat_schedule_v2
-          name: Office Thermostat Schedule
-          icon: mdi:fan-clock
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.office_thermostat_schedule_v2
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.bedroom_hvac_schedule
-          name: Bedroom Thermostat Schedule
-          icon: mdi:fan-clock
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.bedroom_hvac_schedule
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: separator
-          name: Fresh Air Controls
-          icon: mdi:tailwind
-          rows: 0.75
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }                                      
-        - type: custom:bubble-card
-          card_type: button
-          button_type: slider
-          entity: input_number.living_room_fresh_air_min_temp
+    - type: custom:bubble-card
+      card_type: separator
+      name: Climate
+      icon: mdi:fan
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: separator
+      name: Schedules
+      icon: mdi:clock-out
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.living_room_hvac_schedule_v3
+      name: Living Room Thermostat Schedule
+      icon: mdi:fan-clock
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.living_room_hvac_schedule_v3
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.basement_hvac_schedule
+      name: Basement Thermostat Schedule
+      icon: mdi:fan-clock
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.basement_hvac_schedule
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.office_thermostat_schedule_v2
+      name: Office Thermostat Schedule
+      icon: mdi:fan-clock
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.office_thermostat_schedule_v2
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.bedroom_hvac_schedule
+      name: Bedroom Thermostat Schedule
+      icon: mdi:fan-clock
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.bedroom_hvac_schedule
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: separator
+      name: Fresh Air Controls
+      icon: mdi:tailwind
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      button_type: slider
+      entity: input_number.living_room_fresh_air_min_temp
+      show_last_changed: false
+      show_state: false
+      scrolling_effect: false
+      icon: mdi:home-thermometer-outline
+      card_layout: large
+      sub_button:
+        - entity: input_number.living_room_fresh_air_min_temp
+          show_state: true
+          show_icon: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      button_type: slider
+      entity: input_number.basement_fresh_air_minimum_temp
+      show_last_changed: false
+      show_state: false
+      scrolling_effect: false
+      icon: mdi:home-thermometer-outline
+      card_layout: large
+      sub_button:
+        - entity: input_number.basement_fresh_air_minimum_temp
+          show_state: true
+          show_icon: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: separator
+      name: Filter Maintenance
+      icon: mdi:air-filter
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      button_type: state
+      entity: input_number.upper_floor_hvac_filter_hours
+      show_state: false
+      scrolling_effect: false
+      card_layout: large
+      sub_button:
+        - entity: input_number.upper_floor_hvac_filter_hours
+          state_background: false
           show_last_changed: false
-          show_state: false
-          scrolling_effect: false
-          icon: mdi:home-thermometer-outline
-          card_layout: large
-          sub_button:
-            - entity: input_number.living_room_fresh_air_min_temp
-              show_state: true
-              show_icon: false
-              show_background: false
-          styles: |-
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          button_type: slider
-          entity: input_number.basement_fresh_air_minimum_temp
+          show_state: true
+          show_background: false
+      button_action:
+        tap_action:
+          action: more-info
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      button_type: state
+      entity: input_number.lower_floors_hvac_filter_hours
+      show_state: false
+      scrolling_effect: false
+      card_layout: large
+      sub_button:
+        - entity: input_number.lower_floors_hvac_filter_hours
+          state_background: false
           show_last_changed: false
-          show_state: false
-          scrolling_effect: false
-          icon: mdi:home-thermometer-outline
-          card_layout: large
-          sub_button:
-            - entity: input_number.basement_fresh_air_minimum_temp
-              show_state: true
-              show_icon: false
-              show_background: false
-          styles: |-
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: separator
-          name: Filter Maintenance
-          icon: mdi:air-filter
-          rows: 0.75
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-        - type: custom:bubble-card
-          card_type: button
-          button_type: state
-          entity: input_number.upper_floor_hvac_filter_hours
-          show_state: false
-          scrolling_effect: false
-          card_layout: large
-          sub_button:
-            - entity: input_number.upper_floor_hvac_filter_hours
-              state_background: false
-              show_last_changed: false
-              show_state: true
-              show_background: false
-          button_action:
-            tap_action:
-              action: more-info
-          styles: |-
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          button_type: state
-          entity: input_number.lower_floors_hvac_filter_hours
-          show_state: false
-          scrolling_effect: false
-          card_layout: large
-          sub_button:
-            - entity: input_number.lower_floors_hvac_filter_hours
-              state_background: false
-              show_last_changed: false
-              show_state: true
-              show_background: false
-          button_action:
-            tap_action:
-              action: more-info
-          styles: |-
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          modules:
-          - Mobile Module Theme  
+          show_state: true
+          show_background: false
+      button_action:
+        tap_action:
+          action: more-info
+      modules:
+        - "{{ settings_module }}"
+
 #Alarm
-- type: custom:expander-card
-  expanded: false
-  title-card-clickable: true
-  title-card:
-    type: custom:bubble-card
-    card_type: separator
-    name: Alarm
-    icon: mdi:alarm-panel
-    rows: 0.75
-    styles: |
-      .bubble-name {
-        font-size: 20px !important;  /* title */
-        font-weight: bold !important;
-      }
-      .bubble-sub-button 
-      {
-        font-size: 20px !important;
-        font-weight: 700 !important;
-      }
-      .bubble-line {
-        background: var(--primary-text-color);
-        opacity: 0.1;
-      }
-      .card-content {
-        padding-top: 7px !important;
-      }
-  card_mod:
-    style: |
-      ha-card {
-        border-radius: 20px !important;
-        padding-top: 3px !important;
-        margin-left: 5px !important;
-        padding-bottom: 3px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        background-color: var(--ha-card-background-2) !important;
-      }
+- type: vertical-stack
   cards:
-    - type: vertical-stack
-      cards:
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.alarm_arm_away_when_everyone_leaves
-          name: Automatically Arm Away Mode When Leaving
-          icon: mdi:shield-lock
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.alarm_arm_away_when_everyone_leaves
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: >-
-            automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm
-          name: Automatically Arm Home Mode at 11pm
-          icon: mdi:shield-lock
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.alarm_disarm_upon_arriving_home
-          name: Automatically Disarm at 7am
-          icon: mdi:shield-lock-open
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.alarm_disarm_upon_arriving_home
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.alarm_disarm_upon_arriving_home
-          name: Automatically Disarm When Arrive Home
-          icon: mdi:shield-lock-open
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.alarm_disarm_upon_arriving_home
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
+    - type: custom:bubble-card
+      card_type: separator
+      name: Alarm
+      icon: mdi:alarm-panel
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.alarm_arm_away_when_everyone_leaves
+      name: Automatically Arm Away Mode When Leaving
+      icon: mdi:shield-lock
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.alarm_arm_away_when_everyone_leaves
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm
+      name: Automatically Arm Home Mode at 11pm
+      icon: mdi:shield-lock
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.alarm_disarm_upon_arriving_home
+      name: Automatically Disarm at 7am
+      icon: mdi:shield-lock-open
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.alarm_disarm_upon_arriving_home
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.alarm_disarm_upon_arriving_home
+      name: Automatically Disarm When Arrive Home
+      icon: mdi:shield-lock-open
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.alarm_disarm_upon_arriving_home
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+
 #Water Heater
-- type: custom:expander-card
-  expanded: false
-  title-card-clickable: true
-  title-card:
-    type: custom:bubble-card
-    card_type: separator
-    name: Water Heater
-    icon: mdi:water-boiler
-    rows: 0.75
-    styles: |
-      .bubble-name {
-        font-size: 20px !important;  /* title */
-        font-weight: bold !important;
-      }
-      .bubble-sub-button 
-      {
-        font-size: 20px !important;
-        font-weight: 700 !important;
-      }
-      .bubble-line {
-        background: var(--primary-text-color);
-        opacity: 0.1;
-      }
-      .card-content {
-        padding-top: 7px !important;
-      }
-  card_mod:
-    style: |
-      ha-card {
-        border-radius: 20px !important;
-        padding-top: 3px !important;
-        margin-left: 5px !important;
-        padding-bottom: 3px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        background-color: var(--ha-card-background-2) !important;
-      }
+- type: vertical-stack
   cards:
-    - type: vertical-stack
-      cards:
-        - type: custom:bubble-card
-          card_type: climate
-          entity: water_heater.smithy_2
-          name: Water Heater Temp
-          icon: mdi:water-boiler
-          show_state: false
-          scrolling_effect: false
+    - type: custom:bubble-card
+      card_type: separator
+      name: Water Heater
+      icon: mdi:water-boiler
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: climate
+      entity: water_heater.smithy_2
+      name: Water Heater Temp
+      icon: mdi:water-boiler
+      show_state: false
+      scrolling_effect: false
+      tap_action:
+        action: toggle
+      card_layout: large
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: climate
+      entity: water_heater.smithy_2
+      name: Water Heater Mode
+      icon: mdi:leaf
+      card_layout: large
+      scrolling_effect: false
+      sub_button:
+        - entity: water_heater.smithy_2
+          select_attribute: operation_list
+          state_background: false
+          show_state: true
+          show_attribute: false
+          attribute: operation_mode
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      button_type: name
+      entity: water_heater.smithy_2
+      name: Water Heater Away Mode
+      icon: mdi:leaf
+      card_layout: large
+      show_state: false
+      scrolling_effect: false
+      sub_button:
+        - entity: water_heater.smithy_2
+          attribute: away_mode
+          show_attribute: true
+          show_icon: false
+          state_background: false
+          show_background: false
           tap_action:
-            action: toggle
-          card_layout: large
-          styles: |-
-            .bubble-name {
-                font-size: 16px !important;
-              }
-            .bubble-temperature-display {
-                font-size: 16px !important;
-                font-weight: bold;
-              }
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: climate
-          entity: water_heater.smithy_2
-          name: Water Heater Mode
-          icon: mdi:leaf
-          card_layout: large
-          scrolling_effect: false
-          sub_button:
-            - entity: water_heater.smithy_2
-              select_attribute: operation_list
-              state_background: false
-              show_state: true
-              show_attribute: false
-              attribute: operation_mode
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          button_type: name
-          entity: water_heater.smithy_2
-          name: Water Heater Away Mode
-          icon: mdi:leaf
-          card_layout: large
-          show_state: false
-          scrolling_effect: false
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: water_heater.smithy_2
-              attribute: away_mode
-              show_attribute: true
-              show_icon: false
-              state_background: false
-              show_background: false
-              tap_action:
-                action: perform-action
-                perform_action: script.toggle_water_heater_away_mode
-          button_action:
-            tap_action:
-                action: perform-action
-                perform_action: script.toggle_water_heater_away_mode
-          tap_action:
-                action: perform-action
-                perform_action: script.toggle_water_heater_away_mode
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: separator
-          name: Water Heater Maintenance
-          icon: mdi:air-filter
-          rows: 0.75
-          styles: >
-            .bubble-name { font-size: 16px !important; font-weight:
-            bold !important; }
+            action: perform-action
+            perform_action: script.toggle_water_heater_away_mode
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: script.toggle_water_heater_away_mode
+      tap_action:
+        action: perform-action
+        perform_action: script.toggle_water_heater_away_mode
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: separator
+      name: Water Heater Maintenance
+      icon: mdi:air-filter
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      button_type: state
+      entity: input_datetime.water_heater_last_flushed
+      show_state: false
+      scrolling_effect: false
+      card_layout: large
+      sub_button:
+        - entity: input_datetime.water_heater_last_flushed
+          state_background: false
+          show_last_changed: false
+          show_state: true
+          show_background: false
+          show_icon: false
+      button_action:
+        tap_action:
+          action: more-info
+      modules:
+        - "{{ settings_module }}"
 
-            .bubble-line { background: var(--primary-text-color);
-            opacity: 0.1; }
-
-            .card-content { padding-top: 7px !important; } 
-        - type: custom:bubble-card
-          card_type: button
-          button_type: state
-          entity: input_datetime.water_heater_last_flushed
-          show_state: false
-          scrolling_effect: false
-          card_layout: large
-          sub_button:
-            - entity: input_datetime.water_heater_last_flushed
-              state_background: false
-              show_last_changed: false
-              show_state: true
-              show_background: false
-              show_icon: false
-          button_action:
-            tap_action:
-              action: more-info
-          styles: |-
-            .bubble-sub-button 
-            {
-              font-size: 14px !important;
-              font-weight: 700 !important;
-            }
-            .bubble-name {
-                font-size: 16px !important;
-              }
-          modules:
-          - Mobile Module Theme  
 #Motion
-- type: custom:expander-card
-  expanded: false
-  title-card-clickable: true
-  title-card:
-    type: custom:bubble-card
-    card_type: separator
-    name: Motion
-    icon: mdi:motion
-    rows: 0.75
-    styles: |
-      .bubble-name {
-        font-size: 20px !important;  /* title */
-        font-weight: bold !important;
-      }
-      .bubble-sub-button 
-      {
-        font-size: 20px !important;
-        font-weight: 700 !important;
-      }
-      .bubble-line {
-        background: var(--primary-text-color);
-        opacity: 0.1;
-      }
-      .card-content {
-        padding-top: 7px !important;
-      }
-  card_mod:
-    style: |
-      ha-card {
-        border-radius: 20px !important;
-        padding-top: 3px !important;
-        margin-left: 5px !important;
-        padding-bottom: 3px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        background-color: var(--ha-card-background-2) !important;
-      }
+- type: vertical-stack
   cards:
-    - type: vertical-stack
-      cards:
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.outdoor_motion_after_11pm_before_sunrise
-          name: Outdoor Lights Motion Detection - 11pm - Sunrise
-          icon: mdi:motion
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.outdoor_motion_after_11pm_before_sunrise
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.motion_bathroom_day
-          name: Bathroom Lights Motion - Day
-          icon: mdi:motion
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.motion_bathroom_day
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.motion_bathroom_lights_night
-          name: Bathroom Lights Motion - Night
-          icon: mdi:motion
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.motion_bathroom_lights_night
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
+    - type: custom:bubble-card
+      card_type: separator
+      name: Motion
+      icon: mdi:motion
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.outdoor_motion_after_11pm_before_sunrise
+      name: Outdoor Lights Motion Detection - 11pm - Sunrise
+      icon: mdi:motion
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.outdoor_motion_after_11pm_before_sunrise
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.motion_bathroom_day
+      name: Bathroom Lights Motion - Day
+      icon: mdi:motion
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.motion_bathroom_day
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.motion_bathroom_lights_night
+      name: Bathroom Lights Motion - Night
+      icon: mdi:motion
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.motion_bathroom_lights_night
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+
 #Lights
-- type: custom:expander-card
-  expanded: false
-  title-card-clickable: true
-  title-card:
-    type: custom:bubble-card
-    card_type: separator
-    name: Lights
-    icon: mdi:lightbulb-auto
-    rows: 0.75
-    styles: |
-      .bubble-name {
-        font-size: 20px !important;  /* title */
-        font-weight: bold !important;
-      }
-      .bubble-sub-button 
-      {
-        font-size: 20px !important;
-        font-weight: 700 !important;
-      }
-      .bubble-line {
-        background: var(--primary-text-color);
-        opacity: 0.1;
-      }
-      .card-content {
-        padding-top: 7px !important;
-      }
-  card_mod:
-    style: |
-      ha-card {
-        border-radius: 20px !important;
-        padding-top: 3px !important;
-        margin-left: 5px !important;
-        padding-bottom: 3px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        background-color: var(--ha-card-background-2) !important;
-      }
+- type: vertical-stack
   cards:
-    - type: vertical-stack
-      cards:
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.evening_lights_on_lux
-          name: Automatically Turn Lights On In Evening
-          icon: mdi:lightbulb-auto
-          show_state: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.evening_lights_on_lux
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.morning_lights_off_lux_over_5000_or_9am
-          name: Automatically Turn Lights Off in Morning
-          icon: mdi:lightbulb-auto
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.morning_lights_off_lux_over_5000_or_9am
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.11_00_pm_good_night
-          name: Automatically Set Good Night at 11PM
-          icon: mdi:lightbulb-auto
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.11_00_pm_good_night
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.sunset_outdoor_off
-          name: Automatically Turn Outdoor Lights On At Sunset
-          icon: mdi:lightbulb-auto
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.sunset_outdoor_off
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.outdoor_off_at_11pm
-          name: Automatically Turn Off Outdoor Lights at 11PM
-          icon: mdi:motion
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.outdoor_off_at_11pm
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
+    - type: custom:bubble-card
+      card_type: separator
+      name: Lights
+      icon: mdi:lightbulb-auto
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.evening_lights_on_lux
+      name: Automatically Turn Lights On In Evening
+      icon: mdi:lightbulb-auto
+      show_state: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.evening_lights_on_lux
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.morning_lights_off_lux_over_5000_or_9am
+      name: Automatically Turn Lights Off in Morning
+      icon: mdi:lightbulb-auto
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.morning_lights_off_lux_over_5000_or_9am
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.11_00_pm_good_night
+      name: Automatically Set Good Night at 11PM
+      icon: mdi:lightbulb-auto
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.11_00_pm_good_night
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.sunset_outdoor_off
+      name: Automatically Turn Outdoor Lights On At Sunset
+      icon: mdi:lightbulb-auto
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.sunset_outdoor_off
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.outdoor_off_at_11pm
+      name: Automatically Turn Off Outdoor Lights at 11PM
+      icon: mdi:motion
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.outdoor_off_at_11pm
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+
 #Shades
-- type: custom:expander-card
-  expanded: false
-  title-card-clickable: true
-  title-card:
-    type: custom:bubble-card
-    card_type: separator
-    name: Shades
-    icon: mdi:roller-shade
-    rows: 0.75
-    styles: |
-      .bubble-name {
-        font-size: 20px !important;  /* title */
-        font-weight: bold !important;
-      }
-      .bubble-sub-button 
-      {
-        font-size: 20px !important;
-        font-weight: 700 !important;
-      }
-      .bubble-line {
-        background: var(--primary-text-color);
-        opacity: 0.1;
-      }
-      .card-content {
-        padding-top: 7px !important;
-      }
-  card_mod:
-    style: |
-      ha-card {
-        border-radius: 20px !important;
-        padding-top: 3px !important;
-        margin-left: 5px !important;
-        padding-bottom: 3px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        background-color: var(--ha-card-background-2) !important;
-      }
+- type: vertical-stack
   cards:
-    - type: vertical-stack
-      cards:
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.7_30_am_first_floor_shades_weekdays
-          name: 7:30AM First Floor Shades Open (Weekdays)
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.7_30_am_first_floor_shades_weekdays
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.8_00_am_first_floor_shades_weekends
-          name: 8:00AM First Floor Shades Open (Weekends)
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.8_00_am_first_floor_shades_weekends
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.800am_bedroom_hallway_shades
-          name: 8:00AM Bedroom Shades Open (Weekdays)
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.800am_bedroom_hallway_shades
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.8am_back_guest_bedroom_shades_weekdays
-          name: 8:00AM Back Guest Bedroom Shades Open (Weekdays)
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.8am_back_guest_bedroom_shades_weekdays
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.900am_bedroom_shades_open_weekends
-          name: 9:00AM Bedroom Shades Open (Weekends)
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.900am_bedroom_shades_open_weekends
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.9am_back_guest_bedroom_shades_weekends
-          name: 9:00AM Back Guest Bedroom Shades Open (Weekends)
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.9am_back_guest_bedroom_shades_weekends
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.10_30_am_dining_room_shades
-          name: 10:30AM East Facing Shades Open Fully
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.1_00_pm_first_floor_sun_shading
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.1_00_pm_first_floor_sun_shading
-          name: 1:00PM West Facing Shades Sun Shading
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.1_00_pm_first_floor_sun_shading
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.3_00_pm_living_room_side_shades
-          name: 3:00PM Living Room Shades Sun Position
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.3_00_pm_living_room_side_shades
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.3_00pm_bedroom_back_shading
-          name: 3:00PM Bedroom Shades Sun Position
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.3_00pm_bedroom_back_shading
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.sunset_30_or_8_00_pm_close_shades
-          name: Evening Close First Floor Shades
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.sunset_30_or_8_00_pm_close_shades
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm
-          name: Evening Close Bedroom Shades
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme              
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm
-          name: Evening Close Back Guest Bedroom Shades
-          icon: mdi:roller-shade
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme   
+    - type: custom:bubble-card
+      card_type: separator
+      name: Shades
+      icon: mdi:roller-shade
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.7_30_am_first_floor_shades_weekdays
+      name: 7:30AM First Floor Shades Open (Weekdays)
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.7_30_am_first_floor_shades_weekdays
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.8_00_am_first_floor_shades_weekends
+      name: 8:00AM First Floor Shades Open (Weekends)
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.8_00_am_first_floor_shades_weekends
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.800am_bedroom_hallway_shades
+      name: 8:00AM Bedroom Shades Open (Weekdays)
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.800am_bedroom_hallway_shades
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.8am_back_guest_bedroom_shades_weekdays
+      name: 8:00AM Back Guest Bedroom Shades Open (Weekdays)
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.8am_back_guest_bedroom_shades_weekdays
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.900am_bedroom_shades_open_weekends
+      name: 9:00AM Bedroom Shades Open (Weekends)
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.900am_bedroom_shades_open_weekends
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.9am_back_guest_bedroom_shades_weekends
+      name: 9:00AM Back Guest Bedroom Shades Open (Weekends)
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.9am_back_guest_bedroom_shades_weekends
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.10_30_am_dining_room_shades
+      name: 10:30AM East Facing Shades Open Fully
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.1_00_pm_first_floor_sun_shading
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.1_00_pm_first_floor_sun_shading
+      name: 1:00PM West Facing Shades Sun Shading
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.1_00_pm_first_floor_sun_shading
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.3_00_pm_living_room_side_shades
+      name: 3:00PM Living Room Shades Sun Position
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.3_00_pm_living_room_side_shades
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.3_00pm_bedroom_back_shading
+      name: 3:00PM Bedroom Shades Sun Position
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.3_00pm_bedroom_back_shading
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.sunset_30_or_8_00_pm_close_shades
+      name: Evening Close First Floor Shades
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.sunset_30_or_8_00_pm_close_shades
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm
+      name: Evening Close Bedroom Shades
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm
+      name: Evening Close Back Guest Bedroom Shades
+      icon: mdi:roller-shade
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+
 #Pool
-- type: custom:expander-card
-  expanded: false
-  title-card-clickable: true
-  title-card:
-    type: custom:bubble-card
-    card_type: separator
-    name: Pool
-    icon: mdi:pool
-    rows: 0.75
-    styles: |
-      .bubble-name {
-        font-size: 20px !important;  /* title */
-        font-weight: bold !important;
-      }
-      .bubble-sub-button 
-      {
-        font-size: 20px !important;
-        font-weight: 700 !important;
-      }
-      .bubble-line {
-        background: var(--primary-text-color);
-        opacity: 0.1;
-      }
-      .card-content {
-        padding-top: 7px !important;
-      }
-  card_mod:
-    style: |
-      ha-card {
-        border-radius: 20px !important;
-        padding-top: 3px !important;
-        margin-left: 5px !important;
-        padding-bottom: 3px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        background-color: var(--ha-card-background-2) !important;
-      }
+- type: vertical-stack
   cards:
-    - type: vertical-stack
-      cards:
-        - type: custom:bubble-card
-          card_type: button
-          entity: automation.pool_heater_schedule
-          name: Pool Heater Schedule
-          icon: mdi:heat-wave
-          show_state: false
-          scrolling_effect: false
-          button_action:
-            tap_action:
-              action: toggle
-          tap_action:
-            action: toggle
-          card_layout: large
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: automation.pool_heater_schedule
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
+    - type: custom:bubble-card
+      card_type: separator
+      name: Pool
+      icon: mdi:pool
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.pool_heater_schedule
+      name: Pool Heater Schedule
+      icon: mdi:heat-wave
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.pool_heater_schedule
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+
 #Energy
-- type: custom:expander-card
-  expanded: false
-  clear: false
-  title-card-clickable: true
-  title-card:
-    type: custom:bubble-card
-    card_type: separator
-    name: Energy Settings
-    icon: mdi:cog
-    rows: 0.75
-    styles: |
-      .bubble-name {
-        font-size: 20px !important;  /* title */
-        font-weight: bold !important;
-      }
-      .bubble-sub-button 
-      {
-        font-size: 20px !important;
-        font-weight: 700 !important;
-      }
-      .bubble-line {
-        background: var(--primary-text-color);
-        opacity: 0.1;
-      }
-      .card-content {
-        padding-top: 7px !important;
-      }
-  card_mod:
-    style: |
-      ha-card {
-        border-radius: 20px !important;
-        padding-top: 3px !important;
-        margin-left: 5px !important;
-        padding-bottom: 3px !important;
-        margin-bottom: 10px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        background-color: var(--ha-card-background-2) !important;
-      }
+- type: vertical-stack
   cards:
-    - type: vertical-stack
-      cards:
-        - type: custom:bubble-card
-          entity: switch.bayberry_off_grid_operation
-          card_type: button
-          name: Go Off Grid
-          card_layout: large
-          show_state: false
-          scrolling_effect: false
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          icon: mdi:transmission-tower-off
-          sub_button:
-            - entity: switch.bayberry_off_grid_operation
-              show_state: true
-              show_icon: false
-              state_background: false
-              show_background: false
-          button_action:
-            tap_action:
-            action: toggle
-            confirmation:
-              text: Are you sure you want to go off grid?
-          tap_action:
-            action: toggle
-            confirmation:
-              text: Are you sure you want to go off grid?
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          button_type: slider
-          entity: number.bayberry_backup_reserve
-          name: Powerwall Minimum Reserve
-          card_layout: large
-          show_state: false
-          scrolling_effect: false
-          slider_live_update: true
-          read_only_slider: false
-          tap_to_slide: true
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: number.bayberry_backup_reserve
-              show_state: true
-              show_attribute: false
-              show_icon: false
-              state_background: false
-              show_background: false
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: separator
-          name: Energy Consumption
-          icon: mdi:lightning-bolt
-          rows: 0.75
-          styles: >
-            .bubble-name { font-size: 16px !important; font-weight:
-            bold !important; }
-
-            .bubble-line { background: var(--primary-text-color);
-            opacity: 0.1; }
-
-            .card-content { padding-top: 7px !important; }
-        - type: custom:bubble-card
-          card_type: button
-          button_type: name
-          entity: sensor.well_pump_energy
-          name: Well Pump Energy Consumed
-          card_layout: large
-          show_state: false
-          scrolling_effect: false
-          slider_live_update: true
-          read_only_slider: false
-          tap_to_slide: true
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: sensor.well_pump_energy
-              show_state: true
-              show_attribute: false
-              show_icon: false
-              state_background: false
-              show_background: false
-          button_action:
-            tap_action:
-              action: more-info
-          tap_action:
-            action: more-info
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          button_type: name
-          entity: sensor.pool_pump_energy
-          name: Pool Pump Energy Consumed
-          card_layout: large
-          show_state: false
-          scrolling_effect: false
-          slider_live_update: true
-          read_only_slider: false
-          tap_to_slide: true
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: sensor.pool_pump_energy
-              show_state: true
-              show_attribute: false
-              show_icon: false
-              state_background: false
-              show_background: false
-          button_action:
-            tap_action:
-              action: more-info
-          tap_action:
-            action: more-info
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          button_type: name
-          entity: sensor.smith_hotsensor.smithy_energy_usage_2
-          name: Water Heater Energy Consumed
-          card_layout: large
-          show_state: false
-          scrolling_effect: false
-          slider_live_update: true
-          read_only_slider: false
-          tap_to_slide: true
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: sensor.smithy_energy_usage_2
-              show_state: true
-              show_attribute: false
-              show_icon: false
-              state_background: false
-              show_background: false
-          button_action:
-            tap_action:
-              action: more-info
-          tap_action:
-            action: more-info
-          modules:
-          - Mobile Module Theme  
-        - type: custom:bubble-card
-          card_type: button
-          button_type: name
-          entity: sensor.tesla_wall_connector_energy
-          name: EV Charger Energy Consumed
-          card_layout: large
-          show_state: false
-          scrolling_effect: false
-          slider_live_update: true
-          read_only_slider: false
-          tap_to_slide: true
-          styles: >
-            .bubble-name { font-size: 16px !important; text-align: left !important; }
-            .bubble-sub-button { font-size: 14px !important;
-            font-weight: bold; }
-          sub_button:
-            - entity: sensor.tesla_wall_connector_energy
-              show_state: true
-              show_attribute: false
-              show_icon: false
-              state_background: false
-              show_background: false
-          button_action:
-            tap_action:
-              action: more-info
-          tap_action:
-            action: more-info
-          modules:
-          - Mobile Module Theme              
+    - type: custom:bubble-card
+      card_type: separator
+      name: Energy Settings
+      icon: mdi:cog
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      entity: switch.bayberry_off_grid_operation
+      card_type: button
+      name: Go Off Grid
+      card_layout: large
+      show_state: false
+      scrolling_effect: false
+      icon: mdi:transmission-tower-off
+      sub_button:
+        - entity: switch.bayberry_off_grid_operation
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      button_action:
+        tap_action:
+          action: toggle
+          confirmation:
+            text: Are you sure you want to go off grid?
+      tap_action:
+        action: toggle
+        confirmation:
+          text: Are you sure you want to go off grid?
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      button_type: slider
+      entity: number.bayberry_backup_reserve
+      name: Powerwall Minimum Reserve
+      card_layout: large
+      show_state: false
+      scrolling_effect: false
+      slider_live_update: true
+      read_only_slider: false
+      tap_to_slide: true
+      sub_button:
+        - entity: number.bayberry_backup_reserve
+          show_state: true
+          show_attribute: false
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: separator
+      name: Energy Consumption
+      icon: mdi:lightning-bolt
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      button_type: name
+      entity: sensor.well_pump_energy
+      name: Well Pump Energy Consumed
+      card_layout: large
+      show_state: false
+      scrolling_effect: false
+      slider_live_update: true
+      read_only_slider: false
+      tap_to_slide: true
+      sub_button:
+        - entity: sensor.well_pump_energy
+          show_state: true
+          show_attribute: false
+          show_icon: false
+          state_background: false
+          show_background: false
+      button_action:
+        tap_action:
+          action: more-info
+      tap_action:
+        action: more-info
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      button_type: name
+      entity: sensor.pool_pump_energy
+      name: Pool Pump Energy Consumed
+      card_layout: large
+      show_state: false
+      scrolling_effect: false
+      slider_live_update: true
+      read_only_slider: false
+      tap_to_slide: true
+      sub_button:
+        - entity: sensor.pool_pump_energy
+          show_state: true
+          show_attribute: false
+          show_icon: false
+          state_background: false
+          show_background: false
+      button_action:
+        tap_action:
+          action: more-info
+      tap_action:
+        action: more-info
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      button_type: name
+      entity: sensor.smithy_energy_usage_2
+      name: Water Heater Energy Consumed
+      card_layout: large
+      show_state: false
+      scrolling_effect: false
+      slider_live_update: true
+      read_only_slider: false
+      tap_to_slide: true
+      sub_button:
+        - entity: sensor.smithy_energy_usage_2
+          show_state: true
+          show_attribute: false
+          show_icon: false
+          state_background: false
+          show_background: false
+      button_action:
+        tap_action:
+          action: more-info
+      tap_action:
+        action: more-info
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      button_type: name
+      entity: sensor.tesla_wall_connector_energy
+      name: EV Charger Energy Consumed
+      card_layout: large
+      show_state: false
+      scrolling_effect: false
+      slider_live_update: true
+      read_only_slider: false
+      tap_to_slide: true
+      sub_button:
+        - entity: sensor.tesla_wall_connector_energy
+          show_state: true
+          show_attribute: false
+          show_icon: false
+          state_background: false
+          show_background: false
+      button_action:
+        tap_action:
+          action: more-info
+      tap_action:
+        action: more-info
+      modules:
+        - "{{ settings_module }}"
