@@ -208,6 +208,11 @@ cards:
                   margin-right: 10px !important;
                   padding-left: 10px !important;
                 }
+                .volume-slider {
+                  --control-slider-thickness: 20px !important;
+                  margin-left: 10px !important;
+                  margin-right: 10px !important;
+                }
               sonos-grouping$ sonos-grouping-button$: |
                 ha-control-button {
                   background: var(--background-color-2) !important;
