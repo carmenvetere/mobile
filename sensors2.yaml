@@ -125,12 +125,6 @@
           unknown
         {% endif %}
 
-    - name: "Living Room Favorites List"
-      unique_id: living_room_favorites
-      state: "Stored in attributes"
-      attributes:
-        favorites: !include /config/dashboards/modules/custom-favorites.yaml
-
     - name: "Solcast Seven Day"
       unique_id: "solcast_seven_day"
       state: >
