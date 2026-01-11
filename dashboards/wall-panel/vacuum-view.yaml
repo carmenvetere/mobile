@@ -275,7 +275,7 @@ cards:
                   - value: "on"
                     styles:
                       card:
-                        - background-color: "#8EB1BF"
+                        - background-color: var(--accent-color)
                         - box-shadow: 0 0 7px rgba(255, 255, 255, 0.6)
             gym:
               card:
@@ -302,7 +302,7 @@ cards:
                   - value: "on"
                     styles:
                       card:
-                        - background-color: "#8EB1BF"
+                        - background-color: var(--accent-color)
                         - box-shadow: 0 0 7px rgba(255, 255, 255, 0.6)
             hallway:
               card:
@@ -329,7 +329,7 @@ cards:
                   - value: "on"
                     styles:
                       card:
-                        - background-color: "#8EB1BF"
+                        - background-color: var(--accent-color)
                         - box-shadow: 0 0 7px rgba(255, 255, 255, 0.6)
             media:
               card:
@@ -356,7 +356,7 @@ cards:
                   - value: "on"
                     styles:
                       card:
-                        - background-color: "#8EB1BF"
+                        - background-color: var(--accent-color)
                         - box-shadow: 0 0 7px rgba(255, 255, 255, 0.6)
             mudroom:
               card:
@@ -383,7 +383,7 @@ cards:
                   - value: "on"
                     styles:
                       card:
-                        - background-color: "#8EB1BF"
+                        - background-color: var(--accent-color)
                         - box-shadow: 0 0 7px rgba(255, 255, 255, 0.6)
             bathroom:
               card:
@@ -410,6 +410,6 @@ cards:
                   - value: "on"
                     styles:
                       card:
-                        - background-color: "#8EB1BF"
+                        - background-color: var(--accent-color)
                         - box-shadow: 0 0 7px rgba(255, 255, 255, 0.6)
       nav: !include footer-menu.yaml
