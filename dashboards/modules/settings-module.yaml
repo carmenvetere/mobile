@@ -1144,7 +1144,7 @@
     - type: custom:bubble-card
       card_type: button
       button_type: name
-      entity: sensor.tesla_wall_connector_energy
+      entity: sensor.wall_charger_energy
       name: EV Charger Energy Consumed
       card_layout: large
       show_state: false
@@ -1153,7 +1153,7 @@
       read_only_slider: false
       tap_to_slide: true
       sub_button:
-        - entity: sensor.tesla_wall_connector_energy
+        - entity: sensor.wall_charger_energy
           show_state: true
           show_attribute: false
           show_icon: false
