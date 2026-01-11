@@ -139,12 +139,6 @@ cards:
                 .volume-slider {
                   --control-slider-thickness: 80px !important;
                 }
-              sonos-media-browser$: |
-                .header {
-                  font-size: 26px !important;
-                  font-weight: bold !important;
-                  background-color: var(--background-color) !important;
-                  }
               sonos-media-browser$ sonos-favorites-icons$: |
                 .icons {
                   padding-top: 10px !important;
@@ -192,10 +186,40 @@ cards:
                 .speakers {
                   font-size: 24px !important;
                   text-align: left !important;
-                  margin-bottom: 5px !important;
+                  margin-bottom: 10px !important;
                 }
                 .song-title {
                   font-size: 20px !important;
                 }
-
+              sonos-grouping$: |
+                .wrapper {
+                  background: var(--background-color-2) !important;
+                }
+                .predefined-groups {
+                  /* styles for the container */
+                }
+                sonos-grouping-button {
+                  /* styles for the outer element */
+                }
+                .name {
+                  font-size: 24px !important;
+                  text-align: left !important;
+                  justify-content: flex-start !important;
+                }
+                .item {
+                  justify-content: flex-start !important;
+                }
+                .name-and-volume {
+                  align-items: flex-start !important;
+                }
+              sonos-grouping$ sonos-grouping-button$: |
+                ha-control-button {
+                  background: var(--background-color-2) !important;
+                  height: 60px !important;
+                }
+              sonos-grouping$ sonos-grouping-button$ ha-control-button$: |
+                .button {
+                  background: var(--primary-color) !important;
+                  border-radius: 15px !important;
+                }
       nav: !include footer-menu.yaml
