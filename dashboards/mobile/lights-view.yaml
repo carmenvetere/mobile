@@ -261,7 +261,7 @@ cards:
               }
           cards: 
           - type: vertical-stack
-            cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: mobile_lights_scenes, dashboard: mobile}]
+            cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
       second:
         card:
           type: custom:expander-card
