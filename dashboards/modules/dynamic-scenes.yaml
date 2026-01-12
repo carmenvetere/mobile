@@ -221,14 +221,18 @@ cards:
 # All Off Scene - All Displays All Times    
   - type: custom:bubble-card
     card_type: button
-    entity: switch.good_night_stateful_scene
+    entity: sensor.scene_good_night
     name: All Off
     icon: mdi:lightbulb-off
     button_action:
       tap_action:
         action: toggle
+      target: 
+        entity: switch.good_night_stateful_scene
     tap_action:
       action: toggle
+    target: 
+      entity: switch.good_night_stateful_scene
     card_layout: large
     scrolling_effect: false
     modules:
