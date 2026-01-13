@@ -317,31 +317,31 @@
           target:
             entity_id: light.stairs_spot_lights 
 # Other Lights - Basement Wall Panel Dashboard Link
-{% if dashboard == 'basement_wall_panel' %}
-    - type: custom:bubble-card
-      card_type: button
-      button_type: name
-      name: Other Lights
-      icon: mdi:light-recessed
-      show_state: false
-      slider_live_update: false
-      read_only_slider: false
-      tap_to_slide: false
-      tap_action:
-          action: navigate
-          navigation_path: /mudroom-wall-panel-dash/other-lights-view
-      scrolling_effect: false
-      use_accent_color: false
-      button_action:
-          tap_action:
-            action: navigate
-            navigation_path: /mudroom-wall-panel-dash/other-lights-view
-      sub_button:
-        - icon: mdi:chevron-right
-          state_background: false
-          tap_action:
-            action: navigate
-            navigation_path: /mudroom-wall-panel-dash/other-lights-view
-      modules:
-        - wall_panel_scenes
-{% endif %}
+# {% if dashboard == 'basement_wall_panel' %}
+#     - type: custom:bubble-card
+#       card_type: button
+#       button_type: name
+#       name: Other Lights
+#       icon: mdi:light-recessed
+#       show_state: false
+#       slider_live_update: false
+#       read_only_slider: false
+#       tap_to_slide: false
+#       tap_action:
+#           action: navigate
+#           navigation_path: /mudroom-wall-panel-dash/other-lights-view
+#       scrolling_effect: false
+#       use_accent_color: false
+#       button_action:
+#           tap_action:
+#             action: navigate
+#             navigation_path: /mudroom-wall-panel-dash/other-lights-view
+#       sub_button:
+#         - icon: mdi:chevron-right
+#           state_background: false
+#           tap_action:
+#             action: navigate
+#             navigation_path: /mudroom-wall-panel-dash/other-lights-view
+#       modules:
+#         - wall_panel_scenes
+# {% endif %}
