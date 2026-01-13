@@ -3,84 +3,84 @@ type: vertical-stack
 cards:
 # Rivian Charging - Basement Wall Panel Day
 {% if dashboard == 'basement_wall_panel' %}
-  -  type: custom:button-card
-      visibility:
-        - condition: state
-          entity: binary_sensor.r1t_charging_status
-          state: "on"
-      styles:
+  - type: custom:button-card
+    visibility:
+      - condition: state
+        entity: binary_sensor.r1t_charging_status
+        state: "on"
+    styles:
+      card:
+        - height: 140px
+        - width: 600px
+        - background: var(--background-color-2)
+        - border-radius: 30px
+        - padding-left: 20px
+      grid:
+        - grid-template-areas: |
+            "icon name time"
+            "slider slider slider"
+        - grid-template-columns: 75px 525px
+        - grid-template-rows: 45px 65px
+        - column-gap: 0px
+        - row-gap: 5px
+    custom_fields:
+      name:
         card:
-          - height: 140px
-          - width: 600px
-          - background: var(--background-color-2)
-          - border-radius: 30px
-          - padding-left: 20px
-        grid:
-          - grid-template-areas: |
-              "icon name time"
-              "slider slider slider"
-          - grid-template-columns: 75px 525px
-          - grid-template-rows: 45px 65px
-          - column-gap: 0px
-          - row-gap: 5px
-      custom_fields:
-        name:
-          card:
-            type: custom:button-card
-            name: Rivian R1T
-            show_name: true
-            show_state: false
-            show_icon: false
-            styles:
-              card:
-                - height: 65px
-                - width: 450px
-                - background-color: transparent
-                - margin-left: "-20px"
-              name:
-                - font-size: 28px
-                - font-weight: bold
-                - color: var(--text-color)
-                - text-align: left
-                - justify-self: start
-        icon:
-          card:
-            type: custom:button-card
-            icon: mdi:battery-50
-            styles:
-              icon:
-                - color: green
-                - height: 60px
-                - width: 60px
-              card:
-                - background-color: transparent
-                - margin-left: 10px
-                - height: 65px
-                - width: 75px
-        slider:
-          card:
-            type: custom:bubble-card
-            card_type: button
-            button_type: slider
-            sub_button:
-              main:
-                - entity: sensor.r1t_estimated_vehicle_range
-                  show_state: true
-                  show_icon: false
-                  state_background: true
-                  show_background: false
-                  name: ""
-                  show_name: false
-                - entity: sensor.r1t_battery_state_of_charge
-                  show_icon: false
-                  show_state: true
-                  state_background: false
-                  show_background: false
-              bottom: []
-            entity: sensor.r1t_battery_state_of_charge
-            show_name: false
-            modules:
-              - wall_panel_charging
+          type: custom:button-card
+          name: Rivian R1T
+          show_name: true
+          show_state: false
+          show_icon: false
+          styles:
+            card:
+              - height: 65px
+              - width: 450px
+              - background-color: transparent
+              - margin-left: "-20px"
+            name:
+              - font-size: 28px
+              - font-weight: bold
+              - color: var(--text-color)
+              - text-align: left
+              - justify-self: start
+      icon:
+        card:
+          type: custom:button-card
+          icon: mdi:battery-50
+          styles:
+            icon:
+              - color: green
+              - height: 60px
+              - width: 60px
+            card:
+              - background-color: transparent
+              - margin-left: 10px
+              - height: 65px
+              - width: 75px
+      slider:
+        card:
+          type: custom:bubble-card
+          card_type: button
+          button_type: slider
+          sub_button:
+            main:
+              - entity: sensor.r1t_estimated_vehicle_range
+                show_state: true
+                show_icon: false
+                state_background: true
+                show_background: false
+                name: ""
+                show_name: false
+              - entity: sensor.r1t_battery_state_of_charge
+                show_icon: false
+                show_state: true
+                state_background: false
+                show_background: false
+            bottom: []
+          entity: sensor.r1t_battery_state_of_charge
+          show_name: false
+          modules:
+            - wall_panel_charging
 {% endif %}
 #Good Morning Scene - All Displays in Morning
   - type: custom:bubble-card
