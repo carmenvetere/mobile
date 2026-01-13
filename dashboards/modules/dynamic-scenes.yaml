@@ -24,10 +24,11 @@ cards:
         - grid-template-rows: 45px 65px
         - column-gap: 0px
         - row-gap: 5px
-        - align-items: left
+        - align-items: start
+        - justify-items: flex-center
       custom_fields: 
         name: 
-          - justify-items: left
+          - justify-items: flex-start
     custom_fields:
       name:
         card:
