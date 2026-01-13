@@ -24,6 +24,7 @@ cards:
         - grid-template-rows: 45px 65px
         - column-gap: 0px
         - row-gap: 5px
+        - align-items: left
     custom_fields:
       name:
         card:
@@ -43,7 +44,7 @@ cards:
               - font-weight: bold
               - color: var(--text-color)
               - text-align: left
-              - justify-self: start
+              - justify-self: left
       slider:
         card:
           type: custom:bubble-card
