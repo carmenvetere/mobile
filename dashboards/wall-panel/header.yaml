@@ -261,7 +261,7 @@ card:
               style: |
                 :host {
                   zoom: 1.25 !important;
-                  --chip-background: transparent;
+                  --chip-background: var(--ha-card-background-2);
                 }
     temp:
       card:
