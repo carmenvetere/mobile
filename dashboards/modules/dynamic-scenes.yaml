@@ -18,7 +18,7 @@ cards:
         - margin-left: 10px
       grid:
         - grid-template-areas: |
-            "icon name time"
+            "name name time"
             "slider slider slider"
         - grid-template-columns: 75px 525px
         - grid-template-rows: 45px 65px
@@ -44,20 +44,6 @@ cards:
               - color: var(--text-color)
               - text-align: left
               - justify-self: start
-      icon:
-        card:
-          type: custom:button-card
-          icon: mdi:battery-50
-          styles:
-            icon:
-              - color: green
-              - height: 60px
-              - width: 60px
-            card:
-              - background-color: transparent
-              - margin-left: 10px
-              - height: 65px
-              - width: 75px
       slider:
         card:
           type: custom:bubble-card
