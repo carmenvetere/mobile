@@ -91,11 +91,11 @@ cards:
       grid:
         - grid-template-areas: |
             "icon name time"
-            "hold hold time" 
         - grid-template-columns: 100px 150px 350px
-        - grid-template-rows: 45px 65px
+        - grid-template-rows: 140px
         - column-gap: 0px
         - row-gap: 5px
+        - align-items: center
     custom_fields:
       name:
         card:
