@@ -144,3 +144,12 @@ lovelace:
       type: module 
     - url: /hacsfiles/Drag-And-Drop-Card/drag-and-drop-card.js 
       type: module
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.stream: error
+    homeassistant.components.ffmpeg: error
+
+homeassistant:
+  log_file: /config/home-assistant.log
