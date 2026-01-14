@@ -15,7 +15,7 @@ cards:
         - background: var(--background-color)
         - border-radius: 30px
         - padding-left: 20px
-        - margin-left: 20px
+        - margin-left: 10px
       grid:
         - grid-template-areas: |
             "name name time"
@@ -111,7 +111,7 @@ cards:
               - background-color: transparent
               - margin-left: "-20px"
             name:
-              - font-size: 28px
+              - font-size: 32px
               - font-weight: bold
               - color: var(--text-color)
               - text-align: left
@@ -138,6 +138,7 @@ cards:
           show_label: false
           show_name: false
           show_icon: false
+          tap_action: none
           styles:
             card:
               - height: 130px
