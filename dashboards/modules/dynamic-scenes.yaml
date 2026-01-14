@@ -15,7 +15,7 @@ cards:
         - background: var(--background-color)
         - border-radius: 30px
         - padding-left: 20px
-        - margin-left: 10px
+        - margin-left: 20px
       grid:
         - grid-template-areas: |
             "name name time"
@@ -87,6 +87,7 @@ cards:
         - background: var(--background-color-2)
         - border-radius: 30px
         - padding-left: 20px
+        - margin-left: 10px
       grid:
         - grid-template-areas: |
             "icon name time"
