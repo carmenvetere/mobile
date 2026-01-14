@@ -277,15 +277,19 @@ cards:
 #Outdoor Scene - All Displays All Times
   - type: custom:bubble-card
     card_type: button
-    entity: switch.outdoor_on_stateful_scene
+    entity: sensor.scene_outdoor_on
     name: Outdoor
     icon: mdi:coach-lamp
     button_action:
       tap_action:
         action: toggle
+      target: 
+        entity: switch.outdoor_on_stateful_scene
     tap_action:
       tap_action:
         action: toggle
+      target: 
+        entity: switch.outdoor_on_stateful_scene
     card_layout: large
     scrolling_effect: false
     modules:
