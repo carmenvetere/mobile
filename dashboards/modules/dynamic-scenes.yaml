@@ -74,6 +74,7 @@ cards:
             - wall_panel_charging
 {% endif %}
 #Dryer When Running - Basement Panel in Morning. 
+{% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
     visibility:
       - condition: state
@@ -144,8 +145,7 @@ cards:
             state:
               - font-size: 46px
               - color: var(--text-color)
-
-
+{% endif %}
 #Good Morning Scene - All Displays in Morning
   - type: custom:bubble-card
     card_type: button
