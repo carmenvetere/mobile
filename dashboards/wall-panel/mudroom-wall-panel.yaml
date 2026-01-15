@@ -1,13 +1,13 @@
 kiosk_mode:
   non_admin_settings:
     hide_header: true
-    hide_sidebar: false
+    hide_sidebar: true
     hide_search: true
     hide_assistant: true
   mobile_settings:
     hide_header: true
     hide_search: true
-    hide_sidebar: false
+    hide_sidebar: true
     hide_overflow: true
 views:
   - !include home-view.yaml
