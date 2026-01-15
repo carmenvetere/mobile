@@ -356,15 +356,11 @@ cards:
     name: Outdoor
     icon: mdi:coach-lamp
     button_action:
-      tap_action:
-        action: toggle
-      target: 
-        entity: switch.outdoor_on_stateful_scene
-    tap_action:
-      tap_action:
-        action: toggle
-      target: 
-        entity: switch.outdoor_on_stateful_scene
+        tap_action:
+          action: perform-action
+          perform_action: switch.toggle
+          target:
+            entity_id: switch.outdoor_on_stateful_scene
     card_layout: large
     scrolling_effect: false
     modules:
