@@ -14,17 +14,6 @@ scene: !include scenes.yaml
 homekit: !include homekit.yaml
 template: !include sensors2.yaml
 
-command_line:
-  - sensor:
-      name: living_room_favorites
-      unique_id: living_room_favorites
-      command: >-
-        python3 -c "import yaml, json; data = yaml.safe_load(open('/config/dashboards/modules/custom-favorites.yaml')); print(json.dumps({'favorites': data, 'count': len(data)}))"
-      value_template: "{{ value_json.count }} favorites"
-      json_attributes:
-        - favorites
-      scan_interval: 86400
-
 device_tracker:
   - platform: group
     name: "Smartphones"
@@ -63,7 +52,6 @@ recorder:
       - sensor.powerwall_discharge_time
       - sensor.bayberry_tempest_wind_speed
       - sensor.bayberry_tempest_wind_direction
-      - sensor.solcast_* 
 
 lovelace_gen:
 
@@ -119,8 +107,6 @@ lovelace:
       type: module
     - url: /hacsfiles/llmvision-card/llmvision-card.js 
       type: module
-    - url: /hacsfiles/ha-sankey-chart/ha-sankey-chart.js 
-      type: module
     - url: /hacsfiles/mini-climate-card/mini-climate-card-bundle.js 
       type: module
     - url: /hacsfiles/vacuum-card/vacuum-card.js  
@@ -135,19 +121,7 @@ lovelace:
       type: module
     - url: /hacsfiles/alarmo-card/alarmo-card.js 
       type: module
-    - url: /hacsfiles/mediocre-hass-media-player-cards/mediocre-hass-media-player-cards.js 
-      type: module 
     - url: /hacsfiles/apexcharts-card/apexcharts-card.js 
-      type: module
-    - url: /hacsfiles/lovelace-thermostat-card/main.js 
       type: module
     - url: /hacsfiles/weather-radar-card/weather-radar-card.js 
       type: module 
-    - url: /hacsfiles/Drag-And-Drop-Card/drag-and-drop-card.js 
-      type: module
-
-logger:
-  default: warning
-  logs:
-    homeassistant.components.stream: error
-    homeassistant.components.ffmpeg: error

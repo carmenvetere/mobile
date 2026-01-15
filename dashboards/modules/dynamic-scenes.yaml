@@ -74,80 +74,80 @@ cards:
             - wall_panel_charging
 {% endif %}
 #Dryer When Running - Basement Panel in Morning. 
-{% if dashboard == 'basement_wall_panel' %}
-  - type: custom:button-card
-    visibility:
-      - condition: state
-        entity: sensor.dryer
-        state: "on"
-    styles:
-      card:
-        - height: 140px
-        - width: 600px
-        - background: var(--background-color-2)
-        - border-radius: 30px
-        - padding-left: 20px
-        - margin-left: 10px
-      grid:
-        - grid-template-areas: |
-            "icon name time"
-        - grid-template-columns: 100px 150px 350px
-        - grid-template-rows: 140px
-        - column-gap: 0px
-        - row-gap: 5px
-        - align-items: center
-    custom_fields:
-      name:
-        card:
-          type: custom:button-card
-          name: Dryer
-          show_name: true
-          show_state: false
-          show_icon: false
-          styles:
-            card:
-              - height: 130px
-              - width: 150px
-              - background-color: transparent
-              - margin-left: "-20px"
-            name:
-              - font-size: 32px
-              - font-weight: bold
-              - color: var(--text-color)
-              - text-align: left
-              - justify-self: start
-      icon:
-        card:
-          type: custom:button-card
-          icon: mdi:tumble-dryer
-          styles:
-            icon:
-              - color: var(--text-color)
-              - height: 60px
-              - width: 60px
-            card:
-              - background-color: transparent
-              - margin-left: 10px
-              - height: 130px
-              - width: 75px
-      time:
-        card:
-          type: custom:button-card
-          entity: sensor.dryer_remaining_time
-          show_state: true
-          show_label: false
-          show_name: false
-          show_icon: false
-          tap_action: none
-          styles:
-            card:
-              - height: 130px
-              - width: 350px
-              - background: transparent
-            state:
-              - font-size: 46px
-              - color: var(--text-color)
-{% endif %}
+# {% if dashboard == 'basement_wall_panel' %}
+#   - type: custom:button-card
+#     visibility:
+#       - condition: state
+#         entity: sensor.dryer
+#         state: "on"
+#     styles:
+#       card:
+#         - height: 140px
+#         - width: 600px
+#         - background: var(--background-color-2)
+#         - border-radius: 30px
+#         - padding-left: 20px
+#         - margin-left: 10px
+#       grid:
+#         - grid-template-areas: |
+#             "icon name time"
+#         - grid-template-columns: 100px 150px 350px
+#         - grid-template-rows: 140px
+#         - column-gap: 0px
+#         - row-gap: 5px
+#         - align-items: center
+#     custom_fields:
+#       name:
+#         card:
+#           type: custom:button-card
+#           name: Dryer
+#           show_name: true
+#           show_state: false
+#           show_icon: false
+#           styles:
+#             card:
+#               - height: 130px
+#               - width: 150px
+#               - background-color: transparent
+#               - margin-left: "-20px"
+#             name:
+#               - font-size: 32px
+#               - font-weight: bold
+#               - color: var(--text-color)
+#               - text-align: left
+#               - justify-self: start
+#       icon:
+#         card:
+#           type: custom:button-card
+#           icon: mdi:tumble-dryer
+#           styles:
+#             icon:
+#               - color: var(--text-color)
+#               - height: 60px
+#               - width: 60px
+#             card:
+#               - background-color: transparent
+#               - margin-left: 10px
+#               - height: 130px
+#               - width: 75px
+#       time:
+#         card:
+#           type: custom:button-card
+#           entity: sensor.dryer_remaining_time
+#           show_state: true
+#           show_label: false
+#           show_name: false
+#           show_icon: false
+#           tap_action: none
+#           styles:
+#             card:
+#               - height: 130px
+#               - width: 350px
+#               - background: transparent
+#             state:
+#               - font-size: 46px
+#               - color: var(--text-color)
+# {% endif %}
 #Good Morning Scene - All Displays in Morning
   - type: custom:bubble-card
     card_type: button
