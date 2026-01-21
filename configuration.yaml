@@ -14,8 +14,8 @@ scene: !include scenes.yaml
 homekit: !include homekit.yaml
 template: !include sensors2.yaml
 
-device_tracker:
-  - platform: group
+group:
+  smartphones:
     name: "Smartphones"
     entities:
       - device_tracker.brians_iphone_15_pro
