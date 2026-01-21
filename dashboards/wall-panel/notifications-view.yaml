@@ -31,8 +31,5 @@ cards:
       main:
         card: 
           type: vertical-stack
-          cards: !include 
-              - /config/dashboards/modules/notifications.yaml
-              - module_name: wall_panel_notifications
-                dashboard: basement_wall_panel
+          cards: !include [/config/dashboards/modules/notifications.yaml, {module_name: wall_panel_notifications, dashboard: basement_wall_panel}]
       nav: !include footer-menu.yaml
