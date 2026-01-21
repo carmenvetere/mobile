@@ -52,6 +52,7 @@ recorder:
       - sensor.powerwall_discharge_time
       - sensor.bayberry_tempest_wind_speed
       - sensor.bayberry_tempest_wind_direction
+      - sensor.solcast_*
 
 lovelace_gen:
 
