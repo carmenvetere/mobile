@@ -123,3 +123,11 @@ lovelace:
       type: module
     - url: /hacsfiles/weather-radar-card/weather-radar-card.js 
       type: module 
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.homekit_controller: debug
+    homeassistant.components.homekit: debug
+    aiohomekit: debug
+    pyhap: debug
