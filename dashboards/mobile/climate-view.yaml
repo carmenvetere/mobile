@@ -226,8 +226,6 @@ cards:
                 - type: custom:bubble-card
                   card_type: climate
                   name: Living Room Thermostat
-                  modules:
-                    - default
                   show_state: false
                   entity: climate.living_room_thermostat_homekit
                   sub_button:
@@ -345,8 +343,6 @@ cards:
                 - type: custom:bubble-card
                   card_type: climate
                   name: Hallway Thermostat
-                  modules:
-                    - default
                   show_state: false
                   entity: climate.basement_thermostat_homekit
                   sub_button:
@@ -386,8 +382,6 @@ cards:
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
-                  modules:
-                    - default
                   entity: switch.basement_thermostat_family_room_priority
                   name: Media Room Priority
                   show_icon: false
@@ -463,8 +457,6 @@ cards:
                 - type: custom:bubble-card
                   card_type: climate
                   name: Office Thermostat
-                  modules:
-                    - default
                   show_state: false
                   entity: climate.office_thermostat_homekit
                   sub_button:
@@ -537,8 +529,6 @@ cards:
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
-                  modules:
-                    - default
                   entity: switch.office_thermostat_front_guest_bedroom_priority
                   name: Back Guest Room Priority
                   show_icon: false
@@ -570,8 +560,6 @@ cards:
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
-                  modules:
-                    - default
                   entity: switch.office_thermostat_front_guest_bedroom_priority
                   name: Office Priority
                   show_icon: false
@@ -654,8 +642,6 @@ cards:
                 - type: custom:bubble-card
                   card_type: climate
                   name: Bedroom Thermostat
-                  modules:
-                    - default
                   show_state: false
                   entity: climate.bedroom_thermostat
                   sub_button:
@@ -699,8 +685,6 @@ cards:
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
-                  modules:
-                    - default
                   entity: switch.master_bedroom_thermostat_primary_bathroom_priority
                   name: Bathroom Priority
                   show_icon: false
