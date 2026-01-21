@@ -255,7 +255,7 @@ card:
               entity: sensor.r1t_charging_time_remaining
               icon_color: green
               content: >
-                {{ (now() + timedelta(minutes=states('sensor.r1t_charging_time_remaining')|int(0))).timestamp() | timestamp_custom('%-I:%M %p') }}
+                {{ (now() + timedelta(minutes=states('sensor.r1t_charging_time_remaining')|int(0))).strftime('%-I:%M %p') }}
               tap_action:
                 action: more-info
                 entity: sensor.r1t_battery_state_of_charge
