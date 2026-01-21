@@ -44,6 +44,7 @@ recorder:
       - media_player
     entity_globs:
       - sensor.time*
+      - sensor.solcast*
     entities:
       - sensor.date
       - sensor.time
@@ -52,7 +53,7 @@ recorder:
       - sensor.powerwall_discharge_time
       - sensor.bayberry_tempest_wind_speed
       - sensor.bayberry_tempest_wind_direction
-      - sensor.solcast*
+
 
 lovelace_gen:
 
