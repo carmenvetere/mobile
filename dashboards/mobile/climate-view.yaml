@@ -504,8 +504,6 @@ cards:
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
-                  modules:
-                    - default
                   entity: switch.office_thermostat_front_guest_bedroom_priority
                   name: Front Guest Room Priority
                   show_icon: false
