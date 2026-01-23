@@ -158,12 +158,6 @@ cards:
       - condition: state
         entity: input_boolean.day_scene_buttons
         state: "on"
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: scene.turn_on
-        target:
-          entity_id: scene.good_morning
     tap_action:
       action: perform-action
       perform_action: scene.turn_on
@@ -184,12 +178,6 @@ cards:
       - condition: state
         entity: input_boolean.day_scene_buttons
         state: "on"
-    button_action:
-      tap_action:
-        action: perform-action
-        perform_action: scene.turn_on
-        target:
-          entity_id: scene.basement_work
     tap_action:
       action: perform-action
       perform_action: scene.turn_on
