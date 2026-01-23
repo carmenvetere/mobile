@@ -1157,23 +1157,17 @@
       - 578895ed363d718559af33631b306eb0
       - b10688a6aa33df162bd725f76ae4f0e5
       button_0_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.good_morning_stateful_scene
-        data: {}
+          entity_id: scene.good_morning
       button_0_hold:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.first_floor_cleaning_stateful_scene
-        data: {}
+          entity_id: scene.first_floor_cleaning
       button_1_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.entertaining_stateful_scene
-        data: {}
+          entity_id: scene.entertaining
       button_1_hold:
       - action: cover.open_cover
         metadata: {}
@@ -1184,11 +1178,9 @@
           - cover.living_room_side_shades
           - cover.dining_room_side
       button_2_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.nightlight_stateful_scene
-        data: {}
+          entity_id: scene.nightlight
       button_2_hold:
       - action: cover.close_cover
         metadata: {}
@@ -1199,17 +1191,13 @@
           - cover.living_room_side_shades
           - cover.dining_room_side
       button_3_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.good_night_stateful_scene
-        data: {}
+          entity_id: scene.good_night
       button_3_hold:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.emergency_stateful_scene
-        data: {}
+          entity_id: scene.emergency
       auto_mode: restart
 - id: '1733850109426'
   alias: Powerwall - 30%
@@ -1421,41 +1409,29 @@
       pico_remote:
       - 6af6dded0349a69ee60f43bfbc75fe7c
       button_0_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.good_morning_stateful_scene
-        data: {}
+          entity_id: scene.good_morning
       button_0_hold:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.upstairs_cleaning_stateful_scene
-        data: {}
+          entity_id: scene.upstairs_cleaning
       button_1_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.upstairs_evening_stateful_scene
-        data: {}
+          entity_id: scene.upstairs_evening
       button_2_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.nightlight_stateful_scene
-        data: {}
+          entity_id: scene.nightlight
       button_3_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.good_night_stateful_scene
-        data: {}
+          entity_id: scene.good_night
       button_3_hold:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.emergency_stateful_scene
-        data: {}
+          entity_id: scene.emergency
       time_before_long_press: 2
       auto_mode: restart
 - id: '1733943617387'
@@ -1469,53 +1445,37 @@
       - cc5676af08d4c5ebb45d8cd4a6d526cf
       - bf0ab6d18cbec476d48166089fcea092
       button_0_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.welcome_stateful_scene
-        data: {}
+          entity_id: scene.welcome
       button_0_hold:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.basement_cleaning_stateful_scene
-        data: {}
+          entity_id: scene.basement_cleaning
       button_1_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.basement_entertaining_stateful_scene
-        data: {}
+          entity_id: scene.basement_entertaining
       button_1_hold:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.outdoor_on_stateful_scene
-        data: {}
+          entity_id: scene.outdoor_on
       button_2_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.basement_evening_stateful_scene
-        data: {}
+          entity_id: scene.basement_evening
       button_2_hold:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.nightlight_stateful_scene
-        data: {}
+          entity_id: scene.nightlight
       button_3_press:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.good_night_stateful_scene
-        data: {}
+          entity_id: scene.good_night
       button_3_hold:
-      - action: switch.turn_on
-        metadata: {}
+      - action: scene.turn_on
         target:
-          entity_id: switch.emergency_stateful_scene
-        data: {}
+          entity_id: scene.emergency
       auto_mode: restart
 - id: '1734869940914'
   alias: 'Driveway: Detections when alarm armed'
