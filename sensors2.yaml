@@ -191,3 +191,199 @@
       attributes:
         modules: "{{ trigger.event.data.modules }}"
         last_updated: "{{ trigger.event.data.last_updated }}"
+
+# ═══════════════════════════════════════════════════════════════════
+# Scene Detection Binary Sensors
+# ═══════════════════════════════════════════════════════════════════
+- binary_sensor:
+    - name: "Scene Good Morning"
+      unique_id: scene_good_morning
+      state: >
+        {% set checks = [
+          is_state('light.living_room_floor_lamp_1', 'on') and state_attr('light.living_room_floor_lamp_1', 'brightness') | int(0) in range(245, 266),
+          is_state('light.living_room_floor_lamp_2', 'on') and state_attr('light.living_room_floor_lamp_2', 'brightness') | int(0) in range(245, 266),
+          is_state('light.kitchen_main_lights', 'on') and state_attr('light.kitchen_main_lights', 'brightness') | int(0) in range(5, 26),
+          is_state('light.kitchen_outer_wall', 'on') and state_attr('light.kitchen_outer_wall', 'brightness') | int(0) in range(117, 138),
+          is_state('light.kitchen_island_pendants', 'on') and state_attr('light.kitchen_island_pendants', 'brightness') | int(0) in range(28, 49)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:weather-sunset-up
+
+    - name: "Scene Good Night"
+      unique_id: scene_good_night
+      state: >
+        {% set checks = [
+          is_state('light.living_room_main_lights', 'off'),
+          is_state('light.living_room_floor_lamp_1', 'off'),
+          is_state('light.living_room_floor_lamp_2', 'off'),
+          is_state('light.kitchen_main_lights', 'off'),
+          is_state('light.kitchen_island_pendants', 'off')
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:moon-waning-crescent
+
+    - name: "Scene Nightlight"
+      unique_id: scene_nightlight
+      state: >
+        {% set checks = [
+          is_state('light.living_room_floor_lamp_1', 'on') and state_attr('light.living_room_floor_lamp_1', 'brightness') | int(0) in range(66, 87),
+          is_state('light.living_room_floor_lamp_2', 'on') and state_attr('light.living_room_floor_lamp_2', 'brightness') | int(0) in range(66, 87),
+          is_state('light.office_floor_lamp', 'on') and state_attr('light.office_floor_lamp', 'brightness') | int(0) in range(41, 62),
+          is_state('light.kitchen_window_seat_sconce', 'on') and state_attr('light.kitchen_window_seat_sconce', 'brightness') | int(0) in range(117, 138),
+          is_state('light.stairs_spot_lights', 'on') and state_attr('light.stairs_spot_lights', 'brightness') | int(0) in range(15, 36)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:lightbulb-night-outline
+
+    - name: "Scene Emergency"
+      unique_id: scene_emergency
+      state: >
+        {% set checks = [
+          is_state('light.gym_main_lights', 'on') and state_attr('light.gym_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.kitchen_main_lights', 'on') and state_attr('light.kitchen_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.living_room_main_lights', 'on') and state_attr('light.living_room_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.upstairs_hallway_main_lights', 'on') and state_attr('light.upstairs_hallway_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.dining_room_main_lights', 'on') and state_attr('light.dining_room_main_lights', 'brightness') | int(0) in range(245, 266)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:hospital
+
+    - name: "Scene Evening"
+      unique_id: scene_evening
+      state: >
+        {% set checks = [
+          is_state('light.dining_room_accent_lights', 'on') and state_attr('light.dining_room_accent_lights', 'brightness') | int(0) in range(28, 49),
+          is_state('light.dining_room_table_lamps', 'on') and state_attr('light.dining_room_table_lamps', 'brightness') | int(0) in range(66, 87),
+          is_state('light.living_room_main_lights', 'on') and state_attr('light.living_room_main_lights', 'brightness') | int(0) in range(41, 62),
+          is_state('light.living_room_floor_lamp_1', 'on') and state_attr('light.living_room_floor_lamp_1', 'brightness') | int(0) in range(181, 202),
+          is_state('light.kitchen_island_pendants', 'on') and state_attr('light.kitchen_island_pendants', 'brightness') | int(0) in range(41, 62)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:weather-sunset-down
+
+    - name: "Scene Entertaining"
+      unique_id: scene_entertaining
+      state: >
+        {% set checks = [
+          is_state('light.living_room_floor_lamp_1', 'on') and state_attr('light.living_room_floor_lamp_1', 'brightness') | int(0) in range(117, 138),
+          is_state('light.living_room_floor_lamp_2', 'on') and state_attr('light.living_room_floor_lamp_2', 'brightness') | int(0) in range(117, 138),
+          is_state('light.kitchen_island_pendants', 'on') and state_attr('light.kitchen_island_pendants', 'brightness') | int(0) in range(130, 151),
+          is_state('light.dining_room_accent_lights', 'on') and state_attr('light.dining_room_accent_lights', 'brightness') | int(0) in range(117, 138),
+          is_state('light.front_foyer_pendants', 'on') and state_attr('light.front_foyer_pendants', 'brightness') | int(0) in range(66, 87)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:glass-cocktail
+
+    - name: "Scene First Floor Cleaning"
+      unique_id: scene_first_floor_cleaning
+      state: >
+        {% set checks = [
+          is_state('light.kitchen_main_lights', 'on') and state_attr('light.kitchen_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.kitchen_island_pendants', 'on') and state_attr('light.kitchen_island_pendants', 'brightness') | int(0) in range(245, 266),
+          is_state('light.kitchen_outer_wall', 'on') and state_attr('light.kitchen_outer_wall', 'brightness') | int(0) in range(245, 266),
+          is_state('light.living_room_main_lights', 'on') and state_attr('light.living_room_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.dining_room_main_lights', 'on') and state_attr('light.dining_room_main_lights', 'brightness') | int(0) in range(245, 266)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:spray-bottle
+
+    - name: "Scene Welcome"
+      unique_id: scene_welcome
+      state: >
+        {% set checks = [
+          is_state('light.living_room_main_lights', 'on') and state_attr('light.living_room_main_lights', 'brightness') | int(0) in range(66, 87),
+          is_state('light.kitchen_main_lights', 'on') and state_attr('light.kitchen_main_lights', 'brightness') | int(0) in range(66, 87),
+          is_state('light.front_foyer_pendants', 'on') and state_attr('light.front_foyer_pendants', 'brightness') | int(0) in range(66, 87),
+          is_state('light.upstairs_hallway_main_lights', 'on') and state_attr('light.upstairs_hallway_main_lights', 'brightness') | int(0) in range(66, 87),
+          is_state('light.basement_hallway_main_lights', 'on') and state_attr('light.basement_hallway_main_lights', 'brightness') | int(0) in range(92, 113)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:human-greeting
+
+    - name: "Scene Basement Cleaning"
+      unique_id: scene_basement_cleaning
+      state: >
+        {% set checks = [
+          is_state('light.media_room_main_lights', 'on') and state_attr('light.media_room_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.basement_hallway_main_lights', 'on') and state_attr('light.basement_hallway_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.laundry_room_main_lights', 'on') and state_attr('light.laundry_room_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.gym_main_lights', 'on') and state_attr('light.gym_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.stairs_main_lights', 'on') and state_attr('light.stairs_main_lights', 'brightness') | int(0) in range(245, 266)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:spray-bottle
+
+    - name: "Scene Basement Evening"
+      unique_id: scene_basement_evening
+      state: >
+        {% set checks = [
+          is_state('light.media_room_main_lights', 'off'),
+          is_state('light.media_room_table_lamp', 'on') and state_attr('light.media_room_table_lamp', 'brightness') | int(0) in range(41, 62),
+          is_state('light.basement_hallway_main_lights', 'on') and state_attr('light.basement_hallway_main_lights', 'brightness') | int(0) in range(28, 49),
+          is_state('light.stairs_main_lights', 'on') and state_attr('light.stairs_main_lights', 'brightness') | int(0) in range(28, 49),
+          is_state('light.gym_main_lights', 'on') and state_attr('light.gym_main_lights', 'brightness') | int(0) in range(28, 49)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:lamps
+
+    - name: "Scene Basement Work"
+      unique_id: scene_basement_work
+      state: >
+        {% set checks = [
+          is_state('light.media_room_main_lights', 'on') and state_attr('light.media_room_main_lights', 'brightness') | int(0) in range(92, 113),
+          is_state('light.media_room_table_lamp', 'on') and state_attr('light.media_room_table_lamp', 'brightness') | int(0) in range(117, 138),
+          is_state('light.basement_hallway_main_lights', 'on') and state_attr('light.basement_hallway_main_lights', 'brightness') | int(0) in range(53, 74),
+          is_state('light.gym_main_lights', 'on') and state_attr('light.gym_main_lights', 'brightness') | int(0) in range(53, 74)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:desk-lamp
+
+    - name: "Scene Upstairs Evening"
+      unique_id: scene_upstairs_evening
+      state: >
+        {% set checks = [
+          is_state('light.office_floor_lamp', 'on') and state_attr('light.office_floor_lamp', 'brightness') | int(0) in range(66, 87),
+          is_state('light.upstairs_hallway_main_lights', 'on') and state_attr('light.upstairs_hallway_main_lights', 'brightness') | int(0) in range(15, 36),
+          is_state('light.eve_light_strip_a5a4', 'on') and state_attr('light.eve_light_strip_a5a4', 'brightness') | int(0) in range(64, 85)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:moon-waning-crescent
+
+    - name: "Scene Outdoor On"
+      unique_id: scene_outdoor_on
+      state: >
+        {% set checks = [
+          is_state('light.patio_back_porch_lights', 'on') and state_attr('light.patio_back_porch_lights', 'brightness') | int(0) in range(53, 74),
+          is_state('light.driveway_sconces', 'on') and state_attr('light.driveway_sconces', 'brightness') | int(0) in range(53, 74),
+          is_state('light.front_porch_overhead_light', 'on') and state_attr('light.front_porch_overhead_light', 'brightness') | int(0) in range(53, 74),
+          is_state('switch.driveway_zone_2_2', 'on'),
+          is_state('switch.transformer_zone_1', 'on')
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:outdoor-lamp
+
+    - name: "Scene Outdoor On Bright"
+      unique_id: scene_outdoor_on_bright
+      state: >
+        {% set checks = [
+          is_state('light.patio_back_porch_lights', 'on') and state_attr('light.patio_back_porch_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.driveway_sconces', 'on') and state_attr('light.driveway_sconces', 'brightness') | int(0) in range(245, 266),
+          is_state('light.front_porch_overhead_light', 'on') and state_attr('light.front_porch_overhead_light', 'brightness') | int(0) in range(245, 266),
+          is_state('switch.driveway_zone_2_2', 'on'),
+          is_state('switch.transformer_zone_1', 'on')
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:outdoor-lamp
+
+    - name: "Scene Outdoor Off"
+      unique_id: scene_outdoor_off
+      state: >
+        {% set checks = [
+          is_state('light.patio_back_porch_lights', 'off'),
+          is_state('light.driveway_sconces', 'off'),
+          is_state('light.front_porch_overhead_light', 'off'),
+          is_state('switch.driveway_zone_2_2', 'off'),
+          is_state('switch.transformer_zone_1', 'off')
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+      icon: mdi:lightbulb-multiple-off-outline

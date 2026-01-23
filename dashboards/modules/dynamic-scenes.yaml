@@ -151,7 +151,7 @@ cards:
 #Good Morning Scene - All Displays in Morning
   - type: custom:bubble-card
     card_type: button
-    entity: scene.good_morning
+    entity: binary_sensor.scene_good_morning
     name: Morning
     icon: mdi:weather-sunset-up
     visibility:
@@ -160,9 +160,15 @@ cards:
         state: "on"
     button_action:
       tap_action:
-        action: toggle
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.good_morning
     tap_action:
-      action: toggle
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.good_morning
     card_layout: large
     scrolling_effect: false
     modules:
@@ -171,18 +177,24 @@ cards:
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:bubble-card
     card_type: button
-    entity: scene.basement_work
+    entity: binary_sensor.scene_basement_work
     name: Working
     icon: mdi:desk-lamp
     visibility:
       - condition: state
         entity: input_boolean.day_scene_buttons
-        state: "on"                  
+        state: "on"
     button_action:
       tap_action:
-        action: toggle
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.basement_work
     tap_action:
-      action: toggle
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.basement_work
     card_layout: large
     scrolling_effect: false
     modules:
@@ -192,18 +204,24 @@ cards:
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:bubble-card
     card_type: button
-    entity: scene.basement_cleaning
+    entity: binary_sensor.scene_basement_cleaning
     name: Cleaning
     icon: mdi:spray-bottle
     visibility:
       - condition: state
         entity: input_boolean.day_scene_buttons
-        state: "on"                  
+        state: "on"
     button_action:
       tap_action:
-        action: toggle
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.basement_cleaning
     tap_action:
-      action: toggle
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.basement_cleaning
     card_layout: large
     scrolling_effect: false
     modules:
@@ -212,7 +230,7 @@ cards:
 # Welcome Evening Scene - Basement Wall Panel in Evening
   - type: custom:bubble-card
     card_type: button
-    entity: scene.welcome
+    entity: binary_sensor.scene_welcome
     name: Welcome
     icon: mdi:human-greeting
     visibility:
@@ -226,9 +244,15 @@ cards:
             state: "on"
     button_action:
       tap_action:
-        action: toggle
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.welcome
     tap_action:
-      action: toggle
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.welcome
     card_layout: large
     scrolling_effect: false
     modules:
@@ -237,7 +261,7 @@ cards:
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:bubble-card
     card_type: button
-    entity: scene.basement_evening
+    entity: binary_sensor.scene_basement_evening
     name: Basement Evening
     icon: mdi:moon-waning-crescent
     visibility:
@@ -248,12 +272,18 @@ cards:
             state: "on"
           - condition: state
             entity: input_boolean.evening_scene_buttons
-            state: "on"             
+            state: "on"
     button_action:
       tap_action:
-        action: toggle
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.basement_evening
     tap_action:
-      action: toggle
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.basement_evening
     card_layout: large
     scrolling_effect: false
     modules:
@@ -263,7 +293,7 @@ cards:
 {% if dashboard in ['mobile'] %}
   - type: custom:bubble-card
     card_type: button
-    entity: scene.evening
+    entity: binary_sensor.scene_evening
     name: First Floor Evening
     icon: mdi:moon-waning-crescent
     visibility:
@@ -274,12 +304,18 @@ cards:
             state: "on"
           - condition: state
             entity: input_boolean.evening_scene_buttons
-            state: "on"             
+            state: "on"
     button_action:
       tap_action:
-        action: toggle
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.evening
     tap_action:
-      action: toggle
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.evening
     card_layout: large
     scrolling_effect: false
     modules:
@@ -289,18 +325,24 @@ cards:
 {% if dashboard in ['mobile'] %}
   - type: custom:bubble-card
     card_type: button
-    entity: scene.entertaining
+    entity: binary_sensor.scene_entertaining
     name: Entertaining
     icon: mdi:glass-cocktail
     visibility:
       - condition: state
         entity: input_boolean.evening_scene_buttons
-        state: "on"                  
+        state: "on"
     button_action:
       tap_action:
-        action: toggle
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.entertaining
     tap_action:
-      action: toggle
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.entertaining
     card_layout: large
     scrolling_effect: false
     modules:
@@ -309,18 +351,24 @@ cards:
 # Emergency Scene - All Displays Night
   - type: custom:bubble-card
     card_type: button
-    entity: scene.emergency
+    entity: binary_sensor.scene_emergency
     name: Emergency
     icon: mdi:hospital
     visibility:
       - condition: state
         entity: input_boolean.night_scene_buttons
-        state: "on"                  
+        state: "on"
     button_action:
       tap_action:
-        action: toggle
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.emergency
     tap_action:
-      action: toggle
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.emergency
     card_layout: large
     scrolling_effect: false
     modules:
@@ -328,23 +376,29 @@ cards:
 # Nightlight Scene - All Displays Evening and Night
   - type: custom:bubble-card
     card_type: button
-    entity: scene.nightlight
+    entity: binary_sensor.scene_nightlight
     name: Nightlight
     icon: mdi:lightbulb-night
     visibility:
       - condition: or
-        conditions: 
+        conditions:
         - condition: state
           entity: input_boolean.night_scene_buttons
-          state: "on"                  
+          state: "on"
         - condition: state
           entity: input_boolean.evening_scene_buttons
-          state: "on" 
+          state: "on"
     button_action:
       tap_action:
-        action: toggle
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.nightlight
     tap_action:
-      action: toggle
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.nightlight
     card_layout: large
     scrolling_effect: false
     modules:
@@ -352,7 +406,7 @@ cards:
 #Outdoor Scene - All Displays All Times
   - type: custom:bubble-card
     card_type: button
-    entity: sensor.scene_outdoor_on
+    entity: binary_sensor.scene_outdoor_on
     name: Outdoor
     icon: mdi:coach-lamp
     button_action:
@@ -368,18 +422,20 @@ cards:
 # All Off Scene - All Displays All Times    
   - type: custom:bubble-card
     card_type: button
-    entity: sensor.scene_good_night
+    entity: binary_sensor.scene_good_night
     name: All Off
     icon: mdi:lightbulb-off
     button_action:
       tap_action:
-        action: toggle
-      target: 
-        entity: scene.good_night
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.good_night
     tap_action:
-      action: toggle
-    target: 
-      entity: scene.good_night
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.good_night
     card_layout: large
     scrolling_effect: false
     modules:
