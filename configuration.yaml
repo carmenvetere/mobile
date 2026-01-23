@@ -45,6 +45,22 @@ recorder:
     entity_globs:
       - sensor.time*
       - sensor.solcast*
+      - binary_sensor.*_person_detected*
+      - binary_sensor.*_vehicle_detected*
+      - binary_sensor.*_animal_detected*
+      - binary_sensor.*_object_detected*
+      - binary_sensor.*_audio_object_detected*
+      - binary_sensor.*_speaking_detected*
+      - binary_sensor.*_barking_detected*
+      - binary_sensor.*_siren_detected*
+      - binary_sensor.*_smoke_alarm_detected*
+      - binary_sensor.*_car_horn_detected*
+      - binary_sensor.*_car_alarm_detected*
+      - sensor.*_last_motion_detected*
+      - switch.*_detections_person
+      - switch.*_detections_vehicle
+      - switch.*_detections_animal
+      - switch.*_detections_speaking
     entities:
       - sensor.date
       - sensor.time
@@ -79,22 +95,6 @@ recorder:
       - switch.bedroom_air_quality
       - button.bedroom_air_quality_identify
       - update.bedroom_air_quality_firmware
-      - binary_sensor.*_person_detected*
-      - binary_sensor.*_vehicle_detected*
-      - binary_sensor.*_animal_detected*
-      - binary_sensor.*_object_detected*
-      - binary_sensor.*_audio_object_detected*
-      - binary_sensor.*_speaking_detected*
-      - binary_sensor.*_barking_detected*
-      - binary_sensor.*_siren_detected*
-      - binary_sensor.*_smoke_alarm_detected*
-      - binary_sensor.*_car_horn_detected*
-      - binary_sensor.*_car_alarm_detected*
-      - sensor.*_last_motion_detected*
-      - switch.*_detections_person
-      - switch.*_detections_vehicle
-      - switch.*_detections_animal
-      - switch.*_detections_speaking
 
 
 lovelace_gen:
