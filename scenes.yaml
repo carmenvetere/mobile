@@ -1,0 +1,2348 @@
+- id: '1719260294727'
+  name: Evening
+  entities:
+    light.dining_room_accent_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 38
+      device_id: '24'
+      zone_id: '16'
+      friendly_name: Dining Room Accent Lights
+      supported_features: 32
+      state: 'on'
+    light.dining_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '23'
+      zone_id: '15'
+      friendly_name: Dining Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_table_lamps:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '16'
+      zone_id: '8'
+      friendly_name: Dining Room Table Lamps
+      supported_features: 32
+      state: 'on'
+    light.living_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 51
+      device_id: '22'
+      zone_id: '14'
+      friendly_name: Living Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.living_room_floor_lamp_1:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 191
+      device_id: '14'
+      zone_id: '6'
+      friendly_name: Living Room Floor Lamp 1
+      supported_features: 32
+      state: 'on'
+    light.living_room_floor_lamp_2:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 191
+      device_id: '15'
+      zone_id: '7'
+      friendly_name: Living Room Floor Lamp 2
+      supported_features: 32
+      state: 'on'
+    light.kitchen_island_pendants:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 51
+      device_id: '21'
+      zone_id: '13'
+      friendly_name: Kitchen Island Pendants
+      supported_features: 32
+      state: 'on'
+    light.kitchen_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 38
+      device_id: '20'
+      zone_id: '12'
+      friendly_name: Kitchen Main Lights
+      supported_features: 32
+      state: 'on'
+    light.kitchen_outer_wall:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 38
+      device_id: '17'
+      zone_id: '9'
+      friendly_name: Kitchen Outer Wall
+      supported_features: 32
+      state: 'on'
+    light.kitchen_window_seat_sconce:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 165
+      device_id: '19'
+      zone_id: '11'
+      friendly_name: Kitchen Window Seat Sconce
+      supported_features: 32
+      state: 'on'
+    light.front_foyer_pendants:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '25'
+      zone_id: '17'
+      friendly_name: Front Foyer Pendants
+      supported_features: 32
+      state: 'off'
+  icon: mdi:weather-sunset-down
+  metadata: {}
+- id: '1719762534473'
+  name: Entertaining
+  entities:
+    light.living_room_floor_lamp_1:
+      supported_color_modes:
+      - brightness
+      friendly_name: Living Room Floor Lamp 1
+      supported_features: 32
+      color_mode: brightness
+      brightness: 127
+      device_id: '14'
+      zone_id: '6'
+      state: 'on'
+    light.living_room_floor_lamp_2:
+      supported_color_modes:
+      - brightness
+      friendly_name: Living Room Floor Lamp 2
+      supported_features: 32
+      color_mode: brightness
+      brightness: 127
+      device_id: '15'
+      zone_id: '7'
+      state: 'on'
+    light.living_room_main_lights:
+      supported_color_modes:
+      - brightness
+      friendly_name: Living Room Main Lights
+      supported_features: 32
+      color_mode: brightness
+      brightness: 63
+      device_id: '22'
+      zone_id: '14'
+      state: 'on'
+    light.kitchen_island_pendants:
+      supported_color_modes:
+      - brightness
+      friendly_name: Kitchen Island Pendants
+      supported_features: 32
+      color_mode: brightness
+      brightness: 140
+      device_id: '21'
+      zone_id: '13'
+      state: 'on'
+    light.kitchen_main_lights:
+      supported_color_modes:
+      - brightness
+      friendly_name: Kitchen Main Lights
+      supported_features: 32
+      color_mode: brightness
+      brightness: 51
+      device_id: '20'
+      zone_id: '12'
+      state: 'on'
+    light.kitchen_outer_wall:
+      supported_color_modes:
+      - brightness
+      friendly_name: Kitchen Outer Wall
+      supported_features: 32
+      color_mode: brightness
+      brightness: 89
+      device_id: '17'
+      zone_id: '9'
+      state: 'on'
+    light.kitchen_window_seat_sconce:
+      supported_color_modes:
+      - brightness
+      friendly_name: Kitchen Window Seat Sconce
+      supported_features: 32
+      color_mode: brightness
+      brightness: 255
+      device_id: '19'
+      zone_id: '11'
+      state: 'on'
+    light.dining_room_accent_lights:
+      supported_color_modes:
+      - brightness
+      friendly_name: Dining Room Accent Lights
+      supported_features: 32
+      color_mode: brightness
+      brightness: 127
+      device_id: '24'
+      zone_id: '16'
+      state: 'on'
+    light.dining_room_main_lights:
+      supported_color_modes:
+      - brightness
+      friendly_name: Dining Room Main Lights
+      supported_features: 32
+      color_mode: brightness
+      brightness: 38
+      device_id: '23'
+      zone_id: '15'
+      state: 'on'
+    light.dining_room_table_lamps:
+      supported_color_modes:
+      - brightness
+      friendly_name: Dining Room Table Lamps
+      supported_features: 32
+      color_mode: brightness
+      brightness: 127
+      device_id: '16'
+      zone_id: '8'
+      state: 'on'
+    light.front_foyer_pendants:
+      supported_color_modes:
+      - brightness
+      friendly_name: Front Foyer Pendants
+      supported_features: 32
+      color_mode: brightness
+      brightness: 76
+      device_id: '25'
+      zone_id: '17'
+      state: 'on'
+    light.stairs_spot_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 127
+      device_id: '56'
+      zone_id: '35'
+      friendly_name: Stairs Spot Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:glass-cocktail
+  metadata: {}
+- id: '1719762685113'
+  name: Bedroom Evening
+  entities:
+    light.master_bedroom_closet_light:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 25
+      device_id: '31'
+      zone_id: '20'
+      friendly_name: Master Bedroom Closet Light
+      supported_features: 32
+      state: 'on'
+    light.master_bedroom_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 22
+      device_id: '27'
+      zone_id: '19'
+      friendly_name: Master Bedroom Main Lights
+      supported_features: 32
+      state: 'on'
+    light.master_bedroom_sconces:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 25
+      device_id: '32'
+      zone_id: '21'
+      friendly_name: Master Bedroom Sconces
+      supported_features: 32
+      state: 'on'
+    switch.bedroom_floor_lamp_switch:
+      device_class: outlet
+      friendly_name: Bedroom Floor Lamp Switch
+      state: 'on'
+  icon: mdi:bed-king
+  metadata: {}
+- id: '1719915060114'
+  name: Good Night
+  entities:
+    light.stairs_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '38'
+      zone_id: '25'
+      friendly_name: Stairs Main Lights
+      supported_features: 32
+      state: 'off'
+    light.basement_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '45'
+      zone_id: '29'
+      friendly_name: Basement Hallway Main Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_accent_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '24'
+      zone_id: '16'
+      friendly_name: Dining Room Accent Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '23'
+      zone_id: '15'
+      friendly_name: Dining Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_table_lamps:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '16'
+      zone_id: '8'
+      friendly_name: Dining Room Table Lamps
+      supported_features: 32
+      state: 'off'
+    light.front_foyer_pendants:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '25'
+      zone_id: '17'
+      friendly_name: Front Foyer Pendants
+      supported_features: 32
+      state: 'off'
+    light.upstairs_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '42'
+      zone_id: '27'
+      friendly_name: Upstairs Hallway Main Lights
+      supported_features: 32
+      state: 'off'
+    light.gym_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '47'
+      zone_id: '31'
+      friendly_name: Gym Main Lights
+      supported_features: 32
+      state: 'off'
+    light.kitchen_island_pendants:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '21'
+      zone_id: '13'
+      friendly_name: Kitchen Island Pendants
+      supported_features: 32
+      state: 'off'
+    light.kitchen_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '20'
+      zone_id: '12'
+      friendly_name: Kitchen Main Lights
+      supported_features: 32
+      state: 'off'
+    light.kitchen_outer_wall:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '17'
+      zone_id: '9'
+      friendly_name: Kitchen Outer Wall
+      supported_features: 32
+      state: 'off'
+    light.laundry_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '46'
+      zone_id: '30'
+      friendly_name: Laundry Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.office_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '41'
+      zone_id: '26'
+      friendly_name: Office Main Lights
+      supported_features: 32
+      state: 'off'
+    light.media_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '37'
+      zone_id: '24'
+      friendly_name: Media Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.media_room_table_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '49'
+      zone_id: '33'
+      friendly_name: Media Room Table Lamp
+      supported_features: 32
+      state: 'off'
+    light.office_floor_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '54'
+      zone_id: '34'
+      friendly_name: Office Floor Lamp
+      supported_features: 32
+      state: 'off'
+    light.living_room_floor_lamp_1:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '14'
+      zone_id: '6'
+      friendly_name: Living Room Floor Lamp 1
+      supported_features: 32
+      state: 'off'
+    light.living_room_floor_lamp_2:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '15'
+      zone_id: '7'
+      friendly_name: Living Room Floor Lamp 2
+      supported_features: 32
+      state: 'off'
+    light.living_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '22'
+      zone_id: '14'
+      friendly_name: Living Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.kitchen_window_seat_sconce:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '19'
+      zone_id: '11'
+      friendly_name: Kitchen Window Seat Sconce
+      supported_features: 32
+      state: 'off'
+    light.stairs_spot_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '56'
+      zone_id: '35'
+      friendly_name: Stairs Spot Lights
+      supported_features: 32
+      state: 'off'
+    switch.s4:
+      device_class: outlet
+      friendly_name: Christmas Tree
+      state: unavailable
+    light.eve_light_strip_a5a4:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 10000
+      min_mireds: 100
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      friendly_name: Eve Light Strip A5A4
+      supported_features: 0
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      state: 'off'
+  icon: mdi:moon-waning-crescent
+  metadata:
+    light.stairs_main_lights:
+      entity_only: true
+    light.basement_hallway_main_lights:
+      entity_only: true
+    light.dining_room_accent_lights:
+      entity_only: true
+    light.dining_room_main_lights:
+      entity_only: true
+    light.dining_room_table_lamps:
+      entity_only: true
+    light.front_foyer_pendants:
+      entity_only: true
+    light.upstairs_hallway_main_lights:
+      entity_only: true
+    light.gym_main_lights:
+      entity_only: true
+    light.kitchen_island_pendants:
+      entity_only: true
+    light.kitchen_main_lights:
+      entity_only: true
+    light.kitchen_outer_wall:
+      entity_only: true
+    light.laundry_room_main_lights:
+      entity_only: true
+    light.office_main_lights:
+      entity_only: true
+    light.media_room_main_lights:
+      entity_only: true
+    light.media_room_table_lamp:
+      entity_only: true
+    light.office_floor_lamp:
+      entity_only: true
+    light.living_room_floor_lamp_1:
+      entity_only: true
+    light.living_room_floor_lamp_2:
+      entity_only: true
+    light.living_room_main_lights:
+      entity_only: true
+    light.kitchen_window_seat_sconce:
+      entity_only: true
+    light.stairs_spot_lights:
+      entity_only: true
+    switch.s4:
+      entity_only: true
+    light.eve_light_strip_a5a4:
+      entity_only: true
+- id: '1719941079793'
+  name: Good Morning
+  entities:
+    light.living_room_floor_lamp_1:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '14'
+      zone_id: '6'
+      friendly_name: Living Room Floor Lamp 1
+      supported_features: 32
+      state: 'on'
+    light.living_room_floor_lamp_2:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '15'
+      zone_id: '7'
+      friendly_name: Living Room Floor Lamp 2
+      supported_features: 32
+      state: 'on'
+    light.kitchen_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 15
+      device_id: '20'
+      zone_id: '12'
+      friendly_name: Kitchen Main Lights
+      supported_features: 32
+      state: 'on'
+    light.kitchen_outer_wall:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 127
+      device_id: '17'
+      zone_id: '9'
+      friendly_name: Kitchen Outer Wall
+      supported_features: 32
+      state: 'on'
+    light.kitchen_island_pendants:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 38
+      device_id: '21'
+      zone_id: '13'
+      friendly_name: Kitchen Island Pendants
+      supported_features: 32
+      state: 'on'
+    light.kitchen_window_seat_sconce:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 127
+      device_id: '19'
+      zone_id: '11'
+      friendly_name: Kitchen Window Seat Sconce
+      supported_features: 32
+      state: 'on'
+    switch.s4:
+      device_class: outlet
+      friendly_name: Christmas Tree
+      state: 'on'
+    light.laundry_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '46'
+      zone_id: '30'
+      friendly_name: Laundry Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '23'
+      zone_id: '15'
+      friendly_name: Dining Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_accent_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '24'
+      zone_id: '16'
+      friendly_name: Dining Room Accent Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_table_lamps:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 38
+      device_id: '16'
+      zone_id: '8'
+      friendly_name: Dining Room Table Lamps
+      supported_features: 32
+      state: 'on'
+    light.living_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '22'
+      zone_id: '14'
+      friendly_name: Living Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.stairs_spot_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 38
+      device_id: '56'
+      zone_id: '35'
+      friendly_name: Stairs Spot Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:weather-sunset-up
+  metadata:
+    switch.s4:
+      entity_only: true
+- id: '1719941863909'
+  name: Nightlight
+  entities:
+    light.stairs_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '38'
+      zone_id: '25'
+      friendly_name: Stairs Main Lights
+      supported_features: 32
+      state: 'off'
+    light.basement_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '45'
+      zone_id: '29'
+      friendly_name: Basement Hallway Main Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_accent_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '24'
+      zone_id: '16'
+      friendly_name: Dining Room Accent Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '23'
+      zone_id: '15'
+      friendly_name: Dining Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_table_lamps:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '16'
+      zone_id: '8'
+      friendly_name: Dining Room Table Lamps
+      supported_features: 32
+      state: 'off'
+    light.front_foyer_pendants:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '25'
+      zone_id: '17'
+      friendly_name: Front Foyer Pendants
+      supported_features: 32
+      state: 'off'
+    light.upstairs_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '42'
+      zone_id: '27'
+      friendly_name: Upstairs Hallway Main Lights
+      supported_features: 32
+      state: 'off'
+    light.gym_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '47'
+      zone_id: '31'
+      friendly_name: Gym Main Lights
+      supported_features: 32
+      state: 'off'
+    light.kitchen_island_pendants:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '21'
+      zone_id: '13'
+      friendly_name: Kitchen Island Pendants
+      supported_features: 32
+      state: 'off'
+    light.kitchen_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '20'
+      zone_id: '12'
+      friendly_name: Kitchen Main Lights
+      supported_features: 32
+      state: 'off'
+    light.kitchen_outer_wall:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '17'
+      zone_id: '9'
+      friendly_name: Kitchen Outer Wall
+      supported_features: 32
+      state: 'off'
+    light.laundry_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '46'
+      zone_id: '30'
+      friendly_name: Laundry Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.office_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '41'
+      zone_id: '26'
+      friendly_name: Office Main Lights
+      supported_features: 32
+      state: 'off'
+    light.media_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '37'
+      zone_id: '24'
+      friendly_name: Media Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.media_room_table_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '49'
+      zone_id: '33'
+      friendly_name: Media Room Table Lamp
+      supported_features: 32
+      state: 'off'
+    light.office_floor_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 51
+      device_id: '54'
+      zone_id: '34'
+      friendly_name: Office Floor Lamp
+      supported_features: 32
+      state: 'on'
+    light.living_room_floor_lamp_1:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '14'
+      zone_id: '6'
+      friendly_name: Living Room Floor Lamp 1
+      supported_features: 32
+      state: 'on'
+    light.living_room_floor_lamp_2:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '15'
+      zone_id: '7'
+      friendly_name: Living Room Floor Lamp 2
+      supported_features: 32
+      state: 'on'
+    light.living_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '22'
+      zone_id: '14'
+      friendly_name: Living Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.kitchen_window_seat_sconce:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 127
+      device_id: '19'
+      zone_id: '11'
+      friendly_name: Kitchen Window Seat Sconce
+      supported_features: 32
+      state: 'on'
+    light.stairs_spot_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 25
+      device_id: '56'
+      zone_id: '35'
+      friendly_name: Stairs Spot Lights
+      supported_features: 32
+      state: 'on'
+    light.eve_light_strip_a5a4:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 10000
+      min_mireds: 100
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 12.75
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      - 27.1
+      - 42.4
+      rgb_color:
+      - 255
+      - 196
+      - 147
+      xy_color:
+      - 0.445
+      - 0.372
+      friendly_name: Eve Light Strip A5A4
+      supported_features: 0
+      state: 'on'
+  icon: mdi:lightbulb-night-outline
+  metadata:
+    light.stairs_main_lights:
+      entity_only: true
+    light.basement_hallway_main_lights:
+      entity_only: true
+    light.dining_room_accent_lights:
+      entity_only: true
+    light.dining_room_main_lights:
+      entity_only: true
+    light.dining_room_table_lamps:
+      entity_only: true
+    light.front_foyer_pendants:
+      entity_only: true
+    light.upstairs_hallway_main_lights:
+      entity_only: true
+    light.gym_main_lights:
+      entity_only: true
+    light.kitchen_island_pendants:
+      entity_only: true
+    light.kitchen_main_lights:
+      entity_only: true
+    light.kitchen_outer_wall:
+      entity_only: true
+    light.laundry_room_main_lights:
+      entity_only: true
+    light.office_main_lights:
+      entity_only: true
+    light.media_room_main_lights:
+      entity_only: true
+    light.media_room_table_lamp:
+      entity_only: true
+    light.office_floor_lamp:
+      entity_only: true
+    light.living_room_floor_lamp_1:
+      entity_only: true
+    light.living_room_floor_lamp_2:
+      entity_only: true
+    light.living_room_main_lights:
+      entity_only: true
+    light.kitchen_window_seat_sconce:
+      entity_only: true
+    light.stairs_spot_lights:
+      entity_only: true
+    light.eve_light_strip_a5a4:
+      entity_only: true
+- id: '1719942307374'
+  name: Welcome
+  entities:
+    light.living_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '22'
+      zone_id: '14'
+      friendly_name: Living Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.kitchen_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '20'
+      zone_id: '12'
+      friendly_name: Kitchen Main Lights
+      supported_features: 32
+      state: 'on'
+    light.media_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '37'
+      zone_id: '24'
+      friendly_name: Media Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.media_room_table_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '49'
+      zone_id: '33'
+      friendly_name: Media Room Table Lamp
+      supported_features: 32
+      state: 'on'
+    light.basement_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 102
+      device_id: '45'
+      zone_id: '29'
+      friendly_name: Basement Hallway Main Lights
+      supported_features: 32
+      state: 'on'
+    light.front_foyer_pendants:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '25'
+      zone_id: '17'
+      friendly_name: Front Foyer Pendants
+      supported_features: 32
+      state: 'on'
+    light.laundry_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 127
+      device_id: '46'
+      zone_id: '30'
+      friendly_name: Laundry Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.upstairs_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '42'
+      zone_id: '27'
+      friendly_name: Upstairs Hallway Main Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:human-greeting
+  metadata: {}
+- id: '1720186441253'
+  name: Basement Cleaning
+  entities:
+    light.media_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '37'
+      zone_id: '24'
+      friendly_name: Media Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.basement_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '45'
+      zone_id: '29'
+      friendly_name: Basement Hallway Main Lights
+      supported_features: 32
+      state: 'on'
+    light.laundry_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '46'
+      zone_id: '30'
+      friendly_name: Laundry Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.gym_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '47'
+      zone_id: '31'
+      friendly_name: Gym Main Lights
+      supported_features: 32
+      state: 'on'
+    light.stairs_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '38'
+      zone_id: '25'
+      friendly_name: Stairs Main Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:spray-bottle
+  metadata: {}
+- id: '1720186680983'
+  name: Basement Evening
+  entities:
+    light.media_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '37'
+      zone_id: '24'
+      friendly_name: Media Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.media_room_table_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 51
+      device_id: '49'
+      zone_id: '33'
+      friendly_name: Media Room Table Lamp
+      supported_features: 32
+      state: 'on'
+    light.basement_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 38
+      device_id: '45'
+      zone_id: '29'
+      friendly_name: Basement Hallway Main Lights
+      supported_features: 32
+      state: 'on'
+    light.stairs_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 38
+      device_id: '38'
+      zone_id: '25'
+      friendly_name: Stairs Main Lights
+      supported_features: 32
+      state: 'on'
+    light.gym_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 38
+      device_id: '47'
+      zone_id: '31'
+      friendly_name: Gym Main Lights
+      supported_features: 32
+      state: 'on'
+    light.laundry_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 38
+      device_id: '46'
+      zone_id: '30'
+      friendly_name: Laundry Room Main Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:lamps
+  metadata:
+    light.media_room_main_lights:
+      entity_only: true
+    light.media_room_table_lamp:
+      entity_only: true
+    light.basement_hallway_main_lights:
+      entity_only: true
+    light.stairs_main_lights:
+      entity_only: true
+    light.gym_main_lights:
+      entity_only: true
+    light.laundry_room_main_lights:
+      entity_only: true
+- id: '1720218383856'
+  name: Outdoor On
+  entities:
+    light.patio_back_porch_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 63
+      device_id: '48'
+      zone_id: '32'
+      friendly_name: Patio Back Porch Lights
+      supported_features: 32
+      state: 'on'
+    light.driveway_sconces:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 63
+      device_id: '18'
+      zone_id: '10'
+      friendly_name: Driveway Sconces
+      supported_features: 32
+      state: 'on'
+    light.front_porch_overhead_light:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 63
+      device_id: '26'
+      zone_id: '18'
+      friendly_name: Front Porch Overhead Light
+      supported_features: 32
+      state: 'on'
+    switch.driveway_zone_2_2:
+      friendly_name: Landscape Driveway and Pool Path Lights
+      state: 'on'
+    switch.driveway_zone_3_2:
+      friendly_name: Landscape Firepit Path Lights
+      state: 'on'
+    switch.driveway_zone_1_2:
+      friendly_name: Landscape Spotlights
+      state: 'on'
+    switch.transformer_zone_2:
+      friendly_name: Front Spotlights
+      state: 'on'
+    switch.transformer_zone_1:
+      friendly_name: Path Lights
+      state: 'on'
+    switch.transformer_zone_3:
+      friendly_name: Retaining Wall Light
+      state: 'on'
+    switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet:
+      device_class: outlet
+      friendly_name: Smart Switch (2302084653898257090148e1e9b9ccaa) Outlet
+      state: 'on'
+  icon: mdi:outdoor-lamp
+  metadata:
+    light.patio_back_porch_lights:
+      entity_only: true
+    light.driveway_sconces:
+      entity_only: true
+    light.front_porch_overhead_light:
+      entity_only: true
+    switch.driveway_zone_2_2:
+      entity_only: true
+    switch.driveway_zone_3_2:
+      entity_only: true
+    switch.driveway_zone_1_2:
+      entity_only: true
+    switch.transformer_zone_2:
+      entity_only: true
+    switch.transformer_zone_1:
+      entity_only: true
+    switch.transformer_zone_3:
+      entity_only: true
+    switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet:
+      entity_only: true
+- id: '1720218450460'
+  name: Outdoor Off
+  entities:
+    light.patio_back_porch_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '48'
+      zone_id: '32'
+      friendly_name: Patio Back Porch Lights
+      supported_features: 32
+      state: 'off'
+    light.driveway_sconces:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '18'
+      zone_id: '10'
+      friendly_name: Driveway Sconces
+      supported_features: 32
+      state: 'off'
+    light.front_porch_overhead_light:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '26'
+      zone_id: '18'
+      friendly_name: Front Porch Overhead Light
+      supported_features: 32
+      state: 'off'
+    switch.driveway_zone_2_2:
+      friendly_name: Landscape Driveway and Pool Path Lights
+      state: 'off'
+    switch.driveway_zone_3_2:
+      friendly_name: Landscape Firepit Path Lights
+      state: 'off'
+    switch.driveway_zone_1_2:
+      friendly_name: Landscape Spotlights
+      state: 'off'
+    switch.transformer_zone_1:
+      friendly_name: Path Lights
+      state: 'off'
+    switch.transformer_zone_2:
+      friendly_name: Front Spotlights
+      state: 'off'
+    switch.transformer_zone_3:
+      friendly_name: Retaining Wall Light
+      state: 'off'
+    switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet:
+      device_class: outlet
+      friendly_name: Smart Switch (2302084653898257090148e1e9b9ccaa) Outlet
+      state: 'off'
+  icon: mdi:lightbulb-multiple-off-outline
+  metadata:
+    light.patio_back_porch_lights:
+      entity_only: true
+    light.driveway_sconces:
+      entity_only: true
+    light.front_porch_overhead_light:
+      entity_only: true
+    switch.driveway_zone_2_2:
+      entity_only: true
+    switch.driveway_zone_3_2:
+      entity_only: true
+    switch.driveway_zone_1_2:
+      entity_only: true
+    switch.transformer_zone_1:
+      entity_only: true
+    switch.transformer_zone_2:
+      entity_only: true
+    switch.transformer_zone_3:
+      entity_only: true
+    switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet:
+      entity_only: true
+- id: '1720532755261'
+  name: Basement Entertaining
+  entities:
+    light.media_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '37'
+      zone_id: '24'
+      friendly_name: Media Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.media_room_table_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '49'
+      zone_id: '33'
+      friendly_name: Media Room Table Lamp
+      supported_features: 32
+      state: 'on'
+    light.basement_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 51
+      device_id: '45'
+      zone_id: '29'
+      friendly_name: Basement Hallway Main Lights
+      supported_features: 32
+      state: 'on'
+    light.stairs_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 25
+      device_id: '38'
+      zone_id: '25'
+      friendly_name: Stairs Main Lights
+      supported_features: 32
+      state: 'on'
+    light.gym_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '47'
+      zone_id: '31'
+      friendly_name: Gym Main Lights
+      supported_features: 32
+      state: 'on'
+    light.laundry_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 51
+      device_id: '46'
+      zone_id: '30'
+      friendly_name: Laundry Room Main Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:party-popper
+  metadata:
+    light.media_room_main_lights:
+      entity_only: true
+    light.media_room_table_lamp:
+      entity_only: true
+    light.basement_hallway_main_lights:
+      entity_only: true
+    light.stairs_main_lights:
+      entity_only: true
+    light.gym_main_lights:
+      entity_only: true
+    light.laundry_room_main_lights:
+      entity_only: true
+- id: '1720533509647'
+  name: Upstairs Evening
+  entities:
+    light.office_floor_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '54'
+      zone_id: '34'
+      friendly_name: Office Floor Lamp
+      supported_features: 32
+      state: 'on'
+    light.upstairs_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 25
+      device_id: '42'
+      zone_id: '27'
+      friendly_name: Upstairs Hallway Main Lights
+      supported_features: 32
+      state: 'on'
+    light.eve_light_strip_a5a4:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 10000
+      min_mireds: 100
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - hs
+      friendly_name: Eve Light Strip A5A4
+      supported_features: 0
+      color_mode: hs
+      brightness: 73.95
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      - 27.3
+      - 16.2
+      rgb_color:
+      - 255
+      - 232
+      - 214
+      xy_color:
+      - 0.363
+      - 0.346
+      state: 'on'
+  icon: mdi:moon-waning-crescent
+  metadata: {}
+- id: '1720630080952'
+  name: Bedroom Cleaning
+  entities:
+    light.master_bedroom_closet_light:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '31'
+      zone_id: '20'
+      friendly_name: Master Bedroom Closet Light
+      supported_features: 32
+      state: 'on'
+    light.master_bedroom_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '27'
+      zone_id: '19'
+      friendly_name: Master Bedroom Main Lights
+      supported_features: 32
+      state: 'on'
+    light.master_bedroom_sconces:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '32'
+      zone_id: '21'
+      friendly_name: Master Bedroom Sconces
+      supported_features: 32
+      state: 'on'
+    light.master_bathroom_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '33'
+      zone_id: '22'
+      friendly_name: Master Bathroom Main Lights
+      supported_features: 32
+      state: 'on'
+    light.master_bathroom_vanity_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '34'
+      zone_id: '23'
+      friendly_name: Master Bathroom Vanity Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:spray-bottle
+  metadata: {}
+- id: '1720630140609'
+  name: Bedtime
+  entities:
+    light.master_bedroom_closet_light:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '31'
+      zone_id: '20'
+      friendly_name: Master Bedroom Closet Light
+      supported_features: 32
+      state: 'off'
+    light.master_bedroom_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '27'
+      zone_id: '19'
+      friendly_name: Master Bedroom Main Lights
+      supported_features: 32
+      state: 'off'
+    light.master_bedroom_sconces:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '32'
+      zone_id: '21'
+      friendly_name: Master Bedroom Sconces
+      supported_features: 32
+      state: 'off'
+    light.master_bathroom_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '33'
+      zone_id: '22'
+      friendly_name: Master Bathroom Main Lights
+      supported_features: 32
+      state: 'off'
+    light.master_bathroom_vanity_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '34'
+      zone_id: '23'
+      friendly_name: Master Bathroom Vanity Lights
+      supported_features: 32
+      state: 'off'
+    switch.bedroom_floor_lamp_switch:
+      device_class: outlet
+      friendly_name: Bedroom Floor Lamp Switch
+      state: 'off'
+  icon: mdi:bed-clock
+  metadata: {}
+- id: '1720634233815'
+  name: Power Outage Lights
+  entities:
+    light.living_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '22'
+      zone_id: '14'
+      friendly_name: Living Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.living_room_floor_lamp_1:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 191
+      device_id: '14'
+      zone_id: '6'
+      friendly_name: Living Room Floor Lamp 1
+      supported_features: 32
+      state: 'on'
+    light.living_room_floor_lamp_2:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 191
+      device_id: '15'
+      zone_id: '7'
+      friendly_name: Living Room Floor Lamp 2
+      supported_features: 32
+      state: 'on'
+    light.kitchen_island_pendants:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '21'
+      zone_id: '13'
+      friendly_name: Kitchen Island Pendants
+      supported_features: 32
+      state: 'off'
+    light.kitchen_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '20'
+      zone_id: '12'
+      friendly_name: Kitchen Main Lights
+      supported_features: 32
+      state: 'off'
+    light.kitchen_outer_wall:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 51
+      device_id: '17'
+      zone_id: '9'
+      friendly_name: Kitchen Outer Wall
+      supported_features: 32
+      state: 'on'
+    light.kitchen_window_seat_sconce:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '19'
+      zone_id: '11'
+      friendly_name: Kitchen Window Seat Sconce
+      supported_features: 32
+      state: 'on'
+    light.media_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '37'
+      zone_id: '24'
+      friendly_name: Media Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.media_room_table_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 76
+      device_id: '49'
+      zone_id: '33'
+      friendly_name: Media Room Table Lamp
+      supported_features: 32
+      state: 'on'
+    light.master_bedroom_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '27'
+      zone_id: '19'
+      friendly_name: Master Bedroom Main Lights
+      supported_features: 32
+      state: 'off'
+    light.master_bedroom_closet_light:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '31'
+      zone_id: '20'
+      friendly_name: Master Bedroom Closet Light
+      supported_features: 32
+      state: 'off'
+    light.master_bedroom_sconces:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '32'
+      zone_id: '21'
+      friendly_name: Master Bedroom Sconces
+      supported_features: 32
+      state: 'off'
+    light.office_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '41'
+      zone_id: '26'
+      friendly_name: Office Main Lights
+      supported_features: 32
+      state: 'off'
+    light.office_floor_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '54'
+      zone_id: '34'
+      friendly_name: Office Floor Lamp
+      supported_features: 32
+      state: 'off'
+    light.basement_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '45'
+      zone_id: '29'
+      friendly_name: Basement Hallway Main Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '23'
+      zone_id: '15'
+      friendly_name: Dining Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_accent_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '24'
+      zone_id: '16'
+      friendly_name: Dining Room Accent Lights
+      supported_features: 32
+      state: 'off'
+    light.dining_room_table_lamps:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '16'
+      zone_id: '8'
+      friendly_name: Dining Room Table Lamps
+      supported_features: 32
+      state: 'off'
+    light.stairs_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '38'
+      zone_id: '25'
+      friendly_name: Stairs Main Lights
+      supported_features: 32
+      state: 'off'
+    light.master_bathroom_vanity_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '34'
+      zone_id: '23'
+      friendly_name: Master Bathroom Vanity Lights
+      supported_features: 32
+      state: 'off'
+    light.front_foyer_pendants:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '25'
+      zone_id: '17'
+      friendly_name: Front Foyer Pendants
+      supported_features: 32
+      state: 'off'
+    light.laundry_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 51
+      device_id: '46'
+      zone_id: '30'
+      friendly_name: Laundry Room Main Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:flash-alert
+  metadata: {}
+- id: '1720899281233'
+  name: Emergency
+  entities:
+    light.gym_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '47'
+      zone_id: '31'
+      friendly_name: Gym Main Lights
+      supported_features: 32
+      state: 'on'
+    light.kitchen_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '20'
+      zone_id: '12'
+      friendly_name: Kitchen Main Lights
+      supported_features: 32
+      state: 'on'
+    light.living_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '22'
+      zone_id: '14'
+      friendly_name: Living Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.upstairs_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '42'
+      zone_id: '27'
+      friendly_name: Upstairs Hallway Main Lights
+      supported_features: 32
+      state: 'on'
+    light.dining_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '23'
+      zone_id: '15'
+      friendly_name: Dining Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.basement_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '45'
+      zone_id: '29'
+      friendly_name: Basement Hallway Main Lights
+      supported_features: 32
+      state: 'on'
+    light.stairs_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '38'
+      zone_id: '25'
+      friendly_name: Stairs Main Lights
+      supported_features: 32
+      state: 'on'
+    light.media_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '37'
+      zone_id: '24'
+      friendly_name: Media Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.laundry_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '46'
+      zone_id: '30'
+      friendly_name: Laundry Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.patio_back_porch_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '48'
+      zone_id: '32'
+      friendly_name: Patio Back Porch Lights
+      supported_features: 32
+      state: 'on'
+    light.driveway_sconces:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '18'
+      zone_id: '10'
+      friendly_name: Driveway Sconces
+      supported_features: 32
+      state: 'on'
+    light.front_porch_overhead_light:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '26'
+      zone_id: '18'
+      friendly_name: Front Porch Overhead Light
+      supported_features: 32
+      state: 'on'
+    light.driveway_transformer_1_2:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      model: HB-200-1215WIFIB
+      deviceId: 8c435443b236c8b2_1
+      devbranch: false
+      watts: 33
+      volts: 12V
+      debugInfo:
+      friendly_name: Landscape Spotlights
+      supported_features: 0
+      state: 'on'
+    switch.driveway_zone_2_2:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      model: HB-200-1215WIFIB
+      deviceId: 8c435443b236c8b2_2
+      devbranch: false
+      watts:
+      volts:
+      debugInfo:
+      friendly_name: Driveway and Pool Path Lights
+      supported_features: 0
+      state: 'on'
+    light.driveway_transformer_3_2:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      model: HB-200-1215WIFIB
+      deviceId: 8c435443b236c8b2_3
+      devbranch: false
+      watts:
+      volts:
+      debugInfo:
+      friendly_name: Firepit Landscape Lights
+      supported_features: 0
+      state: 'on'
+  icon: mdi:hospital
+  metadata:
+    light.driveway_transformer_1:
+      entity_only: true
+    light.driveway_transformer_2:
+      entity_only: true
+    light.driveway_transformer_3:
+      entity_only: true
+- id: '1728153471123'
+  name: First Floor Cleaning
+  entities:
+    light.kitchen_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '20'
+      zone_id: '12'
+      friendly_name: Kitchen Main Lights
+      supported_features: 32
+      state: 'on'
+    light.kitchen_island_pendants:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '21'
+      zone_id: '13'
+      friendly_name: Kitchen Island Pendants
+      supported_features: 32
+      state: 'on'
+    light.kitchen_outer_wall:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '17'
+      zone_id: '9'
+      friendly_name: Kitchen Outer Wall
+      supported_features: 32
+      state: 'on'
+    light.living_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '22'
+      zone_id: '14'
+      friendly_name: Living Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.dining_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '23'
+      zone_id: '15'
+      friendly_name: Dining Room Main Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:spray-bottle
+  metadata:
+    light.kitchen_main_lights:
+      entity_only: true
+    light.kitchen_island_pendants:
+      entity_only: true
+    light.kitchen_outer_wall:
+      entity_only: true
+    light.living_room_main_lights:
+      entity_only: true
+    light.dining_room_main_lights:
+      entity_only: true
+- id: '1747681850467'
+  name: Outdoor On - Bright
+  entities:
+    light.patio_back_porch_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '48'
+      zone_id: '32'
+      friendly_name: Patio Back Porch Lights
+      supported_features: 32
+      state: 'on'
+    light.driveway_sconces:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '18'
+      zone_id: '10'
+      friendly_name: Driveway Sconces
+      supported_features: 32
+      state: 'on'
+    light.front_porch_overhead_light:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '26'
+      zone_id: '18'
+      friendly_name: Front Porch Overhead Light
+      supported_features: 32
+      state: 'on'
+    switch.front_holiday_2:
+      device_class: outlet
+      friendly_name: Smart Switch (2302084653898257090148e1e9b9ccaa) Outlet 2
+      state: unavailable
+    switch.driveway_zone_2_2:
+      friendly_name: Landscape Driveway and Pool Path Lights
+      state: 'on'
+    switch.driveway_zone_3_2:
+      friendly_name: Landscape Firepit Path Lights
+      state: 'on'
+    switch.driveway_zone_1_2:
+      friendly_name: Landscape Spotlights
+      state: 'on'
+    switch.transformer_zone_2:
+      friendly_name: Front Spotlights
+      state: 'on'
+    switch.transformer_zone_1:
+      friendly_name: Path Lights
+      state: 'on'
+    switch.transformer_zone_3:
+      friendly_name: Retaining Wall Light
+      state: 'on'
+  icon: mdi:outdoor-lamp
+  metadata:
+    light.patio_back_porch_lights:
+      entity_only: true
+    light.driveway_sconces:
+      entity_only: true
+    light.front_porch_overhead_light:
+      entity_only: true
+    switch.front_holiday_2:
+      entity_only: true
+    switch.driveway_zone_2_2:
+      entity_only: true
+    switch.driveway_zone_3_2:
+      entity_only: true
+    switch.driveway_zone_1_2:
+      entity_only: true
+    switch.transformer_zone_2:
+      entity_only: true
+    switch.transformer_zone_1:
+      entity_only: true
+    switch.transformer_zone_3:
+      entity_only: true
+- id: '1749485381106'
+  name: Upstairs Cleaning
+  entities:
+    light.upstairs_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '42'
+      zone_id: '27'
+      friendly_name: Upstairs Hallway Main Lights
+      supported_features: 32
+      state: 'on'
+    light.office_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      device_id: '41'
+      zone_id: '26'
+      friendly_name: Office Main Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:spray-bottle
+  metadata:
+    light.upstairs_hallway_main_lights:
+      entity_only: true
+    light.office_main_lights:
+      entity_only: true
+- id: '1760608109778'
+  name: Basement Work
+  entities:
+    light.media_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 102
+      device_id: '37'
+      zone_id: '24'
+      friendly_name: Media Room Main Lights
+      supported_features: 32
+      state: 'on'
+    light.media_room_table_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 127
+      device_id: '49'
+      zone_id: '33'
+      friendly_name: Media Room Table Lamp
+      supported_features: 32
+      state: 'on'
+    light.basement_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 63
+      device_id: '45'
+      zone_id: '29'
+      friendly_name: Basement Hallway Main Lights
+      supported_features: 32
+      state: 'on'
+    light.gym_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 63
+      device_id: '47'
+      zone_id: '31'
+      friendly_name: Gym Main Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:desk-lamp
+  metadata:
+    light.media_room_main_lights:
+      entity_only: true
+    light.media_room_table_lamp:
+      entity_only: true
+    light.basement_hallway_main_lights:
+      entity_only: true
+    light.gym_main_lights:
+      entity_only: true
+- id: '1767353443220'
+  name: Basement Working
+  entities:
+    light.gym_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 127
+      device_id: '47'
+      zone_id: '31'
+      friendly_name: Gym Main Lights
+      supported_features: 32
+      state: 'on'
+    light.media_room_table_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 127
+      device_id: '49'
+      zone_id: '33'
+      friendly_name: Media Room Table Lamp
+      supported_features: 32
+      state: 'on'
+    light.basement_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 127
+      device_id: '45'
+      zone_id: '29'
+      friendly_name: Basement Hallway Main Lights
+      supported_features: 32
+      state: 'on'
+  icon: mdi:desk-lamp-on
+  metadata:
+    light.gym_main_lights:
+      entity_only: true
+    light.media_room_table_lamp:
+      entity_only: true
+    light.basement_hallway_main_lights:
+      entity_only: true
+- id: '1767353745751'
+  name: Movie
+  entities:
+    light.gym_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '47'
+      zone_id: '31'
+      friendly_name: Gym Main Lights
+      supported_features: 32
+      state: 'off'
+    light.media_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '37'
+      zone_id: '24'
+      friendly_name: Media Room Main Lights
+      supported_features: 32
+      state: 'off'
+    light.media_room_table_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 51
+      device_id: '49'
+      zone_id: '33'
+      friendly_name: Media Room Table Lamp
+      supported_features: 32
+      state: 'on'
+    light.laundry_room_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '46'
+      zone_id: '30'
+      friendly_name: Laundry Room Main Lights
+      supported_features: 32
+      state: 'off'
+    switch.driveway_zone_2_2:
+      friendly_name: Landscape Driveway and Pool Path Lights
+      state: 'off'
+    light.basement_hallway_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '45'
+      zone_id: '29'
+      friendly_name: Basement Hallway Main Lights
+      supported_features: 32
+      state: 'off'
+    light.stairs_main_lights:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      device_id: '38'
+      zone_id: '25'
+      friendly_name: Stairs Main Lights
+      supported_features: 32
+      state: 'off'
+    light.stairs_spot_lights:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 25
+      device_id: '56'
+      zone_id: '35'
+      friendly_name: Stairs Spot Lights
+      supported_features: 32
+      state: 'on'
+    switch.driveway_zone_1_2:
+      friendly_name: Landscape Spotlights
+      state: 'off'
+  icon: mdi:movie-check
+  metadata:
+    light.gym_main_lights:
+      entity_only: true
+    light.media_room_main_lights:
+      entity_only: true
+    light.media_room_table_lamp:
+      entity_only: true
+    light.laundry_room_main_lights:
+      entity_only: true
+    switch.driveway_zone_2_2:
+      entity_only: true
+    light.basement_hallway_main_lights:
+      entity_only: true
+    light.stairs_main_lights:
+      entity_only: true
+    light.stairs_spot_lights:
+      entity_only: true
+    switch.driveway_zone_1_2:
+      entity_only: true
