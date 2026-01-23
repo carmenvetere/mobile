@@ -1,0 +1,379 @@
+clean_mudroom:
+  alias: Clean Mudroom
+  sequence:
+  - service: vacuum.send_command
+    metadata: {}
+    data:
+      command: app_segment_clean
+      params:
+      - segments:
+        - 16
+        - 20
+        repeat: 2
+    target:
+      entity_id: vacuum.roborock_s8
+  description: ''
+  icon: mdi:washing-machine
+clean_basement:
+  alias: Clean Basement
+  sequence:
+  - service: vacuum.send_command
+    metadata: {}
+    data:
+      command: app_segment_clean
+      params:
+      - segments:
+        - 16
+        - 17
+        - 18
+        - 20
+        - 21
+        repeat: 1
+    target:
+      entity_id: vacuum.roborock_s8
+  description: ''
+  icon: mdi:vacuum-outline
+reset_vacuum_timer:
+  alias: Reset Vacuum Timer
+  sequence:
+  - service: input_datetime.set_datetime
+    target:
+      entity_id: input_datetime.last_pool_vacuum
+    data:
+      datetime: '{{ now().strftime(''%Y-%m-%d %H:%M:%S'') }}'
+  description: ''
+  icon: mdi:pool
+power_outage_cooling:
+  alias: 'Power Outage: Cooling'
+  sequence:
+  - action: input_select.select_option
+    data:
+      option: Cool
+    target:
+      entity_id:
+      - input_select.living_thermostat_last_hvac_mode
+      - input_select.basement_thermostat_last_hvac_mode
+      - input_select.bedroom_thermostat_last_hvac_mode
+      - input_select.office_thermostat_last_hvac_mode
+  - metadata: {}
+    data:
+      hvac_mode: 'off'
+    target:
+      entity_id:
+      - climate.office_thermostat
+      - climate.living_room_thermostat
+      - climate.basement_thermostat
+    action: climate.set_hvac_mode
+  - metadata: {}
+    data:
+      temperature: 75
+      hvac_mode: cool
+    action: climate.set_temperature
+    target:
+      entity_id: climate.master_bedroom_thermostat
+  - action: automation.turn_off
+    target:
+      entity_id:
+      - automation.basement_hvac_schedule
+      - automation.bedroom_hvac_schedule
+      - automation.enhanced_first_floor_climate_manager
+      - automation.office_thermostat_schedule_v2
+    data:
+      stop_actions: true
+  description: ''
+  icon: mdi:flash-alert
+power_outage_heating:
+  alias: 'Power Outage: Heating'
+  sequence:
+  - metadata: {}
+    data:
+      temperature: 64
+    action: climate.set_temperature
+    target:
+      entity_id: climate.master_bedroom_thermostat
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 62
+    target:
+      entity_id:
+      - climate.living_room_thermostat
+      - climate.office_thermostat
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 60
+    target:
+      entity_id: climate.basement_thermostat
+  - action: climate.set_preset_mode
+    metadata: {}
+    data:
+      preset_mode: PermanentHold
+    target:
+      entity_id:
+      - climate.basement_thermostat
+      - climate.living_room_thermostat
+      - climate.master_bedroom_thermostat
+      - climate.office_thermostat
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - switch.office_thermostat_office_emergency_heat
+      - switch.living_room_thermostat_living_room_emergency_heat
+      - switch.basement_thermostat_basement_emergency_heat
+      - switch.master_bedroom_thermostat_master_bedroom_emergency_heat
+  - action: automation.turn_off
+    target:
+      entity_id:
+      - automation.basement_hvac_schedule
+      - automation.bedroom_hvac_schedule
+      - automation.enhanced_first_floor_climate_manager
+      - automation.office_thermostat_schedule_v2
+    data:
+      stop_actions: true
+  description: ''
+  icon: mdi:flash-alert
+clean_bedroom:
+  alias: Clean Bedroom
+  sequence:
+  - service: vacuum.send_command
+    metadata: {}
+    data:
+      command: app_segment_clean
+      params:
+      - segments:
+        - 16
+        - 17
+        repeat: 1
+    target:
+      entity_id: vacuum.roborock_s8
+  description: ''
+  icon: mdi:vacuum-outline
+clean_second_floor:
+  alias: Clean Second Floor
+  sequence:
+  - service: vacuum.send_command
+    metadata: {}
+    data:
+      command: app_segment_clean
+      params:
+      - segments:
+        - 16
+        - 17
+        - 18
+        - 19
+        - 20
+        - 21
+        - 22
+        repeat: 1
+    target:
+      entity_id: vacuum.roborock_s8
+  description: ''
+  icon: mdi:vacuum-outline
+pool_music:
+  alias: Pool Music
+  sequence:
+  - service: media_player.play_media
+    metadata: {}
+    data:
+      media_content_type: music
+      enqueue: play
+      media_content_id: x-sonos-spotify:spotify%3atrack%3a32iLyDlWw7DHowE5TiXZpi?sid=12&flags=8232&sn=9
+    target:
+      entity_id: media_player.pool
+  description: ''
+  icon: mdi:music
+mop_mudroom:
+  alias: Mop Mudroom
+  sequence:
+  - service: vacuum.set_fan_speed
+    metadata: {}
+    data:
+      fan_speed: 'Off'
+    target:
+      entity_id: vacuum.roborock_s8
+  - service: select.select_option
+    metadata: {}
+    data:
+      option: intense
+    target:
+      entity_id:
+      - select.roborock_s8_mop_intensity
+  - service: select.select_option
+    metadata: {}
+    data:
+      option: deep_plus
+    target:
+      entity_id: select.roborock_s8_mop_mode
+  - service: vacuum.send_command
+    metadata: {}
+    data:
+      command: app_segment_clean
+      params:
+      - segments:
+        - 16
+        - 20
+        repeat: 2
+    target:
+      entity_id: vacuum.roborock_s8
+    enabled: true
+  description: ''
+reset_lower_floors_filter_runtime:
+  alias: reset_lower_floors_filter_runtime
+  sequence:
+  - target:
+      entity_id: input_datetime.lower_floors_air_filter_last_reset
+    data:
+      datetime: '{{ now().strftime(''%Y-%m-%d %H:%M:%S'') }}'
+    action: input_datetime.set_datetime
+  - action: input_number.set_value
+    metadata: {}
+    target:
+      entity_id: input_number.lower_floors_hvac_filter_hours
+    data:
+      value: 0
+  description: ''
+reset_upper_floors_filter_runtime:
+  alias: reset_upper_floors_filter_runtime
+  sequence:
+  - target:
+      entity_id: input_datetime.upper_floor_air_filter_last_reset
+    data:
+      datetime: '{{ now().strftime(''%Y-%m-%d %H:%M:%S'') }}'
+    action: input_datetime.set_datetime
+  description: ''
+clean_kitchen:
+  alias: Clean Kitchen
+  sequence:
+  - metadata: {}
+    data:
+      command: app_segment_clean
+      params:
+      - segments:
+        - 20
+        repeat: 2
+    target:
+      entity_id: vacuum.roborock_s8
+    action: vacuum.send_command
+  description: ''
+  icon: mdi:chef-hat
+power_returns:
+  alias: Power Returns
+  sequence:
+  - action: climate.set_preset_mode
+    metadata: {}
+    data:
+      preset_mode: NoHold
+    target:
+      entity_id:
+      - climate.basement_thermostat
+      - climate.living_room_thermostat
+      - climate.master_bedroom_thermostat
+      - climate.office_thermostat
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - switch.office_thermostat_office_emergency_heat
+      - switch.basement_thermostat_basement_emergency_heat
+      - switch.living_room_thermostat_living_room_emergency_heat
+      - switch.master_bedroom_thermostat_master_bedroom_emergency_heat
+  - action: automation.turn_on
+    target:
+      entity_id:
+      - automation.basement_hvac_schedule
+      - automation.enhanced_first_floor_climate_manager
+      - automation.bedroom_hvac_schedule
+      - automation.office_thermostat_schedule_v2
+    data: {}
+  - action: automation.trigger
+    target:
+      entity_id:
+      - automation.basement_hvac_schedule
+      - automation.bedroom_hvac_schedule
+      - automation.enhanced_first_floor_climate_manager
+      - automation.office_thermostat_schedule_v2
+    data:
+      skip_condition: true
+  description: ''
+  icon: mdi:lightning-bolt-outline
+reset_hot_water_last_flushed_date:
+  sequence:
+  - target:
+      entity_id: input_datetime.water_heater_last_flushed
+    data:
+      datetime: '{{ now().strftime(''%Y-%m-%d %H:%M:%S'') }}'
+    action: input_datetime.set_datetime
+  alias: Reset Hot Water Last Flushed Date
+  description: ''
+  icon: mdi:water-boiler-alert
+'1750692869441':
+  alias: Clean Selected Basement Rooms
+  mode: single
+  description: Cleans basement rooms based on selected input_boolean toggles
+  variables:
+    basement_rooms:
+      input_boolean.vacuum_mudroom: 16
+      input_boolean.vacuum_basement_bath: 20
+      input_boolean.vacuum_media_room: 17
+      input_boolean.vacuum_gym: 21
+      input_boolean.vacuum_hallway: 18
+    segments: "{% set selected = namespace(ids=[]) %} {% for entity, segment_id in
+      basement_rooms.items() %}\n  {% if states(entity) == 'on' %}\n    {% set selected.ids
+      = selected.ids + [segment_id] %}\n  {% endif %}\n{% endfor %} {{ selected.ids
+      }}\n"
+  sequence:
+  - condition: template
+    value_template: '{{ segments | length > 0 }}'
+  - target:
+      entity_id: select.roborock_s8_selected_map
+    data:
+      option: Basement
+    action: select.select_option
+    enabled: false
+  - wait_template: '{{ states(''select.roborock_s8_selected_map'') == ''Basement''
+      }}'
+    timeout: 00:00:30
+    continue_on_timeout: false
+    enabled: false
+  - target:
+      entity_id: vacuum.roborock_s8
+    data:
+      fan_speed: '{{ states(''input_select.vacuum_suction'') }}'
+    action: vacuum.set_fan_speed
+  - target:
+      entity_id: vacuum.roborock_s8
+    data:
+      command: app_segment_clean
+      params:
+      - segments: '{{ segments }}'
+        repeat: 1
+    action: vacuum.send_command
+toggle_water_heater_away_mode:
+  alias: Toggle Water-Heater Away Mode
+  sequence:
+  - action: water_heater.set_away_mode
+    target:
+      entity_id: water_heater.smithy_2
+    data:
+      away_mode: "{% if state_attr('water_heater.smithy_2', 'away_mode') == 'on' %}\n
+        \ off\n{% else %}\n  on\n{% endif %}\n"
+  mode: single
+  description: ''
+alarm_keypad_disarm:
+  alias: Alarm Keypad Disarm
+  sequence:
+  - action: alarm_control_panel.alarm_disarm
+    target:
+      entity_id: alarm_control_panel.alarmo
+    data:
+      code: '{{ states(''input_text.alarm_code_input'') }}'
+  - action: input_text.set_value
+    target:
+      entity_id: input_text.alarm_code_input
+    data:
+      value: ''
+  description: ''
