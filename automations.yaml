@@ -4858,13 +4858,6 @@
   triggers:
   - trigger: state
     entity_id:
-    - sensor.basement_thermostat_homekit_current_temperature
-    for:
-      hours: 0
-      minutes: 2
-      seconds: 0
-  - trigger: state
-    entity_id:
     - input_boolean.basement_hvac_fresh_air_available
   - trigger: time
     at: 08:00:00
@@ -5576,13 +5569,6 @@
   alias: Living Room HVAC Schedule V3
   description: Manages first floor with comfort hours and energy savings
   triggers:
-  - trigger: state
-    entity_id:
-    - sensor.living_room_thermostat_current_temperature
-    for:
-      hours: 0
-      minutes: 2
-      seconds: 0
   - trigger: state
     entity_id:
     - input_boolean.basement_hvac_fresh_air_available
