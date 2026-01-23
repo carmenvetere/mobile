@@ -199,11 +199,9 @@
     trigger: time
   conditions: []
   actions:
-  - metadata: {}
+  - action: scene.turn_on
     target:
       entity_id: scene.outdoor_off
-    action: scene.turn_on
-    data: {}
   mode: single
 - id: '1720455198364'
   alias: Sprinkler Surge above 90
@@ -469,16 +467,6 @@
     trigger: sun
   conditions: []
   actions:
-  - metadata: {}
-    target:
-      entity_id: scene.outdoor_on
-    action: scene.turn_on
-    data: {}
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 10
-      milliseconds: 0
   - metadata: {}
     target:
       entity_id: scene.outdoor_on
@@ -1115,30 +1103,6 @@
       - ad083d27029b75d6dff9f9925c6e0d6d
       - b5dd5a5d880c08e0cb400eefceecba46
       - ea7d0311040cfb5cdc34e51fbb6cf40e
-  mode: single
-- id: '1731503818866'
-  alias: Clean Kitchen
-  description: ''
-  triggers: []
-  conditions: []
-  actions:
-  - action: select.select_option
-    target:
-      entity_id: select.roborock_s8_selected_map
-    data:
-      option: First Floor
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 40
-      milliseconds: 0
-  - action: vacuum.set_fan_speed
-    target:
-      entity_id: vacuum.roborock_s8
-    data:
-      fan_speed: max
-  - action: script.clean_kitchen
-    data: {}
   mode: single
 - id: '1733360364746'
   alias: 11:00PM - Turn Off Landscape Spotlights (S-Th)
