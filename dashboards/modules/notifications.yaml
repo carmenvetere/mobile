@@ -104,7 +104,7 @@
   conditions:
     - condition: state
       entity: binary_sensor.bayberry_storm_watch_active
-      state: "on"
+      state: 'on'
   card:
     type: custom:bubble-card
     card_type: button
