@@ -53,7 +53,32 @@ recorder:
       - sensor.powerwall_discharge_time
       - sensor.bayberry_tempest_wind_speed
       - sensor.bayberry_tempest_wind_direction
-
+      - binary_sensor.myggspray_wrlss_mtn_sensor_occupancy
+      - sensor.myggspray_wrlss_mtn_sensor_battery
+      - sensor.myggspray_wrlss_mtn_sensor_battery_voltage
+      - sensor.myggspray_wrlss_mtn_sensor_battery_type
+      - sensor.myggspray_wrlss_mtn_sensor_illuminance
+      - update.myggspray_wrlss_mtn_sensor_firmware
+      - button.myggspray_wrlss_mtn_sensor_identify_1
+      - button.myggspray_wrlss_mtn_sensor_identify_2  
+      - binary_sensor.myggspray_wrlss_mtn_sensor_occupancy_2
+      - sensor.myggspray_wrlss_mtn_sensor_battery_2
+      - sensor.myggspray_wrlss_mtn_sensor_battery_voltage_2
+      - sensor.myggspray_wrlss_mtn_sensor_battery_type_2
+      - sensor.myggspray_wrlss_mtn_sensor_illuminance_2
+      - update.myggspray_wrlss_mtn_sensor_firmware_2
+      - button.myggspray_wrlss_mtn_sensor_identify_1_2
+      - button.myggspray_wrlss_mtn_sensor_identify_2_2
+      - sensor.first_floor_air_quality_carbon_dioxide
+      - sensor.first_floor_air_quality_pm2_5
+      - sensor.bedroom_air_quality_carbon_dioxide
+      - sensor.bedroom_air_quality_pm2_5
+      - switch.first_floor_air_quality
+      - button.first_floor_air_quality_identify
+      - update.first_floor_air_quality_firmware
+      - switch.bedroom_air_quality
+      - button.bedroom_air_quality_identify
+      - update.bedroom_air_quality_firmware
 
 lovelace_gen:
 
