@@ -428,4 +428,4 @@ cards:
             background-color: var(--ha-card-background-2) !important;
             }
       - type: vertical-stack
-        cards: !include /config/dashboards/modules/notifications.yaml    
+        cards: !include [/config/dashboards/modules/notifications.yaml, {module_name: notifications_module}]    
