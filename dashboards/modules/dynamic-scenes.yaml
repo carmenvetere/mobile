@@ -151,7 +151,7 @@ cards:
 #Good Morning Scene - All Displays in Morning
   - type: custom:bubble-card
     card_type: button
-    entity: switch.good_morning_stateful_scene
+    entity: scene.good_morning
     name: Morning
     icon: mdi:weather-sunset-up
     visibility:
@@ -171,7 +171,7 @@ cards:
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:bubble-card
     card_type: button
-    entity: switch.basement_work_stateful_scene
+    entity: scene.basement_work
     name: Working
     icon: mdi:desk-lamp
     visibility:
@@ -192,7 +192,7 @@ cards:
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:bubble-card
     card_type: button
-    entity: switch.basement_cleaning_stateful_scene
+    entity: scene.basement_cleaning
     name: Cleaning
     icon: mdi:spray-bottle
     visibility:
@@ -212,7 +212,7 @@ cards:
 # Welcome Evening Scene - Basement Wall Panel in Evening
   - type: custom:bubble-card
     card_type: button
-    entity: switch.welcome_stateful_scene
+    entity: scene.welcome
     name: Welcome
     icon: mdi:human-greeting
     visibility:
@@ -237,7 +237,7 @@ cards:
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:bubble-card
     card_type: button
-    entity: switch.basement_evening_stateful_scene
+    entity: scene.basement_evening
     name: Basement Evening
     icon: mdi:moon-waning-crescent
     visibility:
@@ -263,7 +263,7 @@ cards:
 {% if dashboard in ['mobile'] %}
   - type: custom:bubble-card
     card_type: button
-    entity: switch.evening_stateful_scene
+    entity: scene.evening
     name: First Floor Evening
     icon: mdi:moon-waning-crescent
     visibility:
@@ -289,7 +289,7 @@ cards:
 {% if dashboard in ['mobile'] %}
   - type: custom:bubble-card
     card_type: button
-    entity: switch.entertaining_stateful_scene
+    entity: scene.entertaining
     name: Entertaining
     icon: mdi:glass-cocktail
     visibility:
@@ -309,7 +309,7 @@ cards:
 # Emergency Scene - All Displays Night
   - type: custom:bubble-card
     card_type: button
-    entity: switch.emergency_stateful_scene
+    entity: scene.emergency
     name: Emergency
     icon: mdi:hospital
     visibility:
@@ -328,7 +328,7 @@ cards:
 # Nightlight Scene - All Displays Evening and Night
   - type: custom:bubble-card
     card_type: button
-    entity: switch.nightlight_stateful_scene
+    entity: scene.nightlight
     name: Nightlight
     icon: mdi:lightbulb-night
     visibility:
@@ -358,9 +358,9 @@ cards:
     button_action:
         tap_action:
           action: perform-action
-          perform_action: switch.toggle
+          perform_action: scene.turn_on
           target:
-            entity_id: switch.outdoor_on_stateful_scene
+            entity_id: scene.outdoor_on
     card_layout: large
     scrolling_effect: false
     modules:
@@ -375,11 +375,11 @@ cards:
       tap_action:
         action: toggle
       target: 
-        entity: switch.good_night_stateful_scene
+        entity: scene.good_night
     tap_action:
       action: toggle
     target: 
-      entity: switch.good_night_stateful_scene
+      entity: scene.good_night
     card_layout: large
     scrolling_effect: false
     modules:
