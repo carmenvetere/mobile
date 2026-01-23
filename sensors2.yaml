@@ -5,6 +5,7 @@
         {# ─── 1) Boolean rules (each evaluates to True/False) ─── #}
         {% set rules = [
           is_state('binary_sensor.bayberry_grid_status', 'off'),
+          is_state('binary_sensor.bayberry_storm_watch_active', 'on'),
           is_state('binary_sensor.dryer_recently_completed', 'on'),
           is_state('binary_sensor.washer_recently_completed', 'on'),
           (is_state('sensor.bayberry_tempest_precipitation_type','rain')

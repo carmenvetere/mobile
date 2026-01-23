@@ -5,7 +5,7 @@
   conditions:
     - condition: state
       entity: binary_sensor.bayberry_grid_status
-      state: "off"
+      state: 'off'
   card:
     type: custom:bubble-card
     card_type: button
@@ -27,7 +27,7 @@
   conditions:
     - condition: state
       entity: binary_sensor.bayberry_grid_status
-      state: "off"
+      state: 'off'
     - condition: numeric_state
       entity: sensor.bayberry_charge
       below: 25
@@ -303,7 +303,7 @@
   conditions:
     - condition: state
       entity: binary_sensor.bayberry_grid_services_active_2
-      state: "on"
+      state: 'on'
   card:
     type: custom:bubble-card
     card_type: button
@@ -332,7 +332,7 @@
       state: rain
     - condition: state
       entity: binary_sensor.pool_cover_pump
-      state: "off"
+      state: 'off'
   card:
     type: custom:bubble-card
     card_type: button
@@ -358,7 +358,7 @@
   conditions:
     - condition: state
       entity: input_boolean.low_pool_water_level
-      state: "on"
+      state: 'on'
   card:
     type: custom:bubble-card
     card_type: button
@@ -1175,7 +1175,7 @@
       above: 48
     - condition: state
       entity: binary_sensor.pool_season
-      state: "on"
+      state: 'on'
   card:
     type: custom:bubble-card
     card_type: button
@@ -1231,7 +1231,7 @@
   conditions:
     - condition: state
       entity: binary_sensor.washer_recently_completed
-      state: "on"
+      state: 'on'
   card:
     type: custom:bubble-card
     card_type: button
