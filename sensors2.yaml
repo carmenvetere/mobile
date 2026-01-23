@@ -125,42 +125,42 @@
           unknown
         {% endif %}
 
-    # - name: "Solcast Seven Day"
-    #   unique_id: "solcast_seven_day"
-    #   state: >
-    #     {{
-    #       states('sensor.solcast_pv_forecast_forecast_today') | float(0) +
-    #       states('sensor.solcast_pv_forecast_forecast_tomorrow') | float(0) +
-    #       states('sensor.solcast_pv_forecast_forecast_day_3') | float(0) +
-    #       states('sensor.solcast_pv_forecast_forecast_day_4') | float(0) +
-    #       states('sensor.solcast_pv_forecast_forecast_day_5') | float(0) +
-    #       states('sensor.solcast_pv_forecast_forecast_day_6') | float(0) +
-    #       states('sensor.solcast_pv_forecast_forecast_day_7') | float(0)
-    #     }}
-    #   unit_of_measurement: "kWh"
-    #   attributes:
-    #     detailedForecast: >
-    #       {%
-    #         set days = state_attr('sensor.solcast_pv_forecast_forecast_today', 'detailedForecast') +
-    #         state_attr('sensor.solcast_pv_forecast_forecast_tomorrow', 'detailedForecast') +
-    #         state_attr('sensor.solcast_pv_forecast_forecast_day_3', 'detailedForecast') +
-    #         state_attr('sensor.solcast_pv_forecast_forecast_day_4', 'detailedForecast') +
-    #         state_attr('sensor.solcast_pv_forecast_forecast_day_5', 'detailedForecast') +
-    #         state_attr('sensor.solcast_pv_forecast_forecast_day_6', 'detailedForecast') +
-    #         state_attr('sensor.solcast_pv_forecast_forecast_day_7', 'detailedForecast')
-    #       %}
-    #       {% set ns = namespace(combined_list=[]) %}
-    #       {% for interval in days %}
-    #         {% set ns.combined_list = ns.combined_list + [
-    #           {
-    #             'period_start': interval['period_start'].isoformat(),
-    #             'pv_estimate': interval['pv_estimate'],
-    #             'pv_estimate10': interval['pv_estimate10'],
-    #             'pv_estimate90': interval['pv_estimate90'],
-    #           }
-    #         ] %}
-    #       {% endfor %}
-    #       {{ ns.combined_list | to_json() }}
+    - name: "Solcast Seven Day"
+      unique_id: "solcast_seven_day"
+      state: >
+        {{
+          states('sensor.solcast_pv_forecast_forecast_today') | float(0) +
+          states('sensor.solcast_pv_forecast_forecast_tomorrow') | float(0) +
+          states('sensor.solcast_pv_forecast_forecast_day_3') | float(0) +
+          states('sensor.solcast_pv_forecast_forecast_day_4') | float(0) +
+          states('sensor.solcast_pv_forecast_forecast_day_5') | float(0) +
+          states('sensor.solcast_pv_forecast_forecast_day_6') | float(0) +
+          states('sensor.solcast_pv_forecast_forecast_day_7') | float(0)
+        }}
+      unit_of_measurement: "kWh"
+      attributes:
+        detailedForecast: >
+          {%
+            set days = state_attr('sensor.solcast_pv_forecast_forecast_today', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_tomorrow', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_day_3', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_day_4', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_day_5', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_day_6', 'detailedForecast') +
+            state_attr('sensor.solcast_pv_forecast_forecast_day_7', 'detailedForecast')
+          %}
+          {% set ns = namespace(combined_list=[]) %}
+          {% for interval in days %}
+            {% set ns.combined_list = ns.combined_list + [
+              {
+                'period_start': interval['period_start'].isoformat(),
+                'pv_estimate': interval['pv_estimate'],
+                'pv_estimate10': interval['pv_estimate10'],
+                'pv_estimate90': interval['pv_estimate90'],
+              }
+            ] %}
+          {% endfor %}
+          {{ ns.combined_list | to_json() }}
     
     # Calculate "Other" usage
     # - name: "Home Other Usage"
