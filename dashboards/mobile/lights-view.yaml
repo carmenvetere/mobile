@@ -145,11 +145,9 @@ cards:
                   }  
       scenes:
         card:
-          type: custom:expander-card
-          expanded: true
-          title-card-clickable: true
-          title-card:
-            type: custom:bubble-card
+          type: vertical-stack
+          cards:
+          - type: custom:bubble-card
             card_type: separator
             name: Scenes
             icon: mdi:lightbulb-auto
@@ -171,19 +169,10 @@ cards:
               .card-content {
                 padding-top: 7px !important;
               }
-          card_mod:
-            style: |
-              ha-card {
-                border-radius: 20px !important;
-                padding-top: 3px !important;
-                margin-left: 5px !important;
-                padding-bottom: 3px !important;
-                margin-bottom: 10px !important;
-                padding-left: 15px !important;
-                padding-right: 15px !important;
-                background-color: var(--ha-card-background-2) !important;
-              }
-          cards: !include /config/dashboards/modules/first-floor-scenes.yaml
+          - !include 
+              - /config/dashboards/modules/dynamic-scenes.yaml
+              - module_name: mobile_lights_scenes
+                dashboard: mobile
 
       first:
         card: 
