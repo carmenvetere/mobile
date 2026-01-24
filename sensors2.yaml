@@ -204,7 +204,14 @@
           is_state('light.living_room_floor_lamp_2', 'on') and state_attr('light.living_room_floor_lamp_2', 'brightness') | int(0) in range(245, 266),
           is_state('light.kitchen_main_lights', 'on') and state_attr('light.kitchen_main_lights', 'brightness') | int(0) in range(5, 26),
           is_state('light.kitchen_outer_wall', 'on') and state_attr('light.kitchen_outer_wall', 'brightness') | int(0) in range(117, 138),
-          is_state('light.kitchen_island_pendants', 'on') and state_attr('light.kitchen_island_pendants', 'brightness') | int(0) in range(28, 49)
+          is_state('light.kitchen_island_pendants', 'on') and state_attr('light.kitchen_island_pendants', 'brightness') | int(0) in range(28, 49),
+          is_state('light.kitchen_window_seat_sconce', 'on') and state_attr('light.kitchen_window_seat_sconce', 'brightness') | int(0) in range(117, 138),
+          is_state('light.laundry_room_main_lights', 'off'),
+          is_state('light.dining_room_main_lights', 'off'),
+          is_state('light.dining_room_accent_lights', 'off'),
+          is_state('light.dining_room_table_lamps', 'on') and state_attr('light.dining_room_table_lamps', 'brightness') | int(0) in range(28, 49),
+          is_state('light.living_room_main_lights', 'off'),
+          is_state('light.stairs_spot_lights', 'on') and state_attr('light.stairs_spot_lights', 'brightness') | int(0) in range(28, 49)
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
       icon: mdi:weather-sunset-up
@@ -213,11 +220,28 @@
       unique_id: scene_good_night
       state: >
         {% set checks = [
-          is_state('light.living_room_main_lights', 'off'),
+          is_state('light.stairs_main_lights', 'off'),
+          is_state('light.basement_hallway_main_lights', 'off'),
+          is_state('light.dining_room_accent_lights', 'off'),
+          is_state('light.dining_room_main_lights', 'off'),
+          is_state('light.dining_room_table_lamps', 'off'),
+          is_state('light.front_foyer_pendants', 'off'),
+          is_state('light.upstairs_hallway_main_lights', 'off'),
+          is_state('light.gym_main_lights', 'off'),
+          is_state('light.kitchen_island_pendants', 'off'),
+          is_state('light.kitchen_main_lights', 'off'),
+          is_state('light.kitchen_outer_wall', 'off'),
+          is_state('light.laundry_room_main_lights', 'off'),
+          is_state('light.office_main_lights', 'off'),
+          is_state('light.media_room_main_lights', 'off'),
+          is_state('light.media_room_table_lamp', 'off'),
+          is_state('light.office_floor_lamp', 'off'),
           is_state('light.living_room_floor_lamp_1', 'off'),
           is_state('light.living_room_floor_lamp_2', 'off'),
-          is_state('light.kitchen_main_lights', 'off'),
-          is_state('light.kitchen_island_pendants', 'off')
+          is_state('light.living_room_main_lights', 'off'),
+          is_state('light.kitchen_window_seat_sconce', 'off'),
+          is_state('light.stairs_spot_lights', 'off'),
+          is_state('light.eve_light_strip_a5a4', 'off')
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
       icon: mdi:moon-waning-crescent
@@ -226,11 +250,28 @@
       unique_id: scene_nightlight
       state: >
         {% set checks = [
+          is_state('light.stairs_main_lights', 'off'),
+          is_state('light.basement_hallway_main_lights', 'off'),
+          is_state('light.dining_room_accent_lights', 'off'),
+          is_state('light.dining_room_main_lights', 'off'),
+          is_state('light.dining_room_table_lamps', 'off'),
+          is_state('light.front_foyer_pendants', 'off'),
+          is_state('light.upstairs_hallway_main_lights', 'off'),
+          is_state('light.gym_main_lights', 'off'),
+          is_state('light.kitchen_island_pendants', 'off'),
+          is_state('light.kitchen_main_lights', 'off'),
+          is_state('light.kitchen_outer_wall', 'off'),
+          is_state('light.laundry_room_main_lights', 'off'),
+          is_state('light.office_main_lights', 'off'),
+          is_state('light.media_room_main_lights', 'off'),
+          is_state('light.media_room_table_lamp', 'off'),
+          is_state('light.office_floor_lamp', 'on') and state_attr('light.office_floor_lamp', 'brightness') | int(0) in range(41, 62),
           is_state('light.living_room_floor_lamp_1', 'on') and state_attr('light.living_room_floor_lamp_1', 'brightness') | int(0) in range(66, 87),
           is_state('light.living_room_floor_lamp_2', 'on') and state_attr('light.living_room_floor_lamp_2', 'brightness') | int(0) in range(66, 87),
-          is_state('light.office_floor_lamp', 'on') and state_attr('light.office_floor_lamp', 'brightness') | int(0) in range(41, 62),
+          is_state('light.living_room_main_lights', 'off'),
           is_state('light.kitchen_window_seat_sconce', 'on') and state_attr('light.kitchen_window_seat_sconce', 'brightness') | int(0) in range(117, 138),
-          is_state('light.stairs_spot_lights', 'on') and state_attr('light.stairs_spot_lights', 'brightness') | int(0) in range(15, 36)
+          is_state('light.stairs_spot_lights', 'on') and state_attr('light.stairs_spot_lights', 'brightness') | int(0) in range(15, 36),
+          is_state('light.eve_light_strip_a5a4', 'on') and state_attr('light.eve_light_strip_a5a4', 'brightness') | int(0) in range(3, 23)
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
       icon: mdi:lightbulb-night-outline
@@ -243,7 +284,17 @@
           is_state('light.kitchen_main_lights', 'on') and state_attr('light.kitchen_main_lights', 'brightness') | int(0) in range(245, 266),
           is_state('light.living_room_main_lights', 'on') and state_attr('light.living_room_main_lights', 'brightness') | int(0) in range(245, 266),
           is_state('light.upstairs_hallway_main_lights', 'on') and state_attr('light.upstairs_hallway_main_lights', 'brightness') | int(0) in range(245, 266),
-          is_state('light.dining_room_main_lights', 'on') and state_attr('light.dining_room_main_lights', 'brightness') | int(0) in range(245, 266)
+          is_state('light.dining_room_main_lights', 'on') and state_attr('light.dining_room_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.basement_hallway_main_lights', 'on') and state_attr('light.basement_hallway_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.stairs_main_lights', 'on') and state_attr('light.stairs_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.media_room_main_lights', 'on') and state_attr('light.media_room_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.laundry_room_main_lights', 'on') and state_attr('light.laundry_room_main_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.patio_back_porch_lights', 'on') and state_attr('light.patio_back_porch_lights', 'brightness') | int(0) in range(245, 266),
+          is_state('light.driveway_sconces', 'on') and state_attr('light.driveway_sconces', 'brightness') | int(0) in range(245, 266),
+          is_state('light.front_porch_overhead_light', 'on') and state_attr('light.front_porch_overhead_light', 'brightness') | int(0) in range(245, 266),
+          is_state('light.driveway_transformer_1_2', 'on'),
+          is_state('switch.driveway_zone_2_2', 'on'),
+          is_state('light.driveway_transformer_3_2', 'on')
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
       icon: mdi:hospital
@@ -253,10 +304,16 @@
       state: >
         {% set checks = [
           is_state('light.dining_room_accent_lights', 'on') and state_attr('light.dining_room_accent_lights', 'brightness') | int(0) in range(28, 49),
+          is_state('light.dining_room_main_lights', 'off'),
           is_state('light.dining_room_table_lamps', 'on') and state_attr('light.dining_room_table_lamps', 'brightness') | int(0) in range(66, 87),
           is_state('light.living_room_main_lights', 'on') and state_attr('light.living_room_main_lights', 'brightness') | int(0) in range(41, 62),
           is_state('light.living_room_floor_lamp_1', 'on') and state_attr('light.living_room_floor_lamp_1', 'brightness') | int(0) in range(181, 202),
-          is_state('light.kitchen_island_pendants', 'on') and state_attr('light.kitchen_island_pendants', 'brightness') | int(0) in range(41, 62)
+          is_state('light.living_room_floor_lamp_2', 'on') and state_attr('light.living_room_floor_lamp_2', 'brightness') | int(0) in range(181, 202),
+          is_state('light.kitchen_island_pendants', 'on') and state_attr('light.kitchen_island_pendants', 'brightness') | int(0) in range(41, 62),
+          is_state('light.kitchen_main_lights', 'on') and state_attr('light.kitchen_main_lights', 'brightness') | int(0) in range(28, 49),
+          is_state('light.kitchen_outer_wall', 'on') and state_attr('light.kitchen_outer_wall', 'brightness') | int(0) in range(28, 49),
+          is_state('light.kitchen_window_seat_sconce', 'on') and state_attr('light.kitchen_window_seat_sconce', 'brightness') | int(0) in range(155, 176),
+          is_state('light.front_foyer_pendants', 'off')
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
       icon: mdi:weather-sunset-down
@@ -267,9 +324,16 @@
         {% set checks = [
           is_state('light.living_room_floor_lamp_1', 'on') and state_attr('light.living_room_floor_lamp_1', 'brightness') | int(0) in range(117, 138),
           is_state('light.living_room_floor_lamp_2', 'on') and state_attr('light.living_room_floor_lamp_2', 'brightness') | int(0) in range(117, 138),
+          is_state('light.living_room_main_lights', 'on') and state_attr('light.living_room_main_lights', 'brightness') | int(0) in range(53, 74),
           is_state('light.kitchen_island_pendants', 'on') and state_attr('light.kitchen_island_pendants', 'brightness') | int(0) in range(130, 151),
+          is_state('light.kitchen_main_lights', 'on') and state_attr('light.kitchen_main_lights', 'brightness') | int(0) in range(41, 62),
+          is_state('light.kitchen_outer_wall', 'on') and state_attr('light.kitchen_outer_wall', 'brightness') | int(0) in range(79, 100),
+          is_state('light.kitchen_window_seat_sconce', 'on') and state_attr('light.kitchen_window_seat_sconce', 'brightness') | int(0) in range(245, 266),
           is_state('light.dining_room_accent_lights', 'on') and state_attr('light.dining_room_accent_lights', 'brightness') | int(0) in range(117, 138),
-          is_state('light.front_foyer_pendants', 'on') and state_attr('light.front_foyer_pendants', 'brightness') | int(0) in range(66, 87)
+          is_state('light.dining_room_main_lights', 'on') and state_attr('light.dining_room_main_lights', 'brightness') | int(0) in range(28, 49),
+          is_state('light.dining_room_table_lamps', 'on') and state_attr('light.dining_room_table_lamps', 'brightness') | int(0) in range(117, 138),
+          is_state('light.front_foyer_pendants', 'on') and state_attr('light.front_foyer_pendants', 'brightness') | int(0) in range(66, 87),
+          is_state('light.stairs_spot_lights', 'on') and state_attr('light.stairs_spot_lights', 'brightness') | int(0) in range(117, 138)
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
       icon: mdi:glass-cocktail
@@ -293,9 +357,12 @@
         {% set checks = [
           is_state('light.living_room_main_lights', 'on') and state_attr('light.living_room_main_lights', 'brightness') | int(0) in range(66, 87),
           is_state('light.kitchen_main_lights', 'on') and state_attr('light.kitchen_main_lights', 'brightness') | int(0) in range(66, 87),
+          is_state('light.media_room_main_lights', 'on') and state_attr('light.media_room_main_lights', 'brightness') | int(0) in range(66, 87),
+          is_state('light.media_room_table_lamp', 'on') and state_attr('light.media_room_table_lamp', 'brightness') | int(0) in range(66, 87),
+          is_state('light.basement_hallway_main_lights', 'on') and state_attr('light.basement_hallway_main_lights', 'brightness') | int(0) in range(92, 113),
           is_state('light.front_foyer_pendants', 'on') and state_attr('light.front_foyer_pendants', 'brightness') | int(0) in range(66, 87),
-          is_state('light.upstairs_hallway_main_lights', 'on') and state_attr('light.upstairs_hallway_main_lights', 'brightness') | int(0) in range(66, 87),
-          is_state('light.basement_hallway_main_lights', 'on') and state_attr('light.basement_hallway_main_lights', 'brightness') | int(0) in range(92, 113)
+          is_state('light.laundry_room_main_lights', 'on') and state_attr('light.laundry_room_main_lights', 'brightness') | int(0) in range(117, 138),
+          is_state('light.upstairs_hallway_main_lights', 'on') and state_attr('light.upstairs_hallway_main_lights', 'brightness') | int(0) in range(66, 87)
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
       icon: mdi:human-greeting
@@ -321,7 +388,8 @@
           is_state('light.media_room_table_lamp', 'on') and state_attr('light.media_room_table_lamp', 'brightness') | int(0) in range(41, 62),
           is_state('light.basement_hallway_main_lights', 'on') and state_attr('light.basement_hallway_main_lights', 'brightness') | int(0) in range(28, 49),
           is_state('light.stairs_main_lights', 'on') and state_attr('light.stairs_main_lights', 'brightness') | int(0) in range(28, 49),
-          is_state('light.gym_main_lights', 'on') and state_attr('light.gym_main_lights', 'brightness') | int(0) in range(28, 49)
+          is_state('light.gym_main_lights', 'on') and state_attr('light.gym_main_lights', 'brightness') | int(0) in range(28, 49),
+          is_state('light.laundry_room_main_lights', 'on') and state_attr('light.laundry_room_main_lights', 'brightness') | int(0) in range(28, 49)
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
       icon: mdi:lamps
@@ -357,7 +425,12 @@
           is_state('light.driveway_sconces', 'on') and state_attr('light.driveway_sconces', 'brightness') | int(0) in range(53, 74),
           is_state('light.front_porch_overhead_light', 'on') and state_attr('light.front_porch_overhead_light', 'brightness') | int(0) in range(53, 74),
           is_state('switch.driveway_zone_2_2', 'on'),
-          is_state('switch.transformer_zone_1', 'on')
+          is_state('switch.driveway_zone_3_2', 'on'),
+          is_state('switch.driveway_zone_1_2', 'on'),
+          is_state('switch.transformer_zone_2', 'on'),
+          is_state('switch.transformer_zone_1', 'on'),
+          is_state('switch.transformer_zone_3', 'on'),
+          is_state('switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet', 'on')
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
       icon: mdi:outdoor-lamp
@@ -370,7 +443,11 @@
           is_state('light.driveway_sconces', 'on') and state_attr('light.driveway_sconces', 'brightness') | int(0) in range(245, 266),
           is_state('light.front_porch_overhead_light', 'on') and state_attr('light.front_porch_overhead_light', 'brightness') | int(0) in range(245, 266),
           is_state('switch.driveway_zone_2_2', 'on'),
-          is_state('switch.transformer_zone_1', 'on')
+          is_state('switch.driveway_zone_3_2', 'on'),
+          is_state('switch.driveway_zone_1_2', 'on'),
+          is_state('switch.transformer_zone_2', 'on'),
+          is_state('switch.transformer_zone_1', 'on'),
+          is_state('switch.transformer_zone_3', 'on')
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
       icon: mdi:outdoor-lamp
@@ -383,7 +460,12 @@
           is_state('light.driveway_sconces', 'off'),
           is_state('light.front_porch_overhead_light', 'off'),
           is_state('switch.driveway_zone_2_2', 'off'),
-          is_state('switch.transformer_zone_1', 'off')
+          is_state('switch.driveway_zone_3_2', 'off'),
+          is_state('switch.driveway_zone_1_2', 'off'),
+          is_state('switch.transformer_zone_1', 'off'),
+          is_state('switch.transformer_zone_2', 'off'),
+          is_state('switch.transformer_zone_3', 'off'),
+          is_state('switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet', 'off')
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
       icon: mdi:lightbulb-multiple-off-outline
