@@ -30,11 +30,13 @@ cards:
       custom_fields: 
         name: 
           - justify-items: flex-start
+        slide: 
+          - margin-bottom: 10px
     custom_fields:
       name:
         card:
           type: custom:button-card
-          name: Rivian R1T
+          name: Rivian R1T Charging
           show_name: true
           show_state: false
           show_icon: false
