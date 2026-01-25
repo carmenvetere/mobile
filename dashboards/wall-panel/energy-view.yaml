@@ -37,15 +37,16 @@ cards:
               styles:
                 card:
                   - height: 140px
-                  - width: 600px
+                  - width: 690px
                   - background: var(--background-color-2)
                   - border-radius: 30px
                   - padding-left: 20px
                   - padding-top: 0px
+                  - margin-left: 15px
                 grid:
                   - grid-template-areas: |
                       "icon name state"
-                  - grid-template-columns: 100px 150px 350px
+                  - grid-template-columns: 100px 240px 350px
                   - grid-template-rows: 140px
                   - column-gap: 0px
                   - row-gap: 0px
@@ -61,7 +62,7 @@ cards:
                     styles:
                       card:
                         - height: 140px
-                        - width: 150px
+                        - width: 240px
                         - background-color: transparent
                         - margin-left: "-20px"
                       name:
