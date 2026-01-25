@@ -4,36 +4,36 @@ card_mod:
   style: |
     ha-card {
       /* Override all text in the card to be smaller */
-      font-size: 14px !important;
+      font-size: 20px !important;
     }
     /* Try multiple selectors to catch all text elements */
     ha-card * {
-      font-size: 12px !important;
+      font-size: 18px !important;
       font-weight: bold !important;
     }
     /* Main entity values */
     ha-card .value,
     ha-card [class*="value"],
     ha-card .power-value {
-      font-size: 12px !important;
+      font-size: 18px !important;
       font-weight: bold !important;
     }
     /* Entity labels */
     ha-card .label,
     ha-card [class*="label"],
     ha-card .entity-name {
-      font-size: 16px !important;
+      font-size: 18px !important;
       font-weight: bold !important;
     }
     /* Individual device text (smaller) */
     ha-card .individual *,
     ha-card [class*="individual"] * {
-      font-size: 12px !important;
+      font-size: 18px !important;
     }
     /* Secondary info text */
     ha-card .secondary,
     ha-card [class*="secondary"] {
-      font-size: 12px !important;
+      font-size: 18px !important;
       opacity: 0.8;
     }
 entities:
@@ -49,8 +49,8 @@ entities:
     entity: sensor.bayberry_site_power
     color_icon: false
     color:
-      consumption: var(--primary-text-color)
-      production: var(--primary-text-color)
+      consumption: var(--secondary-text-color)
+      production: var(--secondary-text-color)
       color_value: true
     power_outage:
       icon_alert: mdi:flash-alert
