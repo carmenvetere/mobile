@@ -264,6 +264,9 @@ cards:
                   card:
                     type: custom:button-card
                     entity: number.bayberry_backup_reserve
+                    tap_action:
+                      action: navigate
+                      navigation_path: '#powerwall-reserve'
                     show_state: true
                     show_label: false
                     show_name: false
