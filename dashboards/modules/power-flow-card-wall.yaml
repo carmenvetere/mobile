@@ -28,6 +28,11 @@ card_mod:
         background: var(--background-color-2) !important;
       }
     ha-elec-sankey $: |
+      :host {
+        --generation-color: var(--energy-solar-color);
+        --grid-in-color: var(--accent-color);
+        --batt-in-color: var(--accent-color-2);
+      }
       .label {
         font-size: 16px !important;
       }
