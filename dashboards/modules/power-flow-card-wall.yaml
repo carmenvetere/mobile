@@ -11,11 +11,22 @@ title: Live Power Flow
 independent_grid_in_out: false
 generation_entity: sensor.bayberry_solar_power
 card_mod:
-  style: |
-    ha-card {
-      font-size: 18px !important;
-      font-weight: bold !important;
-      max-width: 690px !important;
-      margin-left: 15px !important;
-      background: var(--background-color-2) !important;
-    }
+  style:
+    .: |
+      .card-header {
+        justify-items: left !important;
+        font-size: 36px !important;
+        font-weight: bold !important;
+      }
+        
+      ha-card {
+        font-size: 18px !important;
+        font-weight: bold !important;
+        max-width: 690px !important;
+        margin-left: 15px !important;
+        background: var(--background-color-2) !important;
+      }
+    ha-elec-sankey $: |
+      .label {
+        font-size: 16px !important;
+      }
