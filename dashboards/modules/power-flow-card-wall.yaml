@@ -25,9 +25,10 @@ card_mod:
       .card-header::before {
         content: "";
         display: inline-block;
-        width: 42px;
-        height: 42px;
-        margin-right: 10px;
+        width: 60px;
+        height: 60px;
+        margin-right: 20px;
+        margin-left: 10px;
         vertical-align: middle;
         background-color: var(--primary-text-color);
         -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 15H6L13 1V9H18L11 23V15Z'/%3E%3C/svg%3E");
