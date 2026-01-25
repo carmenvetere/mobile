@@ -213,7 +213,7 @@
           is_state('light.living_room_main_lights', 'off'),
           is_state('light.stairs_spot_lights', 'on') and state_attr('light.stairs_spot_lights', 'brightness') | int(0) in range(28, 49)
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:weather-sunset-up
 
     - name: "Scene Good Night"
@@ -243,7 +243,7 @@
           is_state('light.stairs_spot_lights', 'off'),
           is_state('light.eve_light_strip_a5a4', 'off')
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count == checks | count }}
       icon: mdi:moon-waning-crescent
 
     - name: "Scene Nightlight"
@@ -273,7 +273,7 @@
           is_state('light.stairs_spot_lights', 'on') and state_attr('light.stairs_spot_lights', 'brightness') | int(0) in range(15, 36),
           is_state('light.eve_light_strip_a5a4', 'on') and state_attr('light.eve_light_strip_a5a4', 'brightness') | int(0) in range(3, 23)
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:lightbulb-night-outline
 
     - name: "Scene Emergency"
@@ -296,7 +296,7 @@
           is_state('switch.driveway_zone_2_2', 'on'),
           is_state('light.driveway_transformer_3_2', 'on')
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:hospital
 
     - name: "Scene Evening"
@@ -315,7 +315,7 @@
           is_state('light.kitchen_window_seat_sconce', 'on') and state_attr('light.kitchen_window_seat_sconce', 'brightness') | int(0) in range(155, 176),
           is_state('light.front_foyer_pendants', 'off')
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:weather-sunset-down
 
     - name: "Scene Entertaining"
@@ -335,7 +335,7 @@
           is_state('light.front_foyer_pendants', 'on') and state_attr('light.front_foyer_pendants', 'brightness') | int(0) in range(66, 87),
           is_state('light.stairs_spot_lights', 'on') and state_attr('light.stairs_spot_lights', 'brightness') | int(0) in range(117, 138)
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:glass-cocktail
 
     - name: "Scene First Floor Cleaning"
@@ -348,7 +348,7 @@
           is_state('light.living_room_main_lights', 'on') and state_attr('light.living_room_main_lights', 'brightness') | int(0) in range(245, 266),
           is_state('light.dining_room_main_lights', 'on') and state_attr('light.dining_room_main_lights', 'brightness') | int(0) in range(245, 266)
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:spray-bottle
 
     - name: "Scene Welcome"
@@ -364,7 +364,7 @@
           is_state('light.laundry_room_main_lights', 'on') and state_attr('light.laundry_room_main_lights', 'brightness') | int(0) in range(117, 138),
           is_state('light.upstairs_hallway_main_lights', 'on') and state_attr('light.upstairs_hallway_main_lights', 'brightness') | int(0) in range(66, 87)
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:human-greeting
 
     - name: "Scene Basement Cleaning"
@@ -377,7 +377,7 @@
           is_state('light.gym_main_lights', 'on') and state_attr('light.gym_main_lights', 'brightness') | int(0) in range(245, 266),
           is_state('light.stairs_main_lights', 'on') and state_attr('light.stairs_main_lights', 'brightness') | int(0) in range(245, 266)
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:spray-bottle
 
     - name: "Scene Basement Evening"
@@ -391,7 +391,7 @@
           is_state('light.gym_main_lights', 'on') and state_attr('light.gym_main_lights', 'brightness') | int(0) in range(28, 49),
           is_state('light.laundry_room_main_lights', 'on') and state_attr('light.laundry_room_main_lights', 'brightness') | int(0) in range(28, 49)
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:lamps
 
     - name: "Scene Basement Work"
@@ -403,7 +403,7 @@
           is_state('light.basement_hallway_main_lights', 'on') and state_attr('light.basement_hallway_main_lights', 'brightness') | int(0) in range(53, 74),
           is_state('light.gym_main_lights', 'on') and state_attr('light.gym_main_lights', 'brightness') | int(0) in range(53, 74)
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:desk-lamp
 
     - name: "Scene Upstairs Evening"
@@ -414,7 +414,7 @@
           is_state('light.upstairs_hallway_main_lights', 'on') and state_attr('light.upstairs_hallway_main_lights', 'brightness') | int(0) in range(15, 36),
           is_state('light.eve_light_strip_a5a4', 'on') and state_attr('light.eve_light_strip_a5a4', 'brightness') | int(0) in range(64, 85)
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:moon-waning-crescent
 
     - name: "Scene Outdoor On"
@@ -432,7 +432,7 @@
           is_state('switch.transformer_zone_3', 'on'),
           is_state('switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet', 'on')
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:outdoor-lamp
 
     - name: "Scene Outdoor On Bright"
@@ -449,7 +449,7 @@
           is_state('switch.transformer_zone_1', 'on'),
           is_state('switch.transformer_zone_3', 'on')
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:outdoor-lamp
 
     - name: "Scene Outdoor Off"
@@ -467,5 +467,5 @@
           is_state('switch.transformer_zone_3', 'off'),
           is_state('switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet', 'off')
         ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.8) }}
+        {{ checks | select('equalto', true) | list | count == checks | count }}
       icon: mdi:lightbulb-multiple-off-outline
