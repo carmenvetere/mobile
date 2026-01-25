@@ -19,7 +19,21 @@ card_mod:
         font-size: 36px !important;
         font-weight: bold !important;
       }
-        
+
+      .card-header::before {
+        content: "";
+        display: inline-block;
+        width: 42px;
+        height: 42px;
+        margin-right: 10px;
+        vertical-align: middle;
+        background-color: var(--primary-text-color);
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 15H6L13 1V9H18L11 23V15Z'/%3E%3C/svg%3E");
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 15H6L13 1V9H18L11 23V15Z'/%3E%3C/svg%3E");
+        mask-size: contain;
+        -webkit-mask-size: contain;
+      }
+
       ha-card {
         font-size: 18px !important;
         font-weight: bold !important;
@@ -30,8 +44,8 @@ card_mod:
     ha-elec-sankey $: |
       :host {
         --generation-color: var(--energy-solar-color);
-        --grid-in-color: var(--accent-color);
-        --batt-in-color: var(--accent-color-2);
+        --grid-in-color: var(--accent-color) !important;
+        --batt-in-color: var(--accent-color-2) !important;
       }
       .label {
         font-size: 16px !important;
