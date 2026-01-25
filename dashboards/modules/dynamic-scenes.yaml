@@ -7,7 +7,7 @@ cards:
     visibility:
       - condition: state
         entity: binary_sensor.r1t_charging_status
-        state: "on"
+        state: "off"
     styles:
       card:
         - height: 140px
