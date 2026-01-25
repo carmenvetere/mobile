@@ -1,5 +1,6 @@
 type: custom:power-flow-card-plus
 clickable_entities: true
+full_size: true
 card_mod:
   style: |
     ha-card {
@@ -45,6 +46,7 @@ entities:
       production: '#327C7F'
     color_icon: true
     show_state_of_charge: true
+    display_state: one_way
   grid:
     entity: sensor.bayberry_site_power
     color_icon: false
@@ -57,9 +59,7 @@ entities:
     use_metadata: false
     invert_state: false
     color_value: false
-    secondary_info:
-      entity: sensor.net_grid_export
-      unit_of_measurement: kWh
+    display_state: one_way
   solar:
     entity: sensor.bayberry_solar_power
     color_icon: false
