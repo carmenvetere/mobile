@@ -203,6 +203,9 @@ cards:
                         - font-weight: bold
                         - color: var(--text-color)
             - type: custom:button-card
+              tap_action:
+                action: navigate
+                navigation_path: '#powerwall-reserve'
               styles:
                 card:
                   - height: 140px
@@ -274,6 +277,84 @@ cards:
                         - font-size: 46px
                         - font-weight: bold
                         - color: var(--text-color)
-
-
       nav: !include footer-menu.yaml
+#Powerwall Reserve Pop-Up
+- type: vertical-stack
+  cards:
+    - type: custom:bubble-card
+      card_type: pop-up
+      hash: "#powerwall-reserve"
+      button_type: name
+      sub_button:
+        main: []
+        bottom: []
+      name: Powerwall Backup Reserve
+      icon: mdi:battery-50
+      rows: 2
+      scrolling_effect: false
+      styles: |
+        .bubble-name {
+          font-size: 24px !important;
+          line-height: 1.1;
+          margin-bottom: 30px !important;
+          }
+
+        .bubble-button-card-container {
+          border-radius: 30px !important;
+          background-color: transparent !important;
+          min-height: 100px !important;
+          }
+
+        .bubble-button-background {
+          background-color: transparent !important;
+          }
+          
+        .bubble-icon-container {
+          background-color: transparent !important;
+          margin-bottom: 30px !important;
+          }
+          
+        .bubble-icon {
+          --mdc-icon-size: 36px !important;
+          }
+      card_layout: large
+    - type: custom:bubble-card
+      card_type: button
+      button_type: slider
+      sub_button:
+        main: []
+        bottom:
+          - entity: number.bayberry_backup_reserve
+            show_state: true
+            show_background: false
+            force_icon: false
+            scrolling_effect: false
+            show_icon: false
+      entity: number.bayberry_backup_reserve
+      slider_fill_orientation: bottom
+      styles: |
+        .bubble-button-card-container {
+          border-radius: 30px !important;
+          background-color: var(--background-color) !important;
+          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06)
+            !important;
+          min-height: 500px !important;
+          max-width: 100px !important;
+          margin: 0 auto !important;
+          }
+        .bubble-sub-button { 
+          font-size: 22px !important;
+          font-weight: bold; 
+          margin-top: 27px;
+          color: var(--text-color) !important;
+          }
+        .bubble-range-fill {
+          background: var(--accent-color) !important;
+          }
+        .bubble-range-slider {
+        background: var(--background-color) !important;
+        }
+      scrolling_effect: false
+      show_icon: false
+      show_name: false
+      invert_slider_value: false
