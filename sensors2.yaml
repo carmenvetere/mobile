@@ -163,7 +163,7 @@
           {% endfor %}
           {{ ns.combined_list | to_json() }}
     
-    Calculate "Other" usage
+#   Calculate "Other" usage
     - name: "Home Other Usage"
       unique_id: home_other_usage
       unit_of_measurement: "kWh"
