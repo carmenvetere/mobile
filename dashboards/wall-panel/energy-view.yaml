@@ -231,6 +231,9 @@ cards:
                     show_name: true
                     show_state: false
                     show_icon: false
+                    tap_action:
+                      action: navigate
+                      navigation_path: '#powerwall-reserve'
                     styles:
                       card:
                         - height: 140px
@@ -250,6 +253,9 @@ cards:
                   card:
                     type: custom:button-card
                     icon: mdi:battery-50
+                    tap_action:
+                      action: navigate
+                      navigation_path: '#powerwall-reserve'                    
                     styles:
                       icon:
                         - color: var(--text-color)
