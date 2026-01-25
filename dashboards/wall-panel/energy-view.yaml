@@ -321,6 +321,9 @@ cards:
             --mdc-icon-size: 36px !important;
             }
         card_layout: large
+        width_desktop: 50%
+        bg_opacity: "100"
+        bg_color: var(-—background-color-2)
       - type: custom:bubble-card
         card_type: button
         button_type: slider
