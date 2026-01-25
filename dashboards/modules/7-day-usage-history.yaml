@@ -56,16 +56,6 @@ series:
     show:
       legend_value: false
       in_header: false
-  - entity: sensor.hot_water_heater
-    name: Hot Water
-    type: column
-    color: "#5D617A"
-    group_by:
-      func: delta
-      duration: 1d
-    show:
-      legend_value: false
-      in_header: false
   - entity: sensor.wall_charger_energy
     name: EV Charger
     type: column
@@ -106,17 +96,6 @@ series:
     color: "#4C4F69"
     group_by:
       func: diff
-      duration: 7d
-    show:
-      legend_value: false
-      in_header: true
-      in_chart: false
-  - entity: sensor.hot_water_heater
-    name: Hot Water
-    type: column
-    color: "#5D617A"
-    group_by:
-      func: delta
       duration: 7d
     show:
       legend_value: false
