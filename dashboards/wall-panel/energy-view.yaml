@@ -237,7 +237,7 @@ cards:
                         - color: var(--text-color)
                         - height: 60px
                         - width: 60px
-                        - margin-top: 0px
+                        - margin-top: -10px
                       card:
                         - background-color: transparent
                         - margin-left: 10px
@@ -261,6 +261,7 @@ cards:
                         - color: var(--text-color)
                         - text-align: left
                         - justify-self: flex-start
+                        - margin-left: -5px
                 slider:
                   card:
                     type: custom:bubble-card
