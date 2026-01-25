@@ -214,9 +214,9 @@ cards:
                   - margin-bottom: 50px
                 grid:
                   - grid-template-areas: |
-                      "name name time"
-                      "slider slider slider"
-                  - grid-template-columns: 75px 525px
+                      "icon name"
+                      "slider slider"
+                  - grid-template-columns: 100px 525px
                   - grid-template-rows: 35px 105px
                   - column-gap: 0px
                   - row-gap: 5px
@@ -228,6 +228,20 @@ cards:
                   slide:
                     - margin-bottom: 10px
               custom_fields:
+                icon:
+                  card:
+                    type: custom:button-card
+                    icon: mdi:battery
+                    styles:
+                      icon:
+                        - color: var(--text-color)
+                        - height: 60px
+                        - width: 60px
+                      card:
+                        - background-color: transparent
+                        - margin-left: 10px
+                        - height: 65px
+                        - width: 75px
                 name:
                   card:
                     type: custom:button-card
