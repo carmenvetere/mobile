@@ -32,6 +32,103 @@ cards:
         card: 
           type: vertical-stack
           cards: 
+            - type: custom:button-card
+              visibility:
+              - condition: state
+                entity: binary_sensor.bayberry_grid_status
+                state: 'off'
+              styles:
+                card:
+                  - height: 140px
+                  - width: 690px
+                  - background: var(--background-color-2)
+                  - border-radius: 30px
+                  - padding-left: 10px
+                  - padding-top: 0px
+                grid:
+                  - grid-template-areas: |
+                      "icon name percent time"
+                  - grid-template-columns: 100px 240px 100px 250px
+                  - grid-template-rows: 140px
+                  - column-gap: 0px
+                  - row-gap: 0px
+                  - align-items: center
+              custom_fields:
+                name:
+                  card:
+                    type: custom:button-card
+                    name: Powerwall
+                    show_name: true
+                    show_state: false
+                    show_icon: false
+                    styles:
+                      card:
+                        - height: 140px
+                        - width: 240px
+                        - background-color: transparent
+                        - margin-left: "-20px"
+                      name:
+                        - font-size: 36px
+                        - font-weight: bold
+                        - color: var(--text-color)
+                        - text-align: left
+                        - justify-self: start
+                        - white-space: normal
+                        - overflow: visible
+                        - word-break: break-word
+                icon:
+                  card:
+                    type: custom:button-card
+                    icon: mdi:battery-50
+                    styles:
+                      icon:
+                        - color: "#EF8C00"
+                        - height: 60px
+                        - width: 60px
+                      card:
+                        - background-color: transparent
+                        - margin-left: 10px
+                        - height: 65px
+                        - width: 75px
+                percent:
+                  card:
+                    type: custom:button-card
+                    entity: sensor.bayberry_charge
+                    show_state: true
+                    show_label: false
+                    show_name: false
+                    show_icon: false
+                    styles:
+                      card:
+                        - height: 140px
+                        - width: 100px
+                        - background: transparent
+                      state:
+                        - font-size: 46px
+                        - font-weight: bold
+                        - color: var(--text-color)
+                time:
+                  card:
+                    type: custom:button-card
+                    entity: sensor.powerwall_discharge_time
+                    show_state: true
+                    show_label: false
+                    show_name: false
+                    show_icon: false
+                    state_display: |
+                      [[[
+                        const state = states['sensor.powerwall_discharge_time'].state;
+                        return state.split(': ')[1];
+                      ]]]
+                    styles:
+                      card:
+                        - height: 140px
+                        - width: 250px
+                        - background: transparent
+                      state:
+                        - font-size: 46px
+                        - font-weight: bold
+                        - color: var(--text-color)
             - !include /config/dashboards/modules/power-flow-card-wall.yaml
             - type: custom:button-card
               styles:
