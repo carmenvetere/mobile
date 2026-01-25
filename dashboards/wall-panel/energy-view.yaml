@@ -23,13 +23,9 @@ cards:
             "nav"
         - grid-template-columns: 720px
         - grid-template-rows: 100px 1050px 100px
-        - align-items: start
+        - align-items: center
         - column-gap: 2px
         - row-gap: 15px
-      custom_fields:
-        main:
-          - overflow-y: auto
-          - max-height: 1050px
     custom_fields:
       header: !include header.yaml
       main:
