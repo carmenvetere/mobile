@@ -158,11 +158,17 @@ cards:
       - condition: state
         entity: input_boolean.day_scene_buttons
         state: "on"
+    button_action:
+      tap_action:
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.good_morning_2
     tap_action:
       action: perform-action
       perform_action: scene.turn_on
       target:
-        entity_id: scene.good_morning
+        entity_id: scene.good_morning_2
     card_layout: large
     scrolling_effect: false
     modules:
@@ -178,6 +184,12 @@ cards:
       - condition: state
         entity: input_boolean.day_scene_buttons
         state: "on"
+    button_action:
+      tap_action:
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.basement_work
     tap_action:
       action: perform-action
       perform_action: scene.turn_on
