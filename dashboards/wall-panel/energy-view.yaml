@@ -36,5 +36,5 @@ cards:
         card: 
           type: vertical-stack
           cards: 
-            - !include /config/dashboards/modules/power-flow-card.yaml
+            - !include /config/dashboards/modules/power-flow-card-wall.yaml
       nav: !include footer-menu.yaml
