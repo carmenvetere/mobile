@@ -1,96 +1,12 @@
-type: custom:power-flow-card-plus
-clickable_entities: true
-full_size: true
-card_mod:
-  style: |
-    ha-card {
-      /* Override all text in the card to be smaller */
-      font-size: 20px !important;
-      height: 950px !important;
-      width: 700px !important;
-    }
-    /* Try multiple selectors to catch all text elements */
-    ha-card * {
-      font-size: 18px !important;
-      font-weight: bold !important;
-    }
-    /* Main entity values */
-    ha-card .value,
-    ha-card [class*="value"],
-    ha-card .power-value {
-      font-size: 18px !important;
-      font-weight: bold !important;
-    }
-    /* Entity labels */
-    ha-card .label,
-    ha-card [class*="label"],
-    ha-card .entity-name {
-      font-size: 18px !important;
-      font-weight: bold !important;
-    }
-    /* Individual device text (smaller) */
-    ha-card .individual *,
-    ha-card [class*="individual"] * {
-      font-size: 18px !important;
-    }
-    /* Secondary info text */
-    ha-card .secondary,
-    ha-card [class*="secondary"] {
-      font-size: 18px !important;
-      opacity: 0.8;
-    }
-entities:
-  battery:
-    entity: sensor.bayberry_battery_power
-    state_of_charge: sensor.bayberry_charge
-    color:
-      consumption: '#327C7F'
-      production: '#327C7F'
-    color_icon: true
-    show_state_of_charge: true
-    display_state: one_way
-  grid:
-    entity: sensor.bayberry_site_power
-    color_icon: false
-    color:
-      consumption: var(--secondary-text-color)
-      production: var(--secondary-text-color)
-      color_value: true
-    power_outage:
-      icon_alert: mdi:flash-alert
-    use_metadata: false
-    invert_state: false
-    color_value: false
-    display_state: one_way
-  solar:
-    entity: sensor.bayberry_solar_power
-    color_icon: false
-    color: "#dd8e02"
-  home:
-    entity: sensor.bayberry_load_power
-    subtract_individual: true
-  individual:
-    - entity: sensor.wall_charger_power
-      display_zero: false
-      name: Car Charging
-      icon: mdi:car-electric
-      color: '#E74C3C'
-    - entity: sensor.well_pump_power
-      name: Well Pump
-      color: '#3ea4f0'
-      color_value: false
-      display_zero: false
-      icon: mdi:sprinkler-variant
-    - entity: sensor.omnilogic_pool_filter_pump_power
-      name: Pool Filter
-      color: '#5cb5e1'
-      color_value: false
-      display_zero: false
-      icon: mdi:pool
-display_zero_lines:
-  mode: show
-  transparency: 50
-  grey_color:
-    - 189
-    - 189
-    - 189
+type: custom:energy-sankey-power-flow-card
+config_version: 3
+power_from_grid_entity: sensor.bayberry_grid_power
+consumer_entities:
+  - entity: sensor.bayberry_load_power
+    name: House
+battery_entities:
+  - entity: sensor.bayberry_battery_power
+    name: Powerwall
+title: Live Power Flow
+independent_grid_in_out: false
+generation_entity: sensor.bayberry_solar_power
