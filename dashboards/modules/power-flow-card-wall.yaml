@@ -10,3 +10,11 @@ battery_entities:
 title: Live Power Flow
 independent_grid_in_out: false
 generation_entity: sensor.bayberry_solar_power
+card_mod:
+  style: |
+    ha-card {
+      font-size: 18px !important;
+      font-weight: bold !important;
+      height: 950px !important;
+      max-width: 690px !important;
+    }
