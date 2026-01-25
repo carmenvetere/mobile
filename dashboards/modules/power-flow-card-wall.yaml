@@ -4,6 +4,8 @@ power_from_grid_entity: sensor.bayberry_grid_power
 consumer_entities:
   - entity: sensor.bayberry_load_power
     name: House
+  - entity: sensor.wall_charger_power
+    name: EV Charger
 battery_entities:
   - entity: sensor.bayberry_battery_power
     name: Powerwall
