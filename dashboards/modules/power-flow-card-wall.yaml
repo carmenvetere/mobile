@@ -14,7 +14,8 @@ card_mod:
   style:
     .: |
       .card-header {
-        justify-items: left !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
         font-size: 36px !important;
         font-weight: bold !important;
       }
