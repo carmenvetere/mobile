@@ -37,7 +37,7 @@ cards:
           - padding-top: 0px
           - margin-top: 0px
           - margin-left: 15px
-          - border-radius: 12px
+          - border-radius: 20px
           - background-color: "#626569"
         grid:
           - grid-template-areas: |
@@ -67,7 +67,7 @@ cards:
               card:
                 - height: 125px
                 - width: 170px
-                - border-radius: 12px
+                - border-radius: 20px
                 - background-color: var(--background-color)
               icon:
                 - width: 68px
@@ -95,7 +95,7 @@ cards:
             show_name: true
             show_icon: true
             name: Cool
-            icon: mdi:air-conditioner
+            icon: mdi:snowflake
             tap_action:
               action: perform-action
               perform_action: climate.set_hvac_mode
@@ -107,7 +107,7 @@ cards:
               card:
                 - height: 125px
                 - width: 165px
-                - border-radius: 12px
+                - border-radius: 20px
                 - background-color: var(--background-color)
               icon:
                 - width: 68px
@@ -149,7 +149,7 @@ cards:
               card:
                 - height: 125px
                 - width: 165px
-                - border-radius: 12px
+                - border-radius: 20px
                 - background-color: |
                     [[[
                       const climate = states['climate.basement_thermostat'];
@@ -207,7 +207,7 @@ cards:
               card:
                 - height: 125px
                 - width: 170px
-                - border-radius: 12px
+                - border-radius: 20px
                 - background-color: var(--background-color)
               icon:
                 - width: 68px
