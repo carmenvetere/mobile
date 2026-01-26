@@ -204,7 +204,6 @@
           is_state('light.kitchen_outer_wall', 'on') and state_attr('light.kitchen_outer_wall', 'brightness') | int(0) in range(117, 138),
           is_state('light.kitchen_island_pendants', 'on') and state_attr('light.kitchen_island_pendants', 'brightness') | int(0) in range(28, 49),
           is_state('light.kitchen_window_seat_sconce', 'on') and state_attr('light.kitchen_window_seat_sconce', 'brightness') | int(0) in range(117, 138),
-          is_state('light.laundry_room_main_lights', 'off'),
           is_state('light.dining_room_main_lights', 'off'),
           is_state('light.dining_room_accent_lights', 'off'),
           is_state('light.dining_room_table_lamps', 'on') and state_attr('light.dining_room_table_lamps', 'brightness') | int(0) in range(28, 49),
