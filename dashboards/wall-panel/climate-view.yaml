@@ -1,5 +1,6 @@
+# lovelace_gen
 title: Climate
-theme: Bubble
+theme: Wall Panel
 path: climate-view
 type: custom:grid-layout
 cards:
@@ -9,183 +10,24 @@ cards:
         - border-radius: 0px
         - padding-bottom: 5px
         - padding-left: 0px
-        - margin: '-4px'
         - padding-top: 0px
-        - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
-        - height: 480px
-        - width: 480px
+        - margin-left: -4px
+        - margin-top: -4px      
+        - width: 720px
+        - height: 1280px      
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header"
             "main"
-            "secondary"
             "nav"
-        - grid-template-columns: auto
-        - grid-template-rows: 50px 330px 50px 50px
+        - grid-template-columns: 720px
+        - grid-template-rows: 100px 1050px 100px
         - align-items: start
         - column-gap: 2px
+        - row-gap: 15px
     custom_fields:
       header: !include header.yaml
       main:
-        card:
-          type: thermostat
-          name: ' '
-          entity: climate.basement_thermostat
-          features:
-            - type: climate-hvac-modes
-          card_mod:
-            style: |
-              ha-card {
-                max-width: 480px;
-                max-height: 340px;
-                margin: 0px;
-              }
-      secondary:
-        card:
-          type: custom:button-card
-          styles:
-            card:
-              - height: 42px
-              - width: 456px
-              - padding: 0
-              - margin-left: 12px
-              - margin-right: 12px
-              - margin-top: 0px
-              - border-radius: 12px
-              - background-color: '#D7D9DF'
-            grid:
-              - grid-template-areas: |
-                  "on auto circulate fresh"
-              - grid-template-columns: 115px 115px 115px 115px
-              - grid-template-rows: 45px
-              - column-gap: 0px
-              - align-items: start
-          custom_fields:
-            "on":
-              card:
-                type: custom:button-card
-                show_state: false
-                show_name: false
-                show_icon: true
-                icon: mdi:fan
-                size: 20%
-                tap_action: 
-                  action: perform-action
-                  perform_action: climate.set_fan_mode
-                  target:
-                    entity_id: climate.basement_thermostat
-                  data:
-                    fan_mode: "on"
-                styles:
-                  card:
-                    - height: 45px
-                    - width: 115px
-                    - border-radius: 15px
-                    - background-color: '#D7D9DF'
-                state:
-                  - operator: template
-                    value: >
-                      [[[
-                      return states['climate.basement_thermostat'].attributes.fan_mode == 'on';
-                      ]]]
-                    styles:
-                      card:
-                        - background-color: '#3399ff'
-                      icon:
-                        - color: white
-            auto:
-              card:
-                type: custom:button-card
-                show_state: false
-                show_name: false
-                show_icon: true
-                icon: mdi:fan-auto
-                size: 20%
-                tap_action: 
-                  action: perform-action
-                  perform_action: climate.set_fan_mode
-                  target:
-                    entity_id: climate.basement_thermostat
-                  data:
-                    fan_mode: auto
-                styles:
-                  card:
-                    - height: 45px
-                    - width: 115px
-                    - border-radius: 15px
-                    - background-color: '#D7D9DF'
-                state:
-                  - operator: template
-                    value: >
-                      [[[
-                      return states['climate.basement_thermostat'].attributes.fan_mode == 'auto';
-                      ]]]
-                    styles:
-                      card:
-                        - background-color: '#3399ff'
-                      icon:
-                        - color: white
-            circulate:
-              card:
-                type: custom:button-card
-                show_state: false
-                show_name: false
-                show_icon: true
-                icon: mdi:fan-clock
-                size: 20%
-                tap_action: 
-                  action: perform-action
-                  perform_action: climate.set_fan_mode
-                  target:
-                    entity_id: climate.basement_thermostat
-                  data:
-                    fan_mode: diffuse
-                styles:
-                  card:
-                    - height: 45px
-                    - width: 115px
-                    - border-radius: 15px
-                    - background-color: '#D7D9DF'
-                state:
-                  - operator: template
-                    value: >
-                      [[[
-                      return states['climate.basement_thermostat'].attributes.fan_mode == 'diffuse';
-                      ]]]
-                    styles:
-                      card:
-                        - background-color: '#3399ff'
-                      icon:
-                        - color: white
-            fresh:
-              card:
-                type: custom:button-card
-                entity: switch.utility_room_ventilation_damper
-                show_state: false
-                show_name: false
-                show_icon: true
-                icon: mdi:tailwind
-                size: 20%
-                tap_action: 
-                  action: perform-action
-                  perform_action: switch.toggle
-                  target:
-                    entity_id: switch.utility_room_ventilation_damper
-                styles:
-                  card:
-                    - height: 45px
-                    - width: 115px
-                    - border-radius: 15px
-                    - background-color: '#D7D9DF'
-                state:
-                  - operator: template
-                    value: >
-                      [[[
-                      return states['switch.utility_room_ventilation_damper'].state === 'on';
-                      ]]]
-                    styles:
-                      card:
-                        - background-color: '#3399ff'
-                      icon:
-                        - color: white
+        card: !include /config/dashboards/modules/basement-climate.yaml
       nav: !include footer-menu.yaml
