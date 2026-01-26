@@ -1,0 +1,226 @@
+type: vertical-stack
+cards: 
+    - type: thermostat
+      name: Basement
+      entity: climate.basement_thermostat_homekit
+      theme: Wall Panel
+      show_current_as_primary: false
+      card_mod:
+        style:
+          .: |
+            ha-card {
+              background: var(--background-color) !important;
+              border-radius: 30px !important;
+            }
+            .more-info {
+              display: none !important;
+            }
+
+            .title {
+              font-size: 24px !important;
+              font-weight: bold !important;
+              }
+          round-slider$: |
+            .slider {
+              stroke: var(--background-color-2) !important;
+            }
+    - type: custom:button-card
+      show_name: false
+      show_icon: false
+      show_state: false
+      styles:
+        card:
+          - height: 125px
+          - width: 690px
+          - padding-top: 0px
+          - margin-top: 0px
+          - border-radius: 12px
+          - background-color: "#626569"
+        grid:
+          - grid-template-areas: |
+              "off cool heat emergency_heat"
+          - grid-template-columns: 170px 165px 165px 170px
+          - grid-template-rows: 125px
+          - column-gap: 5px
+          - align-items: center
+      custom_fields:
+        "off":
+          card:
+            type: custom:button-card
+            entity: climate.basement_thermostat
+            show_state: false
+            show_name: true
+            show_icon: true
+            name: "Off"
+            icon: mdi:hvac-off
+            tap_action:
+              action: perform-action
+              perform_action: climate.set_hvac_mode
+              data:
+                hvac_mode: "off"
+              target:
+                entity_id: climate.basement_thermostat
+            styles:
+              card:
+                - height: 125px
+                - width: 230px
+                - border-radius: 12px
+                - background-color: var(--background-color)
+              icon:
+                - width: 68px
+                - height: 68px
+                - color: var(--primary-text-color)
+              name:
+                - font-size: 28px
+                - font-weight: bold
+                - color: var(--primary-text-color)
+            state:
+              - value: "off"
+                styles:
+                  card:
+                    - background-color: var(--ha-card-background)
+                    - opacity: 1
+                  name:
+                    - color: var(--secondary-text-color)
+                  icon:
+                    - color: var(--secondary-text-color)
+        cool:
+          card:
+            type: custom:button-card
+            entity: climate.basement_thermostat
+            show_state: false
+            show_name: true
+            show_icon: true
+            name: Cool
+            icon: mdi:air-conditioner
+            tap_action:
+              action: perform-action
+              perform_action: climate.set_hvac_mode
+              data:
+                hvac_mode: cool
+              target:
+                entity_id: climate.basement_thermostat
+            styles:
+              card:
+                - height: 125px
+                - width: 230px
+                - border-radius: 12px
+                - background-color: var(--background-color)
+              icon:
+                - width: 68px
+                - height: 68px
+                - color: var(--primary-text-color)
+              name:
+                - font-size: 28px
+                - font-weight: bold
+                - color: var(--primary-text-color)
+            state:
+              - value: cool
+                styles:
+                  card:
+                    - background-color: var(--ha-card-background)
+                    - opacity: 1
+                  name:
+                    - color: var(--secondary-text-color)
+                  icon:
+                    - color: var(--secondary-text-color)
+        heat:
+          card:
+            type: custom:button-card
+            entity: climate.basement_thermostat
+            triggers_update:
+              - switch.basement_thermostat_basement_emergency_heat
+            show_state: false
+            show_name: true
+            show_icon: true
+            name: Heat
+            icon: mdi:heat-pump
+            tap_action:
+              action: perform-action
+              perform_action: climate.set_hvac_mode
+              data:
+                hvac_mode: heat
+              target:
+                entity_id: climate.basement_thermostat
+            styles:
+              card:
+                - height: 125px
+                - width: 230px
+                - border-radius: 12px
+                - background-color: |
+                    [[[
+                      const climate = states['climate.basement_thermostat'];
+                      const emergencyHeat = states['switch.basement_thermostat_basement_emergency_heat'];
+                      const isEmergencyOn = emergencyHeat && emergencyHeat.state === 'on';
+                      const isHeat = climate && climate.state === 'heat';
+                      
+                      if (isHeat && !isEmergencyOn) {
+                        return 'var(--ha-card-background)';
+                      }
+                      return 'var(--background-color)';
+                    ]]]
+              icon:
+                - width: 68px
+                - height: 68px
+                - color: |
+                    [[[
+                      const climate = states['climate.basement_thermostat'];
+                      const emergencyHeat = states['switch.basement_thermostat_basement_emergency_heat'];
+                      const isEmergencyOn = emergencyHeat && emergencyHeat.state === 'on';
+                      const isHeat = climate && climate.state === 'heat';
+                      
+                      if (isHeat && !isEmergencyOn) {
+                        return 'var(--secondary-text-color)';
+                      }
+                      return 'var(--primary-text-color)';
+                    ]]]
+              name:
+                - font-size: 28px
+                - font-weight: bold
+                - color: |
+                    [[[
+                      const climate = states['climate.basement_thermostat'];
+                      const emergencyHeat = states['switch.basement_thermostat_basement_emergency_heat'];
+                      const isEmergencyOn = emergencyHeat && emergencyHeat.state === 'on';
+                      const isHeat = climate && climate.state === 'heat';
+                      
+                      if (isHeat && !isEmergencyOn) {
+                        return 'var(--secondary-text-color)';
+                      }
+                      return 'var(--primary-text-color)';
+                    ]]]
+        emergency_heat:
+          card:
+            type: custom:button-card
+            entity: switch.basement_thermostat_basement_emergency_heat
+            show_state: false
+            show_name: true
+            show_icon: true
+            name: Aux Heat
+            icon: mdi:heat-wave
+            tap_action:
+              action: toggle
+            styles:
+              card:
+                - height: 125px
+                - width: 230px
+                - border-radius: 12px
+                - background-color: var(--background-color)
+              icon:
+                - width: 68px
+                - height: 68px
+                - color: var(--primary-text-color)
+              name:
+                - font-size: 28px
+                - font-weight: bold
+                - color: var(--primary-text-color)
+            state:
+              - value: "on"
+                styles:
+                  card:
+                    - background-color: var(--ha-card-background)
+                    - opacity: 1
+                  name:
+                    - color: var(--secondary-text-color)
+                  icon:
+                    - color: var(--secondary-text-color)
