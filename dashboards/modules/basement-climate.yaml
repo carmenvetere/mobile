@@ -42,9 +42,9 @@ cards:
         grid:
           - grid-template-areas: |
               "off cool heat emergency_heat"
-          - grid-template-columns: 170px 165px 165px 170px
+          - grid-template-columns: 171px 165px 165px 171px
           - grid-template-rows: 125px
-          - column-gap: 5px
+          - column-gap: 6px
           - align-items: center
       custom_fields:
         "off":
@@ -66,7 +66,7 @@ cards:
             styles:
               card:
                 - height: 125px
-                - width: 170px
+                - width: 171px
                 - border-radius: 20px
                 - background-color: var(--background-color)
               icon:
@@ -206,7 +206,7 @@ cards:
             styles:
               card:
                 - height: 125px
-                - width: 170px
+                - width: 171px
                 - border-radius: 20px
                 - background-color: var(--background-color)
               icon:
@@ -243,9 +243,9 @@ cards:
         grid:
           - grid-template-areas: |
               "on circulate auto ventilation"
-          - grid-template-columns: 170px 165px 165px 170px
+          - grid-template-columns: 171px 165px 165px 171px
           - grid-template-rows: 125px
-          - column-gap: 5px
+          - column-gap: 6px
           - align-items: center
       custom_fields:
         "on":
@@ -267,7 +267,7 @@ cards:
             styles:
               card:
                 - height: 125px
-                - width: 170px
+                - width: 171px
                 - border-radius: 20px
                 - background-color: var(--background-color)
               icon:
@@ -391,7 +391,7 @@ cards:
             styles:
               card:
                 - height: 125px
-                - width: 170px
+                - width: 171px
                 - border-radius: 20px
                 - background-color: var(--background-color)
               icon:
