@@ -6,7 +6,7 @@ cards:
       show_state: false
       styles:
         card:
-          - height: 160px
+          - height: 175px
           - width: 690px
           - padding-top: 0px
           - margin-top: 0px
@@ -15,10 +15,10 @@ cards:
           - background-color: "#626569"
         grid:
           - grid-template-areas: |
-              "title title"
-              "hallway media_room"
-          - grid-template-columns: 343px 342px
-          - grid-template-rows: 35px 125px
+              "title title title title"
+              "space hallway media_room space2"
+          - grid-template-columns: 5px 332px 332px 5px
+          - grid-template-rows: 45px 125px 10px 
           - column-gap: 5px
           - align-items: center
       custom_fields:
@@ -45,7 +45,7 @@ cards:
             styles:
               card:
                 - height: 125px
-                - width: 343px
+                - width: 332px
                 - border-radius: 20px
                 - background-color: var(--background-color)
               name:
@@ -56,7 +56,7 @@ cards:
                 - grid-template-areas: |
                     "name name"
                     "temp humidity"
-                - grid-template-columns: 173px 170px
+                - grid-template-columns: 167px 165px
                 - grid-template-rows: 65px 60px
                 - column-gap: 5px
                 - align-items: center
@@ -84,7 +84,7 @@ cards:
                   styles:
                     card:
                       - height: 65px
-                      - width: 343px
+                      - width: 332px
                       - border-radius: 20px
                       - background-color: transparent
                     name:
@@ -111,7 +111,7 @@ cards:
                   styles:
                     card:
                       - height: 65px
-                      - width: 173px
+                      - width: 167px
                       - border-radius: 20px
                       - background-color: transparent
                       - padding-bottom: 35px
@@ -139,7 +139,7 @@ cards:
                   styles:
                     card:
                       - height: 65px
-                      - width: 173px
+                      - width: 165px
                       - border-radius: 20px
                       - background-color: transparent
                       - padding-bottom: 35px
@@ -167,7 +167,7 @@ cards:
             styles:
               card:
                 - height: 125px
-                - width: 343px
+                - width: 332px
                 - border-radius: 20px
                 - background-color: var(--background-color)
               name:
@@ -178,7 +178,7 @@ cards:
                 - grid-template-areas: |
                     "name name"
                     "temp humidity"
-                - grid-template-columns: 173px 170px
+                - grid-template-columns: 167px 165px
                 - grid-template-rows: 65px 60px
                 - column-gap: 5px
                 - align-items: center
@@ -206,7 +206,7 @@ cards:
                   styles:
                     card:
                       - height: 65px
-                      - width: 343px
+                      - width: 332px
                       - border-radius: 20px
                       - background-color: transparent
                     name:
@@ -233,7 +233,7 @@ cards:
                   styles:
                     card:
                       - height: 65px
-                      - width: 173px
+                      - width: 167px
                       - border-radius: 20px
                       - background-color: transparent
                       - padding-bottom: 35px
@@ -261,7 +261,7 @@ cards:
                   styles:
                     card:
                       - height: 65px
-                      - width: 173px
+                      - width: 165px
                       - border-radius: 20px
                       - background-color: transparent
                       - padding-bottom: 35px

@@ -87,6 +87,9 @@ card:
                 ]]]
             - height: 64px
             - width: 64px
+        tap_action:
+          action: navigate
+          navigation_path: /mudroom-wall-panel-dash/climate-view
     music:
       card:
         type: custom:button-card
