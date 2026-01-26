@@ -11,6 +11,8 @@ cards:
             ha-card {
               background: var(--background-color) !important;
               border-radius: 30px !important;
+              max-width: 690px !important;
+              margin-left: 15px !important;
             }
             .more-info {
               display: none !important;
