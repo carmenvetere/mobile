@@ -175,7 +175,7 @@
         {% set well  = states('sensor.well_pump_energy2') | float(0) %}
         {% set ev    = states('sensor.wall_charger_energy') | float(0) %}
 
-        {% set other = total - well - water - ev %}
+        {% set other = total - well - ev %}
         {{ [other, 0] | max | round(2) }}
 
 - trigger:
