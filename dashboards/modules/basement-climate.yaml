@@ -412,3 +412,268 @@ cards:
                     - color: var(--secondary-text-color)
                   icon:
                     - color: var(--secondary-text-color)
+    - type: custom:button-card
+      show_name: false
+      show_icon: false
+      show_state: false
+      styles:
+        card:
+          - height: 125px
+          - width: 690px
+          - padding-top: 0px
+          - margin-top: 0px
+          - margin-left: 15px
+          - border-radius: 20px
+          - background-color: "#626569"
+        grid:
+          - grid-template-areas: |
+              "hallway media_room"
+          - grid-template-columns: 343px 342px
+          - grid-template-rows: 125px
+          - column-gap: 5px
+          - align-items: center
+      custom_fields:
+        hallway:
+          card:
+            type: custom:button-card
+            entity: switch.basement_thermostat_basement_priority
+            show_state: false
+            show_name: false
+            show_icon: false
+            tap_action:
+              action: toggle
+            styles:
+              card:
+                - height: 125px
+                - width: 343px
+                - border-radius: 20px
+                - background-color: var(--background-color)
+              name:
+                - font-size: 28px
+                - font-weight: bold
+                - color: var(--primary-text-color)
+              grid:
+                - grid-template-areas: |
+                    "name name"
+                    "temp humidity"
+                - grid-template-columns: 173px 170px
+                - grid-template-rows: 65px 60px
+                - column-gap: 5px
+                - align-items: center
+            state:
+              - value: "on"
+                styles:
+                  card:
+                    - background-color: var(--ha-card-background)
+                    - opacity: 1
+                  name:
+                    - color: var(--secondary-text-color)
+                  icon:
+                    - color: var(--secondary-text-color)
+            custom_fields:
+              name:
+                card:
+                  type: custom:button-card
+                  name: Hallway
+                  entity: switch.basement_thermostat_basement_priority
+                  show_state: false
+                  show_name: true
+                  show_icon: false
+                  tap_action:
+                    action: toggle
+                  styles:
+                    card:
+                      - height: 65px
+                      - width: 343px
+                      - border-radius: 20px
+                      - background-color: transparent
+                    name:
+                      - font-size: 28px
+                      - font-weight: bold
+                      - color: var(--primary-text-color)
+                  state:
+                    - value: "on"
+                      styles:
+                        name:
+                          - color: var(--secondary-text-color)
+                        icon:
+                          - color: var(--secondary-text-color)
+              temp:
+                card:
+                  type: custom:button-card
+                  entity: sensor.basement_thermostat_homekit_current_temperature
+                  triggers_update:
+                    - switch.basement_thermostat_basement_priority
+                  show_state: true
+                  show_name: false
+                  show_icon: false
+                  icon: mdi:thermometer
+                  styles:
+                    card:
+                      - height: 65px
+                      - width: 173px
+                      - border-radius: 20px
+                      - background-color: transparent
+                      - padding-bottom: 35px
+                      - margin-left: 20px
+                    state:
+                      - font-size: 28px
+                      - font-weight: bold
+                      - color: |
+                          [[[
+                            const priority = states['switch.basement_thermostat_basement_priority'];
+                            if (priority && priority.state === 'on') {
+                              return 'var(--secondary-text-color)';
+                            }
+                            return 'var(--primary-text-color)';
+                          ]]]
+              humidity:
+                card:
+                  type: custom:button-card
+                  entity: sensor.basement_thermostat_homekit_current_humidity
+                  triggers_update:
+                    - switch.basement_thermostat_basement_priority
+                  show_state: true
+                  show_name: false
+                  show_icon: false
+                  styles:
+                    card:
+                      - height: 65px
+                      - width: 173px
+                      - border-radius: 20px
+                      - background-color: transparent
+                      - padding-bottom: 35px
+                      - padding-right: 20px
+                    state:
+                      - font-size: 28px
+                      - font-weight: bold
+                      - color: |
+                          [[[
+                            const priority = states['switch.basement_thermostat_basement_priority'];
+                            if (priority && priority.state === 'on') {
+                              return 'var(--secondary-text-color)';
+                            }
+                            return 'var(--primary-text-color)';
+                          ]]]
+        media_room:
+          card:
+            type: custom:button-card
+            entity: switch.basement_thermostat_family_room_priority
+            show_state: false
+            show_name: false
+            show_icon: false
+            tap_action:
+              action: toggle
+            styles:
+              card:
+                - height: 125px
+                - width: 343px
+                - border-radius: 20px
+                - background-color: var(--background-color)
+              name:
+                - font-size: 28px
+                - font-weight: bold
+                - color: var(--primary-text-color)
+              grid:
+                - grid-template-areas: |
+                    "name name"
+                    "temp humidity"
+                - grid-template-columns: 173px 170px
+                - grid-template-rows: 65px 60px
+                - column-gap: 5px
+                - align-items: center
+            state:
+              - value: "on"
+                styles:
+                  card:
+                    - background-color: var(--ha-card-background)
+                    - opacity: 1
+                  name:
+                    - color: var(--secondary-text-color)
+                  icon:
+                    - color: var(--secondary-text-color)
+            custom_fields:
+              name:
+                card:
+                  type: custom:button-card
+                  name: Media Room
+                  entity: switch.basement_thermostat_family_room_priority
+                  show_state: false
+                  show_name: true
+                  show_icon: false
+                  tap_action:
+                    action: toggle
+                  styles:
+                    card:
+                      - height: 65px
+                      - width: 343px
+                      - border-radius: 20px
+                      - background-color: transparent
+                    name:
+                      - font-size: 28px
+                      - font-weight: bold
+                      - color: var(--primary-text-color)
+                  state:
+                    - value: "on"
+                      styles:
+                        name:
+                          - color: var(--secondary-text-color)
+                        icon:
+                          - color: var(--secondary-text-color)
+              temp:
+                card:
+                  type: custom:button-card
+                  entity: sensor.family_room_air_sensor_01_temperature_sensor
+                  triggers_update:
+                    - switch.basement_thermostat_family_room_priority
+                  show_state: true
+                  show_name: false
+                  show_icon: false
+                  icon: mdi:thermometer
+                  styles:
+                    card:
+                      - height: 65px
+                      - width: 173px
+                      - border-radius: 20px
+                      - background-color: transparent
+                      - padding-bottom: 35px
+                      - margin-left: 20px
+                    state:
+                      - font-size: 28px
+                      - font-weight: bold
+                      - color: |
+                          [[[
+                            const priority = states['switch.basement_thermostat_family_room_priority'];
+                            if (priority && priority.state === 'on') {
+                              return 'var(--secondary-text-color)';
+                            }
+                            return 'var(--primary-text-color)';
+                          ]]]
+              humidity:
+                card:
+                  type: custom:button-card
+                  entity: sensor.family_room_air_sensor_01_humidity_sensor
+                  triggers_update:
+                    - switch.basement_thermostat_family_room_priority
+                  show_state: true
+                  show_name: false
+                  show_icon: false
+                  styles:
+                    card:
+                      - height: 65px
+                      - width: 173px
+                      - border-radius: 20px
+                      - background-color: transparent
+                      - padding-bottom: 35px
+                      - padding-right: 20px
+                    state:
+                      - font-size: 28px
+                      - font-weight: bold
+                      - color: |
+                          [[[
+                            const priority = states['switch.basement_thermostat_family_room_priority'];
+                            if (priority && priority.state === 'on') {
+                              return 'var(--secondary-text-color)';
+                            }
+                            return 'var(--primary-text-color)';
+                          ]]]
