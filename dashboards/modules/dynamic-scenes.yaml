@@ -1,12 +1,12 @@
 # lovelace_gen
 type: vertical-stack
 cards:
-    - type: custom:bubble-card
-      card_type: separator
-      name: Scenes
-      icon: mdi:table-lamp
-      modules:
-        - "{{ separator_module }}"
+  - type: custom:bubble-card
+    card_type: separator
+    name: Scenes
+    icon: mdi:table-lamp
+    modules:
+      - "{{ separator_module }}"
 #Good Morning Scene - All Displays in Morning
   - type: custom:bubble-card
     card_type: button
