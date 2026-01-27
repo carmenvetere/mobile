@@ -1,6 +1,12 @@
 # lovelace_gen
 type: vertical-stack
 cards:
+    - type: custom:bubble-card
+      card_type: separator
+      name: Scenes
+      icon: mdi:table-lamp
+      modules:
+        - "{{ separator_module }}"
 #Good Morning Scene - All Displays in Morning
   - type: custom:bubble-card
     card_type: button
@@ -8,9 +14,14 @@ cards:
     name: Morning
     icon: mdi:weather-sunset-up
     visibility:
-      - condition: state
-        entity: input_boolean.day_scene_buttons
-        state: "on"
+      - condition: or
+        conditions:
+          - condition: time
+            after: "05:00:00"
+            before: "12:00:00"
+          - condition: numeric_state
+            entity: sensor.sun_solar_elevation
+            above: 10
     button_action:
       tap_action:
         action: perform-action
@@ -34,9 +45,14 @@ cards:
     name: Working
     icon: mdi:desk-lamp
     visibility:
-      - condition: state
-        entity: input_boolean.day_scene_buttons
-        state: "on"
+      - condition: or
+        conditions:
+          - condition: time
+            after: "05:00:00"
+            before: "12:00:00"
+          - condition: numeric_state
+            entity: sensor.sun_solar_elevation
+            above: 10
     button_action:
       tap_action:
         action: perform-action
@@ -61,9 +77,14 @@ cards:
     name: Cleaning
     icon: mdi:spray-bottle
     visibility:
-      - condition: state
-        entity: input_boolean.day_scene_buttons
-        state: "on"
+      - condition: or
+        conditions:
+          - condition: time
+            after: "05:00:00"
+            before: "12:00:00"
+          - condition: numeric_state
+            entity: sensor.sun_solar_elevation
+            above: 10
     button_action:
       tap_action:
         action: perform-action
@@ -87,14 +108,14 @@ cards:
     name: Welcome
     icon: mdi:human-greeting
     visibility:
-      - condition: or
+      - condition: and
         conditions:
-          - condition: state
-            entity: input_boolean.night_scene_buttons
-            state: "on"
-          - condition: state
-            entity: input_boolean.evening_scene_buttons
-            state: "on"
+          - condition: numeric_state
+            entity: sensor.sun_solar_elevation
+            below: 10
+          - condition: time
+            after: "12:00:00"
+            before: "22:00:00"
     button_action:
       tap_action:
         action: perform-action
