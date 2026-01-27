@@ -44,7 +44,6 @@ recorder:
       - media_player
     entity_globs:
       - sensor.time*
-      - sensor.solcast*
       - binary_sensor.*_person_detected*
       - binary_sensor.*_vehicle_detected*
       - binary_sensor.*_animal_detected*
