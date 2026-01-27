@@ -1,6 +1,7 @@
 # lovelace_gen
 type: vertical-stack
 cards:
+{% if dashboard == 'basement_wall_panel' %}
   - type: custom:bubble-card
     card_type: separator
     name: Scenes
@@ -18,6 +19,7 @@ cards:
       padding-top: 0px !important;
       padding-left: 10px !important;
       }  
+{% endif %}
 #Good Morning Scene - All Displays in Morning
   - type: custom:bubble-card
     card_type: button
