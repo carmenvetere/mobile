@@ -17,6 +17,9 @@ cards:
         - justify-content: start
         - font-size: 96px
         - font-weight: bold
+        - white-space: normal
+        - word-break: break-word
+        - overflow-wrap: break-word    
 # Door Open - After 7PM, Before 7AM - Basement Wall Panel
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
