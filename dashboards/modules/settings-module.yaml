@@ -262,6 +262,36 @@
           action: more-info
       modules:
         - "{{ settings_module }}"
+#vacuum
+- type: vertical-stack
+  cards:
+    - type: custom:bubble-card
+      card_type: separator
+      name: Vacuum
+      icon: mdi:vacuum
+      modules:
+        - "{{ separator_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: automation.12_00am_roborock_s8_vacuum_basement
+      name: 12AM Vacuum Basement Nightly
+      icon: mdi:shield-lock
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: automation.12_00am_roborock_s8_vacuum_basement
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
 #Alarm
 - type: vertical-stack
   cards:
