@@ -32,6 +32,30 @@ cards:
           - margin-left: 50px
     custom_fields:
       header: !include header.yaml
+      info: 
+        card:
+          type: custom:sonos-card
+          sections:
+            - player
+          entityId: media_player.mud_room
+          player:
+            hideControlPowerButton: false
+            hideControlPrevTrackButton: false
+            hideControlRepeatButton: true
+            hideControlShuffleButton: true
+            controlsLargeIcons: true
+          heightPercentage: auto
+          card_mod:
+            style:
+              sonos-player$: |
+                .container {        
+                  grid-template-areas:
+                      'artwork header'
+                      'artwork controls' !important;
+                  grid-template-columns: 1fr 2fr !important;
+                  grid-template-rows: 1fr 2fr !important;
+                  margin: 5px !important;
+                }
       main: 
         card: !include 
             - /config/dashboards/modules/dynamic-scenes.yaml
