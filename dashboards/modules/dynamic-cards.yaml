@@ -14,7 +14,7 @@ cards:
       grid:
         - grid-template-areas: |
             "condition temp"
-        - grid-template-columns: 300px 300px
+        - grid-template-columns: 200px 400px
         - grid-template-rows: 250px
         - column-gap: 5px
         - row-gap: 5px
@@ -30,7 +30,7 @@ cards:
           styles:
             card:
               - height: 250px
-              - width: 300px
+              - width: 200px
               - background-color: transparent
             icon:
               - height: 150px
@@ -46,7 +46,7 @@ cards:
             card:
               - background-color: transparent
               - height: 150px
-              - width: 300px
+              - width: 400px
             state:
               - font-size: 100px
               - font-weight: bold
