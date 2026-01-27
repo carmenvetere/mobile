@@ -19,11 +19,12 @@ cards:
       grid:
         - grid-template-areas: |
             "header"
+            "info"
             "main"
             "nav"
         - grid-template-columns: 720px
-        - grid-template-rows: 100px 1050px 100px
-        - align-items: center
+        - grid-template-rows: 100px 400px 650px 100px
+        - align-items: start
         - column-gap: 2px
         - row-gap: 15px
       custom_fields:
