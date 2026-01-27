@@ -4,9 +4,20 @@ cards:
   - type: custom:bubble-card
     card_type: separator
     name: Scenes
-    icon: mdi:table-lamp
-    modules:
-      - "{{ separator_module }}"
+    icon: mdi:lamp
+    styles: |
+      .bubble-name {
+      font-size: 28px !important;  /* title */
+      font-weight: bold !important;
+      }
+      .bubble-line {
+      background: var(--primary-text-color);
+      opacity: 0.1;
+      }
+      .card-content {
+      padding-top: 0px !important;
+      padding-left: 10px !important;
+      }  
 #Good Morning Scene - All Displays in Morning
   - type: custom:bubble-card
     card_type: button
@@ -147,6 +158,9 @@ cards:
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
+          - condition: state
+            entity: input_boolean.dinner_party
+            state: 'off'
     button_action:
       tap_action:
         action: perform-action
@@ -169,7 +183,7 @@ cards:
     card_type: button
     entity: binary_sensor.scene_basement_entertaining
     name: Basement Entertaining
-    icon: mdi:cocktail
+    icon: mdi:party-popper
     visibility:
       - condition: and
         conditions:
@@ -179,6 +193,9 @@ cards:
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
+          - condition: state
+            entity: input_boolean.dinner_party
+            state: 'on'
     button_action:
       tap_action:
         action: perform-action
@@ -201,7 +218,7 @@ cards:
     card_type: button
     entity: binary_sensor.scene_movie
     name: Movie
-    icon: mdi:cocktail
+    icon: mdi:movie-open-play
     visibility:
       - condition: and
         conditions:
