@@ -99,16 +99,6 @@ series:
       legend_value: true
       in_header: true
       in_chart: false
-  - entity: sensor.solcast_pv_forecast_forecast_today
-    attribute: estimate10
-    yaxis_id: header_only
-    name: Today Forecast 10%
-    color: Grey
-    opacity: 0.3
-    show:
-      legend_value: true
-      in_header: false
-      in_chart: false
   - entity: sensor.solcast_pv_forecast_forecast_remaining_today
     yaxis_id: header_only
     name: Remaining
