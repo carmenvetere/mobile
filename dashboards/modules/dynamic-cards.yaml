@@ -15,7 +15,7 @@ cards:
             state: "on"
     styles:
       card:
-        - height: 140px
+        - height: 135px
         - width: 600px
         - background: var(--background-color)
         - border-radius: 30px
@@ -25,7 +25,7 @@ cards:
         - grid-template-areas: |
             "icon name"
         - grid-template-columns: 100px 500px
-        - grid-template-rows: 140px
+        - grid-template-rows: 135px
         - column-gap: 5px
         - row-gap: 5px
     custom_fields:
@@ -38,7 +38,7 @@ cards:
           show_icon: false
           styles:
             card:
-              - height: 140px
+              - height: 135px
               - width: 500px
               - background-color: transparent
               - margin-left: "-20px"
@@ -76,7 +76,7 @@ cards:
             state: "off"
     styles:
       card:
-        - height: 140px
+        - height: 135px
         - width: 600px
         - background: var(--background-color)
         - border-radius: 30px
@@ -86,7 +86,7 @@ cards:
         - grid-template-areas: |
             "icon name"
         - grid-template-columns: 100px 500px
-        - grid-template-rows: 140px
+        - grid-template-rows: 135px
         - column-gap: 5px
         - row-gap: 5px
     custom_fields:
@@ -99,7 +99,7 @@ cards:
           show_icon: false
           styles:
             card:
-              - height: 140px
+              - height: 135px
               - width: 500px
               - background-color: transparent
               - margin-left: "-20px"
@@ -132,7 +132,7 @@ cards:
         state: "on"
     styles:
       card:
-        - height: 140px
+        - height: 135px
         - width: 600px
         - background: var(--background-color)
         - border-radius: 30px
@@ -204,10 +204,10 @@ cards:
     visibility:
       - condition: state
         entity: sensor.dryer
-        state: "on"
+        state: "off"
     styles:
       card:
-        - height: 140px
+        - height: 135px
         - width: 600px
         - background: var(--background-color-2)
         - border-radius: 30px
@@ -217,7 +217,7 @@ cards:
         - grid-template-areas: |
             "icon name time"
         - grid-template-columns: 100px 150px 350px
-        - grid-template-rows: 140px
+        - grid-template-rows: 135px
         - column-gap: 0px
         - row-gap: 5px
     custom_fields:
@@ -230,7 +230,7 @@ cards:
           show_icon: false
           styles:
             card:
-              - height: 140px
+              - height: 135px
               - width: 150px
               - background-color: transparent
               - margin-left: "-20px"
@@ -263,7 +263,7 @@ cards:
           show_icon: false
           styles:
             card:
-              - height: 140px
+              - height: 135px
               - width: 350px
               - background: transparent
             state:
@@ -277,10 +277,10 @@ cards:
     visibility: 
       - condition: state
         entity: sensor.front_load_washer
-        state: 'on'
+        state: 'off'
     styles:
       card:
-        - height: 140px
+        - height: 135px
         - width: 600px
         - background: var(--background-color-2)
         - border-radius: 30px
@@ -290,7 +290,7 @@ cards:
         - grid-template-areas: |
             "icon name time"
         - grid-template-columns: 100px 150px 350px
-        - grid-template-rows: 140px
+        - grid-template-rows: 135px
         - column-gap: 0px
         - row-gap: 5px
     custom_fields:
@@ -303,7 +303,7 @@ cards:
           show_icon: false
           styles:
             card:
-              - height: 140px
+              - height: 135px
               - width: 150px
               - background-color: transparent
               - margin-left: "-20px"
@@ -336,7 +336,7 @@ cards:
           show_icon: false
           styles:
             card:
-              - height: 140px
+              - height: 135px
               - width: 350px
               - background: transparent
             state:
