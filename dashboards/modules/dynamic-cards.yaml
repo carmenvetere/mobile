@@ -1,25 +1,6 @@
 # lovelace_gen
 type: vertical-stack
 cards:
-# Greeting
-  - type: custom:button-card
-    name: Good Evening
-    styles:
-      card:
-        - height: 250px
-        - width: 600px
-        - background: transparent
-        - border-radius: 30px
-        - padding-left: 20px
-        - padding-top: 0px
-      name:
-        - text-align: left
-        - justify-content: start
-        - font-size: 96px
-        - font-weight: bold
-        - white-space: normal
-        - word-break: break-word
-        - overflow-wrap: break-word    
 # Door Open - After 7PM, Before 7AM - Basement Wall Panel
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
