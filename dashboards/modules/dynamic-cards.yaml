@@ -62,6 +62,67 @@ cards:
               - height: 150px
               - width: 100px
 {% endif %}
+# All Closed - After 7PM, Before 7AM - Basement Wall Panel
+{% if dashboard == 'basement_wall_panel' %}
+  - type: custom:button-card
+    visibility:
+      - condition: and
+        conditions:
+          - condition: time
+            after: "19:00:00"
+            before: "07:00:00"
+          - condition: state
+            entity: binary_sensor.all_doors_including_garage
+            state: "off"
+    styles:
+      card:
+        - height: 140px
+        - width: 600px
+        - background: var(--background-color-2)
+        - border-radius: 30px
+        - padding-left: 20px
+        - padding-top: 0px
+      grid:
+        - grid-template-areas: |
+            "icon name"
+        - grid-template-columns: 100px 500px
+        - grid-template-rows: 140px
+        - column-gap: 5px
+        - row-gap: 5px
+    custom_fields:
+      name:
+        card:
+          type: custom:button-card
+          name: All Closed
+          show_name: true
+          show_state: false
+          show_icon: false
+          styles:
+            card:
+              - height: 140px
+              - width: 500px
+              - background-color: transparent
+              - margin-left: "-20px"
+            name:
+              - font-size: 36px
+              - font-weight: bold
+              - color: var(--text-color)
+              - text-align: left
+              - justify-self: start
+      icon:
+        card:
+          type: custom:button-card
+          icon: mdi:lock
+          styles:
+            icon:
+              - color: 'green'
+              - height: 60px
+              - width: 60px
+            card:
+              - background-color: transparent
+              - height: 150px
+              - width: 100px
+{% endif %}
 # Rivian Charging - Basement Wall Panel Day
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
