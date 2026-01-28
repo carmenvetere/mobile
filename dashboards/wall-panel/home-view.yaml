@@ -35,7 +35,7 @@ cards:
     custom_fields:
       header: !include header.yaml
       info:
-        card: !include [/config/dashboards/modules/basement-lights-individual.yaml, { dashboard: basement_wall_panel}]
+        card: !include [/config/dashboards/modules/dynamic-cards.yaml, {dashboard: basement_wall_panel}]
       main: 
         card: !include 
             - /config/dashboards/modules/dynamic-scenes.yaml
