@@ -386,6 +386,111 @@ cards:
               - font-weight: bold
               - color: var(--text-color)
 {% endif %}
+# Greeting Card - Basement Wall Panel
+# LOWEST PRIORITY: Only shows when no other cards are active
+{% if dashboard == 'basement_wall_panel' %}
+  - type: custom:button-card
+    visibility:
+      - condition: and
+        conditions:
+          # Only show if no other cards are showing
+          - condition: or
+            conditions:
+              # Show during the day
+              - condition: time
+                before: "19:00:00"
+              # OR show at night if doors are closed
+              - condition: and
+                conditions:
+                  - condition: time
+                    after: "19:00:00"
+                  - condition: state
+                    entity: binary_sensor.all_doors_including_garage
+                    state: "off"
+          # Don't show if any higher priority cards are active
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: "off"
+          - condition: state
+            entity: sensor.dryer
+            state: "off"
+          - condition: state
+            entity: sensor.front_load_washer
+            state: "off"
+    show_name: false
+    show_icon: false
+    show_state: false
+    styles:
+      card:
+        - background: transparent
+        - box-shadow: none
+        - height: 135px
+        - width: 600px
+        - padding: 20px
+      custom_fields:
+        hello:
+          - font-size: 42px
+          - font-weight: bold
+          - color: var(--text-color)
+          - margin-bottom: 10px
+        status:
+          - font-size: 20px
+          - line-height: 1.5
+          - color: var(--text-color)
+      grid:
+        - grid-template-areas: |
+            "hello"
+            "status"
+        - grid-template-rows: auto auto
+    custom_fields:
+      hello: |
+        [[[
+          return "Hello!";
+        ]]]
+      status: |
+        [[[
+          // Door status
+          let doorStatus = "";
+          if (states['binary_sensor.all_doors_including_garage'].state === 'off') {
+            doorStatus = "All doors are closed";
+          } else {
+            // Count open doors by checking attributes
+            let doorCount = 0;
+            const groupAttrs = states['binary_sensor.all_doors_including_garage'].attributes.entity_id || [];
+            groupAttrs.forEach(entityId => {
+              if (states[entityId] && states[entityId].state === 'on') doorCount++;
+            });
+            doorStatus = doorCount + " door" + (doorCount !== 1 ? "s are" : " is") + " open";
+          }
+
+          // Alarm status
+          let alarmState = states['alarm_control_panel.alarmo'].state.replace(/_/g, ' ');
+
+          // HVAC mode and average temp
+          let livingMode = states['climate.living_room_thermostat'].state;
+          let basementMode = states['climate.basement_thermostat'].state;
+          let officeMode = states['climate.office_thermostat'].state;
+          let bedroomMode = states['climate.master_bedroom_thermostat'].state;
+
+          let heatCount = [livingMode, basementMode, officeMode, bedroomMode].filter(m => m === 'heat').length;
+          let coolCount = [livingMode, basementMode, officeMode, bedroomMode].filter(m => m === 'cool').length;
+
+          let hvacText = "The climate";
+          if (heatCount > coolCount) hvacText = "The heat";
+          else if (coolCount > 0) hvacText = "The air conditioning";
+
+          // Average temperature
+          let temps = [
+            parseFloat(states['climate.living_room_thermostat'].attributes.temperature) || 0,
+            parseFloat(states['climate.basement_thermostat'].attributes.temperature) || 0,
+            parseFloat(states['climate.office_thermostat'].attributes.temperature) || 0,
+            parseFloat(states['climate.master_bedroom_thermostat'].attributes.temperature) || 0
+          ];
+          let avgTemp = Math.round(temps.reduce((a, b) => a + b, 0) / temps.length);
+
+          return doorStatus + " and the alarm is " + alarmState + ". " + hvacText + " in the house is set to " + avgTemp + "°F.";
+        ]]]
+{% endif %}
 
 
 
