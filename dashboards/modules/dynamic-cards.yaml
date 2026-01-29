@@ -2,6 +2,7 @@
 type: vertical-stack
 cards:
 # Door Open - After 7PM, Before 7AM - Basement Wall Panel
+# HIGHEST PRIORITY: Always shows when doors are open at night
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
     visibility:
@@ -63,6 +64,7 @@ cards:
               - width: 100px
 {% endif %}
 # All Closed - After 7PM, Before 7AM - Basement Wall Panel
+# LOWEST PRIORITY: Only shows if no other alerts are active
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
     visibility:
@@ -73,6 +75,16 @@ cards:
             before: "07:00:00"
           - condition: state
             entity: binary_sensor.all_doors_including_garage
+            state: "off"
+          # Only show if no higher priority items
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: "off"
+          - condition: state
+            entity: sensor.dryer
+            state: "off"
+          - condition: state
+            entity: sensor.front_load_washer
             state: "off"
     styles:
       card:
@@ -124,12 +136,19 @@ cards:
               - width: 100px
 {% endif %}
 # Rivian Charging - Basement Wall Panel Day
+# PRIORITY 2: Only shows if doors are closed
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
     visibility:
-      - condition: state
-        entity: binary_sensor.r1t_charging_status
-        state: "on"
+      - condition: and
+        conditions:
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: "on"
+          # Don't show if door is open (higher priority)
+          - condition: state
+            entity: binary_sensor.all_doors_including_garage
+            state: "off"
     styles:
       card:
         - height: 135px
@@ -198,13 +217,23 @@ cards:
           modules:
             - wall_panel_charging
 {% endif %}
-#Dryer When Running - Basement Panel. 
+#Dryer When Running - Basement Panel.
+# PRIORITY 3: Only shows if no door open or charging
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
     visibility:
-      - condition: state
-        entity: sensor.dryer
-        state: "on"
+      - condition: and
+        conditions:
+          - condition: state
+            entity: sensor.dryer
+            state: "on"
+          # Don't show if higher priority items active
+          - condition: state
+            entity: binary_sensor.all_doors_including_garage
+            state: "off"
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: "off"
     styles:
       card:
         - height: 135px
@@ -272,12 +301,25 @@ cards:
               - color: var(--text-color)
 {% endif %}
 #Washer When Running
+# PRIORITY 4: Only shows if no door open, charging, or dryer running
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
-    visibility: 
-      - condition: state
-        entity: sensor.front_load_washer
-        state: 'on'
+    visibility:
+      - condition: and
+        conditions:
+          - condition: state
+            entity: sensor.front_load_washer
+            state: 'on'
+          # Don't show if higher priority items active
+          - condition: state
+            entity: binary_sensor.all_doors_including_garage
+            state: "off"
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: "off"
+          - condition: state
+            entity: sensor.dryer
+            state: "off"
     styles:
       card:
         - height: 135px
@@ -343,6 +385,83 @@ cards:
               - font-size: 46px
               - font-weight: bold
               - color: var(--text-color)
+{% endif %}
+# Greeting Card - Basement Wall Panel
+# LOWEST PRIORITY: Only shows when no other cards are active
+{% if dashboard == 'basement_wall_panel' %}
+  - type: markdown
+    content: |
+      # Hello!
+
+      {% if is_state('binary_sensor.all_doors_including_garage', 'off') %}
+      All doors are closed
+      {% else %}
+      {% set door_entities = expand('binary_sensor.all_doors_including_garage') | selectattr('state', 'eq', 'on') | list %}
+      {% set door_count = door_entities | count %}
+      {{ door_count }} door{% if door_count != 1 %}s are{% else %} is{% endif %} open
+      {% endif %}
+      and the alarm is {{ states('alarm_control_panel.alarmo') | replace('_', ' ') }}.
+
+      {% set living_room_mode = states('climate.living_room_thermostat') %}
+      {% set basement_mode = states('climate.basement_thermostat') %}
+      {% set office_mode = states('climate.office_thermostat') %}
+      {% set bedroom_mode = states('climate.master_bedroom_thermostat') %}
+      {% set heating_count = [living_room_mode, basement_mode, office_mode, bedroom_mode] | select('eq', 'heat') | list | count %}
+      {% set cooling_count = [living_room_mode, basement_mode, office_mode, bedroom_mode] | select('eq', 'cool') | list | count %}
+      {% if heating_count > cooling_count %}The heat{% elif cooling_count > 0 %}The air conditioning{% else %}The climate{% endif %} in the house is set to
+      {% set temps = [
+        state_attr('climate.living_room_thermostat', 'temperature') | float(0),
+        state_attr('climate.basement_thermostat', 'temperature') | float(0),
+        state_attr('climate.office_thermostat', 'temperature') | float(0),
+        state_attr('climate.master_bedroom_thermostat', 'temperature') | float(0)
+      ] %}
+      {% set avg_temp = (temps | sum / temps | count) | round(0) %}
+      {{ avg_temp }}°F.
+    card_mod:
+      style: |
+        ha-card {
+          background: var(--background-color);
+          border-radius: 30px;
+          padding: 20px;
+          height: 135px;
+          width: 600px;
+        }
+        ha-markdown {
+          font-size: 20px;
+          line-height: 1.4;
+        }
+        ha-markdown h1 {
+          font-size: 32px;
+          margin-bottom: 10px;
+          font-weight: bold;
+        }
+    visibility:
+      - condition: and
+        conditions:
+          # Only show if no other cards are showing
+          - condition: or
+            conditions:
+              # Show during the day
+              - condition: time
+                before: "19:00:00"
+              # OR show at night if doors are closed
+              - condition: and
+                conditions:
+                  - condition: time
+                    after: "19:00:00"
+                  - condition: state
+                    entity: binary_sensor.all_doors_including_garage
+                    state: "off"
+          # Don't show if any higher priority cards are active
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: "off"
+          - condition: state
+            entity: sensor.dryer
+            state: "off"
+          - condition: state
+            entity: sensor.front_load_washer
+            state: "off"
 {% endif %}
 
 
