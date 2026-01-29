@@ -2,6 +2,7 @@
 type: vertical-stack
 cards:
 # Door Open - After 7PM, Before 7AM - Basement Wall Panel
+# HIGHEST PRIORITY: Always shows when doors are open at night
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
     visibility:
@@ -63,6 +64,7 @@ cards:
               - width: 100px
 {% endif %}
 # All Closed - After 7PM, Before 7AM - Basement Wall Panel
+# LOWEST PRIORITY: Only shows if no other alerts are active
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
     visibility:
@@ -73,6 +75,16 @@ cards:
             before: "07:00:00"
           - condition: state
             entity: binary_sensor.all_doors_including_garage
+            state: "off"
+          # Only show if no higher priority items
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: "off"
+          - condition: state
+            entity: sensor.dryer
+            state: "off"
+          - condition: state
+            entity: sensor.front_load_washer
             state: "off"
     styles:
       card:
@@ -124,12 +136,19 @@ cards:
               - width: 100px
 {% endif %}
 # Rivian Charging - Basement Wall Panel Day
+# PRIORITY 2: Only shows if doors are closed
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
     visibility:
-      - condition: state
-        entity: binary_sensor.r1t_charging_status
-        state: "on"
+      - condition: and
+        conditions:
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: "on"
+          # Don't show if door is open (higher priority)
+          - condition: state
+            entity: binary_sensor.all_doors_including_garage
+            state: "off"
     styles:
       card:
         - height: 135px
@@ -198,13 +217,23 @@ cards:
           modules:
             - wall_panel_charging
 {% endif %}
-#Dryer When Running - Basement Panel. 
+#Dryer When Running - Basement Panel.
+# PRIORITY 3: Only shows if no door open or charging
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
     visibility:
-      - condition: state
-        entity: sensor.dryer
-        state: "on"
+      - condition: and
+        conditions:
+          - condition: state
+            entity: sensor.dryer
+            state: "on"
+          # Don't show if higher priority items active
+          - condition: state
+            entity: binary_sensor.all_doors_including_garage
+            state: "off"
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: "off"
     styles:
       card:
         - height: 135px
@@ -272,12 +301,25 @@ cards:
               - color: var(--text-color)
 {% endif %}
 #Washer When Running
+# PRIORITY 4: Only shows if no door open, charging, or dryer running
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:button-card
-    visibility: 
-      - condition: state
-        entity: sensor.front_load_washer
-        state: 'on'
+    visibility:
+      - condition: and
+        conditions:
+          - condition: state
+            entity: sensor.front_load_washer
+            state: 'on'
+          # Don't show if higher priority items active
+          - condition: state
+            entity: binary_sensor.all_doors_including_garage
+            state: "off"
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: "off"
+          - condition: state
+            entity: sensor.dryer
+            state: "off"
     styles:
       card:
         - height: 135px
