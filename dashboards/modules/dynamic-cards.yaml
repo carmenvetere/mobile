@@ -424,7 +424,8 @@ cards:
       card:
         - background: transparent
         - box-shadow: none
-        - height: 135px
+        - height: auto
+        - min-height: 135px
         - width: 600px
         - padding: 20px
       custom_fields:
@@ -433,15 +434,24 @@ cards:
           - font-weight: bold
           - color: var(--text-color)
           - margin-bottom: 10px
+          - text-align: left
+          - justify-self: start
         status:
           - font-size: 20px
           - line-height: 1.5
           - color: var(--text-color)
+          - text-align: left
+          - justify-self: start
+          - white-space: normal
+          - word-wrap: break-word
+          - overflow-wrap: break-word
+          - max-width: 560px
       grid:
         - grid-template-areas: |
             "hello"
             "status"
         - grid-template-rows: auto auto
+        - grid-template-columns: 1fr
     custom_fields:
       hello: |
         [[[
