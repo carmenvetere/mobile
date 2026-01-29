@@ -389,52 +389,7 @@ cards:
 # Greeting Card - Basement Wall Panel
 # LOWEST PRIORITY: Only shows when no other cards are active
 {% if dashboard == 'basement_wall_panel' %}
-  - type: markdown
-    content: |
-      # Hello!
-
-      {% if is_state('binary_sensor.all_doors_including_garage', 'off') %}
-      All doors are closed
-      {% else %}
-      {% set door_entities = expand('binary_sensor.all_doors_including_garage') | selectattr('state', 'eq', 'on') | list %}
-      {% set door_count = door_entities | count %}
-      {{ door_count }} door{% if door_count != 1 %}s are{% else %} is{% endif %} open
-      {% endif %}
-      and the alarm is {{ states('alarm_control_panel.alarmo') | replace('_', ' ') }}.
-
-      {% set living_room_mode = states('climate.living_room_thermostat') %}
-      {% set basement_mode = states('climate.basement_thermostat') %}
-      {% set office_mode = states('climate.office_thermostat') %}
-      {% set bedroom_mode = states('climate.master_bedroom_thermostat') %}
-      {% set heating_count = [living_room_mode, basement_mode, office_mode, bedroom_mode] | select('eq', 'heat') | list | count %}
-      {% set cooling_count = [living_room_mode, basement_mode, office_mode, bedroom_mode] | select('eq', 'cool') | list | count %}
-      {% if heating_count > cooling_count %}The heat{% elif cooling_count > 0 %}The air conditioning{% else %}The climate{% endif %} in the house is set to
-      {% set temps = [
-        state_attr('climate.living_room_thermostat', 'temperature') | float(0),
-        state_attr('climate.basement_thermostat', 'temperature') | float(0),
-        state_attr('climate.office_thermostat', 'temperature') | float(0),
-        state_attr('climate.master_bedroom_thermostat', 'temperature') | float(0)
-      ] %}
-      {% set avg_temp = (temps | sum / temps | count) | round(0) %}
-      {{ avg_temp }}°F.
-    card_mod:
-      style: |
-        ha-card {
-          background: var(--background-color);
-          border-radius: 30px;
-          padding: 20px;
-          height: 135px;
-          width: 600px;
-        }
-        ha-markdown {
-          font-size: 20px;
-          line-height: 1.4;
-        }
-        ha-markdown h1 {
-          font-size: 32px;
-          margin-bottom: 10px;
-          font-weight: bold;
-        }
+  - type: custom:button-card
     visibility:
       - condition: and
         conditions:
@@ -462,6 +417,79 @@ cards:
           - condition: state
             entity: sensor.front_load_washer
             state: "off"
+    show_name: false
+    show_icon: false
+    show_state: false
+    styles:
+      card:
+        - background: transparent
+        - box-shadow: none
+        - height: 135px
+        - width: 600px
+        - padding: 20px
+      custom_fields:
+        hello:
+          - font-size: 42px
+          - font-weight: bold
+          - color: var(--text-color)
+          - margin-bottom: 10px
+        status:
+          - font-size: 20px
+          - line-height: 1.5
+          - color: var(--text-color)
+      grid:
+        - grid-template-areas: |
+            "hello"
+            "status"
+        - grid-template-rows: auto auto
+    custom_fields:
+      hello: |
+        [[[
+          return "Hello!";
+        ]]]
+      status: |
+        [[[
+          // Door status
+          let doorStatus = "";
+          if (states['binary_sensor.all_doors_including_garage'].state === 'off') {
+            doorStatus = "All doors are closed";
+          } else {
+            // Count open doors by checking attributes
+            let doorCount = 0;
+            const groupAttrs = states['binary_sensor.all_doors_including_garage'].attributes.entity_id || [];
+            groupAttrs.forEach(entityId => {
+              if (states[entityId] && states[entityId].state === 'on') doorCount++;
+            });
+            doorStatus = doorCount + " door" + (doorCount !== 1 ? "s are" : " is") + " open";
+          }
+
+          // Alarm status
+          let alarmState = states['alarm_control_panel.alarmo'].state.replace(/_/g, ' ');
+
+          // HVAC mode and average temp
+          let livingMode = states['climate.living_room_thermostat'].state;
+          let basementMode = states['climate.basement_thermostat'].state;
+          let officeMode = states['climate.office_thermostat'].state;
+          let bedroomMode = states['climate.master_bedroom_thermostat'].state;
+
+          let heatCount = [livingMode, basementMode, officeMode, bedroomMode].filter(m => m === 'heat').length;
+          let coolCount = [livingMode, basementMode, officeMode, bedroomMode].filter(m => m === 'cool').length;
+
+          let hvacText = "The climate";
+          if (heatCount > coolCount) hvacText = "The heat";
+          else if (coolCount > 0) hvacText = "The air conditioning";
+
+          // Average temperature
+          let temps = [
+            parseFloat(states['climate.living_room_thermostat'].attributes.temperature) || 0,
+            parseFloat(states['climate.basement_thermostat'].attributes.temperature) || 0,
+            parseFloat(states['climate.office_thermostat'].attributes.temperature) || 0,
+            parseFloat(states['climate.master_bedroom_thermostat'].attributes.temperature) || 0
+          ];
+          let avgTemp = Math.round(temps.reduce((a, b) => a + b, 0) / temps.length);
+
+          return doorStatus + " and the alarm is " + alarmState + ". " + hvacText + " in the house is set to " + avgTemp + "°F.";
+        ]]]
 {% endif %}
 
 
