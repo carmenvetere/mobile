@@ -1,0 +1,59 @@
+#Notifications Pop-up
+type: vertical-stack
+cards:
+  - type: custom:bubble-card
+    card_type: pop-up
+    name: Notifications
+    icon: mdi:bell-alert
+    hash: "#notifications-pop"
+    button_type: name
+    sub_button:
+      main: []
+      bottom: []
+    rows: 2
+    scrolling_effect: false
+    styles: |
+      .bubble-name {
+        font-size: 24px !important;
+        line-height: 1.1;
+        margin-bottom: 30px !important;
+        }
+
+      .bubble-button-card-container {
+        border-radius: 30px !important;
+        background-color: transparent !important;
+        min-height: 100px !important;
+        }
+
+      .bubble-button-background {
+        background-color: transparent !important;
+        }
+        
+      .bubble-icon-container {
+        background-color: transparent !important;
+        margin-bottom: 30px !important;
+        }
+        
+      .bubble-icon {
+        --mdc-icon-size: 36px !important;
+        }
+    card_layout: large
+    width_desktop: 50%
+    bg_opacity: "100"
+    bg_color: var(-—background-color-2)
+    modules:
+    - pop-up-module
+  - type: custom:bubble-card
+    card_type: separator
+    name: Notifications
+    icon: mdi:bell-alert
+    styles: |
+      .bubble-name {
+        font-size: 16px !important;
+          }
+      .bubble-button-card-container {
+        margin: 2px 10px 2px 10px !important;
+        background-color: var(--ha-card-background-2) !important;
+        }
+  - type: vertical-stack
+    cards: !include [/config/dashboards/modules/notifications.yaml, {module_name: notifications_module}]   
