@@ -1,6 +1,78 @@
 # lovelace_gen
 type: vertical-stack
 cards:
+{% if dashboard == 'basement_wall_panel' %}
+    - type: custom:config-template-card
+      variables:
+        - states['media_player.media_room'].state
+        - new Date().getMonth() + 1
+      entities:
+        - media_player.media_room
+        - media_player.mud_room
+        - media_player.pool
+      card:
+        type: custom:sonos-card
+        entityId: |-
+          ${vars[0] === 'playing'
+            ? 'media_player.media_room_soundbar'
+            : ([6,7,8,9].includes(vars[1])
+              ? 'media_player.pool'
+              : 'media_player.mud_room')}
+        sections:
+          - player
+        player:
+          hideControlPowerButton: false
+          hideControlPrevTrackButton: false
+          hideControlRepeatButton: true
+          hideControlShuffleButton: true
+          controlsLargeIcons: true
+        heightPercentage: auto
+        card_mod:
+          style:
+            sonos-player$: |
+              .container {        
+                grid-template-areas:
+                    'artwork header'
+                    'artwork controls' !important;
+                grid-template-columns: 1fr 2fr !important;
+                grid-template-rows: 1fr 2fr !important;
+                margin: 10px !important;
+              }
+            sonos-player$ sonos-player-header$: |
+              .song {
+                color: var(--primary-text-color) !important;
+                font-size: 24px !important;
+                font-weight: bold !important;
+              }
+              .entity {
+                color: var(--primary-text-color) !important;
+                font-size: 24px !important;
+                font-weight: 600 !important;
+              }
+              .artist-album {
+                color: var(--primary-text-color) !important;
+                font-size: 24px !important;
+                font-weight: 500 !important;
+              }   
+            .: |
+              :host {
+                --mdc-icon-color: var(--text-color) !important;
+                --secondary-text-color: var(--secondary-text-color) !important;
+                --paper-item-icon-color: var(--secondary-text-color) !important;
+                --mdc-theme-primary: var(--primary-text-color) !important;
+                --mdc-icon-button-ink-color: var(--secondary-text-color) !important;
+              }
+              ha-card {
+                margin-left: 10px !important;
+                margin-right: 10px !important;
+                max-width: 96% !important;
+                border-radius: 20px !important;
+                background-color: var(--background-color) !important;
+              } 
+              ha-control-slider {
+                --control-slider-color: var(--primary-text-color) !important;
+              }
+{% endif %}
 # {% if dashboard == 'basement_wall_panel' %}
 #   - type: custom:bubble-card
 #     card_type: separator
