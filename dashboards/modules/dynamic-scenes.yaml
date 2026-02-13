@@ -26,7 +26,10 @@ cards:
         hideControlRepeatButton: true
         hideControlShuffleButton: true
         controlsLargeIcons: true
-      heightPercentage: auto
+        showVolumeUpAndDownButtons: true
+        hideVolume: true
+      heightPercentage: 95
+      volumeStepSize: 2
       card_mod:
         style:
           sonos-player$: |
