@@ -53,7 +53,15 @@ cards:
               color: var(--primary-text-color) !important;
               font-size: 24px !important;
               font-weight: 500 !important;
-            }   
+            }
+          sonos-player$ sonos-player-controls$ sonos-volume$: |
+            .volume-level {
+              font-size: 20px !important;
+              font-weight: bold !important;
+            }
+            .volume-slider {
+              --control-slider-thickness: 80px !important;
+            }      
           .: |
             :host {
               --mdc-icon-color: var(--text-color) !important;
