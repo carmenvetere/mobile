@@ -19,11 +19,11 @@ cards:
       grid:
         - grid-template-areas: |
             "header"
-            "info"
+#            "info"
             "main"
             "nav"
         - grid-template-columns: 720px
-        - grid-template-rows: 100px 270px 780px 100px
+        - grid-template-rows: 100px 1050px 100px
         - align-items: start
         - column-gap: 2px
         - row-gap: 15px
@@ -34,8 +34,8 @@ cards:
           - margin-left: 50px
     custom_fields:
       header: !include header.yaml
-      info:
-        card: !include [/config/dashboards/modules/dynamic-cards.yaml, {dashboard: basement_wall_panel}]
+#      info:
+#        card: !include [/config/dashboards/modules/dynamic-cards.yaml, {dashboard: basement_wall_panel}]
       main: 
         card: !include 
             - /config/dashboards/modules/dynamic-scenes.yaml
