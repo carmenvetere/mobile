@@ -1,6 +1,26 @@
 # lovelace_gen
 - type: vertical-stack
   cards:
+{% if dashboard == 'basement_wall_panel' %}
+    - type: custom:bubble-card
+      card_type: separator
+      name: Basement
+      icon: mdi:home-floor-b
+      styles: |
+        .bubble-name {
+        font-size: 28px !important;  /* title */
+        font-weight: bold !important;
+        }
+        .bubble-line {
+        background: var(--primary-text-color);
+        opacity: 0.1;
+        }
+        .card-content {
+        padding-top: 0px !important;
+        padding-left: 10px !important;
+        margin-right: 50px !important;
+        }  
+{% endif %}  
     - type: custom:bubble-card
       card_type: button
       entity: light.gym_main_lights
