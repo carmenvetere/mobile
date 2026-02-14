@@ -196,13 +196,13 @@ cards:
               - value: "on"
                 styles:
                   card:
-                    - background-color: var(--ha-background-color)
+                    - background-color: var(--ha-card-background)
                     - opacity: 1
                     - box-shadow: 0 0 7px rgba(255, 255, 255, 0.6)
                   name:
-                    - color: var(--primary-text-color)
+                    - color: var(--secondary-text-color)
                   icon:
-                    - color: var(--primary-text-color)
+                    - color: var(--secondary-text-color)
               - value: "off"
                 styles: 
                   card: 
