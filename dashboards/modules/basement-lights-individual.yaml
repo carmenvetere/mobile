@@ -26,7 +26,7 @@
       entity: light.gym_main_lights
       name: Media Room Main Lights      
       icon: mdi:light-recessed
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.gym_main_lights
@@ -51,7 +51,7 @@
       entity: light.media_room_table_lamp
       name: Media Room Table Lamp 
       icon: mdi:floor-lamp    
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.media_room_table_lamp
@@ -76,7 +76,7 @@
       entity: light.laundry_room_main_lights
       name: Mud Room Main Lights 
       icon: mdi:light-recessed   
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.laundry_room_main_lights
@@ -101,7 +101,7 @@
       entity: light.basement_hallway_main_lights
       name: Hallway Main Lights 
       icon: mdi:light-recessed   
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.basement_hallway_main_lights
@@ -126,7 +126,7 @@
       entity: light.media_room_main_lights
       name: Gym Main Lights 
       icon: mdi:light-recessed   
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.media_room_main_lights
@@ -151,7 +151,7 @@
       entity: light.stairs_main_lights
       name: Basement Stairs 
       icon: mdi:light-recessed   
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.stairs_main_lights
@@ -176,7 +176,7 @@
       entity: light.stairs_spot_lights
       name: Basement Stairs Accent
       icon: mdi:spotlight-beam
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.stairs_spot_lights
