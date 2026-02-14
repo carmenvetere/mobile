@@ -26,7 +26,7 @@
       entity: light.living_room_main_lights
       name: Living Room Main Lights
       icon: mdi:light-recessed
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.living_room_main_lights
@@ -51,7 +51,7 @@
       entity: light.living_room_floor_lamps
       name: Living Room Floor Lamps
       icon: mdi:floor-lamp
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.living_room_floor_lamps
@@ -76,7 +76,7 @@
       entity: light.kitchen_main_lights
       name: Kitchen Main Lights
       icon: mdi:light-recessed
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.kitchen_main_lights
@@ -101,7 +101,7 @@
       entity: light.kitchen_outer_wall
       name: Kitchen Outer Wall
       icon: mdi:spotlight-beam
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.kitchen_outer_wall
@@ -126,7 +126,7 @@
       entity: light.kitchen_island_pendants
       name: Kitchen Island Pendants
       icon: mdi:ceiling-light-multiple
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.kitchen_island_pendants
@@ -151,7 +151,7 @@
       entity: light.kitchen_window_seat_sconce
       name: Kitchen Window Seat Sconce
       icon: mdi:wall-sconce
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.kitchen_window_seat_sconce
@@ -176,7 +176,7 @@
       entity: light.dining_room_main_lights
       name: Dining Room Main Lights
       icon: mdi:light-recessed
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.dining_room_main_lights
@@ -201,7 +201,7 @@
       entity: light.dining_room_table_lamps
       name: Dining Room Table Lamps
       icon: mdi:lamps
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.dining_room_table_lamps
@@ -226,7 +226,7 @@
       entity: light.dining_room_accent_lights
       name: Dining Room Accent Light
       icon: mdi:spotlight-beam
-      button_type: switch
+      button_type: slider
       sub_button:
         main:
           - entity: light.dining_room_accent_lights
