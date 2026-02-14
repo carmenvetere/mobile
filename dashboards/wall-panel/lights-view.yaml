@@ -38,7 +38,7 @@ cards:
           type: vertical-stack
           cards:
             - !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: wall_panel_lights_2, dashboard: basement_wall_panel}]
-            - !include [/config/dashboards/modules/outdoor-lights-individual.yaml, {module_name: wall_panel_lights_2, dashboard: outdoor_wall_panel}]
-            - !include [/config/dashboards/modules/first-floor-lights-individual.yaml, {module_name: wall_panel_lights_2, dashboard: first_floor_wall_panel}]
-            - !include [/config/dashboards/modules/second-floor-lights-individual.yaml, {module_name: wall_panel_lights_2, dashboard: second_floor_wall_panel}]
+            - !include [/config/dashboards/modules/outdoor-lights-individual.yaml, {module_name: wall_panel_lights_2, dashboard: basement_wall_panel}]
+            - !include [/config/dashboards/modules/first-floor-lights-individual.yaml, {module_name: wall_panel_lights_2, dashboard: basement_wall_panel}]
+            - !include [/config/dashboards/modules/second-floor-lights-individual.yaml, {module_name: wall_panel_lights_2, dashboard: basement_wall_panel}]
       nav: !include footer-menu.yaml
