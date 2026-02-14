@@ -1,7 +1,7 @@
 # lovelace_gen
 - type: vertical-stack
   cards:
-{% if dashboard == 'outdoor_wall_panel' %}
+{% if 'wall_panel' in dashboard %}
     - type: custom:bubble-card
       card_type: separator
       name: Outdoor
