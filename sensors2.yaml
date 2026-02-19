@@ -178,6 +178,23 @@
         {% set other = total - well - ev %}
         {{ [other, 0] | max | round(2) }}
 
+    - name: "Living Room Favorites"
+      unique_id: living_room_favorites
+      state: "8"
+      icon: mdi:music-box-multiple
+      attributes:
+        favorites: >
+          {{ [
+            {"title": "MS NOW", "media_content_id": "x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8200&sn=5", "media_content_type": "radio"},
+            {"title": "1 Hotel South Beach Poolside Playlist", "media_content_id": "x-sonos-spotify:playlist:7z1cddbJ1L62FZpTVZBj2i?si=92255a8128cd450f?sid=12&flags=8232&sn=9", "media_content_type": "playlist"},
+            {"title": "Top 50 - United Kingdom", "media_content_id": "x-sonos-spotify:playlist:1QM1qz09ZzsAPiXphF1l4S?si=29a715d35f304d07?sid=12&flags=8232&sn=9", "media_content_type": "playlist"},
+            {"title": "Top 50 - Australia", "media_content_id": "x-sonos-spotify:playlist:37i9dQZEVXbJPcfkRz0wJ0?si=29a715d35f304d07?sid=12&flags=8232&sn=9", "media_content_type": "playlist"},
+            {"title": "Pool Mix - 2025", "media_content_id": "x-sonos-spotify:playlist:2rA0wj0dnIyj1A5Uaoogaa?si=29a715d35f304d07?sid=12&flags=8232&sn=9", "media_content_type": "playlist"},
+            {"title": "Hotel Costes Radio", "media_content_id": "x-sonos-spotify:playlist:37i9dQZF1E4mWbHqaowOUP?si=29a715d35f304d07?sid=12&flags=8232&sn=9", "media_content_type": "playlist"},
+            {"title": "Pop & Dance Mix", "media_content_id": "x-sonosapi-hls-static:channel-xtra%3adc93524a-aa6d-b0c4-0d53-caabac97500c%3a15ebc9ab-82ba-0dd1-0276-d408113397df?sid=37&flags=32768&sn=5", "media_content_type": "radio"},
+            {"title": "Chill Mix", "media_content_id": "x-sonos-spotify:playlist:37i9dQZF1EVHGWrwldPRtj?sid=12&flags=8232&sn=9", "media_content_type": "playlist"}
+          ] }}
+
 - trigger:
     - trigger: event
       event_type: bubble_card_update_modules
