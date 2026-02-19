@@ -903,7 +903,7 @@
   - if:
     - condition: numeric_state
       entity_id: input_number.sonos_favorites_index
-      above: 4
+      above: 8
     then:
     - action: input_number.set_value
       target:
