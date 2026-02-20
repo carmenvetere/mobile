@@ -174,16 +174,9 @@ cards:
                     } 
       first:
         card:
-          type: custom:expander-card
-          expanded: true
-          title-card-clickable: true
-          card_mod: 
-            style: |
-              ha-card {
-                background-color: var(--ha-card-background-2) !important;
-              }
-          title-card:
-            type: custom:bubble-card
+          type: vertical-stack
+          cards:
+          - type: custom:bubble-card
             card_type: separator
             name: First Floor
             icon: mdi:home-floor-1
@@ -195,7 +188,7 @@ cards:
                 show_background: false
                 visibility:
                   - condition: screen
-                    media_query: '(min-width: 768px)'
+                    media_query: '(min-width: 500px)'
               - entity: sensor.living_room_thermostat_current_humidity
                 show_state: true
                 show_background: false
@@ -283,7 +276,7 @@ cards:
                             action: toggle
                           content_layout: icon-left
                           fill_width: false
-                          width: 28
+                          width: 25
                   bottom_layout: rows
                 show_icon: false
                 scrolling_effect: false
