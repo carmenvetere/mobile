@@ -213,77 +213,74 @@ cards:
               .card-content {
                 padding-top: 7px !important;
               }
-          cards:
-            - type: vertical-stack
-              cards:
-              - type: custom:bubble-card
-                card_type: climate
-                name: Living Room Thermostat
-                show_state: false
-                entity: climate.living_room_thermostat_homekit
-                sub_button:
-                  main: []
-                  bottom:
-                    - name: HVAC Modes
-                      buttons_layout: rows
-                      group:
-                        - name: HVAC modes menu
-                          select_attribute: hvac_modes
-                          state_background: false
-                          show_arrow: true
-                          show_attribute: false
-                          show_state: true
-                          sub_button_type: select
-                        - entity: climate.living_room_thermostat
-                          select_attribute: fan_modes
-                          state_background: false
-                          show_state: false
-                          show_attribute: true
-                          attribute: fan_mode
-                          sub_button_type: select
-                    - name: Air Quality
-                      buttons_layout: rows
-                      group:
-                        - entity: sensor.first_floor_air_quality_carbon_dioxide
-                          scrolling_effect: false
-                          state_background: false
-                          show_background: true
-                          show_icon: false
-                          show_state: true
-                          name: C02
-                          show_name: true
-                          content_layout: icon-left
-                          force_icon: false
-                          fill_width: false
-                          width: 35
-                        - entity: sensor.first_floor_air_quality_pm2_5
-                          scrolling_effect: false
-                          state_background: false
-                          show_background: true
-                          show_icon: false
-                          show_state: true
-                          name: PM2.5
-                          show_name: true
-                          content_layout: icon-left
-                          fill_width: false
-                          width: 35
-                        - entity: switch.utility_room_ventilation_damper
-                          icon: mdi:tailwind
-                          scrolling_effect: false
-                          name: Fresh Air
-                          show_name: true
-                          tap_action:
-                            action: toggle
-                          content_layout: icon-left
-                          fill_width: false
-                          width: 25
-                  bottom_layout: rows
-                show_icon: false
-                scrolling_effect: false
-                card_layout: large-sub-buttons-grid
-                modules:
-                  - mobile_climate
-                rows: 2.406
+          - type: custom:bubble-card
+            card_type: climate
+            name: Living Room Thermostat
+            show_state: false
+            entity: climate.living_room_thermostat_homekit
+            sub_button:
+              main: []
+              bottom:
+                - name: HVAC Modes
+                  buttons_layout: rows
+                  group:
+                    - name: HVAC modes menu
+                      select_attribute: hvac_modes
+                      state_background: false
+                      show_arrow: true
+                      show_attribute: false
+                      show_state: true
+                      sub_button_type: select
+                    - entity: climate.living_room_thermostat
+                      select_attribute: fan_modes
+                      state_background: false
+                      show_state: false
+                      show_attribute: true
+                      attribute: fan_mode
+                      sub_button_type: select
+                - name: Air Quality
+                  buttons_layout: rows
+                  group:
+                    - entity: sensor.first_floor_air_quality_carbon_dioxide
+                      scrolling_effect: false
+                      state_background: false
+                      show_background: true
+                      show_icon: false
+                      show_state: true
+                      name: C02
+                      show_name: true
+                      content_layout: icon-left
+                      force_icon: false
+                      fill_width: false
+                      width: 35
+                    - entity: sensor.first_floor_air_quality_pm2_5
+                      scrolling_effect: false
+                      state_background: false
+                      show_background: true
+                      show_icon: false
+                      show_state: true
+                      name: PM2.5
+                      show_name: true
+                      content_layout: icon-left
+                      fill_width: false
+                      width: 35
+                    - entity: switch.utility_room_ventilation_damper
+                      icon: mdi:tailwind
+                      scrolling_effect: false
+                      name: Fresh Air
+                      show_name: true
+                      tap_action:
+                        action: toggle
+                      content_layout: icon-left
+                      fill_width: false
+                      width: 25
+              bottom_layout: rows
+            show_icon: false
+            scrolling_effect: false
+            card_layout: large-sub-buttons-grid
+            modules:
+              - mobile_climate
+            rows: 2.406
       basement:
         card:
           type: custom:expander-card
