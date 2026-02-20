@@ -229,64 +229,63 @@ cards:
                   show_state: false
                   entity: climate.living_room_thermostat_homekit
                   sub_button:
-                    - name: HVAC modes menu
-                      select_attribute: hvac_modes
-                      state_background: false
-                      show_arrow: true
-                      show_attribute: false
-                      show_state: true
-                    - entity: climate.living_room_thermostat
-                      select_attribute: fan_modes
-                      state_background: false
-                      show_state: false
-                      show_attribute: true
-                      attribute: fan_mode
+                    main:
+                      - name: HVAC modes menu
+                        select_attribute: hvac_modes
+                        state_background: false
+                        show_arrow: true
+                        show_attribute: false
+                        show_state: true
+                        sub_button_type: select
+                      - entity: climate.living_room_thermostat
+                        select_attribute: fan_modes
+                        state_background: false
+                        show_state: false
+                        show_attribute: true
+                        attribute: fan_mode
+                        sub_button_type: select
+                    bottom:
+                      - name: Automatically grouped
+                        buttons_layout: inline
+                        group:
+                          - entity: sensor.first_floor_air_quality_carbon_dioxide
+                            scrolling_effect: false
+                            state_background: false
+                            show_background: true
+                            show_icon: false
+                            show_state: true
+                            name: C02
+                            show_name: true
+                            content_layout: icon-left
+                            width: 35
+                            fill_width: false
+                          - entity: sensor.first_floor_air_quality_pm2_5
+                            scrolling_effect: false
+                            state_background: false
+                            show_background: true
+                            show_icon: false
+                            show_state: true
+                            name: PM2.5
+                            show_name: true
+                            content_layout: icon-left
+                            width: 35
+                            fill_width: false
+                          - entity: switch.utility_room_ventilation_damper
+                            icon: mdi:tailwind
+                            scrolling_effect: false
+                            name: Fresh Air
+                            show_name: true
+                            tap_action:
+                              action: toggle
+                            content_layout: icon-left
+                            fill_width: false
+                            width: 30
                   show_icon: false
                   scrolling_effect: false
                   card_layout: large-sub-buttons-grid
-                  grid_options:
-                    rows: 2
-                  styles: |-
-                    .bubble-name {
-                    font-size: 16px !important;
-                    }
-                    .bubble-sub-button 
-                    {
-                      font-size: 12px !important;
-                      font-weight: 700 !important;
-                    }
-                    .bubble-temperature-display 
-                    {
-                      font-size: 14px !important;
-                      font-weight: 700 !important;
-                    }
                   modules:
-                   - Mobile Module Theme 
-                - type: custom:bubble-card
-                  card_type: button
-                  button_type: state
-                  icon: mdi:tailwind
-                  entity: switch.utility_room_ventilation_damper
-                  name: Fresh Air Damper
-                  show_icon: false
-                  show_state: false
-                  sub_button:
-                    - entity: switch.utility_room_ventilation_damper
-                      show_state: true
-                      icon: mdi:tailwind
-                      tap_action:
-                        action: toggle
-                  styles: |-
-                    .bubble-name {
-                    font-size: 16px !important;
-                    }
-                    .bubble-sub-button 
-                    {
-                      font-size: 12px !important;
-                      font-weight: 700 !important;
-                    }
-                  modules:
-                   - Mobile Module Theme 
+                    - mobile_climate
+                  rows: 1.672
       basement:
         card:
           type: custom:expander-card
