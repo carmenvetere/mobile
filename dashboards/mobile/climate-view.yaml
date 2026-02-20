@@ -229,12 +229,7 @@ cards:
                 show_state: false
                 entity: climate.living_room_thermostat_homekit
                 sub_button:
-                  main:
-                    - name: HVAC modes menu
-                      select_attribute: hvac_modes
-                      state_background: false
-                      show_arrow: false
-                      sub_button_type: select
+                  main: []
                   bottom:
                     - name: HVAC Modes
                       buttons_layout: rows
@@ -267,7 +262,7 @@ cards:
                           content_layout: icon-left
                           force_icon: false
                           fill_width: false
-                          width: 30
+                          width: 35
                         - entity: sensor.first_floor_air_quality_pm2_5
                           scrolling_effect: false
                           state_background: false
