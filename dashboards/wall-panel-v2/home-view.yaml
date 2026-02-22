@@ -27,9 +27,7 @@ cards:
         - column-gap: 10px
         - row-gap: 15px
       custom_fields:
-        main:
-          - margin-left: 50px
-        info:
+        main1:
           - margin-left: 50px
     custom_fields:
       header: !include header.yaml
@@ -53,31 +51,82 @@ cards:
                   : 'media_player.mud_room')}
             sections:
               - player
+              - volumes
+              - media browser
+              - groups
+              - grouping
+            startSection: player
             player:
-              hideControlPowerButton: false
-              hideControlPrevTrackButton: false
+              artworkAsBackground: false
+              artworkAsBackgroundBlur: 0
+              artworkBorderRadius: 10
+              controlsLargeIcons: true
               hideControlRepeatButton: true
               hideControlShuffleButton: true
-              controlsLargeIcons: true
-              showVolumeUpAndDownButtons: true
-              hideVolume: true
-            heightPercentage: auto
-            volumeStepSize: 2
+            mediaBrowser:
+              hideHeader: false
+              onlyFavorites: true
+              itemsPerRow: 1
+              favorites:
+                exclude: null
+                topItems: []
+                hideTitleForThumbnailIcons: false
+                sortByType: true
+                hideSonosFavorites: true
+                customFavorites:
+                  all: !include /config/dashboards/modules/custom-favorites.yaml
+            heightPercentage: 185
+            footerHeight: 8
+            sectionButtonIconSize: 6
+            groups:
+              title: Speaker Groups
+              backgroundColor: "#C0C4C5"
+              compact: false
+              speakersFontSize: 1.5
+              titleFontSize: 1
+            grouping:
+              skipApplyButton: true
+            predefinedGroups:
+              - name: Outside
+                media: ""
+                entities:
+                  - player: media_player.pool
+                    volume: 20
+                  - player: media_player.deck
+                    volume: 30
+              - name: All Basement
+                media: ""
+                entities:
+                  - player: media_player.gym
+                    volume: 10
+                  - player: media_player.mud_room
+                    volume: 10
+                  - player: media_player.media_room
+                    volume: 10
             card_mod:
+              refresh_interval: 2
               style:
-                sonos-player$: |
-                  .container {        
-                    grid-template-areas:
-                        'artwork header'
-                        'artwork controls' !important;
-                    grid-template-columns: 1fr 2fr !important;
-                    grid-template-rows: 1fr 2fr !important;
-                    margin: 10px !important;
+                .: |
+                  :host {
+                    --mdc-icon-color: var(--text-color) !important;
+                    --secondary-text-color: var(--secondary-text-color) !important;
+                    --paper-item-icon-color: var(--secondary-text-color) !important;
+                    --mdc-theme-primary: var(--primary-text-color) !important;
+                    --mdc-icon-button-ink-color: var(--secondary-text-color) !important;
+                  }
+                  ha-card {
+                    margin-left: 10px !important;
+                    margin-right: 10px !important;
+                    max-width: 96% !important;
+                    background-color: var(--background-color) !important;
+                  }  
+                  ha-control-slider {
+                    --control-slider-color: var(--primary-text-color) !important;
                   }
                 sonos-player$ sonos-player-header$: |
                   .song {
                     color: var(--primary-text-color) !important;
-                    font-size: 24px !important;
+                    font-size: 28px !important;
                     font-weight: bold !important;
                   }
                   .entity {
@@ -89,6 +138,16 @@ cards:
                     color: var(--primary-text-color) !important;
                     font-size: 24px !important;
                     font-weight: 500 !important;
+                  }   
+                sonos-player$ sonos-player-header$ sonos-progress$: |
+                  .progress {
+                    color: var(--primary-text-color) !important;
+                    font-size: 20px !important;
+                    font-weight: bold !important;
+                    --paper-progress-active-color: var(--primary-text-color) !important;
+                  }
+                  .progress-bar {
+                    background-color: var(--primary-text-color) !important;
                   }
                 sonos-player$ sonos-player-controls$ sonos-volume$: |
                   .volume-level {
@@ -97,23 +156,97 @@ cards:
                   }
                   .volume-slider {
                     --control-slider-thickness: 80px !important;
-                  }      
-                .: |
-                  :host {
-                    --mdc-icon-color: var(--text-color) !important;
-                    --secondary-text-color: var(--secondary-text-color) !important;
-                    --paper-item-icon-color: var(--secondary-text-color) !important;
-                    --mdc-theme-primary: var(--primary-text-color) !important;
-                    --mdc-icon-button-ink-color: var(--secondary-text-color) !important;
                   }
-                  ha-card {
-                    max-width: 600px !important;
-                    max-height: 270px !important;
-                    border-radius: 20px !important;
-                    background-color: var(--background-color) !important;
-                  } 
-                  ha-control-slider {
-                    --control-slider-color: var(--primary-text-color) !important;
+                sonos-media-browser$ sonos-favorites-icons$: |
+                  .icons {
+                    padding-top: 10px !important;
+                  }
+                  .thumbnail {
+                    display: none !important;
+                    height: 0 !important;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                  }
+                  .title {
+                    font-size: 24px !important;
+                    height: 100% !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: left !important;
+                    padding-left: 30px !important;
+                    padding-top: 10px !important;
+                    background-color: var(--background-color-2) !important;
+                  }
+                  .button {
+                    border-radius: 15px !important;
+                    height: 80px !important;
+                    margin: 10px !important;
+                    max-width: 95% !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: flex-start !important;
+                    background-color: var(--background-color-2) !important;
+                  }
+                  ha-control-button {
+                    height: 80px !important;
+                    max-width: 95% !important;
+                    margin-left: 12px !important;
+                    background-image: none !important;
+                  }
+                sonos-groups$ sonos-group$: |
+                  mwc-list-item {
+                    background: var(--background-color-2) !important;
+                    height: 80px !important;
+                  }
+                  .row {
+                    height: 100% !important;
+                  }
+                  .speakers {
+                    font-size: 24px !important;
+                    text-align: left !important;
+                    margin-bottom: 10px !important;
+                  }
+                  .song-title {
+                    font-size: 20px !important;
+                  }
+                sonos-grouping$: |
+                  .name {
+                    font-size: 24px !important;
+                    font-weight: bold !important;
+                    text-align: left !important;
+                    justify-content: flex-start !important;
+                    margin-left: 10px !important;
+                    margin-top: 10px !important;
+                  }
+                  .item {
+                    justify-content: flex-start !important;
+                  }
+                  .name-and-volume {
+                    align-items: flex-start !important;
+                    background-color: var(--background-color-2) !important;
+                    border-radius: 15px !important;
+                    margin-right: 10px !important;
+                    padding-left: 10px !important;
+                    height: 80px !important;
+                  }
+                  .volume {
+                    --control-slider-thickness: 20px !important;
+                    --control-slider-background: var(--background-color) !important;
+                    margin-left: 10px !important;
+                    margin-right: 10px !important;
+                  }
+                sonos-grouping$ sonos-grouping-button$: |
+                  ha-control-button {
+                    background: var(--background-color-2) !important;
+                    height: 80px !important;
+                    border-radius: 15px !important;
+                    font-size: 20px !important;
+                    font-weight: bold !important;
+                  }
+                sonos-grouping$ sonos-grouping-button$ ha-control-button$: |
+                  .button {
+                    background: var(--primary-color) !important;
+                    border-radius: 15px !important;
                   }
       main1: 
         card: !include 
