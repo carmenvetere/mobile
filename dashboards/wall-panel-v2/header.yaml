@@ -72,8 +72,8 @@ card:
           ]]]
         styles:
           icon:
-            - width: 100px
-            - height: 100px
+            - width: 75px
+            - height: 75px
             - color: |
                 [[[
                   var state = states['alarm_control_panel.alarmo'].state;
@@ -128,18 +128,18 @@ card:
             navigation_path: /mudroom-wall-panel-dash/notifications-view
           styles:
             state:
-              - font-size: 28px
+              - font-size: 54px
               - font-weight: bold
               - justify-self: start
             grid: 
               - column-gap: 3px
-              - grid-template-columns: 42px auto
+              - grid-template-columns: 100px auto
             img_cell:
               - align-self: center
               - justify-content: end
             icon:
-              - width: 32px
-              - height: 32px
+              - width: 75px
+              - height: 75px
               - padding-left: 5px
               - color: >
                   [[[
@@ -180,8 +180,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 32px
-                - height: 32px
+                - width: 75px
+                - height: 75px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -207,8 +207,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 32px
-                - height: 32px
+                - width: 75px
+                - height: 75px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -234,8 +234,8 @@ card:
               action: toggle
             styles:
               icon:
-                - width: 32px
-                - height: 32px
+                - width: 75px
+                - height: 75px
                 - color: var(--primary-text-color)
               img_cell:
                 - align-self: center
@@ -287,15 +287,15 @@ card:
           navigation_path: /mudroom-wall-panel-dash/weather-view
         styles:
           state:
-            - font-size: 28px
+            - font-size: 54px
             - font-weight: bold
             - justify-self: start
           icon:
-            - width: 32px
-            - height: 32px
+            - width: 75px
+            - height: 75px
           grid: 
-            - column-gap: 3px
-            - grid-template-columns: 42px auto
+            - column-gap: 10px
+            - grid-template-columns: 100px auto
           img_cell:
             - align-self: center
             - justify-content: end
