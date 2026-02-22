@@ -13,19 +13,18 @@ cards:
         - padding-top: 0px
         - margin-left: -4px
         - margin-top: -4px        
-        - width: 720px
-        - height: 1280px
+        - width: 2048px
+        - height: 1536px
         - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
-            "header"
-            "info"
-            "main"
-            "nav"
-        - grid-template-columns: 720px
-        - grid-template-rows: 100px 270px 780px 100px
+            "header header"
+            "main1 main2"
+            "nav nav"
+        - grid-template-columns: 1019px 1019px
+        - grid-template-rows: 150px 1206px 150px
         - align-items: start
-        - column-gap: 2px
+        - column-gap: 10px
         - row-gap: 15px
       custom_fields:
         main:
@@ -34,7 +33,7 @@ cards:
           - margin-left: 50px
     custom_fields:
       header: !include header.yaml
-      info:
+      main2:
         card: 
           type: custom:config-template-card
           variables:
@@ -116,7 +115,7 @@ cards:
                   ha-control-slider {
                     --control-slider-color: var(--primary-text-color) !important;
                   }
-      main: 
+      main1: 
         card: !include 
             - /config/dashboards/modules/dynamic-scenes.yaml
             - module_name: wall_panel_scenes
