@@ -126,23 +126,23 @@ cards:
                 sonos-player$ sonos-player-header$: |
                   .song {
                     color: var(--primary-text-color) !important;
-                    font-size: 28px !important;
+                    font-size: 48px !important;
                     font-weight: bold !important;
                   }
                   .entity {
                     color: var(--primary-text-color) !important;
-                    font-size: 24px !important;
+                    font-size: 42px !important;
                     font-weight: 600 !important;
                   }
                   .artist-album {
                     color: var(--primary-text-color) !important;
-                    font-size: 24px !important;
+                    font-size: 48px !important;
                     font-weight: 500 !important;
                   }   
                 sonos-player$ sonos-player-header$ sonos-progress$: |
                   .progress {
                     color: var(--primary-text-color) !important;
-                    font-size: 20px !important;
+                    font-size: 40px !important;
                     font-weight: bold !important;
                     --paper-progress-active-color: var(--primary-text-color) !important;
                   }
@@ -151,11 +151,11 @@ cards:
                   }
                 sonos-player$ sonos-player-controls$ sonos-volume$: |
                   .volume-level {
-                    font-size: 20px !important;
+                    font-size: 40px !important;
                     font-weight: bold !important;
                   }
                   .volume-slider {
-                    --control-slider-thickness: 80px !important;
+                    --control-slider-thickness: 150px !important;
                   }
                 sonos-media-browser$ sonos-favorites-icons$: |
                   .icons {
