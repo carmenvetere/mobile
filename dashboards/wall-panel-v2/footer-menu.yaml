@@ -7,13 +7,13 @@ card:
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 100px
+      - height: 150px
       - background-color: black
     grid:
       - grid-template-areas: |
           "home lights music climate security energy vacuum other"
       - grid-template-columns: auto
-      - grid-template-rows: 100px
+      - grid-template-rows: 150px
       - align-items: center
       - column-gap: 0px
   custom_fields:
@@ -37,8 +37,8 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('home-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 64px
-            - width: 64px
+            - height: 75px
+            - width: 75px
         tap_action:
           action: navigate
           navigation_path: /mudroom-wall-panel-dash/home-view
