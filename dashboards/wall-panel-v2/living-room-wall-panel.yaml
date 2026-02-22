@@ -1,0 +1,23 @@
+kiosk_mode:
+  non_admin_settings:
+    hide_header: true
+    hide_sidebar: true
+    hide_search: true
+    hide_assistant: true
+  mobile_settings:
+    hide_header: true
+    hide_search: true
+    hide_sidebar: true
+    hide_overflow: true
+views:
+  - !include home-view.yaml
+#  - !include notifications-view.yaml
+#  - !include alarm-view.yaml
+#  - !include weather-view.yaml
+#  - !include lights-view.yaml
+#  - !include climate-view.yaml
+#  - !include music-view.yaml
+#  - !include security-view.yaml
+#  - !include vacuum-view.yaml
+#  - !include settings-view.yaml
+#  - !include energy-view.yaml

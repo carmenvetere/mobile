@@ -1,0 +1,124 @@
+# lovelace_gen
+title: Home
+path: home-view
+theme: Wall Panel
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 0px
+        - padding-bottom: 5px
+        - padding-left: 0px
+        - padding-top: 0px
+        - margin-left: -4px
+        - margin-top: -4px        
+        - width: 720px
+        - height: 1280px
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
+      grid:
+        - grid-template-areas: |
+            "header"
+            "info"
+            "main"
+            "nav"
+        - grid-template-columns: 720px
+        - grid-template-rows: 100px 270px 780px 100px
+        - align-items: start
+        - column-gap: 2px
+        - row-gap: 15px
+      custom_fields:
+        main:
+          - margin-left: 50px
+        info:
+          - margin-left: 50px
+    custom_fields:
+      header: !include header.yaml
+      info:
+        card: 
+          type: custom:config-template-card
+          variables:
+            - states['media_player.media_room'].state
+            - new Date().getMonth() + 1
+          entities:
+            - media_player.media_room
+            - media_player.mud_room
+            - media_player.pool
+          card:
+            type: custom:sonos-card
+            entityId: |-
+              ${vars[0] === 'playing'
+                ? 'media_player.media_room_soundbar'
+                : ([6,7,8,9].includes(vars[1])
+                  ? 'media_player.pool'
+                  : 'media_player.mud_room')}
+            sections:
+              - player
+            player:
+              hideControlPowerButton: false
+              hideControlPrevTrackButton: false
+              hideControlRepeatButton: true
+              hideControlShuffleButton: true
+              controlsLargeIcons: true
+              showVolumeUpAndDownButtons: true
+              hideVolume: true
+            heightPercentage: auto
+            volumeStepSize: 2
+            card_mod:
+              style:
+                sonos-player$: |
+                  .container {        
+                    grid-template-areas:
+                        'artwork header'
+                        'artwork controls' !important;
+                    grid-template-columns: 1fr 2fr !important;
+                    grid-template-rows: 1fr 2fr !important;
+                    margin: 10px !important;
+                  }
+                sonos-player$ sonos-player-header$: |
+                  .song {
+                    color: var(--primary-text-color) !important;
+                    font-size: 24px !important;
+                    font-weight: bold !important;
+                  }
+                  .entity {
+                    color: var(--primary-text-color) !important;
+                    font-size: 24px !important;
+                    font-weight: 600 !important;
+                  }
+                  .artist-album {
+                    color: var(--primary-text-color) !important;
+                    font-size: 24px !important;
+                    font-weight: 500 !important;
+                  }
+                sonos-player$ sonos-player-controls$ sonos-volume$: |
+                  .volume-level {
+                    font-size: 20px !important;
+                    font-weight: bold !important;
+                  }
+                  .volume-slider {
+                    --control-slider-thickness: 80px !important;
+                  }      
+                .: |
+                  :host {
+                    --mdc-icon-color: var(--text-color) !important;
+                    --secondary-text-color: var(--secondary-text-color) !important;
+                    --paper-item-icon-color: var(--secondary-text-color) !important;
+                    --mdc-theme-primary: var(--primary-text-color) !important;
+                    --mdc-icon-button-ink-color: var(--secondary-text-color) !important;
+                  }
+                  ha-card {
+                    max-width: 600px !important;
+                    max-height: 270px !important;
+                    border-radius: 20px !important;
+                    background-color: var(--background-color) !important;
+                  } 
+                  ha-control-slider {
+                    --control-slider-color: var(--primary-text-color) !important;
+                  }
+      main: 
+        card: !include 
+            - /config/dashboards/modules/dynamic-scenes.yaml
+            - module_name: wall_panel_scenes
+              dashboard: basement_wall_panel
+      nav: !include footer-menu.yaml

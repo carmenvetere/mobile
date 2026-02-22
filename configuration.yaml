@@ -125,6 +125,11 @@ lovelace:
       icon: mdi:alarm-panel
       show_in_sidebar: true
       filename: dashboards/wall-panel/mudroom-wall-panel.yaml
+    living-room-wall-panel-dash:
+      mode: yaml
+      title: "Living Room Wall Panel - YAML"
+      icon: mdi:alart-panel
+      show_in_sidebar: true
   resources: 
     - url: /hacsfiles/lovelace-layout-card/layout-card.js
       type: module
