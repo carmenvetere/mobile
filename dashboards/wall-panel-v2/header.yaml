@@ -1,0 +1,303 @@
+card:
+  type: custom:button-card
+  styles:
+    card:
+      - border-radius: 0px
+      - padding-bottom: 15px
+      - padding-left: 0px
+      - margin: 0px
+      - padding-top: 0px
+      - height: 100px
+      - width: 750px
+      - background-color: black 
+    grid:
+      - grid-template-areas: |
+          "time alarm notifications modes temp"
+      - grid-template-columns: 2fr 3fr 1.5fr 1.5fr 2fr
+      - grid-template-rows: 100px
+      - align-items: center
+      - justify-items: start
+      - column-gap: 10px
+  custom_fields:
+    time:
+      card:
+        type: custom:button-card
+        entity: sensor.time
+        show_icon: false
+        show_label: false
+        show_name: false
+        show_state: true
+        tap_action:
+          action: navigate
+          navigation_path: /mudroom-wall-panel-dash/home-view
+        state_display: |
+          [[[
+            var timeString = states['sensor.time'].state;
+            return new Date('1970-01-01T' + timeString + ':00').toLocaleTimeString([], {hour: 'numeric', minute:'2-digit'});
+          ]]]       
+        styles:
+          card:
+            - border-radius: 0px
+            - align-self: center
+            - justify-self: start
+            - background: transparent
+          state:
+            - font-size: 28px
+            - font-weight: bold
+            - padding-left: 10px
+    alarm:
+      card:
+        type: custom:button-card
+        entity: alarm_control_panel.alarmo
+        layout: icon_state
+        show_icon: true
+        show_label: false
+        show_name: false
+        show_state: true
+        state_display: |
+          [[[
+            var state = states['alarm_control_panel.alarmo'].state;
+            if (state === 'armed_away') return 'Armed';
+            if (state === 'armed_home') return 'Armed';
+            if (state === 'armed_vacation') return 'Armed';
+            if (state === 'armed_night') return 'Armed';
+            if (state === 'disarmed') return 'Disarmed';
+            if (state === 'pending') return 'Enter Code';
+            if (state === 'arming') return 'Arming';
+            if (state === 'triggered') return 'ALARM!';
+            return state.charAt(0).toUpperCase() + state.slice(1);
+          ]]]
+        styles:
+          icon:
+            - width: 32px
+            - height: 32px
+            - color: |
+                [[[
+                  var state = states['alarm_control_panel.alarmo'].state;
+                  if (state === 'triggered') return 'red';
+                  if (state === 'armed_away' || state === 'armed_home' || state === 'armed_vacation') return 'orange';
+                  if (state === 'pending' || state === 'arming') return 'orange';
+                  if (state === 'disarmed') return 'var(--primary-text-color)';
+                  return 'var(--primary-text-color)';
+                ]]]
+          state:
+            - font-size: 28px
+            - font-weight: bold
+            - justify-self: start
+          grid: 
+            - column-gap: 3px
+            - grid-template-columns: 42px auto
+          img_cell:
+            - align-self: center
+            - justify-content: start
+          card:
+            - border-radius: 0px
+            - align-self: center
+            - justify-self: start
+            - background: transparent
+        tap_action:
+          action: navigate
+          navigation_path: /mudroom-wall-panel-dash/alarm-view
+    notifications:
+      card:
+        type: conditional
+        conditions:
+          - condition: numeric_state
+            entity: sensor.notification_alert_counter
+            above: 0
+        card:
+          type: custom:button-card
+          entity: sensor.notification_alert_counter
+          icon: >
+            [[[
+              const priority = states['sensor.notification_icon_priority'].state;
+              if (priority === 'critical') return 'mdi:alert';
+              if (priority === 'warning') return 'mdi:bell-alert';
+              return 'mdi:bell';
+            ]]]
+          layout: icon_state
+          show_icon: true
+          show_label: false
+          show_name: false
+          show_state: true
+          tap_action:
+            action: navigate
+            navigation_path: /mudroom-wall-panel-dash/notifications-view
+          styles:
+            state:
+              - font-size: 28px
+              - font-weight: bold
+              - justify-self: start
+            grid: 
+              - column-gap: 3px
+              - grid-template-columns: 42px auto
+            img_cell:
+              - align-self: center
+              - justify-content: end
+            icon:
+              - width: 32px
+              - height: 32px
+              - padding-left: 5px
+              - color: >
+                  [[[
+                    const priority = states['sensor.notification_icon_priority'].state;
+                    if (priority === 'critical') return '#EA4D3D';  // Red - power outage, alarm triggered
+                    if (priority === 'warning') return '#FF8C00';   // Orange - weather alerts, storm watch
+                    return 'var(--primary-text-color)';             // Default when no high-priority notifications
+                  ]]]
+            card:
+              - border-radius: 5px
+              - padding: 2px
+              - align-self: center
+              - justify-self: center
+              - background: transparent
+    modes: 
+      card:
+        type: custom:stack-in-card
+        mode: horizontal
+        card_mod:
+          style: |
+            ha-card {
+              background: black !important;
+            }
+        cards:
+        - type: conditional
+          conditions:
+            - entity: input_boolean.dinner_party
+              state: 'on'
+          card: 
+            type: custom:button-card
+            entity: input_boolean.dinner_party
+            icon: mdi:glass-cocktail
+            show_icon: true
+            show_label: false
+            show_name: false
+            show_state: false
+            tap_action:
+              action: toggle
+            styles:
+              icon:
+                - width: 32px
+                - height: 32px
+                - color: var(--primary-text-color)
+              img_cell:
+                - align-self: center
+                - justify-content: center
+              card:
+                - border-radius: 5px
+                - align-self: center
+                - justify-self: center
+                - background: transparent 
+        - type: conditional
+          conditions:
+            - entity: input_boolean.guest_mode
+              state: 'on'  
+          card: 
+            type: custom:button-card
+            entity: input_boolean.guest_mode
+            icon: mdi:bed
+            show_icon: true
+            show_label: false
+            show_name: false
+            show_state: false
+            tap_action:
+              action: toggle
+            styles:
+              icon:
+                - width: 32px
+                - height: 32px
+                - color: var(--primary-text-color)
+              img_cell:
+                - align-self: center
+                - justify-content: center
+              card:
+                - border-radius: 5px
+                - align-self: center
+                - justify-self: center
+                - background-color: black
+        - type: conditional
+          conditions:
+            - entity: input_boolean.cleaners_mode
+              state: 'on'  
+          card: 
+            type: custom:button-card
+            entity: input_boolean.cleaners_mode
+            icon: mdi:spray-bottle
+            show_icon: true
+            show_label: false
+            show_name: false
+            show_state: false
+            tap_action:
+              action: toggle
+            styles:
+              icon:
+                - width: 32px
+                - height: 32px
+                - color: var(--primary-text-color)
+              img_cell:
+                - align-self: center
+                - justify-content: center
+              card:
+                - border-radius: 5px
+                - align-self: center
+                - justify-self: center
+                - background: transparent
+        - type: conditional
+          conditions:
+            - condition: state
+              entity: binary_sensor.r1t_charging_status
+              state: "on"
+          card:
+            type: custom:mushroom-chips-card
+            chips:
+              type: template
+              icon: mdi:ev-plug-type2
+              entity: sensor.r1t_charging_time_remaining
+              icon_color: green
+              content: >
+                {{ (now() + timedelta(minutes=states('sensor.r1t_charging_time_remaining')|int(0))).strftime('%-I:%M %p') }}
+              tap_action:
+                action: more-info
+                entity: sensor.r1t_battery_state_of_charge
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: transparent;
+                  }
+    temp:
+      card:
+        type: custom:button-card
+        entity: sensor.bayberry_tempest_temperature
+        show_icon: true
+        layout: icon_state
+        show_state: true
+        show_label: false
+        show_name: false
+        state_display: |
+          [[[
+            var temp = states['sensor.bayberry_tempest_temperature'].state;
+            return Math.round(temp) + '°F';
+          ]]]
+        tap_action:
+          action: navigate
+          navigation_path: /mudroom-wall-panel-dash/weather-view
+        styles:
+          state:
+            - font-size: 28px
+            - font-weight: bold
+            - justify-self: start
+          icon:
+            - width: 32px
+            - height: 32px
+          grid: 
+            - column-gap: 3px
+            - grid-template-columns: 42px auto
+          img_cell:
+            - align-self: center
+            - justify-content: end
+          card:
+            - border-radius: 0px
+            - align-self: center
+            - justify-self: center
+            - background: transparent
