@@ -18,6 +18,9 @@ card:
       - align-items: center
       - justify-items: start
       - column-gap: 10px
+    custom_fields:
+      time:
+        - margin-left: 20px
   custom_fields:
     time:
       card:
@@ -42,7 +45,7 @@ card:
             - justify-self: start
             - background: transparent
           state:
-            - font-size: 48px
+            - font-size: 56px
             - font-weight: bold
             - padding-left: 10px
     alarm:
@@ -69,8 +72,8 @@ card:
           ]]]
         styles:
           icon:
-            - width: 75px
-            - height: 75px
+            - width: 100px
+            - height: 100px
             - color: |
                 [[[
                   var state = states['alarm_control_panel.alarmo'].state;
@@ -81,12 +84,12 @@ card:
                   return 'var(--primary-text-color)';
                 ]]]
           state:
-            - font-size: 48px
+            - font-size: 54px
             - font-weight: bold
             - justify-self: start
           grid: 
-            - column-gap: 3px
-            - grid-template-columns: 42px auto
+            - column-gap: 10px
+            - grid-template-columns: 100px auto
           img_cell:
             - align-self: center
             - justify-content: start
