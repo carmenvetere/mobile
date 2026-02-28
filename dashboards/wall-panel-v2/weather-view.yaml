@@ -75,6 +75,8 @@ cards:
                   }
                   .state {
                     text-align: left !important;
+                    font-size: 48px !important;
+                    font-weight: bold !important;
                   }
                   .temp-attribute .temp {
                     font-size: 48px !important;
@@ -91,5 +93,9 @@ cards:
                   .forecast div {
                     font-size: 44px !important;
                     font-weight: bold !important;
+                    }
+                  .forecast-image-icon {
+                    padding-top: 15px !important;
+                    padding-bottom: 15px !important;
                     }
       nav: !include footer-menu.yaml
