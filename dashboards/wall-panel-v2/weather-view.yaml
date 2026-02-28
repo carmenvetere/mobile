@@ -63,4 +63,33 @@ cards:
               forecast_slots: 7
               tap_action:
                 action: none
+                            card_mod:
+                style: |
+                  ha-card {
+                    background: transparent !important;
+                    box-shadow: none !important;
+                    font-size: 48px !important;
+                  }
+                  .name-state {
+                    justify-content: flex-start !important;
+                  }
+                  .state {
+                    text-align: left !important;
+                  }
+                  .temp-attribute .temp {
+                    font-size: 48px !important;
+                    font-weight: bold !important;
+                    }
+                  .forecast .temp {
+                    font-size: 44px !important;
+                    font-weight: bold !important;
+                    }
+                  .forecast .templow {
+                    font-size: 44px !important;
+                    font-weight: bold !important;
+                    }
+                  .forecast div {
+                    font-size: 44px !important;
+                    font-weight: bold !important;
+                    }
       nav: !include footer-menu.yaml
