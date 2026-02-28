@@ -83,22 +83,22 @@ cards:
             grouping:
               skipApplyButton: true
             predefinedGroups:
-              - name: Outside
+              - name: First Floor
                 media: ""
                 entities:
-                  - player: media_player.pool
-                    volume: 20
+                  - player: media_player.living_room
+                    volume: 12
+                  - player: media_player.kitche
+                    volume: 12
+              - name: First Floor + Deck
+                media: ""
+                entities:
+                  - player: media_player.living_room
+                    volume: 12
+                  - player: media_player.kitchen
+                    volume: 12
                   - player: media_player.deck
-                    volume: 30
-              - name: All Basement
-                media: ""
-                entities:
-                  - player: media_player.gym
-                    volume: 10
-                  - player: media_player.mud_room
-                    volume: 10
-                  - player: media_player.media_room
-                    volume: 10
+                    volume: 25
             card_mod:
               refresh_interval: 2
               style:
