@@ -216,6 +216,8 @@ cards:
                     }
       main2: 
         card:
+          type: vertical-stack
+          cards:
             - type: custom:bubble-card
               card_type: separator
               name: Radar
