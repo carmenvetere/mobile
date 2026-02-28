@@ -36,20 +36,15 @@ cards:
         card: 
           type: custom:config-template-card
           variables:
-            - states['media_player.media_room'].state
+            - states['media_player.living_room'].state
             - new Date().getMonth() + 1
           entities:
-            - media_player.media_room
-            - media_player.mud_room
-            - media_player.pool
+            - media_player.living_room
+            - media_player.kitchen
+            - media_player.deck
           card:
             type: custom:sonos-card
-            entityId: |-
-              ${vars[0] === 'playing'
-                ? 'media_player.media_room_soundbar'
-                : ([6,7,8,9].includes(vars[1])
-                  ? 'media_player.pool'
-                  : 'media_player.mud_room')}
+            entityId: media_player.living_room
             sections:
               - player
               - volumes
