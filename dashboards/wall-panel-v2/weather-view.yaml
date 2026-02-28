@@ -20,7 +20,7 @@ cards:
       grid:
         - grid-template-areas: |
             "header header"
-            "main1 main2"
+            "main main"
             "nav nav"
         - grid-template-columns: 1019px 1019px
         - grid-template-rows: 150px 1206px 150px
@@ -60,7 +60,7 @@ cards:
               name: ""
               entity: weather.bayberry
               forecast_type: daily
-              forecast_slots: 5
+              forecast_slots: 10
               tap_action:
                 action: none
               card_mod:
