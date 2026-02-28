@@ -37,35 +37,35 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('home-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 75px
-            - width: 75px
+            - height: 90px
+            - width: 90px
         tap_action:
           action: navigate
-          navigation_path: /mudroom-wall-panel-dash/home-view
-    lights:
-      card:
-        type: custom:button-card
-        icon: mdi:lightbulb
-        show_icon: true
-        show_label: false
-        show_name: false
-        show_state: false
-        styles:
-          card:
-            - align-self: center
-            - justify-self: center
-            - background: transparent            
-          icon:
-            - color: |
-                [[[
-                  const path = window.location.pathname + window.location.hash;
-                  return path.includes('lights-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
-                ]]]
-            - height: 64px
-            - width: 64px
-        tap_action:
-          action: navigate
-          navigation_path: /mudroom-wall-panel-dash/lights-view
+          navigation_path: /living-room-wall-panel-dash/home-view
+    # lights:
+    #   card:
+    #     type: custom:button-card
+    #     icon: mdi:lightbulb
+    #     show_icon: true
+    #     show_label: false
+    #     show_name: false
+    #     show_state: false
+    #     styles:
+    #       card:
+    #         - align-self: center
+    #         - justify-self: center
+    #         - background: transparent            
+    #       icon:
+    #         - color: |
+    #             [[[
+    #               const path = window.location.pathname + window.location.hash;
+    #               return path.includes('lights-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
+    #             ]]]
+    #         - height: 90px
+    #         - width: 90px
+    #     tap_action:
+    #       action: navigate
+    #       navigation_path: /mudroom-wall-panel-dash/lights-view
     climate:
       card:
         type: custom:button-card
@@ -85,35 +85,35 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('climate-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 64px
-            - width: 64px
+            - height: 90px
+            - width: 90px
         tap_action:
           action: navigate
           navigation_path: /mudroom-wall-panel-dash/climate-view
-    music:
-      card:
-        type: custom:button-card
-        icon: mdi:music
-        show_icon: true
-        show_label: false
-        show_name: false
-        show_state: false
-        styles:
-          card:
-            - align-self: center
-            - justify-self: center
-            - background: transparent
-          icon:
-            - color: |
-                [[[
-                  const path = window.location.pathname + window.location.hash;
-                  return path.includes('music-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
-                ]]]
-            - height: 64px
-            - width: 64px
-        tap_action:
-          action: navigate
-          navigation_path: /mudroom-wall-panel-dash/music-view
+    # music:
+    #   card:
+    #     type: custom:button-card
+    #     icon: mdi:music
+    #     show_icon: true
+    #     show_label: false
+    #     show_name: false
+    #     show_state: false
+    #     styles:
+    #       card:
+    #         - align-self: center
+    #         - justify-self: center
+    #         - background: transparent
+    #       icon:
+    #         - color: |
+    #             [[[
+    #               const path = window.location.pathname + window.location.hash;
+    #               return path.includes('music-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
+    #             ]]]
+    #         - height: 90px
+    #         - width: 90px
+    #     tap_action:
+    #       action: navigate
+    #       navigation_path: /mudroom-wall-panel-dash/music-view
     energy:
       card:
         type: custom:button-card
@@ -133,8 +133,8 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('energy-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 64px
-            - width: 64px
+            - height: 90px
+            - width: 90px
         tap_action:
           action: navigate
           navigation_path: /mudroom-wall-panel-dash/energy-view
@@ -159,30 +159,30 @@ card:
     #             ]]]
     #         - height: 64px
     #         - width: 64px
-    vacuum:
-      card:
-        type: custom:button-card
-        icon: mdi:vacuum
-        show_icon: true
-        show_label: false
-        show_name: false
-        show_state: false
-        styles:
-          card:
-            - align-self: center
-            - justify-self: center
-            - background: transparent
-          icon:
-            - color: |
-                [[[
-                  const path = window.location.pathname + window.location.hash;
-                  return path.includes('vacuum-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
-                ]]]
-            - height: 64px
-            - width: 64px
-        tap_action:
-          action: navigate
-          navigation_path: /mudroom-wall-panel-dash/vacuum-view
+    # vacuum:
+    #   card:
+    #     type: custom:button-card
+    #     icon: mdi:vacuum
+    #     show_icon: true
+    #     show_label: false
+    #     show_name: false
+    #     show_state: false
+    #     styles:
+    #       card:
+    #         - align-self: center
+    #         - justify-self: center
+    #         - background: transparent
+    #       icon:
+    #         - color: |
+    #             [[[
+    #               const path = window.location.pathname + window.location.hash;
+    #               return path.includes('vacuum-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
+    #             ]]]
+    #         - height: 90px
+    #         - width: 90px
+    #     tap_action:
+    #       action: navigate
+    #       navigation_path: /mudroom-wall-panel-dash/vacuum-view
     other:
       card:
         type: custom:button-card
@@ -202,8 +202,8 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('settings-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 64px
-            - width: 64px
+            - height: 90px
+            - width: 90px
         tap_action:
           action: navigate
           navigation_path: /mudroom-wall-panel-dash/settings-view       
