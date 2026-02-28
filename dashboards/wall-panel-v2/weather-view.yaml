@@ -43,7 +43,7 @@ cards:
               rows: 0.75
               styles: |
                 .bubble-name {
-                font-size: 28px !important;  /* title */
+                font-size: 42px !important;  /* title */
                 font-weight: bold !important;
                 }
                 .bubble-line {
@@ -60,7 +60,7 @@ cards:
               name: ""
               entity: weather.bayberry
               forecast_type: daily
-              forecast_slots: 7
+              forecast_slots: 5
               tap_action:
                 action: none
               card_mod:
@@ -68,7 +68,7 @@ cards:
                   ha-card {
                     background: transparent !important;
                     box-shadow: none !important;
-                    font-size: 36px !important;
+                    font-size: 42px !important;
                   }
                   .name-state {
                     justify-content: flex-start !important;
@@ -77,15 +77,15 @@ cards:
                     text-align: left !important;
                   }
                   .temp-attribute .temp {
-                    font-size: 40px !important;
+                    font-size: 48px !important;
                     }
                   .forecast .temp {
-                    font-size: 32px !important;
+                    font-size: 40px !important;
                     }
                   .forecast .templow {
-                    font-size: 32px !important;
+                    font-size: 40px !important;
                     }
                   .forecast div {
-                    font-size: 32px !important;
+                    font-size: 40px !important;
                     }
       nav: !include footer-menu.yaml
