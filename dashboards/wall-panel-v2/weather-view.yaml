@@ -32,10 +32,10 @@ cards:
           - margin-left: 10px
     custom_fields:
       header: !include header.yaml
-      main1:
-        card: 
-          type: vertical-stack
-          cards:
+      # main1:
+      #   card: 
+      #     type: vertical-stack
+      #     cards:
             # - type: conditional
             #   conditions:
             #     - condition: numeric_state
