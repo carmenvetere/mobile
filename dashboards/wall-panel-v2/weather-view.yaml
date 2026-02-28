@@ -109,24 +109,24 @@ cards:
             #             ha-markdown h1 {
             #               text-align: left !important;
             #             }
-            - type: custom:bubble-card
-              card_type: separator
-              name: Current Weather & 5-Day Forecast
-              icon: mdi:weather-partly-cloudy
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 28px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: transparent !important;
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 20px !important;
-                padding-left: 10px !important;
-                }
+            # - type: custom:bubble-card
+            #   card_type: separator
+            #   name: Current Weather & 5-Day Forecast
+            #   icon: mdi:weather-partly-cloudy
+            #   rows: 0.75
+            #   styles: |
+            #     .bubble-name {
+            #     font-size: 28px !important;  /* title */
+            #     font-weight: bold !important;
+            #     }
+            #     .bubble-line {
+            #     background: transparent !important;
+            #     opacity: 0.1;
+            #     }
+            #     .card-content {
+            #     padding-top: 20px !important;
+            #     padding-left: 10px !important;
+            #     }
             # - type: weather-forecast
             #   show_current: true
             #   show_forecast: true
