@@ -105,5 +105,5 @@ cards:
               modules:
                 - wall_panel_scenes
       main2: 
-        card: !include /config/dashboards/modules/power-flow-card-wall.yaml
+        card: !include /config/dashboards/modules/power-flow-card.yaml
       nav: !include footer-menu.yaml
