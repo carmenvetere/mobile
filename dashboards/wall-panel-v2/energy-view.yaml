@@ -111,38 +111,38 @@ cards:
           card_mod:
             style: |
               ha-card {
-                font-size: 14px !important;
+                font-size: 44px !important;
                 background: var(--background-color) !important;
                 height: 100% !important;
               }
 
               ha-card * {
-                font-size: 12px !important;
+                font-size: 36px !important;
                 font-weight: bold !important;
               }
 
               ha-card .value,
               ha-card [class*="value"],
               ha-card .power-value {
-                font-size: 12px !important;
+                font-size: 36px !important;
                 font-weight: bold !important;
               }
 
               ha-card .label,
               ha-card [class*="label"],
               ha-card .entity-name {
-                font-size: 16px !important;
+                font-size: 36px !important;
                 font-weight: bold !important;
               }
 
               ha-card .individual *,
               ha-card [class*="individual"] * {
-                font-size: 12px !important;
+                font-size: 36px !important;
               }
 
               ha-card .secondary,
               ha-card [class*="secondary"] {
-                font-size: 12px !important;
+                font-size: 36px !important;
                 opacity: 0.8;
               }
           entities:
