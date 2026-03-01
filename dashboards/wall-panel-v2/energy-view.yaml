@@ -29,8 +29,7 @@ cards:
         - row-gap: 15px
       custom_fields:
         main1:
-          - margin-left: 20px
-          - margin-right: 20px
+          - margin-left: 50px
     custom_fields:
       header: !include header.yaml
       main1: 
@@ -49,10 +48,60 @@ cards:
               slider_fill_orientation: left
               slider_value_position: right
               entity: sensor.bayberry_home_usage
+              name: Today's Energy Used
+              show_state: false
               modules:
                 - wall_panel_scenes
-              name: Today's Energy
+          type: vertical-stack 
+          cards: 
+            - type: custom:bubble-card
+              card_type: button
+              button_type: state
+              sub_button:
+                main:
+                  - entity: sensor.bayberry_home_usage
+                    show_state: true
+                    show_icon: false
+                bottom: []
+              slider_fill_orientation: left
+              slider_value_position: right
+              entity: sensor.bayberry_home_usage
+              name: Today's Energy Used
               show_state: false
+              modules:
+                - wall_panel_scenes
+            - type: custom:bubble-card
+              card_type: button
+              button_type: state
+              sub_button:
+                main:
+                  - entity: sensor.solcast_pv_forecast_forecast_today
+                    show_state: true
+                    show_icon: false
+                bottom: []
+              slider_fill_orientation: left
+              slider_value_position: right
+              entity: sensor.solcast_pv_forecast_forecast_today
+              name: Today's Solar Forecast
+              show_state: false
+              modules:
+                - wall_panel_scenes
+            - type: custom:bubble-card
+              card_type: button
+              button_type: state
+              sub_button:
+                main:
+                  - entity: number.bayberry_backup_reserve
+                    show_state: true
+                    show_icon: false
+                bottom: []
+              slider_fill_orientation: left
+              slider_value_position: right
+              entity: number.bayberry_backup_reserve
+              name: Powerwall Backup Reserve
+              show_state: false
+              modules:
+                - wall_panel_scenes
       main2: 
         card: !include /config/dashboards/modules/power-flow-card.yaml
       nav: !include footer-menu.yaml
