@@ -40,8 +40,9 @@ card_mod:
       ha-card {
         font-size: 18px !important;
         font-weight: bold !important;
-        max-width: 690px !important;
-        max-height: 1209px !important;
+        width: 100% !important;
+        height: 100% !important;
+#        max-width: 690px !important;
         margin-left: 15px !important;
         background: var(--background-color) !important;
       }
