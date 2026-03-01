@@ -154,6 +154,14 @@ cards:
                   .volume-slider {
                     --control-slider-thickness: 150px !important;
                   }
+                
+                sonos-media-browser$: |
+                  .header {
+                    font-size: 40px !important;
+                    font-weight: bold !important;
+                    padding-top: 10px !important;
+                    background-color: var(--background-color) !important;
+                  }
                 sonos-media-browser$ sonos-favorites-icons$: |
                   .icons {
                     padding-top: 10px !important;
