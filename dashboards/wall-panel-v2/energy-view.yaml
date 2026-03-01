@@ -1,0 +1,36 @@
+# lovelace_gen
+title: Energy
+path: energy-view
+theme: Wall Panel
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 0px
+        - padding-bottom: 5px
+        - padding-left: 0px
+        - padding-top: 0px
+        - margin-left: -4px
+        - margin-top: -4px        
+        - width: 2048px
+        - height: 1536px
+        - zoom: .40
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
+      grid:
+        - grid-template-areas: |
+            "header header"
+            "main1 main2"
+            "nav nav"
+        - grid-template-columns: 1019px 1019px
+        - grid-template-rows: 150px 1206px 150px
+        - align-items: start
+        - column-gap: 10px
+        - row-gap: 15px
+      custom_fields:
+        main1:
+          - margin-left: 50px
+    custom_fields:
+      header: !include header.yaml
+      main2: !include /config/dashboards/modules/power-flow-card-wall.yaml
+      nav: !include footer-menu.yaml
