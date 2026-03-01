@@ -29,7 +29,8 @@ cards:
         - row-gap: 15px
       custom_fields:
         main1:
-          - margin-left: 50px
+          - margin-left: 20px
+          - margin-right: 20px
     custom_fields:
       header: !include header.yaml
       main1: 
@@ -47,24 +48,24 @@ cards:
               styles:
                 card:
                   - background-color: var(--background-color)
-                  - height: 140px
+                  - height: 230px
                 icon:
                   - color: var(--text-color)
-                  - height: 60px
-                  - width: 60px
+                  - height: 75px
+                  - width: 75px
                 name:
-                  - font-size: 36px
+                  - font-size: 48px
                   - font-weight: bold
                   - color: var(--text-color)
                   - white-space: normal
                   - overflow: visible
                 state:
-                  - font-size: 46px
+                  - font-size: 48px
                   - font-weight: bold
                   - color: var(--text-color)
                 grid:
                   - grid-template-areas: '"i n s"'
-                  - grid-template-columns: auto auto auto
+                  - grid-template-columns: 100px auto auto
                   - align-items: center
       main2: 
         card: !include /config/dashboards/modules/power-flow-card.yaml
