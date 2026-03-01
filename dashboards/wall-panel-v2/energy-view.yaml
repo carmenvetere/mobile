@@ -37,37 +37,22 @@ cards:
         card: 
           type: vertical-stack 
           cards: 
-            - type: custom:button-card
+            - type: custom:bubble-card
+              card_type: button
+              button_type: state
+              sub_button:
+                main:
+                  - entity: sensor.bayberry_home_usage
+                    show_state: true
+                    show_icon: false
+                bottom: []
+              slider_fill_orientation: left
+              slider_value_position: right
               entity: sensor.bayberry_home_usage
+              modules:
+                - wall_panel_scenes
               name: Today's Energy
-              icon: mdi:lightning-bolt
-              show_name: true
-              show_state: true
-              show_icon: true
-              layout: icon_name_state
-              styles:
-                card:
-                  - background-color: var(--background-color)
-                  - height: 230px
-                icon:
-                  - color: var(--text-color)
-                  - height: 75px
-                  - width: 75px
-                  - margin-left: 20px
-                name:
-                  - font-size: 48px
-                  - font-weight: bold
-                  - color: var(--text-color)
-                  - white-space: normal
-                  - overflow: visible
-                state:
-                  - font-size: 48px
-                  - font-weight: bold
-                  - color: var(--text-color)
-                grid:
-                  - grid-template-areas: '"i n s"'
-                  - grid-template-columns: 100px auto auto
-                  - align-items: center
+              show_state: false
       main2: 
         card: !include /config/dashboards/modules/power-flow-card.yaml
       nav: !include footer-menu.yaml
