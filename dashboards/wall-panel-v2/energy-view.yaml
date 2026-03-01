@@ -46,7 +46,7 @@ cards:
               layout: icon_name_state
               styles:
                 card:
-                  - background-color: transparent
+                  - background-color: var(--background-color)
                   - height: 140px
                 icon:
                   - color: var(--text-color)
@@ -64,7 +64,7 @@ cards:
                   - color: var(--text-color)
                 grid:
                   - grid-template-areas: '"i n s"'
-                  - grid-template-columns: min-content auto auto
+                  - grid-template-columns: auto auto auto
                   - align-items: center
       main2: 
         card: !include /config/dashboards/modules/power-flow-card.yaml
