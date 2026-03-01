@@ -3,37 +3,39 @@ clickable_entities: true
 card_mod:
   style: |
     ha-card {
-      /* Override all text in the card to be smaller */
-      font-size: 14px !important;
+      font-size: 36px !important;
+      font-weight: bold !important;
+      background: var(--background-color) !important;
+      height: 1206px !important;
     }
     /* Try multiple selectors to catch all text elements */
     ha-card * {
-      font-size: 12px !important;
+      font-size: 36px !important;
       font-weight: bold !important;
     }
     /* Main entity values */
     ha-card .value,
     ha-card [class*="value"],
     ha-card .power-value {
-      font-size: 12px !important;
+      font-size: 36px !important;
       font-weight: bold !important;
     }
     /* Entity labels */
     ha-card .label,
     ha-card [class*="label"],
     ha-card .entity-name {
-      font-size: 16px !important;
+      font-size: 40px !important;
       font-weight: bold !important;
     }
     /* Individual device text (smaller) */
     ha-card .individual *,
     ha-card [class*="individual"] * {
-      font-size: 12px !important;
+      font-size: 40px !important;
     }
     /* Secondary info text */
     ha-card .secondary,
     ha-card [class*="secondary"] {
-      font-size: 12px !important;
+      font-size: 36px !important;
       opacity: 0.8;
     }
 entities:
