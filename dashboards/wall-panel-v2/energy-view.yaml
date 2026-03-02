@@ -114,6 +114,7 @@ cards:
                 background: var(--background-color) !important;
                 border-radius: 20px;
                 padding: 3px 12px 4px;
+                height: 100% !important;
                 }
           cards:
             - type: vertical-stack
@@ -132,7 +133,7 @@ cards:
                     opacity: 0.1;
                     }
                     .card-content {
-                    padding-top: 10px !important;
+                    padding-top: 25px !important;
                     padding-left: 10px !important;
                     margin-right: 50px !important;
                     }  
