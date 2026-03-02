@@ -107,7 +107,7 @@ cards:
       main2: 
         card:
           type: custom:power-flow-card-plus
-          title: Live Power flow
+          title: Live Power Flow
           icon: mdi:lightning
           clickable_entities: false
           card_mod:
@@ -121,10 +121,6 @@ cards:
               ha-card .card-header {
                 text-align: left !important;
                 font-size: 48px !important;
-                font-weight: bold !important;
-              }
-              ha-card * {
-                font-size: 36px !important;
                 font-weight: bold !important;
               }
 
