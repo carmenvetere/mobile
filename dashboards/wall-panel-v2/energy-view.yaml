@@ -59,7 +59,11 @@ cards:
               modules:
                 - wall_panel_scenes
             - type: custom:button-card
-              styles: 
+              styles:
+                card:
+                - height: 230px
+                - width: 900px
+                - background: transparent 
                 grid:
                 - grid-template-areas: |
                     "button1 button2
@@ -84,7 +88,29 @@ cards:
                     entity: sensor.bayberry_charge
                     show_state: false
                     modules:
-                      - wall_panel_scenes
+                      - wall_panel_energy_gauge
+                    show_name: false
+                    scrolling_effect: false
+                button2:
+                  card:
+                    type: custom:bubble-card
+                    card_type: button
+                    button_type: state
+                    icon: mdi:transmission-tower-import
+                    sub_button:
+                      main:
+                        - entity: sensor.net_grid_export_ytd
+                          show_state: true
+                          show_icon: false
+                      bottom: []
+                    slider_fill_orientation: left
+                    slider_value_position: right
+                    entity: sensor.net_grid_export_ytd
+                    show_state: false
+                    modules:
+                      - wall_panel_energy_gauge
+                    show_name: false
+                    scrolling_effect: false                  
             - type: custom:bubble-card
               card_type: button
               button_type: state
