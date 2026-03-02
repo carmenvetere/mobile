@@ -107,7 +107,9 @@ cards:
       main2: 
         card:
           type: custom:power-flow-card-plus
-          clickable_entities: true
+          title: Live Power flow
+          icon: mdi:lightning
+          clickable_entities: false
           card_mod:
             style: |
               ha-card {
