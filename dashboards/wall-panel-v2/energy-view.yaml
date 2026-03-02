@@ -151,7 +151,10 @@ cards:
                         font-size: 48px !important;
                         font-weight: bold !important;
                       }
-
+                      ha-card * {
+                        font-size: 36px !important;
+                        font-weight: bold !important;
+          }
                       ha-card .card-content {
                         padding-top: 150px !important;
                       }
