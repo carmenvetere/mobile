@@ -122,6 +122,9 @@ cards:
                 font-weight: bold !important;
               }
 
+              ha-card .card-content {
+                padding-top: 200px !important;
+              }
               ha-card .value,
               ha-card [class*="value"],
               ha-card .power-value {
@@ -154,7 +157,7 @@ cards:
                 consumption: '#327C7F'
                 production: '#327C7F'
               color_icon: true
-              show_state_of_charge: true
+              show_state_of_charge: false
             grid:
               entity: sensor.bayberry_site_power
               color_icon: false
@@ -167,9 +170,6 @@ cards:
               use_metadata: false
               invert_state: false
               color_value: false
-              secondary_info:
-                entity: sensor.net_grid_export
-                unit_of_measurement: kWh
             solar:
               entity: sensor.bayberry_solar_power
               color_icon: false
