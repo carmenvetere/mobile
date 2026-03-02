@@ -132,22 +132,6 @@ cards:
               button_type: state
               sub_button:
                 main:
-                  - entity: sensor.bayberry_home_usage
-                    show_state: true
-                    show_icon: false
-                bottom: []
-              slider_fill_orientation: left
-              slider_value_position: right
-              entity: sensor.bayberry_home_usage
-              name: Today's Energy Used
-              show_state: false
-              modules:
-                - wall_panel_scenes
-            - type: custom:bubble-card
-              card_type: button
-              button_type: state
-              sub_button:
-                main:
                   - entity: sensor.solcast_pv_forecast_forecast_today
                     show_state: true
                     show_icon: false
