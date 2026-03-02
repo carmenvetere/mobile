@@ -111,47 +111,38 @@ cards:
           icon: mdi:lightning
           clickable_entities: false
           card_mod:
-            style: |
-              ha-card {
-                font-size: 44px !important;
-                background: var(--background-color) !important;
-                height: 100% !important;
-                zoom: 1.8 !important;
-              }
-              ha-card .card-header {
-                text-align: left !important;
-                font-size: 48px !important;
-                font-weight: bold !important;
-              }
-
-              ha-card .card-content {
-                padding-top: 150px !important;
-              }
-              ha-card .value,
-              ha-card [class*="value"],
-              ha-card .power-value {
-                font-size: 36px !important;
-                font-weight: bold !important;
-              }
-
-              ha-card .label,
-              ha-card [class*="label"],
-              ha-card .entity-name {
-                font-size: 36px !important;
-                font-weight: bold !important;
-                color: var(--primary-text-color) !important;
-              }
-
-              ha-card .individual *,
-              ha-card [class*="individual"] * {
-                font-size: 36px !important;
-              }
-
-              ha-card .secondary,
-              ha-card [class*="secondary"] {
-                font-size: 36px !important;
-                opacity: 0.8;
-              }
+            style:
+              .: |
+                ha-card {
+                  font-size: 44px !important;
+                  background: var(--background-color) !important;
+                  height: 100% !important;
+                  zoom: 1.8 !important;
+                }
+              ha-card$: |
+                .card-header,
+                h1,
+                .title {
+                  text-align: left !important;
+                  font-size: 48px !important;
+                  font-weight: bold !important;
+                }
+                .card-content {
+                  padding-top: 150px !important;
+                }
+                .value,
+                [class*="value"],
+                .power-value {
+                  font-size: 36px !important;
+                  font-weight: bold !important;
+                }
+                .label,
+                [class*="label"],
+                .entity-name {
+                  font-size: 36px !important;
+                  font-weight: bold !important;
+                  color: var(--primary-text-color) !important;
+                }
           entities:
             battery:
               entity: sensor.bayberry_battery_power
