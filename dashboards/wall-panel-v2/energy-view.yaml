@@ -115,6 +115,9 @@ cards:
                 background: var(--background-color) !important;
                 height: 100% !important;
               }
+              ha-card svg {
+                transform: scale(1.3) !important;
+                transform-origin: center center !important;
 
               ha-card * {
                 font-size: 36px !important;
