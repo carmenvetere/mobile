@@ -114,11 +114,9 @@ cards:
                 font-size: 44px !important;
                 background: var(--background-color) !important;
                 height: 100% !important;
+                zoom: 1.3 !important;
               }
-              ha-card svg {
-                transform: scale(1.3) !important;
-                transform-origin: center center !important;
-
+              
               ha-card * {
                 font-size: 36px !important;
                 font-weight: bold !important;
