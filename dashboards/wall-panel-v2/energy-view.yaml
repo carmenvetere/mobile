@@ -121,7 +121,7 @@ cards:
                 - type: custom:bubble-card
                   card_type: separator
                   name: Live Power Flow
-                  icon: mdi:lightning
+                  icon: mdi:lightning-bolt
                   styles: |
                     .bubble-name {
                     font-size: 48px !important;  /* title */
@@ -132,13 +132,11 @@ cards:
                     opacity: 0.1;
                     }
                     .card-content {
-                    padding-top: 0px !important;
+                    padding-top: 10px !important;
                     padding-left: 10px !important;
                     margin-right: 50px !important;
                     }  
                 - type: custom:power-flow-card-plus
-                  title: Live Power Flow
-                  icon: mdi:lightning
                   clickable_entities: false
                   card_mod:
                     style: |
