@@ -38,6 +38,22 @@ cards:
         card: 
           type: vertical-stack 
           cards: 
+            - type: custom:bubble-card
+              card_type: button
+              button_type: state
+              sub_button:
+                main:
+                  - entity: sensor.powerwall_discharge_time
+                    show_state: true
+                    show_icon: false
+                bottom: []
+              slider_fill_orientation: left
+              slider_value_position: right
+              entity: sensor.powerwall_discharge_time
+              name: Power Outage - Time Remaining:
+              show_state: false
+              modules:
+                - wall_panel_scenes
             - type: custom:button-card
               styles: 
                 grid:
