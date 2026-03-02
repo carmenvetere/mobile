@@ -106,94 +106,132 @@ cards:
                 - wall_panel_scenes
       main2: 
         card:
-          type: custom:power-flow-card-plus
-          title: Live Power Flow
-          icon: mdi:lightning
-          clickable_entities: false
+          type: custom:stack-in-card
+          mode: vertical
           card_mod:
-            style:
-              .: |
-                ha-card {
-                  font-size: 44px !important;
-                  background: var(--background-color) !important;
-                  height: 100% !important;
-                  zoom: 1.8 !important;
+            style: |
+              ha-card {
+                background: var(--background-color) !important;
+                border-radius: 20px;
+                padding: 3px 12px 4px;
                 }
-              ha-card$: |
-                .card-header,
-                h1,
-                .title {
-                  text-align: left !important;
-                  font-size: 48px !important;
-                  font-weight: bold !important;
-                }
-                .card-content {
-                  padding-top: 150px !important;
-                }
-                .value,
-                [class*="value"],
-                .power-value {
-                  font-size: 36px !important;
-                  font-weight: bold !important;
-                }
-                .label,
-                [class*="label"],
-                .entity-name {
-                  font-size: 36px !important;
-                  font-weight: bold !important;
-                  color: var(--primary-text-color) !important;
-                }
-          entities:
-            battery:
-              entity: sensor.bayberry_battery_power
-              state_of_charge: sensor.bayberry_charge
-              color:
-                consumption: '#8ba680'
-                production: '#8ba680'
-              color_icon: true
-              show_state_of_charge: false
-            grid:
-              entity: sensor.bayberry_site_power
-              color_icon: false
-              color:
-                consumption: var(--primary-text-color)
-                production: var(--primary-text-color)
-                color_value: true
-              power_outage:
-                icon_alert: mdi:flash-alert
-              use_metadata: false
-              invert_state: false
-              color_value: false
-            solar:
-              entity: sensor.bayberry_solar_power
-              color_icon: false
-              color: "#dd8e02"
-            home:
-              entity: sensor.bayberry_load_power
-              subtract_individual: true
-            individual:
-              - entity: sensor.wall_charger_power
-                display_zero: false
-                name: Car Charging
-                icon: mdi:car-electric
-                color: '#E74C3C'
-              - entity: sensor.well_pump_power
-                name: Well Pump
-                color: '#3ea4f0'
-                color_value: false
-                display_zero: false
-                icon: mdi:sprinkler-variant
-              - entity: sensor.omnilogic_pool_filter_pump_power
-                name: Pool Filter
-                color: '#5cb5e1'
-                color_value: false
-                display_zero: false
-                icon: mdi:pool
-          display_zero_lines:
-            mode: show
-            transparency: 50
-            grey_color:
-              - 189
-              - 189
-              - 189
+          cards:
+            - type: vertical-stack
+              cards:
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: Live Power Flow
+                  icon: mdi:lightning
+                  styles: |
+                    .bubble-name {
+                    font-size: 48px !important;  /* title */
+                    font-weight: bold !important;
+                    }
+                    .bubble-line {
+                    background: var(--primary-text-color);
+                    opacity: 0.1;
+                    }
+                    .card-content {
+                    padding-top: 0px !important;
+                    padding-left: 10px !important;
+                    margin-right: 50px !important;
+                    }  
+                - type: custom:power-flow-card-plus
+                  title: Live Power Flow
+                  icon: mdi:lightning
+                  clickable_entities: false
+                  card_mod:
+                    style: |
+                      ha-card {
+                        font-size: 44px !important;
+                        background: transparent !important;
+                        zoom: 1.8 !important;
+                      }
+                      ha-card .card-header {
+                        text-align: left !important;
+                        font-size: 48px !important;
+                        font-weight: bold !important;
+                      }
+
+                      ha-card .card-content {
+                        padding-top: 150px !important;
+                      }
+                      ha-card .value,
+                      ha-card [class*="value"],
+                      ha-card .power-value {
+                        font-size: 36px !important;
+                        font-weight: bold !important;
+                      }
+
+                      ha-card .label,
+                      ha-card [class*="label"],
+                      ha-card .entity-name {
+                        font-size: 36px !important;
+                        font-weight: bold !important;
+                        color: var(--primary-text-color) !important;
+                      }
+
+                      ha-card .individual *,
+                      ha-card [class*="individual"] * {
+                        font-size: 36px !important;
+                      }
+
+                      ha-card .secondary,
+                      ha-card [class*="secondary"] {
+                        font-size: 36px !important;
+                        opacity: 0.8;
+                      }
+                  entities:
+                    battery:
+                      entity: sensor.bayberry_battery_power
+                      state_of_charge: sensor.bayberry_charge
+                      color:
+                        consumption: '#8ba680'
+                        production: '#8ba680'
+                      color_icon: true
+                      show_state_of_charge: false
+                    grid:
+                      entity: sensor.bayberry_site_power
+                      color_icon: false
+                      color:
+                        consumption: var(--primary-text-color)
+                        production: var(--primary-text-color)
+                        color_value: true
+                      power_outage:
+                        icon_alert: mdi:flash-alert
+                      use_metadata: false
+                      invert_state: false
+                      color_value: false
+                    solar:
+                      entity: sensor.bayberry_solar_power
+                      color_icon: false
+                      color: "#dd8e02"
+                    home:
+                      entity: sensor.bayberry_load_power
+                      subtract_individual: true
+                    individual:
+                      - entity: sensor.wall_charger_power
+                        display_zero: false
+                        name: Car Charging
+                        icon: mdi:car-electric
+                        color: '#E74C3C'
+                      - entity: sensor.well_pump_power
+                        name: Well Pump
+                        color: '#3ea4f0'
+                        color_value: false
+                        display_zero: false
+                        icon: mdi:sprinkler-variant
+                      - entity: sensor.omnilogic_pool_filter_pump_power
+                        name: Pool Filter
+                        color: '#5cb5e1'
+                        color_value: false
+                        display_zero: false
+                        icon: mdi:pool
+                  display_zero_lines:
+                    mode: show
+                    transparency: 50
+                    grey_color:
+                      - 189
+                      - 189
+                      - 189
       nav: !include footer-menu.yaml
