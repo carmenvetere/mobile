@@ -34,7 +34,7 @@ cards:
           - height: 100%
     custom_fields:
       header: !include header.yaml
-      main1: 
+      main2: 
         card:
           type: custom:button-card
           show_name: false
@@ -42,9 +42,9 @@ cards:
           show_state: false
           styles:
             card:
-              - border-radius: 0px
-              - width: 720px
-              - height: 1050px
+              - border-radius: 20px
+              - width: 1019px
+              - height: 1206px
               - padding-top: 0px
               - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
             grid:
