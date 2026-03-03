@@ -32,7 +32,7 @@ card:
         show_state: true
         tap_action:
           action: navigate
-          navigation_path: /mudroom-wall-panel-dash/home-view
+          navigation_path: /living-room-wall-panel-dash/home-view
         state_display: |
           [[[
             var timeString = states['sensor.time'].state;
@@ -100,7 +100,7 @@ card:
             - background: transparent
         tap_action:
           action: navigate
-          navigation_path: /mudroom-wall-panel-dash/alarm-view
+          navigation_path: /living-room-wall-panel-dash/security-view
     notifications:
       card:
         type: conditional
