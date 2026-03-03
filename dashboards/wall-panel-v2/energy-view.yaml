@@ -79,6 +79,10 @@ cards:
                     type: custom:bubble-card
                     card_type: button
                     button_type: state
+                    button_action: 
+                      tap_action:
+                        action: navigate
+                        navigation_path: '#powerwall-reserve'                    
                     tap_action:
                       action: navigate
                       navigation_path: '#powerwall-reserve'
@@ -87,7 +91,10 @@ cards:
                         - entity: sensor.bayberry_charge
                           show_state: true
                           show_icon: false
-                      bottom: []
+                          tap_action:
+                            action: navigate
+                            navigation_path: '#powerwall-reserve'
+                            bottom: []
                     slider_fill_orientation: left
                     slider_value_position: right
                     entity: sensor.bayberry_charge
