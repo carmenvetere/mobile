@@ -35,3 +35,526 @@ cards:
     custom_fields:
       header: !include header.yaml
       main1: 
+        card:
+          type: custom:button-card
+          show_name: false
+          show_icon: false
+          show_state: false
+          styles:
+            card:
+              - border-radius: 0px
+              - width: 720px
+              - height: 1050px
+              - padding-top: 0px
+              - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
+            grid:
+              - grid-template-areas: |
+                  "space1"
+                  "display"
+                  "space2"
+                  "keypad"
+                  "space3"
+                  "controls"
+              - grid-template-columns: auto
+              - grid-template-rows: 20px 100px 20px 700px 20px 125px
+              - row-gap: 5px
+              - align-items: center
+              - justify-items: center
+          custom_fields:
+            # Code Display
+            display:
+              card:
+                type: custom:button-card
+                show_name: false
+                show_icon: false
+                show_state: true
+                entity: input_text.alarm_code_input
+                styles:
+                  card:
+                    - height: 100px
+                    - width: 500px
+                    - border-radius: 8px
+                    - background-color: '#FFFFFF'
+                    - border: 2px solid '#666666'
+                  state:
+                    - color: black
+                    - font-size: 68px
+                    - font-weight: bold
+                    - letter-spacing: 12px  
+            # Number Keypad
+            keypad:
+              card:
+                type: custom:button-card
+                show_name: false
+                show_icon: false
+                show_state: false
+                styles:
+                  card:
+                    - height: 700px
+                    - width: 500px
+                    - background-color: transparent
+                    - border-radius: 0px
+                  grid:
+                    - grid-template-areas: |
+                        "n1 n2 n3"
+                        "n4 n5 n6"
+                        "n7 n8 n9"
+                        "clear n0 enter"
+                    - grid-template-columns: 160px 160px 160px
+                    - grid-template-rows: 160px 160px 160px 160px
+                    - align-items: center
+                    - justify-items: center
+                    - row-gap: 10px
+                    - column-gap: 10px
+                custom_fields:
+                  n1:
+                    card:
+                      type: custom:button-card
+                      show_label: true
+                      show_icon: false
+                      show_state: false
+                      label: '1'
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: input_text.alarm_code_input
+                        data:
+                          value: '[[[ return states["input_text.alarm_code_input"].state + "1" ]]]'
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        label:
+                          - color: var(--primary-text-color)
+                          - font-size: 68px
+                          - font-weight: bold
+                  n2:
+                    card:
+                      type: custom:button-card
+                      show_label: true
+                      show_icon: false
+                      show_state: false
+                      label: '2'
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: input_text.alarm_code_input
+                        data:
+                          value: '[[[ return states["input_text.alarm_code_input"].state + "2" ]]]'
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        label:
+                          - color: var(--primary-text-color)
+                          - font-size: 68px
+                          - font-weight: bold                   
+                  n3:
+                    card:
+                      type: custom:button-card
+                      show_label: true
+                      show_icon: false
+                      show_state: false
+                      label: '3'
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: input_text.alarm_code_input
+                        data:
+                          value: '[[[ return states["input_text.alarm_code_input"].state + "3" ]]]'
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        label:
+                          - color: var(--primary-text-color)
+                          - font-size: 68px
+                          - font-weight: bold
+                  n4:
+                    card:
+                      type: custom:button-card
+                      show_label: true
+                      show_icon: false
+                      show_state: false
+                      label: '4'
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: input_text.alarm_code_input
+                        data:
+                          value: '[[[ return states["input_text.alarm_code_input"].state + "4" ]]]'
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        label:
+                          - color: var(--primary-text-color)
+                          - font-size: 68px
+                          - font-weight: bold
+                  n5:
+                    card:
+                      type: custom:button-card
+                      show_label: true
+                      show_icon: false
+                      show_state: false
+                      label: '5'
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: input_text.alarm_code_input
+                        data:
+                          value: '[[[ return states["input_text.alarm_code_input"].state + "5" ]]]'
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        label:
+                          - color: var(--primary-text-color)
+                          - font-size: 68px
+                          - font-weight: bold
+                  n6:
+                    card:
+                      type: custom:button-card
+                      show_label: true
+                      show_icon: false
+                      show_state: false
+                      label: '6'
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: input_text.alarm_code_input
+                        data:
+                          value: '[[[ return states["input_text.alarm_code_input"].state + "6" ]]]'
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        label:
+                          - color: var(--primary-text-color)
+                          - font-size: 68px
+                          - font-weight: bold
+                  n7:
+                    card:
+                      type: custom:button-card
+                      show_label: true
+                      show_icon: false
+                      show_state: false
+                      label: '7'
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: input_text.alarm_code_input
+                        data:
+                          value: '[[[ return states["input_text.alarm_code_input"].state + "7" ]]]'
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        label:
+                          - color: var(--primary-text-color)
+                          - font-size: 68px
+                          - font-weight: bold
+                  n8:
+                    card:
+                      type: custom:button-card
+                      show_label: true
+                      show_icon: false
+                      show_state: false
+                      label: '8'
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: input_text.alarm_code_input
+                        data:
+                          value: '[[[ return states["input_text.alarm_code_input"].state + "8" ]]]'
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        label:
+                          - color: var(--primary-text-color)
+                          - font-size: 68px
+                          - font-weight: bold
+                  n9:
+                    card:
+                      type: custom:button-card
+                      show_label: true
+                      show_icon: false
+                      show_state: false
+                      label: '9'
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: input_text.alarm_code_input
+                        data:
+                          value: '[[[ return states["input_text.alarm_code_input"].state + "9" ]]]'
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        label:
+                          - color: var(--primary-text-color)
+                          - font-size: 68px
+                          - font-weight: bold
+                  n0:
+                    card:
+                      type: custom:button-card
+                      show_label: true
+                      show_icon: false
+                      show_state: false
+                      label: '0'
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: input_text.alarm_code_input
+                        data:
+                          value: '[[[ return states["input_text.alarm_code_input"].state + "0" ]]]'
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        label:
+                          - color: var(--primary-text-color)
+                          - font-size: 68px
+                          - font-weight: bold
+                  clear:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: true
+                      show_state: false
+                      icon: mdi:backspace
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_text.set_value
+                        target:
+                          entity_id: input_text.alarm_code_input
+                        data:
+                          value: '[[[ return states["input_text.alarm_code_input"].state.slice(0, -1) ]]]'
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        icon:
+                          - color: '#D32F2F'
+                          - size: 68px
+                  enter:
+                    card:
+                      type: custom:button-card
+                      show_name: false
+                      show_icon: true
+                      show_state: false
+                      icon: mdi:check
+                      tap_action:
+                        action: perform-action
+                        perform_action: script.alarm_keypad_disarm
+                      styles:
+                        card:
+                          - height: 160px
+                          - width: 160px
+                          - border-radius: 8px
+                          - background-color: '#626569'
+                          - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
+                        icon:
+                          - color: '#388E3C'
+                          - size: 68px                          
+            # Three-way Mode Controls (similar to climate view)
+            controls:
+              card:
+                type: custom:button-card
+                show_name: false
+                show_icon: false
+                show_state: false
+                styles:
+                  card:
+                    - height: 125px
+                    - width: 690px
+                    - padding-top: 0px
+                    - margin-top: 0px
+                    - border-radius: 12px
+                    - background-color: '#626569'
+                  grid:
+                    - grid-template-areas: |
+                        "disarm home away"
+                    - grid-template-columns: 230px 230px 230px
+                    - grid-template-rows: 125px
+                    - column-gap: 5px
+                    - align-items: center
+                custom_fields:
+                  disarm:
+                    card:
+                      type: custom:button-card
+                      entity: alarm_control_panel.alarmo
+                      show_state: false
+                      show_name: true
+                      show_icon: true
+                      name: Disarmed
+                      icon: mdi:shield-off
+                      tap_action:
+                        action: call-service
+                        service: alarm_control_panel.alarm_disarm
+                        service_data:
+                          entity_id: alarm_control_panel.alarmo
+                      styles:
+                        card:
+                          - height: 125px
+                          - width: 230px
+                          - border-radius: 12px
+                          - background-color: '#626569'
+                        icon:
+                          - width: 68px
+                          - height: 68px
+                          - color: var(--primary-text-color)
+                        name:
+                          - font-size: 28px
+                          - font-weight: bold
+                          - color: var(--primary-text-color)
+                      state:                
+                        - value: 'disarmed'
+                          styles:
+                            card:
+                              - background-color: 'green'
+                              - opacity: 0.5
+                            name:
+                              - color: white
+                            icon:
+                              - color: white
+                  home:
+                    card:
+                      type: custom:button-card
+                      entity: alarm_control_panel.alarmo
+                      show_state: false
+                      show_name: true
+                      show_icon: true
+                      name: Armed Home
+                      icon: mdi:shield-home
+                      tap_action:
+                        action: call-service
+                        service: alarm_control_panel.alarm_arm_home
+                        service_data:
+                          entity_id: alarm_control_panel.alarmo
+                      styles:
+                        card:
+                          - height: 125px
+                          - width: 230px
+                          - border-radius: 12px
+                          - background-color: '#626569'
+                        icon:
+                          - width: 68px
+                          - height: 68px
+                          - color: var(--primary-text-color)
+                        name:
+                          - font-size: 28px
+                          - font-weight: bold
+                          - color: var(--primary-text-color)
+                      state:                
+                        - value: 'armed_home'
+                          styles:
+                            card:
+                              - background-color: 'orange'
+                              - opacity: 0.5
+                            name:
+                              - color: white
+                            icon:
+                              - color: white
+                        - value: 'armed_night'
+                          styles:
+                            card:
+                              - background-color: 'orange'
+                              - opacity: 0.5
+                            name:
+                              - color: white
+                            icon:
+                              - color: white
+                  away:
+                    card:
+                      type: custom:button-card
+                      entity: alarm_control_panel.alarmo
+                      show_state: false
+                      show_name: true
+                      show_icon: true
+                      name: Armed Away
+                      icon: mdi:shield-lock
+                      tap_action:
+                        action: call-service
+                        service: alarm_control_panel.alarm_arm_away
+                        target:
+                          entity_id: alarm_control_panel.alarmo
+                        data:
+                      styles:
+                        card:
+                          - height: 125px
+                          - width: 230px
+                          - border-radius: 12px
+                          - background-color: '#626569'
+                        icon:
+                          - width: 68px
+                          - height: 68px
+                          - color: var(--primary-text-color)
+                        name:
+                          - font-size: 28px
+                          - font-weight: bold
+                          - color: var(--primary-text-color)
+                      state:                
+                        - value: 'armed_away'
+                          styles:
+                            card:
+                              - background-color: 'red'
+                              - opacity: 0.5
+                            name:
+                              - color: white
+                            icon:
+                              - color: white
+                        - value: 'armed_vacation'
+                          styles:
+                            card:
+                              - background-color: 'red'
+                              - opacity: 0.5
+                            name:
+                              - color: white
+                            icon:
+                              - color: white
+      nav: !include footer-menu.yaml
