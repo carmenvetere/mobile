@@ -149,6 +149,13 @@ cards:
             - type: custom:bubble-card
               card_type: button
               button_type: state
+              button_action: 
+                tap_action:
+                  action: navigate
+                  navigation_path: '#solar-forecast'                    
+              tap_action:
+                action: navigate
+                navigation_path: '#solar-forecast'    
               sub_button:
                 main:
                   - entity: sensor.solcast_pv_forecast_forecast_today
@@ -484,3 +491,88 @@ cards:
                 padding-left: 10px !important;
                 }  
             - !include /config/dashboards/modules/7-day-usage-history.yaml
+#Solar Forecast Pop-Up
+  - type: vertical-stack
+    cards:
+      - type: custom:bubble-card
+        card_type: pop-up
+        hash: "#solar-forecast"
+        button_type: name
+        sub_button:
+          main: []
+          bottom: []
+        name: Solar Forecast
+        icon: mdi:lightning-bolt
+        rows: 2
+        scrolling_effect: false
+        styles: |
+          .bubble-name {
+            font-size: 48px !important;
+            line-height: 1.1;
+            margin-bottom: 30px !important;
+            }
+
+          .bubble-button-card-container {
+            border-radius: 30px !important;
+            background-color: transparent !important;
+            min-height: 100px !important;
+            }
+
+          .bubble-button-background {
+            background-color: transparent !important;
+            }
+            
+          .bubble-icon-container {
+            background-color: transparent !important;
+            margin-bottom: 30px !important;
+            }
+            
+          .bubble-icon {
+            --mdc-icon-size: 36px !important;
+            }
+        card_layout: large
+        width_desktop: 25%
+        bg_opacity: "100"
+        bg_color: var(-—background-color-2)
+        modules:
+        - pop-up-module
+      - type: vertical-stack
+        cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Today's Solar Forecast
+              icon: mdi:flash
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }  
+            - !include /config/dashboards/modules/solar-forecast-today.yaml
+            - type: custom:bubble-card
+              card_type: separator
+              name: 7-Day Solar Forecast
+              icon: mdi:flash
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }  
+            - !include /config/dashboards/modules/7-day-solar-forecast.yaml
