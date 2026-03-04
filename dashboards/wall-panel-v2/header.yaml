@@ -12,7 +12,7 @@ card:
       - background-color: black 
     grid:
       - grid-template-areas: |
-          "time alarm notifications vent riv bmw cleaner dinner guest temp"
+          "time alarm notifications riv bmw vent cleaner dinner guest temp"
       - grid-template-columns: 400px 600px 100px 100px 100px 100px 100px 100px 100px 348px
       - grid-template-rows: 150px
       - align-items: center
@@ -188,7 +188,7 @@ card:
         type: conditional
         conditions:
           - entity: input_boolean.dinner_party
-            state: 'off'
+            state: 'on'
         card: 
           type: custom:button-card
           entity: input_boolean.dinner_party
@@ -217,7 +217,7 @@ card:
         type: conditional
         conditions:
           - entity: input_boolean.guest_mode
-            state: 'off'  
+            state: 'on'  
         card: 
           type: custom:button-card
           entity: input_boolean.guest_mode
@@ -246,7 +246,7 @@ card:
         type: conditional
         conditions:
           - entity: input_boolean.cleaners_mode
-            state: 'off'  
+            state: 'on'  
         card: 
           type: custom:button-card
           entity: input_boolean.cleaners_mode
@@ -276,7 +276,7 @@ card:
         conditions:
           - condition: state
             entity: binary_sensor.r1t_charging_status
-            state: 'off'
+            state: 'on'
         card:
           type: custom:mushroom-chips-card
           chips:
