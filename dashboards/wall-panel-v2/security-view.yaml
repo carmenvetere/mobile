@@ -57,7 +57,7 @@ cards:
                   "space3"
                   "controls"
               - grid-template-columns: auto
-              - grid-template-rows: 50px 100px 20px 700px 20px 125px
+              - grid-template-rows: 50px 100px 20px 700px 20px 200px
               - row-gap: 5px
               - align-items: center
               - justify-items: center
@@ -411,8 +411,8 @@ cards:
                 show_state: false
                 styles:
                   card:
-                    - height: 125px
-                    - width: 690px
+                    - height: 200px
+                    - width: 900px
                     - padding-top: 0px
                     - margin-top: 0px
                     - border-radius: 12px
@@ -420,8 +420,8 @@ cards:
                   grid:
                     - grid-template-areas: |
                         "disarm home away"
-                    - grid-template-columns: 230px 230px 230px
-                    - grid-template-rows: 125px
+                    - grid-template-columns: 300px 300px 300px
+                    - grid-template-rows: 200px
                     - column-gap: 5px
                     - align-items: center
                 custom_fields:
@@ -441,16 +441,16 @@ cards:
                           entity_id: alarm_control_panel.alarmo
                       styles:
                         card:
-                          - height: 125px
-                          - width: 230px
+                          - height: 200px
+                          - width: 300px
                           - border-radius: 12px
                           - background-color: '#626569'
                         icon:
-                          - width: 68px
-                          - height: 68px
+                          - width: 75px
+                          - height: 75px
                           - color: var(--primary-text-color)
                         name:
-                          - font-size: 28px
+                          - font-size: 36px
                           - font-weight: bold
                           - color: var(--primary-text-color)
                       state:                
@@ -479,16 +479,16 @@ cards:
                           entity_id: alarm_control_panel.alarmo
                       styles:
                         card:
-                          - height: 125px
-                          - width: 230px
+                          - height: 200px
+                          - width: 300px
                           - border-radius: 12px
                           - background-color: '#626569'
                         icon:
-                          - width: 68px
-                          - height: 68px
+                          - width: 75px
+                          - height: 75px
                           - color: var(--primary-text-color)
                         name:
-                          - font-size: 28px
+                          - font-size: 36px
                           - font-weight: bold
                           - color: var(--primary-text-color)
                       state:                
@@ -527,16 +527,16 @@ cards:
                         data:
                       styles:
                         card:
-                          - height: 125px
-                          - width: 230px
+                          - height: 200px
+                          - width: 300px
                           - border-radius: 12px
                           - background-color: '#626569'
                         icon:
-                          - width: 68px
-                          - height: 68px
+                          - width: 75px
+                          - height: 75px
                           - color: var(--primary-text-color)
                         name:
-                          - font-size: 28px
+                          - font-size: 36px
                           - font-weight: bold
                           - color: var(--primary-text-color)
                       state:                
