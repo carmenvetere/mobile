@@ -274,6 +274,8 @@ cards:
                       - height: 230px
                       - background: var(--background-color)
                       - border-radius: 20px
+                    grid:
+                      - column-gap: 0px
                     icon:
                       - width: 75px
                       - height: 75px
@@ -281,7 +283,7 @@ cards:
                       - font-size: 48px
                       - font-weight: bold
                       - white-space: normal !important
-                      - text-align: center
+                      - text-align: left
       main2: 
         card:
           type: custom:button-card
