@@ -246,6 +246,34 @@ cards:
                       - background-color: transparent
                       - height: 230px
                       - width: 200px  
+          - type: custom:button-card
+            styles:
+              card:
+              - height: 230px
+              - width: 900px
+              - margin-top: 0px
+              - padding-top: 0px
+              - background: transparent 
+              grid:
+              - grid-template-areas: |
+                  "button1 button2"
+              - grid-template-columns: 445px 445px
+              - grid-template-rows: 230px
+              - align-items: start
+              - column-gap: 10px
+            custom_fields: 
+              button1: 
+                card: 
+                  type: custom:button-card
+                  name: Front - center
+                  icon: mdi:cctv
+                  layout: icon_name
+                  styles:
+                    card: 
+                      - width: 440px
+                      - height: 230px
+                      - background: var(--background-color)
+                      - border_radius: 20px
       main2: 
         card:
           type: custom:button-card
