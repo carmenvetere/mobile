@@ -258,7 +258,7 @@ cards:
               - width: 1019px
               - height: 1206px
               - padding-top: 0px
-              - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
+              - background: var(--background-color)
             grid:
               - grid-template-areas: |
                   "space1"
@@ -338,7 +338,7 @@ cards:
                           - height: 160px
                           - width: 160px
                           - border-radius: 8px
-                          - background-color: '#626569'
+                          - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
