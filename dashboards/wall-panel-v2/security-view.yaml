@@ -265,7 +265,29 @@ cards:
               button1: 
                 card: 
                   type: custom:button-card
-                  name: Front - center
+                  name: Front Center
+                  icon: mdi:cctv
+                  layout: icon_name
+                  styles:
+                    card: 
+                      - width: 440px
+                      - height: 230px
+                      - background: var(--background-color)
+                      - border-radius: 20px
+                    grid:
+                      - column-gap: 0px
+                    icon:
+                      - width: 75px
+                      - height: 75px
+                    name:
+                      - font-size: 48px
+                      - font-weight: bold
+                      - white-space: normal !important
+                      - text-align: left
+              button2: 
+                card: 
+                  type: custom:button-card
+                  name: Front Right
                   icon: mdi:cctv
                   layout: icon_name
                   styles:
