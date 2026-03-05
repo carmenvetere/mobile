@@ -253,7 +253,7 @@ cards:
                     }
                 cards: 
                   - type: vertical-stack
-                    cards: !include /config/dashboards/modules/first-floor-lights-individual.yaml
+                    cards: !include [/config/dashboards/modules/first-floor-lights-individual.yaml, {module_name: mobile_lights_scenes, dashboard: mobile}]
             - type: custom:expander-card
               expanded: false
               title-card-clickable: true
