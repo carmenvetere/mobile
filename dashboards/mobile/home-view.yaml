@@ -221,31 +221,31 @@ cards:
                     navigation_path: /mobile-dash/shades-main
                   modules:
                     - mobile_lights_scenes
-                - type: custom:bubble-card
-                  card_type: button
-                  button_type: name
-                  name: Music
-                  icon: mdi:music
-                  button_action:
-                    tap_action:
-                      action: navigate
-                      navigation_path: /mobile-dash/music
-                  sub_button:
-                    - icon: mdi:chevron-right
-                      state_background: false
-                      tap_action:
-                        action: navigate
-                        navigation_path: /mobile-dash/music
-                  card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
-                  tap_action:
-                    action: navigate
-                    navigation_path: /mobile-dash/music                  
-                  modules:
-                    - mobile_lights_scenes
+                # - type: custom:bubble-card
+                #   card_type: button
+                #   button_type: name
+                #   name: Music
+                #   icon: mdi:music
+                #   button_action:
+                #     tap_action:
+                #       action: navigate
+                #       navigation_path: /mobile-dash/music
+                #   sub_button:
+                #     - icon: mdi:chevron-right
+                #       state_background: false
+                #       tap_action:
+                #         action: navigate
+                #         navigation_path: /mobile-dash/music
+                #   card_layout: normal
+                #   styles: |-
+                #     .bubble-name {
+                #         font-size: 16px !important;
+                #       }
+                #   tap_action:
+                #     action: navigate
+                #     navigation_path: /mobile-dash/music                  
+                #   modules:
+                #     - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -321,31 +321,31 @@ cards:
                     navigation_path: /mobile-dash/pool
                   modules:
                     - mobile_lights_scenes
-                - type: custom:bubble-card
-                  card_type: button
-                  button_type: name
-                  name: Vacuum
-                  icon: mdi:vacuum
-                  button_action:
-                    tap_action:
-                      action: navigate
-                      navigation_path: /mobile-dash/vacuum
-                  sub_button:
-                    - icon: mdi:chevron-right
-                      state_background: false
-                      tap_action:
-                        action: navigate
-                        navigation_path: /mobile-dash/vacuum
-                  card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
-                  tap_action:
-                    action: navigate
-                    navigation_path: /mobile-dash/vacuum
-                  modules:
-                    - mobile_lights_scenes
+                # - type: custom:bubble-card
+                #   card_type: button
+                #   button_type: name
+                #   name: Vacuum
+                #   icon: mdi:vacuum
+                #   button_action:
+                #     tap_action:
+                #       action: navigate
+                #       navigation_path: /mobile-dash/vacuum
+                #   sub_button:
+                #     - icon: mdi:chevron-right
+                #       state_background: false
+                #       tap_action:
+                #         action: navigate
+                #         navigation_path: /mobile-dash/vacuum
+                #   card_layout: normal
+                #   styles: |-
+                #     .bubble-name {
+                #         font-size: 16px !important;
+                #       }
+                #   tap_action:
+                #     action: navigate
+                #     navigation_path: /mobile-dash/vacuum
+                #   modules:
+                #     - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name

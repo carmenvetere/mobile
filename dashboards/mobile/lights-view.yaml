@@ -1,7 +1,7 @@
 # lovelace_gen
 title: Lights
 icon: mdi:lightbulb
-theme: Bubble
+theme: Wall Panel
 path: lights-main
 type: custom:grid-layout
 cards:
@@ -32,6 +32,9 @@ cards:
         - row-gap: 0px
         - align-items: start
         - column-gap: 2px
+      custom_fields:
+        first:
+          - margin-top: 10px
     custom_fields:
       header:
         card:
@@ -128,9 +131,13 @@ cards:
               card_mod:
                 style: |
                   :host {
-                    zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2);
+                    zoom: 1.5 !important;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
                   }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }    
             - type: entity
               entity: sensor.lights_on_count
               tap_action:
@@ -140,9 +147,13 @@ cards:
               card_mod:
                 style: |
                   :host {
-                    zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2);
-                  }  
+                    zoom: 1.5 !important;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }    
       scenes:
         card:
           type: vertical-stack
@@ -173,7 +184,6 @@ cards:
               - /config/dashboards/modules/dynamic-scenes.yaml
               - module_name: mobile_lights_scenes
                 dashboard: mobile
-
       first:
         card: 
           type: custom:expander-card
