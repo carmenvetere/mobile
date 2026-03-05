@@ -249,7 +249,7 @@ cards:
                       margin-bottom: 10px !important;
                       padding-left: 15px !important;
                       padding-right: 15px !important;
-                      background-color: var(--background-color-2) !important;
+                      background-color: transparent
                     }
                 cards: 
                   - type: vertical-stack
@@ -281,8 +281,7 @@ cards:
                     margin-bottom: 10px !important;
                     padding-left: 15px !important;
                     padding-right: 15px !important;
-                    background-color: var(--background-color-2) !important;
-                    opacity: .5 !important;
+                    background-color: transparent !important;
                   }
               cards: 
               - type: vertical-stack
