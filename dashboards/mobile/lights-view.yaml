@@ -249,7 +249,7 @@ cards:
                       margin-bottom: 10px !important;
                       padding-left: 15px !important;
                       padding-right: 15px !important;
-                      background-color: transparent
+                      background-color: transparent !important;
                     }
                 cards: 
                   - type: vertical-stack
@@ -281,11 +281,11 @@ cards:
                     margin-bottom: 10px !important;
                     padding-left: 15px !important;
                     padding-right: 15px !important;
-                    background: transparent !important;
+                    background-color: transparent !important;
                   }
               cards: 
               - type: vertical-stack
-                cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
+                cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: mobile_lights_scenes, dashboard: mobile}]
             - type: custom:expander-card
               expanded: false
               title-card-clickable: true
