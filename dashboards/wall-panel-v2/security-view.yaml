@@ -268,6 +268,7 @@ cards:
                   name: Front Center
                   icon: mdi:cctv
                   layout: icon_name
+                  entity: camera.front_high_resolution_channel
                   styles:
                     card: 
                       - width: 440px
@@ -290,6 +291,7 @@ cards:
                   name: Front Right
                   icon: mdi:cctv
                   layout: icon_name
+                  entity: camera.blueberry_high_resolution_channel
                   styles:
                     card: 
                       - width: 440px
@@ -306,7 +308,7 @@ cards:
                       - font-weight: bold
                       - white-space: normal !important
                       - text-align: left
-                      - margin-right: 10px
+                      - margin-right: 15px
       main2: 
         card:
           type: custom:button-card
