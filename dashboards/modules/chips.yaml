@@ -161,6 +161,9 @@
               --chip-background: var(--background-color);
               --chip-font-size: 16px;
             }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
 #Notifications Pop-up
     - type: vertical-stack
       cards:
@@ -207,8 +210,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #Powerwall Charge Level if Grid Down
     - type: conditional
@@ -227,8 +234,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #Dinner Party Mode
     - type: conditional
@@ -244,8 +255,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #Guest Mode
     - type: conditional
@@ -261,8 +276,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #Away Mode
     - type: conditional
@@ -278,8 +297,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #Pool Cover Status
     - type: conditional
@@ -298,8 +321,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #Washer Time Remaining
     - type: conditional
@@ -315,8 +342,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #Dryer Time Remaining
     - type: conditional
@@ -332,8 +363,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #Pool Water Temperature
     - type: conditional
@@ -354,8 +389,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #BMW Charge End Time
     - type: conditional
@@ -376,8 +415,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #Rivian Charge End Time
     - type: conditional
@@ -398,8 +441,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #Vehicle Charging
     - type: conditional
@@ -421,8 +468,12 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
 #Fresh Air Ventilation
     - type: conditional
@@ -441,9 +492,13 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
-            }      
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }    
 #Aux Heat Active
     - type: conditional
       conditions:
@@ -460,6 +515,10 @@
         card_mod:
           style: |
             :host {
-              zoom: 1.25 !important;
-              --chip-background: var(--ha-card-background-2);
+              zoom: 1.5 !important;
+              --chip-background: var(--background-color);
+              --chip-font-size: 16px;
+            }
+            ha-card {
+              box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
