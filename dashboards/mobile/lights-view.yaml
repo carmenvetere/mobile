@@ -190,6 +190,28 @@ cards:
                   - /config/dashboards/modules/dynamic-scenes.yaml
                   - module_name: mobile_lights_scenes
                     dashboard: mobile
+              - type: custom:bubble-card
+                card_type: separator
+                name: Individual Lights
+                icon: mdi:lightbulb-auto
+                rows: 0.75
+                styles: |
+                  .bubble-name {
+                    font-size: 20px !important;  /* title */
+                    font-weight: bold !important;
+                  }
+                  .bubble-sub-button 
+                  {
+                    font-size: 20px !important;
+                    font-weight: 700 !important;
+                  }
+                  .bubble-line {
+                    background: var(--primary-text-color);
+                    opacity: 0.1;
+                  }
+                  .card-content {
+                    padding-top: 7px !important;
+                  }
               - type: custom:expander-card
                 expanded: false
                 title-card-clickable: true
