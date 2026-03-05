@@ -68,8 +68,8 @@
       card_mod:
         style: |
           :host {
-            transform: scale(1.25);
-            transform-origin: center center;
+            --chip-font-size: 16px;
+            --chip-icon-size: 16px;
             --chip-background: var(--background-color-2);
             filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
           }
