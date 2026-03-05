@@ -226,7 +226,7 @@ cards:
                       margin-bottom: 10px !important;
                       padding-left: 15px !important;
                       padding-right: 15px !important;
-                      background-color: var(--background-color) !important;
+                      background-color: var(--background-color-2) !important;
                     }
                 cards: 
                   - type: vertical-stack
@@ -258,7 +258,7 @@ cards:
                     margin-bottom: 10px !important;
                     padding-left: 15px !important;
                     padding-right: 15px !important;
-                    background-color: var(--background-color) !important;
+                    background-color: var(--background-color-2) !important;
                   }
               cards: 
               - type: vertical-stack
@@ -290,7 +290,7 @@ cards:
                     margin-bottom: 10px !important;
                     padding-left: 15px !important;
                     padding-right: 15px !important;
-                    background-color: var(--ha-card-background-2) !important;
+                    background-color: var(--background-color-2) !important;
                   }
               cards: !include /config/dashboards/modules/second-floor-lights-individual.yaml
             - type: custom:expander-card
@@ -320,6 +320,6 @@ cards:
                     margin-bottom: 10px !important;
                     padding-left: 15px !important;
                     padding-right: 15px !important;
-                    background-color: var(--ha-card-background-2) !important;
+                    background-color: var(--background-color-2) !important;
                   }
               cards: !include /config/dashboards/modules/outdoor-lights-individual.yaml
