@@ -68,8 +68,11 @@
       card_mod:
         style: |
           :host {
-            zoom: 1.25 !important;
+            transform: scale(1.25);
+            transform-origin: center center;
             --chip-background: var(--background-color-2);
+            --chip-font-size: 0.95em;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
           }
 #Notifications Chip
     - type: conditional
