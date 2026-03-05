@@ -16,7 +16,7 @@ cards:
         - margin: 0
         - height: auto
 #       - width: 398px
-        - background-color: var(--background-color)
+        - background-color: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header"
@@ -101,7 +101,7 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background: var(--background-color-2) !important;
+                background: var(--background-color) !important;
                 border-radius: 20px;
                 padding: 3px 12px 4px;
                 }
