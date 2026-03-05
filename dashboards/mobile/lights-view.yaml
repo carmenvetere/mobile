@@ -22,13 +22,9 @@ cards:
         - grid-template-areas: |
             "header"
             "chips"
-            "scenes"
-            "first"
-            "basement"
-            "second"
-            "outdoor"
+            "main"
         - grid-template-columns: auto
-        - grid-template-rows: 60px 60px auto auto
+        - grid-template-rows: 60px 60px auto
         - row-gap: 0px
         - align-items: start
         - column-gap: 2px
@@ -154,174 +150,182 @@ cards:
                   ha-card {
                     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
                   }    
-      scenes:
+      main:
         card:
-          type: vertical-stack
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--background-color) !important;
+                border-radius: 20px;
+                padding: 3px 12px 4px;       /* top / sides / bottom */
+                }
           cards:
-          - type: custom:bubble-card
-            card_type: separator
-            name: Scenes
-            icon: mdi:lightbulb-auto
-            rows: 0.75
-            styles: |
-              .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-              }
-              .bubble-sub-button 
-              {
-                font-size: 20px !important;
-                font-weight: 700 !important;
-              }
-              .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-              }
-              .card-content {
-                padding-top: 7px !important;
-              }
-          - !include 
-              - /config/dashboards/modules/dynamic-scenes.yaml
-              - module_name: mobile_lights_scenes
-                dashboard: mobile
-      first:
-        card: 
-          type: custom:expander-card
-          expanded: false
-          title-card-clickable: true
-          title-card:
-            type: custom:bubble-card
-            card_type: separator
-            name: First Floor
-            icon: mdi:home-floor-1
-            rows: 0.75
-            styles: |
-              .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-              }
-              .bubble-sub-button 
-              {
-                font-size: 20px !important;
-                font-weight: 700 !important;
-              }
-              .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-              }
-              .card-content {
-                padding-top: 7px !important;
-              }
-          card_mod:
-            style: |
-              ha-card {
-                border-radius: 20px !important;
-                padding-top: 3px !important;
-                margin-left: 5px !important;
-                padding-bottom: 3px !important;
-                margin-bottom: 10px !important;
-                padding-left: 15px !important;
-                padding-right: 15px !important;
-                background-color: var(--ha-card-background-2) !important;
-              }
-          cards: 
             - type: vertical-stack
-              cards: !include /config/dashboards/modules/first-floor-lights-individual.yaml
-      basement:
-        card:
-          type: custom:expander-card
-          expanded: false
-          title-card-clickable: true
-          title-card:
-            type: custom:bubble-card
-            card_type: separator
-            name: Basement
-            icon: mdi:home-floor-b
-            rows: 0.75
-            styles: >
-              .bubble-name { font-size: 20px !important; font-weight: bold
-              !important; }
-              .bubble-sub-button { font-size: 20px !important; font-weight:
-              700 !important; }
-              .bubble-line { background: var(--primary-text-color); opacity:
-              0.1; }
-              .card-content { padding-top: 7px !important; }
-          card_mod:
-            style: |
-              ha-card {
-                border-radius: 20px !important;
-                padding-top: 3px !important;
-                margin-left: 5px !important;
-                padding-bottom: 3px !important;
-                margin-bottom: 10px !important;
-                padding-left: 15px !important;
-                padding-right: 15px !important;
-                background-color: var(--ha-card-background-2) !important;
-              }
-          cards: 
-          - type: vertical-stack
-            cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
-      second:
-        card:
-          type: custom:expander-card
-          expanded: false
-          title-card-clickable: true
-          title-card:
-            type: custom:bubble-card
-            card_type: separator
-            name: Second Floor
-            icon: mdi:home-floor-2
-            rows: 0.75
-            styles: >
-              .bubble-name { font-size: 20px !important; font-weight: bold
-              !important; }
-              .bubble-sub-button { font-size: 20px !important; font-weight:
-              700 !important; }
-              .bubble-line { background: var(--primary-text-color); opacity:
-              0.1; }
-              .card-content { padding-top: 7px !important; }
-          card_mod:
-            style: |
-              ha-card {
-                border-radius: 20px !important;
-                padding-top: 3px !important;
-                margin-left: 5px !important;
-                padding-bottom: 3px !important;
-                margin-bottom: 10px !important;
-                padding-left: 15px !important;
-                padding-right: 15px !important;
-                background-color: var(--ha-card-background-2) !important;
-              }
-          cards: !include /config/dashboards/modules/second-floor-lights-individual.yaml
-      outdoor:
-        card:
-          type: custom:expander-card
-          expanded: false
-          title-card-clickable: true
-          title-card:
-            type: custom:bubble-card
-            card_type: separator
-            name: Outdoor
-            icon: mdi:outdoor-lamp
-            rows: 0.75
-            styles: >
-              .bubble-name { font-size: 20px !important; font-weight: bold
-              !important; }
-              .bubble-sub-button { font-size: 20px !important; font-weight:
-              700 !important; }
-              .bubble-line { background: var(--primary-text-color); opacity:
-              0.1; }
-              .card-content { padding-top: 7px !important; }
-          card_mod:
-            style: |
-              ha-card {
-                border-radius: 20px !important;
-                padding-top: 3px !important;
-                margin-left: 5px !important;
-                padding-bottom: 3px !important;
-                margin-bottom: 10px !important;
-                padding-left: 15px !important;
-                padding-right: 15px !important;
-                background-color: var(--ha-card-background-2) !important;
-              }
-          cards: !include /config/dashboards/modules/outdoor-lights-individual.yaml
+              cards: 
+              - type: custom:bubble-card
+                card_type: separator
+                name: Scenes
+                icon: mdi:lightbulb-auto
+                rows: 0.75
+                styles: |
+                  .bubble-name {
+                    font-size: 20px !important;  /* title */
+                    font-weight: bold !important;
+                  }
+                  .bubble-sub-button 
+                  {
+                    font-size: 20px !important;
+                    font-weight: 700 !important;
+                  }
+                  .bubble-line {
+                    background: var(--primary-text-color);
+                    opacity: 0.1;
+                  }
+                  .card-content {
+                    padding-top: 7px !important;
+                  }
+              - !include 
+                  - /config/dashboards/modules/dynamic-scenes.yaml
+                  - module_name: mobile_lights_scenes
+                    dashboard: mobile
+              - type: custom:expander-card
+                expanded: false
+                title-card-clickable: true
+                title-card:
+                  type: custom:bubble-card
+                  card_type: separator
+                  name: First Floor
+                  icon: mdi:home-floor-1
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                      font-size: 20px !important;  /* title */
+                      font-weight: bold !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 20px !important;
+                      font-weight: 700 !important;
+                    }
+                    .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                    }
+                    .card-content {
+                      padding-top: 7px !important;
+                    }
+                card_mod:
+                  style: |
+                    ha-card {
+                      border-radius: 20px !important;
+                      padding-top: 3px !important;
+                      margin-left: 5px !important;
+                      padding-bottom: 3px !important;
+                      margin-bottom: 10px !important;
+                      padding-left: 15px !important;
+                      padding-right: 15px !important;
+                      background-color: var(--background-color) !important;
+                    }
+                cards: 
+                  - type: vertical-stack
+                    cards: !include /config/dashboards/modules/first-floor-lights-individual.yaml
+      # basement:
+      #   card:
+      #     type: custom:expander-card
+      #     expanded: false
+      #     title-card-clickable: true
+      #     title-card:
+      #       type: custom:bubble-card
+      #       card_type: separator
+      #       name: Basement
+      #       icon: mdi:home-floor-b
+      #       rows: 0.75
+      #       styles: >
+      #         .bubble-name { font-size: 20px !important; font-weight: bold
+      #         !important; }
+      #         .bubble-sub-button { font-size: 20px !important; font-weight:
+      #         700 !important; }
+      #         .bubble-line { background: var(--primary-text-color); opacity:
+      #         0.1; }
+      #         .card-content { padding-top: 7px !important; }
+      #     card_mod:
+      #       style: |
+      #         ha-card {
+      #           border-radius: 20px !important;
+      #           padding-top: 3px !important;
+      #           margin-left: 5px !important;
+      #           padding-bottom: 3px !important;
+      #           margin-bottom: 10px !important;
+      #           padding-left: 15px !important;
+      #           padding-right: 15px !important;
+      #           background-color: var(--ha-card-background-2) !important;
+      #         }
+      #     cards: 
+      #     - type: vertical-stack
+      #       cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
+      # second:
+      #   card:
+      #     type: custom:expander-card
+      #     expanded: false
+      #     title-card-clickable: true
+      #     title-card:
+      #       type: custom:bubble-card
+      #       card_type: separator
+      #       name: Second Floor
+      #       icon: mdi:home-floor-2
+      #       rows: 0.75
+      #       styles: >
+      #         .bubble-name { font-size: 20px !important; font-weight: bold
+      #         !important; }
+      #         .bubble-sub-button { font-size: 20px !important; font-weight:
+      #         700 !important; }
+      #         .bubble-line { background: var(--primary-text-color); opacity:
+      #         0.1; }
+      #         .card-content { padding-top: 7px !important; }
+      #     card_mod:
+      #       style: |
+      #         ha-card {
+      #           border-radius: 20px !important;
+      #           padding-top: 3px !important;
+      #           margin-left: 5px !important;
+      #           padding-bottom: 3px !important;
+      #           margin-bottom: 10px !important;
+      #           padding-left: 15px !important;
+      #           padding-right: 15px !important;
+      #           background-color: var(--ha-card-background-2) !important;
+      #         }
+      #     cards: !include /config/dashboards/modules/second-floor-lights-individual.yaml
+      # outdoor:
+      #   card:
+      #     type: custom:expander-card
+      #     expanded: false
+      #     title-card-clickable: true
+      #     title-card:
+      #       type: custom:bubble-card
+      #       card_type: separator
+      #       name: Outdoor
+      #       icon: mdi:outdoor-lamp
+      #       rows: 0.75
+      #       styles: >
+      #         .bubble-name { font-size: 20px !important; font-weight: bold
+      #         !important; }
+      #         .bubble-sub-button { font-size: 20px !important; font-weight:
+      #         700 !important; }
+      #         .bubble-line { background: var(--primary-text-color); opacity:
+      #         0.1; }
+      #         .card-content { padding-top: 7px !important; }
+      #     card_mod:
+      #       style: |
+      #         ha-card {
+      #           border-radius: 20px !important;
+      #           padding-top: 3px !important;
+      #           margin-left: 5px !important;
+      #           padding-bottom: 3px !important;
+      #           margin-bottom: 10px !important;
+      #           padding-left: 15px !important;
+      #           padding-right: 15px !important;
+      #           background-color: var(--ha-card-background-2) !important;
+      #         }
+      #     cards: !include /config/dashboards/modules/outdoor-lights-individual.yaml
