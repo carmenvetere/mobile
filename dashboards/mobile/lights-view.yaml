@@ -313,9 +313,9 @@ cards:
                     margin-bottom: 10px !important;
                     padding-left: 15px !important;
                     padding-right: 15px !important;
-                    background-color: var(--background-color-2) !important;
+                    background-color: transparent !important;
                   }
-              cards: !include /config/dashboards/modules/second-floor-lights-individual.yaml
+              cards: !include [/config/dashboards/modules/second-floor-lights-individual.yaml, {module_name: mobile_lights_scenes, dashboard: mobile}]
             - type: custom:expander-card
               expanded: false
               title-card-clickable: true
@@ -343,6 +343,6 @@ cards:
                     margin-bottom: 10px !important;
                     padding-left: 15px !important;
                     padding-right: 15px !important;
-                    background-color: var(--background-color-2) !important;
+                    background-color: transparent !important;
                   }
-              cards: !include /config/dashboards/modules/outdoor-lights-individual.yaml
+              cards: !include [/config/dashboards/modules/outdoor-lights-individual.yaml, {module_name: mobile_lights_scenes, dashboard: mobile}]
