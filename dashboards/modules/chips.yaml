@@ -69,10 +69,9 @@
       card_mod:
         style: |
           :host {
-            --chip-font-size: 16px;
-            --chip-icon-size: 20px;
+            zoom: 1.5 !important;
             --chip-background: var(--background-color);
-            --chip-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            --chip-font-size: 16px;
           }
           ha-card {
             box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
