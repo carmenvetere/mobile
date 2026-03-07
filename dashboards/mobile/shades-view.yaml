@@ -1,6 +1,6 @@
 title: Shades
 icon: mdi:roller-shade
-theme: Bubble
+theme: Wall Panel
 path: shades-main
 type: custom:grid-layout
 cards:
@@ -15,7 +15,7 @@ cards:
 #        - margin: -8px
         - height: auto
 #        - width: 398px
-        - background-color: var(--background-color-2)
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header"
@@ -127,8 +127,12 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2);
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
                   }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }   
       groups:
         card:
           type: custom:stack-in-card
@@ -136,7 +140,7 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background: var(--ha-card-background-2) !important;
+                background: var(--background-color) !important;
                 border-radius: 20px;
                 padding: 3px 12px 4px;       /* top / sides / bottom */
                 }
@@ -249,7 +253,7 @@ cards:
           card_mod: 
             style: |
               ha-card {
-                background-color: var(--ha-card-background-2) !important;
+                background-color: var(--background-color-2) !important;
                 margin-top: 5px !important;
               }
           title-card:
@@ -286,7 +290,7 @@ cards:
           card_mod: 
             style: |
               ha-card {
-                background-color: var(--ha-card-background-2) !important;
+                background-color: var(--background-color-2) !important;
                 margin-top: 5px !important;
               }
           title-card:
@@ -323,7 +327,7 @@ cards:
           card_mod: 
             style: |
               ha-card {
-                background-color: var(--ha-card-background-2) !important;
+                background-color: var(--background-color-2) !important;
                 margin-top: 5px !important;
               }
           title-card:
@@ -360,7 +364,7 @@ cards:
           card_mod: 
             style: |
               ha-card {
-                background-color: var(--ha-card-background-2) !important;
+                background-color: var(--background-color-2) !important;
                 margin-top: 5px !important;
               }
           title-card:
