@@ -66,12 +66,7 @@ cards:
             # === Sonos card ===
             - type: custom:config-template-card
               variables:
-                - >
-                  states['input_select.sonos_speaker_select'].state === 'Living Room'
-                    ? 'media_player.living_room'
-                    : states['input_select.sonos_speaker_select'].state === 'Kitchen'
-                      ? 'media_player.kitchen'
-                      : 'media_player.deck'
+                - "((states['input_select.sonos_speaker_select'] || {state: 'Living Room'}).state === 'Kitchen' ? 'media_player.kitchen' : (states['input_select.sonos_speaker_select'] || {state: 'Living Room'}).state === 'Deck' ? 'media_player.deck' : 'media_player.living_room')"
                 - new Date().getMonth() + 1
               entities:
                 - input_select.sonos_speaker_select
