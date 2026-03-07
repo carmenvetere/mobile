@@ -36,6 +36,16 @@ input_number:
     step: 1
     mode: box
 
+input_select:
+  sonos_speaker_select:
+    name: Sonos Speaker
+    options:
+      - Living Room
+      - Kitchen
+      - Deck
+    initial: Living Room
+    icon: mdi:speaker
+
 recorder:
   db_url: mysql://carmenv:Bayberry1991@core-mariadb/homeassistant?charset=utf8mb4
   purge_keep_days: 30
