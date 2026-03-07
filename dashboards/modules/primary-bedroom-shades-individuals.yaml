@@ -14,15 +14,9 @@
       icon: mdi:battery
       show_background: false
       show_state: true
-  styles: |-
-    .bubble-name {
-        font-size: 16px !important; text-align: left !important;
-      }
-    .bubble-state {
-        text-align: left !important;
-      }
+  rows: 1.3
   modules:
-  - Mobile Module Theme 
+  - mobile_shades_module 
 - type: custom:bubble-card
   card_type: cover
   entity: cover.hallway_2
@@ -39,15 +33,9 @@
       icon: mdi:battery
       show_background: false
       show_state: true
-  styles: |-
-    .bubble-name {
-        font-size: 16px !important; text-align: left !important;
-      }
-    .bubble-state {
-        text-align: left !important;
-      }
+  rows: 1.3
   modules:
-  - Mobile Module Theme 
+  - mobile_shades_module 
 - type: custom:bubble-card
   card_type: cover
   entity: cover.bedroom_right
@@ -64,15 +52,9 @@
       icon: mdi:battery
       show_background: false
       show_state: true
-  styles: |-
-    .bubble-name {
-        font-size: 16px !important; text-align: left !important;
-      }
-    .bubble-state {
-        text-align: left !important;
-      }
+  rows: 1.3
   modules:
-  - Mobile Module Theme 
+  - mobile_shades_module 
 - type: custom:bubble-card
   card_type: cover
   entity: cover.bedroom_left
@@ -89,15 +71,9 @@
       icon: mdi:battery
       show_background: false
       show_state: true
-  styles: |-
-    .bubble-name {
-        font-size: 16px !important; text-align: left !important;
-      }
-    .bubble-state {
-        text-align: left !important;
-      }
+  rows: 1.3
   modules:
-  - Mobile Module Theme 
+  - mobile_shades_module 
 - type: custom:bubble-card
   card_type: cover
   entity: cover.bedroom_back_1_cover
@@ -114,15 +90,9 @@
       icon: mdi:battery
       show_background: false
       show_state: true
-  styles: |-
-    .bubble-name {
-        font-size: 16px !important; text-align: left !important;
-      }
-    .bubble-state {
-        text-align: left !important;
-      }
+  rows: 1.3
   modules:
-  - Mobile Module Theme 
+  - mobile_shades_module 
 - type: custom:bubble-card
   card_type: cover
   entity: cover.back_2
@@ -139,15 +109,9 @@
       icon: mdi:battery
       show_background: false
       show_state: true
-  styles: |-
-    .bubble-name {
-        font-size: 16px !important; text-align: left !important;
-      }
-    .bubble-state {
-        text-align: left !important;
-      }
+  rows: 1.3
   modules:
-  - Mobile Module Theme 
+  - mobile_shades_module 
 - type: custom:bubble-card
   card_type: cover
   entity: cover.back_3
@@ -164,15 +128,9 @@
       icon: mdi:battery
       show_background: false
       show_state: true
-  styles: |-
-    .bubble-name {
-        font-size: 16px !important; text-align: left !important;
-      }
-    .bubble-state {
-        text-align: left !important;
-      }
+  rows: 1.3
   modules:
-  - Mobile Module Theme 
+  - mobile_shades_module 
 - type: custom:bubble-card
   card_type: cover
   entity: cover.bedroom_back_4_cover
@@ -189,15 +147,9 @@
       icon: mdi:battery
       show_background: false
       show_state: true
-  styles: |-
-    .bubble-name {
-        font-size: 16px !important; text-align: left !important;
-      }
-    .bubble-state {
-        text-align: left !important;
-      }
+  rows: 1.3
   modules:
-  - Mobile Module Theme 
+  - mobile_shades_module 
 - type: custom:bubble-card
   card_type: cover
   entity: cover.bedroom_back_5_cover
@@ -214,12 +166,6 @@
       icon: mdi:battery
       show_background: false
       show_state: true
-  styles: |-
-    .bubble-name {
-        font-size: 16px !important; text-align: left !important;
-      }
-    .bubble-state {
-        text-align: left !important;
-      }
+  rows: 1.3
   modules:
-  - Mobile Module Theme 
+  - mobile_shades_module 
