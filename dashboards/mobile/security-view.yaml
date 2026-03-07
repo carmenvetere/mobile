@@ -12,7 +12,7 @@ cards:
         - padding-left: 5px
         - padding-top: 2px
         - height: auto
-        - background-color: var(--background-color-2)
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header"
@@ -125,8 +125,12 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2);
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
                   }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }   
             - type: template
               icon: mdi:shield-home
               content: |-
@@ -153,8 +157,12 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2);
-                  }  
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }   
             - type: template
               icon: mdi:door-closed
               entity: binary_sensor.all_doors_including_garage
@@ -179,8 +187,12 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2);
-                  } 
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }   
       front:
         card:
           type: custom:stack-in-card
@@ -188,7 +200,7 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background: var(--ha-card-background-2);
+                background: var(--background-color) !important;
                 border-radius: 20px;
                 padding-right: 10px;
                 padding-bottom: 10px;
