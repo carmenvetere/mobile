@@ -37,7 +37,7 @@ series:
     name: Grid
     type: line
     stroke_width: 2
-    color: "#0E395E"
+    color: var(--accent-color)
     show:
       in_header: false
       legend_value: true
@@ -45,7 +45,7 @@ series:
     name: Solar
     type: line
     stroke_width: 2
-    color: Orange
+    color: var(accent-color-3)
     show:
       in_header: false
   - entity: sensor.bayberry_load_power
