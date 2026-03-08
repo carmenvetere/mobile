@@ -41,8 +41,8 @@ entities:
     entity: sensor.bayberry_battery_power
     state_of_charge: sensor.bayberry_charge
     color:
-      consumption: '#327C7F'
-      production: '#327C7F'
+      consumption: var(--accent-color-2)
+      production: var(--accent-color-2)
     color_icon: true
     show_state_of_charge: true
   grid:
@@ -63,7 +63,7 @@ entities:
   solar:
     entity: sensor.bayberry_solar_power
     color_icon: false
-    color: "#dd8e02"
+    color: var(--accent-color-3)
   home:
     entity: sensor.bayberry_load_power
     subtract_individual: true
@@ -72,16 +72,16 @@ entities:
       display_zero: false
       name: Car Charging
       icon: mdi:car-electric
-      color: '#E74C3C'
+      color: var(--accent-color-2)
     - entity: sensor.well_pump_power
       name: Well Pump
-      color: '#3ea4f0'
+      color: var(--accent-color)
       color_value: false
       display_zero: false
       icon: mdi:sprinkler-variant
     - entity: sensor.omnilogic_pool_filter_pump_power
       name: Pool Filter
-      color: '#5cb5e1'
+      color: var(--accent-color)
       color_value: false
       display_zero: false
       icon: mdi:pool
