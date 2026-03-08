@@ -55,7 +55,7 @@ series:
       duration: 5m
   - entity: sensor.solcast_pv_forecast_forecast_today
     name: Forecast
-    color: var(--secondary-text-color)
+    color: var(--primary-text-color)
     opacity: 0.5
     stroke_width: 0
     type: area
@@ -71,7 +71,7 @@ series:
           });
   - entity: sensor.solcast_pv_forecast_forecast_today
     name: Forecast 10%
-    color: var(--secondary-text-color)
+    color: var(--primary-text-color)
     opacity: 0.3
     stroke_width: 0
     type: area
