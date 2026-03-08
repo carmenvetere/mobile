@@ -32,7 +32,7 @@ series:
   - entity: sensor.solcast_seven_day
     name: Forecasted Solar Generation
     type: column
-    color: "#FFA500"
+    color: var(--accent-color-3)
     data_generator: |
       const now = new Date();
       now.setHours(0, 0, 0, 0);
@@ -54,7 +54,7 @@ series:
   - entity: sensor.solcast_seven_day
     name: 7-Day Solar Generation
     yaxis_id: header_only
-    color: "#FFA500"
+    color: var(--accent-color-3)
     show:
       in_header: true
       in_chart: false
