@@ -70,7 +70,7 @@ series:
     name: Well Pump
     type: column
     color: var(--primary-text-color)
-    opactity: .5
+    opacity: .5
     group_by:
       func: diff
       duration: 1d
