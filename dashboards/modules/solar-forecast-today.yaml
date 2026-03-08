@@ -87,7 +87,7 @@ series:
     yaxis_id: header_only
     name: Today Actual
     stroke_width: 2
-    color: var(--accent-color-2)
+    color: var(--accent-color-3)
     show:
       legend_value: true
       in_header: true
@@ -95,7 +95,7 @@ series:
   - entity: sensor.solcast_pv_forecast_forecast_today
     yaxis_id: header_only
     name: Today Forecast
-    color: Grey
+    color: var(--primary-text-color)
     show:
       legend_value: true
       in_header: true
