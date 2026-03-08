@@ -41,7 +41,7 @@ series:
     type: line
     stroke_width: 2
     float_precision: 2
-    color: Orange
+    color: var(--accent-color-3)
     yaxis_id: kWh
     unit: kW
     extend_to: now
@@ -53,8 +53,8 @@ series:
       duration: 5m
   - entity: sensor.solcast_pv_forecast_forecast_today
     name: Forecast
-    color: Grey
-    opacity: 0.3
+    color: var(--secondary-text-color)
+    opacity: 0.5
     stroke_width: 0
     type: area
     time_delta: +15min
@@ -69,7 +69,7 @@ series:
           });
   - entity: sensor.solcast_pv_forecast_forecast_today
     name: Forecast 10%
-    color: Grey
+    color: var(--secondary-text-color)
     opacity: 0.3
     stroke_width: 0
     type: area
@@ -87,7 +87,7 @@ series:
     yaxis_id: header_only
     name: Today Actual
     stroke_width: 2
-    color: Orange
+    color: var(--accent-color-2)
     show:
       legend_value: true
       in_header: true
@@ -103,7 +103,7 @@ series:
   - entity: sensor.solcast_pv_forecast_forecast_remaining_today
     yaxis_id: header_only
     name: Remaining
-    color: Grey
+    color: var(--primary-text-color)
     show:
       legend_value: true
       in_header: true
