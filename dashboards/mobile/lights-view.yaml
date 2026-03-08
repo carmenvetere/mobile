@@ -253,7 +253,7 @@ cards:
                     }
                 cards: 
                   - type: vertical-stack
-                    cards: !include [/config/dashboards/modules/first-floor-lights-individual.yaml, {module_name: mobile_lights_scenes, dashboard: mobile}]
+                    cards: !include [/config/dashboards/modules/first-floor-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
             - type: custom:expander-card
               expanded: false
               title-card-clickable: true
@@ -285,7 +285,7 @@ cards:
                   }
               cards: 
               - type: vertical-stack
-                cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: mobile_lights_scenes, dashboard: mobile}]
+                cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
             - type: custom:expander-card
               expanded: false
               title-card-clickable: true
@@ -315,7 +315,7 @@ cards:
                     padding-right: 15px !important;
                     background-color: transparent !important;
                   }
-              cards: !include [/config/dashboards/modules/second-floor-lights-individual.yaml, {module_name: mobile_lights_scenes, dashboard: mobile}]
+              cards: !include [/config/dashboards/modules/second-floor-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
             - type: custom:expander-card
               expanded: false
               title-card-clickable: true
@@ -345,4 +345,4 @@ cards:
                     padding-right: 15px !important;
                     background-color: transparent !important;
                   }
-              cards: !include [/config/dashboards/modules/outdoor-lights-individual.yaml, {module_name: mobile_lights_scenes, dashboard: mobile}]
+              cards: !include [/config/dashboards/modules/outdoor-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
