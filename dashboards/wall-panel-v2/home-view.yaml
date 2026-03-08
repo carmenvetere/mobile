@@ -50,6 +50,7 @@ cards:
               card_mod:
                 style: |
                   .bubble-select-container {
+                    border-radius: 20px 20px 0px 0px !important;
                     font-size: 42px !important;
                     font-weight: 600 !important;
                     color: var(--primary-text-color) !important;
@@ -65,9 +66,10 @@ cards:
                     }
                   .bubble-select-card-container {
                     border-radius: 15px 15px 0 0 !important;
-                    border-radius: 30px !important;
-                    margin: 2px 20px 2px 0px !important;
                     background-color: var(--background-color) !important;
+                    margin-left: 10px !important;
+                    margin-right: 10px !important;
+                    max-width: 96% !important;
                     }
               rows: 1.3
             # === Sonos card ===
