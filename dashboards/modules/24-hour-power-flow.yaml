@@ -45,7 +45,7 @@ series:
     name: Solar
     type: line
     stroke_width: 2
-    color: var(accent-color-3)
+    color: var(--accent-color-3)
     show:
       in_header: false
   - entity: sensor.bayberry_load_power
@@ -53,7 +53,7 @@ series:
     type: line
     stroke_width: 2
     color: var(--primary-text-color)
-    opacity: .5
+    opacity: .8
     show:
       in_header: false
   - entity: sensor.bayberry_solar_generated
@@ -76,7 +76,7 @@ series:
       in_chart: false
   - entity: sensor.bayberry_grid_imported
     name: Net Grid
-    color: var(-accent-color)
+    color: var(--accent-color)
     show:
       in_header: true
       in_chart: false
