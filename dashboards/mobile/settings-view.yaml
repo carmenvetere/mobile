@@ -1,7 +1,7 @@
 # lovelace_gen
 title: Settings
 icon: mdi:cog
-theme: Bubble
+theme: Wall Panel
 path: settings
 type: custom:grid-layout
 cards:
@@ -16,7 +16,7 @@ cards:
 #        - margin: -8px
         - height: auto
 #        - width: 398px
-        - background-color: var(--background-color-2)
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header"
@@ -124,9 +124,23 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2) !important;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
                   }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }   
       settings:
         card:
-          type: vertical-stack
-          cards: !include [/config/dashboards/modules/settings-module.yaml, {separator_module: mobile_separator, settings_module: mobile_settings_module}]
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background-color: var(--background-color) !important;
+                border-radius: 20px;
+                padding: 10;
+              }
+          cards:
+          - type: vertical-stack
+            cards: !include [/config/dashboards/modules/settings-module.yaml, {separator_module: mobile_separator, settings_module: mobile_settings_module}]
