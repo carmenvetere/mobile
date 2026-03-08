@@ -25,9 +25,14 @@ apex_config:
     width: 2
   xaxis:
     type: datetime
+    labels:
+      style:
+        fontSize: '14px'
   yaxis:
     decimals: 1
     labels:
+      style:
+        fontSize: '14px'
       formatter: |
         EVAL:function(value) {
           return value.toFixed(1) + ' kW';

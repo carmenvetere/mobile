@@ -15,6 +15,16 @@ apex_config:
     enabled: true
     shared: true
     followCursor: true
+  xaxis:
+    formatter:
+      labels:
+        style:
+          fontSize: '14px'
+  yaxis:
+    formatter:
+      labels:
+        style:
+          fontSize: '14px'
 graph_span: 24h
 cache: false
 span:
