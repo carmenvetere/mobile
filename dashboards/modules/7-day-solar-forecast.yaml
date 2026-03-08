@@ -54,7 +54,7 @@ series:
   - entity: sensor.solcast_seven_day
     name: 7-Day Solar Generation
     yaxis_id: header_only
-    color: var(--accent-color-3)
+    color: 'var(--accent-color-3)'
     show:
       in_header: true
       in_chart: false
