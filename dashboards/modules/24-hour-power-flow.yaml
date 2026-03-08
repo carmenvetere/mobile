@@ -53,13 +53,14 @@ series:
     type: line
     stroke_width: 2
     color: var(--primary-text-color)
+    opacity: .5
     show:
       in_header: false
   - entity: sensor.bayberry_solar_generated
     yaxis_id: header_only
     name: Solar
     stroke_width: 2
-    color: Orange
+    color: var(--accent-color-3)
     show:
       legend_value: false
       in_header: true
@@ -75,7 +76,7 @@ series:
       in_chart: false
   - entity: sensor.bayberry_grid_imported
     name: Net Grid
-    color: rgb(0, 109, 143)
+    color: var(-accent-color)
     show:
       in_header: true
       in_chart: false
