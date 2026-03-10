@@ -1,0 +1,53 @@
+type: custom:apexcharts-card
+header:
+  show: true
+  show_states: true
+graph_span: 12month
+span:
+  end: month
+series:
+  - entity: sensor.bayberry_solar_export
+    type: column
+    color: var(--accent-color-3)
+    statistics:
+      type: change
+      period: month
+    group_by:
+      func: sum
+      duration: 1month
+    show:
+      legend_value: false
+      in_header: false
+      datalabels: true
+    float_precision: 1
+    unit: " kWh"
+apex_config:
+  chart:
+    height: 300px
+  plotOptions:
+    bar:
+      dataLabels:
+        position: top
+  dataLabels:
+    enabled: true
+    offsetY: -11
+    background:
+      enabled: false
+    dropShadow:
+      enabled: false
+    style:
+      fontSize: 14px
+      colors:
+        - var(--primary-text-color)
+    formatter: |
+      EVAL:function(value) {
+        return value.toFixed(0) ;
+      }
+  xaxis:
+    type: datetime
+    labels:
+      format: MMM
+      style:
+        fontSize: 16px
+  yaxis:
+    show: false
