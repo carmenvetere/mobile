@@ -7,13 +7,13 @@ card:
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 150px
+      - height: 100px
       - background-color: black
     grid:
       - grid-template-areas: |
           "home lights music climate security energy vacuum other"
       - grid-template-columns: auto
-      - grid-template-rows: 150px
+      - grid-template-rows: 100px
       - align-items: center
       - column-gap: 0px
   custom_fields:
