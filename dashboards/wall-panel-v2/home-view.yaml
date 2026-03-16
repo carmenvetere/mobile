@@ -33,16 +33,16 @@ cards:
       header: !include header.yaml
       main2:
         card:
-          type: vertical-stack
-          card_mod:
-            style: |
-              :host {
-                --ha-card-margin: 0px;
-              }
-              #root > *:not(:last-child) {
-                margin-bottom: 0px !important;
-              }
-          cards:
+          type: custom:mod-card
+          style:
+            hui-vertical-stack-card:
+              $: |
+                #root > * {
+                  margin: 0 !important;
+                }
+          card:
+            type: vertical-stack
+            cards:
             # === Speaker selector dropdown ===
             - type: custom:bubble-card
               card_type: select
@@ -56,14 +56,6 @@ cards:
               show_icon: false
               card_mod:
                 style: |
-                  :host {
-                    margin-bottom: 0 !important;
-                    padding-bottom: 0 !important;
-                  }
-                  ha-card {
-                    margin-bottom: 0 !important;
-                    padding-bottom: 0 !important;
-                  }
                   .bubble-select-container {
                     border-radius: 20px 20px 0px 0px !important;
                     font-size: 42px !important;
@@ -90,15 +82,6 @@ cards:
               rows: 1.3
             # === Sonos card ===
             - type: custom:config-template-card
-              card_mod:
-                style: |
-                  :host {
-                    margin-top: 0 !important;
-                    padding-top: 0 !important;
-                  }
-                  ha-card {
-                    margin-top: 0 !important;
-                  }
               variables:
                 - >
                   states['input_select.sonos_speaker_select'].state === 'Living Room'
