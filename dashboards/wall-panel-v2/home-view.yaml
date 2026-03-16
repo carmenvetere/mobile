@@ -45,6 +45,11 @@ cards:
             background: true
             box_shadow: true
             border_radius: true
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--background-color) !important;
+                }
           cards:
             # === Speaker selector dropdown ===
             - type: custom:bubble-card
@@ -131,9 +136,9 @@ cards:
                     hideSonosFavorites: true
                     customFavorites:
                       all: !include /config/dashboards/modules/custom-favorites.yaml
-                heightPercentage: 82
+                heightPercentage: 81
                 footerHeight: 8
-                sectionButtonIconSize: 6
+                sectionButtonIconSize: 5
                 groups:
                   title: Speaker Groups
                   backgroundColor: "#C0C4C5"
