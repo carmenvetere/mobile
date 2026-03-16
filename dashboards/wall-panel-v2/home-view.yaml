@@ -33,16 +33,15 @@ cards:
       header: !include header.yaml
       main2:
         card:
-          type: custom:mod-card
-          style:
-            hui-vertical-stack-card:
-              $: |
-                #root > * {
-                  margin: 0 !important;
-                }
-          card:
-            type: vertical-stack
-            cards:
+          type: custom:stack-in-card
+          mode: vertical
+          keep:
+            margin: false
+            outer_padding: false
+            background: true
+            box_shadow: true
+            border_radius: true
+          cards:
             # === Speaker selector dropdown ===
             - type: custom:bubble-card
               card_type: select
