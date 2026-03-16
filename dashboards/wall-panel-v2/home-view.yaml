@@ -34,6 +34,11 @@ cards:
       main2:
         card:
           type: vertical-stack
+          card_mod:
+            style: |
+              #root {
+                gap: 0px !important;
+              }
           cards:
             # === Speaker selector dropdown ===
             - type: custom:bubble-card
