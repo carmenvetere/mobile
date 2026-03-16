@@ -36,8 +36,11 @@ cards:
           type: vertical-stack
           card_mod:
             style: |
-              #root {
-                gap: 0px !important;
+              :host {
+                --ha-card-margin: 0px;
+              }
+              #root > *:not(:last-child) {
+                margin-bottom: 0px !important;
               }
           cards:
             # === Speaker selector dropdown ===
