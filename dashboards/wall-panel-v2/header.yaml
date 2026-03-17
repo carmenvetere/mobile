@@ -3,24 +3,24 @@ card:
   styles:
     card:
       - border-radius: 0px
-      - padding-bottom: 15px
+      - padding-bottom: 8px
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 150px
-      - width: 2048px
-      - background-color: black 
+      - height: 75px
+      - width: 1024px
+      - background-color: black
     grid:
       - grid-template-areas: |
           "time alarm notifications riv bmw vent cleaner dinner guest temp"
-      - grid-template-columns: 400px 500px 125px 175px 175px 100px 100px 100px 100px 273px
-      - grid-template-rows: 150px
+      - grid-template-columns: 200px 250px 63px 88px 88px 50px 50px 50px 50px 137px
+      - grid-template-rows: 75px
       - align-items: center
       - justify-items: start
-      - column-gap: 10px
+      - column-gap: 5px
     custom_fields:
       time:
-        - margin-left: 20px
+        - margin-left: 10px
   custom_fields:
     time:
       card:
@@ -45,9 +45,9 @@ card:
             - justify-self: start
             - background: transparent
           state:
-            - font-size: 56px
+            - font-size: 28px
             - font-weight: bold
-            - padding-left: 10px
+            - padding-left: 5px
     alarm:
       card:
         type: custom:button-card
@@ -72,8 +72,8 @@ card:
           ]]]
         styles:
           icon:
-            - width: 75px
-            - height: 75px
+            - width: 38px
+            - height: 38px
             - color: |
                 [[[
                   var state = states['alarm_control_panel.alarmo'].state;
@@ -84,12 +84,12 @@ card:
                   return 'var(--primary-text-color)';
                 ]]]
           state:
-            - font-size: 54px
+            - font-size: 27px
             - font-weight: bold
             - justify-self: start
-          grid: 
-            - column-gap: 10px
-            - grid-template-columns: 100px auto
+          grid:
+            - column-gap: 5px
+            - grid-template-columns: 50px auto
           img_cell:
             - align-self: center
             - justify-content: start
@@ -128,19 +128,19 @@ card:
             navigation_path: /mudroom-wall-panel-dash/notifications-view
           styles:
             state:
-              - font-size: 48px
+              - font-size: 24px
               - font-weight: bold
               - justify-self: start
-            grid: 
-              - column-gap: 3px
-              - grid-template-columns: 100px auto
+            grid:
+              - column-gap: 2px
+              - grid-template-columns: 50px auto
             img_cell:
               - align-self: center
               - justify-content: end
             icon:
-              - width: 75px
-              - height: 75px
-              - padding-left: 5px
+              - width: 38px
+              - height: 38px
+              - padding-left: 3px
               - color: >
                   [[[
                     const priority = states['sensor.notification_icon_priority'].state;
@@ -172,8 +172,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 75px
-              - height: 75px
+              - width: 38px
+              - height: 38px
               - color: var(--accent-color)
             img_cell:
               - align-self: center
@@ -201,8 +201,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 75px
-              - height: 75px
+              - width: 38px
+              - height: 38px
               - color: var(--primary-text-color)
             img_cell:
               - align-self: center
@@ -230,8 +230,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 75px
-              - height: 75px
+              - width: 38px
+              - height: 38px
               - color: var(--primary-text-color)
             img_cell:
               - align-self: center
@@ -259,8 +259,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 75px
-              - height: 75px
+              - width: 38px
+              - height: 38px
               - color: var(--primary-text-color)
             img_cell:
               - align-self: center
@@ -334,15 +334,15 @@ card:
           navigation_path: /mudroom-wall-panel-dash/weather-view
         styles:
           state:
-            - font-size: 54px
+            - font-size: 27px
             - font-weight: bold
             - justify-self: start
           icon:
-            - width: 75px
-            - height: 75px
-          grid: 
-            - column-gap: 10px
-            - grid-template-columns: 100px auto
+            - width: 38px
+            - height: 38px
+          grid:
+            - column-gap: 5px
+            - grid-template-columns: 50px auto
           img_cell:
             - align-self: center
             - justify-content: end

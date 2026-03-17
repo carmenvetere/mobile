@@ -3,18 +3,18 @@ card:
   styles:
     card:
       - border-radius: 0px
-      - padding-bottom: 5px
+      - padding-bottom: 3px
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 150px
-      - width: 2048px
+      - height: 75px
+      - width: 1024px
       - background-color: black
     grid:
       - grid-template-areas: |
           "home lights music climate security energy vacuum other"
       - grid-template-columns: auto
-      - grid-template-rows: 150px
+      - grid-template-rows: 75px
       - align-items: center
       - column-gap: 0px
   custom_fields:
@@ -38,8 +38,8 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('home-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 90px
-            - width: 90px
+            - height: 45px
+            - width: 45px
         tap_action:
           action: navigate
           navigation_path: /living-room-wall-panel-dash/home-view
@@ -134,8 +134,8 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('energy-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 90px
-            - width: 90px
+            - height: 45px
+            - width: 45px
         tap_action:
           action: navigate
           navigation_path: /living-room-wall-panel-dash/energy-view
@@ -158,8 +158,8 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('security-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 90px
-            - width: 90px
+            - height: 45px
+            - width: 45px
         tap_action:
           action: navigate
           navigation_path: /living-room-wall-panel-dash/security-view
@@ -206,8 +206,8 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('settings-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 90px
-            - width: 90px
+            - height: 45px
+            - width: 45px
         tap_action:
           action: navigate
           navigation_path: /mudroom-wall-panel-dash/settings-view       

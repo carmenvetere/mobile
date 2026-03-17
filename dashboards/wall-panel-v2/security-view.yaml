@@ -11,26 +11,26 @@ cards:
         - padding-bottom: 5px
         - padding-left: 0px
         - padding-top: 0px
-        - margin-left: -4px
-        - margin-top: -4px        
-        - width: 2048px
-        - height: 1536px
+        - margin-left: -2px
+        - margin-top: -2px
+        - width: 1024px
+        - height: 768px
         - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header header"
             "main1 main2"
             "nav nav"
-        - grid-template-columns: 1019px 1019px
-        - grid-template-rows: 150px 1206px 150px
+        - grid-template-columns: 510px 510px
+        - grid-template-rows: 75px 603px 75px
         - align-items: start
-        - column-gap: 10px
-        - row-gap: 15px
+        - column-gap: 5px
+        - row-gap: 8px
       custom_fields:
         main1:
-          - margin-left: 50px
+          - margin-left: 25px
         main2:
-          - margin-right: 50px
+          - margin-right: 25px
           - height: 100%
     custom_fields:
       header: !include header.yaml
@@ -45,18 +45,18 @@ cards:
               state: "on"
             styles:
               card:
-                - height: 230px
-                - width: 900px
+                - height: 115px
+                - width: 450px
                 - background: var(--background-color)
-                - border-radius: 30px
-                - padding-left: 20px
+                - border-radius: 15px
+                - padding-left: 10px
                 - padding-top: 0px
                 - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
               grid:
                 - grid-template-areas: |
                     "icon name"
-                - grid-template-columns: 150px 700px
-                - grid-template-rows: 230px
+                - grid-template-columns: 75px 350px
+                - grid-template-rows: 115px
                 - column-gap: 5px
                 - row-gap: 5px
             custom_fields:
@@ -69,11 +69,11 @@ cards:
                   show_icon: false
                   styles:
                     card:
-                      - height: 230px
-                      - width: 700px
+                      - height: 115px
+                      - width: 350px
                       - background-color: transparent
                     name:
-                      - font-size: 48px
+                      - font-size: 24px
                       - font-weight: bold
                       - color: var(--text-color)
                       - text-align: left
@@ -85,12 +85,12 @@ cards:
                   styles:
                     icon:
                       - color: '#F6CE46'
-                      - height: 75px
-                      - width: 75px
+                      - height: 38px
+                      - width: 38px
                     card:
                       - background-color: transparent
-                      - height: 230px
-                      - width: 200px                
+                      - height: 115px
+                      - width: 100px                
           - type: custom:button-card
             visibility:
             - condition: state
@@ -98,18 +98,18 @@ cards:
               state: "off"
             styles:
               card:
-                - height: 230px
-                - width: 900px
+                - height: 115px
+                - width: 450px
                 - background: var(--background-color)
-                - border-radius: 30px
-                - padding-left: 20px
+                - border-radius: 15px
+                - padding-left: 10px
                 - padding-top: 0px
                 - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
               grid:
                 - grid-template-areas: |
                     "icon name"
-                - grid-template-columns: 150px 700px
-                - grid-template-rows: 230px
+                - grid-template-columns: 75px 350px
+                - grid-template-rows: 115px
                 - column-gap: 5px
                 - row-gap: 5px
             custom_fields:
@@ -122,11 +122,11 @@ cards:
                   show_icon: false
                   styles:
                     card:
-                      - height: 230px
-                      - width: 700px
+                      - height: 115px
+                      - width: 350px
                       - background-color: transparent
                     name:
-                      - font-size: 48px
+                      - font-size: 24px
                       - font-weight: bold
                       - color: var(--text-color)
                       - text-align: left
@@ -138,12 +138,12 @@ cards:
                   styles:
                     icon:
                       - color: var(--accent-color-2)
-                      - height: 75px
-                      - width: 75px
+                      - height: 38px
+                      - width: 38px
                     card:
                       - background-color: transparent
-                      - height: 230px
-                      - width: 200px                
+                      - height: 115px
+                      - width: 100px                
           - type: custom:button-card
             visibility:
             - condition: state
@@ -151,18 +151,18 @@ cards:
               state: "closed"
             styles:
               card:
-                - height: 230px
-                - width: 900px
+                - height: 115px
+                - width: 450px
                 - background: var(--background-color)
-                - border-radius: 30px
-                - padding-left: 20px
+                - border-radius: 15px
+                - padding-left: 10px
                 - padding-top: 0px
                 - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
               grid:
                 - grid-template-areas: |
                     "icon name"
-                - grid-template-columns: 150px 700px
-                - grid-template-rows: 230px
+                - grid-template-columns: 75px 350px
+                - grid-template-rows: 115px
                 - column-gap: 5px
                 - row-gap: 5px
             custom_fields:
@@ -175,11 +175,11 @@ cards:
                   show_icon: false
                   styles:
                     card:
-                      - height: 230px
-                      - width: 700px
+                      - height: 115px
+                      - width: 350px
                       - background-color: transparent
                     name:
-                      - font-size: 48px
+                      - font-size: 24px
                       - font-weight: bold
                       - color: var(--text-color)
                       - text-align: left
@@ -191,12 +191,12 @@ cards:
                   styles:
                     icon:
                       - color: var(--accent-color-2)
-                      - height: 75px
-                      - width: 75px
+                      - height: 38px
+                      - width: 38px
                     card:
                       - background-color: transparent
-                      - height: 230px
-                      - width: 200px  
+                      - height: 115px
+                      - width: 100px  
           - type: custom:button-card
             visibility:
             - condition: state
@@ -204,18 +204,18 @@ cards:
               state: "open"
             styles:
               card:
-                - height: 230px
-                - width: 900px
+                - height: 115px
+                - width: 450px
                 - background: var(--background-color)
-                - border-radius: 30px
-                - padding-left: 20px
+                - border-radius: 15px
+                - padding-left: 10px
                 - padding-top: 0px
                 - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
               grid:
                 - grid-template-areas: |
                     "icon name"
-                - grid-template-columns: 150px 700px
-                - grid-template-rows: 230px
+                - grid-template-columns: 75px 350px
+                - grid-template-rows: 115px
                 - column-gap: 5px
                 - row-gap: 5px
             custom_fields:
@@ -228,11 +228,11 @@ cards:
                   show_icon: false
                   styles:
                     card:
-                      - height: 230px
-                      - width: 700px
+                      - height: 115px
+                      - width: 350px
                       - background-color: transparent
                     name:
-                      - font-size: 48px
+                      - font-size: 24px
                       - font-weight: bold
                       - color: var(--text-color)
                       - text-align: left
@@ -244,27 +244,27 @@ cards:
                   styles:
                     icon:
                       - color: var(--accent-color-3)
-                      - height: 75px
-                      - width: 75px
+                      - height: 38px
+                      - width: 38px
                     card:
                       - background-color: transparent
-                      - height: 230px
-                      - width: 200px  
+                      - height: 115px
+                      - width: 100px  
           - type: custom:button-card
             styles:
               card:
-              - height: 235px
-              - width: 900px
+              - height: 118px
+              - width: 450px
               - margin-top: 0px
               - padding-top: 0px
-              - background: transparent 
+              - background: transparent
               grid:
               - grid-template-areas: |
                   "button1 button2"
-              - grid-template-columns: 445px 445px
-              - grid-template-rows: 230px
+              - grid-template-columns: 223px 223px
+              - grid-template-rows: 115px
               - align-items: start
-              - column-gap: 10px
+              - column-gap: 5px
             custom_fields: 
               button1: 
                 card: 
@@ -275,19 +275,19 @@ cards:
                   entity: camera.front_high_resolution_channel
                   styles:
                     card: 
-                      - width: 440px
-                      - height: 230px
+                      - width: 220px
+                      - height: 115px
                       - background: var(--background-color)
-                      - border-radius: 30px
+                      - border-radius: 15px
                       - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
                     grid:
                       - column-gap: 0px
                     icon:
-                      - width: 75px
-                      - height: 75px
+                      - width: 38px
+                      - height: 38px
                       - color: var(--text-color)
                     name:
-                      - font-size: 48px
+                      - font-size: 24px
                       - font-weight: bold
                       - white-space: normal !important
                       - text-align: left
@@ -300,23 +300,23 @@ cards:
                   entity: camera.blueberry_high_resolution_channel
                   styles:
                     card: 
-                      - width: 440px
-                      - height: 230px
+                      - width: 220px
+                      - height: 115px
                       - background: var(--background-color)
-                      - border-radius: 30px
+                      - border-radius: 15px
                       - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
                     grid:
                       - column-gap: 0px
                     icon:
-                      - width: 75px
-                      - height: 75px
+                      - width: 38px
+                      - height: 38px
                       - color: var(--text-color)
                     name:
-                      - font-size: 48px
+                      - font-size: 24px
                       - font-weight: bold
                       - white-space: normal !important
                       - text-align: left
-                      - margin-right: 15px
+                      - margin-right: 8px
       main2: 
         card:
           type: custom:button-card
@@ -325,9 +325,9 @@ cards:
           show_state: false
           styles:
             card:
-              - border-radius: 20px
-              - width: 969px
-              - height: 1206px
+              - border-radius: 10px
+              - width: 485px
+              - height: 603px
               - padding-top: 0px
               - background: var(--background-color)
             grid:
@@ -339,8 +339,8 @@ cards:
                   "space3"
                   "controls"
               - grid-template-columns: auto
-              - grid-template-rows: 50px 100px 20px 700px 20px 200px
-              - row-gap: 5px
+              - grid-template-rows: 25px 50px 10px 350px 10px 100px
+              - row-gap: 3px
               - align-items: center
               - justify-items: center
           custom_fields:
@@ -354,16 +354,16 @@ cards:
                 entity: input_text.alarm_code_input
                 styles:
                   card:
-                    - height: 100px
-                    - width: 500px
-                    - border-radius: 8px
+                    - height: 50px
+                    - width: 250px
+                    - border-radius: 4px
                     - background-color: '#FFFFFF'
                     - border: 2px solid '#666666'
                   state:
                     - color: black
-                    - font-size: 68px
+                    - font-size: 34px
                     - font-weight: bold
-                    - letter-spacing: 12px  
+                    - letter-spacing: 6px  
             # Number Keypad
             keypad:
               card:
@@ -373,8 +373,8 @@ cards:
                 show_state: false
                 styles:
                   card:
-                    - height: 700px
-                    - width: 500px
+                    - height: 350px
+                    - width: 250px
                     - background-color: transparent
                     - border-radius: 0px
                   grid:
@@ -383,12 +383,12 @@ cards:
                         "n4 n5 n6"
                         "n7 n8 n9"
                         "clear n0 enter"
-                    - grid-template-columns: 160px 160px 160px
-                    - grid-template-rows: 160px 160px 160px 160px
+                    - grid-template-columns: 80px 80px 80px
+                    - grid-template-rows: 80px 80px 80px 80px
                     - align-items: center
                     - justify-items: center
-                    - row-gap: 10px
-                    - column-gap: 10px
+                    - row-gap: 5px
+                    - column-gap: 5px
                 custom_fields:
                   n1:
                     card:
@@ -406,14 +406,14 @@ cards:
                           value: '[[[ return states["input_text.alarm_code_input"].state + "1" ]]]'
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
-                          - font-size: 68px
+                          - font-size: 34px
                           - font-weight: bold
                   n2:
                     card:
@@ -431,14 +431,14 @@ cards:
                           value: '[[[ return states["input_text.alarm_code_input"].state + "2" ]]]'
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
-                          - font-size: 68px
+                          - font-size: 34px
                           - font-weight: bold                   
                   n3:
                     card:
@@ -456,14 +456,14 @@ cards:
                           value: '[[[ return states["input_text.alarm_code_input"].state + "3" ]]]'
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
-                          - font-size: 68px
+                          - font-size: 34px
                           - font-weight: bold
                   n4:
                     card:
@@ -481,14 +481,14 @@ cards:
                           value: '[[[ return states["input_text.alarm_code_input"].state + "4" ]]]'
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
-                          - font-size: 68px
+                          - font-size: 34px
                           - font-weight: bold
                   n5:
                     card:
@@ -506,14 +506,14 @@ cards:
                           value: '[[[ return states["input_text.alarm_code_input"].state + "5" ]]]'
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
-                          - font-size: 68px
+                          - font-size: 34px
                           - font-weight: bold
                   n6:
                     card:
@@ -531,14 +531,14 @@ cards:
                           value: '[[[ return states["input_text.alarm_code_input"].state + "6" ]]]'
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
-                          - font-size: 68px
+                          - font-size: 34px
                           - font-weight: bold
                   n7:
                     card:
@@ -556,14 +556,14 @@ cards:
                           value: '[[[ return states["input_text.alarm_code_input"].state + "7" ]]]'
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
-                          - font-size: 68px
+                          - font-size: 34px
                           - font-weight: bold
                   n8:
                     card:
@@ -581,14 +581,14 @@ cards:
                           value: '[[[ return states["input_text.alarm_code_input"].state + "8" ]]]'
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
-                          - font-size: 68px
+                          - font-size: 34px
                           - font-weight: bold
                   n9:
                     card:
@@ -606,14 +606,14 @@ cards:
                           value: '[[[ return states["input_text.alarm_code_input"].state + "9" ]]]'
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
-                          - font-size: 68px
+                          - font-size: 34px
                           - font-weight: bold
                   n0:
                     card:
@@ -631,14 +631,14 @@ cards:
                           value: '[[[ return states["input_text.alarm_code_input"].state + "0" ]]]'
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         label:
                           - color: var(--primary-text-color)
-                          - font-size: 68px
+                          - font-size: 34px
                           - font-weight: bold
                   clear:
                     card:
@@ -656,14 +656,14 @@ cards:
                           value: '[[[ return states["input_text.alarm_code_input"].state.slice(0, -1) ]]]'
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         icon:
                           - color: '#D32F2F'
-                          - size: 68px
+                          - size: 34px
                   enter:
                     card:
                       type: custom:button-card
@@ -676,14 +676,14 @@ cards:
                         perform_action: script.alarm_keypad_disarm
                       styles:
                         card:
-                          - height: 160px
-                          - width: 160px
-                          - border-radius: 8px
+                          - height: 80px
+                          - width: 80px
+                          - border-radius: 4px
                           - background-color: var(--background-color-2)
                           - box-shadow: rgba(0,0,0,.35) 0px 5px 15px
                         icon:
                           - color: '#388E3C'
-                          - size: 68px                          
+                          - size: 34px                          
             # Three-way Mode Controls (similar to climate view)
             controls:
               card:
@@ -693,17 +693,17 @@ cards:
                 show_state: false
                 styles:
                   card:
-                    - height: 200px
-                    - width: 900px
+                    - height: 100px
+                    - width: 450px
                     - padding-top: 0px
                     - margin-top: 0px
-                    - border-radius: 12px
+                    - border-radius: 6px
                     - background-color: var(--background-color-2)
                   grid:
                     - grid-template-areas: |
                         "disarm home away"
-                    - grid-template-columns: 300px 300px 300px
-                    - grid-template-rows: 200px
+                    - grid-template-columns: 150px 150px 150px
+                    - grid-template-rows: 100px
                     - column-gap: 5px
                     - align-items: center
                 custom_fields:
@@ -723,16 +723,16 @@ cards:
                           entity_id: alarm_control_panel.alarmo
                       styles:
                         card:
-                          - height: 200px
-                          - width: 300px
-                          - border-radius: 12px
+                          - height: 100px
+                          - width: 150px
+                          - border-radius: 6px
                           - background-color: var(--background-color-2)
                         icon:
-                          - width: 75px
-                          - height: 75px
+                          - width: 38px
+                          - height: 38px
                           - color: var(--primary-text-color)
                         name:
-                          - font-size: 36px
+                          - font-size: 18px
                           - font-weight: bold
                           - color: var(--primary-text-color)
                       state:                
@@ -761,16 +761,16 @@ cards:
                           entity_id: alarm_control_panel.alarmo
                       styles:
                         card:
-                          - height: 200px
-                          - width: 300px
-                          - border-radius: 12px
+                          - height: 100px
+                          - width: 150px
+                          - border-radius: 6px
                           - background-color: var(--background-color-2)
                         icon:
-                          - width: 75px
-                          - height: 75px
+                          - width: 38px
+                          - height: 38px
                           - color: var(--primary-text-color)
                         name:
-                          - font-size: 36px
+                          - font-size: 18px
                           - font-weight: bold
                           - color: var(--primary-text-color)
                       state:                
@@ -809,16 +809,16 @@ cards:
                         data:
                       styles:
                         card:
-                          - height: 200px
-                          - width: 300px
-                          - border-radius: 12px
+                          - height: 100px
+                          - width: 150px
+                          - border-radius: 6px
                           - background-color: var(--background-color-2)
                         icon:
-                          - width: 75px
-                          - height: 75px
+                          - width: 38px
+                          - height: 38px
                           - color: var(--primary-text-color)
                         name:
-                          - font-size: 36px
+                          - font-size: 18px
                           - font-weight: bold
                           - color: var(--primary-text-color)
                       state:                
