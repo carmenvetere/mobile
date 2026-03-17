@@ -7,22 +7,20 @@ card:
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 80px
-      - width: 1280px
+      - height: 150px
+      - width: 2048px
       - background-color: black 
     grid:
       - grid-template-areas: |
-          "time alarm notifications vent cleaner dinner guest temp"
-      - grid-template-columns: 250px 350px 140px 80px 80px 80px 80px 175px
-      - grid-template-rows: 80px
+          "time alarm notifications riv bmw vent cleaner dinner guest temp"
+      - grid-template-columns: 400px 500px 125px 175px 175px 100px 100px 100px 100px 273px
+      - grid-template-rows: 150px
       - align-items: center
       - justify-items: start
       - column-gap: 10px
     custom_fields:
       time:
-        - margin-left: 5px
-      temp:
-        - margin-right: 5px
+        - margin-left: 20px
   custom_fields:
     time:
       card:
@@ -47,7 +45,7 @@ card:
             - justify-self: start
             - background: transparent
           state:
-            - font-size: 36px
+            - font-size: 56px
             - font-weight: bold
             - padding-left: 10px
     alarm:
@@ -74,8 +72,8 @@ card:
           ]]]
         styles:
           icon:
-            - width: 60px
-            - height: 60px
+            - width: 75px
+            - height: 75px
             - color: |
                 [[[
                   var state = states['alarm_control_panel.alarmo'].state;
@@ -86,7 +84,7 @@ card:
                   return 'var(--primary-text-color)';
                 ]]]
           state:
-            - font-size: 36px
+            - font-size: 54px
             - font-weight: bold
             - justify-self: start
           grid: 
@@ -130,7 +128,7 @@ card:
             navigation_path: /mudroom-wall-panel-dash/notifications-view
           styles:
             state:
-              - font-size: 36px
+              - font-size: 48px
               - font-weight: bold
               - justify-self: start
             grid: 
@@ -140,8 +138,8 @@ card:
               - align-self: center
               - justify-content: end
             icon:
-              - width: 60px
-              - height: 60px
+              - width: 75px
+              - height: 75px
               - padding-left: 5px
               - color: >
                   [[[
@@ -174,8 +172,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 60px
-              - height: 60px
+              - width: 75px
+              - height: 75px
               - color: var(--accent-color)
             img_cell:
               - align-self: center
@@ -203,8 +201,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 60px
-              - height: 60px
+              - width: 75px
+              - height: 75px
               - color: var(--primary-text-color)
             img_cell:
               - align-self: center
@@ -232,8 +230,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 60px
-              - height: 60px
+              - width: 75px
+              - height: 75px
               - color: var(--primary-text-color)
             img_cell:
               - align-self: center
@@ -261,8 +259,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 60px
-              - height: 60px
+              - width: 75px
+              - height: 75px
               - color: var(--primary-text-color)
             img_cell:
               - align-self: center
@@ -272,6 +270,51 @@ card:
               - align-self: center
               - justify-self: center
               - background: transparent
+    riv:
+      card:
+        type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: 'on'
+        card:
+          type: custom:mushroom-chips-card
+          chips:
+            type: template
+            icon: mdi:ev-plug-type2
+            entity: sensor.r1t_charging_time_remaining
+            icon_color: var(--accent-color-2)
+            content: >
+              {{ (now() + timedelta(minutes=states('sensor.r1t_charging_time_remaining')|int(0))).strftime('%-I:%M %p') }}
+            tap_action:
+              action: more-info
+              entity: sensor.r1t_battery_state_of_charge
+            card_mod:
+              style: |
+                :host {
+                  zoom: 1.25 !important;
+                  --chip-background: transparent;
+                }
+    bmw:
+      card:
+        type: conditional
+        conditions:
+          - condition: state
+            entity: sensor.wall_charger_charging_status
+            state: 'charging'
+        card:
+          type: custom:mushroom-chips-card
+          chips:
+            type: template
+            icon: mdi:ev-plug-type2
+            icon_color: var(--accent-color)
+            content: "Charging"
+            card_mod:
+              style: |
+                :host {
+                  zoom: 1.25 !important;
+                  --chip-background: transparent;
+                }
     temp:
       card:
         type: custom:button-card
@@ -291,15 +334,15 @@ card:
           navigation_path: /mudroom-wall-panel-dash/weather-view
         styles:
           state:
-            - font-size: 36px
+            - font-size: 54px
             - font-weight: bold
             - justify-self: start
           icon:
-            - width: 60px
-            - height: 60px
+            - width: 75px
+            - height: 75px
           grid: 
-            - column-gap: 2px
-            - grid-template-columns: 70px auto
+            - column-gap: 10px
+            - grid-template-columns: 100px auto
           img_cell:
             - align-self: center
             - justify-content: end
