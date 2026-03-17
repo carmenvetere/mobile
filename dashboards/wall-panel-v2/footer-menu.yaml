@@ -7,13 +7,13 @@ card:
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 80px
+      - height: 150px
       - background-color: black
     grid:
       - grid-template-areas: |
           "home lights music climate security energy vacuum other"
       - grid-template-columns: auto
-      - grid-template-rows: 80px
+      - grid-template-rows: 150px
       - align-items: center
       - column-gap: 0px
   custom_fields:
@@ -37,8 +37,8 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('home-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 60px
-            - width: 60px
+            - height: 90px
+            - width: 90px
         tap_action:
           action: navigate
           navigation_path: /living-room-wall-panel-dash/home-view
@@ -61,8 +61,8 @@ card:
     #               const path = window.location.pathname + window.location.hash;
     #               return path.includes('lights-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
     #             ]]]
-    #         - height: 60px
-    #         - width: 60px
+    #         - height: 90px
+    #         - width: 90px
     #     tap_action:
     #       action: navigate
     #       navigation_path: /mudroom-wall-panel-dash/lights-view
@@ -85,8 +85,8 @@ card:
     #               const path = window.location.pathname + window.location.hash;
     #               return path.includes('climate-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
     #             ]]]
-    #         - height: 60px
-    #         - width: 60px
+    #         - height: 90px
+    #         - width: 90px
     #     tap_action:
     #       action: navigate
     #       navigation_path: /mudroom-wall-panel-dash/climate-view
@@ -109,8 +109,8 @@ card:
     #               const path = window.location.pathname + window.location.hash;
     #               return path.includes('music-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
     #             ]]]
-    #         - height: 60px
-    #         - width: 60px
+    #         - height: 90px
+    #         - width: 90px
     #     tap_action:
     #       action: navigate
     #       navigation_path: /mudroom-wall-panel-dash/music-view
@@ -133,8 +133,8 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('energy-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 60px
-            - width: 60px
+            - height: 90px
+            - width: 90px
         tap_action:
           action: navigate
           navigation_path: /living-room-wall-panel-dash/energy-view
@@ -157,8 +157,8 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('security-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 60px
-            - width: 60px
+            - height: 90px
+            - width: 90px
         tap_action:
           action: navigate
           navigation_path: /living-room-wall-panel-dash/security-view
@@ -181,8 +181,8 @@ card:
     #               const path = window.location.pathname + window.location.hash;
     #               return path.includes('vacuum-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
     #             ]]]
-    #         - height: 60px
-    #         - width: 60px
+    #         - height: 90px
+    #         - width: 90px
     #     tap_action:
     #       action: navigate
     #       navigation_path: /mudroom-wall-panel-dash/vacuum-view
@@ -205,8 +205,8 @@ card:
                   const path = window.location.pathname + window.location.hash;
                   return path.includes('settings-view') ? 'var(--background-color)' : 'var(--primary-text-color)';
                 ]]]
-            - height: 60px
-            - width: 60px
+            - height: 90px
+            - width: 90px
         tap_action:
           action: navigate
           navigation_path: /mudroom-wall-panel-dash/settings-view       
