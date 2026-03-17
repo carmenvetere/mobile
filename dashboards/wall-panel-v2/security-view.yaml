@@ -318,7 +318,76 @@ cards:
                       - font-weight: bold
                       - white-space: normal !important
                       - text-align: left
-                      - margin-right: 8px
+                      - margin-right: 12px
+          - type: custom:button-card
+            styles:
+              card:
+#              - height: 118px
+#              - width: 450px
+              - margin-top: 0px
+              - padding-top: 0px
+              - border-radius: 0px
+              - background-color: transparent
+              - box-shadow: none
+              grid:
+              - grid-template-areas: |
+                  "button1 button2"
+              - grid-template-columns: 223px 223px
+              - grid-template-rows: 115px
+              - align-items: start
+              - column-gap: 5px
+            custom_fields: 
+              button1: 
+                card: 
+                  type: custom:button-card
+                  name: Pool
+                  icon: mdi:cctv
+                  layout: icon_name
+                  entity: camera.pool_high_resolution_channel
+                  styles:
+                    card: 
+                      - width: 220px
+                      - height: 115px
+                      - background-color: var(--background-color)
+                      - border-radius: 15px
+                      - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+                    grid:
+                      - column-gap: 0px
+                    icon:
+                      - width: 38px
+                      - height: 38px
+                      - color: var(--text-color)
+                    name:
+                      - font-size: 24px
+                      - font-weight: bold
+                      - white-space: normal !important
+                      - text-align: left
+              button2: 
+                card: 
+                  type: custom:button-card
+                  name: Driveway
+                  icon: mdi:cctv
+                  layout: icon_name
+                  entity: camera.driveway_high_resolution_channel_2
+                  styles:
+                    card: 
+                      - width: 220px
+                      - height: 115px
+                      - background-color: var(--background-color)
+                      - border-radius: 15px
+                      - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+                    grid:
+                      - column-gap: 0px
+                    icon:
+                      - width: 38px
+                      - height: 38px
+                      - color: var(--text-color)
+                    name:
+                      - font-size: 24px
+                      - font-weight: bold
+                      - white-space: normal !important
+                      - text-align: left
+                      - margin-right: 12px
       main2: 
         card:
           type: custom:button-card
