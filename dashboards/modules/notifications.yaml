@@ -155,7 +155,7 @@
   conditions:
     - condition: numeric_state
       entity: sensor.utility_room_temp_sensor_temperature
-      above: 50
+      above: 80
   card:
     type: custom:bubble-card
     card_type: button
