@@ -113,7 +113,7 @@ cards:
                     sub_button:
                       main:
                         - entity: sensor.net_grid_export_ytd
-                          state_display: "{{ states('sensor.net_grid_export_ytd') | round(0) | int }}"
+                          state_display: "{{ states('sensor.net_grid_export_ytd') | round(0) | int }} kWh"
                           show_state: true
                           show_icon: false
                       bottom: []
