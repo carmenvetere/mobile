@@ -29,6 +29,7 @@ cards:
       custom_fields:
         main1:
           - margin-left: 25px
+          - margin-right: 25px
         main2:
           - margin-right: 25px
           - height: 100%
@@ -144,6 +145,7 @@ cards:
               entity: sensor.bayberry_home_usage
               name: Today's Energy Used
               show_state: false
+              scrolling_effect: false
               modules:
                 - wall_panel_scenes
             - type: custom:bubble-card
@@ -167,6 +169,7 @@ cards:
               entity: sensor.solcast_pv_forecast_forecast_today
               name: Today's Solar Forecast
               show_state: false
+              scrolling_effect: false
               modules:
                 - wall_panel_scenes
             - type: custom:bubble-card
@@ -184,6 +187,7 @@ cards:
               name: Powerwall Backup Reserve
               show_state: false
               tap_action: none
+              scrolling_effect: false
               modules:
                 - wall_panel_scenes
       main2: 
