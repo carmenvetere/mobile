@@ -143,11 +143,11 @@ cards:
               slider_fill_orientation: left
               slider_value_position: right
               entity: sensor.bayberry_home_usage
-              name: Today's Energy Used
+              name: Today's Energy Consumption
               show_state: false
               scrolling_effect: false
               modules:
-                - wall_panel_scenes
+                - wall_panel_energy_history
             - type: custom:bubble-card
               card_type: button
               button_type: state
@@ -171,7 +171,7 @@ cards:
               show_state: false
               scrolling_effect: false
               modules:
-                - wall_panel_scenes
+                - wall_panel_energy_history
             - type: custom:bubble-card
               card_type: button
               button_type: slider
@@ -189,7 +189,7 @@ cards:
               tap_action: none
               scrolling_effect: false
               modules:
-                - wall_panel_scenes
+                - wall_panel_energy_history
       main2: 
         card:
           type: custom:stack-in-card
