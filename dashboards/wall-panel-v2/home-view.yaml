@@ -354,7 +354,7 @@ cards:
               show_label: true
               show_icon: true
               icon: mdi:speaker-multiple
-              label: "[[[return entity.state]]]"
+              label: "[[[return entity?.state ?? 'No Speakers']]]"
               tap_action:
                 action: none
               triggers_update:
