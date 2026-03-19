@@ -107,7 +107,8 @@
           'switch.transformer_zone_3',
           'switch.transformer_zone_1_2',
           'switch.transformer_zone_2_2',
-          'switch.transformer_zone_3_2'
+          'switch.transformer_zone_3_2',
+          'light.stairs_spot_lights'
         ] %}
         {% set on_lights = lights | select('is_state', 'on') | list %}
         {% if on_lights | length == 0 %}
