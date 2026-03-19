@@ -11,26 +11,27 @@ cards:
         - padding-bottom: 5px
         - padding-left: 0px
         - padding-top: 0px
-        - margin-left: -4px
-        - margin-top: -4px        
-        - width: 2048px
-        - height: 1536px
+        - margin-left: -2px
+        - margin-top: -2px
+        - width: 1024px
+        - height: 768px
         - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header header"
             "main1 main2"
             "nav nav"
-        - grid-template-columns: 1019px 1019px
-        - grid-template-rows: 150px 1206px 150px
+        - grid-template-columns: 510px 510px
+        - grid-template-rows: 75px 603px 75px
         - align-items: start
-        - column-gap: 10px
-        - row-gap: 15px
+        - column-gap: 5px
+        - row-gap: 8px
       custom_fields:
         main1:
-          - margin-left: 50px
+          - margin-left: 25px
+          - margin-right: 25px
         main2:
-          - margin-right: 50px
+          - margin-right: 25px
           - height: 100%
     custom_fields:
       header: !include header.yaml
@@ -61,18 +62,18 @@ cards:
             - type: custom:button-card
               styles:
                 card:
-                - height: 230px
-                - width: 900px
+                - height: 115px
+                - width: 450px
                 - margin-top: 0px
                 - padding-top: 0px
-                - background: transparent 
+                - background: transparent
                 grid:
                 - grid-template-areas: |
                     "button1 button2"
-                - grid-template-columns: 445px 445px
-                - grid-template-rows: 230px
+                - grid-template-columns: 223px 223px
+                - grid-template-rows: 115px
                 - align-items: start
-                - column-gap: 10px
+                - column-gap: 5px
               custom_fields: 
                 button1: 
                   card: 
@@ -142,10 +143,11 @@ cards:
               slider_fill_orientation: left
               slider_value_position: right
               entity: sensor.bayberry_home_usage
-              name: Today's Energy Used
+              name: Today's Energy Consumption
               show_state: false
+              scrolling_effect: false
               modules:
-                - wall_panel_scenes
+                - wall_panel_energy_history
             - type: custom:bubble-card
               card_type: button
               button_type: state
@@ -167,8 +169,9 @@ cards:
               entity: sensor.solcast_pv_forecast_forecast_today
               name: Today's Solar Forecast
               show_state: false
+              scrolling_effect: false
               modules:
-                - wall_panel_scenes
+                - wall_panel_energy_history
             - type: custom:bubble-card
               card_type: button
               button_type: slider
@@ -184,8 +187,9 @@ cards:
               name: Powerwall Backup Reserve
               show_state: false
               tap_action: none
+              scrolling_effect: false
               modules:
-                - wall_panel_scenes
+                - wall_panel_energy_history
       main2: 
         card:
           type: custom:stack-in-card
@@ -207,7 +211,7 @@ cards:
                   icon: mdi:lightning-bolt
                   styles: |
                     .bubble-name {
-                    font-size: 48px !important;  /* title */
+                    font-size: 24px !important;  /* title */
                     font-weight: bold !important;
                     }
                     .bubble-line {
@@ -215,54 +219,54 @@ cards:
                     opacity: 0.1;
                     }
                     .card-content {
-                    padding-top: 25px !important;
-                    padding-left: 10px !important;
-                    margin-right: 50px !important;
-                    }  
+                    padding-top: 13px !important;
+                    padding-left: 5px !important;
+                    margin-right: 25px !important;
+                    }
                 - type: custom:power-flow-card-plus
                   clickable_entities: false
                   card_mod:
                     style: |
                       ha-card {
-                        font-size: 44px !important;
+                        font-size: 22px !important;
                         background: transparent !important;
-                        zoom: 1.8 !important;
+                        zoom: 0.9 !important;
                       }
                       ha-card .card-header {
                         text-align: left !important;
-                        font-size: 48px !important;
+                        font-size: 24px !important;
                         font-weight: bold !important;
                       }
                       ha-card * {
-                        font-size: 36px !important;
+                        font-size: 18px !important;
                         font-weight: bold !important;
                       }
                       ha-card .card-content {
-                        padding-top: 125px !important;
+                        padding-top: 63px !important;
                       }
                       ha-card .value,
                       ha-card [class*="value"],
                       ha-card .power-value {
-                        font-size: 36px !important;
+                        font-size: 18px !important;
                         font-weight: bold !important;
                       }
 
                       ha-card .label,
                       ha-card [class*="label"],
                       ha-card .entity-name {
-                        font-size: 36px !important;
+                        font-size: 18px !important;
                         font-weight: bold !important;
                         color: var(--primary-text-color) !important;
                       }
 
                       ha-card .individual *,
                       ha-card [class*="individual"] * {
-                        font-size: 36px !important;
+                        font-size: 18px !important;
                       }
 
                       ha-card .secondary,
                       ha-card [class*="secondary"] {
-                        font-size: 36px !important;
+                        font-size: 18px !important;
                         opacity: 0.8;
                       }
                   entities:
@@ -335,9 +339,9 @@ cards:
         scrolling_effect: false
         styles: |
           .bubble-name {
-            font-size: 48px !important;
+            font-size: 24px !important;
             line-height: 1.1;
-            margin-bottom: 30px !important;
+            margin-bottom: 15px !important;
             }
 
           .bubble-button-card-container {
@@ -352,11 +356,11 @@ cards:
             
           .bubble-icon-container {
             background-color: transparent !important;
-            margin-bottom: 30px !important;
+            margin-bottom: 15px !important;
             }
-            
+
           .bubble-icon {
-            --mdc-icon-size: 36px !important;
+            --mdc-icon-size: 18px !important;
             }
         card_layout: large
         width_desktop: 25%
@@ -420,9 +424,9 @@ cards:
         scrolling_effect: false
         styles: |
           .bubble-name {
-            font-size: 48px !important;
+            font-size: 24px !important;
             line-height: 1.1;
-            margin-bottom: 30px !important;
+            margin-bottom: 15px !important;
             }
 
           .bubble-button-card-container {
@@ -437,11 +441,11 @@ cards:
             
           .bubble-icon-container {
             background-color: transparent !important;
-            margin-bottom: 30px !important;
+            margin-bottom: 15px !important;
             }
-            
+
           .bubble-icon {
-            --mdc-icon-size: 36px !important;
+            --mdc-icon-size: 18px !important;
             }
         card_layout: large
         width_desktop: 25%

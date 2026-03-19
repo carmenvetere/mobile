@@ -3,26 +3,24 @@ card:
   styles:
     card:
       - border-radius: 0px
-      - padding-bottom: 15px
+      - padding-bottom: 8px
       - padding-left: 0px
       - margin: 0px
       - padding-top: 0px
-      - height: 80px
-      - width: 1280px
-      - background-color: black 
+      - height: 75px
+      - width: 1024px
+      - background-color: black
     grid:
       - grid-template-areas: |
-          "time alarm notifications vent cleaner dinner guest temp"
-      - grid-template-columns: 250px 350px 140px 80px 80px 80px 80px 175px
-      - grid-template-rows: 80px
+          "time alarm notifications riv bmw vent cleaner dinner guest temp"
+      - grid-template-columns: 180px 220px 73px 88px 88px 50px 50px 50px 50px 110px
+      - grid-template-rows: 75px
       - align-items: center
       - justify-items: start
-      - column-gap: 10px
+      - column-gap: 5px
     custom_fields:
       time:
-        - margin-left: 5px
-      temp:
-        - margin-right: 5px
+        - margin-left: 10px
   custom_fields:
     time:
       card:
@@ -47,9 +45,9 @@ card:
             - justify-self: start
             - background: transparent
           state:
-            - font-size: 36px
+            - font-size: 28px
             - font-weight: bold
-            - padding-left: 10px
+            - padding-left: 5px
     alarm:
       card:
         type: custom:button-card
@@ -74,8 +72,8 @@ card:
           ]]]
         styles:
           icon:
-            - width: 60px
-            - height: 60px
+            - width: 38px
+            - height: 38px
             - color: |
                 [[[
                   var state = states['alarm_control_panel.alarmo'].state;
@@ -86,12 +84,12 @@ card:
                   return 'var(--primary-text-color)';
                 ]]]
           state:
-            - font-size: 36px
+            - font-size: 27px
             - font-weight: bold
             - justify-self: start
-          grid: 
-            - column-gap: 10px
-            - grid-template-columns: 100px auto
+          grid:
+            - column-gap: 5px
+            - grid-template-columns: 50px auto
           img_cell:
             - align-self: center
             - justify-content: start
@@ -127,22 +125,22 @@ card:
           show_state: true
           tap_action:
             action: navigate
-            navigation_path: /mudroom-wall-panel-dash/notifications-view
+            navigation_path: '#notifications'
           styles:
             state:
-              - font-size: 36px
+              - font-size: 24px
               - font-weight: bold
               - justify-self: start
-            grid: 
-              - column-gap: 3px
-              - grid-template-columns: 100px auto
+            grid:
+              - column-gap: 2px
+              - grid-template-columns: 50px auto
             img_cell:
               - align-self: center
               - justify-content: end
             icon:
-              - width: 60px
-              - height: 60px
-              - padding-left: 5px
+              - width: 38px
+              - height: 38px
+              - padding-left: 3px
               - color: >
                   [[[
                     const priority = states['sensor.notification_icon_priority'].state;
@@ -174,8 +172,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 60px
-              - height: 60px
+              - width: 38px
+              - height: 38px
               - color: var(--accent-color)
             img_cell:
               - align-self: center
@@ -203,8 +201,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 60px
-              - height: 60px
+              - width: 38px
+              - height: 38px
               - color: var(--primary-text-color)
             img_cell:
               - align-self: center
@@ -232,8 +230,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 60px
-              - height: 60px
+              - width: 38px
+              - height: 38px
               - color: var(--primary-text-color)
             img_cell:
               - align-self: center
@@ -261,8 +259,8 @@ card:
             action: toggle
           styles:
             icon:
-              - width: 60px
-              - height: 60px
+              - width: 38px
+              - height: 38px
               - color: var(--primary-text-color)
             img_cell:
               - align-self: center
@@ -272,6 +270,51 @@ card:
               - align-self: center
               - justify-self: center
               - background: transparent
+    riv:
+      card:
+        type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.r1t_charging_status
+            state: 'on'
+        card:
+          type: custom:mushroom-chips-card
+          chips:
+            type: template
+            icon: mdi:ev-plug-type2
+            entity: sensor.r1t_charging_time_remaining
+            icon_color: var(--accent-color-2)
+            content: >
+              {{ (now() + timedelta(minutes=states('sensor.r1t_charging_time_remaining')|int(0))).strftime('%-I:%M %p') }}
+            tap_action:
+              action: more-info
+              entity: sensor.r1t_battery_state_of_charge
+            card_mod:
+              style: |
+                :host {
+                  zoom: 1.25 !important;
+                  --chip-background: transparent;
+                }
+    bmw:
+      card:
+        type: conditional
+        conditions:
+          - condition: state
+            entity: sensor.wall_charger_charging_status
+            state: 'charging'
+        card:
+          type: custom:mushroom-chips-card
+          chips:
+            type: template
+            icon: mdi:ev-plug-type2
+            icon_color: var(--accent-color)
+            content: "Charging"
+            card_mod:
+              style: |
+                :host {
+                  zoom: 1.25 !important;
+                  --chip-background: transparent;
+                }
     temp:
       card:
         type: custom:button-card
@@ -288,18 +331,18 @@ card:
           ]]]
         tap_action:
           action: navigate
-          navigation_path: /mudroom-wall-panel-dash/weather-view
+          navigation_path: '#weather'
         styles:
           state:
-            - font-size: 36px
+            - font-size: 27px
             - font-weight: bold
             - justify-self: start
           icon:
-            - width: 60px
-            - height: 60px
-          grid: 
-            - column-gap: 2px
-            - grid-template-columns: 70px auto
+            - width: 38px
+            - height: 38px
+          grid:
+            - column-gap: 1px
+            - grid-template-columns: 50px auto
           img_cell:
             - align-self: center
             - justify-content: end
