@@ -12,36 +12,43 @@ cards:
         - padding-bottom: 5px
         - padding-left: 0px
         - padding-top: 0px
-        - margin-left: -4px
-        - margin-top: -4px
-        - width: 1280px
-        - height: 720px
+        - margin-left: -2px
+        - margin-top: -2px
+        - width: 1024px
+        - height: 768px
         - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header header"
             "main1 main2"
             "nav nav"
-        - grid-template-columns: 635px 635px
-        - grid-template-rows: 80px 530px 80px
+        - grid-template-columns: 510px 510px
+        - grid-template-rows: 75px 603px 75px
         - align-items: start
-        - column-gap: 10px
-        - row-gap: 15px
+        - column-gap: 5px
+        - row-gap: 8px
       custom_fields:
         main1:
-          - margin-left: 50px
+          - margin-left: 25px
+          - margin-right: 25px
     custom_fields:
       header: !include header.yaml
       main2:
-        card:
+        card: 
           type: custom:stack-in-card
           mode: vertical
           keep:
             margin: false
             outer_padding: false
+            inner_padding: false
             background: true
             box_shadow: true
             border_radius: true
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--background-color) !important;
+                }
           cards:
             # === Speaker / group navigator button — tap to open popup ===
             - type: custom:button-card
@@ -131,9 +138,9 @@ cards:
                     hideSonosFavorites: true
                     customFavorites:
                       all: !include /config/dashboards/modules/custom-favorites.yaml
-                heightPercentage: 200
-                footerHeight: 12
-                sectionButtonIconSize: 6
+                heightPercentage: 93
+                footerHeight: 8
+                sectionButtonIconSize: 5
                 groups:
                   title: Speaker Groups
                   backgroundColor: "#C0C4C5"
@@ -171,13 +178,13 @@ cards:
                         --mdc-icon-button-ink-color: var(--secondary-text-color) !important;
                       }
                       ha-card {
-                        margin-left: 10px !important;
-                        margin-right: 10px !important;
+                        margin-left: 5px !important;
+                        margin-right: 5px !important;
                         margin-top: 0px !important;
                         max-width: 96% !important;
                         max-height: 96% !important;
                         background-color: var(--background-color) !important;
-                        border-radius: 0 0 15px 15px !important;
+                        border-radius: 0 0 8px 8px !important;
                       }
                       ha-control-slider {
                         --control-slider-color: var(--primary-text-color) !important;
@@ -185,18 +192,18 @@ cards:
                     sonos-player$ sonos-player-header$: |
                       .song {
                         color: var(--primary-text-color) !important;
-                        font-size: 48px !important;
+                        font-size: 24px !important;
                         font-weight: bold !important;
                       }
                       .artist-album {
                         color: var(--primary-text-color) !important;
-                        font-size: 48px !important;
+                        font-size: 24px !important;
                         font-weight: 500 !important;
                       }
                     sonos-player$ sonos-player-header$ sonos-progress$: |
                       .progress {
                         color: var(--primary-text-color) !important;
-                        font-size: 40px !important;
+                        font-size: 14px !important;
                         font-weight: bold !important;
                         --paper-progress-active-color: var(--primary-text-color) !important;
                       }
@@ -205,29 +212,29 @@ cards:
                       }
                     sonos-player$ sonos-player-controls$: |
                       ha-icon-button {
-                        --mdc-icon-size: 80px !important;
-                        width: 80px !important;
-                        height: 80px !important;
+                        --mdc-icon-size: 40px !important;
+                        width: 40px !important;
+                        height: 40px !important;
                       }
                     sonos-player$ sonos-player-controls$ sonos-volume$: |
                       .volume-level {
-                        font-size: 52px !important;
+                        font-size: 14px !important;
                         font-weight: bold !important;
                       }
                       .volume-slider {
-                        --control-slider-thickness: 150px !important;
+                        --control-slider-thickness: 75px !important;
                       }
                     sonos-media-browser$: |
                       .header {
-                        font-size: 40px !important;
+                        font-size: 18px !important;
                         font-weight: bold !important;
-                        padding-top: 10px !important;
+                        padding-top: 5px !important;
                         background-color: var(--background-color) !important;
                       }
                       .title {
-                        font-size: 40px !important;
+                        font-size: 18px !important;
                         font-weight: bold !important;
-                        padding-top: 10px !important;
+                        padding-top: 5px !important;
                       }
                     sonos-media-browser$ sonos-favorites-icons$: |
                       .icons {
@@ -240,19 +247,19 @@ cards:
                         margin: 0 !important;
                       }
                       .title {
-                        font-size: 40px !important;
+                        font-size: 18px !important;
                         height: 100% !important;
                         display: flex !important;
                         align-items: center !important;
                         justify-content: left !important;
-                        padding-left: 30px !important;
-                        padding-top: 10px !important;
+                        padding-left: 15px !important;
+                        padding-top: 5px !important;
                         background-color: var(--background-color-2) !important;
                       }
                       .button {
-                        border-radius: 15px !important;
-                        height: 150px !important;
-                        margin: 10px !important;
+                        border-radius: 8px !important;
+                        height: 75px !important;
+                        margin: 5px !important;
                         max-width: 95% !important;
                         display: flex !important;
                         align-items: center !important;
@@ -260,35 +267,35 @@ cards:
                         background-color: var(--background-color-2) !important;
                       }
                       ha-control-button {
-                        height: 150px !important;
+                        height: 75px !important;
                         max-width: 95% !important;
-                        margin-left: 12px !important;
+                        margin-left: 6px !important;
                         background-image: none !important;
                       }
                     sonos-groups$ sonos-group$: |
                       mwc-list-item {
                         background: var(--background-color-2) !important;
-                        height: 80px !important;
+                        height: 40px !important;
                       }
                       .row {
                         height: 100% !important;
                       }
                       .speakers {
-                        font-size: 24px !important;
+                        font-size: 12px !important;
                         text-align: left !important;
-                        margin-bottom: 10px !important;
+                        margin-bottom: 5px !important;
                       }
                       .song-title {
-                        font-size: 20px !important;
+                        font-size: 10px !important;
                       }
                     sonos-grouping$: |
                       .name {
-                        font-size: 24px !important;
+                        font-size: 12px !important;
                         font-weight: bold !important;
                         text-align: left !important;
                         justify-content: flex-start !important;
-                        margin-left: 10px !important;
-                        margin-top: 10px !important;
+                        margin-left: 5px !important;
+                        margin-top: 5px !important;
                       }
                       .item {
                         justify-content: flex-start !important;
@@ -296,29 +303,29 @@ cards:
                       .name-and-volume {
                         align-items: flex-start !important;
                         background-color: var(--background-color-2) !important;
-                        border-radius: 15px !important;
-                        margin-right: 10px !important;
-                        padding-left: 10px !important;
-                        height: 80px !important;
+                        border-radius: 8px !important;
+                        margin-right: 5px !important;
+                        padding-left: 5px !important;
+                        height: 40px !important;
                       }
                       .volume {
-                        --control-slider-thickness: 20px !important;
+                        --control-slider-thickness: 10px !important;
                         --control-slider-background: var(--background-color) !important;
-                        margin-left: 10px !important;
-                        margin-right: 10px !important;
+                        margin-left: 5px !important;
+                        margin-right: 5px !important;
                       }
                     sonos-grouping$ sonos-grouping-button$: |
                       ha-control-button {
                         background: var(--background-color-2) !important;
-                        height: 80px !important;
-                        border-radius: 15px !important;
-                        font-size: 20px !important;
+                        height: 40px !important;
+                        border-radius: 8px !important;
+                        font-size: 10px !important;
                         font-weight: bold !important;
                       }
                     sonos-grouping$ sonos-grouping-button$ ha-control-button$: |
                       .button {
                         background: var(--primary-color) !important;
-                        border-radius: 15px !important;
+                        border-radius: 8px !important;
                       }
       main1:
         card: !include
