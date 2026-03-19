@@ -420,13 +420,13 @@ cards:
                   - input_select.sonos_speaker_select
                   - media_player.living_room
                 tap_action:
+                  action: toggle
+                double_tap_action:
                   action: call-service
                   service: input_select.select_option
                   service_data:
                     entity_id: input_select.sonos_speaker_select
                     option: Living Room
-                double_tap_action:
-                  action: toggle
                 hold_action:
                   action: call-service
                   service: script.sonos_set_main_speaker
@@ -483,13 +483,13 @@ cards:
                   - input_select.sonos_speaker_select
                   - media_player.kitchen
                 tap_action:
+                  action: toggle
+                double_tap_action:
                   action: call-service
                   service: input_select.select_option
                   service_data:
                     entity_id: input_select.sonos_speaker_select
                     option: Kitchen
-                double_tap_action:
-                  action: toggle
                 hold_action:
                   action: call-service
                   service: script.sonos_set_main_speaker
@@ -546,13 +546,13 @@ cards:
                   - input_select.sonos_speaker_select
                   - media_player.office
                 tap_action:
+                  action: toggle
+                double_tap_action:
                   action: call-service
                   service: input_select.select_option
                   service_data:
                     entity_id: input_select.sonos_speaker_select
                     option: Office
-                double_tap_action:
-                  action: toggle
                 hold_action:
                   action: call-service
                   service: script.sonos_set_main_speaker
@@ -609,13 +609,13 @@ cards:
                   - input_select.sonos_speaker_select
                   - media_player.deck
                 tap_action:
+                  action: toggle
+                double_tap_action:
                   action: call-service
                   service: input_select.select_option
                   service_data:
                     entity_id: input_select.sonos_speaker_select
                     option: Deck
-                double_tap_action:
-                  action: toggle
                 hold_action:
                   action: call-service
                   service: script.sonos_set_main_speaker
@@ -672,13 +672,13 @@ cards:
                   - input_select.sonos_speaker_select
                   - media_player.pool
                 tap_action:
+                  action: toggle
+                double_tap_action:
                   action: call-service
                   service: input_select.select_option
                   service_data:
                     entity_id: input_select.sonos_speaker_select
                     option: Pool
-                double_tap_action:
-                  action: toggle
                 hold_action:
                   action: call-service
                   service: script.sonos_set_main_speaker
@@ -738,13 +738,13 @@ cards:
                   - input_select.sonos_speaker_select
                   - media_player.primary_bedroom
                 tap_action:
+                  action: toggle
+                double_tap_action:
                   action: call-service
                   service: input_select.select_option
                   service_data:
                     entity_id: input_select.sonos_speaker_select
                     option: Primary Bedroom
-                double_tap_action:
-                  action: toggle
                 hold_action:
                   action: call-service
                   service: script.sonos_set_main_speaker
@@ -801,13 +801,13 @@ cards:
                   - input_select.sonos_speaker_select
                   - media_player.primary_bathroom
                 tap_action:
+                  action: toggle
+                double_tap_action:
                   action: call-service
                   service: input_select.select_option
                   service_data:
                     entity_id: input_select.sonos_speaker_select
                     option: Primary Bathroom
-                double_tap_action:
-                  action: toggle
                 hold_action:
                   action: call-service
                   service: script.sonos_set_main_speaker
@@ -864,13 +864,13 @@ cards:
                   - input_select.sonos_speaker_select
                   - media_player.gym
                 tap_action:
+                  action: toggle
+                double_tap_action:
                   action: call-service
                   service: input_select.select_option
                   service_data:
                     entity_id: input_select.sonos_speaker_select
                     option: Gym
-                double_tap_action:
-                  action: toggle
                 hold_action:
                   action: call-service
                   service: script.sonos_set_main_speaker
@@ -927,13 +927,13 @@ cards:
                   - input_select.sonos_speaker_select
                   - media_player.mud_room
                 tap_action:
+                  action: toggle
+                double_tap_action:
                   action: call-service
                   service: input_select.select_option
                   service_data:
                     entity_id: input_select.sonos_speaker_select
                     option: Mud Room
-                double_tap_action:
-                  action: toggle
                 hold_action:
                   action: call-service
                   service: script.sonos_set_main_speaker
@@ -990,13 +990,13 @@ cards:
                   - input_select.sonos_speaker_select
                   - media_player.media_room
                 tap_action:
+                  action: toggle
+                double_tap_action:
                   action: call-service
                   service: input_select.select_option
                   service_data:
                     entity_id: input_select.sonos_speaker_select
                     option: Media Room
-                double_tap_action:
-                  action: toggle
                 hold_action:
                   action: call-service
                   service: script.sonos_set_main_speaker
@@ -1029,7 +1029,7 @@ cards:
           - type: horizontal-stack
             cards:
               - type: custom:button-card
-                name: "Tap = listen  •  Double-tap = group  •  Hold = set main"
+                name: "Tap = group  •  Double-tap = listen  •  Hold = set main"
                 show_name: true
                 show_icon: false
                 tap_action:
