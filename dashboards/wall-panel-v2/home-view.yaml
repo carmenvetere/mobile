@@ -333,7 +333,9 @@ cards:
             - module_name: wall_panel_scenes
               dashboard: basement_wall_panel
       nav: !include footer-menu.yaml
-# Sonos Grouping Pop-Up
+  # Sonos Grouping Pop-Up
   - !include /config/dashboards/modules/sonos-grouping-pop-up.yaml
   # Weather Pop-Up
   - !include /config/dashboards/modules/weather-pop-up.yaml
+  #Notifications Pop-Up
+  - !include /config/dashboards/modules/notifications-pop-up.yaml
