@@ -22,9 +22,8 @@ cards:
             "header header"
             "main1 main2"
             "nav nav"
-            "popup popup"
         - grid-template-columns: 510px 510px
-        - grid-template-rows: 75px 603px 75px 0px
+        - grid-template-rows: 75px 603px 75px
         - align-items: start
         - column-gap: 5px
         - row-gap: 8px
@@ -32,10 +31,6 @@ cards:
         main1:
           - margin-left: 25px
           - margin-right: 25px
-        popup:
-          - height: 0px
-          - padding: 0px
-          - margin: 0px
     custom_fields:
       header: !include header.yaml
       main2:
