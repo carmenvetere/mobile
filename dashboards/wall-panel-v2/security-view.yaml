@@ -377,19 +377,19 @@ cards:
                       - background-color: var(--background-color)
                       - border-radius: 15px
                       - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
-                    grid:
-                      - column-gap: 0px
-                      - justify-content: start
                     icon:
                       - width: 38px
                       - height: 38px
                       - color: var(--text-color)
+                    grid:
+                      - grid-template-columns: 50px 1fr
+                      - padding-left: 12px
+                      - column-gap: 0px
                     name:
                       - font-size: 24px
                       - font-weight: bold
                       - white-space: normal !important
                       - text-align: left
-                      - margin-right: 12px
           - type: custom:button-card
             styles:
               card:
