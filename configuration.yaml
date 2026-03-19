@@ -36,15 +36,69 @@ input_number:
     step: 1
     mode: box
 
+input_boolean:
+  sonos_group_select_living_room:
+    name: Group Living Room
+    icon: mdi:sofa
+  sonos_group_select_kitchen:
+    name: Group Kitchen
+    icon: mdi:countertop
+  sonos_group_select_office:
+    name: Group Office
+    icon: mdi:desk
+  sonos_group_select_deck:
+    name: Group Deck
+    icon: mdi:table-chair
+  sonos_group_select_pool:
+    name: Group Pool
+    icon: mdi:pool
+  sonos_group_select_primary_bedroom:
+    name: Group Primary Bedroom
+    icon: mdi:bed
+  sonos_group_select_primary_bathroom:
+    name: Group Primary Bathroom
+    icon: mdi:shower
+  sonos_group_select_gym:
+    name: Group Gym
+    icon: mdi:dumbbell
+  sonos_group_select_mud_room:
+    name: Group Mud Room
+    icon: mdi:door
+  sonos_group_select_media_room:
+    name: Group Media Room
+    icon: mdi:television
+
 input_select:
   sonos_speaker_select:
     name: Sonos Speaker
     options:
       - Living Room
       - Kitchen
+      - Office
       - Deck
+      - Pool
+      - Primary Bedroom
+      - Primary Bathroom
+      - Gym
+      - Mud Room
+      - Media Room
     initial: Living Room
     icon: mdi:speaker
+  sonos_group_coordinator:
+    name: Sonos Group Coordinator
+    options:
+      - living_room
+      - kitchen
+      - office
+      - deck
+      - pool
+      - primary_bedroom
+      - primary_bathroom
+      - gym
+      - mud_room
+      - media_room
+    initial: living_room
+    icon: mdi:speaker-multiple
 
 recorder:
   db_url: mysql://carmenv:Bayberry1991@core-mariadb/homeassistant?charset=utf8mb4
