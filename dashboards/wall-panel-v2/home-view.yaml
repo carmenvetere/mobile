@@ -60,7 +60,7 @@ cards:
               icon: mdi:speaker-multiple
               show_label: true
               label: >
-                [[[return entity?.state ?? 'No Speaker']]]
+                [[[return states['input_select.sonos_speaker_select']?.state ?? 'No Speaker']]]
               triggers_update:
                 - input_select.sonos_speaker_select
               tap_action:
