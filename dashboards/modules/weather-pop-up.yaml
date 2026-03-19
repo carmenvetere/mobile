@@ -1,0 +1,96 @@
+type: vertical-stack
+cards:
+  - type: custom:bubble-card
+    theme: Wall Panel
+    card_type: pop-up
+    hash: "#weather"
+    button_type: name
+    sub_button:
+      main: []
+      bottom: []
+    show_header: true
+    name: Weather
+    icon: mdi:weather-partly-cloudy
+    scrolling_effect: false
+    close_on_click: true
+    background_update: true
+    modules:
+      - pop-up-module
+      - wall_panel_separator
+    styles: |-
+      .bubble-background {
+        background: transparent !important;
+        }
+
+      .bubble-icon-container {
+        background: transparent !important;
+        }
+
+      .bubble-icon {
+        --mdc-icon-size: 36px !important;
+        }
+  - show_current: true
+    show_forecast: true
+    type: weather-forecast
+    name: ""
+    entity: weather.bayberry
+    forecast_type: hourly
+    forecast_slots: 6
+    card_mod:
+      style: |
+        ha-card {
+          background: var(--background-color-2) !important;
+          box-shadow: none !important;
+          font-size: 20px !important;
+        }
+          }
+        .name-state {
+          justify-content: flex-start !important;
+        }
+        .state {
+          text-align: left !important;
+        }
+        .temp-attribute .temp {
+          font-size: 24px !important;
+          }
+        .forecast .temp {
+          font-size: 24px !important;
+          }
+        .forecast .templow {
+          font-size: 24px !important;
+          }
+        .forecast div {
+          font-size: 20px !important;
+          }
+  - show_current: false
+    show_forecast: true
+    type: weather-forecast
+    entity: weather.bayberry
+    forecast_type: daily
+    forecast_slots: 7
+    card_mod:
+      style: |
+        ha-card {
+          background: var(--background-color-2) !important;
+          box-shadow: none !important;
+          font-size: 20px !important;
+        }
+          }
+        .name-state {
+          justify-content: flex-start !important;
+        }
+        .state {
+          text-align: left !important;
+        }
+        .temp-attribute .temp {
+          font-size: 24px !important;
+          }
+        .forecast .temp {
+          font-size: 24px !important;
+          }
+        .forecast .templow {
+          font-size: 24px !important;
+          }
+        .forecast div {
+          font-size: 20px !important;
+          }
