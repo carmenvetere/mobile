@@ -58,7 +58,7 @@ cards:
               icon: mdi:speaker-multiple
               show_label: true
               label: >
-                [[[return entity.state]]]
+                [[[return entity?.state ?? 'Select Speaker']]]
               triggers_update:
                 - sensor.sonos_group_name
               tap_action:
