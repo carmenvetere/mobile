@@ -48,22 +48,26 @@ cards:
             style: |
               ha-card {
                 background: var(--background-color) !important;
+                height: 603px !important;
+                overflow: hidden !important;
                 }
           cards:
             # === Speaker / group navigator button — tap to open popup ===
             - type: custom:button-card
-              entity: sensor.sonos_group_name
+              entity: input_select.sonos_speaker_select
               show_name: false
               show_icon: true
               icon: mdi:speaker-multiple
               show_label: true
               label: >
-                [[[return entity?.state ?? 'Select Speaker']]]
+                [[[return entity?.state ?? 'No Speaker']]]
               triggers_update:
-                - sensor.sonos_group_name
+                - input_select.sonos_speaker_select
               tap_action:
                 action: navigate
                 navigation_path: '#sonos-grouping'
+              custom_fields:
+                chevron: "<ha-icon icon='mdi:chevron-right' style='--mdc-icon-size:22px;color:var(--secondary-text-color)'></ha-icon>"
               styles:
                 card:
                   - border-radius: 20px 20px 0 0
@@ -71,17 +75,22 @@ cards:
                   - margin-left: 10px
                   - margin-right: 10px
                   - max-width: 96%
-                  - height: 90px
-                  - padding: 0 20px
+                  - height: 55px
+                  - padding: 0 15px
                 label:
-                  - font-size: 40px
+                  - font-size: 18px
                   - font-weight: '600'
                   - color: var(--primary-text-color)
                   - text-align: left
+                  - flex: '1'
                 icon:
-                  - width: 40px
+                  - width: 26px
                   - color: var(--secondary-text-color)
-                  - margin-right: 15px
+                  - margin-right: 12px
+                custom_fields:
+                  chevron:
+                    - justify-self: end
+                    - align-self: center
             # === Sonos card — player section only ===
             - type: custom:config-template-card
               variables:
