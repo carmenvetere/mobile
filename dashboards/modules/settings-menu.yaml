@@ -100,3 +100,353 @@ cards:
           - color: var(--secondary-text-color)
         icon:
           - color: var(--secondary-text-color)
+- type: custom:button-card
+  icon: mdi:robot-vacuum
+  entity: input_select.settings_menu
+  name: Vacuum
+  layout: icon_name
+  show_name: true
+  show_icon: true
+  tap_action:
+    action: perform-action
+    perform_action: input_select.select_option
+    target:
+      entity_id: input_select.settings_menu
+    data:
+      option: Vacuum
+  styles:
+    card:
+      - height: 115px
+      - width: 450px
+      - background: var(--background-color)
+      - border-radius: 20px
+      - padding-left: 10px
+      - padding-top: 0px
+      - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+    grid:
+      - grid-template-areas: |
+          "i n"
+      - grid-template-columns: 75px 350px
+      - grid-template-rows: 115px
+      - column-gap: 5px
+      - row-gap: 5px
+    name:
+      - justify-self: start
+      - font-size: 30px
+      - font-weight: bold
+      - color: var(--primary-text-color)
+    icon:
+      - justify-self: start
+      - color: var(--primary-text-color)
+      - width: 38px
+      - height: 38px
+  state:
+    - value: Vacuum
+      styles:
+        card:
+          - background-color: var(--ha-card-background)
+          - box-shadow: 0 0 10px rgba(255, 255, 255, 0.6)
+        name:
+          - color: var(--secondary-text-color)
+        icon:
+          - color: var(--secondary-text-color)
+- type: custom:button-card
+  icon: mdi:shield-home
+  entity: input_select.settings_menu
+  name: Alarm
+  layout: icon_name
+  show_name: true
+  show_icon: true
+  tap_action:
+    action: perform-action
+    perform_action: input_select.select_option
+    target:
+      entity_id: input_select.settings_menu
+    data:
+      option: Alarm
+  styles:
+    card:
+      - height: 115px
+      - width: 450px
+      - background: var(--background-color)
+      - border-radius: 20px
+      - padding-left: 10px
+      - padding-top: 0px
+      - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+    grid:
+      - grid-template-areas: |
+          "i n"
+      - grid-template-columns: 75px 350px
+      - grid-template-rows: 115px
+      - column-gap: 5px
+      - row-gap: 5px
+    name:
+      - justify-self: start
+      - font-size: 30px
+      - font-weight: bold
+      - color: var(--primary-text-color)
+    icon:
+      - justify-self: start
+      - color: var(--primary-text-color)
+      - width: 38px
+      - height: 38px
+  state:
+    - value: Alarm
+      styles:
+        card:
+          - background-color: var(--ha-card-background)
+          - box-shadow: 0 0 10px rgba(255, 255, 255, 0.6)
+        name:
+          - color: var(--secondary-text-color)
+        icon:
+          - color: var(--secondary-text-color)
+- type: custom:button-card
+  icon: mdi:motion-sensor
+  entity: input_select.settings_menu
+  name: Motion
+  layout: icon_name
+  show_name: true
+  show_icon: true
+  tap_action:
+    action: perform-action
+    perform_action: input_select.select_option
+    target:
+      entity_id: input_select.settings_menu
+    data:
+      option: Motion
+  styles:
+    card:
+      - height: 115px
+      - width: 450px
+      - background: var(--background-color)
+      - border-radius: 20px
+      - padding-left: 10px
+      - padding-top: 0px
+      - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+    grid:
+      - grid-template-areas: |
+          "i n"
+      - grid-template-columns: 75px 350px
+      - grid-template-rows: 115px
+      - column-gap: 5px
+      - row-gap: 5px
+    name:
+      - justify-self: start
+      - font-size: 30px
+      - font-weight: bold
+      - color: var(--primary-text-color)
+    icon:
+      - justify-self: start
+      - color: var(--primary-text-color)
+      - width: 38px
+      - height: 38px
+  state:
+    - value: Motion
+      styles:
+        card:
+          - background-color: var(--ha-card-background)
+          - box-shadow: 0 0 10px rgba(255, 255, 255, 0.6)
+        name:
+          - color: var(--secondary-text-color)
+        icon:
+          - color: var(--secondary-text-color)
+- type: custom:button-card
+  icon: mdi:lightbulb
+  entity: input_select.settings_menu
+  name: Lights
+  layout: icon_name
+  show_name: true
+  show_icon: true
+  tap_action:
+    action: perform-action
+    perform_action: input_select.select_option
+    target:
+      entity_id: input_select.settings_menu
+    data:
+      option: Lights
+  styles:
+    card:
+      - height: 115px
+      - width: 450px
+      - background: var(--background-color)
+      - border-radius: 20px
+      - padding-left: 10px
+      - padding-top: 0px
+      - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+    grid:
+      - grid-template-areas: |
+          "i n"
+      - grid-template-columns: 75px 350px
+      - grid-template-rows: 115px
+      - column-gap: 5px
+      - row-gap: 5px
+    name:
+      - justify-self: start
+      - font-size: 30px
+      - font-weight: bold
+      - color: var(--primary-text-color)
+    icon:
+      - justify-self: start
+      - color: var(--primary-text-color)
+      - width: 38px
+      - height: 38px
+  state:
+    - value: Lights
+      styles:
+        card:
+          - background-color: var(--ha-card-background)
+          - box-shadow: 0 0 10px rgba(255, 255, 255, 0.6)
+        name:
+          - color: var(--secondary-text-color)
+        icon:
+          - color: var(--secondary-text-color)
+- type: custom:button-card
+  icon: mdi:roller-shade
+  entity: input_select.settings_menu
+  name: Shades
+  layout: icon_name
+  show_name: true
+  show_icon: true
+  tap_action:
+    action: perform-action
+    perform_action: input_select.select_option
+    target:
+      entity_id: input_select.settings_menu
+    data:
+      option: Shades
+  styles:
+    card:
+      - height: 115px
+      - width: 450px
+      - background: var(--background-color)
+      - border-radius: 20px
+      - padding-left: 10px
+      - padding-top: 0px
+      - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+    grid:
+      - grid-template-areas: |
+          "i n"
+      - grid-template-columns: 75px 350px
+      - grid-template-rows: 115px
+      - column-gap: 5px
+      - row-gap: 5px
+    name:
+      - justify-self: start
+      - font-size: 30px
+      - font-weight: bold
+      - color: var(--primary-text-color)
+    icon:
+      - justify-self: start
+      - color: var(--primary-text-color)
+      - width: 38px
+      - height: 38px
+  state:
+    - value: Shades
+      styles:
+        card:
+          - background-color: var(--ha-card-background)
+          - box-shadow: 0 0 10px rgba(255, 255, 255, 0.6)
+        name:
+          - color: var(--secondary-text-color)
+        icon:
+          - color: var(--secondary-text-color)
+- type: custom:button-card
+  icon: mdi:pool
+  entity: input_select.settings_menu
+  name: Pool
+  layout: icon_name
+  show_name: true
+  show_icon: true
+  tap_action:
+    action: perform-action
+    perform_action: input_select.select_option
+    target:
+      entity_id: input_select.settings_menu
+    data:
+      option: Pool
+  styles:
+    card:
+      - height: 115px
+      - width: 450px
+      - background: var(--background-color)
+      - border-radius: 20px
+      - padding-left: 10px
+      - padding-top: 0px
+      - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+    grid:
+      - grid-template-areas: |
+          "i n"
+      - grid-template-columns: 75px 350px
+      - grid-template-rows: 115px
+      - column-gap: 5px
+      - row-gap: 5px
+    name:
+      - justify-self: start
+      - font-size: 30px
+      - font-weight: bold
+      - color: var(--primary-text-color)
+    icon:
+      - justify-self: start
+      - color: var(--primary-text-color)
+      - width: 38px
+      - height: 38px
+  state:
+    - value: Pool
+      styles:
+        card:
+          - background-color: var(--ha-card-background)
+          - box-shadow: 0 0 10px rgba(255, 255, 255, 0.6)
+        name:
+          - color: var(--secondary-text-color)
+        icon:
+          - color: var(--secondary-text-color)
+- type: custom:button-card
+  icon: mdi:lightning-bolt
+  entity: input_select.settings_menu
+  name: Energy
+  layout: icon_name
+  show_name: true
+  show_icon: true
+  tap_action:
+    action: perform-action
+    perform_action: input_select.select_option
+    target:
+      entity_id: input_select.settings_menu
+    data:
+      option: Energy
+  styles:
+    card:
+      - height: 115px
+      - width: 450px
+      - background: var(--background-color)
+      - border-radius: 20px
+      - padding-left: 10px
+      - padding-top: 0px
+      - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+    grid:
+      - grid-template-areas: |
+          "i n"
+      - grid-template-columns: 75px 350px
+      - grid-template-rows: 115px
+      - column-gap: 5px
+      - row-gap: 5px
+    name:
+      - justify-self: start
+      - font-size: 30px
+      - font-weight: bold
+      - color: var(--primary-text-color)
+    icon:
+      - justify-self: start
+      - color: var(--primary-text-color)
+      - width: 38px
+      - height: 38px
+  state:
+    - value: Energy
+      styles:
+        card:
+          - background-color: var(--ha-card-background)
+          - box-shadow: 0 0 10px rgba(255, 255, 255, 0.6)
+        name:
+          - color: var(--secondary-text-color)
+        icon:
+          - color: var(--secondary-text-color)
