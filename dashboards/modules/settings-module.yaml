@@ -94,12 +94,14 @@
 #Climate
 - type: vertical-stack
   cards:
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Climate - Schedules
       icon: mdi:fan
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       entity: automation.living_room_hvac_schedule_v3
@@ -184,12 +186,14 @@
           show_background: false
       modules:
         - "{{ settings_module }}"
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Climate - Fresh Air Controls
       icon: mdi:tailwind
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       button_type: slider
@@ -222,12 +226,14 @@
           show_background: false
       modules:
         - "{{ settings_module }}"
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Climate - Filter Maintenance
       icon: mdi:air-filter
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       button_type: state
@@ -267,12 +273,14 @@
 #vacuum
 - type: vertical-stack
   cards:
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Vacuum
       icon: mdi:vacuum
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       entity: automation.12_00am_roborock_s8_vacuum_basement
@@ -297,12 +305,14 @@
 #Alarm
 - type: vertical-stack
   cards:
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Alarm
       icon: mdi:alarm-panel
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       entity: automation.alarm_arm_away_when_everyone_leaves
@@ -453,12 +463,14 @@
 #         perform_action: script.toggle_water_heater_away_mode
 #       modules:
 #         - "{{ settings_module }}"
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Water Heater Maintenance
       icon: mdi:air-filter
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       button_type: state
@@ -482,12 +494,14 @@
 #Motion
 - type: vertical-stack
   cards:
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Motion
       icon: mdi:motion
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       entity: automation.outdoor_motion_after_11pm_before_sunrise
@@ -555,12 +569,14 @@
 #Lights
 - type: vertical-stack
   cards:
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Lights
       icon: mdi:lightbulb-auto
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       entity: automation.evening_lights_on_lux
@@ -690,12 +706,14 @@
 #Shades
 - type: vertical-stack
   cards:
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Shades
       icon: mdi:roller-shade
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       entity: automation.7_30_am_first_floor_shades_weekdays
@@ -1035,12 +1053,14 @@
 #Pool
 - type: vertical-stack
   cards:
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Pool
       icon: mdi:pool
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       entity: automation.pool_heater_schedule
@@ -1066,12 +1086,14 @@
 #Energy
 - type: vertical-stack
   cards:
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Energy Settings
       icon: mdi:cog
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       entity: switch.bayberry_off_grid_operation
       card_type: button
@@ -1117,12 +1139,14 @@
           show_background: false
       modules:
         - "{{ settings_module }}"
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Energy Consumption
       icon: mdi:lightning-bolt
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       button_type: name
