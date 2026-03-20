@@ -49,7 +49,7 @@ cards:
           swipe_direction: vertical
           card_mod:
             style: |
-              ha-card {
+              :host {
                 height: 603px !important;
               }
           cards: !include [/config/dashboards/modules/settings-module.yaml, {settings_module: wall_panel_settings_module, dashboard: basement_wall_panel}]
