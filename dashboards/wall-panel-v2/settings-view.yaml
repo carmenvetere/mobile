@@ -35,7 +35,6 @@ cards:
           - height: 100%
     custom_fields:
       header: !include header.yaml
-      main1: 
+      main1:
         card: !include /config/dashboards/modules/settings-menu.yaml
-      main2: 
-      nav: !include footer-menu.yaml 
+      nav: !include footer-menu.yaml
