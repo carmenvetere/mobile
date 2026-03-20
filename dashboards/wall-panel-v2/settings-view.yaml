@@ -35,6 +35,8 @@ cards:
         main2:
           - margin-right: 25px
           - height: 100%
+          - overflow-y: auto
+          - height: 603px
     custom_fields:
       header: !include header.yaml
       main1:
