@@ -1,0 +1,41 @@
+# lovelace_gen
+title: Settings
+path: settings-view
+theme: Wall Panel
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 0px
+        - padding-bottom: 5px
+        - padding-left: 0px
+        - padding-top: 0px
+        - margin-left: -2px
+        - margin-top: -2px
+        - width: 1024px
+        - height: 768px
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
+      grid:
+        - grid-template-areas: |
+            "header header"
+            "main1 main2"
+            "nav nav"
+        - grid-template-columns: 510px 510px
+        - grid-template-rows: 75px 603px 75px
+        - align-items: start
+        - column-gap: 5px
+        - row-gap: 8px
+      custom_fields:
+        main1:
+          - margin-left: 25px
+          - margin-right: 25px
+        main2:
+          - margin-right: 25px
+          - height: 100%
+    custom_fields:
+      header: !include header.yaml
+      main1: 
+        card: !include /config/dashboards/modules/settings-menu.yaml
+      main2: 
+      nav: !include footer-menu.yaml 
