@@ -1,14 +1,4 @@
 type: vertical-stack
-card_mod:
-  style: |
-    ha-card {
-      overflow-y: auto !important;
-      max-height: 603px;
-      scrollbar-width: none;
-    }
-    ha-card::-webkit-scrollbar {
-      display: none;
-    }
 cards:
 - type: custom:button-card
   icon: mdi:home-automation
