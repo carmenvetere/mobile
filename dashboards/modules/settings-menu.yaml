@@ -8,7 +8,8 @@ cards:
   show_name: true
   show_icon: true
   tap_action:
-    action: input_select.select_option
+    action: perform-action
+    perform_action: input_select.select_option
     target:
       entity_id: input_select.settings_menu
     data:
@@ -57,7 +58,8 @@ cards:
   show_name: true
   show_icon: true
   tap_action:
-    action: input_select.select_option
+    action: perform-action
+    perform_action: input_select.select_option
     target:
       entity_id: input_select.settings_menu
     data:
