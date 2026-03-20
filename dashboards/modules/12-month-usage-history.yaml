@@ -10,6 +10,57 @@ apex_config:
     type: bar
     stacked: true
     height: 300px
+    events:
+      mounted: |
+        EVAL:function(ctx) {
+          if (ctx.w.globals._othInProgress) return;
+          ctx.w.globals._othInProgress = true;
+          try {
+            const s = ctx.w.globals.series;
+            const xs = ctx.w.globals.seriesX;
+            if (!s || s.length < 3 || !xs || !xs[0] || !xs[0].length) return;
+            const evMap = {};
+            const wpMap = {};
+            (xs[1] || []).forEach((x, i) => { evMap[x] = s[1][i] || 0; });
+            (xs[2] || []).forEach((x, i) => { wpMap[x] = s[2][i] || 0; });
+            const newData = xs[0].map((x, i) => ({
+              x: x,
+              y: Math.max(0, (s[0][i] || 0) - (evMap[x] || 0) - (wpMap[x] || 0))
+            }));
+            ctx.updateSeries([
+              { data: newData },
+              { data: xs[1].map((x, i) => ({ x: x, y: s[1][i] })) },
+              { data: xs[2].map((x, i) => ({ x: x, y: s[2][i] })) }
+            ], false);
+          } finally {
+            setTimeout(() => { ctx.w.globals._othInProgress = false; }, 100);
+          }
+        }
+      updated: |
+        EVAL:function(ctx) {
+          if (ctx.w.globals._othInProgress) return;
+          ctx.w.globals._othInProgress = true;
+          try {
+            const s = ctx.w.globals.series;
+            const xs = ctx.w.globals.seriesX;
+            if (!s || s.length < 3 || !xs || !xs[0] || !xs[0].length) return;
+            const evMap = {};
+            const wpMap = {};
+            (xs[1] || []).forEach((x, i) => { evMap[x] = s[1][i] || 0; });
+            (xs[2] || []).forEach((x, i) => { wpMap[x] = s[2][i] || 0; });
+            const newData = xs[0].map((x, i) => ({
+              x: x,
+              y: Math.max(0, (s[0][i] || 0) - (evMap[x] || 0) - (wpMap[x] || 0))
+            }));
+            ctx.updateSeries([
+              { data: newData },
+              { data: xs[1].map((x, i) => ({ x: x, y: s[1][i] })) },
+              { data: xs[2].map((x, i) => ({ x: x, y: s[2][i] })) }
+            ], false);
+          } finally {
+            setTimeout(() => { ctx.w.globals._othInProgress = false; }, 100);
+          }
+        }
   dataLabels:
     enabled: false
   xaxis:
@@ -21,7 +72,7 @@ apex_config:
   yaxis:
     show: false
 series:
-  - entity: sensor.home_other_usage
+  - entity: sensor.bayberry_load_import
     name: Other
     type: column
     color: var(--accent-color)
