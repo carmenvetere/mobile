@@ -8,10 +8,11 @@ cards:
   show_name: true
   show_icon: true
   tap_action:
-    action: input_select.select_option
+    action: call-service
+    service: input_select.select_option
     target:
       entity_id: input_select.settings_menu
-    data:
+    service_data:
       option: Home Modes
   styles:
     card:
@@ -57,10 +58,11 @@ cards:
   show_name: true
   show_icon: true
   tap_action:
-    action: input_select.select_option
+    action: call-service
+    service: input_select.select_option
     target:
       entity_id: input_select.settings_menu
-    data:
+    service_data:
       option: Climate
   styles:
     card:
