@@ -39,4 +39,6 @@ cards:
       header: !include header.yaml
       main1:
         card: !include /config/dashboards/modules/settings-menu.yaml
+      main2:
+        card: !include [/config/dashboards/modules/settings-menu-detail.yaml, {module_name: wall_panel_settings, dashboard: basement_wall_panel}]
       nav: !include footer-menu.yaml 
