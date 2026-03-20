@@ -2,12 +2,14 @@
 #Home Modes
 - type: vertical-stack
   cards:
+  {% if dashboard == 'mobile' %}
     - type: custom:bubble-card
       card_type: separator
       name: Home Modes
       icon: mdi:home-automation
       modules:
         - "{{ separator_module }}"
+  {% endif %}
     - type: custom:bubble-card
       card_type: button
       entity: input_boolean.dinner_party
