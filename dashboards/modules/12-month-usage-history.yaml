@@ -1,0 +1,69 @@
+type: custom:apexcharts-card
+header:
+  show: true
+  show_states: true
+graph_span: 12month
+span:
+  end: month
+apex_config:
+  chart:
+    type: bar
+    stacked: true
+    height: 300px
+  dataLabels:
+    enabled: false
+  xaxis:
+    type: datetime
+    labels:
+      format: MMM
+      style:
+        fontSize: 16px
+  yaxis:
+    show: false
+series:
+  - entity: sensor.home_other_usage
+    name: Other
+    type: column
+    color: var(--accent-color)
+    statistics:
+      type: change
+      period: month
+    group_by:
+      func: sum
+      duration: 1month
+    float_precision: 1
+    unit: " kWh"
+    show:
+      legend_value: false
+      in_header: false
+  - entity: sensor.wall_charger_energy
+    name: EV Charger
+    type: column
+    color: var(--accent-color-2)
+    statistics:
+      type: change
+      period: month
+    group_by:
+      func: sum
+      duration: 1month
+    float_precision: 1
+    unit: " kWh"
+    show:
+      legend_value: false
+      in_header: false
+  - entity: sensor.well_pump_energy2
+    name: Well Pump
+    type: column
+    color: var(--primary-text-color)
+    opacity: 0.5
+    statistics:
+      type: change
+      period: month
+    group_by:
+      func: sum
+      duration: 1month
+    float_precision: 1
+    unit: " kWh"
+    show:
+      legend_value: false
+      in_header: false
