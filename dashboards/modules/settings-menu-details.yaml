@@ -1,0 +1,88 @@
+type: custom:simple-swipe-card
+show_pagination: false
+auto_hide_pagination: 0
+auto_height: false
+swipe_direction: vertical
+cards:
+- type: vertical-stack
+  cards:
+    - type: custom:bubble-card
+      card_type: button
+      entity: input_boolean.dinner_party
+      name: Dinner Party
+      icon: mdi:party-popper
+      show_state: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: input_boolean.dinner_party
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: input_boolean.guest_mode
+      name: Overnight Guests
+      icon: mdi:bed
+      show_state: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: input_boolean.guest_mode
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: input_boolean.cleaners_mode
+      name: Cleaners Mode
+      icon: mdi:spray-bottle
+      show_state: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: input_boolean.cleaners_mode
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
+    - type: custom:bubble-card
+      card_type: button
+      entity: input_boolean.away_mode
+      name: Away
+      icon: mdi:bag-suitcase
+      show_state: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: input_boolean.away_mode
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - "{{ settings_module }}"
