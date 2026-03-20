@@ -1,0 +1,100 @@
+type: vertical-stack
+cards: 
+- type: custom:button-card
+  icon: mdi:home-automation
+  entity: input_select.settings_menu
+  name: Home Modes
+  layout: icon_name
+  show_name: true
+  show_icon: true
+  tap_action:
+    action: input_select.select_option
+    target:
+      entity_id: input_select.settings_menu
+    data:
+      option: Home Modes
+  styles:
+    card:
+      - height: 115px
+      - width: 450px
+      - background: var(--background-color)
+      - border-radius: 20px
+      - padding-left: 10px
+      - padding-top: 0px
+      - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+    grid:
+      - grid-template-areas: |
+          "i n"
+      - grid-template-columns: 75px 350px
+      - grid-template-rows: 115px
+      - column-gap: 5px
+      - row-gap: 5px
+    name:
+      - justify-self: start
+      - font-size: 30px
+      - font-weight: bold
+      - color: var(--primary-text-color)
+    icon:
+      - justify-self: start
+      - color: var(--primary-text-color)
+      - width: 38px
+      - height: 38px
+  state:
+    - value: Home Modes
+      styles:
+        card:
+          - background-color: var(--ha-card-background)
+          - box-shadow: 0 0 10px rgba(255, 255, 255, 0.6)
+        name:
+          - color: var(--secondary-text-color)
+        icon:
+          - color: var(--secondary-text-color)
+- type: custom:button-card
+  icon: mdi:fan
+  entity: input_select.settings_menu
+  name: Climate
+  layout: icon_name
+  show_name: true
+  show_icon: true
+  tap_action:
+    action: input_select.select_option
+    target:
+      entity_id: input_select.settings_menu
+    data:
+      option: Climate
+  styles:
+    card:
+      - height: 115px
+      - width: 450px
+      - background: var(--background-color)
+      - border-radius: 20px
+      - padding-left: 10px
+      - padding-top: 0px
+      - box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+    grid:
+      - grid-template-areas: |
+          "i n"
+      - grid-template-columns: 75px 350px
+      - grid-template-rows: 115px
+      - column-gap: 5px
+      - row-gap: 5px
+    name:
+      - justify-self: start
+      - font-size: 30px
+      - font-weight: bold
+      - color: var(--primary-text-color)
+    icon:
+      - justify-self: start
+      - color: var(--primary-text-color)
+      - width: 38px
+      - height: 38px
+  state:
+    - value: Climate
+      styles:
+        card:
+          - background-color: var(--ha-card-background)
+          - box-shadow: 0 0 10px rgba(255, 255, 255, 0.6)
+        name:
+          - color: var(--secondary-text-color)
+        icon:
+          - color: var(--secondary-text-color)
