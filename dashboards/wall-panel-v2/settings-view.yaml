@@ -55,6 +55,7 @@ cards:
                 height: 603px !important;
                 width: 95% !important;
                 margin-top: 10px !important;
+                overflow-y: auto !important;
               }
           cards: !include [/config/dashboards/modules/settings-module.yaml, {settings_module: wall_panel_settings_module, dashboard: basement_wall_panel}]
       nav: !include footer-menu.yaml 
