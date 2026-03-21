@@ -48,6 +48,7 @@ cards:
           auto_height: false
           swipe_direction: vertical
           state_entity: input_select.settings_menu
+          loop_mode: infinite
           card_mod:
             style: |
               :host {
