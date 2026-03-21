@@ -25,21 +25,18 @@ cards:
       .bubble-background {
         background: transparent !important;
         }
-
       .bubble-icon-container {
         background: transparent !important;
         }
-
       .bubble-icon {
         --mdc-icon-size: 36px !important;
         }
+
   - type: custom:button-card
     entity: sensor.sonos_group_name
-    name: Speakers
-    show_name: true
+    show_name: false
+    show_icon: false
     show_label: true
-    show_icon: true
-    icon: mdi:speaker-multiple
     label: "[[[return entity?.state ?? 'No Speakers']]]"
     tap_action:
       action: none
@@ -49,698 +46,1033 @@ cards:
       card:
         - background: transparent
         - box-shadow: none
-        - height: 65px
-        - padding: 8px 15px
-      name:
-        - font-size: 16px
-        - color: var(--secondary-text-color)
-        - text-transform: uppercase
-        - letter-spacing: 2px
+        - height: 55px
       label:
-        - font-size: 32px
+        - font-size: 26px
         - font-weight: bold
         - color: var(--primary-text-color)
-      icon:
-        - width: 32px
-        - color: var(--secondary-text-color)
-  - type: custom:button-card
-    styles:
-      card:
-        - background-color: transparent
-      grid:
-        - grid-template-areas: |
-            "column1 column2"
-        - grid-template-columns: 1fr 1fr
-        - grid-template-rows: auto
-        - align-items: start
-        - column-gap: 10px
-    custom_fields:
-      column1:
-        card:
-          type: vertical-stack
-          cards:
-            - type: custom:button-card
-              entity: input_boolean.sonos_group_select_living_room
-              name: Living Room
-              icon: mdi:sofa
-              show_name: true
-              show_icon: true
-              show_label: true
-              label: |
-                [[[
-                  const active = states['input_select.sonos_speaker_select']?.state === 'Living Room';
-                  const coord = states['input_select.sonos_group_coordinator']?.state === 'living_room';
-                  const mp = states['media_player.living_room'];
-                  const parts = [];
-                  if (active) parts.push('▶ Listening');
-                  else if (coord) parts.push('⭐ Main');
-                  if (mp?.state === 'playing') {
-                    parts.push(mp.attributes.media_artist || mp.attributes.media_title || 'Playing');
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    parts.push(mp.state.charAt(0).toUpperCase() + mp.state.slice(1));
-                  }
-                  return parts.join('  ·  ') || ' ';
-                ]]]
-              triggers_update:
-                - input_boolean.sonos_group_select_living_room
-                - input_select.sonos_group_coordinator
-                - input_select.sonos_speaker_select
-                - media_player.living_room
-              tap_action:
-                action: call-service
-                service: input_select.select_option
-                service_data:
-                  entity_id: input_select.sonos_speaker_select
-                  option: Living Room
-              double_tap_action:
-                action: toggle
-              hold_action:
-                action: call-service
-                service: script.sonos_set_main_speaker
-                service_data:
-                  speaker: living_room
-              state:
-                - value: "on"
-                  color: var(--primary-color)
-                  styles:
-                    card:
-                      - background: rgba(var(--rgb-primary-color), 0.2) !important
-                      - border: 2px solid var(--primary-color) !important
-                - value: "off"
-                  color: var(--secondary-text-color)
-              styles:
-                card:
-                  - height: 115px
-                  - border-radius: 14px
-                  - margin: 4px
-                name:
-                  - font-size: 20px
-                  - font-weight: bold
-                label:
-                  - font-size: 14px
-                  - color: var(--secondary-text-color)
-                icon:
-                  - width: 36px
-            - type: custom:button-card
-              entity: input_boolean.sonos_group_select_kitchen
-              name: Kitchen
-              icon: mdi:countertop
-              show_name: true
-              show_icon: true
-              show_label: true
-              label: |
-                [[[
-                  const active = states['input_select.sonos_speaker_select']?.state === 'Kitchen';
-                  const coord = states['input_select.sonos_group_coordinator']?.state === 'kitchen';
-                  const mp = states['media_player.kitchen'];
-                  const parts = [];
-                  if (active) parts.push('▶ Listening');
-                  else if (coord) parts.push('⭐ Main');
-                  if (mp?.state === 'playing') {
-                    parts.push(mp.attributes.media_artist || mp.attributes.media_title || 'Playing');
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    parts.push(mp.state.charAt(0).toUpperCase() + mp.state.slice(1));
-                  }
-                  return parts.join('  ·  ') || ' ';
-                ]]]
-              triggers_update:
-                - input_boolean.sonos_group_select_kitchen
-                - input_select.sonos_group_coordinator
-                - input_select.sonos_speaker_select
-                - media_player.kitchen
-              tap_action:
-                action: call-service
-                service: input_select.select_option
-                service_data:
-                  entity_id: input_select.sonos_speaker_select
-                  option: Kitchen
-              double_tap_action:
-                action: toggle
-              hold_action:
-                action: call-service
-                service: script.sonos_set_main_speaker
-                service_data:
-                  speaker: kitchen
-              state:
-                - value: "on"
-                  color: var(--primary-color)
-                  styles:
-                    card:
-                      - background: rgba(var(--rgb-primary-color), 0.2) !important
-                      - border: 2px solid var(--primary-color) !important
-                - value: "off"
-                  color: var(--secondary-text-color)
-              styles:
-                card:
-                  - height: 115px
-                  - border-radius: 14px
-                  - margin: 4px
-                name:
-                  - font-size: 20px
-                  - font-weight: bold
-                label:
-                  - font-size: 14px
-                  - color: var(--secondary-text-color)
-                icon:
-                  - width: 36px
-            - type: custom:button-card
-              entity: input_boolean.sonos_group_select_office
-              name: Office
-              icon: mdi:desk
-              show_name: true
-              show_icon: true
-              show_label: true
-              label: |
-                [[[
-                  const active = states['input_select.sonos_speaker_select']?.state === 'Office';
-                  const coord = states['input_select.sonos_group_coordinator']?.state === 'office';
-                  const mp = states['media_player.office'];
-                  const parts = [];
-                  if (active) parts.push('▶ Listening');
-                  else if (coord) parts.push('⭐ Main');
-                  if (mp?.state === 'playing') {
-                    parts.push(mp.attributes.media_artist || mp.attributes.media_title || 'Playing');
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    parts.push(mp.state.charAt(0).toUpperCase() + mp.state.slice(1));
-                  }
-                  return parts.join('  ·  ') || ' ';
-                ]]]
-              triggers_update:
-                - input_boolean.sonos_group_select_office
-                - input_select.sonos_group_coordinator
-                - input_select.sonos_speaker_select
-                - media_player.office
-              tap_action:
-                action: call-service
-                service: input_select.select_option
-                service_data:
-                  entity_id: input_select.sonos_speaker_select
-                  option: Office
-              double_tap_action:
-                action: toggle
-              hold_action:
-                action: call-service
-                service: script.sonos_set_main_speaker
-                service_data:
-                  speaker: office
-              state:
-                - value: "on"
-                  color: var(--primary-color)
-                  styles:
-                    card:
-                      - background: rgba(var(--rgb-primary-color), 0.2) !important
-                      - border: 2px solid var(--primary-color) !important
-                - value: "off"
-                  color: var(--secondary-text-color)
-              styles:
-                card:
-                  - height: 115px
-                  - border-radius: 14px
-                  - margin: 4px
-                name:
-                  - font-size: 20px
-                  - font-weight: bold
-                label:
-                  - font-size: 14px
-                  - color: var(--secondary-text-color)
-                icon:
-                  - width: 36px
-            - type: custom:button-card
-              entity: input_boolean.sonos_group_select_deck
-              name: Deck
-              icon: mdi:table-chair
-              show_name: true
-              show_icon: true
-              show_label: true
-              label: |
-                [[[
-                  const active = states['input_select.sonos_speaker_select']?.state === 'Deck';
-                  const coord = states['input_select.sonos_group_coordinator']?.state === 'deck';
-                  const mp = states['media_player.deck'];
-                  const parts = [];
-                  if (active) parts.push('▶ Listening');
-                  else if (coord) parts.push('⭐ Main');
-                  if (mp?.state === 'playing') {
-                    parts.push(mp.attributes.media_artist || mp.attributes.media_title || 'Playing');
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    parts.push(mp.state.charAt(0).toUpperCase() + mp.state.slice(1));
-                  }
-                  return parts.join('  ·  ') || ' ';
-                ]]]
-              triggers_update:
-                - input_boolean.sonos_group_select_deck
-                - input_select.sonos_group_coordinator
-                - input_select.sonos_speaker_select
-                - media_player.deck
-              tap_action:
-                action: call-service
-                service: input_select.select_option
-                service_data:
-                  entity_id: input_select.sonos_speaker_select
-                  option: Deck
-              double_tap_action:
-                action: toggle
-              hold_action:
-                action: call-service
-                service: script.sonos_set_main_speaker
-                service_data:
-                  speaker: deck
-              state:
-                - value: "on"
-                  color: var(--primary-color)
-                  styles:
-                    card:
-                      - background: rgba(var(--rgb-primary-color), 0.2) !important
-                      - border: 2px solid var(--primary-color) !important
-                - value: "off"
-                  color: var(--secondary-text-color)
-              styles:
-                card:
-                  - height: 115px
-                  - border-radius: 14px
-                  - margin: 4px
-                name:
-                  - font-size: 20px
-                  - font-weight: bold
-                label:
-                  - font-size: 14px
-                  - color: var(--secondary-text-color)
-                icon:
-                  - width: 36px
-            - type: custom:button-card
-              entity: input_boolean.sonos_group_select_pool
-              name: Pool
-              icon: mdi:pool
-              show_name: true
-              show_icon: true
-              show_label: true
-              label: |
-                [[[
-                  const active = states['input_select.sonos_speaker_select']?.state === 'Pool';
-                  const coord = states['input_select.sonos_group_coordinator']?.state === 'pool';
-                  const mp = states['media_player.pool'];
-                  const parts = [];
-                  if (active) parts.push('▶ Listening');
-                  else if (coord) parts.push('⭐ Main');
-                  if (mp?.state === 'playing') {
-                    parts.push(mp.attributes.media_artist || mp.attributes.media_title || 'Playing');
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    parts.push(mp.state.charAt(0).toUpperCase() + mp.state.slice(1));
-                  }
-                  return parts.join('  ·  ') || ' ';
-                ]]]
-              triggers_update:
-                - input_boolean.sonos_group_select_pool
-                - input_select.sonos_group_coordinator
-                - input_select.sonos_speaker_select
-                - media_player.pool
-              tap_action:
-                action: call-service
-                service: input_select.select_option
-                service_data:
-                  entity_id: input_select.sonos_speaker_select
-                  option: Pool
-              double_tap_action:
-                action: toggle
-              hold_action:
-                action: call-service
-                service: script.sonos_set_main_speaker
-                service_data:
-                  speaker: pool
-              state:
-                - value: "on"
-                  color: var(--primary-color)
-                  styles:
-                    card:
-                      - background: rgba(var(--rgb-primary-color), 0.2) !important
-                      - border: 2px solid var(--primary-color) !important
-                - value: "off"
-                  color: var(--secondary-text-color)
-              styles:
-                card:
-                  - height: 115px
-                  - border-radius: 14px
-                  - margin: 4px
-                name:
-                  - font-size: 20px
-                  - font-weight: bold
-                label:
-                  - font-size: 14px
-                  - color: var(--secondary-text-color)
-                icon:
-                  - width: 36px
-      column2:
-        card:
-          type: vertical-stack
-          cards:
-            - type: custom:button-card
-              entity: input_boolean.sonos_group_select_primary_bedroom
-              name: Bedroom
-              icon: mdi:bed
-              show_name: true
-              show_icon: true
-              show_label: true
-              label: |
-                [[[
-                  const active = states['input_select.sonos_speaker_select']?.state === 'Primary Bedroom';
-                  const coord = states['input_select.sonos_group_coordinator']?.state === 'primary_bedroom';
-                  const mp = states['media_player.primary_bedroom'];
-                  const parts = [];
-                  if (active) parts.push('▶ Listening');
-                  else if (coord) parts.push('⭐ Main');
-                  if (mp?.state === 'playing') {
-                    parts.push(mp.attributes.media_artist || mp.attributes.media_title || 'Playing');
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    parts.push(mp.state.charAt(0).toUpperCase() + mp.state.slice(1));
-                  }
-                  return parts.join('  ·  ') || ' ';
-                ]]]
-              triggers_update:
-                - input_boolean.sonos_group_select_primary_bedroom
-                - input_select.sonos_group_coordinator
-                - input_select.sonos_speaker_select
-                - media_player.primary_bedroom
-              tap_action:
-                action: call-service
-                service: input_select.select_option
-                service_data:
-                  entity_id: input_select.sonos_speaker_select
-                  option: Primary Bedroom
-              double_tap_action:
-                action: toggle
-              hold_action:
-                action: call-service
-                service: script.sonos_set_main_speaker
-                service_data:
-                  speaker: primary_bedroom
-              state:
-                - value: "on"
-                  color: var(--primary-color)
-                  styles:
-                    card:
-                      - background: rgba(var(--rgb-primary-color), 0.2) !important
-                      - border: 2px solid var(--primary-color) !important
-                - value: "off"
-                  color: var(--secondary-text-color)
-              styles:
-                card:
-                  - height: 115px
-                  - border-radius: 14px
-                  - margin: 4px
-                name:
-                  - font-size: 20px
-                  - font-weight: bold
-                label:
-                  - font-size: 14px
-                  - color: var(--secondary-text-color)
-                icon:
-                  - width: 36px
-            - type: custom:button-card
-              entity: input_boolean.sonos_group_select_primary_bathroom
-              name: Bathroom
-              icon: mdi:shower
-              show_name: true
-              show_icon: true
-              show_label: true
-              label: |
-                [[[
-                  const active = states['input_select.sonos_speaker_select']?.state === 'Primary Bathroom';
-                  const coord = states['input_select.sonos_group_coordinator']?.state === 'primary_bathroom';
-                  const mp = states['media_player.primary_bathroom'];
-                  const parts = [];
-                  if (active) parts.push('▶ Listening');
-                  else if (coord) parts.push('⭐ Main');
-                  if (mp?.state === 'playing') {
-                    parts.push(mp.attributes.media_artist || mp.attributes.media_title || 'Playing');
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    parts.push(mp.state.charAt(0).toUpperCase() + mp.state.slice(1));
-                  }
-                  return parts.join('  ·  ') || ' ';
-                ]]]
-              triggers_update:
-                - input_boolean.sonos_group_select_primary_bathroom
-                - input_select.sonos_group_coordinator
-                - input_select.sonos_speaker_select
-                - media_player.primary_bathroom
-              tap_action:
-                action: call-service
-                service: input_select.select_option
-                service_data:
-                  entity_id: input_select.sonos_speaker_select
-                  option: Primary Bathroom
-              double_tap_action:
-                action: toggle
-              hold_action:
-                action: call-service
-                service: script.sonos_set_main_speaker
-                service_data:
-                  speaker: primary_bathroom
-              state:
-                - value: "on"
-                  color: var(--primary-color)
-                  styles:
-                    card:
-                      - background: rgba(var(--rgb-primary-color), 0.2) !important
-                      - border: 2px solid var(--primary-color) !important
-                - value: "off"
-                  color: var(--secondary-text-color)
-              styles:
-                card:
-                  - height: 115px
-                  - border-radius: 14px
-                  - margin: 4px
-                name:
-                  - font-size: 20px
-                  - font-weight: bold
-                label:
-                  - font-size: 14px
-                  - color: var(--secondary-text-color)
-                icon:
-                  - width: 36px
-            - type: custom:button-card
-              entity: input_boolean.sonos_group_select_gym
-              name: Gym
-              icon: mdi:dumbbell
-              show_name: true
-              show_icon: true
-              show_label: true
-              label: |
-                [[[
-                  const active = states['input_select.sonos_speaker_select']?.state === 'Gym';
-                  const coord = states['input_select.sonos_group_coordinator']?.state === 'gym';
-                  const mp = states['media_player.gym'];
-                  const parts = [];
-                  if (active) parts.push('▶ Listening');
-                  else if (coord) parts.push('⭐ Main');
-                  if (mp?.state === 'playing') {
-                    parts.push(mp.attributes.media_artist || mp.attributes.media_title || 'Playing');
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    parts.push(mp.state.charAt(0).toUpperCase() + mp.state.slice(1));
-                  }
-                  return parts.join('  ·  ') || ' ';
-                ]]]
-              triggers_update:
-                - input_boolean.sonos_group_select_gym
-                - input_select.sonos_group_coordinator
-                - input_select.sonos_speaker_select
-                - media_player.gym
-              tap_action:
-                action: call-service
-                service: input_select.select_option
-                service_data:
-                  entity_id: input_select.sonos_speaker_select
-                  option: Gym
-              double_tap_action:
-                action: toggle
-              hold_action:
-                action: call-service
-                service: script.sonos_set_main_speaker
-                service_data:
-                  speaker: gym
-              state:
-                - value: "on"
-                  color: var(--primary-color)
-                  styles:
-                    card:
-                      - background: rgba(var(--rgb-primary-color), 0.2) !important
-                      - border: 2px solid var(--primary-color) !important
-                - value: "off"
-                  color: var(--secondary-text-color)
-              styles:
-                card:
-                  - height: 115px
-                  - border-radius: 14px
-                  - margin: 4px
-                name:
-                  - font-size: 20px
-                  - font-weight: bold
-                label:
-                  - font-size: 14px
-                  - color: var(--secondary-text-color)
-                icon:
-                  - width: 36px
-            - type: custom:button-card
-              entity: input_boolean.sonos_group_select_mud_room
-              name: Mud Room
-              icon: mdi:coat-rack
-              show_name: true
-              show_icon: true
-              show_label: true
-              label: |
-                [[[
-                  const active = states['input_select.sonos_speaker_select']?.state === 'Mud Room';
-                  const coord = states['input_select.sonos_group_coordinator']?.state === 'mud_room';
-                  const mp = states['media_player.mud_room'];
-                  const parts = [];
-                  if (active) parts.push('▶ Listening');
-                  else if (coord) parts.push('⭐ Main');
-                  if (mp?.state === 'playing') {
-                    parts.push(mp.attributes.media_artist || mp.attributes.media_title || 'Playing');
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    parts.push(mp.state.charAt(0).toUpperCase() + mp.state.slice(1));
-                  }
-                  return parts.join('  ·  ') || ' ';
-                ]]]
-              triggers_update:
-                - input_boolean.sonos_group_select_mud_room
-                - input_select.sonos_group_coordinator
-                - input_select.sonos_speaker_select
-                - media_player.mud_room
-              tap_action:
-                action: call-service
-                service: input_select.select_option
-                service_data:
-                  entity_id: input_select.sonos_speaker_select
-                  option: Mud Room
-              double_tap_action:
-                action: toggle
-              hold_action:
-                action: call-service
-                service: script.sonos_set_main_speaker
-                service_data:
-                  speaker: mud_room
-              state:
-                - value: "on"
-                  color: var(--primary-color)
-                  styles:
-                    card:
-                      - background: rgba(var(--rgb-primary-color), 0.2) !important
-                      - border: 2px solid var(--primary-color) !important
-                - value: "off"
-                  color: var(--secondary-text-color)
-              styles:
-                card:
-                  - height: 115px
-                  - border-radius: 14px
-                  - margin: 4px
-                name:
-                  - font-size: 20px
-                  - font-weight: bold
-                label:
-                  - font-size: 14px
-                  - color: var(--secondary-text-color)
-                icon:
-                  - width: 36px
-            - type: custom:button-card
-              entity: input_boolean.sonos_group_select_media_room
-              name: Media Room
-              icon: mdi:television-play
-              show_name: true
-              show_icon: true
-              show_label: true
-              label: |
-                [[[
-                  const active = states['input_select.sonos_speaker_select']?.state === 'Media Room';
-                  const coord = states['input_select.sonos_group_coordinator']?.state === 'media_room';
-                  const mp = states['media_player.media_room'];
-                  const parts = [];
-                  if (active) parts.push('▶ Listening');
-                  else if (coord) parts.push('⭐ Main');
-                  if (mp?.state === 'playing') {
-                    parts.push(mp.attributes.media_artist || mp.attributes.media_title || 'Playing');
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    parts.push(mp.state.charAt(0).toUpperCase() + mp.state.slice(1));
-                  }
-                  return parts.join('  ·  ') || ' ';
-                ]]]
-              triggers_update:
-                - input_boolean.sonos_group_select_media_room
-                - input_select.sonos_group_coordinator
-                - input_select.sonos_speaker_select
-                - media_player.media_room
-              tap_action:
-                action: call-service
-                service: input_select.select_option
-                service_data:
-                  entity_id: input_select.sonos_speaker_select
-                  option: Media Room
-              double_tap_action:
-                action: toggle
-              hold_action:
-                action: call-service
-                service: script.sonos_set_main_speaker
-                service_data:
-                  speaker: media_room
-              state:
-                - value: "on"
-                  color: var(--primary-color)
-                  styles:
-                    card:
-                      - background: rgba(var(--rgb-primary-color), 0.2) !important
-                      - border: 2px solid var(--primary-color) !important
-                - value: "off"
-                  color: var(--secondary-text-color)
-              styles:
-                card:
-                  - height: 115px
-                  - border-radius: 14px
-                  - margin: 4px
-                name:
-                  - font-size: 20px
-                  - font-weight: bold
-                label:
-                  - font-size: 14px
-                  - color: var(--secondary-text-color)
-                icon:
-                  - width: 36px
+        - text-align: center
+
   - type: vertical-stack
     cards:
+
+      # ── Living Room ──────────────────────────────────────────────────────────
       - type: custom:button-card
-        name: Tap = listen  •  Double-tap = group  •  Hold = set main
-        show_name: true
-        show_icon: false
         tap_action:
           action: none
         styles:
           card:
             - background: transparent
             - box-shadow: none
-            - height: 40px
-          name:
-            - font-size: 16px
-            - color: var(--primary-text-color)
-            - font-weight: normal
+            - padding: 3px 10px
+            - height: 76px
+          grid:
+            - grid-template-areas: '"radio speaker"'
+            - grid-template-columns: 56px 1fr
+            - grid-template-rows: 1fr
+            - align-items: center
+        custom_fields:
+          radio:
+            card:
+              type: custom:button-card
+              entity: input_boolean.sonos_group_select_living_room
+              show_name: false
+              show_icon: true
+              tap_action:
+                action: toggle
+              state:
+                - value: "on"
+                  icon: mdi:radiobox-marked
+                  color: var(--primary-text-color)
+                - value: "off"
+                  icon: mdi:radiobox-blank
+                  color: var(--secondary-text-color)
+              triggers_update:
+                - input_boolean.sonos_group_select_living_room
+              styles:
+                card:
+                  - background: transparent
+                  - box-shadow: none
+                  - height: 56px
+                  - padding: 0
+                icon:
+                  - width: 30px
+          speaker:
+            card:
+              type: custom:button-card
+              entity: media_player.living_room
+              name: Living Room
+              show_name: true
+              show_label: true
+              show_icon: false
+              label: |
+                [[[
+                  const mp = states['media_player.living_room'];
+                  if (mp?.state === 'playing') {
+                    const title = mp.attributes.media_title || '';
+                    return title ? 'Playing<br>' + title : 'Playing';
+                  }
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
+                ]]]
+              triggers_update:
+                - media_player.living_room
+                - input_select.sonos_speaker_select
+              tap_action:
+                action: call-service
+                service: input_select.select_option
+                service_data:
+                  entity_id: input_select.sonos_speaker_select
+                  option: Living Room
+              state:
+                - operator: template
+                  value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Living Room']]]"
+                  styles:
+                    card:
+                      - border: 2px solid var(--primary-color) !important
+                - operator: default
+                  styles:
+                    card:
+                      - border: 2px solid transparent
+              styles:
+                card:
+                  - height: 68px
+                  - border-radius: 12px
+                  - background: var(--background-color-2)
+                  - margin: 0
+                grid:
+                  - grid-template-areas: '"n l"'
+                  - grid-template-columns: 1fr auto
+                  - align-items: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                label:
+                  - font-size: 13px
+                  - color: var(--secondary-text-color)
+                  - text-align: right
+
+      # ── Kitchen ──────────────────────────────────────────────────────────────
       - type: custom:button-card
-        name: Apply Group
-        icon: mdi:check-circle-outline
-        show_name: true
-        show_icon: true
         tap_action:
-          action: call-service
-          service: script.turn_on
-          service_data:
-            entity_id: script.sonos_apply_group
+          action: none
         styles:
           card:
-            - height: 60px
-            - border-radius: 12px
-            - background: var(--primary-color)
-            - min-width: 180px
-            - max-width: 220px
-          name:
-            - font-size: 22px
-            - font-weight: bold
-            - color: white
-          icon:
-            - color: white
-            - width: 28px
+            - background: transparent
+            - box-shadow: none
+            - padding: 3px 10px
+            - height: 76px
+          grid:
+            - grid-template-areas: '"radio speaker"'
+            - grid-template-columns: 56px 1fr
+            - grid-template-rows: 1fr
+            - align-items: center
+        custom_fields:
+          radio:
+            card:
+              type: custom:button-card
+              entity: input_boolean.sonos_group_select_kitchen
+              show_name: false
+              show_icon: true
+              tap_action:
+                action: toggle
+              state:
+                - value: "on"
+                  icon: mdi:radiobox-marked
+                  color: var(--primary-text-color)
+                - value: "off"
+                  icon: mdi:radiobox-blank
+                  color: var(--secondary-text-color)
+              triggers_update:
+                - input_boolean.sonos_group_select_kitchen
+              styles:
+                card:
+                  - background: transparent
+                  - box-shadow: none
+                  - height: 56px
+                  - padding: 0
+                icon:
+                  - width: 30px
+          speaker:
+            card:
+              type: custom:button-card
+              entity: media_player.kitchen
+              name: Kitchen
+              show_name: true
+              show_label: true
+              show_icon: false
+              label: |
+                [[[
+                  const mp = states['media_player.kitchen'];
+                  if (mp?.state === 'playing') {
+                    const title = mp.attributes.media_title || '';
+                    return title ? 'Playing<br>' + title : 'Playing';
+                  }
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
+                ]]]
+              triggers_update:
+                - media_player.kitchen
+                - input_select.sonos_speaker_select
+              tap_action:
+                action: call-service
+                service: input_select.select_option
+                service_data:
+                  entity_id: input_select.sonos_speaker_select
+                  option: Kitchen
+              state:
+                - operator: template
+                  value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Kitchen']]]"
+                  styles:
+                    card:
+                      - border: 2px solid var(--primary-color) !important
+                - operator: default
+                  styles:
+                    card:
+                      - border: 2px solid transparent
+              styles:
+                card:
+                  - height: 68px
+                  - border-radius: 12px
+                  - background: var(--background-color-2)
+                  - margin: 0
+                grid:
+                  - grid-template-areas: '"n l"'
+                  - grid-template-columns: 1fr auto
+                  - align-items: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                label:
+                  - font-size: 13px
+                  - color: var(--secondary-text-color)
+                  - text-align: right
+
+      # ── Office ───────────────────────────────────────────────────────────────
+      - type: custom:button-card
+        tap_action:
+          action: none
+        styles:
+          card:
+            - background: transparent
+            - box-shadow: none
+            - padding: 3px 10px
+            - height: 76px
+          grid:
+            - grid-template-areas: '"radio speaker"'
+            - grid-template-columns: 56px 1fr
+            - grid-template-rows: 1fr
+            - align-items: center
+        custom_fields:
+          radio:
+            card:
+              type: custom:button-card
+              entity: input_boolean.sonos_group_select_office
+              show_name: false
+              show_icon: true
+              tap_action:
+                action: toggle
+              state:
+                - value: "on"
+                  icon: mdi:radiobox-marked
+                  color: var(--primary-text-color)
+                - value: "off"
+                  icon: mdi:radiobox-blank
+                  color: var(--secondary-text-color)
+              triggers_update:
+                - input_boolean.sonos_group_select_office
+              styles:
+                card:
+                  - background: transparent
+                  - box-shadow: none
+                  - height: 56px
+                  - padding: 0
+                icon:
+                  - width: 30px
+          speaker:
+            card:
+              type: custom:button-card
+              entity: media_player.office
+              name: Office
+              show_name: true
+              show_label: true
+              show_icon: false
+              label: |
+                [[[
+                  const mp = states['media_player.office'];
+                  if (mp?.state === 'playing') {
+                    const title = mp.attributes.media_title || '';
+                    return title ? 'Playing<br>' + title : 'Playing';
+                  }
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
+                ]]]
+              triggers_update:
+                - media_player.office
+                - input_select.sonos_speaker_select
+              tap_action:
+                action: call-service
+                service: input_select.select_option
+                service_data:
+                  entity_id: input_select.sonos_speaker_select
+                  option: Office
+              state:
+                - operator: template
+                  value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Office']]]"
+                  styles:
+                    card:
+                      - border: 2px solid var(--primary-color) !important
+                - operator: default
+                  styles:
+                    card:
+                      - border: 2px solid transparent
+              styles:
+                card:
+                  - height: 68px
+                  - border-radius: 12px
+                  - background: var(--background-color-2)
+                  - margin: 0
+                grid:
+                  - grid-template-areas: '"n l"'
+                  - grid-template-columns: 1fr auto
+                  - align-items: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                label:
+                  - font-size: 13px
+                  - color: var(--secondary-text-color)
+                  - text-align: right
+
+      # ── Deck ─────────────────────────────────────────────────────────────────
+      - type: custom:button-card
+        tap_action:
+          action: none
+        styles:
+          card:
+            - background: transparent
+            - box-shadow: none
+            - padding: 3px 10px
+            - height: 76px
+          grid:
+            - grid-template-areas: '"radio speaker"'
+            - grid-template-columns: 56px 1fr
+            - grid-template-rows: 1fr
+            - align-items: center
+        custom_fields:
+          radio:
+            card:
+              type: custom:button-card
+              entity: input_boolean.sonos_group_select_deck
+              show_name: false
+              show_icon: true
+              tap_action:
+                action: toggle
+              state:
+                - value: "on"
+                  icon: mdi:radiobox-marked
+                  color: var(--primary-text-color)
+                - value: "off"
+                  icon: mdi:radiobox-blank
+                  color: var(--secondary-text-color)
+              triggers_update:
+                - input_boolean.sonos_group_select_deck
+              styles:
+                card:
+                  - background: transparent
+                  - box-shadow: none
+                  - height: 56px
+                  - padding: 0
+                icon:
+                  - width: 30px
+          speaker:
+            card:
+              type: custom:button-card
+              entity: media_player.deck
+              name: Deck
+              show_name: true
+              show_label: true
+              show_icon: false
+              label: |
+                [[[
+                  const mp = states['media_player.deck'];
+                  if (mp?.state === 'playing') {
+                    const title = mp.attributes.media_title || '';
+                    return title ? 'Playing<br>' + title : 'Playing';
+                  }
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
+                ]]]
+              triggers_update:
+                - media_player.deck
+                - input_select.sonos_speaker_select
+              tap_action:
+                action: call-service
+                service: input_select.select_option
+                service_data:
+                  entity_id: input_select.sonos_speaker_select
+                  option: Deck
+              state:
+                - operator: template
+                  value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Deck']]]"
+                  styles:
+                    card:
+                      - border: 2px solid var(--primary-color) !important
+                - operator: default
+                  styles:
+                    card:
+                      - border: 2px solid transparent
+              styles:
+                card:
+                  - height: 68px
+                  - border-radius: 12px
+                  - background: var(--background-color-2)
+                  - margin: 0
+                grid:
+                  - grid-template-areas: '"n l"'
+                  - grid-template-columns: 1fr auto
+                  - align-items: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                label:
+                  - font-size: 13px
+                  - color: var(--secondary-text-color)
+                  - text-align: right
+
+      # ── Pool ─────────────────────────────────────────────────────────────────
+      - type: custom:button-card
+        tap_action:
+          action: none
+        styles:
+          card:
+            - background: transparent
+            - box-shadow: none
+            - padding: 3px 10px
+            - height: 76px
+          grid:
+            - grid-template-areas: '"radio speaker"'
+            - grid-template-columns: 56px 1fr
+            - grid-template-rows: 1fr
+            - align-items: center
+        custom_fields:
+          radio:
+            card:
+              type: custom:button-card
+              entity: input_boolean.sonos_group_select_pool
+              show_name: false
+              show_icon: true
+              tap_action:
+                action: toggle
+              state:
+                - value: "on"
+                  icon: mdi:radiobox-marked
+                  color: var(--primary-text-color)
+                - value: "off"
+                  icon: mdi:radiobox-blank
+                  color: var(--secondary-text-color)
+              triggers_update:
+                - input_boolean.sonos_group_select_pool
+              styles:
+                card:
+                  - background: transparent
+                  - box-shadow: none
+                  - height: 56px
+                  - padding: 0
+                icon:
+                  - width: 30px
+          speaker:
+            card:
+              type: custom:button-card
+              entity: media_player.pool
+              name: Pool
+              show_name: true
+              show_label: true
+              show_icon: false
+              label: |
+                [[[
+                  const mp = states['media_player.pool'];
+                  if (mp?.state === 'playing') {
+                    const title = mp.attributes.media_title || '';
+                    return title ? 'Playing<br>' + title : 'Playing';
+                  }
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
+                ]]]
+              triggers_update:
+                - media_player.pool
+                - input_select.sonos_speaker_select
+              tap_action:
+                action: call-service
+                service: input_select.select_option
+                service_data:
+                  entity_id: input_select.sonos_speaker_select
+                  option: Pool
+              state:
+                - operator: template
+                  value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Pool']]]"
+                  styles:
+                    card:
+                      - border: 2px solid var(--primary-color) !important
+                - operator: default
+                  styles:
+                    card:
+                      - border: 2px solid transparent
+              styles:
+                card:
+                  - height: 68px
+                  - border-radius: 12px
+                  - background: var(--background-color-2)
+                  - margin: 0
+                grid:
+                  - grid-template-areas: '"n l"'
+                  - grid-template-columns: 1fr auto
+                  - align-items: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                label:
+                  - font-size: 13px
+                  - color: var(--secondary-text-color)
+                  - text-align: right
+
+      # ── Primary Bedroom ───────────────────────────────────────────────────────
+      - type: custom:button-card
+        tap_action:
+          action: none
+        styles:
+          card:
+            - background: transparent
+            - box-shadow: none
+            - padding: 3px 10px
+            - height: 76px
+          grid:
+            - grid-template-areas: '"radio speaker"'
+            - grid-template-columns: 56px 1fr
+            - grid-template-rows: 1fr
+            - align-items: center
+        custom_fields:
+          radio:
+            card:
+              type: custom:button-card
+              entity: input_boolean.sonos_group_select_primary_bedroom
+              show_name: false
+              show_icon: true
+              tap_action:
+                action: toggle
+              state:
+                - value: "on"
+                  icon: mdi:radiobox-marked
+                  color: var(--primary-text-color)
+                - value: "off"
+                  icon: mdi:radiobox-blank
+                  color: var(--secondary-text-color)
+              triggers_update:
+                - input_boolean.sonos_group_select_primary_bedroom
+              styles:
+                card:
+                  - background: transparent
+                  - box-shadow: none
+                  - height: 56px
+                  - padding: 0
+                icon:
+                  - width: 30px
+          speaker:
+            card:
+              type: custom:button-card
+              entity: media_player.primary_bedroom
+              name: Primary Bedroom
+              show_name: true
+              show_label: true
+              show_icon: false
+              label: |
+                [[[
+                  const mp = states['media_player.primary_bedroom'];
+                  if (mp?.state === 'playing') {
+                    const title = mp.attributes.media_title || '';
+                    return title ? 'Playing<br>' + title : 'Playing';
+                  }
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
+                ]]]
+              triggers_update:
+                - media_player.primary_bedroom
+                - input_select.sonos_speaker_select
+              tap_action:
+                action: call-service
+                service: input_select.select_option
+                service_data:
+                  entity_id: input_select.sonos_speaker_select
+                  option: Primary Bedroom
+              state:
+                - operator: template
+                  value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Primary Bedroom']]]"
+                  styles:
+                    card:
+                      - border: 2px solid var(--primary-color) !important
+                - operator: default
+                  styles:
+                    card:
+                      - border: 2px solid transparent
+              styles:
+                card:
+                  - height: 68px
+                  - border-radius: 12px
+                  - background: var(--background-color-2)
+                  - margin: 0
+                grid:
+                  - grid-template-areas: '"n l"'
+                  - grid-template-columns: 1fr auto
+                  - align-items: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                label:
+                  - font-size: 13px
+                  - color: var(--secondary-text-color)
+                  - text-align: right
+
+      # ── Primary Bathroom ──────────────────────────────────────────────────────
+      - type: custom:button-card
+        tap_action:
+          action: none
+        styles:
+          card:
+            - background: transparent
+            - box-shadow: none
+            - padding: 3px 10px
+            - height: 76px
+          grid:
+            - grid-template-areas: '"radio speaker"'
+            - grid-template-columns: 56px 1fr
+            - grid-template-rows: 1fr
+            - align-items: center
+        custom_fields:
+          radio:
+            card:
+              type: custom:button-card
+              entity: input_boolean.sonos_group_select_primary_bathroom
+              show_name: false
+              show_icon: true
+              tap_action:
+                action: toggle
+              state:
+                - value: "on"
+                  icon: mdi:radiobox-marked
+                  color: var(--primary-text-color)
+                - value: "off"
+                  icon: mdi:radiobox-blank
+                  color: var(--secondary-text-color)
+              triggers_update:
+                - input_boolean.sonos_group_select_primary_bathroom
+              styles:
+                card:
+                  - background: transparent
+                  - box-shadow: none
+                  - height: 56px
+                  - padding: 0
+                icon:
+                  - width: 30px
+          speaker:
+            card:
+              type: custom:button-card
+              entity: media_player.primary_bathroom
+              name: Primary Bathroom
+              show_name: true
+              show_label: true
+              show_icon: false
+              label: |
+                [[[
+                  const mp = states['media_player.primary_bathroom'];
+                  if (mp?.state === 'playing') {
+                    const title = mp.attributes.media_title || '';
+                    return title ? 'Playing<br>' + title : 'Playing';
+                  }
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
+                ]]]
+              triggers_update:
+                - media_player.primary_bathroom
+                - input_select.sonos_speaker_select
+              tap_action:
+                action: call-service
+                service: input_select.select_option
+                service_data:
+                  entity_id: input_select.sonos_speaker_select
+                  option: Primary Bathroom
+              state:
+                - operator: template
+                  value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Primary Bathroom']]]"
+                  styles:
+                    card:
+                      - border: 2px solid var(--primary-color) !important
+                - operator: default
+                  styles:
+                    card:
+                      - border: 2px solid transparent
+              styles:
+                card:
+                  - height: 68px
+                  - border-radius: 12px
+                  - background: var(--background-color-2)
+                  - margin: 0
+                grid:
+                  - grid-template-areas: '"n l"'
+                  - grid-template-columns: 1fr auto
+                  - align-items: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                label:
+                  - font-size: 13px
+                  - color: var(--secondary-text-color)
+                  - text-align: right
+
+      # ── Gym ──────────────────────────────────────────────────────────────────
+      - type: custom:button-card
+        tap_action:
+          action: none
+        styles:
+          card:
+            - background: transparent
+            - box-shadow: none
+            - padding: 3px 10px
+            - height: 76px
+          grid:
+            - grid-template-areas: '"radio speaker"'
+            - grid-template-columns: 56px 1fr
+            - grid-template-rows: 1fr
+            - align-items: center
+        custom_fields:
+          radio:
+            card:
+              type: custom:button-card
+              entity: input_boolean.sonos_group_select_gym
+              show_name: false
+              show_icon: true
+              tap_action:
+                action: toggle
+              state:
+                - value: "on"
+                  icon: mdi:radiobox-marked
+                  color: var(--primary-text-color)
+                - value: "off"
+                  icon: mdi:radiobox-blank
+                  color: var(--secondary-text-color)
+              triggers_update:
+                - input_boolean.sonos_group_select_gym
+              styles:
+                card:
+                  - background: transparent
+                  - box-shadow: none
+                  - height: 56px
+                  - padding: 0
+                icon:
+                  - width: 30px
+          speaker:
+            card:
+              type: custom:button-card
+              entity: media_player.gym
+              name: Gym
+              show_name: true
+              show_label: true
+              show_icon: false
+              label: |
+                [[[
+                  const mp = states['media_player.gym'];
+                  if (mp?.state === 'playing') {
+                    const title = mp.attributes.media_title || '';
+                    return title ? 'Playing<br>' + title : 'Playing';
+                  }
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
+                ]]]
+              triggers_update:
+                - media_player.gym
+                - input_select.sonos_speaker_select
+              tap_action:
+                action: call-service
+                service: input_select.select_option
+                service_data:
+                  entity_id: input_select.sonos_speaker_select
+                  option: Gym
+              state:
+                - operator: template
+                  value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Gym']]]"
+                  styles:
+                    card:
+                      - border: 2px solid var(--primary-color) !important
+                - operator: default
+                  styles:
+                    card:
+                      - border: 2px solid transparent
+              styles:
+                card:
+                  - height: 68px
+                  - border-radius: 12px
+                  - background: var(--background-color-2)
+                  - margin: 0
+                grid:
+                  - grid-template-areas: '"n l"'
+                  - grid-template-columns: 1fr auto
+                  - align-items: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                label:
+                  - font-size: 13px
+                  - color: var(--secondary-text-color)
+                  - text-align: right
+
+      # ── Mud Room ─────────────────────────────────────────────────────────────
+      - type: custom:button-card
+        tap_action:
+          action: none
+        styles:
+          card:
+            - background: transparent
+            - box-shadow: none
+            - padding: 3px 10px
+            - height: 76px
+          grid:
+            - grid-template-areas: '"radio speaker"'
+            - grid-template-columns: 56px 1fr
+            - grid-template-rows: 1fr
+            - align-items: center
+        custom_fields:
+          radio:
+            card:
+              type: custom:button-card
+              entity: input_boolean.sonos_group_select_mud_room
+              show_name: false
+              show_icon: true
+              tap_action:
+                action: toggle
+              state:
+                - value: "on"
+                  icon: mdi:radiobox-marked
+                  color: var(--primary-text-color)
+                - value: "off"
+                  icon: mdi:radiobox-blank
+                  color: var(--secondary-text-color)
+              triggers_update:
+                - input_boolean.sonos_group_select_mud_room
+              styles:
+                card:
+                  - background: transparent
+                  - box-shadow: none
+                  - height: 56px
+                  - padding: 0
+                icon:
+                  - width: 30px
+          speaker:
+            card:
+              type: custom:button-card
+              entity: media_player.mud_room
+              name: Mud Room
+              show_name: true
+              show_label: true
+              show_icon: false
+              label: |
+                [[[
+                  const mp = states['media_player.mud_room'];
+                  if (mp?.state === 'playing') {
+                    const title = mp.attributes.media_title || '';
+                    return title ? 'Playing<br>' + title : 'Playing';
+                  }
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
+                ]]]
+              triggers_update:
+                - media_player.mud_room
+                - input_select.sonos_speaker_select
+              tap_action:
+                action: call-service
+                service: input_select.select_option
+                service_data:
+                  entity_id: input_select.sonos_speaker_select
+                  option: Mud Room
+              state:
+                - operator: template
+                  value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Mud Room']]]"
+                  styles:
+                    card:
+                      - border: 2px solid var(--primary-color) !important
+                - operator: default
+                  styles:
+                    card:
+                      - border: 2px solid transparent
+              styles:
+                card:
+                  - height: 68px
+                  - border-radius: 12px
+                  - background: var(--background-color-2)
+                  - margin: 0
+                grid:
+                  - grid-template-areas: '"n l"'
+                  - grid-template-columns: 1fr auto
+                  - align-items: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                label:
+                  - font-size: 13px
+                  - color: var(--secondary-text-color)
+                  - text-align: right
+
+      # ── Media Room ───────────────────────────────────────────────────────────
+      - type: custom:button-card
+        tap_action:
+          action: none
+        styles:
+          card:
+            - background: transparent
+            - box-shadow: none
+            - padding: 3px 10px
+            - height: 76px
+          grid:
+            - grid-template-areas: '"radio speaker"'
+            - grid-template-columns: 56px 1fr
+            - grid-template-rows: 1fr
+            - align-items: center
+        custom_fields:
+          radio:
+            card:
+              type: custom:button-card
+              entity: input_boolean.sonos_group_select_media_room
+              show_name: false
+              show_icon: true
+              tap_action:
+                action: toggle
+              state:
+                - value: "on"
+                  icon: mdi:radiobox-marked
+                  color: var(--primary-text-color)
+                - value: "off"
+                  icon: mdi:radiobox-blank
+                  color: var(--secondary-text-color)
+              triggers_update:
+                - input_boolean.sonos_group_select_media_room
+              styles:
+                card:
+                  - background: transparent
+                  - box-shadow: none
+                  - height: 56px
+                  - padding: 0
+                icon:
+                  - width: 30px
+          speaker:
+            card:
+              type: custom:button-card
+              entity: media_player.media_room
+              name: Media Room
+              show_name: true
+              show_label: true
+              show_icon: false
+              label: |
+                [[[
+                  const mp = states['media_player.media_room'];
+                  if (mp?.state === 'playing') {
+                    const title = mp.attributes.media_title || '';
+                    return title ? 'Playing<br>' + title : 'Playing';
+                  }
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
+                ]]]
+              triggers_update:
+                - media_player.media_room
+                - input_select.sonos_speaker_select
+              tap_action:
+                action: call-service
+                service: input_select.select_option
+                service_data:
+                  entity_id: input_select.sonos_speaker_select
+                  option: Media Room
+              state:
+                - operator: template
+                  value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Media Room']]]"
+                  styles:
+                    card:
+                      - border: 2px solid var(--primary-color) !important
+                - operator: default
+                  styles:
+                    card:
+                      - border: 2px solid transparent
+              styles:
+                card:
+                  - height: 68px
+                  - border-radius: 12px
+                  - background: var(--background-color-2)
+                  - margin: 0
+                grid:
+                  - grid-template-areas: '"n l"'
+                  - grid-template-columns: 1fr auto
+                  - align-items: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                label:
+                  - font-size: 13px
+                  - color: var(--secondary-text-color)
+                  - text-align: right
+
+  # ── Apply button ─────────────────────────────────────────────────────────────
+  - type: custom:button-card
+    name: Apply
+    show_name: true
+    show_icon: false
+    tap_action:
+      action: call-service
+      service: script.turn_on
+      service_data:
+        entity_id: script.sonos_apply_group
+    styles:
+      card:
+        - height: 60px
+        - border-radius: 12px
+        - background: var(--primary-color)
+        - margin: 8px 10px 16px
+      name:
+        - font-size: 22px
+        - font-weight: bold
+        - color: white
