@@ -56,8 +56,7 @@ cards:
             - type: custom:button-card
               entity: input_select.sonos_speaker_select
               show_name: false
-              show_icon: true
-              icon: mdi:speaker-multiple
+              show_icon: false
               show_label: true
               label: |
                 [[[
@@ -107,6 +106,11 @@ cards:
                 action: navigate
                 navigation_path: '#sonos-grouping'
               custom_fields:
+                star_btn: >
+                  <div onclick="event.stopPropagation();history.pushState(null,'','#sonos-favorites');window.dispatchEvent(new CustomEvent('location-changed',{bubbles:true,composed:true,detail:{replace:false}}));"
+                       style="cursor:pointer;display:flex;align-items:center;justify-content:center;width:55px;height:55px;">
+                    <ha-icon icon="mdi:star" style="--mdc-icon-size:26px;color:var(--secondary-text-color)"></ha-icon>
+                  </div>
                 chevron: "<ha-icon icon='mdi:chevron-right' style='--mdc-icon-size:22px;color:var(--secondary-text-color)'></ha-icon>"
               styles:
                 card:
@@ -116,17 +120,20 @@ cards:
                   - margin-right: 10px
                   - max-width: 96%
                   - height: 55px
+                grid:
+                  - grid-template-areas: '"star_btn l chevron"'
+                  - grid-template-columns: '55px 1fr 55px'
+                  - align-items: center
                 label:
                   - font-size: 24px
                   - font-weight: '600'
                   - color: var(--primary-text-color)
-                  - text-align: left
-                  - flex: '1'
-                icon:
-                  - width: 26px
-                  - color: var(--secondary-text-color)
-                  - margin-right: 12px
+                  - text-align: center
                 custom_fields:
+                  star_btn:
+                    - justify-self: start
+                    - align-self: center
+                    - padding: '0'
                   chevron:
                     - justify-self: end
                     - align-self: center
@@ -381,6 +388,8 @@ cards:
             - module_name: wall_panel_scenes
               dashboard: basement_wall_panel
       nav: !include footer-menu.yaml
+  # Sonos Favorites Pop-Up
+  - !include /config/dashboards/modules/sonos-favorites-pop-up.yaml
   # Sonos Grouping Pop-Up
   - !include /config/dashboards/modules/sonos-grouping-pop-up.yaml
   # Weather Pop-Up
