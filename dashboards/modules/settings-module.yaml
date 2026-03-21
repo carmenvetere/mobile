@@ -16,6 +16,7 @@
       name: Dinner Party
       icon: mdi:party-popper
       show_state: false
+      scrolling_effect: false
       button_action:
         tap_action:
           action: toggle
@@ -36,6 +37,7 @@
       name: Overnight Guests
       icon: mdi:bed
       show_state: false
+      scrolling_effect: false
       button_action:
         tap_action:
           action: toggle
@@ -56,6 +58,7 @@
       name: Cleaners Mode
       icon: mdi:spray-bottle
       show_state: false
+      scrolling_effect: false
       button_action:
         tap_action:
           action: toggle
@@ -76,6 +79,7 @@
       name: Away
       icon: mdi:bag-suitcase
       show_state: false
+      scrolling_effect: false
       button_action:
         tap_action:
           action: toggle
@@ -583,6 +587,7 @@
       name: Automatically Turn Lights On In Evening
       icon: mdi:lightbulb-auto
       show_state: false
+      scrolling_effect: false
       button_action:
         tap_action:
           action: toggle
