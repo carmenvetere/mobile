@@ -433,6 +433,24 @@ sonos_apply_group:
             {% endif %}
           {% endfor %}
           {{ selected.entities }}
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.sonos_speaker_select
+      data:
+        option: >-
+          {% set name_map = {
+            'living_room': 'Living Room',
+            'kitchen': 'Kitchen',
+            'office': 'Office',
+            'deck': 'Deck',
+            'pool': 'Pool',
+            'primary_bedroom': 'Primary Bedroom',
+            'primary_bathroom': 'Primary Bathroom',
+            'gym': 'Gym',
+            'mud_room': 'Mud Room',
+            'media_room': 'Media Room'
+          } %}
+          {{ name_map.get(states('input_select.sonos_group_coordinator'), 'Living Room') }}
 
 alarm_keypad_disarm:
   alias: Alarm Keypad Disarm

@@ -13,7 +13,7 @@ cards:
     name: Sonos Grouping
     icon: mdi:speaker-multiple
     scrolling_effect: false
-    close_on_click: true
+    close_on_click: false
     background_update: true
     modules:
       - pop-up-module
@@ -33,15 +33,55 @@ cards:
         }
 
   - type: custom:button-card
-    entity: sensor.sonos_group_name
     show_name: false
     show_icon: false
     show_label: true
-    label: "[[[return entity?.state ?? 'No Speakers']]]"
+    label: |
+      [[[
+        const sel = states['input_select.sonos_speaker_select']?.state;
+        const nameMap = {
+          'Living Room': 'media_player.living_room',
+          'Kitchen': 'media_player.kitchen',
+          'Office': 'media_player.office',
+          'Deck': 'media_player.deck',
+          'Pool': 'media_player.pool',
+          'Primary Bedroom': 'media_player.primary_bedroom',
+          'Primary Bathroom': 'media_player.primary_bathroom',
+          'Gym': 'media_player.gym',
+          'Mud Room': 'media_player.mud_room',
+          'Media Room': 'media_player.media_room'
+        };
+        const revMap = {
+          'media_player.living_room': 'Living Room',
+          'media_player.kitchen': 'Kitchen',
+          'media_player.office': 'Office',
+          'media_player.deck': 'Deck',
+          'media_player.pool': 'Pool',
+          'media_player.primary_bedroom': 'Primary Bedroom',
+          'media_player.primary_bathroom': 'Primary Bathroom',
+          'media_player.gym': 'Gym',
+          'media_player.mud_room': 'Mud Room',
+          'media_player.media_room': 'Media Room'
+        };
+        const mp = sel ? states[nameMap[sel]] : null;
+        const members = mp?.attributes?.group_members;
+        if (!members || members.length <= 1) return sel || 'No Speaker';
+        return members.map(m => revMap[m] || m).join(' + ');
+      ]]]
     tap_action:
       action: none
     triggers_update:
-      - sensor.sonos_group_name
+      - input_select.sonos_speaker_select
+      - media_player.living_room
+      - media_player.kitchen
+      - media_player.office
+      - media_player.deck
+      - media_player.pool
+      - media_player.primary_bedroom
+      - media_player.primary_bathroom
+      - media_player.gym
+      - media_player.mud_room
+      - media_player.media_room
     styles:
       card:
         - background: transparent
