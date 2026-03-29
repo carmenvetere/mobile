@@ -165,6 +165,7 @@
           {{ ns.combined_list | to_json() }}
     
 #   Calculate "Other" usage
+#   Holds last value if any required sensor is unavailable/unknown
     - name: "Home Other Usage"
       unique_id: home_other_usage
       unit_of_measurement: "kWh"
@@ -172,12 +173,19 @@
       state_class: total_increasing
       icon: mdi:home-lightning-bolt
       state: >
-        {% set total = states('sensor.bayberry_load_import') | float(0) %}
-        {% set well  = states('sensor.well_pump_energy2') | float(0) %}
-        {% set ev    = states('sensor.wall_charger_energy') | float(0) %}
-
-        {% set other = total - well - ev %}
-        {{ [other, 0] | max | round(2) }}
+        {% set required = [
+          'sensor.bayberry_load_import',
+          'sensor.well_pump_energy2',
+          'sensor.wall_charger_energy'
+        ] %}
+        {% if required | map('states') | select('in', ['unavailable', 'unknown']) | list | count > 0 %}
+          {{ states('sensor.home_other_usage') | float(0) }}
+        {% else %}
+          {% set total = states('sensor.bayberry_load_import') | float(0) %}
+          {% set well  = states('sensor.well_pump_energy2') | float(0) %}
+          {% set ev    = states('sensor.wall_charger_energy') | float(0) %}
+          {{ [total - well - ev, 0] | max | round(2) }}
+        {% endif %}
 
     - name: "Living Room Favorites"
       unique_id: living_room_favorites
