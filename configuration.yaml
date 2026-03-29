@@ -100,6 +100,14 @@ input_select:
     initial: living_room
     icon: mdi:speaker-multiple
 
+utility_meter:
+  daily_well_pump:
+    source: sensor.well_pump_energy2
+    cycle: daily
+  daily_ev_charger:
+    source: sensor.wall_charger_energy
+    cycle: daily
+
 recorder:
   db_url: mysql://carmenv:Bayberry1991@core-mariadb/homeassistant?charset=utf8mb4
   purge_keep_days: 30
