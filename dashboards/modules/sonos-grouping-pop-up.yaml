@@ -126,7 +126,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_living_room
               styles:
@@ -141,23 +141,21 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.living_room
-              show_name: false
+              name: Living Room
+              show_name: true
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.living_room'];
-                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    status = title ? 'Playing · ' + title : 'Playing';
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                    return title ? 'Playing<br>' + title : 'Playing';
                   }
-                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
-                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Living Room</span>'
-                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
-                    + '</div>';
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
                 ]]]
               triggers_update:
                 - media_player.living_room
@@ -173,7 +171,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Living Room']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -184,9 +182,22 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
+                grid:
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                  - justify-self: start
                 label:
-                  - padding: 0
-                  - width: 100%
+                  - font-size: 14px
+                  - color: var(--secondary-text-color)
+                  - text-align: left
+                  - justify-self: start
 
       # ── Kitchen ──────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -218,7 +229,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_kitchen
               styles:
@@ -233,23 +244,21 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.kitchen
-              show_name: false
+              name: Kitchen
+              show_name: true
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.kitchen'];
-                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    status = title ? 'Playing · ' + title : 'Playing';
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                    return title ? 'Playing<br>' + title : 'Playing';
                   }
-                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
-                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Kitchen</span>'
-                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
-                    + '</div>';
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
                 ]]]
               triggers_update:
                 - media_player.kitchen
@@ -265,7 +274,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Kitchen']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -276,9 +285,22 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
+                grid:
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                  - justify-self: start
                 label:
-                  - padding: 0
-                  - width: 100%
+                  - font-size: 14px
+                  - color: var(--secondary-text-color)
+                  - text-align: left
+                  - justify-self: start
 
       # ── Office ───────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -310,7 +332,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_office
               styles:
@@ -325,23 +347,21 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.office
-              show_name: false
+              name: Office
+              show_name: true
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.office'];
-                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    status = title ? 'Playing · ' + title : 'Playing';
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                    return title ? 'Playing<br>' + title : 'Playing';
                   }
-                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
-                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Office</span>'
-                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
-                    + '</div>';
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
                 ]]]
               triggers_update:
                 - media_player.office
@@ -357,7 +377,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Office']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -368,9 +388,22 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
+                grid:
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                  - justify-self: start
                 label:
-                  - padding: 0
-                  - width: 100%
+                  - font-size: 14px
+                  - color: var(--secondary-text-color)
+                  - text-align: left
+                  - justify-self: start
 
       # ── Deck ─────────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -402,7 +435,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_deck
               styles:
@@ -417,23 +450,21 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.deck
-              show_name: false
+              name: Deck
+              show_name: true
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.deck'];
-                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    status = title ? 'Playing · ' + title : 'Playing';
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                    return title ? 'Playing<br>' + title : 'Playing';
                   }
-                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
-                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Deck</span>'
-                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
-                    + '</div>';
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
                 ]]]
               triggers_update:
                 - media_player.deck
@@ -449,7 +480,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Deck']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -460,9 +491,22 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
+                grid:
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                  - justify-self: start
                 label:
-                  - padding: 0
-                  - width: 100%
+                  - font-size: 14px
+                  - color: var(--secondary-text-color)
+                  - text-align: left
+                  - justify-self: start
 
       # ── Pool ─────────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -494,7 +538,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_pool
               styles:
@@ -509,23 +553,21 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.pool
-              show_name: false
+              name: Pool
+              show_name: true
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.pool'];
-                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    status = title ? 'Playing · ' + title : 'Playing';
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                    return title ? 'Playing<br>' + title : 'Playing';
                   }
-                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
-                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Pool</span>'
-                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
-                    + '</div>';
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
                 ]]]
               triggers_update:
                 - media_player.pool
@@ -541,7 +583,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Pool']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -552,9 +594,22 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
+                grid:
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                  - justify-self: start
                 label:
-                  - padding: 0
-                  - width: 100%
+                  - font-size: 14px
+                  - color: var(--secondary-text-color)
+                  - text-align: left
+                  - justify-self: start
 
       # ── Primary Bedroom ───────────────────────────────────────────────────────
       - type: custom:button-card
@@ -586,7 +641,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_primary_bedroom
               styles:
@@ -601,23 +656,21 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.primary_bedroom
-              show_name: false
+              name: Primary Bedroom
+              show_name: true
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.primary_bedroom'];
-                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    status = title ? 'Playing · ' + title : 'Playing';
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                    return title ? 'Playing<br>' + title : 'Playing';
                   }
-                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
-                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Primary Bedroom</span>'
-                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
-                    + '</div>';
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
                 ]]]
               triggers_update:
                 - media_player.primary_bedroom
@@ -633,7 +686,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Primary Bedroom']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -644,9 +697,22 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
+                grid:
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                  - justify-self: start
                 label:
-                  - padding: 0
-                  - width: 100%
+                  - font-size: 14px
+                  - color: var(--secondary-text-color)
+                  - text-align: left
+                  - justify-self: start
 
       # ── Primary Bathroom ──────────────────────────────────────────────────────
       - type: custom:button-card
@@ -678,7 +744,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_primary_bathroom
               styles:
@@ -693,23 +759,21 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.primary_bathroom
-              show_name: false
+              name: Primary Bathroom
+              show_name: true
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.primary_bathroom'];
-                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    status = title ? 'Playing · ' + title : 'Playing';
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                    return title ? 'Playing<br>' + title : 'Playing';
                   }
-                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
-                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Primary Bathroom</span>'
-                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
-                    + '</div>';
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
                 ]]]
               triggers_update:
                 - media_player.primary_bathroom
@@ -725,7 +789,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Primary Bathroom']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -736,9 +800,22 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
+                grid:
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                  - justify-self: start
                 label:
-                  - padding: 0
-                  - width: 100%
+                  - font-size: 14px
+                  - color: var(--secondary-text-color)
+                  - text-align: left
+                  - justify-self: start
 
       # ── Gym ──────────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -770,7 +847,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_gym
               styles:
@@ -785,23 +862,21 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.gym
-              show_name: false
+              name: Gym
+              show_name: true
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.gym'];
-                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    status = title ? 'Playing · ' + title : 'Playing';
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                    return title ? 'Playing<br>' + title : 'Playing';
                   }
-                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
-                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Gym</span>'
-                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
-                    + '</div>';
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
                 ]]]
               triggers_update:
                 - media_player.gym
@@ -817,7 +892,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Gym']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -828,9 +903,22 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
+                grid:
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                  - justify-self: start
                 label:
-                  - padding: 0
-                  - width: 100%
+                  - font-size: 14px
+                  - color: var(--secondary-text-color)
+                  - text-align: left
+                  - justify-self: start
 
       # ── Mud Room ─────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -862,7 +950,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_mud_room
               styles:
@@ -877,23 +965,21 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.mud_room
-              show_name: false
+              name: Mud Room
+              show_name: true
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.mud_room'];
-                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    status = title ? 'Playing · ' + title : 'Playing';
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                    return title ? 'Playing<br>' + title : 'Playing';
                   }
-                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
-                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Mud Room</span>'
-                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
-                    + '</div>';
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
                 ]]]
               triggers_update:
                 - media_player.mud_room
@@ -909,7 +995,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Mud Room']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -920,9 +1006,22 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
+                grid:
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                  - justify-self: start
                 label:
-                  - padding: 0
-                  - width: 100%
+                  - font-size: 14px
+                  - color: var(--secondary-text-color)
+                  - text-align: left
+                  - justify-self: start
 
       # ── Media Room ───────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -954,7 +1053,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_media_room
               styles:
@@ -969,23 +1068,21 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.media_room
-              show_name: false
+              name: Media Room
+              show_name: true
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.media_room'];
-                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    status = title ? 'Playing · ' + title : 'Playing';
-                  } else if (mp?.state && mp.state !== 'unavailable') {
-                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                    return title ? 'Playing<br>' + title : 'Playing';
                   }
-                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
-                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Media Room</span>'
-                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
-                    + '</div>';
+                  if (mp?.state && mp.state !== 'unavailable') {
+                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
+                  }
+                  return '';
                 ]]]
               triggers_update:
                 - media_player.media_room
@@ -1001,7 +1098,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Media Room']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -1012,9 +1109,22 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
+                grid:
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
+                  - padding: 0 15px
+                name:
+                  - font-size: 18px
+                  - font-weight: bold
+                  - text-align: left
+                  - justify-self: start
                 label:
-                  - padding: 0
-                  - width: 100%
+                  - font-size: 14px
+                  - color: var(--secondary-text-color)
+                  - text-align: left
+                  - justify-self: start
 
   # ── Apply button ─────────────────────────────────────────────────────────────
   - type: custom:button-card
