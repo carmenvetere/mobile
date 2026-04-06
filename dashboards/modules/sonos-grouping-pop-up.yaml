@@ -126,7 +126,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_living_room
               styles:
@@ -171,7 +171,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Living Room']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -183,18 +183,21 @@ cards:
                   - background: var(--background-color-2)
                   - margin: 0
                 grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
                   - padding: 0 15px
                 name:
                   - font-size: 18px
                   - font-weight: bold
                   - text-align: left
+                  - justify-self: start
                 label:
-                  - font-size: 13px
+                  - font-size: 14px
                   - color: var(--secondary-text-color)
-                  - text-align: right
+                  - text-align: left
+                  - justify-self: start
 
       # ── Kitchen ──────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -226,7 +229,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_kitchen
               styles:
@@ -271,7 +274,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Kitchen']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -283,18 +286,21 @@ cards:
                   - background: var(--background-color-2)
                   - margin: 0
                 grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
                   - padding: 0 15px
                 name:
                   - font-size: 18px
                   - font-weight: bold
                   - text-align: left
+                  - justify-self: start
                 label:
-                  - font-size: 13px
+                  - font-size: 14px
                   - color: var(--secondary-text-color)
-                  - text-align: right
+                  - text-align: left
+                  - justify-self: start
 
       # ── Office ───────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -326,7 +332,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_office
               styles:
@@ -371,7 +377,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Office']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -383,18 +389,21 @@ cards:
                   - background: var(--background-color-2)
                   - margin: 0
                 grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
                   - padding: 0 15px
                 name:
                   - font-size: 18px
                   - font-weight: bold
                   - text-align: left
+                  - justify-self: start
                 label:
-                  - font-size: 13px
+                  - font-size: 14px
                   - color: var(--secondary-text-color)
-                  - text-align: right
+                  - text-align: left
+                  - justify-self: start
 
       # ── Deck ─────────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -426,7 +435,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_deck
               styles:
@@ -471,7 +480,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Deck']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -483,18 +492,21 @@ cards:
                   - background: var(--background-color-2)
                   - margin: 0
                 grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
                   - padding: 0 15px
                 name:
                   - font-size: 18px
                   - font-weight: bold
                   - text-align: left
+                  - justify-self: start
                 label:
-                  - font-size: 13px
+                  - font-size: 14px
                   - color: var(--secondary-text-color)
-                  - text-align: right
+                  - text-align: left
+                  - justify-self: start
 
       # ── Pool ─────────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -526,7 +538,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_pool
               styles:
@@ -571,7 +583,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Pool']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -583,18 +595,21 @@ cards:
                   - background: var(--background-color-2)
                   - margin: 0
                 grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
                   - padding: 0 15px
                 name:
                   - font-size: 18px
                   - font-weight: bold
                   - text-align: left
+                  - justify-self: start
                 label:
-                  - font-size: 13px
+                  - font-size: 14px
                   - color: var(--secondary-text-color)
-                  - text-align: right
+                  - text-align: left
+                  - justify-self: start
 
       # ── Primary Bedroom ───────────────────────────────────────────────────────
       - type: custom:button-card
@@ -626,7 +641,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_primary_bedroom
               styles:
@@ -671,7 +686,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Primary Bedroom']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -683,18 +698,21 @@ cards:
                   - background: var(--background-color-2)
                   - margin: 0
                 grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
                   - padding: 0 15px
                 name:
                   - font-size: 18px
                   - font-weight: bold
                   - text-align: left
+                  - justify-self: start
                 label:
-                  - font-size: 13px
+                  - font-size: 14px
                   - color: var(--secondary-text-color)
-                  - text-align: right
+                  - text-align: left
+                  - justify-self: start
 
       # ── Primary Bathroom ──────────────────────────────────────────────────────
       - type: custom:button-card
@@ -726,7 +744,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_primary_bathroom
               styles:
@@ -771,7 +789,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Primary Bathroom']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -783,18 +801,21 @@ cards:
                   - background: var(--background-color-2)
                   - margin: 0
                 grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
                   - padding: 0 15px
                 name:
                   - font-size: 18px
                   - font-weight: bold
                   - text-align: left
+                  - justify-self: start
                 label:
-                  - font-size: 13px
+                  - font-size: 14px
                   - color: var(--secondary-text-color)
-                  - text-align: right
+                  - text-align: left
+                  - justify-self: start
 
       # ── Gym ──────────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -826,7 +847,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_gym
               styles:
@@ -871,7 +892,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Gym']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -883,18 +904,21 @@ cards:
                   - background: var(--background-color-2)
                   - margin: 0
                 grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
                   - padding: 0 15px
                 name:
                   - font-size: 18px
                   - font-weight: bold
                   - text-align: left
+                  - justify-self: start
                 label:
-                  - font-size: 13px
+                  - font-size: 14px
                   - color: var(--secondary-text-color)
-                  - text-align: right
+                  - text-align: left
+                  - justify-self: start
 
       # ── Mud Room ─────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -926,7 +950,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_mud_room
               styles:
@@ -971,7 +995,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Mud Room']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -983,18 +1007,21 @@ cards:
                   - background: var(--background-color-2)
                   - margin: 0
                 grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
                   - padding: 0 15px
                 name:
                   - font-size: 18px
                   - font-weight: bold
                   - text-align: left
+                  - justify-self: start
                 label:
-                  - font-size: 13px
+                  - font-size: 14px
                   - color: var(--secondary-text-color)
-                  - text-align: right
+                  - text-align: left
+                  - justify-self: start
 
       # ── Media Room ───────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -1026,7 +1053,7 @@ cards:
                   color: var(--primary-text-color)
                 - value: "off"
                   icon: mdi:radiobox-blank
-                  color: var(--secondary-text-color)
+                  color: var(--ha-card-background-color)
               triggers_update:
                 - input_boolean.sonos_group_select_media_room
               styles:
@@ -1071,7 +1098,7 @@ cards:
                   value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Media Room']]]"
                   styles:
                     card:
-                      - border: 2px solid var(--primary-color) !important
+                      - background: var(--accent-color) !important
                 - operator: default
                   styles:
                     card:
@@ -1083,18 +1110,21 @@ cards:
                   - background: var(--background-color-2)
                   - margin: 0
                 grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
+                  - grid-template-areas: '"n" "l"'
+                  - grid-template-rows: auto auto
+                  - justify-items: start
+                  - align-content: center
                   - padding: 0 15px
                 name:
                   - font-size: 18px
                   - font-weight: bold
                   - text-align: left
+                  - justify-self: start
                 label:
-                  - font-size: 13px
+                  - font-size: 14px
                   - color: var(--secondary-text-color)
-                  - text-align: right
+                  - text-align: left
+                  - justify-self: start
 
   # ── Apply button ─────────────────────────────────────────────────────────────
   - type: custom:button-card
