@@ -53,7 +53,8 @@ cards:
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            media_content_id: x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8200&sn=5
+            media_content_id: >-
+              x-rincon-mp3radio://https://tunein.cdnstream1.com/3511_96.mp3?aw_0_1st.playerid=SonosRadio&aw_0_1st.skey=1775503325&aw_0_1st.bundleId=tunein.sonos&lat=41.6463&lon=-70.2751&aw_0_1st.abtest=&partnerId=SonosRadio&aw_0_1st.stationId=s297990&aw_0_1st.premium=false&source=TuneIn&aw_0_1st.platform=tunein&aw_0_1st.genre_id=g247&aw_0_1st.class=talk&aw_0_1st.ads_partner_alias=ce.SonosApp&aw_0_azn.planguage=en&aw_0_1st.is_ondemand=false&aw_0_1st.topicId=na&aw_0_1st.programId=p1421468&aw_0_1st.affiliateIds=a39100%2ca39163%2ca40075%2ca188091&aw_0_1st.bandId=16&delivery=1
             media_content_type: music
         triggers_update:
           - input_select.sonos_speaker_select
