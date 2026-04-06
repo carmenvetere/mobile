@@ -53,7 +53,8 @@ cards:
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            source: "MS NOW"
+            media_content_id: x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8200&sn=5
+            media_content_type: music
         triggers_update:
           - input_select.sonos_speaker_select
         styles:
