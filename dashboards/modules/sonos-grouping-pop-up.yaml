@@ -141,21 +141,23 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.living_room
-              name: Living Room
-              show_name: true
+              show_name: false
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.living_room'];
+                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    return title ? 'Playing<br>' + title : 'Playing';
+                    status = title ? 'Playing · ' + title : 'Playing';
+                  } else if (mp?.state && mp.state !== 'unavailable') {
+                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
                   }
-                  if (mp?.state && mp.state !== 'unavailable') {
-                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
-                  }
-                  return '';
+                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
+                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Living Room</span>'
+                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
+                    + '</div>';
                 ]]]
               triggers_update:
                 - media_player.living_room
@@ -182,20 +184,9 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
-                grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
-                  - padding: 0 15px
-                name:
-                  - font-size: 18px
-                  - font-weight: bold
-                  - text-align: left
-                  - justify-content: flex-start
                 label:
-                  - font-size: 13px
-                  - color: var(--secondary-text-color)
-                  - text-align: right
+                  - padding: 0
+                  - width: 100%
 
       # ── Kitchen ──────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -242,21 +233,23 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.kitchen
-              name: Kitchen
-              show_name: true
+              show_name: false
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.kitchen'];
+                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    return title ? 'Playing<br>' + title : 'Playing';
+                    status = title ? 'Playing · ' + title : 'Playing';
+                  } else if (mp?.state && mp.state !== 'unavailable') {
+                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
                   }
-                  if (mp?.state && mp.state !== 'unavailable') {
-                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
-                  }
-                  return '';
+                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
+                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Kitchen</span>'
+                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
+                    + '</div>';
                 ]]]
               triggers_update:
                 - media_player.kitchen
@@ -283,20 +276,9 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
-                grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
-                  - padding: 0 15px
-                name:
-                  - font-size: 18px
-                  - font-weight: bold
-                  - text-align: left
-                  - justify-content: flex-start
                 label:
-                  - font-size: 13px
-                  - color: var(--secondary-text-color)
-                  - text-align: right
+                  - padding: 0
+                  - width: 100%
 
       # ── Office ───────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -343,21 +325,23 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.office
-              name: Office
-              show_name: true
+              show_name: false
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.office'];
+                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    return title ? 'Playing<br>' + title : 'Playing';
+                    status = title ? 'Playing · ' + title : 'Playing';
+                  } else if (mp?.state && mp.state !== 'unavailable') {
+                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
                   }
-                  if (mp?.state && mp.state !== 'unavailable') {
-                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
-                  }
-                  return '';
+                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
+                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Office</span>'
+                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
+                    + '</div>';
                 ]]]
               triggers_update:
                 - media_player.office
@@ -384,20 +368,9 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
-                grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
-                  - padding: 0 15px
-                name:
-                  - font-size: 18px
-                  - font-weight: bold
-                  - text-align: left
-                  - justify-content: flex-start
                 label:
-                  - font-size: 13px
-                  - color: var(--secondary-text-color)
-                  - text-align: right
+                  - padding: 0
+                  - width: 100%
 
       # ── Deck ─────────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -444,21 +417,23 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.deck
-              name: Deck
-              show_name: true
+              show_name: false
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.deck'];
+                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    return title ? 'Playing<br>' + title : 'Playing';
+                    status = title ? 'Playing · ' + title : 'Playing';
+                  } else if (mp?.state && mp.state !== 'unavailable') {
+                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
                   }
-                  if (mp?.state && mp.state !== 'unavailable') {
-                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
-                  }
-                  return '';
+                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
+                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Deck</span>'
+                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
+                    + '</div>';
                 ]]]
               triggers_update:
                 - media_player.deck
@@ -485,20 +460,9 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
-                grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
-                  - padding: 0 15px
-                name:
-                  - font-size: 18px
-                  - font-weight: bold
-                  - text-align: left
-                  - justify-content: flex-start
                 label:
-                  - font-size: 13px
-                  - color: var(--secondary-text-color)
-                  - text-align: right
+                  - padding: 0
+                  - width: 100%
 
       # ── Pool ─────────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -545,21 +509,23 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.pool
-              name: Pool
-              show_name: true
+              show_name: false
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.pool'];
+                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    return title ? 'Playing<br>' + title : 'Playing';
+                    status = title ? 'Playing · ' + title : 'Playing';
+                  } else if (mp?.state && mp.state !== 'unavailable') {
+                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
                   }
-                  if (mp?.state && mp.state !== 'unavailable') {
-                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
-                  }
-                  return '';
+                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
+                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Pool</span>'
+                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
+                    + '</div>';
                 ]]]
               triggers_update:
                 - media_player.pool
@@ -586,20 +552,9 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
-                grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
-                  - padding: 0 15px
-                name:
-                  - font-size: 18px
-                  - font-weight: bold
-                  - text-align: left
-                  - justify-content: flex-start
                 label:
-                  - font-size: 13px
-                  - color: var(--secondary-text-color)
-                  - text-align: right
+                  - padding: 0
+                  - width: 100%
 
       # ── Primary Bedroom ───────────────────────────────────────────────────────
       - type: custom:button-card
@@ -646,21 +601,23 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.primary_bedroom
-              name: Primary Bedroom
-              show_name: true
+              show_name: false
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.primary_bedroom'];
+                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    return title ? 'Playing<br>' + title : 'Playing';
+                    status = title ? 'Playing · ' + title : 'Playing';
+                  } else if (mp?.state && mp.state !== 'unavailable') {
+                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
                   }
-                  if (mp?.state && mp.state !== 'unavailable') {
-                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
-                  }
-                  return '';
+                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
+                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Primary Bedroom</span>'
+                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
+                    + '</div>';
                 ]]]
               triggers_update:
                 - media_player.primary_bedroom
@@ -687,20 +644,9 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
-                grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
-                  - padding: 0 15px
-                name:
-                  - font-size: 18px
-                  - font-weight: bold
-                  - text-align: left
-                  - justify-content: flex-start
                 label:
-                  - font-size: 13px
-                  - color: var(--secondary-text-color)
-                  - text-align: right
+                  - padding: 0
+                  - width: 100%
 
       # ── Primary Bathroom ──────────────────────────────────────────────────────
       - type: custom:button-card
@@ -747,21 +693,23 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.primary_bathroom
-              name: Primary Bathroom
-              show_name: true
+              show_name: false
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.primary_bathroom'];
+                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    return title ? 'Playing<br>' + title : 'Playing';
+                    status = title ? 'Playing · ' + title : 'Playing';
+                  } else if (mp?.state && mp.state !== 'unavailable') {
+                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
                   }
-                  if (mp?.state && mp.state !== 'unavailable') {
-                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
-                  }
-                  return '';
+                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
+                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Primary Bathroom</span>'
+                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
+                    + '</div>';
                 ]]]
               triggers_update:
                 - media_player.primary_bathroom
@@ -788,20 +736,9 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
-                grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
-                  - padding: 0 15px
-                name:
-                  - font-size: 18px
-                  - font-weight: bold
-                  - text-align: left
-                  - justify-content: flex-start
                 label:
-                  - font-size: 13px
-                  - color: var(--secondary-text-color)
-                  - text-align: right
+                  - padding: 0
+                  - width: 100%
 
       # ── Gym ──────────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -848,21 +785,23 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.gym
-              name: Gym
-              show_name: true
+              show_name: false
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.gym'];
+                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    return title ? 'Playing<br>' + title : 'Playing';
+                    status = title ? 'Playing · ' + title : 'Playing';
+                  } else if (mp?.state && mp.state !== 'unavailable') {
+                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
                   }
-                  if (mp?.state && mp.state !== 'unavailable') {
-                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
-                  }
-                  return '';
+                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
+                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Gym</span>'
+                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
+                    + '</div>';
                 ]]]
               triggers_update:
                 - media_player.gym
@@ -889,20 +828,9 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
-                grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
-                  - padding: 0 15px
-                name:
-                  - font-size: 18px
-                  - font-weight: bold
-                  - text-align: left
-                  - justify-content: flex-start
                 label:
-                  - font-size: 13px
-                  - color: var(--secondary-text-color)
-                  - text-align: right
+                  - padding: 0
+                  - width: 100%
 
       # ── Mud Room ─────────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -949,21 +877,23 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.mud_room
-              name: Mud Room
-              show_name: true
+              show_name: false
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.mud_room'];
+                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    return title ? 'Playing<br>' + title : 'Playing';
+                    status = title ? 'Playing · ' + title : 'Playing';
+                  } else if (mp?.state && mp.state !== 'unavailable') {
+                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
                   }
-                  if (mp?.state && mp.state !== 'unavailable') {
-                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
-                  }
-                  return '';
+                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
+                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Mud Room</span>'
+                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
+                    + '</div>';
                 ]]]
               triggers_update:
                 - media_player.mud_room
@@ -990,20 +920,9 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
-                grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
-                  - padding: 0 15px
-                name:
-                  - font-size: 18px
-                  - font-weight: bold
-                  - text-align: left
-                  - justify-content: flex-start
                 label:
-                  - font-size: 13px
-                  - color: var(--secondary-text-color)
-                  - text-align: right
+                  - padding: 0
+                  - width: 100%
 
       # ── Media Room ───────────────────────────────────────────────────────────
       - type: custom:button-card
@@ -1050,21 +969,23 @@ cards:
             card:
               type: custom:button-card
               entity: media_player.media_room
-              name: Media Room
-              show_name: true
+              show_name: false
               show_label: true
               show_icon: false
               label: |
                 [[[
                   const mp = states['media_player.media_room'];
+                  let status = '';
                   if (mp?.state === 'playing') {
                     const title = mp.attributes.media_title || '';
-                    return title ? 'Playing<br>' + title : 'Playing';
+                    status = title ? 'Playing · ' + title : 'Playing';
+                  } else if (mp?.state && mp.state !== 'unavailable') {
+                    status = mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
                   }
-                  if (mp?.state && mp.state !== 'unavailable') {
-                    return mp.state.charAt(0).toUpperCase() + mp.state.slice(1);
-                  }
-                  return '';
+                  return '<div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:0 15px">'
+                    + '<span style="font-size:18px;font-weight:bold;color:var(--primary-text-color)">Media Room</span>'
+                    + (status ? '<span style="font-size:13px;color:var(--secondary-text-color)">' + status + '</span>' : '')
+                    + '</div>';
                 ]]]
               triggers_update:
                 - media_player.media_room
@@ -1091,20 +1012,9 @@ cards:
                   - border-radius: 12px
                   - background: var(--background-color-2)
                   - margin: 0
-                grid:
-                  - grid-template-areas: '"n l"'
-                  - grid-template-columns: 1fr auto
-                  - align-items: center
-                  - padding: 0 15px
-                name:
-                  - font-size: 18px
-                  - font-weight: bold
-                  - text-align: left
-                  - justify-content: flex-start
                 label:
-                  - font-size: 13px
-                  - color: var(--secondary-text-color)
-                  - text-align: right
+                  - padding: 0
+                  - width: 100%
 
   # ── Apply button ─────────────────────────────────────────────────────────────
   - type: custom:button-card
