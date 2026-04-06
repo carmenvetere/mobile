@@ -109,9 +109,9 @@ cards:
                 star_btn: >
                   <div onclick="event.stopPropagation();history.pushState(null,'','#sonos-favorites');window.dispatchEvent(new CustomEvent('location-changed',{bubbles:true,composed:true,detail:{replace:false}}));"
                        style="cursor:pointer;display:flex;align-items:center;justify-content:center;width:55px;height:55px;">
-                    <ha-icon icon="mdi:star" style="--mdc-icon-size:26px;color:var(--secondary-text-color)"></ha-icon>
+                    <ha-icon icon="mdi:star" style="--mdc-icon-size:26px;color:var(--primary-text-color)"></ha-icon>
                   </div>
-                chevron: "<ha-icon icon='mdi:chevron-right' style='--mdc-icon-size:22px;color:var(--secondary-text-color)'></ha-icon>"
+                chevron: "<ha-icon icon='mdi:chevron-right' style='--mdc-icon-size:22px;color:var(--primary-text-color)'></ha-icon>"
               styles:
                 card:
                   - border-radius: 20px 20px 0 0
