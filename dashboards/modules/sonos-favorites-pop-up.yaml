@@ -45,9 +45,9 @@ cards:
         layout: icon_name
         icon: mdi:radio
         tap_action:
-          action: call-service
-          service: media_player.select_source
-          service_data:
+          action: perform-action
+          perform_action: media_player.play_media
+          data:
             entity_id: >
               [[[
                 const sel = states['input_select.sonos_speaker_select']?.state;
@@ -88,16 +88,19 @@ cards:
         layout: icon_name
         icon: mdi:playlist-music
         tap_action:
-          action: call-service
-          service: media_player.select_source
-          service_data:
+          action: perform-action
+          perform_action: media_player.play_media
+          data:
             entity_id: >
               [[[
                 const sel = states['input_select.sonos_speaker_select']?.state;
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            source: "1 Hotel South Beach Poolside Playlist"
+            media_content_id: "x-sonos-spotify:playlist:7z1cddbJ1L62FZpTVZBj2i?sid=12&flags=8232&sn=9"
+            media_content_type: playlist
+            extra:
+              enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
         styles:
@@ -129,16 +132,19 @@ cards:
         layout: icon_name
         icon: mdi:playlist-music
         tap_action:
-          action: call-service
-          service: media_player.select_source
-          service_data:
+          action: perform-action
+          perform_action: media_player.play_media
+          data:
             entity_id: >
               [[[
                 const sel = states['input_select.sonos_speaker_select']?.state;
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            source: "Top 50 - United Kingdom"
+            media_content_id: "x-sonos-spotify:playlist:1QM1qz09ZzsAPiXphF1l4S?sid=12&flags=8232&sn=9"
+            media_content_type: playlist
+            extra:
+              enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
         styles:
@@ -170,16 +176,19 @@ cards:
         layout: icon_name
         icon: mdi:playlist-music
         tap_action:
-          action: call-service
-          service: media_player.select_source
-          service_data:
+          action: perform-action
+          perform_action: media_player.play_media
+          data:
             entity_id: >
               [[[
                 const sel = states['input_select.sonos_speaker_select']?.state;
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            source: "Top 50 - Australia"
+            media_content_id: "x-sonos-spotify:playlist:37i9dQZEVXbJPcfkRz0wJ0?sid=12&flags=8232&sn=9"
+            media_content_type: playlist
+            extra:
+              enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
         styles:
@@ -211,16 +220,19 @@ cards:
         layout: icon_name
         icon: mdi:playlist-music
         tap_action:
-          action: call-service
-          service: media_player.select_source
-          service_data:
+          action: perform-action
+          perform_action: media_player.play_media
+          data:
             entity_id: >
               [[[
                 const sel = states['input_select.sonos_speaker_select']?.state;
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            source: "Pool Mix - 2025"
+            media_content_id: "x-sonos-spotify:playlist:2rA0wj0dnIyj1A5Uaoogaa?sid=12&flags=8232&sn=9"
+            media_content_type: playlist
+            extra:
+              enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
         styles:
@@ -252,16 +264,19 @@ cards:
         layout: icon_name
         icon: mdi:playlist-music
         tap_action:
-          action: call-service
-          service: media_player.select_source
-          service_data:
+          action: perform-action
+          perform_action: media_player.play_media
+          data:
             entity_id: >
               [[[
                 const sel = states['input_select.sonos_speaker_select']?.state;
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            source: "Hotel Costes Radio"
+            media_content_id: "x-sonos-spotify:playlist:37i9dQZF1E4mWbHqaowOUP?sid=12&flags=8232&sn=9"
+            media_content_type: playlist
+            extra:
+              enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
         styles:
@@ -293,16 +308,17 @@ cards:
         layout: icon_name
         icon: mdi:radio
         tap_action:
-          action: call-service
-          service: media_player.select_source
-          service_data:
+          action: perform-action
+          perform_action: media_player.play_media
+          data:
             entity_id: >
               [[[
                 const sel = states['input_select.sonos_speaker_select']?.state;
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            source: "Pop & Dance Mix"
+            media_content_id: "x-sonosapi-hls-static:channel-xtra%3adc93524a-aa6d-b0c4-0d53-caabac97500c%3a15ebc9ab-82ba-0dd1-0276-d408113397df?sid=37&flags=32768&sn=5"
+            media_content_type: music
         triggers_update:
           - input_select.sonos_speaker_select
         styles:
@@ -334,16 +350,19 @@ cards:
         layout: icon_name
         icon: mdi:playlist-music
         tap_action:
-          action: call-service
-          service: media_player.select_source
-          service_data:
+          action: perform-action
+          perform_action: media_player.play_media
+          data:
             entity_id: >
               [[[
                 const sel = states['input_select.sonos_speaker_select']?.state;
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            source: "Chill Mix"
+            media_content_id: "x-sonos-spotify:playlist:37i9dQZF1EVHGWrwldPRtj?sid=12&flags=8232&sn=9"
+            media_content_type: playlist
+            extra:
+              enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
         styles:
@@ -375,16 +394,19 @@ cards:
         layout: icon_name
         icon: mdi:playlist-music
         tap_action:
-          action: call-service
-          service: media_player.select_source
-          service_data:
+          action: perform-action
+          perform_action: media_player.play_media
+          data:
             entity_id: >
               [[[
                 const sel = states['input_select.sonos_speaker_select']?.state;
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            source: "Bridgerton Playlist"
+            media_content_id: "x-sonos-spotify:playlist:37i9dQZF1DX5Hl0iWtr5b3?sid=12&flags=8232&sn=9"
+            media_content_type: playlist
+            extra:
+              enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
         styles:
@@ -416,16 +438,19 @@ cards:
         layout: icon_name
         icon: mdi:playlist-music
         tap_action:
-          action: call-service
-          service: media_player.select_source
-          service_data:
+          action: perform-action
+          perform_action: media_player.play_media
+          data:
             entity_id: >
               [[[
                 const sel = states['input_select.sonos_speaker_select']?.state;
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            source: "The Best of Ella & Louis"
+            media_content_id: "x-sonos-spotify:playlist:502ADPBCxITjzQZOlnAjQQ?sid=12&flags=8232&sn=9"
+            media_content_type: playlist
+            extra:
+              enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
         styles:
