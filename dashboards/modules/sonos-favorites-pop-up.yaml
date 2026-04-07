@@ -42,6 +42,7 @@ cards:
         name: MS NOW
         show_name: true
         show_icon: true
+        layout: icon_name
         icon: mdi:radio
         tap_action:
           action: call-service
@@ -53,7 +54,8 @@ cards:
                 const nm = {'Living Room':'media_player.living_room','Kitchen':'media_player.kitchen','Office':'media_player.office','Deck':'media_player.deck','Pool':'media_player.pool','Primary Bedroom':'media_player.primary_bedroom','Primary Bathroom':'media_player.primary_bathroom','Gym':'media_player.gym','Mud Room':'media_player.mud_room','Media Room':'media_player.media_room'};
                 return nm[sel] || 'media_player.living_room';
               ]]]
-            media_content_id: x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8200&sn=5
+            media_content_id: >-
+              x-rincon-mp3radio://https://tunein.cdnstream1.com/3511_96.mp3?aw_0_1st.playerid=SonosRadio&aw_0_1st.skey=1775503325&aw_0_1st.bundleId=tunein.sonos&lat=41.6463&lon=-70.2751&aw_0_1st.abtest=&partnerId=SonosRadio&aw_0_1st.stationId=s297990&aw_0_1st.premium=false&source=TuneIn&aw_0_1st.platform=tunein&aw_0_1st.genre_id=g247&aw_0_1st.class=talk&aw_0_1st.ads_partner_alias=ce.SonosApp&aw_0_azn.planguage=en&aw_0_1st.is_ondemand=false&aw_0_1st.topicId=na&aw_0_1st.programId=p1421468&aw_0_1st.affiliateIds=a39100%2ca39163%2ca40075%2ca188091&aw_0_1st.bandId=16&delivery=1
             media_content_type: music
         triggers_update:
           - input_select.sonos_speaker_select
@@ -64,18 +66,26 @@ cards:
             - height: 70px
             - margin: 4px
           name:
-            - font-size: 13px
-            - font-weight: '600'
+            - font-size: 18px
+            - font-weight: bold
             - color: var(--primary-text-color)
+            - justify-self: start
           icon:
             - width: 22px
-            - color: var(--secondary-text-color)
+            - color: var(--primary-text-color)
+            - margin-left: 10px
+            - margin-top: -5px
+          grid:
+            - grid-template-areas: '"i n"'
+            - grid-template-columns: 40px auto
+            - column-gap: 10px
 
       # ── 1 Hotel South Beach Poolside Playlist ────────────────────────────────
       - type: custom:button-card
         name: 1 Hotel Poolside
         show_name: true
         show_icon: true
+        layout: icon_name
         icon: mdi:playlist-music
         tap_action:
           action: call-service
@@ -97,18 +107,26 @@ cards:
             - height: 70px
             - margin: 4px
           name:
-            - font-size: 13px
-            - font-weight: '600'
+            - font-size: 18px
+            - font-weight: bold
             - color: var(--primary-text-color)
+            - justify-self: start
           icon:
             - width: 22px
-            - color: var(--secondary-text-color)
+            - color: var(--primary-text-color)
+            - margin-left: 10px
+            - margin-top: -5px
+          grid:
+            - grid-template-areas: '"i n"'
+            - grid-template-columns: 40px auto
+            - column-gap: 10px
 
       # ── Top 50 - United Kingdom ───────────────────────────────────────────────
       - type: custom:button-card
         name: Top 50 - UK
         show_name: true
         show_icon: true
+        layout: icon_name
         icon: mdi:playlist-music
         tap_action:
           action: call-service
@@ -130,18 +148,26 @@ cards:
             - height: 70px
             - margin: 4px
           name:
-            - font-size: 13px
-            - font-weight: '600'
+            - font-size: 18px
+            - font-weight: bold
             - color: var(--primary-text-color)
+            - justify-self: start
           icon:
             - width: 22px
-            - color: var(--secondary-text-color)
+            - color: var(--primary-text-color)
+            - margin-left: 10px
+            - margin-top: -5px
+          grid:
+            - grid-template-areas: '"i n"'
+            - grid-template-columns: 40px auto
+            - column-gap: 10px
 
       # ── Top 50 - Australia ────────────────────────────────────────────────────
       - type: custom:button-card
         name: Top 50 - Australia
         show_name: true
         show_icon: true
+        layout: icon_name
         icon: mdi:playlist-music
         tap_action:
           action: call-service
@@ -163,18 +189,26 @@ cards:
             - height: 70px
             - margin: 4px
           name:
-            - font-size: 13px
-            - font-weight: '600'
+            - font-size: 18px
+            - font-weight: bold
             - color: var(--primary-text-color)
+            - justify-self: start
           icon:
             - width: 22px
-            - color: var(--secondary-text-color)
+            - color: var(--primary-text-color)
+            - margin-left: 10px
+            - margin-top: -5px
+          grid:
+            - grid-template-areas: '"i n"'
+            - grid-template-columns: 40px auto
+            - column-gap: 10px
 
       # ── Pool Mix - 2025 ───────────────────────────────────────────────────────
       - type: custom:button-card
         name: Pool Mix 2025
         show_name: true
         show_icon: true
+        layout: icon_name
         icon: mdi:playlist-music
         tap_action:
           action: call-service
@@ -196,18 +230,26 @@ cards:
             - height: 70px
             - margin: 4px
           name:
-            - font-size: 13px
-            - font-weight: '600'
+            - font-size: 18px
+            - font-weight: bold
             - color: var(--primary-text-color)
+            - justify-self: start
           icon:
             - width: 22px
-            - color: var(--secondary-text-color)
+            - color: var(--primary-text-color)
+            - margin-left: 10px
+            - margin-top: -5px
+          grid:
+            - grid-template-areas: '"i n"'
+            - grid-template-columns: 40px auto
+            - column-gap: 10px
 
       # ── Hotel Costes Radio ────────────────────────────────────────────────────
       - type: custom:button-card
         name: Hotel Costes Radio
         show_name: true
         show_icon: true
+        layout: icon_name
         icon: mdi:playlist-music
         tap_action:
           action: call-service
@@ -229,18 +271,26 @@ cards:
             - height: 70px
             - margin: 4px
           name:
-            - font-size: 13px
-            - font-weight: '600'
+            - font-size: 18px
+            - font-weight: bold
             - color: var(--primary-text-color)
+            - justify-self: start
           icon:
             - width: 22px
-            - color: var(--secondary-text-color)
+            - color: var(--primary-text-color)
+            - margin-left: 10px
+            - margin-top: -5px
+          grid:
+            - grid-template-areas: '"i n"'
+            - grid-template-columns: 40px auto
+            - column-gap: 10px
 
       # ── Pop & Dance Mix ───────────────────────────────────────────────────────
       - type: custom:button-card
         name: Pop & Dance Mix
         show_name: true
         show_icon: true
+        layout: icon_name
         icon: mdi:radio
         tap_action:
           action: call-service
@@ -262,18 +312,26 @@ cards:
             - height: 70px
             - margin: 4px
           name:
-            - font-size: 13px
-            - font-weight: '600'
+            - font-size: 18px
+            - font-weight: bold
             - color: var(--primary-text-color)
+            - justify-self: start
           icon:
             - width: 22px
-            - color: var(--secondary-text-color)
+            - color: var(--primary-text-color)
+            - margin-left: 10px
+            - margin-top: -5px
+          grid:
+            - grid-template-areas: '"i n"'
+            - grid-template-columns: 40px auto
+            - column-gap: 10px
 
       # ── Chill Mix ─────────────────────────────────────────────────────────────
       - type: custom:button-card
         name: Chill Mix
         show_name: true
         show_icon: true
+        layout: icon_name
         icon: mdi:playlist-music
         tap_action:
           action: call-service
@@ -295,18 +353,26 @@ cards:
             - height: 70px
             - margin: 4px
           name:
-            - font-size: 13px
-            - font-weight: '600'
+            - font-size: 18px
+            - font-weight: bold
             - color: var(--primary-text-color)
+            - justify-self: start
           icon:
             - width: 22px
-            - color: var(--secondary-text-color)
+            - color: var(--primary-text-color)
+            - margin-left: 10px
+            - margin-top: -5px
+          grid:
+            - grid-template-areas: '"i n"'
+            - grid-template-columns: 40px auto
+            - column-gap: 10px
 
       # ── Bridgerton Playlist ───────────────────────────────────────────────────
       - type: custom:button-card
         name: Bridgerton Playlist
         show_name: true
         show_icon: true
+        layout: icon_name
         icon: mdi:playlist-music
         tap_action:
           action: call-service
@@ -328,18 +394,26 @@ cards:
             - height: 70px
             - margin: 4px
           name:
-            - font-size: 13px
-            - font-weight: '600'
+            - font-size: 18px
+            - font-weight: bold
             - color: var(--primary-text-color)
+            - justify-self: start
           icon:
             - width: 22px
-            - color: var(--secondary-text-color)
+            - color: var(--primary-text-color)
+            - margin-left: 10px
+            - margin-top: -5px
+          grid:
+            - grid-template-areas: '"i n"'
+            - grid-template-columns: 40px auto
+            - column-gap: 10px
 
       # ── The Best of Ella & Louis ──────────────────────────────────────────────
       - type: custom:button-card
         name: Ella & Louis
         show_name: true
         show_icon: true
+        layout: icon_name
         icon: mdi:playlist-music
         tap_action:
           action: call-service
@@ -361,9 +435,16 @@ cards:
             - height: 70px
             - margin: 4px
           name:
-            - font-size: 13px
-            - font-weight: '600'
+            - font-size: 18px
+            - font-weight: bold
             - color: var(--primary-text-color)
+            - justify-self: start
           icon:
             - width: 22px
-            - color: var(--secondary-text-color)
+            - color: var(--primary-text-color)
+            - margin-left: 10px
+            - margin-top: -5px
+          grid:
+            - grid-template-areas: '"i n"'
+            - grid-template-columns: 40px auto
+            - column-gap: 10px
