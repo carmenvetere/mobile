@@ -47,26 +47,13 @@ cards:
         - justify-self: start
 
   # ── Source chip grid ────────────────────────────────────────────────────────
-  {% set speakers = [
-    ('Living Room',      'media_player.living_room'),
-    ('Kitchen',          'media_player.kitchen'),
-    ('Office',           'media_player.office'),
-    ('Deck',             'media_player.deck'),
-    ('Pool',             'media_player.pool'),
-    ('Primary Bedroom',  'media_player.primary_bedroom'),
-    ('Primary Bathroom', 'media_player.primary_bathroom'),
-    ('Gym',              'media_player.gym'),
-    ('Mud Room',         'media_player.mud_room'),
-    ('Media Room',       'media_player.media_room')
-  ] %}
-
   - type: grid
     columns: 2
     square: false
     cards:
-      {% for name, entity in speakers %}
+
       - type: custom:button-card
-        name: {{ name }}
+        name: Living Room
         show_name: true
         show_icon: false
         tap_action:
@@ -74,12 +61,12 @@ cards:
           service: input_select.select_option
           service_data:
             entity_id: input_select.sonos_speaker_select
-            option: {{ name }}
+            option: Living Room
         triggers_update:
           - input_select.sonos_speaker_select
         state:
           - operator: template
-            value: "[[[return states['input_select.sonos_speaker_select']?.state === '{{ name }}']]]"
+            value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Living Room']]]"
             styles:
               card:
                 - background: var(--accent-color) !important
@@ -99,7 +86,321 @@ cards:
           name:
             - font-size: 14px
             - font-weight: '600'
-      {% endfor %}
+
+      - type: custom:button-card
+        name: Kitchen
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_speaker_select
+            option: Kitchen
+        triggers_update:
+          - input_select.sonos_speaker_select
+        state:
+          - operator: template
+            value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Kitchen']]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 44px
+            - border-radius: 22px
+            - margin: 4px 6px
+          name:
+            - font-size: 14px
+            - font-weight: '600'
+
+      - type: custom:button-card
+        name: Office
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_speaker_select
+            option: Office
+        triggers_update:
+          - input_select.sonos_speaker_select
+        state:
+          - operator: template
+            value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Office']]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 44px
+            - border-radius: 22px
+            - margin: 4px 6px
+          name:
+            - font-size: 14px
+            - font-weight: '600'
+
+      - type: custom:button-card
+        name: Deck
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_speaker_select
+            option: Deck
+        triggers_update:
+          - input_select.sonos_speaker_select
+        state:
+          - operator: template
+            value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Deck']]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 44px
+            - border-radius: 22px
+            - margin: 4px 6px
+          name:
+            - font-size: 14px
+            - font-weight: '600'
+
+      - type: custom:button-card
+        name: Pool
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_speaker_select
+            option: Pool
+        triggers_update:
+          - input_select.sonos_speaker_select
+        state:
+          - operator: template
+            value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Pool']]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 44px
+            - border-radius: 22px
+            - margin: 4px 6px
+          name:
+            - font-size: 14px
+            - font-weight: '600'
+
+      - type: custom:button-card
+        name: Primary Bedroom
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_speaker_select
+            option: Primary Bedroom
+        triggers_update:
+          - input_select.sonos_speaker_select
+        state:
+          - operator: template
+            value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Primary Bedroom']]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 44px
+            - border-radius: 22px
+            - margin: 4px 6px
+          name:
+            - font-size: 14px
+            - font-weight: '600'
+
+      - type: custom:button-card
+        name: Primary Bathroom
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_speaker_select
+            option: Primary Bathroom
+        triggers_update:
+          - input_select.sonos_speaker_select
+        state:
+          - operator: template
+            value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Primary Bathroom']]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 44px
+            - border-radius: 22px
+            - margin: 4px 6px
+          name:
+            - font-size: 14px
+            - font-weight: '600'
+
+      - type: custom:button-card
+        name: Gym
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_speaker_select
+            option: Gym
+        triggers_update:
+          - input_select.sonos_speaker_select
+        state:
+          - operator: template
+            value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Gym']]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 44px
+            - border-radius: 22px
+            - margin: 4px 6px
+          name:
+            - font-size: 14px
+            - font-weight: '600'
+
+      - type: custom:button-card
+        name: Mud Room
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_speaker_select
+            option: Mud Room
+        triggers_update:
+          - input_select.sonos_speaker_select
+        state:
+          - operator: template
+            value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Mud Room']]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 44px
+            - border-radius: 22px
+            - margin: 4px 6px
+          name:
+            - font-size: 14px
+            - font-weight: '600'
+
+      - type: custom:button-card
+        name: Media Room
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_speaker_select
+            option: Media Room
+        triggers_update:
+          - input_select.sonos_speaker_select
+        state:
+          - operator: template
+            value: "[[[return states['input_select.sonos_speaker_select']?.state === 'Media Room']]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 44px
+            - border-radius: 22px
+            - margin: 4px 6px
+          name:
+            - font-size: 14px
+            - font-weight: '600'
 
   # ── ALSO PLAYING IN section label ───────────────────────────────────────────
   - type: custom:button-card
