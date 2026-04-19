@@ -1,6 +1,7 @@
-title: Cimate
+# lovelace_gen
+title: Climate
 icon: mdi:fan
-theme: Bubble
+theme: Wall Panel
 path: climate-main
 type: custom:grid-layout
 cards:
@@ -12,11 +13,11 @@ cards:
         - padding-left: 5px
         - padding-right: 10px
         - padding-top: 2px
-        - margin-right: '-5px'
         - height: auto
         - box-sizing: border-box
         - max-width: 98%
-        - background-color: var(--background-color-2)
+        - box-shadow: none
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header"
@@ -26,7 +27,7 @@ cards:
             "office"
             "primbed"
         - grid-template-columns: auto
-        - grid-template-rows: 60px 60px auto auto
+        - grid-template-rows: 60px 60px auto auto auto auto
         - row-gap: 5px
         - align-items: start
         - column-gap: 2px
@@ -62,13 +63,13 @@ cards:
                 name: Climate
                 size: 60%
                 icon_color: var(--primary-text-color)
-                styles: 
-                  name: 
+                styles:
+                  name:
                     - font-size: 22px
                     - font-weight: bold
                   card:
                     - align-items: start
-                    - justify-content: flex-start 
+                    - justify-content: flex-start
                     - text-align: left
                     - padding-left: 8px
                     - background-color: transparent
@@ -79,9 +80,9 @@ cards:
             style: |
               ha-card {
                 overflow: hidden !important;
-                max-width: calc(100vw - 30px) !important; 
+                max-width: calc(100vw - 30px) !important;
                 margin-right: 10px !important;
-                box-sizing: border-box !important; 
+                box-sizing: border-box !important;
               }
               ha-card > * {
                 display: flex !important;
@@ -127,7 +128,11 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2);
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
                   }
             - type: entity
               entity: sensor.bayberry_tempest_temperature
@@ -139,8 +144,12 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2);
-                  }    
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }
             - type: entity
               entity: sensor.bayberry_tempest_humidity
               tap_action:
@@ -151,8 +160,28 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2);
-                  }  
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }
+            - type: entity
+              entity: sensor.first_floor_air_quality_pm2_5
+              tap_action:
+                action: more-info
+              icon: mdi:leaf
+              icon_color: green
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }
             - type: conditional
               conditions:
                 - condition: state
@@ -170,136 +199,143 @@ cards:
                   style: |
                     :host {
                       zoom: 1.25 !important;
-                      --chip-background: var(--ha-card-background-2);
-                    } 
+                      --chip-background: var(--background-color);
+                      --chip-font-size: 16px;
+                    }
+                    ha-card {
+                      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                    }
       first:
         card:
-          type: custom:stack-in-card
-          mode: vertical
+          type: custom:expander-card
+          expanded: true
+          title-card-clickable: true
           card_mod:
             style: |
               ha-card {
-                background: var(--ha-card-background-2) !important;
+                background-color: var(--background-color) !important;
                 border-radius: 20px;
                 padding: 3px 12px 4px;
-                }
+              }
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: First Floor
+            icon: mdi:home-floor-1
+            rows: 0.75
+            sub_button:
+              - entity: sensor.living_room_thermostat_current_temperature
+                show_state: true
+                show_icon: true
+                show_background: false
+                visibility:
+                  - condition: screen
+                    media_query: '(min-width: 500px)'
+              - entity: sensor.living_room_thermostat_current_humidity
+                show_state: true
+                show_background: false
+                show_icon: true
+                visibility:
+                  - condition: screen
+                    media_query: '(min-width: 1024px)'
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;
+                font-weight: bold !important;
+              }
+              .bubble-sub-button {
+                font-size: 14px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
           cards:
             - type: vertical-stack
               cards:
-              - type: custom:bubble-card
-                card_type: separator
-                name: First Floor
-                icon: mdi:home-floor-1
-                rows: 0.75
-                sub_button:
-                  - entity: sensor.living_room_thermostat_current_temperature
-                    show_state: true
-                    show_icon: true
-                    show_background: false
-                    visibility:
-                      - condition: screen
-                        media_query: '(min-width: 500px)'
-                  - entity: sensor.living_room_thermostat_current_humidity
-                    show_state: true
-                    show_background: false
-                    show_icon: true
-                    visibility:
-                      - condition: screen
-                        media_query: '(min-width: 1024px)'
-                styles: |
-                  .bubble-name {
-                    font-size: 20px !important;  /* title */
-                    font-weight: bold !important;
-                  }
-                  .bubble-sub-button 
-                  {
-                    font-size: 14px !important;
-                    font-weight: 700 !important;
-                  }
-                  .bubble-line {
-                    background: var(--primary-text-color);
-                    opacity: 0.1;
-                  }
-                  .card-content {
-                    padding-top: 7px !important;
-                  }
-              - type: custom:bubble-card
-                card_type: climate
-                name: Living Room Thermostat
-                show_state: false
-                entity: climate.living_room_thermostat_homekit
-                sub_button:
-                  main: []
-                  bottom:
-                    - name: HVAC Modes
-                      buttons_layout: rows
-                      group:
-                        - name: HVAC modes menu
-                          select_attribute: hvac_modes
-                          state_background: false
-                          show_arrow: true
-                          show_attribute: false
-                          show_state: true
-                          sub_button_type: select
-                        - entity: climate.living_room_thermostat
-                          select_attribute: fan_modes
-                          state_background: false
-                          show_state: false
-                          show_attribute: true
-                          attribute: fan_mode
-                          sub_button_type: select
-                    - name: Air Quality
-                      buttons_layout: rows
-                      group:
-                        - entity: sensor.first_floor_air_quality_carbon_dioxide
-                          scrolling_effect: false
-                          state_background: false
-                          show_background: true
-                          show_icon: false
-                          show_state: true
-                          name: C02
-                          show_name: true
-                          content_layout: icon-left
-                          force_icon: false
-                          fill_width: false
-                          width: 35
-                        - entity: sensor.first_floor_air_quality_pm2_5
-                          scrolling_effect: false
-                          state_background: false
-                          show_background: true
-                          show_icon: false
-                          show_state: true
-                          name: PM2.5
-                          show_name: true
-                          content_layout: icon-left
-                          fill_width: false
-                          width: 35
-                        - entity: switch.utility_room_ventilation_damper
-                          icon: mdi:tailwind
-                          scrolling_effect: false
-                          name: Fresh Air
-                          show_name: true
-                          tap_action:
-                            action: toggle
-                          content_layout: icon-left
-                          fill_width: false
-                          width: 25
-                  bottom_layout: rows
-                show_icon: false
-                scrolling_effect: false
-                card_layout: large-sub-buttons-grid
-                modules:
-                  - mobile_climate
-                rows: 2.406
+                - type: custom:bubble-card
+                  card_type: climate
+                  name: Living Room Thermostat
+                  show_state: false
+                  entity: climate.living_room_thermostat_homekit
+                  sub_button:
+                    main: []
+                    bottom:
+                      - name: HVAC Modes
+                        buttons_layout: rows
+                        group:
+                          - name: HVAC modes menu
+                            select_attribute: hvac_modes
+                            state_background: false
+                            show_arrow: true
+                            show_attribute: false
+                            show_state: true
+                            sub_button_type: select
+                          - entity: climate.living_room_thermostat
+                            select_attribute: fan_modes
+                            state_background: false
+                            show_state: false
+                            show_attribute: true
+                            attribute: fan_mode
+                            sub_button_type: select
+                      - name: Air Quality
+                        buttons_layout: rows
+                        group:
+                          - entity: sensor.first_floor_air_quality_carbon_dioxide
+                            scrolling_effect: false
+                            state_background: false
+                            show_background: true
+                            show_icon: false
+                            show_state: true
+                            name: C02
+                            show_name: true
+                            content_layout: icon-left
+                            force_icon: false
+                            fill_width: false
+                            width: 35
+                          - entity: sensor.first_floor_air_quality_pm2_5
+                            scrolling_effect: false
+                            state_background: false
+                            show_background: true
+                            show_icon: false
+                            show_state: true
+                            name: PM2.5
+                            show_name: true
+                            content_layout: icon-left
+                            fill_width: false
+                            width: 35
+                          - entity: switch.utility_room_ventilation_damper
+                            icon: mdi:tailwind
+                            scrolling_effect: false
+                            name: Fresh Air
+                            show_name: true
+                            tap_action:
+                              action: toggle
+                            content_layout: icon-left
+                            fill_width: false
+                            width: 25
+                    bottom_layout: rows
+                  show_icon: false
+                  scrolling_effect: false
+                  card_layout: large-sub-buttons-grid
+                  modules:
+                    - mobile_climate
+                  rows: 2.406
       basement:
         card:
           type: custom:expander-card
           expanded: true
           title-card-clickable: true
-          card_mod: 
+          card_mod:
             style: |
               ha-card {
-                background-color: var(--ha-card-background-2) !important;
+                background-color: var(--background-color) !important;
+                border-radius: 20px;
+                padding: 3px 12px 4px;
               }
           title-card:
             type: custom:bubble-card
@@ -324,11 +360,10 @@ cards:
                     media_query: '(min-width: 1024px)'
             styles: |
               .bubble-name {
-                font-size: 20px !important;  /* title */
+                font-size: 20px !important;
                 font-weight: bold !important;
               }
-              .bubble-sub-button 
-              {
+              .bubble-sub-button {
                 font-size: 14px !important;
                 font-weight: 700 !important;
               }
@@ -367,20 +402,18 @@ cards:
                     rows: 2
                   styles: |-
                     .bubble-name {
-                    font-size: 16px !important;
+                      font-size: 16px !important;
                     }
-                    .bubble-sub-button 
-                    {
+                    .bubble-sub-button {
                       font-size: 12px !important;
                       font-weight: 700 !important;
                     }
-                    .bubble-temperature-display 
-                    {
+                    .bubble-temperature-display {
                       font-size: 14px !important;
                       font-weight: 700 !important;
                     }
                   modules:
-                   - Mobile Module Theme 
+                    - Mobile Module Theme
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
@@ -403,24 +436,25 @@ cards:
                         action: toggle
                   styles: |-
                     .bubble-name {
-                    font-size: 16px !important;
+                      font-size: 16px !important;
                     }
-                    .bubble-sub-button 
-                    {
+                    .bubble-sub-button {
                       font-size: 12px !important;
                       font-weight: 700 !important;
                     }
                   modules:
-                   - Mobile Module Theme 
+                    - Mobile Module Theme
       office:
         card:
           type: custom:expander-card
           expanded: true
           title-card-clickable: true
-          card_mod: 
+          card_mod:
             style: |
               ha-card {
-                background-color: var(--ha-card-background-2) !important;
+                background-color: var(--background-color) !important;
+                border-radius: 20px;
+                padding: 3px 12px 4px;
               }
           title-card:
             type: custom:bubble-card
@@ -438,11 +472,10 @@ cards:
                     media_query: '(min-width: 768px)'
             styles: |
               .bubble-name {
-                font-size: 20px !important;  /* title */
+                font-size: 20px !important;
                 font-weight: bold !important;
               }
-              .bubble-sub-button 
-              {
+              .bubble-sub-button {
                 font-size: 14px !important;
                 font-weight: 700 !important;
               }
@@ -481,20 +514,18 @@ cards:
                     rows: 2
                   styles: |-
                     .bubble-name {
-                    font-size: 16px !important;
+                      font-size: 16px !important;
                     }
-                    .bubble-sub-button 
-                    {
+                    .bubble-sub-button {
                       font-size: 14px !important;
                       font-weight: 700 !important;
                     }
-                    .bubble-temperature-display 
-                    {
+                    .bubble-temperature-display {
                       font-size: 14px !important;
                       font-weight: 700 !important;
                     }
                   modules:
-                   - Mobile Module Theme 
+                    - Mobile Module Theme
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
@@ -519,15 +550,14 @@ cards:
                         action: toggle
                   styles: |-
                     .bubble-name {
-                    font-size: 16px !important;
+                      font-size: 16px !important;
                     }
-                    .bubble-sub-button 
-                    {
+                    .bubble-sub-button {
                       font-size: 12px !important;
                       font-weight: 700 !important;
                     }
                   modules:
-                   - Mobile Module Theme 
+                    - Mobile Module Theme
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
@@ -550,15 +580,14 @@ cards:
                         action: toggle
                   styles: |-
                     .bubble-name {
-                    font-size: 16px !important;
+                      font-size: 16px !important;
                     }
-                    .bubble-sub-button 
-                    {
+                    .bubble-sub-button {
                       font-size: 12px !important;
                       font-weight: 700 !important;
                     }
                   modules:
-                   - Mobile Module Theme 
+                    - Mobile Module Theme
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
@@ -581,30 +610,31 @@ cards:
                         action: toggle
                   styles: |-
                     .bubble-name {
-                    font-size: 16px !important;
+                      font-size: 16px !important;
                     }
-                    .bubble-sub-button 
-                    {
+                    .bubble-sub-button {
                       font-size: 12px !important;
                       font-weight: 700 !important;
                     }
                   modules:
-                   - Mobile Module Theme 
+                    - Mobile Module Theme
       primbed:
         card:
           type: custom:expander-card
           expanded: true
           title-card-clickable: true
-          card_mod: 
+          card_mod:
             style: |
               ha-card {
-                background-color: var(--ha-card-background-2) !important;
+                background-color: var(--background-color) !important;
+                border-radius: 20px;
+                padding: 3px 12px 4px;
               }
           title-card:
             type: custom:bubble-card
             card_type: separator
             name: Primary Bed
-            icon: mdi:home-floor-2
+            icon: mdi:bed
             rows: 0.75
             sub_button:
               - entity: sensor.bedroom_thermostat_current_temperature
@@ -623,11 +653,10 @@ cards:
                     media_query: '(min-width: 1024px)'
             styles: |
               .bubble-name {
-                font-size: 20px !important;  /* title */
+                font-size: 20px !important;
                 font-weight: bold !important;
               }
-              .bubble-sub-button 
-              {
+              .bubble-sub-button {
                 font-size: 14px !important;
                 font-weight: 700 !important;
               }
@@ -666,10 +695,9 @@ cards:
                     rows: 2
                   styles: |-
                     .bubble-name {
-                    font-size: 16px !important;
+                      font-size: 16px !important;
                     }
-                    .bubble-sub-button 
-                    {
+                    .bubble-sub-button {
                       font-size: 12px !important;
                       font-weight: 700 !important;
                     }
@@ -677,13 +705,12 @@ cards:
                       font-size: 12px !important;
                       font-weight: 700 !important;
                     }
-                    .bubble-temperature-display 
-                    {
+                    .bubble-temperature-display {
                       font-size: 14px !important;
                       font-weight: 700 !important;
                     }
                   modules:
-                   - Mobile Module Theme 
+                    - Mobile Module Theme
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
@@ -708,12 +735,11 @@ cards:
                         action: toggle
                   styles: |-
                     .bubble-name {
-                    font-size: 16px !important;
+                      font-size: 16px !important;
                     }
-                    .bubble-sub-button 
-                    {
+                    .bubble-sub-button {
                       font-size: 12px !important;
                       font-weight: 700 !important;
                     }
                   modules:
-                   - Mobile Module Theme                     
+                    - Mobile Module Theme
