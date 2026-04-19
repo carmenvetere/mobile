@@ -1,0 +1,60 @@
+# lovelace_gen
+#
+# Reusable Bubble Card compact "priority" row matching the CompactRow
+# in Climate.html. When the priority switch is on, the row picks up a
+# cyan tint + glow via ${state === 'on' ? ...} template literals.
+#
+# Required vars:
+#   switch_entity    - switch.* entity id (priority toggle)
+#   row_name         - display name
+#   temp_sensor      - temperature sensor entity id
+#   humidity_sensor  - humidity sensor entity id
+type: custom:bubble-card
+card_type: button
+button_type: state
+entity: {{ switch_entity }}
+name: {{ row_name }}
+show_icon: false
+show_state: false
+sub_button:
+  - entity: {{ temp_sensor }}
+    show_state: true
+    show_background: true
+    state_background: false
+  - entity: {{ humidity_sensor }}
+    show_state: true
+    show_background: true
+    state_background: false
+  - entity: {{ switch_entity }}
+    show_state: true
+    icon: mdi:toggle-switch-variant
+    tap_action:
+      action: toggle
+styles: |
+  ha-card {
+    background: ${state === 'on' ? 'linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03))' : 'rgba(255,255,255,0.03)'} !important;
+    border: 1px solid rgba(255,255,255,0.05) !important;
+    border-radius: 14px !important;
+    padding: 10px 12px !important;
+    margin-top: 6px !important;
+    box-shadow: ${state === 'on' ? 'inset 0 0 0 1px rgba(94,200,255,0.4), 0 0 18px -8px rgba(94,200,255,0.45)' : 'none'} !important;
+    transition: box-shadow .3s ease, background .3s ease !important;
+  }
+  .bubble-name {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #f2f3f5 !important;
+  }
+  .bubble-sub-button {
+    background: rgba(255,255,255,0.09) !important;
+    border-radius: 999px !important;
+    border: none !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: rgba(242,243,245,0.62) !important;
+    padding: 5px 10px !important;
+    min-height: 30px !important;
+  }
+  .bubble-sub-button:hover {
+    background: rgba(255,255,255,0.14) !important;
+  }
