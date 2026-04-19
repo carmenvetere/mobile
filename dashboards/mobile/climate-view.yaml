@@ -28,7 +28,7 @@ cards:
             "primbed"
         - grid-template-columns: auto
         - grid-template-rows: 60px 60px auto auto auto auto
-        - row-gap: 10px
+        - row-gap: 5px
         - align-items: start
         - column-gap: 2px
     custom_fields:
@@ -67,7 +67,6 @@ cards:
                   name:
                     - font-size: 22px
                     - font-weight: bold
-                    - letter-spacing: '-0.3px'
                   card:
                     - align-items: start
                     - justify-content: flex-start
@@ -129,67 +128,59 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: rgba(255,255,255,0.14);
-                    --chip-font-size: 14px;
-                    --chip-border-radius: 999px;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
                   }
                   ha-card {
-                    border: 1px solid rgba(255,255,255,0.04) !important;
-                    box-shadow: none !important;
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
                   }
             - type: entity
               entity: sensor.bayberry_tempest_temperature
               tap_action:
                 action: more-info
               icon: mdi:thermometer
-              icon_color: '#5ec8ff'
+              icon_color: light-blue
               card_mod:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: rgba(255,255,255,0.14);
-                    --chip-font-size: 14px;
-                    --chip-border-radius: 999px;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
                   }
                   ha-card {
-                    border: 1px solid rgba(255,255,255,0.04) !important;
-                    box-shadow: none !important;
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
                   }
             - type: entity
               entity: sensor.bayberry_tempest_humidity
               tap_action:
                 action: more-info
               icon: mdi:water-percent
-              icon_color: '#5ec8ff'
+              icon_color: light-blue
               card_mod:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: rgba(255,255,255,0.14);
-                    --chip-font-size: 14px;
-                    --chip-border-radius: 999px;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
                   }
                   ha-card {
-                    border: 1px solid rgba(255,255,255,0.04) !important;
-                    box-shadow: none !important;
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
                   }
             - type: entity
               entity: sensor.first_floor_air_quality_pm2_5
               tap_action:
                 action: more-info
               icon: mdi:leaf
-              icon_color: '#4ade80'
+              icon_color: green
               card_mod:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: rgba(255,255,255,0.14);
-                    --chip-font-size: 14px;
-                    --chip-border-radius: 999px;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
                   }
                   ha-card {
-                    border: 1px solid rgba(255,255,255,0.04) !important;
-                    box-shadow: none !important;
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
                   }
             - type: conditional
               conditions:
@@ -203,18 +194,16 @@ cards:
                 tap_action:
                   action: more-info
                 icon: mdi:tailwind
-                icon_color: '#4ade80'
+                icon_color: blue
                 card_mod:
                   style: |
                     :host {
                       zoom: 1.25 !important;
-                      --chip-background: rgba(255,255,255,0.14);
-                      --chip-font-size: 14px;
-                      --chip-border-radius: 999px;
+                      --chip-background: var(--background-color);
+                      --chip-font-size: 16px;
                     }
                     ha-card {
-                      border: 1px solid rgba(255,255,255,0.04) !important;
-                      box-shadow: none !important;
+                      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
                     }
       first:
         card:
@@ -227,7 +216,7 @@ cards:
                 background: rgba(255,255,255,0.055) !important;
                 border: 1px solid rgba(255,255,255,0.06) !important;
                 border-radius: 22px !important;
-                padding: 14px !important;
+                padding: 6px 14px 10px !important;
                 box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset !important;
               }
           title-card:
@@ -251,31 +240,28 @@ cards:
                 visibility:
                   - condition: screen
                     media_query: '(min-width: 1024px)'
-            card_mod:
-              style: |
-                .bubble-name {
-                  font-size: 15px !important;
-                  font-weight: 700 !important;
-                  letter-spacing: 0.1px !important;
-                  color: #f2f3f5 !important;
-                }
-                .bubble-sub-button {
-                  font-size: 13px !important;
-                  font-weight: 600 !important;
-                  color: rgba(242,243,245,0.62) !important;
-                  background: transparent !important;
-                }
-                .bubble-icon-container {
-                  color: rgba(242,243,245,0.62) !important;
-                }
-                .bubble-line {
-                  background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
-                  opacity: 1 !important;
-                  height: 1px !important;
-                }
-                .card-content {
-                  padding: 4px 6px 10px !important;
-                }
+            styles: |
+              .bubble-name {
+                font-size: 15px !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.1px !important;
+                color: #f2f3f5 !important;
+              }
+              .bubble-sub-button {
+                font-size: 12px !important;
+                font-weight: 600 !important;
+                color: rgba(242,243,245,0.62) !important;
+                background: rgba(255,255,255,0.05) !important;
+                border-radius: 999px !important;
+              }
+              .bubble-line {
+                background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
+                opacity: 1 !important;
+                height: 1px !important;
+              }
+              .card-content {
+                padding: 4px 6px 10px !important;
+              }
           cards:
             - type: vertical-stack
               cards:
@@ -313,7 +299,7 @@ cards:
                             show_background: true
                             show_icon: false
                             show_state: true
-                            name: CO2
+                            name: C02
                             show_name: true
                             content_layout: icon-left
                             force_icon: false
@@ -347,55 +333,29 @@ cards:
                   modules:
                     - mobile_climate
                   rows: 2.406
-                  card_mod:
-                    style: |
-                      ha-card {
-                        background: rgba(255,255,255,0.035) !important;
-                        border-radius: 18px !important;
-                        padding: 14px !important;
-                        overflow: hidden !important;
-                        transition: box-shadow .3s ease, background .3s ease !important;
-                        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04) !important;
-                      }
-                      {% set mode = states('climate.living_room_thermostat_homekit') %}
-                      {% if mode == 'heat' %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(255,122,61,0.13), rgba(255,122,61,0.04)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(255,122,61,0.55), 0 0 30px -6px rgba(255,122,61,0.55) !important;
-                      }
-                      {% elif mode == 'cool' %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(94,200,255,0.5), 0 0 30px -6px rgba(94,200,255,0.5) !important;
-                      }
-                      {% endif %}
-                      .bubble-name {
-                        font-size: 14px !important;
-                        font-weight: 700 !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-sub-button-container,
-                      .bubble-sub-button {
-                        font-size: 13px !important;
-                        font-weight: 600 !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-sub-button {
-                        background: rgba(255,255,255,0.14) !important;
-                        border-radius: 999px !important;
-                        border: 1px solid rgba(255,255,255,0.04) !important;
-                      }
-                      .bubble-sub-button:hover {
-                        background: rgba(255,255,255,0.22) !important;
-                      }
-                      .bubble-climate-temperature,
-                      .bubble-temperature-display {
-                        font-size: 18px !important;
-                        font-weight: 700 !important;
-                        {% if mode == 'heat' %}color: #ff7a3d !important;
-                        {% elif mode == 'cool' %}color: #5ec8ff !important;
-                        {% else %}color: #f2f3f5 !important;{% endif %}
-                      }
+                  styles: |
+                    .bubble-name {
+                      font-size: 14px !important;
+                      font-weight: 700 !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-sub-button {
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                      background: rgba(255,255,255,0.14) !important;
+                      border-radius: 999px !important;
+                      border: 1px solid rgba(255,255,255,0.04) !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-sub-button:hover {
+                      background: rgba(255,255,255,0.22) !important;
+                    }
+                    .bubble-climate-temperature,
+                    .bubble-temperature-display {
+                      font-size: 18px !important;
+                      font-weight: 700 !important;
+                      color: #f2f3f5 !important;
+                    }
       basement:
         card:
           type: custom:expander-card
@@ -407,7 +367,7 @@ cards:
                 background: rgba(255,255,255,0.055) !important;
                 border: 1px solid rgba(255,255,255,0.06) !important;
                 border-radius: 22px !important;
-                padding: 14px !important;
+                padding: 6px 14px 10px !important;
                 box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset !important;
               }
           title-card:
@@ -431,28 +391,28 @@ cards:
                 visibility:
                   - condition: screen
                     media_query: '(min-width: 1024px)'
-            card_mod:
-              style: |
-                .bubble-name {
-                  font-size: 15px !important;
-                  font-weight: 700 !important;
-                  letter-spacing: 0.1px !important;
-                  color: #f2f3f5 !important;
-                }
-                .bubble-sub-button {
-                  font-size: 13px !important;
-                  font-weight: 600 !important;
-                  color: rgba(242,243,245,0.62) !important;
-                  background: transparent !important;
-                }
-                .bubble-line {
-                  background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
-                  opacity: 1 !important;
-                  height: 1px !important;
-                }
-                .card-content {
-                  padding: 4px 6px 10px !important;
-                }
+            styles: |
+              .bubble-name {
+                font-size: 15px !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.1px !important;
+                color: #f2f3f5 !important;
+              }
+              .bubble-sub-button {
+                font-size: 12px !important;
+                font-weight: 600 !important;
+                color: rgba(242,243,245,0.62) !important;
+                background: rgba(255,255,255,0.05) !important;
+                border-radius: 999px !important;
+              }
+              .bubble-line {
+                background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
+                opacity: 1 !important;
+                height: 1px !important;
+              }
+              .card-content {
+                padding: 4px 6px 10px !important;
+              }
           cards:
             - type: vertical-stack
               cards:
@@ -479,51 +439,28 @@ cards:
                   card_layout: large-sub-buttons-grid
                   grid_options:
                     rows: 2
+                  styles: |
+                    .bubble-name {
+                      font-size: 14px !important;
+                      font-weight: 700 !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-sub-button {
+                      font-size: 12px !important;
+                      font-weight: 600 !important;
+                      background: rgba(255,255,255,0.14) !important;
+                      border-radius: 999px !important;
+                      border: 1px solid rgba(255,255,255,0.04) !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-climate-temperature,
+                    .bubble-temperature-display {
+                      font-size: 16px !important;
+                      font-weight: 700 !important;
+                      color: #f2f3f5 !important;
+                    }
                   modules:
                     - Mobile Module Theme
-                  card_mod:
-                    style: |
-                      ha-card {
-                        background: rgba(255,255,255,0.035) !important;
-                        border-radius: 18px !important;
-                        padding: 14px !important;
-                        overflow: hidden !important;
-                        transition: box-shadow .3s ease, background .3s ease !important;
-                        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04) !important;
-                      }
-                      {% set mode = states('climate.basement_thermostat_homekit') %}
-                      {% if mode == 'heat' %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(255,122,61,0.13), rgba(255,122,61,0.04)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(255,122,61,0.55), 0 0 30px -6px rgba(255,122,61,0.55) !important;
-                      }
-                      {% elif mode == 'cool' %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(94,200,255,0.5), 0 0 30px -6px rgba(94,200,255,0.5) !important;
-                      }
-                      {% endif %}
-                      .bubble-name {
-                        font-size: 14px !important;
-                        font-weight: 700 !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-sub-button {
-                        font-size: 12px !important;
-                        font-weight: 600 !important;
-                        background: rgba(255,255,255,0.14) !important;
-                        border-radius: 999px !important;
-                        border: 1px solid rgba(255,255,255,0.04) !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-climate-temperature,
-                      .bubble-temperature-display {
-                        font-size: 16px !important;
-                        font-weight: 700 !important;
-                        {% if mode == 'heat' %}color: #ff7a3d !important;
-                        {% elif mode == 'cool' %}color: #5ec8ff !important;
-                        {% else %}color: #f2f3f5 !important;{% endif %}
-                      }
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
@@ -544,37 +481,22 @@ cards:
                       icon: mdi:toggle-switch-variant
                       tap_action:
                         action: toggle
+                  styles: |
+                    .bubble-name {
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-sub-button {
+                      background: rgba(255,255,255,0.09) !important;
+                      border-radius: 999px !important;
+                      font-size: 12px !important;
+                      font-weight: 600 !important;
+                      color: rgba(242,243,245,0.62) !important;
+                      padding: 5px 10px !important;
+                    }
                   modules:
                     - Mobile Module Theme
-                  card_mod:
-                    style: |
-                      ha-card {
-                        background: rgba(255,255,255,0.03) !important;
-                        border: 1px solid rgba(255,255,255,0.05) !important;
-                        border-radius: 14px !important;
-                        padding: 10px 12px !important;
-                        margin-top: 6px !important;
-                        box-shadow: none !important;
-                      }
-                      {% if is_state('switch.basement_thermostat_family_room_priority', 'on') %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(94,200,255,0.4), 0 0 18px -8px rgba(94,200,255,0.45) !important;
-                      }
-                      {% endif %}
-                      .bubble-name {
-                        font-size: 13px !important;
-                        font-weight: 600 !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-sub-button {
-                        background: rgba(255,255,255,0.09) !important;
-                        border-radius: 999px !important;
-                        font-size: 12px !important;
-                        font-weight: 600 !important;
-                        color: rgba(242,243,245,0.62) !important;
-                        padding: 5px 10px !important;
-                      }
       office:
         card:
           type: custom:expander-card
@@ -586,7 +508,7 @@ cards:
                 background: rgba(255,255,255,0.055) !important;
                 border: 1px solid rgba(255,255,255,0.06) !important;
                 border-radius: 22px !important;
-                padding: 14px !important;
+                padding: 6px 14px 10px !important;
                 box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset !important;
               }
           title-card:
@@ -603,28 +525,28 @@ cards:
                 visibility:
                   - condition: screen
                     media_query: '(min-width: 768px)'
-            card_mod:
-              style: |
-                .bubble-name {
-                  font-size: 15px !important;
-                  font-weight: 700 !important;
-                  letter-spacing: 0.1px !important;
-                  color: #f2f3f5 !important;
-                }
-                .bubble-sub-button {
-                  font-size: 13px !important;
-                  font-weight: 600 !important;
-                  color: rgba(242,243,245,0.62) !important;
-                  background: transparent !important;
-                }
-                .bubble-line {
-                  background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
-                  opacity: 1 !important;
-                  height: 1px !important;
-                }
-                .card-content {
-                  padding: 4px 6px 10px !important;
-                }
+            styles: |
+              .bubble-name {
+                font-size: 15px !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.1px !important;
+                color: #f2f3f5 !important;
+              }
+              .bubble-sub-button {
+                font-size: 12px !important;
+                font-weight: 600 !important;
+                color: rgba(242,243,245,0.62) !important;
+                background: rgba(255,255,255,0.05) !important;
+                border-radius: 999px !important;
+              }
+              .bubble-line {
+                background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
+                opacity: 1 !important;
+                height: 1px !important;
+              }
+              .card-content {
+                padding: 4px 6px 10px !important;
+              }
           cards:
             - type: vertical-stack
               cards:
@@ -651,51 +573,28 @@ cards:
                   card_layout: large-sub-buttons-grid
                   grid_options:
                     rows: 2
+                  styles: |
+                    .bubble-name {
+                      font-size: 14px !important;
+                      font-weight: 700 !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-sub-button {
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                      background: rgba(255,255,255,0.14) !important;
+                      border-radius: 999px !important;
+                      border: 1px solid rgba(255,255,255,0.04) !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-climate-temperature,
+                    .bubble-temperature-display {
+                      font-size: 16px !important;
+                      font-weight: 700 !important;
+                      color: #f2f3f5 !important;
+                    }
                   modules:
                     - Mobile Module Theme
-                  card_mod:
-                    style: |
-                      ha-card {
-                        background: rgba(255,255,255,0.035) !important;
-                        border-radius: 18px !important;
-                        padding: 14px !important;
-                        overflow: hidden !important;
-                        transition: box-shadow .3s ease, background .3s ease !important;
-                        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04) !important;
-                      }
-                      {% set mode = states('climate.office_thermostat_homekit') %}
-                      {% if mode == 'heat' %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(255,122,61,0.13), rgba(255,122,61,0.04)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(255,122,61,0.55), 0 0 30px -6px rgba(255,122,61,0.55) !important;
-                      }
-                      {% elif mode == 'cool' %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(94,200,255,0.5), 0 0 30px -6px rgba(94,200,255,0.5) !important;
-                      }
-                      {% endif %}
-                      .bubble-name {
-                        font-size: 14px !important;
-                        font-weight: 700 !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-sub-button {
-                        font-size: 13px !important;
-                        font-weight: 600 !important;
-                        background: rgba(255,255,255,0.14) !important;
-                        border-radius: 999px !important;
-                        border: 1px solid rgba(255,255,255,0.04) !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-climate-temperature,
-                      .bubble-temperature-display {
-                        font-size: 16px !important;
-                        font-weight: 700 !important;
-                        {% if mode == 'heat' %}color: #ff7a3d !important;
-                        {% elif mode == 'cool' %}color: #5ec8ff !important;
-                        {% else %}color: #f2f3f5 !important;{% endif %}
-                      }
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
@@ -718,37 +617,22 @@ cards:
                       icon: mdi:toggle-switch-variant
                       tap_action:
                         action: toggle
+                  styles: |
+                    .bubble-name {
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-sub-button {
+                      background: rgba(255,255,255,0.09) !important;
+                      border-radius: 999px !important;
+                      font-size: 12px !important;
+                      font-weight: 600 !important;
+                      color: rgba(242,243,245,0.62) !important;
+                      padding: 5px 10px !important;
+                    }
                   modules:
                     - Mobile Module Theme
-                  card_mod:
-                    style: |
-                      ha-card {
-                        background: rgba(255,255,255,0.03) !important;
-                        border: 1px solid rgba(255,255,255,0.05) !important;
-                        border-radius: 14px !important;
-                        padding: 10px 12px !important;
-                        margin-top: 6px !important;
-                        box-shadow: none !important;
-                      }
-                      {% if is_state('switch.office_thermostat_front_guest_bedroom_priority', 'on') %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(94,200,255,0.4), 0 0 18px -8px rgba(94,200,255,0.45) !important;
-                      }
-                      {% endif %}
-                      .bubble-name {
-                        font-size: 13px !important;
-                        font-weight: 600 !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-sub-button {
-                        background: rgba(255,255,255,0.09) !important;
-                        border-radius: 999px !important;
-                        font-size: 12px !important;
-                        font-weight: 600 !important;
-                        color: rgba(242,243,245,0.62) !important;
-                        padding: 5px 10px !important;
-                      }
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
@@ -769,37 +653,22 @@ cards:
                       icon: mdi:toggle-switch-variant
                       tap_action:
                         action: toggle
+                  styles: |
+                    .bubble-name {
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-sub-button {
+                      background: rgba(255,255,255,0.09) !important;
+                      border-radius: 999px !important;
+                      font-size: 12px !important;
+                      font-weight: 600 !important;
+                      color: rgba(242,243,245,0.62) !important;
+                      padding: 5px 10px !important;
+                    }
                   modules:
                     - Mobile Module Theme
-                  card_mod:
-                    style: |
-                      ha-card {
-                        background: rgba(255,255,255,0.03) !important;
-                        border: 1px solid rgba(255,255,255,0.05) !important;
-                        border-radius: 14px !important;
-                        padding: 10px 12px !important;
-                        margin-top: 6px !important;
-                        box-shadow: none !important;
-                      }
-                      {% if is_state('switch.office_thermostat_guest_bedroom_priority', 'on') %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(94,200,255,0.4), 0 0 18px -8px rgba(94,200,255,0.45) !important;
-                      }
-                      {% endif %}
-                      .bubble-name {
-                        font-size: 13px !important;
-                        font-weight: 600 !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-sub-button {
-                        background: rgba(255,255,255,0.09) !important;
-                        border-radius: 999px !important;
-                        font-size: 12px !important;
-                        font-weight: 600 !important;
-                        color: rgba(242,243,245,0.62) !important;
-                        padding: 5px 10px !important;
-                      }
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
@@ -820,37 +689,22 @@ cards:
                       icon: mdi:toggle-switch-variant
                       tap_action:
                         action: toggle
+                  styles: |
+                    .bubble-name {
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-sub-button {
+                      background: rgba(255,255,255,0.09) !important;
+                      border-radius: 999px !important;
+                      font-size: 12px !important;
+                      font-weight: 600 !important;
+                      color: rgba(242,243,245,0.62) !important;
+                      padding: 5px 10px !important;
+                    }
                   modules:
                     - Mobile Module Theme
-                  card_mod:
-                    style: |
-                      ha-card {
-                        background: rgba(255,255,255,0.03) !important;
-                        border: 1px solid rgba(255,255,255,0.05) !important;
-                        border-radius: 14px !important;
-                        padding: 10px 12px !important;
-                        margin-top: 6px !important;
-                        box-shadow: none !important;
-                      }
-                      {% if is_state('switch.office_thermostat_office_priority', 'on') %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(94,200,255,0.4), 0 0 18px -8px rgba(94,200,255,0.45) !important;
-                      }
-                      {% endif %}
-                      .bubble-name {
-                        font-size: 13px !important;
-                        font-weight: 600 !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-sub-button {
-                        background: rgba(255,255,255,0.09) !important;
-                        border-radius: 999px !important;
-                        font-size: 12px !important;
-                        font-weight: 600 !important;
-                        color: rgba(242,243,245,0.62) !important;
-                        padding: 5px 10px !important;
-                      }
       primbed:
         card:
           type: custom:expander-card
@@ -862,7 +716,7 @@ cards:
                 background: rgba(255,255,255,0.055) !important;
                 border: 1px solid rgba(255,255,255,0.06) !important;
                 border-radius: 22px !important;
-                padding: 14px !important;
+                padding: 6px 14px 10px !important;
                 box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset !important;
               }
           title-card:
@@ -886,28 +740,28 @@ cards:
                 visibility:
                   - condition: screen
                     media_query: '(min-width: 1024px)'
-            card_mod:
-              style: |
-                .bubble-name {
-                  font-size: 15px !important;
-                  font-weight: 700 !important;
-                  letter-spacing: 0.1px !important;
-                  color: #f2f3f5 !important;
-                }
-                .bubble-sub-button {
-                  font-size: 13px !important;
-                  font-weight: 600 !important;
-                  color: rgba(242,243,245,0.62) !important;
-                  background: transparent !important;
-                }
-                .bubble-line {
-                  background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
-                  opacity: 1 !important;
-                  height: 1px !important;
-                }
-                .card-content {
-                  padding: 4px 6px 10px !important;
-                }
+            styles: |
+              .bubble-name {
+                font-size: 15px !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.1px !important;
+                color: #f2f3f5 !important;
+              }
+              .bubble-sub-button {
+                font-size: 12px !important;
+                font-weight: 600 !important;
+                color: rgba(242,243,245,0.62) !important;
+                background: rgba(255,255,255,0.05) !important;
+                border-radius: 999px !important;
+              }
+              .bubble-line {
+                background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
+                opacity: 1 !important;
+                height: 1px !important;
+              }
+              .card-content {
+                padding: 4px 6px 10px !important;
+              }
           cards:
             - type: vertical-stack
               cards:
@@ -934,55 +788,32 @@ cards:
                   card_layout: large-sub-buttons-grid
                   grid_options:
                     rows: 2
+                  styles: |
+                    .bubble-name {
+                      font-size: 14px !important;
+                      font-weight: 700 !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-sub-button {
+                      font-size: 12px !important;
+                      font-weight: 600 !important;
+                      background: rgba(255,255,255,0.14) !important;
+                      border-radius: 999px !important;
+                      border: 1px solid rgba(255,255,255,0.04) !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-sub-button .bubble-state {
+                      font-size: 12px !important;
+                      font-weight: 700 !important;
+                    }
+                    .bubble-climate-temperature,
+                    .bubble-temperature-display {
+                      font-size: 16px !important;
+                      font-weight: 700 !important;
+                      color: #f2f3f5 !important;
+                    }
                   modules:
                     - Mobile Module Theme
-                  card_mod:
-                    style: |
-                      ha-card {
-                        background: rgba(255,255,255,0.035) !important;
-                        border-radius: 18px !important;
-                        padding: 14px !important;
-                        overflow: hidden !important;
-                        transition: box-shadow .3s ease, background .3s ease !important;
-                        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04) !important;
-                      }
-                      {% set mode = states('climate.bedroom_thermostat') %}
-                      {% if mode == 'heat' %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(255,122,61,0.13), rgba(255,122,61,0.04)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(255,122,61,0.55), 0 0 30px -6px rgba(255,122,61,0.55) !important;
-                      }
-                      {% elif mode == 'cool' %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(94,200,255,0.5), 0 0 30px -6px rgba(94,200,255,0.5) !important;
-                      }
-                      {% endif %}
-                      .bubble-name {
-                        font-size: 14px !important;
-                        font-weight: 700 !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-sub-button {
-                        font-size: 12px !important;
-                        font-weight: 600 !important;
-                        background: rgba(255,255,255,0.14) !important;
-                        border-radius: 999px !important;
-                        border: 1px solid rgba(255,255,255,0.04) !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-sub-button .bubble-state {
-                        font-size: 12px !important;
-                        font-weight: 700 !important;
-                      }
-                      .bubble-climate-temperature,
-                      .bubble-temperature-display {
-                        font-size: 16px !important;
-                        font-weight: 700 !important;
-                        {% if mode == 'heat' %}color: #ff7a3d !important;
-                        {% elif mode == 'cool' %}color: #5ec8ff !important;
-                        {% else %}color: #f2f3f5 !important;{% endif %}
-                      }
                 - type: custom:bubble-card
                   card_type: button
                   button_type: state
@@ -1005,34 +836,19 @@ cards:
                       icon: mdi:toggle-switch-variant
                       tap_action:
                         action: toggle
+                  styles: |
+                    .bubble-name {
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                      color: #f2f3f5 !important;
+                    }
+                    .bubble-sub-button {
+                      background: rgba(255,255,255,0.09) !important;
+                      border-radius: 999px !important;
+                      font-size: 12px !important;
+                      font-weight: 600 !important;
+                      color: rgba(242,243,245,0.62) !important;
+                      padding: 5px 10px !important;
+                    }
                   modules:
                     - Mobile Module Theme
-                  card_mod:
-                    style: |
-                      ha-card {
-                        background: rgba(255,255,255,0.03) !important;
-                        border: 1px solid rgba(255,255,255,0.05) !important;
-                        border-radius: 14px !important;
-                        padding: 10px 12px !important;
-                        margin-top: 6px !important;
-                        box-shadow: none !important;
-                      }
-                      {% if is_state('switch.master_bedroom_thermostat_primary_bathroom_priority', 'on') %}
-                      ha-card {
-                        background: linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03)) !important;
-                        box-shadow: inset 0 0 0 1px rgba(94,200,255,0.4), 0 0 18px -8px rgba(94,200,255,0.45) !important;
-                      }
-                      {% endif %}
-                      .bubble-name {
-                        font-size: 13px !important;
-                        font-weight: 600 !important;
-                        color: #f2f3f5 !important;
-                      }
-                      .bubble-sub-button {
-                        background: rgba(255,255,255,0.09) !important;
-                        border-radius: 999px !important;
-                        font-size: 12px !important;
-                        font-weight: 600 !important;
-                        color: rgba(242,243,245,0.62) !important;
-                        padding: 5px 10px !important;
-                      }
