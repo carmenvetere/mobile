@@ -494,3 +494,242 @@
         ] %}
         {{ checks | select('equalto', true) | list | count == checks | count }}
       icon: mdi:lightbulb-multiple-off-outline
+
+# =====================================================================
+# Adaptive shading recommendation sensors -- Bayberry, Provincetown MA
+# =====================================================================
+#
+# Four trigger-based template sensors, one per facade. Each outputs a
+# recommended shade position (integer 0-100, 100 = fully open) for any
+# shade on that side of the house. Updates every 2 minutes.
+#
+# Replaces the per-call Claude prompts that were costing ~$1.25/day.
+# Pure Jinja, zero LLM cost, runs in milliseconds.
+#
+# Read from any automation:
+#   - action: cover.set_cover_position
+#     target: { entity_id: cover.dining_room_side }
+#     data:   { position: "{{ states('sensor.shade_recommended_east') | int }}" }
+#
+# Multiple rooms on the same facade share the same sensor. The bedroom
+# above the dining room reads sensor.shade_recommended_east on its own
+# schedule, independently of the dining room shade automation.
+#
+# Facade orientations:
+#   East   facing  80 deg ESE   accept range  50-110 deg
+#   South  facing 170 deg SSE   accept range 110-230 deg
+#   West   facing 260 deg WSW   accept range 230-290 deg
+#   North  facing 350 deg NNW   accept range 290- 50 deg (wraps through 0)
+#
+# Inputs (change these once if your sensor entity_ids ever change):
+#   sun.sun                                  -> azimuth, elevation
+#   sensor.bayberry_tempest_irradiance       -> live solar irradiance W/m^2
+#   sensor.bayberry_tempest_temperature      -> outdoor temp F
+#   climate.living_room_thermostat           -> indoor temp, setpoint, hvac_action
+#
+# Decision logic (per facade, first match wins):
+#   1. Sun NOT hitting that facade -> default open (100)
+#   2. House needs warming (indoor < setpoint-1 OR outdoor < 45) -> 100
+#   3. House overheating (indoor > setpoint+1) AND sun hitting:
+#        - HVAC actively cooling AND outdoor > 85 -> 0
+#        - Otherwise -> linear 40->25 as effective_W rises 100->850
+#   4. At setpoint AND effective_W > 500 -> 55
+#   5. At setpoint AND effective_W 200-500 -> 75
+#   6. At setpoint AND effective_W < 200 -> 100
+#
+# Hit factor: sin(elevation) * cos(azimuth - facing), clamped to >= 0.
+# Effective_W: irradiance * hit factor. ~800 = strong direct, ~300 = moderate.
+#
+# Caveat: when HVAC is off the thermostat's `temperature` attribute is
+# null. The `| float(70)` default makes the algorithm treat the setpoint
+# as 70F. That produces a "needs warming" verdict whenever indoor < 69F
+# regardless of whether you actually want heat -- intentional for now,
+# revisit if you ever want HVAC-off to mean "ignore setpoint comparisons."
+# =====================================================================
+
+- trigger:
+    - platform: time_pattern
+      minutes: "/2"
+  sensor:
+
+    # -----------------------------------------------------------------
+    # EAST facade  --  dining shade and any east-facing room above
+    # -----------------------------------------------------------------
+    - name: "Shade Recommended East"
+      unique_id: shade_recommended_east
+      unit_of_measurement: "%"
+      icon: mdi:weather-sunset-up
+      state: >
+        {% set facing, lo, hi, default_open = 80, 50, 110, 100 %}
+        {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+        {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+        {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+        {% set indoor = state_attr('climate.living_room_thermostat', 'current_temperature') | float(70) %}
+        {% set tgt = state_attr('climate.living_room_thermostat', 'temperature') | float(70) %}
+        {% set outdoor = states('sensor.bayberry_tempest_temperature') | float(70) %}
+        {% set hvac_action = state_attr('climate.living_room_thermostat', 'hvac_action') | default('idle') %}
+        {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
+        {% set hitting = el > 5 and in_range and irr > 50 %}
+        {% set delta = ((az - facing + 540) % 360) - 180 %}
+        {% set hit = [sin(el * pi / 180) * cos(delta * pi / 180), 0] | max %}
+        {% set effw = irr * hit %}
+        {% if not hitting %}{{ default_open }}
+        {% elif indoor < tgt - 1 or outdoor < 45 %}100
+        {% elif indoor > tgt + 1 %}
+          {% if hvac_action == 'cooling' and outdoor > 85 %}0
+          {% else %}{{ [[(40 - (effw - 100) / 50) | round(0) | int, 25] | max, 40] | min }}{% endif %}
+        {% elif effw > 500 %}55
+        {% elif effw >= 200 %}75
+        {% else %}{{ default_open }}{% endif %}
+      attributes:
+        hitting: >
+          {% set lo, hi = 50, 110 %}
+          {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+          {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+          {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+          {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
+          {{ el > 5 and in_range and irr > 50 }}
+        effective_w: >
+          {% set facing = 80 %}
+          {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+          {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+          {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+          {% set delta = ((az - facing + 540) % 360) - 180 %}
+          {{ (irr * ([sin(el * pi / 180) * cos(delta * pi / 180), 0] | max)) | round(0) | int }}
+
+    # -----------------------------------------------------------------
+    # SOUTH facade  --  front shades (4) and any south-facing room above
+    # -----------------------------------------------------------------
+    - name: "Shade Recommended South"
+      unique_id: shade_recommended_south
+      unit_of_measurement: "%"
+      icon: mdi:weather-sunny
+      state: >
+        {% set facing, lo, hi, default_open = 170, 110, 230, 100 %}
+        {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+        {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+        {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+        {% set indoor = state_attr('climate.living_room_thermostat', 'current_temperature') | float(70) %}
+        {% set tgt = state_attr('climate.living_room_thermostat', 'temperature') | float(70) %}
+        {% set outdoor = states('sensor.bayberry_tempest_temperature') | float(70) %}
+        {% set hvac_action = state_attr('climate.living_room_thermostat', 'hvac_action') | default('idle') %}
+        {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
+        {% set hitting = el > 5 and in_range and irr > 50 %}
+        {% set delta = ((az - facing + 540) % 360) - 180 %}
+        {% set hit = [sin(el * pi / 180) * cos(delta * pi / 180), 0] | max %}
+        {% set effw = irr * hit %}
+        {% if not hitting %}{{ default_open }}
+        {% elif indoor < tgt - 1 or outdoor < 45 %}100
+        {% elif indoor > tgt + 1 %}
+          {% if hvac_action == 'cooling' and outdoor > 85 %}0
+          {% else %}{{ [[(40 - (effw - 100) / 50) | round(0) | int, 25] | max, 40] | min }}{% endif %}
+        {% elif effw > 500 %}55
+        {% elif effw >= 200 %}75
+        {% else %}{{ default_open }}{% endif %}
+      attributes:
+        hitting: >
+          {% set lo, hi = 110, 230 %}
+          {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+          {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+          {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+          {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
+          {{ el > 5 and in_range and irr > 50 }}
+        effective_w: >
+          {% set facing = 170 %}
+          {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+          {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+          {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+          {% set delta = ((az - facing + 540) % 360) - 180 %}
+          {{ (irr * ([sin(el * pi / 180) * cos(delta * pi / 180), 0] | max)) | round(0) | int }}
+
+    # -----------------------------------------------------------------
+    # WEST facade  --  living room side shades and any west-facing room above
+    # -----------------------------------------------------------------
+    - name: "Shade Recommended West"
+      unique_id: shade_recommended_west
+      unit_of_measurement: "%"
+      icon: mdi:weather-sunset-down
+      state: >
+        {% set facing, lo, hi, default_open = 260, 230, 290, 100 %}
+        {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+        {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+        {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+        {% set indoor = state_attr('climate.living_room_thermostat', 'current_temperature') | float(70) %}
+        {% set tgt = state_attr('climate.living_room_thermostat', 'temperature') | float(70) %}
+        {% set outdoor = states('sensor.bayberry_tempest_temperature') | float(70) %}
+        {% set hvac_action = state_attr('climate.living_room_thermostat', 'hvac_action') | default('idle') %}
+        {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
+        {% set hitting = el > 5 and in_range and irr > 50 %}
+        {% set delta = ((az - facing + 540) % 360) - 180 %}
+        {% set hit = [sin(el * pi / 180) * cos(delta * pi / 180), 0] | max %}
+        {% set effw = irr * hit %}
+        {% if not hitting %}{{ default_open }}
+        {% elif indoor < tgt - 1 or outdoor < 45 %}100
+        {% elif indoor > tgt + 1 %}
+          {% if hvac_action == 'cooling' and outdoor > 85 %}0
+          {% else %}{{ [[(40 - (effw - 100) / 50) | round(0) | int, 25] | max, 40] | min }}{% endif %}
+        {% elif effw > 500 %}55
+        {% elif effw >= 200 %}75
+        {% else %}{{ default_open }}{% endif %}
+      attributes:
+        hitting: >
+          {% set lo, hi = 230, 290 %}
+          {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+          {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+          {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+          {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
+          {{ el > 5 and in_range and irr > 50 }}
+        effective_w: >
+          {% set facing = 260 %}
+          {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+          {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+          {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+          {% set delta = ((az - facing + 540) % 360) - 180 %}
+          {{ (irr * ([sin(el * pi / 180) * cos(delta * pi / 180), 0] | max)) | round(0) | int }}
+
+    # -----------------------------------------------------------------
+    # NORTH facade  --  any north-facing shades (rare; almost never gets direct sun
+    # at this latitude, so this sensor will read 100 most of the year)
+    # Accept range wraps through 0 deg.
+    # -----------------------------------------------------------------
+    - name: "Shade Recommended North"
+      unique_id: shade_recommended_north
+      unit_of_measurement: "%"
+      icon: mdi:compass-outline
+      state: >
+        {% set facing, lo, hi, default_open = 350, 290, 50, 100 %}
+        {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+        {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+        {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+        {% set indoor = state_attr('climate.living_room_thermostat', 'current_temperature') | float(70) %}
+        {% set tgt = state_attr('climate.living_room_thermostat', 'temperature') | float(70) %}
+        {% set outdoor = states('sensor.bayberry_tempest_temperature') | float(70) %}
+        {% set hvac_action = state_attr('climate.living_room_thermostat', 'hvac_action') | default('idle') %}
+        {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
+        {% set hitting = el > 5 and in_range and irr > 50 %}
+        {% set delta = ((az - facing + 540) % 360) - 180 %}
+        {% set hit = [sin(el * pi / 180) * cos(delta * pi / 180), 0] | max %}
+        {% set effw = irr * hit %}
+        {% if not hitting %}{{ default_open }}
+        {% elif indoor < tgt - 1 or outdoor < 45 %}100
+        {% elif indoor > tgt + 1 %}
+          {% if hvac_action == 'cooling' and outdoor > 85 %}0
+          {% else %}{{ [[(40 - (effw - 100) / 50) | round(0) | int, 25] | max, 40] | min }}{% endif %}
+        {% elif effw > 500 %}55
+        {% elif effw >= 200 %}75
+        {% else %}{{ default_open }}{% endif %}
+      attributes:
+        hitting: >
+          {% set lo, hi = 290, 50 %}
+          {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+          {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+          {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+          {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
+          {{ el > 5 and in_range and irr > 50 }}
+        effective_w: >
+          {% set facing = 350 %}
+          {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
+          {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
+          {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
+          {% set delta = ((az - facing + 540) % 360) - 180 %}
+          {{ (irr * ([sin(el * pi / 180) * cos(delta * pi / 180), 0] | max)) | round(0) | int }}
