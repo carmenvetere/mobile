@@ -508,7 +508,7 @@
       state_class: measurement
       icon: mdi:weather-sunset-up
       state: >
-        {% set facing, lo, hi = 80, 50, 110 %}
+        {% set facing, lo, hi = 60, 330, 150 %}
         {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
         {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
         {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
@@ -521,11 +521,11 @@
         {% endif %}
       attributes:
         in_range: >
-          {% set lo, hi = 50, 110 %}
+          {% set lo, hi = 330, 150 %}
           {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
           {{ (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) }}
         hit_factor: >
-          {% set facing = 80 %}
+          {% set facing = 60 %}
           {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
           {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
           {% set delta = ((az - facing + 540) % 360) - 180 %}
@@ -539,7 +539,7 @@
       state_class: measurement
       icon: mdi:weather-sunny
       state: >
-        {% set facing, lo, hi = 170, 110, 230 %}
+        {% set facing, lo, hi = 150, 60, 240 %}
         {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
         {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
         {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
@@ -552,11 +552,11 @@
         {% endif %}
       attributes:
         in_range: >
-          {% set lo, hi = 110, 230 %}
+          {% set lo, hi = 60, 240 %}
           {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
           {{ (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) }}
         hit_factor: >
-          {% set facing = 170 %}
+          {% set facing = 150 %}
           {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
           {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
           {% set delta = ((az - facing + 540) % 360) - 180 %}
@@ -570,7 +570,7 @@
       state_class: measurement
       icon: mdi:weather-sunset-down
       state: >
-        {% set facing, lo, hi = 260, 230, 290 %}
+        {% set facing, lo, hi = 240, 150, 330 %}
         {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
         {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
         {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
@@ -583,11 +583,11 @@
         {% endif %}
       attributes:
         in_range: >
-          {% set lo, hi = 230, 290 %}
+          {% set lo, hi = 150, 330 %}
           {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
           {{ (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) }}
         hit_factor: >
-          {% set facing = 260 %}
+          {% set facing = 240 %}
           {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
           {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
           {% set delta = ((az - facing + 540) % 360) - 180 %}
@@ -601,7 +601,7 @@
       state_class: measurement
       icon: mdi:compass-outline
       state: >
-        {% set facing, lo, hi = 350, 290, 50 %}
+        {% set facing, lo, hi = 330, 240, 60 %}
         {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
         {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
         {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
@@ -614,11 +614,11 @@
         {% endif %}
       attributes:
         in_range: >
-          {% set lo, hi = 290, 50 %}
+          {% set lo, hi = 240, 60 %}
           {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
           {{ (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) }}
         hit_factor: >
-          {% set facing = 350 %}
+          {% set facing = 330 %}
           {% set az = state_attr('sun.sun', 'azimuth') | float(0) %}
           {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
           {% set delta = ((az - facing + 540) % 360) - 180 %}
