@@ -246,3 +246,53 @@ lovelace:
       type: module
     - url: /hacsfiles/custom-sonos-card-v2/custom-sonos-card-v2.js
       type: module      
+
+sensor:
+  - platform: filter
+    name: "Bedroom CO2 (5min)"
+    entity_id: sensor.bedroom_air_quality_carbon_dioxide
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Bedroom Humidity (5min)"
+    entity_id: sensor.bedroom_air_quality_humidity
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Bedroom PM2.5 (5min)"
+    entity_id: sensor.bedroom_air_quality_pm2_5
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Bedroom Temperature (5min)"
+    entity_id: sensor.bedroom_air_quality_temperature
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "First Floor CO2 (5min)"
+    entity_id: sensor.first_floor_air_quality_monitor_carbon_dioxide
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "First Floor Humidity (5min)"
+    entity_id: sensor.first_floor_air_quality_monitor_humidity
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "First Floor PM2.5 (5min)"
+    entity_id: sensor.first_floor_air_quality_monitor_pm2_5
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "First Floor Temperature (5min)"
+    entity_id: sensor.first_floor_air_quality_monitor_temperature
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
