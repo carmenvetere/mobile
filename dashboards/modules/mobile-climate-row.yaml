@@ -23,7 +23,7 @@ state_color: false
 force_icon: true
 scrolling_effect: false
 card_layout: large-sub-buttons-grid
-rows: {{ rows | default(2.406) }}
+rows: 2.5
 sub_button:
   - name: HVAC modes menu
     select_attribute: hvac_modes
@@ -41,57 +41,145 @@ sub_button:
     state_background: false
 styles: |
   ha-card {
-    background: ${state === 'heat' ? 'linear-gradient(180deg, rgba(255,122,61,0.13), rgba(255,122,61,0.04))' : state === 'cool' ? 'linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03))' : 'rgba(255,255,255,0.035)'} !important;
+    position: relative !important;
+    min-height: 110px !important;
+    background: ${state === 'heat'
+      ? 'linear-gradient(180deg, rgba(255,122,61,0.13), rgba(255,122,61,0.04))'
+      : state === 'cool'
+      ? 'linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03))'
+      : 'rgba(255,255,255,0.04)'} !important;
     border: none !important;
     border-radius: 18px !important;
-    box-shadow: ${state === 'heat' ? 'inset 0 0 0 1px rgba(255,122,61,0.55), 0 0 30px -6px rgba(255,122,61,0.55)' : state === 'cool' ? 'inset 0 0 0 1px rgba(94,200,255,0.5), 0 0 30px -6px rgba(94,200,255,0.5)' : 'inset 0 0 0 1px rgba(255,255,255,0.04)'} !important;
-    margin-bottom: 8px !important;
-    padding: 14px !important;
-    transition: box-shadow .3s ease, background .3s ease !important;
+    box-shadow: ${state === 'heat'
+      ? 'inset 0 0 0 1px rgba(255,122,61,0.45), 0 0 26px -8px rgba(255,122,61,0.55)'
+      : state === 'cool'
+      ? 'inset 0 0 0 1px rgba(94,200,255,0.4), 0 0 26px -8px rgba(94,200,255,0.5)'
+      : 'inset 0 0 0 1px rgba(255,255,255,0.05)'} !important;
+    padding: 14px 16px !important;
   }
-  .bubble-name {
-    font-size: 14px !important;
+
+  /* TEMP GROUP — pinned LEFT on the card, single flex row */
+  .bubble-temperature-container {
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    right: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    background: transparent !important;
+    border-radius: 22px !important;
+    padding: 8px 50px 8px 14px !important;  /* extra right padding for +/- */
+    z-index: 2 !important;
+  }
+
+  /* Big set-temp number */
+  .bubble-temperature-display,
+  .bubble-climate-temp-display {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    font-size: 40px !important;
     font-weight: 700 !important;
+    line-height: 1 !important;
+    font-variant-numeric: tabular-nums !important;
+    position: relative !important;
+    color: ${state === 'off'
+      ? 'transparent'
+      : state === 'heat'
+      ? 'var-primary-text-color'
+      : state === 'cool'
+      ? 'var-primary-text-color'
+      : '#f2f3f5'} !important;
+  }
+
+  /* Off-state overlay */
+  .bubble-climate-temp-display::after {
+    content: 'Off';
+    display: ${state === 'off' ? 'flex' : 'none'};
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1;
+    color: rgba(242,243,245,0.78);
+  }
+
+  /* + button — anchored just ABOVE the container's vertical center */
+  .bubble-climate-plus-button {
+    position: absolute !important;
+    right: 0px !important;
+    bottom: 50% !important;
+    top: auto !important;
+    margin-bottom: 1px !important;
+    display: ${state === 'off' ? 'none' : 'flex'} !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-height: 26px !important;
+    border-radius: 8px !important;
+    background: rgba(255,255,255,0.16) !important;
     color: #f2f3f5 !important;
-    letter-spacing: 0.1px !important;
+    cursor: pointer !important;
   }
-  .bubble-state,
-  .bubble-attribute {
-    font-size: 11.5px !important;
-    font-weight: 500 !important;
-    color: rgba(242,243,245,0.62) !important;
-    letter-spacing: 0.2px !important;
+
+  /* - button — anchored just BELOW the container's vertical center */
+  .bubble-climate-minus-button {
+    position: absolute !important;
+    right: 0px !important;
+    top: 50% !important;
+    bottom: auto !important;
+    margin-top: 1px !important;
+    display: ${state === 'off' ? 'none' : 'flex'} !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-height: 26px !important;
+    border-radius: 8px !important;
+    background: rgba(255,255,255,0.16) !important;
+    color: #f2f3f5 !important;
+    cursor: pointer !important;
   }
-  .bubble-icon-container {
-    background: ${state === 'heat' ? 'rgba(255,122,61,0.18)' : state === 'cool' ? 'rgba(94,200,255,0.18)' : 'rgba(255,255,255,0.06)'} !important;
-    border-radius: 10px !important;
-    width: 32px !important;
-    height: 32px !important;
+
+  .bubble-climate-plus-button:hover,
+  .bubble-climate-minus-button:hover {
+    background: rgba(255,255,255,0.26) !important;
   }
-  .bubble-icon {
-    color: ${state === 'heat' ? '#ff7a3d' : state === 'cool' ? '#5ec8ff' : 'rgba(242,243,245,0.62)'} !important;
-    --mdc-icon-size: 17px !important;
+  .bubble-climate-plus-button ha-icon,
+  .bubble-climate-minus-button ha-icon {
+    --mdc-icon-size: 26px !important;
+    color: #f2f3f5 !important;
   }
+
+
+  /* SUB-BUTTONS — pinned RIGHT, stacked vertically */
+  .bubble-sub-button-container {
+    position: absolute !important;
+    right: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    left: auto !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 8px !important;
+    z-index: 2 !important;
+  }
+
   .bubble-sub-button {
     background: rgba(255,255,255,0.14) !important;
-    border-radius: 999px !important;
     border: 1px solid rgba(255,255,255,0.04) !important;
+    border-radius: 999px !important;
     color: #f2f3f5 !important;
-    font-size: 13px !important;
+    font-size: 16px !important;
     font-weight: 600 !important;
     min-height: 36px !important;
   }
   .bubble-sub-button:hover {
     background: rgba(255,255,255,0.22) !important;
-  }
-  .bubble-climate-temperature,
-  .bubble-temperature-display,
-  .bubble-target-temperature {
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    color: ${state === 'heat' ? '#ff7a3d' : state === 'cool' ? '#5ec8ff' : '#f2f3f5'} !important;
-    font-variant-numeric: tabular-nums !important;
-  }
-  .bubble-button-card-container {
-    padding: 2px !important;
   }
