@@ -404,7 +404,7 @@ cards:
               cards:
                 - !include
                     - /config/dashboards/modules/mobile-climate-row.yaml
-                    - climate_entity: climate.bedroom_thermostat
+                    - climate_entity: climate.master_bedroom_thermostat
                       thermostat_name: Bedroom Thermostat
                 - !include
                     - /config/dashboards/modules/mobile-priority-row.yaml
