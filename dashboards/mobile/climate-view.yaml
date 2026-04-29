@@ -209,7 +209,7 @@ cards:
               cards:
                 - !include
                     - /config/dashboards/modules/mobile-climate-row.yaml
-                    - climate_entity: climate.living_room_thermostat_homekit
+                    - climate_entity: climate.living_room_thermostat
                       thermostat_name: Living Room Thermostat
                       rows: 2.406
       basement:
@@ -268,7 +268,7 @@ cards:
               cards:
                 - !include
                     - /config/dashboards/modules/mobile-climate-row.yaml
-                    - climate_entity: climate.basement_thermostat_homekit
+                    - climate_entity: climate.basement_thermostat
                       thermostat_name: Hallway Thermostat
                 - !include
                     - /config/dashboards/modules/mobile-priority-row.yaml
@@ -328,7 +328,7 @@ cards:
               cards:
                 - !include
                     - /config/dashboards/modules/mobile-climate-row.yaml
-                    - climate_entity: climate.office_thermostat_homekit
+                    - climate_entity: climate.office_thermostat
                       thermostat_name: Office Thermostat
                 - !include
                     - /config/dashboards/modules/mobile-priority-row.yaml
