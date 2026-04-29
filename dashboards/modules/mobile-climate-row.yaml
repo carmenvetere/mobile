@@ -15,14 +15,14 @@ card_type: climate
 entity: {{ climate_entity }}
 name: {{ thermostat_name }}
 show_name: false
-show_state: true
+show_state: false
 show_icon: false
 show_attribute: false
 attribute: hvac_action
 state_color: false
 force_icon: true
 scrolling_effect: false
-card_layout: large-sub-buttons-grid
+card_layout: large-2-rows
 rows: 2.5
 sub_button:
   - name: HVAC modes menu
