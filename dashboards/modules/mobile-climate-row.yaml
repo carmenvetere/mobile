@@ -14,10 +14,10 @@ type: custom:bubble-card
 card_type: climate
 entity: {{ climate_entity }}
 name: {{ thermostat_name }}
-show_name: true
+show_name: false
 show_state: true
-show_icon: true
-show_attribute: true
+show_icon: false
+show_attribute: false
 attribute: hvac_action
 state_color: false
 force_icon: true
