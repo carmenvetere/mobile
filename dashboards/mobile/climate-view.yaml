@@ -250,6 +250,12 @@ cards:
                 show_background: false
                 show_icon: true
             styles: |
+              ha-card {
+                max-width: 100% !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+              }
               .bubble-name {
                 font-size: 16px !important;
                 font-weight: 700 !important;
@@ -270,6 +276,17 @@ cards:
               }
               .card-content {
                 padding: 4px 6px 10px !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+              }
+              @media (max-width: 600px) {
+                .bubble-sub-button-4 { display: none !important; }
+              }
+              @media (max-width: 500px) {
+                .bubble-sub-button-2 { display: none !important; }
+              }
+              @media (max-width: 420px) {
+                .bubble-sub-button-3 { display: none !important; }
               }
           cards:
             - type: vertical-stack
@@ -309,6 +326,12 @@ cards:
                 show_background: false
                 show_icon: true
             styles: |
+              ha-card {
+                max-width: 100% !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+              }
               .bubble-name {
                 font-size: 16px !important;
                 font-weight: 700 !important;
@@ -329,6 +352,17 @@ cards:
               }
               .card-content {
                 padding: 4px 6px 10px !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+              }
+              @media (max-width: 600px) {
+                .bubble-sub-button-4 { display: none !important; }
+              }
+              @media (max-width: 500px) {
+                .bubble-sub-button-2 { display: none !important; }
+              }
+              @media (max-width: 420px) {
+                .bubble-sub-button-3 { display: none !important; }
               }
           cards:
             - type: vertical-stack
@@ -369,6 +403,12 @@ cards:
                 show_icon: true
                 show_background: false
             styles: |
+              ha-card {
+                max-width: 100% !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+              }
               .bubble-name {
                 font-size: 16px !important;
                 font-weight: 700 !important;
@@ -389,6 +429,17 @@ cards:
               }
               .card-content {
                 padding: 4px 6px 10px !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+              }
+              @media (max-width: 600px) {
+                .bubble-sub-button-4 { display: none !important; }
+              }
+              @media (max-width: 500px) {
+                .bubble-sub-button-2 { display: none !important; }
+              }
+              @media (max-width: 420px) {
+                .bubble-sub-button-3 { display: none !important; }
               }
           cards:
             - type: vertical-stack
@@ -445,6 +496,12 @@ cards:
                 show_background: false
                 show_icon: true
             styles: |
+              ha-card {
+                max-width: 100% !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+              }
               .bubble-name {
                 font-size: 16px !important;
                 font-weight: 700 !important;
@@ -465,6 +522,17 @@ cards:
               }
               .card-content {
                 padding: 4px 6px 10px !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+              }
+              @media (max-width: 600px) {
+                .bubble-sub-button-4 { display: none !important; }
+              }
+              @media (max-width: 500px) {
+                .bubble-sub-button-2 { display: none !important; }
+              }
+              @media (max-width: 420px) {
+                .bubble-sub-button-3 { display: none !important; }
               }
           cards:
             - type: vertical-stack
