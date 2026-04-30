@@ -153,6 +153,20 @@ cards:
                 icon: mdi:tailwind
                 icon_color: "#4ade80"
                 card_mod: *chip_style
+            - type: conditional
+              conditions:
+                - condition: numeric_state
+                  entity: sensor.bedroom_co2_5min
+                  above: 700
+              chip:
+                type: template
+                content: High CO2
+                entity: sensor.bedroom_co2_5min
+                tap_action:
+                  action: more-info
+                icon: mdi:cloud-alert
+                icon_color: "#EF8C00"
+                card_mod: *chip_style
       first:
         card:
           type: custom:expander-card
