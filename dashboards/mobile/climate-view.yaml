@@ -23,7 +23,7 @@ cards:
             "basement"
             "office"
             "primbed"
-        - grid-template-columns: auto
+        - grid-template-columns: minmax(0, 1fr)
         - grid-template-rows: 60px 60px auto auto auto auto
         - row-gap: 10px
         - align-items: start
@@ -225,6 +225,10 @@ cards:
                 border-radius: 22px !important;
                 padding: 8px 14px 10px !important;
                 box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
               }
           title-card:
             type: custom:bubble-card
@@ -249,13 +253,38 @@ cards:
                 show_state: true
                 show_background: false
                 show_icon: true
+            card_mod:
+              style: |
+                ha-card {
+                  max-width: 100% !important;
+                  min-width: 0 !important;
+                  box-sizing: border-box !important;
+                  overflow: hidden !important;
+                }
+                .bubble-sub-button-container {
+                  max-width: 100% !important;
+                  flex-wrap: wrap !important;
+                  overflow: hidden !important;
+                }
+                @media (max-width: 600px) {
+                  .bubble-sub-button-4,
+                  .bubble-sub-button-container > :nth-child(4) {
+                    display: none !important;
+                  }
+                }
+                @media (max-width: 500px) {
+                  .bubble-sub-button-2,
+                  .bubble-sub-button-container > :nth-child(2) {
+                    display: none !important;
+                  }
+                }
+                @media (max-width: 420px) {
+                  .bubble-sub-button-3,
+                  .bubble-sub-button-container > :nth-child(3) {
+                    display: none !important;
+                  }
+                }
             styles: |
-              ha-card {
-                max-width: 100% !important;
-                width: 100% !important;
-                box-sizing: border-box !important;
-                overflow: hidden !important;
-              }
               .bubble-name {
                 font-size: 16px !important;
                 font-weight: 700 !important;
@@ -276,17 +305,6 @@ cards:
               }
               .card-content {
                 padding: 4px 6px 10px !important;
-                max-width: 100% !important;
-                box-sizing: border-box !important;
-              }
-              @media (max-width: 600px) {
-                .bubble-sub-button-4 { display: none !important; }
-              }
-              @media (max-width: 500px) {
-                .bubble-sub-button-2 { display: none !important; }
-              }
-              @media (max-width: 420px) {
-                .bubble-sub-button-3 { display: none !important; }
               }
           cards:
             - type: vertical-stack
