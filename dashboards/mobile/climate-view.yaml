@@ -160,7 +160,7 @@ cards:
               conditions:
                 - condition: numeric_state
                   entity: sensor.bedroom_co2_5min
-                  above: 700
+                  above: 800
               chip:
                 type: template
                 content: Bedroom High CO2
@@ -174,11 +174,11 @@ cards:
               conditions:
                 - condition: numeric_state
                   entity: sensor.first_floor_co2_5min
-                  above: 700
+                  above: 800
               chip:
                 type: template
                 content: First Floor High CO2
-                entity: sensor.bedroom_co2_5min
+                entity: sensor.first_floor_co2_5min
                 tap_action:
                   action: more-info
                 icon: mdi:cloud-alert
@@ -191,7 +191,7 @@ cards:
                   above: 10
               chip:
                 type: template
-                content: Bedroom High CO2
+                content: Bedroom High PM2.5
                 entity: sensor.bedroom_pm2_5_5min
                 tap_action:
                   action: more-info
@@ -205,7 +205,7 @@ cards:
                   above: 10
               chip:
                 type: template
-                content: First Floor High CO2
+                content: First Floor High PM2.5
                 entity: sensor.first_floor_pm2_5_5min
                 tap_action:
                   action: more-info
@@ -510,6 +510,14 @@ cards:
                 show_icon: true
                 show_background: false
               - entity: sensor.bedroom_thermostat_current_humidity
+                show_state: true
+                show_background: false
+                show_icon: true
+              - entity: sensor.bedroom_co2_5min
+                show_state: true
+                show_background: false
+                show_icon: true
+              - entity: sensor.bedroom_pm2_5_5min
                 show_state: true
                 show_background: false
                 show_icon: true
