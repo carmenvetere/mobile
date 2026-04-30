@@ -43,11 +43,7 @@ styles: |
   ha-card {
     position: relative !important;
     min-height: 110px !important;
-    background: ${state === 'heat'
-      ? 'linear-gradient(180deg, rgba(255,122,61,0.13), rgba(255,122,61,0.04))'
-      : state === 'cool'
-      ? 'linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03))'
-      : 'rgba(255,255,255,0.04)'} !important;
+    background: var(--background-color-2) !important;
     border: none !important;
     border-radius: 18px !important;
     box-shadow: ${state === 'heat'
