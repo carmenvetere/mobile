@@ -37,7 +37,10 @@ styles: |
     border-radius: 20px !important;
     padding: 10px 12px !important;
     margin-top: 6px !important;
-    box-shadow: ${state === 'on' ? 'inset 0 0 0 1px rgba(94,200,255,0.4), 0 0 18px -8px rgba(94,200,255,0.45)' : 'none'} !important;
+    box-shadow: ${ state === 'on'
+        ? '0 0 10px rgba(255, 255, 255, 0.6)'
+        : '0 6px 14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06)'
+        } !important;
     transition: box-shadow .3s ease, background .3s ease !important;
   }
   .bubble-name {
