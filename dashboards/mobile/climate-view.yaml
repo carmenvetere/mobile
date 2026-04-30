@@ -160,11 +160,53 @@ cards:
                   above: 700
               chip:
                 type: template
-                content: High CO2
+                content: Bedroom High CO2
                 entity: sensor.bedroom_co2_5min
                 tap_action:
                   action: more-info
                 icon: mdi:cloud-alert
+                icon_color: "#EF8C00"
+                card_mod: *chip_style
+            - type: conditional
+              conditions:
+                - condition: numeric_state
+                  entity: sensor.first_floor_co2_5min
+                  above: 700
+              chip:
+                type: template
+                content: First Floor High CO2
+                entity: sensor.bedroom_co2_5min
+                tap_action:
+                  action: more-info
+                icon: mdi:cloud-alert
+                icon_color: "#EF8C00"
+                card_mod: *chip_style
+            - type: conditional
+              conditions:
+                - condition: numeric_state
+                  entity: sensor.bedroom_pm2_5_5min
+                  above: 10
+              chip:
+                type: template
+                content: Bedroom High CO2
+                entity: sensor.bedroom_pm2_5_5min
+                tap_action:
+                  action: more-info
+                icon: mdi:weather-dust
+                icon_color: "#EF8C00"
+                card_mod: *chip_style
+            - type: conditional
+              conditions:
+                - condition: numeric_state
+                  entity: sensor.first_floor_pm2_5_5min
+                  above: 10
+              chip:
+                type: template
+                content: First Floor High CO2
+                entity: sensor.first_floor_pm2_5_5min
+                tap_action:
+                  action: more-info
+                icon: mdi:weather-dust
                 icon_color: "#EF8C00"
                 card_mod: *chip_style
       first:
