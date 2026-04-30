@@ -113,10 +113,13 @@ cards:
               icon: mdi:chevron-left
               card_mod: &chip_style
                 style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
                   ha-card {
-                    border: 1px solid rgba(255,255,255,0.04) !important;
-                    box-shadow: none !important;
-                    color: #f2f3f5 !important;
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
                   }
             - type: entity
               entity: sensor.bayberry_tempest_temperature
