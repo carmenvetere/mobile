@@ -32,26 +32,26 @@ sub_button:
       action: toggle
 styles: |
   ha-card {
-    background: ${state === 'on' ? 'linear-gradient(180deg, rgba(94,200,255,0.12), rgba(94,200,255,0.03))' : 'rgba(255,255,255,0.03)'} !important;
+    background: var(--background-color-2) !important;
     border: 1px solid rgba(255,255,255,0.05) !important;
-    border-radius: 14px !important;
+    border-radius: 20px !important;
     padding: 10px 12px !important;
     margin-top: 6px !important;
     box-shadow: ${state === 'on' ? 'inset 0 0 0 1px rgba(94,200,255,0.4), 0 0 18px -8px rgba(94,200,255,0.45)' : 'none'} !important;
     transition: box-shadow .3s ease, background .3s ease !important;
   }
   .bubble-name {
-    font-size: 13px !important;
+    font-size: 16px !important;
     font-weight: 600 !important;
-    color: #f2f3f5 !important;
+    color: var(--primary-text-color) !important;
   }
   .bubble-sub-button {
-    background: rgba(255,255,255,0.09) !important;
+    background: var(--ha-card-background) !important;
     border-radius: 999px !important;
     border: none !important;
-    font-size: 12px !important;
+    font-size: 16px !important;
     font-weight: 600 !important;
-    color: rgba(242,243,245,0.62) !important;
+    color: var(--primary-text-color) !important;
     padding: 5px 10px !important;
     min-height: 30px !important;
   }
