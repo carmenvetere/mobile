@@ -99,6 +99,22 @@ input_select:
       - media_room
     initial: living_room
     icon: mdi:speaker-multiple
+  sonos_favorites_filter:
+    name: Sonos Favorites Filter
+    options:
+      - All
+      - Playlists
+      - Stations
+      - Albums
+    initial: All
+    icon: mdi:filter-variant
+
+input_text:
+  sonos_favorites_search:
+    name: Sonos Favorites Search
+    initial: ""
+    max: 60
+    icon: mdi:magnify
 
 utility_meter:
   daily_well_pump:

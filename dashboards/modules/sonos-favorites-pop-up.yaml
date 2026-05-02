@@ -1,6 +1,7 @@
 #lovelace_gen
 type: vertical-stack
 cards:
+  # ── Pop-up header ───────────────────────────────────────────────────────────
   - type: custom:bubble-card
     theme: Wall Panel
     card_type: pop-up
@@ -32,12 +33,231 @@ cards:
         --mdc-icon-size: 36px !important;
         }
 
+  # ── "Play to {room}" target indicator ───────────────────────────────────────
+  - type: custom:button-card
+    show_name: false
+    show_icon: false
+    show_label: true
+    label: |
+      [[[
+        const sel = states['input_select.sonos_speaker_select']?.state;
+        const nameMap = {
+          'Living Room': 'media_player.living_room',
+          'Kitchen': 'media_player.kitchen',
+          'Office': 'media_player.office',
+          'Deck': 'media_player.deck',
+          'Pool': 'media_player.pool',
+          'Primary Bedroom': 'media_player.primary_bedroom',
+          'Primary Bathroom': 'media_player.primary_bathroom',
+          'Gym': 'media_player.gym',
+          'Mud Room': 'media_player.mud_room',
+          'Media Room': 'media_player.media_room'
+        };
+        const mp = sel ? states[nameMap[sel]] : null;
+        const members = mp?.attributes?.group_members || [];
+        const extra = members.length > 1 ? ' +' + (members.length - 1) : '';
+        return 'Play to <b>' + (sel || 'No speaker') + extra + '</b>';
+      ]]]
+    triggers_update:
+      - input_select.sonos_speaker_select
+      - media_player.living_room
+      - media_player.kitchen
+      - media_player.office
+      - media_player.deck
+      - media_player.pool
+      - media_player.primary_bedroom
+      - media_player.primary_bathroom
+      - media_player.gym
+      - media_player.mud_room
+      - media_player.media_room
+    tap_action:
+      action: navigate
+      navigation_path: '#sonos-grouping'
+    styles:
+      card:
+        - background: transparent
+        - box-shadow: none
+        - height: 28px
+        - padding: 0 14px
+        - margin-top: 4px
+      label:
+        - font-size: 13px
+        - color: var(--secondary-text-color)
+        - text-align: left
+        - justify-self: start
+
+  # ── Tab + Search row ────────────────────────────────────────────────────────
+  - type: horizontal-stack
+    cards:
+      # Tabs
+      - type: custom:button-card
+        name: All
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_favorites_filter
+            option: All
+        triggers_update:
+          - input_select.sonos_favorites_filter
+        state:
+          - operator: template
+            value: "[[[ return states['input_select.sonos_favorites_filter']?.state === 'All' ]]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 36px
+            - border-radius: 999px
+            - margin: 4px 4px
+          name:
+            - font-size: 13px
+            - font-weight: '600'
+
+      - type: custom:button-card
+        name: Playlists
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_favorites_filter
+            option: Playlists
+        triggers_update:
+          - input_select.sonos_favorites_filter
+        state:
+          - operator: template
+            value: "[[[ return states['input_select.sonos_favorites_filter']?.state === 'Playlists' ]]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 36px
+            - border-radius: 999px
+            - margin: 4px 4px
+          name:
+            - font-size: 13px
+            - font-weight: '600'
+
+      - type: custom:button-card
+        name: Stations
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_favorites_filter
+            option: Stations
+        triggers_update:
+          - input_select.sonos_favorites_filter
+        state:
+          - operator: template
+            value: "[[[ return states['input_select.sonos_favorites_filter']?.state === 'Stations' ]]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 36px
+            - border-radius: 999px
+            - margin: 4px 4px
+          name:
+            - font-size: 13px
+            - font-weight: '600'
+
+      - type: custom:button-card
+        name: Albums
+        show_name: true
+        show_icon: false
+        tap_action:
+          action: call-service
+          service: input_select.select_option
+          service_data:
+            entity_id: input_select.sonos_favorites_filter
+            option: Albums
+        triggers_update:
+          - input_select.sonos_favorites_filter
+        state:
+          - operator: template
+            value: "[[[ return states['input_select.sonos_favorites_filter']?.state === 'Albums' ]]]"
+            styles:
+              card:
+                - background: var(--accent-color) !important
+              name:
+                - color: white
+          - operator: default
+            styles:
+              card:
+                - background: var(--background-color-2)
+              name:
+                - color: var(--primary-text-color)
+        styles:
+          card:
+            - height: 36px
+            - border-radius: 999px
+            - margin: 4px 4px
+          name:
+            - font-size: 13px
+            - font-weight: '600'
+
+  # ── Search input (entities row, styled as pill) ─────────────────────────────
+  - type: entities
+    show_header_toggle: false
+    state_color: false
+    entities:
+      - entity: input_text.sonos_favorites_search
+        name: ""
+        icon: mdi:magnify
+    card_mod:
+      style: |
+        ha-card {
+          background: var(--background-color-2) !important;
+          border-radius: 999px !important;
+          box-shadow: none !important;
+          margin: 4px 8px 8px !important;
+          padding: 2px 10px !important;
+        }
+        .card-content {
+          padding: 0 !important;
+        }
+
+  # ── Favorites grid (each tile filtered by tab + search via state template) ──
   - type: grid
     columns: 2
     square: false
     cards:
 
-      # ── MS NOW ───────────────────────────────────────────────────────────────
+      # ── MS NOW (station) ────────────────────────────────────────────────────
       - type: custom:button-card
         name: MS NOW
         show_name: true
@@ -59,28 +279,44 @@ cards:
             media_content_type: music
         triggers_update:
           - input_select.sonos_speaker_select
+          - input_select.sonos_favorites_filter
+          - input_text.sonos_favorites_search
+        state:
+          - operator: template
+            value: |
+              [[[
+                const f = states['input_select.sonos_favorites_filter']?.state || 'All';
+                const q = (states['input_text.sonos_favorites_search']?.state || '').trim().toLowerCase();
+                const myType = 'station';
+                const myName = 'MS NOW';
+                const filterMatch = f === 'All' || (f === 'Stations' && myType === 'station');
+                const searchMatch = !q || myName.toLowerCase().includes(q);
+                return !(filterMatch && searchMatch);
+              ]]]
+            styles:
+              card:
+                - display: none
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
-            - height: 70px
-            - margin: 4px
+            - border-radius: 999px
+            - height: 56px
+            - margin: 5px
           name:
-            - font-size: 18px
-            - font-weight: bold
+            - font-size: 16px
+            - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
           icon:
             - width: 22px
             - color: var(--primary-text-color)
-            - margin-left: 10px
-            - margin-top: -5px
+            - margin-left: 14px
           grid:
             - grid-template-areas: '"i n"'
-            - grid-template-columns: 40px auto
+            - grid-template-columns: 44px auto
             - column-gap: 10px
 
-      # ── 1 Hotel South Beach Poolside Playlist ────────────────────────────────
+      # ── 1 Hotel Poolside (playlist) ─────────────────────────────────────────
       - type: custom:button-card
         name: 1 Hotel Poolside
         show_name: true
@@ -103,28 +339,44 @@ cards:
               enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
+          - input_select.sonos_favorites_filter
+          - input_text.sonos_favorites_search
+        state:
+          - operator: template
+            value: |
+              [[[
+                const f = states['input_select.sonos_favorites_filter']?.state || 'All';
+                const q = (states['input_text.sonos_favorites_search']?.state || '').trim().toLowerCase();
+                const myType = 'playlist';
+                const myName = '1 Hotel Poolside';
+                const filterMatch = f === 'All' || (f === 'Playlists' && myType === 'playlist');
+                const searchMatch = !q || myName.toLowerCase().includes(q);
+                return !(filterMatch && searchMatch);
+              ]]]
+            styles:
+              card:
+                - display: none
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
-            - height: 70px
-            - margin: 4px
+            - border-radius: 999px
+            - height: 56px
+            - margin: 5px
           name:
-            - font-size: 18px
-            - font-weight: bold
+            - font-size: 16px
+            - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
           icon:
             - width: 22px
             - color: var(--primary-text-color)
-            - margin-left: 10px
-            - margin-top: -5px
+            - margin-left: 14px
           grid:
             - grid-template-areas: '"i n"'
-            - grid-template-columns: 40px auto
+            - grid-template-columns: 44px auto
             - column-gap: 10px
 
-      # ── Top 50 - United Kingdom ───────────────────────────────────────────────
+      # ── Top 50 - UK (playlist) ──────────────────────────────────────────────
       - type: custom:button-card
         name: Top 50 - UK
         show_name: true
@@ -147,28 +399,44 @@ cards:
               enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
+          - input_select.sonos_favorites_filter
+          - input_text.sonos_favorites_search
+        state:
+          - operator: template
+            value: |
+              [[[
+                const f = states['input_select.sonos_favorites_filter']?.state || 'All';
+                const q = (states['input_text.sonos_favorites_search']?.state || '').trim().toLowerCase();
+                const myType = 'playlist';
+                const myName = 'Top 50 - UK';
+                const filterMatch = f === 'All' || (f === 'Playlists' && myType === 'playlist');
+                const searchMatch = !q || myName.toLowerCase().includes(q);
+                return !(filterMatch && searchMatch);
+              ]]]
+            styles:
+              card:
+                - display: none
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
-            - height: 70px
-            - margin: 4px
+            - border-radius: 999px
+            - height: 56px
+            - margin: 5px
           name:
-            - font-size: 18px
-            - font-weight: bold
+            - font-size: 16px
+            - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
           icon:
             - width: 22px
             - color: var(--primary-text-color)
-            - margin-left: 10px
-            - margin-top: -5px
+            - margin-left: 14px
           grid:
             - grid-template-areas: '"i n"'
-            - grid-template-columns: 40px auto
+            - grid-template-columns: 44px auto
             - column-gap: 10px
 
-      # ── Top 50 - Australia ────────────────────────────────────────────────────
+      # ── Top 50 - Australia (playlist) ───────────────────────────────────────
       - type: custom:button-card
         name: Top 50 - Australia
         show_name: true
@@ -191,28 +459,44 @@ cards:
               enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
+          - input_select.sonos_favorites_filter
+          - input_text.sonos_favorites_search
+        state:
+          - operator: template
+            value: |
+              [[[
+                const f = states['input_select.sonos_favorites_filter']?.state || 'All';
+                const q = (states['input_text.sonos_favorites_search']?.state || '').trim().toLowerCase();
+                const myType = 'playlist';
+                const myName = 'Top 50 - Australia';
+                const filterMatch = f === 'All' || (f === 'Playlists' && myType === 'playlist');
+                const searchMatch = !q || myName.toLowerCase().includes(q);
+                return !(filterMatch && searchMatch);
+              ]]]
+            styles:
+              card:
+                - display: none
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
-            - height: 70px
-            - margin: 4px
+            - border-radius: 999px
+            - height: 56px
+            - margin: 5px
           name:
-            - font-size: 18px
-            - font-weight: bold
+            - font-size: 16px
+            - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
           icon:
             - width: 22px
             - color: var(--primary-text-color)
-            - margin-left: 10px
-            - margin-top: -5px
+            - margin-left: 14px
           grid:
             - grid-template-areas: '"i n"'
-            - grid-template-columns: 40px auto
+            - grid-template-columns: 44px auto
             - column-gap: 10px
 
-      # ── Pool Mix - 2025 ───────────────────────────────────────────────────────
+      # ── Pool Mix 2025 (playlist) ────────────────────────────────────────────
       - type: custom:button-card
         name: Pool Mix 2025
         show_name: true
@@ -235,34 +519,50 @@ cards:
               enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
+          - input_select.sonos_favorites_filter
+          - input_text.sonos_favorites_search
+        state:
+          - operator: template
+            value: |
+              [[[
+                const f = states['input_select.sonos_favorites_filter']?.state || 'All';
+                const q = (states['input_text.sonos_favorites_search']?.state || '').trim().toLowerCase();
+                const myType = 'playlist';
+                const myName = 'Pool Mix 2025';
+                const filterMatch = f === 'All' || (f === 'Playlists' && myType === 'playlist');
+                const searchMatch = !q || myName.toLowerCase().includes(q);
+                return !(filterMatch && searchMatch);
+              ]]]
+            styles:
+              card:
+                - display: none
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
-            - height: 70px
-            - margin: 4px
+            - border-radius: 999px
+            - height: 56px
+            - margin: 5px
           name:
-            - font-size: 18px
-            - font-weight: bold
+            - font-size: 16px
+            - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
           icon:
             - width: 22px
             - color: var(--primary-text-color)
-            - margin-left: 10px
-            - margin-top: -5px
+            - margin-left: 14px
           grid:
             - grid-template-areas: '"i n"'
-            - grid-template-columns: 40px auto
+            - grid-template-columns: 44px auto
             - column-gap: 10px
 
-      # ── Hotel Costes Radio ────────────────────────────────────────────────────
+      # ── Hotel Costes Radio (station) ────────────────────────────────────────
       - type: custom:button-card
         name: Hotel Costes Radio
         show_name: true
         show_icon: true
         layout: icon_name
-        icon: mdi:playlist-music
+        icon: mdi:radio
         tap_action:
           action: perform-action
           perform_action: media_player.play_media
@@ -279,28 +579,44 @@ cards:
               enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
+          - input_select.sonos_favorites_filter
+          - input_text.sonos_favorites_search
+        state:
+          - operator: template
+            value: |
+              [[[
+                const f = states['input_select.sonos_favorites_filter']?.state || 'All';
+                const q = (states['input_text.sonos_favorites_search']?.state || '').trim().toLowerCase();
+                const myType = 'station';
+                const myName = 'Hotel Costes Radio';
+                const filterMatch = f === 'All' || (f === 'Stations' && myType === 'station');
+                const searchMatch = !q || myName.toLowerCase().includes(q);
+                return !(filterMatch && searchMatch);
+              ]]]
+            styles:
+              card:
+                - display: none
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
-            - height: 70px
-            - margin: 4px
+            - border-radius: 999px
+            - height: 56px
+            - margin: 5px
           name:
-            - font-size: 18px
-            - font-weight: bold
+            - font-size: 16px
+            - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
           icon:
             - width: 22px
             - color: var(--primary-text-color)
-            - margin-left: 10px
-            - margin-top: -5px
+            - margin-left: 14px
           grid:
             - grid-template-areas: '"i n"'
-            - grid-template-columns: 40px auto
+            - grid-template-columns: 44px auto
             - column-gap: 10px
 
-      # ── Pop & Dance Mix ───────────────────────────────────────────────────────
+      # ── Pop & Dance Mix (station) ───────────────────────────────────────────
       - type: custom:button-card
         name: Pop & Dance Mix
         show_name: true
@@ -321,28 +637,44 @@ cards:
             media_content_type: music
         triggers_update:
           - input_select.sonos_speaker_select
+          - input_select.sonos_favorites_filter
+          - input_text.sonos_favorites_search
+        state:
+          - operator: template
+            value: |
+              [[[
+                const f = states['input_select.sonos_favorites_filter']?.state || 'All';
+                const q = (states['input_text.sonos_favorites_search']?.state || '').trim().toLowerCase();
+                const myType = 'station';
+                const myName = 'Pop & Dance Mix';
+                const filterMatch = f === 'All' || (f === 'Stations' && myType === 'station');
+                const searchMatch = !q || myName.toLowerCase().includes(q);
+                return !(filterMatch && searchMatch);
+              ]]]
+            styles:
+              card:
+                - display: none
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
-            - height: 70px
-            - margin: 4px
+            - border-radius: 999px
+            - height: 56px
+            - margin: 5px
           name:
-            - font-size: 18px
-            - font-weight: bold
+            - font-size: 16px
+            - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
           icon:
             - width: 22px
             - color: var(--primary-text-color)
-            - margin-left: 10px
-            - margin-top: -5px
+            - margin-left: 14px
           grid:
             - grid-template-areas: '"i n"'
-            - grid-template-columns: 40px auto
+            - grid-template-columns: 44px auto
             - column-gap: 10px
 
-      # ── Chill Mix ─────────────────────────────────────────────────────────────
+      # ── Chill Mix (playlist) ────────────────────────────────────────────────
       - type: custom:button-card
         name: Chill Mix
         show_name: true
@@ -365,28 +697,44 @@ cards:
               enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
+          - input_select.sonos_favorites_filter
+          - input_text.sonos_favorites_search
+        state:
+          - operator: template
+            value: |
+              [[[
+                const f = states['input_select.sonos_favorites_filter']?.state || 'All';
+                const q = (states['input_text.sonos_favorites_search']?.state || '').trim().toLowerCase();
+                const myType = 'playlist';
+                const myName = 'Chill Mix';
+                const filterMatch = f === 'All' || (f === 'Playlists' && myType === 'playlist');
+                const searchMatch = !q || myName.toLowerCase().includes(q);
+                return !(filterMatch && searchMatch);
+              ]]]
+            styles:
+              card:
+                - display: none
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
-            - height: 70px
-            - margin: 4px
+            - border-radius: 999px
+            - height: 56px
+            - margin: 5px
           name:
-            - font-size: 18px
-            - font-weight: bold
+            - font-size: 16px
+            - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
           icon:
             - width: 22px
             - color: var(--primary-text-color)
-            - margin-left: 10px
-            - margin-top: -5px
+            - margin-left: 14px
           grid:
             - grid-template-areas: '"i n"'
-            - grid-template-columns: 40px auto
+            - grid-template-columns: 44px auto
             - column-gap: 10px
 
-      # ── Bridgerton Playlist ───────────────────────────────────────────────────
+      # ── Bridgerton Playlist (playlist) ──────────────────────────────────────
       - type: custom:button-card
         name: Bridgerton Playlist
         show_name: true
@@ -409,28 +757,44 @@ cards:
               enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
+          - input_select.sonos_favorites_filter
+          - input_text.sonos_favorites_search
+        state:
+          - operator: template
+            value: |
+              [[[
+                const f = states['input_select.sonos_favorites_filter']?.state || 'All';
+                const q = (states['input_text.sonos_favorites_search']?.state || '').trim().toLowerCase();
+                const myType = 'playlist';
+                const myName = 'Bridgerton Playlist';
+                const filterMatch = f === 'All' || (f === 'Playlists' && myType === 'playlist');
+                const searchMatch = !q || myName.toLowerCase().includes(q);
+                return !(filterMatch && searchMatch);
+              ]]]
+            styles:
+              card:
+                - display: none
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
-            - height: 70px
-            - margin: 4px
+            - border-radius: 999px
+            - height: 56px
+            - margin: 5px
           name:
-            - font-size: 18px
-            - font-weight: bold
+            - font-size: 16px
+            - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
           icon:
             - width: 22px
             - color: var(--primary-text-color)
-            - margin-left: 10px
-            - margin-top: -5px
+            - margin-left: 14px
           grid:
             - grid-template-areas: '"i n"'
-            - grid-template-columns: 40px auto
+            - grid-template-columns: 44px auto
             - column-gap: 10px
 
-      # ── The Best of Ella & Louis ──────────────────────────────────────────────
+      # ── Ella & Louis (playlist) ─────────────────────────────────────────────
       - type: custom:button-card
         name: Ella & Louis
         show_name: true
@@ -453,23 +817,39 @@ cards:
               enqueue: replace
         triggers_update:
           - input_select.sonos_speaker_select
+          - input_select.sonos_favorites_filter
+          - input_text.sonos_favorites_search
+        state:
+          - operator: template
+            value: |
+              [[[
+                const f = states['input_select.sonos_favorites_filter']?.state || 'All';
+                const q = (states['input_text.sonos_favorites_search']?.state || '').trim().toLowerCase();
+                const myType = 'playlist';
+                const myName = 'Ella & Louis';
+                const filterMatch = f === 'All' || (f === 'Playlists' && myType === 'playlist');
+                const searchMatch = !q || myName.toLowerCase().includes(q);
+                return !(filterMatch && searchMatch);
+              ]]]
+            styles:
+              card:
+                - display: none
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
-            - height: 70px
-            - margin: 4px
+            - border-radius: 999px
+            - height: 56px
+            - margin: 5px
           name:
-            - font-size: 18px
-            - font-weight: bold
+            - font-size: 16px
+            - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
           icon:
             - width: 22px
             - color: var(--primary-text-color)
-            - margin-left: 10px
-            - margin-top: -5px
+            - margin-left: 14px
           grid:
             - grid-template-areas: '"i n"'
-            - grid-template-columns: 40px auto
+            - grid-template-columns: 44px auto
             - column-gap: 10px
