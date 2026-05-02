@@ -20,76 +20,52 @@ cards:
       - pop-up-module
       - wall_panel_separator
     styles: |-
-      .bubble-name {
-        line-height: 1.1 !important;
-        }
-      .bubble-background {
-        background: transparent !important;
-        }
-      .bubble-icon-container {
-        background: transparent !important;
-        }
-      .bubble-icon {
-        --mdc-icon-size: 36px !important;
-        }
+      .bubble-name { line-height: 1.1 !important; }
+      .bubble-background { background: transparent !important; }
+      .bubble-icon-container { background: transparent !important; }
+      .bubble-icon { --mdc-icon-size: 36px !important; }
 
-  # ── "Play to {room}" target indicator ───────────────────────────────────────
-  - type: custom:button-card
-    show_name: false
-    show_icon: false
-    show_label: true
-    label: |
-      [[[
-        const sel = states['input_select.sonos_speaker_select']?.state;
-        const nameMap = {
-          'Living Room': 'media_player.living_room',
-          'Kitchen': 'media_player.kitchen',
-          'Office': 'media_player.office',
-          'Deck': 'media_player.deck',
-          'Pool': 'media_player.pool',
-          'Primary Bedroom': 'media_player.primary_bedroom',
-          'Primary Bathroom': 'media_player.primary_bathroom',
-          'Gym': 'media_player.gym',
-          'Mud Room': 'media_player.mud_room',
-          'Media Room': 'media_player.media_room'
-        };
-        const mp = sel ? states[nameMap[sel]] : null;
-        const members = mp?.attributes?.group_members || [];
-        const extra = members.length > 1 ? ' +' + (members.length - 1) : '';
-        return 'Play to <b>' + (sel || 'No speaker') + extra + '</b>';
-      ]]]
-    triggers_update:
-      - input_select.sonos_speaker_select
-      - media_player.living_room
-      - media_player.kitchen
-      - media_player.office
-      - media_player.deck
-      - media_player.pool
-      - media_player.primary_bedroom
-      - media_player.primary_bathroom
-      - media_player.gym
-      - media_player.mud_room
-      - media_player.media_room
-    tap_action:
-      action: navigate
-      navigation_path: '#sonos-grouping'
-    styles:
-      card:
-        - background: transparent
-        - box-shadow: none
-        - height: 28px
-        - padding: 0 14px
-        - margin-top: 4px
-      label:
-        - font-size: 13px
-        - color: var(--secondary-text-color)
-        - text-align: left
-        - justify-self: start
+  # ── "Play to {room}" target indicator (markdown card) ──────────────────────
+  - type: markdown
+    content: >-
+      <div style="font-size:13px;color:var(--secondary-text-color);">
+        Play to
+        <span style="color:var(--primary-text-color);font-weight:600;">
+          {%- set sel = states('input_select.sonos_speaker_select') -%}
+          {%- set name_map = {
+            'Living Room': 'media_player.living_room',
+            'Kitchen': 'media_player.kitchen',
+            'Office': 'media_player.office',
+            'Deck': 'media_player.deck',
+            'Pool': 'media_player.pool',
+            'Primary Bedroom': 'media_player.primary_bedroom',
+            'Primary Bathroom': 'media_player.primary_bathroom',
+            'Gym': 'media_player.gym',
+            'Mud Room': 'media_player.mud_room',
+            'Media Room': 'media_player.media_room'
+          } -%}
+          {%- set mp = name_map.get(sel) -%}
+          {%- set members = state_attr(mp, 'group_members') if mp else [] -%}
+          {{ sel or 'No speaker' }}{% if members and members | length > 1 %} +{{ members | length - 1 }}{% endif %}
+        </span>
+      </div>
+    card_mod:
+      style: |
+        ha-card {
+          background: transparent !important;
+          box-shadow: none !important;
+          margin: 4px 14px 4px !important;
+          padding: 0 !important;
+        }
+        .card-content { padding: 0 !important; }
+        ha-markdown { padding: 0 !important; }
+        ha-markdown p { margin: 0 !important; }
 
-  # ── Tab + Search row ────────────────────────────────────────────────────────
-  - type: horizontal-stack
+  # ── Tab row (All / Playlists / Stations / Albums) ───────────────────────────
+  - type: grid
+    columns: 4
+    square: false
     cards:
-      # Tabs
       - type: custom:button-card
         name: All
         show_name: true
@@ -230,13 +206,13 @@ cards:
             - font-size: 13px
             - font-weight: '600'
 
-  # ── Search input (entities row, styled as pill) ─────────────────────────────
+  # ── Search input (entities card styled as pill) ─────────────────────────────
   - type: entities
     show_header_toggle: false
     state_color: false
     entities:
       - entity: input_text.sonos_favorites_search
-        name: ""
+        name: Search favorites
         icon: mdi:magnify
     card_mod:
       style: |
@@ -244,12 +220,9 @@ cards:
           background: var(--background-color-2) !important;
           border-radius: 999px !important;
           box-shadow: none !important;
-          margin: 4px 8px 8px !important;
-          padding: 2px 10px !important;
+          margin: 4px 10px 8px !important;
         }
-        .card-content {
-          padding: 0 !important;
-        }
+        .card-content { padding: 4px 14px !important; }
 
   # ── Favorites grid (each tile filtered by tab + search via state template) ──
   - type: grid
@@ -300,10 +273,10 @@ cards:
           card:
             - background: var(--background-color-2)
             - border-radius: 999px
-            - height: 56px
-            - margin: 5px
+            - height: 52px
+            - margin: 4px
           name:
-            - font-size: 16px
+            - font-size: 14px
             - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
@@ -314,7 +287,7 @@ cards:
           grid:
             - grid-template-areas: '"i n"'
             - grid-template-columns: 44px auto
-            - column-gap: 10px
+            - column-gap: 8px
 
       # ── 1 Hotel Poolside (playlist) ─────────────────────────────────────────
       - type: custom:button-card
@@ -360,10 +333,10 @@ cards:
           card:
             - background: var(--background-color-2)
             - border-radius: 999px
-            - height: 56px
-            - margin: 5px
+            - height: 52px
+            - margin: 4px
           name:
-            - font-size: 16px
+            - font-size: 14px
             - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
@@ -374,7 +347,7 @@ cards:
           grid:
             - grid-template-areas: '"i n"'
             - grid-template-columns: 44px auto
-            - column-gap: 10px
+            - column-gap: 8px
 
       # ── Top 50 - UK (playlist) ──────────────────────────────────────────────
       - type: custom:button-card
@@ -420,10 +393,10 @@ cards:
           card:
             - background: var(--background-color-2)
             - border-radius: 999px
-            - height: 56px
-            - margin: 5px
+            - height: 52px
+            - margin: 4px
           name:
-            - font-size: 16px
+            - font-size: 14px
             - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
@@ -434,7 +407,7 @@ cards:
           grid:
             - grid-template-areas: '"i n"'
             - grid-template-columns: 44px auto
-            - column-gap: 10px
+            - column-gap: 8px
 
       # ── Top 50 - Australia (playlist) ───────────────────────────────────────
       - type: custom:button-card
@@ -480,10 +453,10 @@ cards:
           card:
             - background: var(--background-color-2)
             - border-radius: 999px
-            - height: 56px
-            - margin: 5px
+            - height: 52px
+            - margin: 4px
           name:
-            - font-size: 16px
+            - font-size: 14px
             - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
@@ -494,7 +467,7 @@ cards:
           grid:
             - grid-template-areas: '"i n"'
             - grid-template-columns: 44px auto
-            - column-gap: 10px
+            - column-gap: 8px
 
       # ── Pool Mix 2025 (playlist) ────────────────────────────────────────────
       - type: custom:button-card
@@ -540,10 +513,10 @@ cards:
           card:
             - background: var(--background-color-2)
             - border-radius: 999px
-            - height: 56px
-            - margin: 5px
+            - height: 52px
+            - margin: 4px
           name:
-            - font-size: 16px
+            - font-size: 14px
             - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
@@ -554,7 +527,7 @@ cards:
           grid:
             - grid-template-areas: '"i n"'
             - grid-template-columns: 44px auto
-            - column-gap: 10px
+            - column-gap: 8px
 
       # ── Hotel Costes Radio (station) ────────────────────────────────────────
       - type: custom:button-card
@@ -600,10 +573,10 @@ cards:
           card:
             - background: var(--background-color-2)
             - border-radius: 999px
-            - height: 56px
-            - margin: 5px
+            - height: 52px
+            - margin: 4px
           name:
-            - font-size: 16px
+            - font-size: 14px
             - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
@@ -614,7 +587,7 @@ cards:
           grid:
             - grid-template-areas: '"i n"'
             - grid-template-columns: 44px auto
-            - column-gap: 10px
+            - column-gap: 8px
 
       # ── Pop & Dance Mix (station) ───────────────────────────────────────────
       - type: custom:button-card
@@ -658,10 +631,10 @@ cards:
           card:
             - background: var(--background-color-2)
             - border-radius: 999px
-            - height: 56px
-            - margin: 5px
+            - height: 52px
+            - margin: 4px
           name:
-            - font-size: 16px
+            - font-size: 14px
             - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
@@ -672,7 +645,7 @@ cards:
           grid:
             - grid-template-areas: '"i n"'
             - grid-template-columns: 44px auto
-            - column-gap: 10px
+            - column-gap: 8px
 
       # ── Chill Mix (playlist) ────────────────────────────────────────────────
       - type: custom:button-card
@@ -718,10 +691,10 @@ cards:
           card:
             - background: var(--background-color-2)
             - border-radius: 999px
-            - height: 56px
-            - margin: 5px
+            - height: 52px
+            - margin: 4px
           name:
-            - font-size: 16px
+            - font-size: 14px
             - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
@@ -732,7 +705,7 @@ cards:
           grid:
             - grid-template-areas: '"i n"'
             - grid-template-columns: 44px auto
-            - column-gap: 10px
+            - column-gap: 8px
 
       # ── Bridgerton Playlist (playlist) ──────────────────────────────────────
       - type: custom:button-card
@@ -778,10 +751,10 @@ cards:
           card:
             - background: var(--background-color-2)
             - border-radius: 999px
-            - height: 56px
-            - margin: 5px
+            - height: 52px
+            - margin: 4px
           name:
-            - font-size: 16px
+            - font-size: 14px
             - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
@@ -792,7 +765,7 @@ cards:
           grid:
             - grid-template-areas: '"i n"'
             - grid-template-columns: 44px auto
-            - column-gap: 10px
+            - column-gap: 8px
 
       # ── Ella & Louis (playlist) ─────────────────────────────────────────────
       - type: custom:button-card
@@ -838,10 +811,10 @@ cards:
           card:
             - background: var(--background-color-2)
             - border-radius: 999px
-            - height: 56px
-            - margin: 5px
+            - height: 52px
+            - margin: 4px
           name:
-            - font-size: 16px
+            - font-size: 14px
             - font-weight: '600'
             - color: var(--primary-text-color)
             - justify-self: start
@@ -852,4 +825,4 @@ cards:
           grid:
             - grid-template-areas: '"i n"'
             - grid-template-columns: 44px auto
-            - column-gap: 10px
+            - column-gap: 8px
