@@ -126,7 +126,7 @@ cards:
         conditions:
           - condition: numeric_state
             entity: sensor.sun_solar_elevation
-            below: 10
+            below: 15
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
@@ -157,7 +157,7 @@ cards:
         conditions:
           - condition: numeric_state
             entity: sensor.sun_solar_elevation
-            below: 10
+            below: 15
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
@@ -192,7 +192,7 @@ cards:
         conditions:
           - condition: numeric_state
             entity: sensor.sun_solar_elevation
-            below: 10
+            below: 15
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
@@ -227,7 +227,7 @@ cards:
         conditions:
           - condition: numeric_state
             entity: sensor.sun_solar_elevation
-            below: 10
+            below: 15
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
@@ -259,7 +259,7 @@ cards:
         conditions:
           - condition: numeric_state
             entity: sensor.sun_solar_elevation
-            below: 10
+            below: 15
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
@@ -293,7 +293,7 @@ cards:
             conditions:
               - condition: numeric_state
                 entity: sensor.sun_solar_elevation
-                below: 10
+                below: 15
               - condition: time
                 after: "12:00:00"
                 before: "22:00:00"
