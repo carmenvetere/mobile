@@ -48,12 +48,10 @@ cards:
           mediaBrowser:
             hideHeader: false
             onlyFavorites: true
-            itemsPerRow: 1
+            forceListLayout: true
+            hideThumbnails: true
             favorites:
-              exclude: null
-              topItems: []
-              hideTitleForThumbnailIcons: false
-              sortByType: true
+              title: Music
               hideSonosFavorites: true
               customFavorites:
                 all: !include /config/dashboards/modules/custom-favorites.yaml
@@ -139,41 +137,19 @@ cards:
                 .volume-slider {
                   --control-slider-thickness: 80px !important;
                 }
-              sonos-media-browser$ sonos-favorites-icons$: |
-                .icons {
-                  padding-top: 10px !important;
+              sonos-media-browser$ sonos-favorites-list$: |
+                .favorites-list {
+                  padding: 10px !important;
+                  gap: 10px !important;
                 }
-                .thumbnail {
-                  display: none !important;
-                  height: 0 !important;
-                  padding: 0 !important;
-                  margin: 0 !important;
+                .favorite-item {
+                  border-radius: 15px !important;
+                  height: 80px !important;
+                  background-color: var(--background-color-2) !important;
+                  padding: 0 30px !important;
                 }
                 .title {
                   font-size: 24px !important;
-                  height: 100% !important;
-                  display: flex !important;
-                  align-items: center !important;
-                  justify-content: left !important;
-                  padding-left: 30px !important;
-                  padding-top: 10px !important;
-                  background-color: var(--background-color-2) !important;
-                }
-                .button {
-                  border-radius: 15px !important;
-                  height: 80px !important;
-                  margin: 10px !important;
-                  max-width: 95% !important;
-                  display: flex !important;
-                  align-items: center !important;
-                  justify-content: flex-start !important;
-                  background-color: var(--background-color-2) !important;
-                }
-                ha-control-button {
-                  height: 80px !important;
-                  max-width: 95% !important;
-                  margin-left: 12px !important;
-                  background-image: none !important;
                 }
               sonos-groups$ sonos-group$: |
                 mwc-list-item {
