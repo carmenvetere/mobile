@@ -125,8 +125,12 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2) !important;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
                   }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }  
       music:
         card:
           type: custom:wall-panel-sonos-card
