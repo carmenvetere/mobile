@@ -21,8 +21,8 @@ cards:
             "header"
             "chips"
             "music"
-        - grid-template-columns: auto
-        - grid-template-rows: 60px 60px auto auto
+        - grid-template-columns: minmax(0, 1fr)
+        - grid-template-rows: 60px 60px auto
         - row-gap: 0px
         - align-items: start
         - column-gap: 2px
