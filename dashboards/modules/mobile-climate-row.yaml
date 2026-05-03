@@ -43,7 +43,7 @@ styles: |
   ha-card {
     position: relative !important;
     min-height: 110px !important;
-    background: var(--background-color-2) !important;
+    background: var(--background-color) !important;
     border: none !important;
     border-radius: 18px !important;
     box-shadow: ${state === 'heat'
@@ -168,7 +168,7 @@ styles: |
   }
 
   .bubble-sub-button {
-    background: rgba(255,255,255,0.14) !important;
+    background: var(--ha-card-background) !important;
     border: 1px solid rgba(255,255,255,0.04) !important;
     border-radius: 999px !important;
     color: #f2f3f5 !important;
