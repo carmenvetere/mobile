@@ -129,205 +129,78 @@ cards:
                   }
       music:
         card:
-          type: vertical-stack
-          cards:  
-            - type: custom:mediocre-media-player-card
-              entity_id: media_player.living_room_2
-              use_art_colors: true
-              tap_opens_popup: true
-              speaker_group:
-                entity_id: media_player.living_room_2
-                entities:
-                    - media_player.living_room_2
-                    - media_player.kitchen_2
-                    - media_player.deck_2
-                    - media_player.office_2
-                    - media_player.mud_room_2
-                    - media_player.pool_2
-                    - media_player.primary_bathroom_2
-                    - media_player.primary_bedroom_2
-                    - media_player.media_room_2
-                    - media.player.gym_2
-              search:
-                enabled: true
-                show_favorites: false
-            - type: custom:mediocre-media-player-card
-              entity_id: media_player.kitchen_2
-              use_art_colors: true
-              tap_opens_popup: true
-              speaker_group:
-                entity_id: media_player.kitchen_2
-                entities:
-                    - media_player.living_room_2
-                    - media_player.kitchen_2
-                    - media_player.deck_2
-                    - media_player.office_2
-                    - media_player.mud_room_2
-                    - media_player.pool_2
-                    - media_player.primary_bathroom_2
-                    - media_player.primary_bedroom_2
-                    - media_player.media_room_2
-                    - media.player.gym_2
-              search:
-                enabled: true
-                show_favorites: false
-            - type: custom:mediocre-media-player-card
-              entity_id: media_player.pool_2
-              use_art_colors: true
-              tap_opens_popup: true
-              speaker_group:
-                entity_id: media_player.pool_2
-                entities:
-                    - media_player.living_room_2
-                    - media_player.kitchen_2
-                    - media_player.deck_2
-                    - media_player.office_2
-                    - media_player.mud_room_2
-                    - media_player.pool_2
-                    - media_player.primary_bathroom_2
-                    - media_player.primary_bedroom_2
-                    - media_player.media_room_2
-                    - media.player.gym_2
-              search:
-                enabled: true
-                show_favorites: false
-            - type: custom:mediocre-media-player-card
-              entity_id: media_player.deck_2
-              use_art_colors: true
-              tap_opens_popup: true
-              speaker_group:
-                entity_id: media_player.deck_2
-                entities:
-                    - media_player.living_room_2
-                    - media_player.kitchen_2
-                    - media_player.deck_2
-                    - media_player.office_2
-                    - media_player.mud_room_2
-                    - media_player.pool_2
-                    - media_player.primary_bathroom_2
-                    - media_player.primary_bedroom_2
-                    - media_player.media_room_2
-                    - media.player.gym_2
-              search:
-                enabled: true
-                show_favorites: false 
-            - type: custom:mediocre-media-player-card
-              entity_id: media_player.mud_room_2
-              use_art_colors: true
-              tap_opens_popup: true
-              speaker_group:
-                entity_id: media_player.mud_room_2
-                entities:
-                    - media_player.living_room_2
-                    - media_player.kitchen_2
-                    - media_player.deck_2
-                    - media_player.office_2
-                    - media_player.mud_room_2
-                    - media_player.pool_2
-                    - media_player.primary_bathroom_2
-                    - media_player.primary_bedroom_2
-                    - media_player.media_room_2
-                    - media.player.gym_2
-              search:
-                enabled: true
-                show_favorites: false
-            - type: custom:mediocre-media-player-card
-              entity_id: media_player.office_2
-              use_art_colors: true
-              tap_opens_popup: true
-              speaker_group:
-                entity_id: media_player.office_2
-                entities:
-                    - media_player.living_room_2
-                    - media_player.kitchen_2
-                    - media_player.deck_2
-                    - media_player.office_2
-                    - media_player.mud_room_2
-                    - media_player.pool_2
-                    - media_player.primary_bathroom_2
-                    - media_player.primary_bedroom_2
-                    - media_player.media_room_2
-                    - media.player.gym_2
-              search:
-                enabled: true
-                show_favorites: false
-            - type: custom:mediocre-media-player-card
-              entity_id: media_player.gym_2
-              use_art_colors: true
-              tap_opens_popup: true
-              speaker_group:
-                entity_id: media_player.gym_2
-                entities:
-                    - media_player.living_room_2
-                    - media_player.kitchen_2
-                    - media_player.deck_2
-                    - media_player.office_2
-                    - media_player.mud_room_2
-                    - media_player.pool_2
-                    - media_player.primary_bathroom_2
-                    - media_player.primary_bedroom_2
-                    - media_player.media_room_2
-                    - media.player.gym_2
-              search:
-                enabled: true
-                show_favorites: false
-            - type: custom:mediocre-media-player-card
-              entity_id: media_player.media_room_2
-              use_art_colors: true
-              tap_opens_popup: true
-              speaker_group:
-                entity_id: media_player.media_room_2
-                entities:
-                    - media_player.living_room_2
-                    - media_player.kitchen_2
-                    - media_player.deck_2
-                    - media_player.office_2
-                    - media_player.mud_room_2
-                    - media_player.pool_2
-                    - media_player.primary_bathroom_2
-                    - media_player.primary_bedroom_2
-                    - media_player.media_room_2
-                    - media.player.gym_2
-              search:
-                enabled: true
-                show_favorites: false
-            - type: custom:mediocre-media-player-card
-              entity_id: media_player.primary_bedroom_2
-              use_art_colors: true
-              tap_opens_popup: true
-              speaker_group:
-                entity_id: media_player.primary_bedroom_2
-                entities:
-                    - media_player.living_room_2
-                    - media_player.kitchen_2
-                    - media_player.deck_2
-                    - media_player.office_2
-                    - media_player.mud_room_2
-                    - media_player.pool_2
-                    - media_player.primary_bathroom_2
-                    - media_player.primary_bedroom_2
-                    - media_player.media_room_2
-                    - media.player.gym_2
-              search:
-                enabled: true
-                show_favorites: false 
-            - type: custom:mediocre-media-player-card
-              entity_id: media_player.primary_bathroom_2
-              use_art_colors: true
-              tap_opens_popup: true
-              speaker_group:
-                entity_id: media_player.primary_bathroom_2
-                entities:
-                    - media_player.living_room_2
-                    - media_player.kitchen_2
-                    - media_player.deck_2
-                    - media_player.office_2
-                    - media_player.mud_room_2
-                    - media_player.pool_2
-                    - media_player.primary_bathroom_2
-                    - media_player.primary_bedroom_2
-                    - media_player.media_room_2
-                    - media.player.gym_2
-              search:
-                enabled: true
-                show_favorites: false                                                                                                                                    
+          type: custom:wall-panel-sonos-card
+          entities:
+            - media_player.living_room
+            - media_player.kitchen
+            - media_player.office
+            - media_player.gym
+            - media_player.deck
+            - media_player.pool
+            - media_player.mud_room
+            - media_player.media_room
+          default_view: player
+          layout: mobile
+          favorites:
+            - id: ms_now
+              name: MS NOW
+              type: station
+              media_content_id: >-
+                x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8200&sn=5
+              media_content_type: music
+              art: "linear-gradient(135deg, #c8102e 0%, #1a1c1f 100%)"
+            - id: one_hotel_south_beach
+              name: 1 Hotel South Beach Poolside Playlist
+              type: playlist
+              media_content_id: x-sonos-spotify:playlist:7z1cddbJ1L62FZpTVZBj2i?sid=12&flags=8232&sn=9
+              media_content_type: playlist
+              art: "linear-gradient(135deg, #00b3a4 0%, #f4d35e 100%)"
+            - id: top_50_uk
+              name: Top 50 - United Kingdom
+              type: playlist
+              media_content_id: x-sonos-spotify:playlist:1QM1qz09ZzsAPiXphF1l4S?sid=12&flags=8232&sn=9
+              media_content_type: playlist
+              art: "linear-gradient(135deg, #012169 0%, #c8102e 100%)"
+            - id: top_50_au
+              name: Top 50 - Australia
+              type: playlist
+              media_content_id: x-sonos-spotify:playlist:37i9dQZEVXbJPcfkRz0wJ0?sid=12&flags=8232&sn=9
+              media_content_type: playlist
+              art: "linear-gradient(135deg, #00843d 0%, #ffcd00 100%)"
+            - id: pool_mix_2025
+              name: Pool Mix - 2025
+              type: playlist
+              media_content_id: x-sonos-spotify:playlist:2rA0wj0dnIyj1A5Uaoogaa?sid=12&flags=8232&sn=9
+              media_content_type: playlist
+              art: "linear-gradient(135deg, #4fb6e6 0%, #f7d774 100%)"
+            - id: hotel_costes_radio
+              name: Hotel Costes Radio
+              type: playlist
+              media_content_id: x-sonos-spotify:playlist:37i9dQZF1E4mWbHqaowOUP?sid=12&flags=8232&sn=9
+              media_content_type: playlist
+              art: "linear-gradient(135deg, #1a1a1a 0%, #6a4a2c 100%)"
+            - id: pop_dance_mix
+              name: Pop & Dance Mix
+              type: station
+              media_content_id: >-
+                x-sonosapi-hls-static:channel-xtra%3adc93524a-aa6d-b0c4-0d53-caabac97500c%3a15ebc9ab-82ba-0dd1-0276-d408113397df?sid=37&flags=32768&sn=5
+              media_content_type: music
+              art: "linear-gradient(135deg, #ff006e 0%, #8338ec 100%)"
+            - id: chill_mix
+              name: Chill Mix
+              type: playlist
+              media_content_id: x-sonos-spotify:playlist:37i9dQZF1EVHGWrwldPRtj?sid=12&flags=8232&sn=9
+              media_content_type: playlist
+              art: "linear-gradient(135deg, #2a3540 0%, #6a4ec8 100%)"
+            - id: bridgerton_playlist
+              name: Bridgerton Playlist
+              type: playlist
+              media_content_id: x-sonos-spotify:playlist:37i9dQZF1DX5Hl0iWtr5b3?sid=12&flags=8232&sn=9
+              media_content_type: playlist
+              art: "linear-gradient(135deg, #d8a7b1 0%, #6e3a5b 100%)"
+            - id: ella_and_louis
+              name: The Best of Ella & Louis
+              type: playlist
+              media_content_id: x-sonos-spotify:playlist:502ADPBCxITjzQZOlnAjQQ?sid=12&flags=8232&sn=9
+              media_content_type: playlist
+              art: "linear-gradient(135deg, #3d2914 0%, #d4a574 100%)"
