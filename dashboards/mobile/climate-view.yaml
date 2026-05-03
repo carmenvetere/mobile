@@ -220,7 +220,7 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background: rgba(255,255,255,0.055) !important;
+                background: var(--background-color) !important;
                 border: 1px solid rgba(255,255,255,0.06) !important;
                 border-radius: 22px !important;
                 padding: 8px 14px 10px !important;
