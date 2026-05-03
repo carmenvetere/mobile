@@ -1,6 +1,6 @@
 title: Music
 icon: mdi:music
-theme: Bubble
+theme: Wall Panel
 path: music
 type: custom:grid-layout
 cards:
@@ -16,7 +16,7 @@ cards:
         - height: auto
         - box-sizing: border-box
         - max-width: 100%
-        - background-color: var(--background-color-2)
+        - background-color: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
       grid:
         - grid-template-areas: |
             "header"
