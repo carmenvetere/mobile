@@ -299,7 +299,8 @@ cards:
                     - /config/dashboards/modules/mobile-climate-row.yaml
                     - climate_entity: climate.living_room_thermostat
                       thermostat_name: Living Room Thermostat
-                      rows: 2.406
+                      rows: 2.5
+                      module_name: mobile_climate
       basement:
         card:
           type: custom:expander-card
@@ -375,6 +376,7 @@ cards:
                     - /config/dashboards/modules/mobile-climate-row.yaml
                     - climate_entity: climate.basement_thermostat
                       thermostat_name: Hallway Thermostat
+                      module_name: mobile_climate
                 - !include
                     - /config/dashboards/modules/mobile-priority-row.yaml
                     - switch_entity: switch.basement_thermostat_family_room_priority
@@ -452,6 +454,7 @@ cards:
                     - /config/dashboards/modules/mobile-climate-row.yaml
                     - climate_entity: climate.office_thermostat
                       thermostat_name: Office Thermostat
+                      module_name: mobile_climate
                 - !include
                     - /config/dashboards/modules/mobile-priority-row.yaml
                     - switch_entity: switch.office_thermostat_front_guest_bedroom_priority
@@ -553,6 +556,7 @@ cards:
                     - /config/dashboards/modules/mobile-climate-row.yaml
                     - climate_entity: climate.master_bedroom_thermostat
                       thermostat_name: Bedroom Thermostat
+                      module_name: mobile_climate
                 - !include
                     - /config/dashboards/modules/mobile-priority-row.yaml
                     - switch_entity: switch.master_bedroom_thermostat_primary_bathroom_priority
