@@ -314,12 +314,3 @@ sensor:
     filters:
       - filter: time_throttle
         window_size: "00:05"
-
-rest_command:
-  update_live_activity:
-    url: 'https://api.getaivi.app/activity/{{ slug }}'
-    method: PATCH
-    headers:
-      content-type: application/json
-      authorization: Token 061c26af03cf0c109daca036d22ff768
-    payload: '{{ payload }}'
