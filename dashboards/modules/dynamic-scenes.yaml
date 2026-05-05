@@ -35,7 +35,7 @@ cards:
             before: "12:00:00"
           - condition: numeric_state
             entity: sensor.sun_solar_elevation
-            above: 10
+            above: 15
     button_action:
       tap_action:
         action: perform-action
