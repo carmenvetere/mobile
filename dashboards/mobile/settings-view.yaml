@@ -23,7 +23,7 @@ cards:
             "chips"
             "settings"
         - grid-template-columns: auto
-        - grid-template-rows: 60px 60px auto auto
+        - grid-template-rows: 60px 60px auto
         - row-gap: 0px
         - align-items: start
         - column-gap: 2px
@@ -42,7 +42,7 @@ cards:
             grid:
               - grid-template-areas: |
                   "name gap"
-              - grid-template-columns: 150px auto
+              - grid-template-columns: 175px auto
               - grid-template-rows: 60px
               - column-gap: 0px
             main:
