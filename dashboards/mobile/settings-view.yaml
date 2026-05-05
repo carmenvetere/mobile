@@ -143,4 +143,4 @@ cards:
               }
           cards:
           - type: vertical-stack
-            cards: !include [/config/dashboards/modules/settings-module.yaml, {separator_module: mobile_separator, settings_module: mobile_settings_module}]
+            cards: !include [/config/dashboards/modules/settings-module.yaml, {separator_module: mobile_separator, settings_module: mobile_settings_module, dashboard: mobile}]
