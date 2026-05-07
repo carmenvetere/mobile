@@ -94,6 +94,8 @@ cards:
                     - background-color: transparent
       chips:
         card: !include /config/dashboards/modules/chips.yaml
+      notifications:
+        card: !include /config/dashboards/modules/dynamic-cards.yaml
       menu:
         card:
           type: custom:stack-in-card

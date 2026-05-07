@@ -1,506 +1,359 @@
 # lovelace_gen
 type: vertical-stack
 cards:
-# Door Open - After 7PM, Before 7AM - Basement Wall Panel
-# HIGHEST PRIORITY: Always shows when doors are open at night
-{% if dashboard == 'basement_wall_panel' %}
-  - type: custom:button-card
-    visibility:
-      - condition: and
-        conditions:
-          - condition: time
-            after: "19:00:00"
-            before: "07:00:00"
-          - condition: state
-            entity: binary_sensor.all_doors_including_garage
-            state: "on"
-    styles:
-      card:
-        - height: 135px
-        - width: 600px
-        - background: var(--background-color)
-        - border-radius: 30px
-        - padding-left: 20px
-        - padding-top: 0px
-      grid:
-        - grid-template-areas: |
-            "icon name"
-        - grid-template-columns: 100px 500px
-        - grid-template-rows: 135px
-        - column-gap: 5px
-        - row-gap: 5px
-    custom_fields:
-      name:
-        card:
-          type: custom:button-card
-          name: Door Open
-          show_name: true
-          show_state: false
-          show_icon: false
-          styles:
-            card:
-              - height: 135px
-              - width: 500px
-              - background-color: transparent
-              - margin-left: "-20px"
-            name:
-              - font-size: 36px
-              - font-weight: bold
-              - color: var(--text-color)
-              - text-align: left
-              - justify-self: start
-      icon:
-        card:
-          type: custom:button-card
-          icon: mdi:lock-open-alert
-          styles:
-            icon:
-              - color: '#F6CE46'
-              - height: 60px
-              - width: 60px
-            card:
-              - background-color: transparent
-              - height: 150px
-              - width: 100px
-{% endif %}
-# All Closed - After 7PM, Before 7AM - Basement Wall Panel
-# LOWEST PRIORITY: Only shows if no other alerts are active
-{% if dashboard == 'basement_wall_panel' %}
-  - type: custom:button-card
-    visibility:
-      - condition: and
-        conditions:
-          - condition: time
-            after: "19:00:00"
-            before: "07:00:00"
-          - condition: state
-            entity: binary_sensor.all_doors_including_garage
-            state: "off"
-          # Only show if no higher priority items
-          - condition: state
-            entity: binary_sensor.r1t_charging_status
-            state: "off"
-          - condition: state
-            entity: sensor.dryer
-            state: "off"
-          - condition: state
-            entity: sensor.front_load_washer
-            state: "off"
-    styles:
-      card:
-        - height: 135px
-        - width: 600px
-        - background: var(--background-color)
-        - border-radius: 30px
-        - padding-left: 20px
-        - padding-top: 0px
-      grid:
-        - grid-template-areas: |
-            "icon name"
-        - grid-template-columns: 100px 500px
-        - grid-template-rows: 135px
-        - column-gap: 5px
-        - row-gap: 5px
-    custom_fields:
-      name:
-        card:
-          type: custom:button-card
-          name: All Closed
-          show_name: true
-          show_state: false
-          show_icon: false
-          styles:
-            card:
-              - height: 135px
-              - width: 500px
-              - background-color: transparent
-              - margin-left: "-20px"
-            name:
-              - font-size: 36px
-              - font-weight: bold
-              - color: var(--text-color)
-              - text-align: left
-              - justify-self: start
-      icon:
-        card:
-          type: custom:button-card
-          icon: mdi:lock
-          styles:
-            icon:
-              - color: var(--accent-color-2)
-              - height: 60px
-              - width: 60px
-            card:
-              - background-color: transparent
-              - height: 150px
-              - width: 100px
-{% endif %}
-# Rivian Charging - Basement Wall Panel Day
-# PRIORITY 2: Only shows if doors are closed
-{% if dashboard == 'basement_wall_panel' %}
-  - type: custom:button-card
-    visibility:
-      - condition: and
-        conditions:
-          - condition: state
-            entity: binary_sensor.r1t_charging_status
-            state: "on"
-          # Don't show if door is open (higher priority)
-          - condition: state
-            entity: binary_sensor.all_doors_including_garage
-            state: "off"
-    styles:
-      card:
-        - height: 135px
-        - width: 600px
-        - background: var(--background-color)
-        - border-radius: 30px
-        - padding-left: 20px
-        - margin-left: 10px
-        - margin-bottom: 50px
-      grid:
-        - grid-template-areas: |
-            "name name time"
-            "slider slider slider"
-        - grid-template-columns: 75px 525px
-        - grid-template-rows: 35px 105px
-        - column-gap: 0px
-        - row-gap: 5px
-        - align-items: start
-        - justify-items: flex-center
-      custom_fields: 
-        name: 
-          - justify-items: flex-start
-        slide: 
-          - margin-bottom: 10px
-    custom_fields:
-      name:
-        card:
-          type: custom:button-card
-          name: Rivian R1T Charging
-          show_name: true
-          show_state: false
-          show_icon: false
-          styles:
-            card:
-              - height: 65px
-              - width: 580px
-              - background-color: transparent
-            name:
-              - font-size: 28px
-              - font-weight: bold
-              - color: var(--text-color)
-              - text-align: left
-              - justify-self: flex-start
-      slider:
-        card:
-          type: custom:bubble-card
-          card_type: button
-          button_type: slider
-          sub_button:
-            main:
-              - entity: sensor.r1t_estimated_vehicle_range
-                show_state: true
-                show_icon: false
-                state_background: true
-                show_background: false
-                name: ""
-                show_name: false
-              - entity: sensor.r1t_battery_state_of_charge
-                show_icon: false
-                show_state: true
-                state_background: false
-                show_background: false
-            bottom: []
-          entity: sensor.r1t_battery_state_of_charge
-          show_name: false
-          modules:
-            - wall_panel_charging
-{% endif %}
-#Dryer When Running - Basement Panel.
-# PRIORITY 3: Only shows if no door open or charging
-{% if dashboard == 'basement_wall_panel' %}
-  - type: custom:button-card
-    visibility:
-      - condition: and
-        conditions:
-          - condition: state
-            entity: sensor.dryer
-            state: "on"
-          # Don't show if higher priority items active
-          - condition: state
-            entity: binary_sensor.all_doors_including_garage
-            state: "off"
-          - condition: state
-            entity: binary_sensor.r1t_charging_status
-            state: "off"
-    styles:
-      card:
-        - height: 135px
-        - width: 600px
-        - background: var(--background-color-2)
-        - border-radius: 30px
-        - padding-left: 20px
-        - padding-top: 0px
-      grid:
-        - grid-template-areas: |
-            "icon name time"
-        - grid-template-columns: 100px 150px 350px
-        - grid-template-rows: 135px
-        - column-gap: 0px
-        - row-gap: 5px
-    custom_fields:
-      name:
-        card:
-          type: custom:button-card
-          name: Dryer
-          show_name: true
-          show_state: false
-          show_icon: false
-          styles:
-            card:
-              - height: 135px
-              - width: 150px
-              - background-color: transparent
-              - margin-left: "-20px"
-            name:
-              - font-size: 36px
-              - font-weight: bold
-              - color: var(--text-color)
-              - text-align: left
-              - justify-self: start
-      icon:
-        card:
-          type: custom:button-card
-          icon: mdi:tumble-dryer
-          styles:
-            icon:
-              - color: var(--text-color)
-              - height: 60px
-              - width: 60px
-            card:
-              - background-color: transparent
-              - height: 150px
-              - width: 100px
-      time:
-        card:
-          type: custom:button-card
-          entity: sensor.dryer_remaining_time
-          show_state: true
-          show_label: false
-          show_name: false
-          show_icon: false
-          styles:
-            card:
-              - height: 135px
-              - width: 350px
-              - background: transparent
-            state:
-              - font-size: 46px
-              - font-weight: bold
-              - color: var(--text-color)
-{% endif %}
-#Washer When Running
-# PRIORITY 4: Only shows if no door open, charging, or dryer running
-{% if dashboard == 'basement_wall_panel' %}
-  - type: custom:button-card
-    visibility:
-      - condition: and
-        conditions:
-          - condition: state
-            entity: sensor.front_load_washer
-            state: 'on'
-          # Don't show if higher priority items active
-          - condition: state
-            entity: binary_sensor.all_doors_including_garage
-            state: "off"
-          - condition: state
-            entity: binary_sensor.r1t_charging_status
-            state: "off"
-          - condition: state
-            entity: sensor.dryer
-            state: "off"
-    styles:
-      card:
-        - height: 135px
-        - width: 600px
-        - background: var(--background-color-2)
-        - border-radius: 30px
-        - padding-left: 20px
-        - padding-top: 0px
-      grid:
-        - grid-template-areas: |
-            "icon name time"
-        - grid-template-columns: 100px 150px 350px
-        - grid-template-rows: 135px
-        - column-gap: 0px
-        - row-gap: 5px
-    custom_fields:
-      name:
-        card:
-          type: custom:button-card
-          name: Washer
-          show_name: true
-          show_state: false
-          show_icon: false
-          styles:
-            card:
-              - height: 135px
-              - width: 150px
-              - background-color: transparent
-              - margin-left: "-20px"
-            name:
-              - font-size: 36px
-              - font-weight: bold
-              - color: var(--text-color)
-              - text-align: left
-              - justify-self: start
-      icon:
-        card:
-          type: custom:button-card
-          icon: mdi:washing-machine
-          styles:
-            icon:
-              - color: var(--text-color)
-              - height: 60px
-              - width: 60px
-            card:
-              - background-color: transparent
-              - height: 150px
-              - width: 100px
-      time:
-        card:
-          type: custom:button-card
-          entity: sensor.front_load_washer_remaining_time
-          show_state: true
-          show_label: false
-          show_name: false
-          show_icon: false
-          styles:
-            card:
-              - height: 135px
-              - width: 350px
-              - background: transparent
-            state:
-              - font-size: 46px
-              - font-weight: bold
-              - color: var(--text-color)
-{% endif %}
-# Greeting Card - Basement Wall Panel
-# LOWEST PRIORITY: Only shows when no other cards are active
-# {% if dashboard == 'basement_wall_panel' %}
-#   - type: custom:button-card
-#     visibility:
-#       - condition: and
-#         conditions:
-#           # Only show if no other cards are showing
-#           - condition: or
-#             conditions:
-#               # Show during the day
-#               - condition: time
-#                 before: "19:00:00"
-#               # OR show at night if doors are closed
-#               - condition: and
-#                 conditions:
-#                   - condition: time
-#                     after: "19:00:00"
-#                   - condition: state
-#                     entity: binary_sensor.all_doors_including_garage
-#                     state: "off"
-#           # Don't show if any higher priority cards are active
-#           - condition: state
-#             entity: binary_sensor.r1t_charging_status
-#             state: "off"
-#           - condition: state
-#             entity: sensor.dryer
-#             state: "off"
-#           - condition: state
-#             entity: sensor.front_load_washer
-#             state: "off"
-#     show_name: false
-#     show_icon: false
-#     show_state: false
-#     styles:
-#       card:
-#         - background: transparent
-#         - box-shadow: none
-#         - height: auto
-#         - min-height: 135px
-#         - width: 600px
-#         - padding: 20px
-#       custom_fields:
-#         hello:
-#           - font-size: 50px
-#           - font-weight: bold
-#           - color: var(--text-color)
-#           - margin-bottom: 10px
-#           - text-align: left
-#           - justify-self: start
-#         status:
-#           - font-size: 26px
-#           - line-height: 1.5
-#           - color: var(--text-color)
-#           - text-align: left
-#           - justify-self: start
-#           - white-space: normal
-#           - word-wrap: break-word
-#           - overflow-wrap: break-word
-#           - max-width: 560px
-#       grid:
-#         - grid-template-areas: |
-#             "hello"
-#             "status"
-#         - grid-template-rows: auto auto
-#         - grid-template-columns: 1fr
-#     custom_fields:
-#       hello: |
-#         [[[
-#           return "Hello!";
-#         ]]]
-#       status: |
-#         [[[
-#           // Door status
-#           let doorStatus = "";
-#           if (states['binary_sensor.all_doors_including_garage'].state === 'off') {
-#             doorStatus = "All doors are closed";
-#           } else {
-#             // Count open doors by checking attributes
-#             let doorCount = 0;
-#             const groupAttrs = states['binary_sensor.all_doors_including_garage'].attributes.entity_id || [];
-#             groupAttrs.forEach(entityId => {
-#               if (states[entityId] && states[entityId].state === 'on') doorCount++;
-#             });
-#             doorStatus = doorCount + " door" + (doorCount !== 1 ? "s are" : " is") + " open";
-#           }
+# Rivian Charging
+- type: custom:bubble-card
+  visibility:
+    - condition: state
+      entity: binary_sensor.r1t_charging_status
+      state: "on"
+  card_type: button
+  entity: light.basement_hallway_main_lights
+  name: Rivian R1T Charging
+  icon: mdi:lightning-bolt
+  button_type: name
+  sub_button:
+    main: []
+    bottom:
+      - entity: sensor.r1t_battery_state_of_charge
+        sub_button_type: slider
+        show_attribute: true
+        attribute: brightness
+        light_background: false
+        show_background: true
+        state_background: true
+        slider_fill_orientation: left
+        slider_value_position: right
+        light_slider_type: brightness
+        slider_live_update: true
+        read_only_slider: false
+        allow_light_slider_to_0: true
+        show_state: false
+        use_accent_color: true
+        light_transition: false
+        content_layout: icon-left
+        always_visible: true
+        invert_slider_value: false
+  modules: []
+  rows: 2
+  styles: |
+    .bubble-button-card-container {
+      border-radius: 30px !important;
+      margin: 2px 20px 2px 10px !important;
+      background-color: var(--background-color) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+    }
+    .bubble-button-background {
+      background-color: var(--background-color) !important;
+    }
+    .bubble-name {
+      font-size: 18px !important;
+      text-align: left !important;
+      color: var(--primary-text-color) !important;
+      padding-left: 0px;
+    }
+    .bubble-sub-button {
+      font-size: 16px !important;
+      font-weight: bold;
+      color: var(--primary-text-color) !important;
+    }
+    .bubble-state {
+      font-size: 16px !important;
+      font-weight: bold !important;
+      text-align: left !important;
+    }
+    .bubble-sub-button-slider {
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-bottom: 15px;
+      height: 40px !important;
+      opacity: 1 !important;
+      position: relative;
+      background-color: var(--background-color) !important;
+    }
 
-#           // Alarm status
-#           let alarmState = states['alarm_control_panel.alarmo'].state.replace(/_/g, ' ');
+    /* Charging target overlay (right side of slider) */
+    .bubble-sub-button-slider::after {
+      content: "${(() => {
+        const e = hass.states['sensor.r1t_battery_state_of_charge_limit'];
+        if (!e || e.state === 'unknown' || e.state === 'unavailable') return '';
+        return 'Target ' + Math.round(e.state) + '%';
+      })()}";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary-text-color);
+      font-size: 16px;
+      font-weight: bold;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.85;
+    }
 
-#           // HVAC mode and average temp
-#           let livingMode = states['climate.living_room_thermostat'].state;
-#           let basementMode = states['climate.basement_thermostat'].state;
-#           let officeMode = states['climate.office_thermostat'].state;
-#           let bedroomMode = states['climate.master_bedroom_thermostat'].state;
+    /* Pulse fill only while actively charging */
+    .bubble-range-fill {
+      background: var(--accent-color-2) !important;
+      opacity: 1 !important;
+      animation: ${hass.states['binary_sensor.r1t_charging_status']?.state === 'on' ? 'r1t-charging-pulse 1.8s ease-in-out infinite' : 'none'};
+    }
+    @keyframes r1t-charging-pulse {
+      0%, 100% { opacity: 1; filter: brightness(1); }
+      50%      { opacity: 0.7; filter: brightness(1.25); }
+    }
 
-#           let heatCount = [livingMode, basementMode, officeMode, bedroomMode].filter(m => m === 'heat').length;
-#           let coolCount = [livingMode, basementMode, officeMode, bedroomMode].filter(m => m === 'cool').length;
+    .bubble-range-value {
+      font-size: 0px !important;
+    }
+    .bubble-range-slider {
+      background: var(--background-color-2) !important;
+    }
+    .bubble-icon {
+      opacity: 1 !important;
+      color: var(--primary-text-color) !important;
+      --mdc-icon-size: 36px !important;
+    }
+    .bubble-icon-container {
+      background-color: transparent !important;
+      margin-left: 20px !important;
+      margin-top: 8px;
+    }
+#Washer Running
+- type: custom:bubble-card
+  visibility:
+    - condition: state
+      entity: sensor.front_load_washer
+      state: 'on'
+  card_type: button
+  entity: sensor.front_load_washer
+  name: Washer
+  icon: mdi:washing-machine
+  button_type: name
+  sub_button:
+    main: []
+    bottom:
+      - entity: sensor.washer_cycle_progress
+        sub_button_type: slider
+        light_background: false
+        show_background: true
+        state_background: true
+        slider_fill_orientation: left
+        slider_value_position: right
+        slider_live_update: true
+        read_only_slider: true
+        show_state: false
+        use_accent_color: true
+        content_layout: icon-left
+        always_visible: true
+  modules: []
+  rows: 2
+  styles: >
+    .bubble-button-card-container {
+      border-radius: 30px !important;
+      margin: 2px 20px 2px 10px !important;
+      background-color: var(--background-color) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+    }
 
-#           let hvacText = "The climate";
-#           if (heatCount > coolCount) hvacText = "The heat";
-#           else if (coolCount > 0) hvacText = "The air conditioning";
+    .bubble-button-background { background-color: var(--background-color)
+    !important; }
 
-#           // Average temperature
-#           let temps = [
-#             parseFloat(states['climate.living_room_thermostat'].attributes.temperature) || 0,
-#             parseFloat(states['climate.basement_thermostat'].attributes.temperature) || 0,
-#             parseFloat(states['climate.office_thermostat'].attributes.temperature) || 0,
-#             parseFloat(states['climate.master_bedroom_thermostat'].attributes.temperature) || 0
-#           ];
-#           let avgTemp = Math.round(temps.reduce((a, b) => a + b, 0) / temps.length);
+    .bubble-name {
+      font-size: 18px !important;
+      text-align: left !important;
+      color: var(--primary-text-color) !important;
+      padding-left: 0px;
+    }
 
-#           return doorStatus + " and the alarm is " + alarmState + ". " + hvacText + " in the house is set to " + avgTemp + "°F.";
-#         ]]]
-# {% endif %}
+    .bubble-sub-button {
+      font-size: 16px !important;
+      font-weight: bold;
+      color: var(--primary-text-color) !important;
+    }
 
+    .bubble-state {
+      font-size: 16px !important;
+      font-weight: bold !important;
+      text-align: left !important;
+    }
 
+    .bubble-sub-button-slider {
+      margin: 0 20px 15px 20px;
+      height: 40px !important;
+      opacity: 1 !important;
+      position: relative;
+      background: var(--background-color-2) !important;
+    }
+
+    .bubble-sub-button-slider::after {
+      content: "${(() => {
+        const r = hass.states['sensor.front_load_washer_remaining_time'];
+        const main = hass.states['sensor.front_load_washer'];
+        if (!r || ['unknown','unavailable','-','0:00:00'].includes(r.state)) {
+          return main?.state === 'off' ? 'Idle' : '';
+        }
+        const p = r.state.split(':').map(Number);
+        const h = p[0], m = p[1];
+        return h > 0 ? h + 'h ' + m + 'm left' : m + 'm left';
+      })()}";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary-text-color);
+      font-size: 16px;
+      font-weight: bold;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.85;
+    }
+
+    .bubble-range-fill {
+      background: var(--accent-color) !important;
+      opacity: 1 !important;
+      animation: ${(() => {
+        const s = hass.states['sensor.front_load_washer']?.state;
+        return s && s !== 'off' && s !== 'unavailable' ? 'washer-pulse 1.8s ease-in-out infinite' : 'none';
+      })()};
+    }
+
+    @keyframes washer-pulse {
+      0%, 100% { opacity: 1; filter: brightness(1); }
+      50%      { opacity: 0.7; filter: brightness(1.25); }
+    }
+
+    .bubble-range-value { font-size: 0px !important; }
+
+    .bubble-range-slider { background: var(--background-color-2) !important; }
+
+    .bubble-icon {
+      opacity: 1 !important;
+      color: var(--primary-text-color) !important;
+      --mdc-icon-size: 36px !important;
+    }
+
+    .bubble-icon-container {
+      background-color: transparent !important;
+      margin-left: 20px !important;
+      margin-top: 8px;
+    }
+#Dryer Running
+- type: custom:bubble-card
+  visibility:
+    - condition: state
+      entity: sensor.dryer
+      state: 'on'
+  card_type: button
+  entity: sensor.dryer
+  name: Dryer
+  icon: mdi:tumble-dryer
+  button_type: name
+  sub_button:
+    main: []
+    bottom:
+      - entity: sensor.dryer_cycle_progress
+        sub_button_type: slider
+        light_background: false
+        show_background: true
+        state_background: true
+        slider_fill_orientation: left
+        slider_value_position: right
+        slider_live_update: true
+        read_only_slider: true
+        show_state: false
+        use_accent_color: true
+        content_layout: icon-left
+        always_visible: true
+  modules: []
+  rows: 2
+  styles: >
+    .bubble-button-card-container {
+      border-radius: 30px !important;
+      margin: 2px 20px 2px 10px !important;
+      background-color: var(--background-color) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .bubble-button-background { background-color: var(--background-color)
+    !important; }
+
+    .bubble-name {
+      font-size: 18px !important;
+      text-align: left !important;
+      color: var(--primary-text-color) !important;
+      padding-left: 0px;
+    }
+
+    .bubble-sub-button {
+      font-size: 16px !important;
+      font-weight: bold;
+      color: var(--primary-text-color) !important;
+    }
+
+    .bubble-state {
+      font-size: 16px !important;
+      font-weight: bold !important;
+      text-align: left !important;
+    }
+
+    .bubble-sub-button-slider {
+      margin: 0 20px 15px 20px;
+      height: 40px !important;
+      opacity: 1 !important;
+      position: relative;
+      background: var(--background-color-2) !important;
+    }
+
+    .bubble-sub-button-slider::after {
+      content: "${(() => {
+        const r = hass.states['sensor.dryer_remaining_time'];
+        const main = hass.states['sensor.dryer'];
+        if (!r || ['unknown','unavailable','-','0:00:00'].includes(r.state)) {
+          return main?.state === 'off' ? 'Idle' : '';
+        }
+        const p = r.state.split(':').map(Number);
+        const h = p[0], m = p[1];
+        return h > 0 ? h + 'h ' + m + 'm left' : m + 'm left';
+      })()}";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary-text-color);
+      font-size: 16px;
+      font-weight: bold;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.85;
+    }
+
+    .bubble-range-fill {
+      background: var(--accent-color-3) !important;
+      opacity: 1 !important;
+      animation: ${(() => {
+        const s = hass.states['sensor.dryer']?.state;
+        return s && s !== 'off' && s !== 'unavailable' ? 'dryer-pulse 1.8s ease-in-out infinite' : 'none';
+      })()};
+    }
+
+    @keyframes dryer-pulse {
+      0%, 100% { opacity: 1; filter: brightness(1); }
+      50%      { opacity: 0.7; filter: brightness(1.25); }
+    }
+
+    .bubble-range-value { font-size: 0px !important; }
+
+    .bubble-range-slider { background: var(--background-color-2) !important; }
+
+    .bubble-icon {
+      opacity: 1 !important;
+      color: var(--primary-text-color) !important;
+      --mdc-icon-size: 36px !important;
+    }
+
+    .bubble-icon-container {
+      background-color: transparent !important;
+      margin-left: 20px !important;
+      margin-top: 8px;
+    }
 
