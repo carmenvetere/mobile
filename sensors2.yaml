@@ -683,3 +683,16 @@
               {% set prev = this.attributes.total_seconds | default(0) | int %}
               {{ [rem, prev] | max }}
             {% endif %}
+
+- trigger:
+    - platform: event
+      event_type: rain_check_minutely_update
+  sensor:
+    - name: "Precip Next Hour"
+      unique_id: precip_next_hour
+      unit_of_measurement: "mm"
+      state: >
+        {{ trigger.event.data.minutely
+            | map(attribute='precipitation') | sum | round(2) }}
+      attributes:
+        minutely: "{{ trigger.event.data.minutely }}"
