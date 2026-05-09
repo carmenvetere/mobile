@@ -12,6 +12,7 @@ cards:
       ha-card {
         background-color: var(--background-color);
         max-height: 120px;
+        margin-bottom: 5px !important;
       }
   cards:
     - type: custom:bubble-card
