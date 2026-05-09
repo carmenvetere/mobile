@@ -13,6 +13,8 @@ cards:
         background-color: var(--background-color);
         max-height: 120px;
         margin-bottom: 5px !important;
+        border-radius: 20px;
+        padding: 3px 12px 4px;
       }
   cards:
     - type: custom:bubble-card
