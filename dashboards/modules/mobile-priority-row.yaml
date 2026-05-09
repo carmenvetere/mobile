@@ -17,6 +17,8 @@ name: {{ row_name }}
 show_icon: false
 show_state: false
 sub_button:
+  main: []
+  bottom:
   - entity: {{ temp_sensor }}
     show_state: true
     show_background: true
@@ -30,26 +32,25 @@ sub_button:
     icon: mdi:toggle-switch-variant
     tap_action:
       action: toggle
+rows: 1.5
 styles: |
   ha-card {
     background: var(--background-color-2) !important;
     border: 1px solid rgba(255,255,255,0.05) !important;
-    border-radius: 20px !important;
+    border-radius: 30px !important;
     padding: 10px 12px !important;
-    margin-top: 6px !important;
-    box-shadow: ${ state === 'on'
-        ? '0 0 10px rgba(255, 255, 255, 0.6)'
-        : '0 6px 14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06)'
-        } !important;
+    margin-top: 5px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
     transition: box-shadow .3s ease, background .3s ease !important;
   }
   .bubble-name {
     font-size: 16px !important;
+    margin-bottom: 10px !important;
     font-weight: 600 !important;
     color: var(--primary-text-color) !important;
   }
   .bubble-sub-button {
-    background: var(--ha-card-background) !important;
+    background: ${state === 'on' ? 'var(--ha-card-background)': 'var(--ha-card-background)'} !important;
     border-radius: 999px !important;
     border: none !important;
     font-size: 16px !important;
@@ -61,3 +62,4 @@ styles: |
   .bubble-sub-button:hover {
     background: rgba(255,255,255,0.14) !important;
   }
+scrolling_effect: false
