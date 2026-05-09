@@ -48,6 +48,7 @@ styles: |
     margin-bottom: 10px !important;
     font-weight: 600 !important;
     color: var(--primary-text-color) !important;
+    text-align: left !important;
   }
   .bubble-sub-button {
     background: ${state === 'on' ? 'var(--ha-card-background)': 'var(--ha-card-background)'} !important;
