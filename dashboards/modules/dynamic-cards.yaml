@@ -1,6 +1,105 @@
 # lovelace_gen
 type: vertical-stack
 cards:
+#Precipitation Next Hour
+- type: custom:stack-in-card
+  visibility:
+    - condition: numeric_state
+      entity: sensor.precip_next_hour
+      above: 0
+  card_mod:
+    style: |
+      ha-card {
+        background-color: var(--background-color);
+        max-height: 120px;
+      }
+  cards:
+    - type: custom:bubble-card
+      card_type: separator
+      name: Precipitation
+      icon: mdi:weather-pouring
+      styles: |
+        ha-card {
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+          overflow: hidden !important;
+          margin-bottom: 0px !important;
+        }
+        .bubble-name {
+          font-size: 16px !important;
+          font-weight: bold !important;
+          letter-spacing: 0.1px !important;
+          color: var(--primary-text-color) !important;
+        }
+        .bubble-sub-button {
+          font-size: 16px !important;
+          font-weight: bold !important;
+          color: var(--primary-text-color) !important;
+          background: transparent !important;
+          border: none !important;
+        }
+        .bubble-line {
+          background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
+          opacity: 1 !important;
+          height: 5px !important;
+        }
+        .card-content {
+          padding: 4px 6px 0px !important;
+          max-width: 100% !important;
+          margin-bottom: 0px !important;
+        }
+        @media (max-width: 600px) {
+          .bubble-sub-button-4 { display: none !important; }
+        }
+        @media (max-width: 500px) {
+          .bubble-sub-button-2 { display: none !important; }
+        }
+        @media (max-width: 420px) {
+          .bubble-sub-button-3 { display: none !important; }
+        }
+    - type: custom:apexcharts-card
+      card_mod:
+        style: |
+          ha-card {
+            padding-top: 0 !important;
+            margin-top: -25px !important;
+            margin-left: 5px !important;
+          }
+      header:
+        show: false
+      graph_span: 1h
+      span:
+        start: minute
+      series:
+        - entity: sensor.precip_next_hour
+          name: Rain
+          type: column
+          color: "#3b82f6"
+          data_generator: |
+            return entity.attributes.minutely.map((m) => {
+              return [new Date(m.datetime).getTime(), m.precipitation];
+            });
+      yaxis:
+        - min: 0
+          decimals: 2
+          apex_config:
+            title:
+              text: in/h
+      apex_config:
+        chart:
+          height: 100
+          background: transparent
+        grid:
+          borderColor: rgba(255,255,255,0.08)
+        xaxis:
+          type: datetime
+          tickAmount: 1
+          labels:
+            datetimeUTC: false
+            format: h:mm
+          axisTicks:
+            show: true
+
 # Rivian Charging
 - type: custom:bubble-card
   visibility:
