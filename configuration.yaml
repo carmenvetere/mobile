@@ -162,6 +162,19 @@ recorder:
       - sensor.powerwall_discharge_time
       - sensor.bayberry_tempest_wind_speed
       - sensor.bayberry_tempest_wind_direction
+      - sensor.bayberry_battery_power
+      - sensor.bayberry_grid_power
+      - sensor.bayberry_load_power
+      - sensor.bayberry_site_power
+      - sensor.bayberry_solar_power
+      - sensor.bayberry_tempest_humidity
+      - sensor.bayberry_tempest_illuminance
+      - sensor.bayberry_tempest_irradiance
+      - sensor.bayberry_tempest_temperature
+      - sensor.bayberry_tempest_wind_gust
+      - sensor.bayberry_tempest_wind_speed_average
+      - sensor.bayberry_tempest_precipitation
+      - sensor.bayberry_tempest_precipitation_type
       - binary_sensor.myggspray_wrlss_mtn_sensor_occupancy
       - sensor.myggspray_wrlss_mtn_sensor_battery
       - sensor.myggspray_wrlss_mtn_sensor_battery_voltage
@@ -314,6 +327,72 @@ sensor:
   - platform: filter
     name: "First Floor Temperature (5min)"
     entity_id: sensor.first_floor_air_quality_monitor_temperature
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Battery Power (5min)"
+    entity_id: sensor.bayberry_battery_power
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Grid Power (5min)"
+    entity_id: sensor.bayberry_grid_power
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Load Power (5min)"
+    entity_id: sensor.bayberry_load_power
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Site Power (5min)"
+    entity_id: sensor.bayberry_site_power
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Solar Power (5min)"
+    entity_id: sensor.bayberry_solar_power
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Tempest Humidity (5min)"
+    entity_id: sensor.bayberry_tempest_humidity
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Tempest Illuminance (5min)"
+    entity_id: sensor.bayberry_tempest_illuminance
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Tempest Irradiance (5min)"
+    entity_id: sensor.bayberry_tempest_irradiance
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Tempest Temperature (5min)"
+    entity_id: sensor.bayberry_tempest_temperature
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Tempest Wind Gust (5min)"
+    entity_id: sensor.bayberry_tempest_wind_gust
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Tempest Wind Speed Average (5min)"
+    entity_id: sensor.bayberry_tempest_wind_speed_average
     filters:
       - filter: time_throttle
         window_size: "00:05"
