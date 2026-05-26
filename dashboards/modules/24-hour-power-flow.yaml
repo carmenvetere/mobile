@@ -38,7 +38,7 @@ apex_config:
           return value.toFixed(1) + ' kW';
         }
 series:
-  - entity: sensor.bayberry_site_power
+  - entity: sensor.site_power_5min
     name: Grid
     type: line
     stroke_width: 2
@@ -46,14 +46,14 @@ series:
     show:
       in_header: false
       legend_value: true
-  - entity: sensor.bayberry_solar_power
+  - entity: sensor.solar_power_5min
     name: Solar
     type: line
     stroke_width: 2
     color: var(--accent-color-3)
     show:
       in_header: false
-  - entity: sensor.bayberry_load_power
+  - entity: sensor.load_power_5min
     name: Home
     type: line
     stroke_width: 2
