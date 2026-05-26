@@ -125,6 +125,7 @@ cards:
               entity: sensor.bayberry_tempest_temperature
               tap_action:
                 action: more-info
+                entity: sensor.tempest_temperature_5min
               icon: mdi:thermometer
               icon_color: "#5ec8ff"
               card_mod: *chip_style
@@ -132,6 +133,7 @@ cards:
               entity: sensor.bayberry_tempest_humidity
               tap_action:
                 action: more-info
+                entity: sensor.tempest_humidity_5min
               icon: mdi:water-percent
               icon_color: "#5ec8ff"
               card_mod: *chip_style
