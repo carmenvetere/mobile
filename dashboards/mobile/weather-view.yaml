@@ -239,7 +239,7 @@ cards:
               cards:
                 - graph: line
                   type: sensor
-                  entity: sensor.bayberry_tempest_temperature
+                  entity: sensor.tempest_temperature_5min
                   detail: 2
                   name: Temperature
                   theme: Bubble
@@ -251,7 +251,7 @@ cards:
                       }
                 - graph: line
                   type: sensor
-                  entity: sensor.bayberry_tempest_humidity
+                  entity: sensor.tempest_humidity_5min
                   detail: 1
                   name: Humidity
                   card_mod:
@@ -262,7 +262,7 @@ cards:
                       }
                 - graph: line
                   type: sensor
-                  entity: sensor.bayberry_tempest_wind_speed_average
+                  entity: sensor.tempest_wind_speed_average_5min
                   detail: 1
                   name: Average Wind Speed
                   card_mod:
@@ -273,7 +273,7 @@ cards:
                       }
                 - graph: line
                   type: sensor
-                  entity: sensor.bayberry_tempest_wind_gust
+                  entity: sensor.tempest_wind_gust_5min
                   detail: 1
                   name: Wind Gust
                   card_mod:
@@ -295,7 +295,7 @@ cards:
                       }
                 - graph: line
                   type: sensor
-                  entity: sensor.bayberry_tempest_illuminance
+                  entity: sensor.tempest_illuminance_5min
                   detail: 1
                   name: Illuminance
                   card_mod:
