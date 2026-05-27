@@ -44,7 +44,7 @@ yaxis:
   - id: header_only
     show: false
 series:
-  - entity: sensor.bayberry_solar_power
+  - entity: sensor.solar_power_5min
     name: Solar Power (now)
     type: line
     stroke_width: 2
