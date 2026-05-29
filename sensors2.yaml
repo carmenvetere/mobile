@@ -513,11 +513,14 @@
         {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
         {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
         {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
-        {% if not (el > 5 and in_range and irr > 50) %}0
+        {% if not (el > 5 and in_range and irr > 0) %}0
         {% else %}
           {% set delta = ((az - facing + 540) % 360) - 180 %}
           {% set hit = [cos(delta * pi / 180) / tan(el * pi / 180), 0] | max %}
-          {{ (irr * hit) | round(0) | int }}
+          {% set effective_W = irr * hit %}
+          {% if effective_W < 150 %}0
+          {% else %}{{ effective_W | round(0) | int }}
+          {% endif %}
         {% endif %}
       attributes:
         in_range: >
@@ -544,11 +547,14 @@
         {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
         {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
         {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
-        {% if not (el > 5 and in_range and irr > 50) %}0
+        {% if not (el > 5 and in_range and irr > 0) %}0
         {% else %}
           {% set delta = ((az - facing + 540) % 360) - 180 %}
           {% set hit = [cos(delta * pi / 180) / tan(el * pi / 180), 0] | max %}
-          {{ (irr * hit) | round(0) | int }}
+          {% set effective_W = irr * hit %}
+          {% if effective_W < 150 %}0
+          {% else %}{{ effective_W | round(0) | int }}
+          {% endif %}
         {% endif %}
       attributes:
         in_range: >
@@ -575,11 +581,14 @@
         {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
         {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
         {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
-        {% if not (el > 5 and in_range and irr > 50) %}0
+        {% if not (el > 5 and in_range and irr > 0) %}0
         {% else %}
           {% set delta = ((az - facing + 540) % 360) - 180 %}
           {% set hit = [cos(delta * pi / 180) / tan(el * pi / 180), 0] | max %}
-          {{ (irr * hit) | round(0) | int }}
+          {% set effective_W = irr * hit %}
+          {% if effective_W < 150 %}0
+          {% else %}{{ effective_W | round(0) | int }}
+          {% endif %}
         {% endif %}
       attributes:
         in_range: >
@@ -606,11 +615,14 @@
         {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
         {% set irr = states('sensor.bayberry_tempest_irradiance') | float(0) %}
         {% set in_range = (lo <= hi and lo <= az <= hi) or (lo > hi and (az >= lo or az <= hi)) %}
-        {% if not (el > 5 and in_range and irr > 50) %}0
+        {% if not (el > 5 and in_range and irr > 0) %}0
         {% else %}
           {% set delta = ((az - facing + 540) % 360) - 180 %}
           {% set hit = [cos(delta * pi / 180) / tan(el * pi / 180), 0] | max %}
-          {{ (irr * hit) | round(0) | int }}
+          {% set effective_W = irr * hit %}
+          {% if effective_W < 150 %}0
+          {% else %}{{ effective_W | round(0) | int }}
+          {% endif %}
         {% endif %}
       attributes:
         in_range: >
@@ -623,6 +635,7 @@
           {% set el = state_attr('sun.sun', 'elevation') | float(0) %}
           {% set delta = ((az - facing + 540) % 360) - 180 %}
           {{ ([cos(delta * pi / 180) / tan(el * pi / 180), 0] | max) | round(3) }}
+
 
 - trigger:
       - platform: state
