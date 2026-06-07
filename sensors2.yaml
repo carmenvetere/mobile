@@ -1,4 +1,58 @@
-- sensor:
+- trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.bayberry_grid_status
+        - binary_sensor.bayberry_storm_watch_active
+        - binary_sensor.dryer_recently_completed
+        - binary_sensor.washer_recently_completed
+        - sensor.bayberry_tempest_precipitation_type
+        - binary_sensor.pool_cover_pump
+        - cover.garage_door_garage
+        - input_boolean.low_pool_water_level
+        - sensor.roborock_s8_vacuum_error
+        - sensor.bayberry_charge
+        - sensor.nws_alerts_alerts
+        - sensor.front_load_washer_tub_clean_counter
+        - sensor.months_since_last_hot_water_flush
+        - input_number.upper_floors_hvac_filter_hours
+        - input_number.lower_floors_hvac_filter_hours
+        - sensor.utility_room_temp_sensor_temperature
+        - sensor.attic_temp_sensor_temperature
+        - sensor.hours_since_last_vacuum
+        - binary_sensor.pool_season
+        - sensor.omnilogic_pool_chlorinator_average_salt_level
+        - sensor.smithy_hot_water_availability_2
+        - sensor.bedroom_back_1_battery
+        - sensor.back_2_battery
+        - sensor.back_3_battery
+        - sensor.bedroom_back_4_battery_0
+        - sensor.bedroom_back_5_battery_0
+        - sensor.side_left_battery_2
+        - sensor.side_right_battery_0
+        - sensor.dining_room_front_left_battery_0
+        - sensor.front_left_battery
+        - sensor.front_right_battery_0
+        - sensor.bedroom_right_battery_0
+        - sensor.hallway_1_battery
+        - sensor.hallway_2_battery_0
+        - sensor.bedroom_left_battery_0
+        - sensor.living_room_side_left_1_battery_0
+        - sensor.living_room_front_left_battery_0
+        - sensor.living_room_side_left_2_battery_0
+        - sensor.living_room_side_right_1_battery_0
+        - sensor.living_room_side_right_2_battery_0
+        - sensor.living_room_front_right_battery
+        - sensor.attic_temp_sensor_battery
+        - sensor.front_door_battery
+        - sensor.kitchen_french_doors_battery
+        - sensor.living_room_french_doors_battery
+        - sensor.mudroom_entry_battery
+        - sensor.mudroom_garage_battery
+        - sensor.utility_room_temp_sensor_battery
+        - sensor.back_guest_bedroom_side_battery
+        - sensor.back_guest_bedroom_back_left_battery
+        - sensor.back_guest_bedroom_back_right_battery
+  sensor:
     - name: "Notification Alert Counter"
       unique_id: notification_alert_counter
       state: >
@@ -69,6 +123,47 @@
         {{ (rules | map('int') | sum) + low_batt_count }}
       icon: mdi:alert-circle
 
+- trigger:
+    - platform: state
+      entity_id:
+        - light.front_foyer_pendants
+        - light.gym_main_lights
+        - light.kitchen_island_pendants
+        - light.kitchen_main_lights
+        - light.kitchen_outer_wall
+        - light.kitchen_window_seat_sconce
+        - light.laundry_room_main_lights
+        - light.living_room_floor_lamp_1
+        - light.living_room_floor_lamp_2
+        - light.living_room_main_lights
+        - light.media_room_main_lights
+        - light.media_room_table_lamp
+        - light.office_floor_lamp
+        - light.office_main_lights
+        - light.upstairs_hallway_main_lights
+        - light.basement_hallway_main_lights
+        - light.dining_room_accent_lights
+        - light.dining_room_main_lights
+        - light.dining_room_table_lamps
+        - light.driveway_sconces
+        - light.front_porch_overhead_light
+        - light.master_bathroom_main_lights
+        - light.master_bathroom_vanity_lights
+        - light.master_bedroom_main_lights
+        - light.master_bedroom_sconces
+        - light.master_bedroom_closet_light
+        - light.patio_back_porch_lights
+        - light.eve_light_strip_a5a4
+        - switch.bedroom_floor_lamp_switch
+        - switch.transformer_zone_1
+        - switch.transformer_zone_2
+        - switch.transformer_zone_3
+        - switch.transformer_zone_1_2
+        - switch.transformer_zone_2_2
+        - switch.transformer_zone_3_2
+        - light.stairs_spot_lights
+      for: "00:00:01"
+  sensor:
     - name: "Lights On Count"
       unique_id: count_of_lights
       state: >
@@ -117,16 +212,23 @@
           {{ on_lights | length }}
         {% endif %}
 
+- trigger:
+    - platform: state
+      entity_id: input_datetime.last_pool_vacuum
+    - platform: time_pattern
+      hours: "/1"
+  sensor:
     - name: "Hours Since Last Vacuum"
       unique_id: hours_since_last_vacuum
       unit_of_measurement: "hours"
       state: >
-        {% if states('input_datetime.last_pool_vacuum') %}
-          {{ ((as_timestamp(now()) - as_timestamp(states.input_datetime.last_pool_vacuum.state)) / 3600) | round(1) }}
+        {% if states('input_datetime.last_pool_vacuum') not in ['unknown','unavailable',''] %}
+          {{ ((as_timestamp(now()) - as_timestamp(states('input_datetime.last_pool_vacuum'))) / 3600) | round(1) }}
         {% else %}
           unknown
         {% endif %}
 
+- sensor:
     - name: "Solcast Seven Day"
       unique_id: "solcast_seven_day"
       state: >
@@ -222,7 +324,45 @@
 # ═══════════════════════════════════════════════════════════════════
 # Scene Detection Binary Sensors
 # ═══════════════════════════════════════════════════════════════════
-- binary_sensor:
+- trigger:
+    - platform: state
+      entity_id:
+        - light.living_room_floor_lamp_1
+        - light.living_room_floor_lamp_2
+        - light.kitchen_main_lights
+        - light.kitchen_outer_wall
+        - light.kitchen_island_pendants
+        - light.kitchen_window_seat_sconce
+        - light.dining_room_main_lights
+        - light.dining_room_accent_lights
+        - light.dining_room_table_lamps
+        - light.living_room_main_lights
+        - light.stairs_spot_lights
+        - light.stairs_main_lights
+        - light.basement_hallway_main_lights
+        - light.front_foyer_pendants
+        - light.upstairs_hallway_main_lights
+        - light.gym_main_lights
+        - light.laundry_room_main_lights
+        - light.office_main_lights
+        - light.media_room_main_lights
+        - light.media_room_table_lamp
+        - light.office_floor_lamp
+        - light.eve_light_strip_a5a4
+        - light.patio_back_porch_lights
+        - light.driveway_sconces
+        - light.front_porch_overhead_light
+        - light.driveway_transformer_1_2
+        - light.driveway_transformer_3_2
+        - switch.driveway_zone_2_2
+        - switch.driveway_zone_3_2
+        - switch.driveway_zone_1_2
+        - switch.transformer_zone_1
+        - switch.transformer_zone_2
+        - switch.transformer_zone_3
+        - switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet
+      for: "00:00:01"
+  binary_sensor:
     - name: "Scene Good Morning"
       unique_id: scene_good_morning
       state: >
@@ -497,7 +637,7 @@
 
 - trigger:
     - platform: time_pattern
-      minutes: "/2"
+      minutes: "/15"
   sensor:
 
     # ---- EAST  (dining shade + east-facing rooms above) ----
