@@ -5235,6 +5235,7 @@
     - binary_sensor.pool_object_detected
     - binary_sensor.front_object_detected_2
     to: 'on'
+    for: '00:00:05'
   conditions:
   - condition: or
     conditions:
@@ -5294,7 +5295,8 @@
       binary_sensor.front_object_detected_2: Front
     camera_entity: '{{ camera_by_sensor.get(trigger_entity) }}'
     area_name: '{{ area_by_sensor.get(trigger_entity, ''Camera'') }}'
-  mode: parallel
+  mode: queued
+  max: 3
 - id: '1759004981297'
   alias: Back Guest Bedroom - Close Shades -30 min before sunset or 8PM
   description: ''
