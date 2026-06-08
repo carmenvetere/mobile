@@ -127,7 +127,7 @@ utility_meter:
 recorder:
   db_url: mysql://carmenv:REDACTED@core-mariadb/homeassistant?charset=utf8mb4
   purge_keep_days: 30
-  commit_interval: 10          # NEW: batch DB writes every 10s instead of every 1s
+  commit_interval: 30          # NEW: batch DB writes every 10s instead of every 1s
   auto_purge: true
   auto_repack: true
   exclude:
