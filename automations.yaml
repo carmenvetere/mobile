@@ -6296,6 +6296,10 @@
   triggers:
   - trigger: time_pattern
     hours: /3
+  conditions:
+  - condition: sun
+    after: sunrise
+    before: sunset
   actions:
   - action: camera.snapshot
     target:
@@ -6533,11 +6537,15 @@
             - condition: state
               entity_id: binary_sensor.someone_home
               state: 'on'
-          - condition: template
-            value_template: '{{ now().hour < 17 or state_attr(''cover.first_floor_front'',
-              ''current_position'') | int(0) > 5 or state_attr(''cover.dining_room_side'',
-              ''current_position'') | int(0) > 5 or state_attr(''cover.living_room_side_shades'',
-              ''current_position'') | int(0) > 5 }}'
+          - condition: or
+            conditions:
+            - condition: time
+              before: '17:00:00'
+            - condition: template
+              value_template: '{{ state_attr(''cover.first_floor_front'',
+                ''current_position'') | int(0) > 5 or state_attr(''cover.dining_room_side'',
+                ''current_position'') | int(0) > 5 or state_attr(''cover.living_room_side_shades'',
+                ''current_position'') | int(0) > 5 }}'
       sequence:
       - variables:
           comfort: 70
