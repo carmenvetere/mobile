@@ -656,6 +656,7 @@
 - id: '1720897912038'
   alias: Sunset +30 or 8:00 PM Close Shades
   description: ''
+  initial_state: false
   triggers:
   - event: sunset
     offset: 00:30:00
@@ -2388,6 +2389,7 @@
 - id: '1743103086408'
   alias: Bedroom - Close Shades at Sunset +30min or 8:00PM
   description: ''
+  initial_state: false
   triggers:
   - event: sunset
     offset: 00:30:00
@@ -5345,6 +5347,7 @@
 - id: '1759004981297'
   alias: Back Guest Bedroom - Close Shades -30 min before sunset or 8PM
   description: ''
+  initial_state: false
   triggers:
   - event: sunset
     offset: 00:30:00
@@ -5831,6 +5834,7 @@
 - id: '1762979427130'
   alias: Front Guest Bedroom Shades +30 min from Sunset or 8pm
   description: ''
+  initial_state: false
   triggers:
   - event: sunset
     offset: 00:30:00
@@ -6560,6 +6564,7 @@
             id: adaptive
           - condition: time
             after: 08:01:00
+            before: '19:55:00'
           - condition: numeric_state
             entity_id: sun.sun
             attribute: elevation
@@ -7070,6 +7075,7 @@
             id: adaptive
           - condition: time
             after: 09:01:00
+            before: '19:55:00'
           - condition: numeric_state
             entity_id: sun.sun
             attribute: elevation
@@ -7199,6 +7205,7 @@
             id: adaptive
           - condition: time
             after: 09:01:00
+            before: '19:55:00'
           - condition: numeric_state
             entity_id: sun.sun
             attribute: elevation
@@ -7307,6 +7314,7 @@
             id: adaptive
           - condition: time
             after: 09:01:00
+            before: '19:55:00'
           - condition: numeric_state
             entity_id: sun.sun
             attribute: elevation
