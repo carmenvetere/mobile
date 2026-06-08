@@ -6213,3 +6213,1394 @@
       value: 192.168.10.120:8123/mudroom-wall-panel-dash/home-view
       key: startURL
   mode: single
+- id: '1769475464564'
+  alias: Gym Motion - After Sunset
+  description: ''
+  triggers:
+  - entity_id:
+    - binary_sensor.myggspray_wrlss_mtn_sensor_occupancy
+    from:
+    to:
+    - 'on'
+    platform: state
+  conditions:
+  - condition: sun
+    after: sunset
+    after_offset: -00:30:00
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.basement_evening
+    data:
+      transition: 3
+  - repeat:
+      until:
+      - condition: state
+        entity_id: binary_sensor.myggspray_wrlss_mtn_sensor_occupancy
+        state:
+        - 'off'
+        for:
+          hours: 0
+          minutes: 0
+          seconds: 0
+      - condition: state
+        entity_id: binary_sensor.family_room_sensor_family_room_motion
+        state:
+        - 'off'
+      sequence:
+      - delay:
+          hours: 0
+          minutes: 15
+          seconds: 0
+          milliseconds: 0
+      - if:
+        - condition: state
+          entity_id: binary_sensor.myggspray_wrlss_mtn_sensor_occupancy
+          state:
+          - 'off'
+        - condition: state
+          entity_id: binary_sensor.family_room_sensor_family_room_motion
+          state:
+          - 'off'
+        then:
+        - action: light.turn_off
+          metadata: {}
+          target:
+            entity_id:
+            - light.basement_hallway_main_lights
+            - light.stairs_main_lights
+            - light.media_room_main_lights
+            - light.laundry_room_main_lights
+          data:
+            transition: 10
+        - if:
+          - condition: time
+            after: '23:00:00'
+          then:
+          - action: light.turn_off
+            metadata: {}
+            target:
+              entity_id:
+              - light.gym_main_lights
+              - light.media_room_table_lamp
+            data: {}
+  mode: single
+- id: '1771808052251'
+  alias: Driveway Timelapse
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    hours: /3
+  actions:
+  - action: camera.snapshot
+    target:
+      entity_id: camera.driveway_high_resolution_channel_2
+    data:
+      filename: /media/timelapse/driveway_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg
+- id: '1771808302981'
+  alias: Pool Timelapse
+  description: ''
+  triggers:
+  - hours: /3
+    platform: time_pattern
+  conditions:
+  - condition: sun
+    after: sunrise
+    before: sunset
+  actions:
+  - action: camera.snapshot
+    data:
+      filename: /media/timelapse/pool_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg
+    target:
+      entity_id: camera.pool_high_resolution_channel
+  mode: single
+- id: '1771808340027'
+  alias: Blueberry Timelapse
+  description: ''
+  triggers:
+  - hours: /3
+    platform: time_pattern
+  conditions:
+  - condition: sun
+    before: sunset
+    after: sunrise
+  actions:
+  - action: camera.snapshot
+    data:
+      filename: /media/timelapse/blueberry_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg
+    target:
+      entity_id: camera.blueberry_high_resolution_channel
+  mode: single
+- id: '1776944952972'
+  alias: Dining Room Adaptive Shading
+  description: Hourly adaptive shade control for dining room side shades (facing 80°
+    ESE). Uses Claude to balance solar gain vs. cooling. Runs 7:30am–30min after sunset,
+    skips when Dinner Party mode is on.
+  triggers:
+  - platform: time
+    at: 07:30:00
+  - platform: time_pattern
+    hours: '*'
+    minutes: '0'
+  conditions:
+  - condition: time
+    after: 07:30:00
+  - condition: numeric_state
+    entity_id: sun.sun
+    attribute: elevation
+    above: -7
+  - condition: state
+    entity_id: input_boolean.dinner_party
+    state: 'off'
+  actions:
+  - variables:
+      sun_azimuth: '{{ state_attr(''sun.sun'', ''azimuth'') | float(0) }}'
+      sun_elevation: '{{ state_attr(''sun.sun'', ''elevation'') | float(0) }}'
+      irradiance: '{{ states(''sensor.bayberry_tempest_irradiance'') | float(0) }}'
+      outdoor_temp: '{{ states(''sensor.bayberry_tempest_temperature'') | float(70)
+        }}'
+      indoor_temp: '{{ state_attr(''climate.living_room_thermostat'', ''current_temperature'')
+        | float(70) }}'
+      target_temp: '{{ state_attr(''climate.living_room_thermostat'', ''temperature'')
+        | float(70) }}'
+      hvac_mode: '{{ states(''climate.living_room_thermostat'') }}'
+      current_position: '{{ state_attr(''cover.dining_room_side'', ''current_position'')
+        | int(100) }}'
+      sun_hitting: '{{ sun_azimuth > 50 and sun_azimuth < 110 and sun_elevation >
+        5 and irradiance > 50 }}'
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ not sun_hitting }}'
+      sequence:
+      - if:
+        - condition: template
+          value_template: '{{ current_position != 100 }}'
+        then:
+        - target:
+            entity_id: cover.dining_room_side
+          data:
+            position: 100
+          action: cover.set_cover_position
+        - data:
+            message: 'Adaptive Shading: Sun not hitting (az={{ sun_azimuth }}°, el={{
+              sun_elevation }}°, irr={{ irradiance }}W/m²) — opened to 100%'
+            level: info
+          action: system_log.write
+    - conditions:
+      - condition: template
+        value_template: '{{ sun_hitting }}'
+      sequence:
+      - data:
+          agent_id: conversation.claude_conversation
+          text: 'Respond with ONLY a single integer between 55 and 100. No explanation,
+            no text.
+
+
+            You are controlling a motorized shade in the dining room of a home, facing
+            80° east-southeast. The shade is currently at {{ current_position }}%
+            open (100 = fully open, 0 = fully closed, minimum allowed = 55%).
+
+
+            Current conditions:
+
+            - Sun azimuth: {{ sun_azimuth }}° (shade faces 80°, direct sun when 50–110°)
+
+            - Sun elevation: {{ sun_elevation }}°
+
+            - Solar irradiance: {{ irradiance }} W/m² (clear direct sun ≈ 800+ W/m²,
+            partly cloudy ≈ 200–600, overcast < 100)
+
+            - Outdoor temperature: {{ outdoor_temp }}°F
+
+            - Indoor temperature (dining/living area): {{ indoor_temp }}°F
+
+            - Thermostat setpoint: {{ target_temp }}°F
+
+            - HVAC mode: {{ hvac_mode }}
+
+
+            Logic to apply:
+
+            - Open toward 100% if the home needs solar warming: HVAC in heat mode,
+            indoor temp below setpoint, cold outdoors (< 50°F)
+
+            - Close toward 55% if solar gain is unwanted: indoor temp at or above
+            setpoint, warm outdoors (> 65°F), or irradiance > 400 W/m²
+
+            - If conditions are neutral or mixed, prefer a position between 70–85%
+
+            - Only move if new position differs from current by more than 10% to avoid
+            unnecessary cycling — in that case return current position
+
+
+            Reply with one integer 55–100 only.'
+        response_variable: claude_response
+        action: conversation.process
+      - variables:
+          recommended_position: '{% set speech = claude_response.response.speech.plain.speech
+            | trim %}{% set matches = speech | regex_findall(''\d+'') %}{% if matches
+            %}{% set pos = matches[0] | int %}{{ [[55, pos] | max, 100] | min }}{%
+            else %}{{ current_position }}{% endif %}'
+      - data:
+          message: 'Adaptive Shading: Sun hitting (az={{ sun_azimuth }}°, el={{ sun_elevation
+            }}°, irr={{ irradiance }}W/m²) | Indoor={{ indoor_temp }}°F / {{ target_temp
+            }}°F target | HVAC={{ hvac_mode }} | Claude recommended {{ recommended_position
+            }}% (current={{ current_position }}%)'
+          level: info
+        action: system_log.write
+      - if:
+        - condition: template
+          value_template: '{{ (recommended_position | int - current_position | int)
+            | abs > 10 }}'
+        then:
+        - target:
+            entity_id: cover.dining_room_side
+          data:
+            position: '{{ recommended_position | int }}'
+          action: cover.set_cover_position
+  mode: single
+- id: '1776980419853'
+  alias: First Floor Shades – Schedule & Adaptive
+  description: 'First-floor shading: weekday 7:30 and weekend 8:00 morning opens plus
+    30-min adaptive ticks all run the same template formula on front/dining/living
+    shades. Adaptive runs from 08:01 until sunset (sun above horizon). After 5pm,
+    adaptive skips entirely if ALL three first-floor shades are already closed (manual
+    privacy mode) -- automation does not reopen them. After 5pm with no one home,
+    adaptive also skips. Sunset+30 or 8pm closes all three. Paused during dinner party.'
+  triggers:
+  - at: 07:30:00
+    id: weekday_open
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    platform: time
+  - at: 08:00:00
+    id: weekend_open
+    weekday:
+    - sun
+    - sat
+    platform: time
+  - minutes: /30
+    id: adaptive
+    platform: time_pattern
+  - event: sunset
+    offset: 00:30:00
+    id: sunset_close
+    platform: sun
+  - at: '20:00:00'
+    id: evening_close
+    platform: time
+  conditions:
+  - condition: time
+    after: 07:29:00
+    before: '20:01:00'
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.dinner_party
+        state: 'off'
+      - condition: or
+        conditions:
+        - condition: trigger
+          id: weekday_open
+        - condition: trigger
+          id: weekend_open
+        - condition: and
+          conditions:
+          - condition: trigger
+            id: adaptive
+          - condition: time
+            after: 08:01:00
+          - condition: numeric_state
+            entity_id: sun.sun
+            attribute: elevation
+            above: 0
+          - condition: or
+            conditions:
+            - condition: time
+              before: '17:00:00'
+            - condition: state
+              entity_id: binary_sensor.someone_home
+              state: 'on'
+          - condition: template
+            value_template: '{{ now().hour < 17 or state_attr(''cover.first_floor_front'',
+              ''current_position'') | int(0) > 5 or state_attr(''cover.dining_room_side'',
+              ''current_position'') | int(0) > 5 or state_attr(''cover.living_room_side_shades'',
+              ''current_position'') | int(0) > 5 }}'
+      sequence:
+      - variables:
+          comfort: 70
+          closure_responsiveness: 20
+          indoor: '{{ state_attr(''climate.living_room_thermostat_homekit'', ''current_temperature'')
+            | float(70) }}'
+          effw_front: '{{ states(''sensor.sun_hitting_south'') | float(0) }}'
+          effw_dining: '{{ states(''sensor.sun_hitting_east'') | float(0) }}'
+          effw_living: '{{ states(''sensor.sun_hitting_west'') | float(0) }}'
+          target_front: '{% if effw_front == 0 or indoor <= comfort %}100{% else %}{%
+            set excess = indoor - comfort %}{% set closure = excess * effw_front /
+            closure_responsiveness %}{{ [[100 - closure, 0] | max, 100] | min | round(0)
+            | int }}{% endif %}'
+          target_dining: '{% if effw_dining == 0 or indoor <= comfort %}100{% else
+            %}{% set excess = indoor - comfort %}{% set closure = excess * effw_dining
+            / closure_responsiveness %}{{ [[100 - closure, 0] | max, 100] | min |
+            round(0) | int }}{% endif %}'
+          target_living: '{% if effw_living == 0 or indoor <= comfort %}100{% else
+            %}{% set excess = indoor - comfort %}{% set closure = excess * effw_living
+            / closure_responsiveness %}{{ [[100 - closure, 0] | max, 100] | min |
+            round(0) | int }}{% endif %}'
+      - action: cover.set_cover_position
+        target:
+          entity_id: cover.first_floor_front
+        data:
+          position: '{{ target_front | int }}'
+      - action: cover.set_cover_position
+        target:
+          entity_id: cover.dining_room_side
+        data:
+          position: '{{ target_dining | int }}'
+      - action: cover.set_cover_position
+        target:
+          entity_id: cover.living_room_side_shades
+        data:
+          position: '{{ target_living | int }}'
+      - action: system_log.write
+        data:
+          message: 'First Floor Shading ({{ trigger.id }}): indoor={{ indoor }}F comfort={{
+            comfort }}F | front -> {{ target_front }}% (effw {{ effw_front }} W/m2)
+            | dining -> {{ target_dining }}% (effw {{ effw_dining }} W/m2) | living
+            -> {{ target_living }}% (effw {{ effw_living }} W/m2)'
+          level: info
+    - conditions:
+      - condition: trigger
+        id:
+        - sunset_close
+        - evening_close
+      - condition: state
+        entity_id: input_boolean.dinner_party
+        state: 'off'
+      sequence:
+      - action: cover.close_cover
+        target:
+          entity_id:
+          - cover.living_room_side_shades
+          - cover.first_floor_front
+          - cover.dining_room_side
+        data: {}
+  mode: single
+- id: '1777026025997'
+  alias: Exhaust Fan Economizer - Safety Shutoff
+  description: Immediately closes the fresh air damper when outdoor conditions become
+    unsafe for ventilation (sustained rain >0.01in for 5min, dew point >65F, or outdoor
+    >73F). Bathroom fans turned off ONLY if HA started them (state-change context
+    shows automation parent_id or user_id). Manually-started shower fans left alone
+    since they only exhaust bathroom air, not draw outside air. No ownership helpers
+    needed.
+  triggers:
+  - platform: numeric_state
+    entity_id: sensor.bayberry_tempest_precipitation
+    above: 0.01
+    for: 00:05:00
+  - platform: numeric_state
+    entity_id: sensor.bayberry_tempest_dew_point
+    above: 65
+    for: 00:02:00
+  - platform: numeric_state
+    entity_id: sensor.bayberry_tempest_temperature
+    above: 73
+    for: 00:05:00
+  conditions: []
+  actions:
+  - action: switch.turn_off
+    target:
+      entity_id: switch.utility_room_ventilation_damper
+  - if:
+    - condition: template
+      value_template: '{{ is_state(''switch.primary_bathroom_exhaust_fan'', ''on'')
+        and (states.switch.primary_bathroom_exhaust_fan.context.parent_id is not none
+        or states.switch.primary_bathroom_exhaust_fan.context.user_id is not none)
+        }}'
+    then:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.primary_bathroom_exhaust_fan
+  - if:
+    - condition: template
+      value_template: '{{ is_state(''switch.basement_bathroom_exhaust_fan'', ''on'')
+        and (states.switch.basement_bathroom_exhaust_fan.context.parent_id is not
+        none or states.switch.basement_bathroom_exhaust_fan.context.user_id is not
+        none) }}'
+    then:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.basement_bathroom_exhaust_fan
+  - action: system_log.write
+    data:
+      message: 'Economizer Safety Shutoff: damper closed. Precip={{ states(''sensor.bayberry_tempest_precipitation'')
+        }}in, DewPt={{ states(''sensor.bayberry_tempest_dew_point'') }}F, Outdoor={{
+        states(''sensor.bayberry_tempest_temperature'') }}F. Primary fan: {% set pf=states.switch.primary_bathroom_exhaust_fan
+        %}{% if pf.state == ''on'' and (pf.context.parent_id is not none or pf.context.user_id
+        is not none) %}turned off (HA-owned){% elif pf.state == ''on'' %}left alone
+        (manual){% else %}already off{% endif %}. Basement fan: {% set bf=states.switch.basement_bathroom_exhaust_fan
+        %}{% if bf.state == ''on'' and (bf.context.parent_id is not none or bf.context.user_id
+        is not none) %}turned off (HA-owned){% elif bf.state == ''on'' %}left alone
+        (manual){% else %}already off{% endif %}.'
+      level: warning
+  mode: single
+- id: '1777026130089'
+  alias: Fresh Air Ventilation
+  description: 'Fresh Air Ventilation. Drives bathroom exhaust fans + outdoor damper
+    + thermostat blowers for FIRST FLOOR (zone 1) and BASEMENT (zone 2). Primary demand
+    signals: temp differential, first-floor or bedroom CO2 > 800, time fallback (<0.5h
+    damper in 24h). Basement runs on its own temp demand OR couples to primary (when
+    run_primary is true) -- giving 310 total CFM for faster house-wide ventilation.
+    Basement coupling still respects: outdoor must be cooler than basement, basement
+    must be above its min_floor (no over-cooling). Coordination with manual/shower
+    presses via state-context inspection -- the economizer turns OFF a fan only if
+    HA started that fan. Externally-started fans left alone for the bathroom 45-min
+    timer. Damper opens if any fan on. Fan_mode set on when economizer is actively
+    running an HA-owned fan.'
+  triggers:
+  - hours: /1
+    id: hourly
+    platform: time_pattern
+  - at: 07:00:00
+    id: morning
+    platform: time
+  - at: '22:00:00'
+    id: primary_unavail
+    platform: time
+  - entity_id: sensor.bayberry_tempest_irradiance
+    above: 200
+    for: 00:10:00
+    id: solar_start
+    platform: numeric_state
+  - entity_id: sensor.bayberry_tempest_precipitation
+    below: 0.01
+    for: 00:05:00
+    id: rain_stop
+    platform: numeric_state
+  - entity_id: sensor.bayberry_tempest_dew_point
+    below: 55
+    for: 00:10:00
+    id: dew_low
+    platform: numeric_state
+  - entity_id: sensor.living_room_thermostat_current_temperature
+    below: 67.5
+    for: 00:02:00
+    id: z1_cooled
+    platform: numeric_state
+  - entity_id: sensor.basement_thermostat_homekit_current_temperature
+    below: 71.5
+    for: 00:02:00
+    id: z2_cooled
+    platform: numeric_state
+  - entity_id: sensor.first_floor_co2_5min
+    above: 800
+    for: 00:05:00
+    id: co2_high_first
+    platform: numeric_state
+  - entity_id: sensor.first_floor_co2_5min
+    below: 600
+    for: 00:05:00
+    id: co2_recovered_first
+    platform: numeric_state
+  - entity_id: sensor.fresh_air_damper_on_24_h
+    above: 1
+    for: 00:05:00
+    id: fallback_satisfied
+    platform: numeric_state
+  - platform: numeric_state
+    entity_id: sensor.bedroom_co2_5min
+    above: 800
+    for: 00:05:00
+    id: co2_high_bedroom
+  conditions:
+  - condition: numeric_state
+    entity_id: sensor.bayberry_tempest_dew_point
+    below: 65
+  - condition: numeric_state
+    entity_id: sensor.bayberry_tempest_precipitation
+    below: 0.01
+  actions:
+  - action: weather.get_forecasts
+    data:
+      type: daily
+    target:
+      entity_id: weather.bayberry
+    response_variable: weather_forecast
+  - variables:
+      outdoor_temp: '{{ states(''sensor.bayberry_tempest_temperature'') | float(70)
+        }}'
+      dew_point: '{{ states(''sensor.bayberry_tempest_dew_point'') | float(50) }}'
+      irradiance: '{{ states(''sensor.bayberry_tempest_irradiance'') | float(0) }}'
+      zone1_temp: '{{ states(''sensor.living_room_thermostat_current_temperature'')
+        | float(72) }}'
+      zone2_temp: '{{ states(''sensor.basement_thermostat_homekit_current_temperature'')
+        | float(72) }}'
+      zone1_min_temp: '{{ states(''input_number.living_room_fresh_air_min_temp'')
+        | float(65) }}'
+      zone2_min_temp: '{{ states(''input_number.basement_fresh_air_minimum_temp'')
+        | float(65) }}'
+      is_overnight: '{{ now().hour >= 20 or now().hour < 8 }}'
+      primary_available: '{{ now().hour >= 7 and now().hour < 22 }}'
+      tomorrow_high: '{{ weather_forecast[''weather.bayberry''][''forecast''][1].temperature
+        | float(70) }}'
+      zone1_target: '{% if not is_overnight %}{{ 68 - (1 if irradiance > 200 else
+        0) }}{% elif tomorrow_high > 72 %}{{ zone1_min_temp + 1 }}{% else %}70{% endif
+        %}'
+      zone2_target: '{% if not is_overnight %}{{ 72 - (1 if irradiance > 200 else
+        0) }}{% elif tomorrow_high > 72 %}{{ zone2_min_temp + 1 }}{% else %}70{% endif
+        %}'
+      primary_running: '{{ is_state(''switch.primary_bathroom_exhaust_fan'', ''on'')
+        }}'
+      basement_running: '{{ is_state(''switch.basement_bathroom_exhaust_fan'', ''on'')
+        }}'
+      co2_first_floor: '{{ states(''sensor.first_floor_co2_5min'') | float(400) }}'
+      co2_bedroom: '{{ states(''sensor.bedroom_co2_5min'') | float(400) }}'
+      damper_24h: '{{ states(''sensor.fresh_air_damper_on_24_h'') | float(0) }}'
+      run_primary: '{% set t = zone1_target | float %}{% set hyst = (primary_running
+        and zone1_temp > (t - 0.5)) or (not primary_running and zone1_temp > (t +
+        0.5)) %}{% set above_floor = zone1_temp > zone1_min_temp %}{% set outdoor_cooler
+        = outdoor_temp < zone1_temp %}{% set b_above_floor = zone2_temp > zone2_min_temp
+        %}{% set b_outdoor_cooler = outdoor_temp < zone2_temp %}{% set b_will_couple
+        = b_above_floor and b_outdoor_cooler %}{% set effective_cfm = 110 + (290 if
+        b_will_couple else 0) %}{% set worth_running = (effective_cfm * (zone1_temp
+        - outdoor_temp) * 1.08) > 600 %}{% set temp_demand = hyst and above_floor
+        and outdoor_cooler and worth_running %}{% set co2_ff = states(''sensor.first_floor_co2_5min'')
+        | float(400) %}{% set co2_br = states(''sensor.bedroom_co2_5min'') | float(400)
+        %}{% set damper_24 = states(''sensor.fresh_air_damper_on_24_h'') | float(0)
+        %}{% set co2_demand = co2_ff > 800 or co2_br > 800 %}{% set fallback_demand
+        = (primary_running and damper_24 < 1.0) or (not primary_running and damper_24
+        < 0.5) %}{{ primary_available and (temp_demand or co2_demand or fallback_demand)
+        }}'
+      run_basement: '{% set t = zone2_target | float %}{% set hyst = (basement_running
+        and zone2_temp > (t - 0.5)) or (not basement_running and zone2_temp > (t +
+        0.5)) %}{% set above_floor = zone2_temp > zone2_min_temp %}{% set outdoor_cooler
+        = outdoor_temp < zone2_temp %}{% set worth_running = (290 * (zone2_temp -
+        outdoor_temp) * 1.08) > 600 %}{% set basement_temp_demand = hyst and worth_running
+        %}{{ above_floor and outdoor_cooler and (basement_temp_demand or run_primary)
+        }}'
+      primary_started_by_us: '{{ states.switch.primary_bathroom_exhaust_fan.context.parent_id
+        is not none or states.switch.primary_bathroom_exhaust_fan.context.user_id
+        is not none }}'
+      basement_started_by_us: '{{ states.switch.basement_bathroom_exhaust_fan.context.parent_id
+        is not none or states.switch.basement_bathroom_exhaust_fan.context.user_id
+        is not none }}'
+  - if:
+    - condition: template
+      value_template: '{{ run_primary }}'
+    then:
+    - if:
+      - condition: template
+        value_template: '{{ not primary_running }}'
+      then:
+      - action: switch.turn_on
+        target:
+          entity_id: switch.primary_bathroom_exhaust_fan
+      - action: climate.set_fan_mode
+        target:
+          entity_id: climate.living_room_thermostat
+        data:
+          fan_mode: 'on'
+    else:
+    - if:
+      - condition: template
+        value_template: '{{ primary_running and primary_started_by_us }}'
+      then:
+      - action: switch.turn_off
+        target:
+          entity_id: switch.primary_bathroom_exhaust_fan
+      - action: climate.set_fan_mode
+        target:
+          entity_id: climate.living_room_thermostat
+        data:
+          fan_mode: auto
+  - if:
+    - condition: template
+      value_template: '{{ run_basement }}'
+    then:
+    - if:
+      - condition: template
+        value_template: '{{ not basement_running }}'
+      then:
+      - action: switch.turn_on
+        target:
+          entity_id: switch.basement_bathroom_exhaust_fan
+      - action: climate.set_fan_mode
+        target:
+          entity_id: climate.basement_thermostat
+        data:
+          fan_mode: 'on'
+    else:
+    - if:
+      - condition: template
+        value_template: '{{ basement_running and basement_started_by_us }}'
+      then:
+      - action: switch.turn_off
+        target:
+          entity_id: switch.basement_bathroom_exhaust_fan
+      - action: climate.set_fan_mode
+        target:
+          entity_id: climate.basement_thermostat
+        data:
+          fan_mode: auto
+  - if:
+    - condition: template
+      value_template: '{{ is_state(''switch.primary_bathroom_exhaust_fan'', ''on'')
+        or is_state(''switch.basement_bathroom_exhaust_fan'', ''on'') }}'
+    then:
+    - action: switch.turn_on
+      target:
+        entity_id: switch.utility_room_ventilation_damper
+    else:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.utility_room_ventilation_damper
+  - if:
+    - condition: template
+      value_template: '{{ run_primary and (not primary_running or primary_started_by_us)
+        }}'
+    then:
+    - action: climate.set_fan_mode
+      target:
+        entity_id: climate.living_room_thermostat
+      data:
+        fan_mode: 'on'
+    else:
+    - action: climate.set_fan_mode
+      target:
+        entity_id: climate.living_room_thermostat
+      data:
+        fan_mode: auto
+  - if:
+    - condition: template
+      value_template: '{{ run_basement and (not basement_running or basement_started_by_us)
+        }}'
+    then:
+    - action: climate.set_fan_mode
+      target:
+        entity_id: climate.basement_thermostat
+      data:
+        fan_mode: 'on'
+    else:
+    - action: climate.set_fan_mode
+      target:
+        entity_id: climate.basement_thermostat
+      data:
+        fan_mode: auto
+  - action: system_log.write
+    data:
+      message: 'Fresh Air Ventilation: outdoor={{ outdoor_temp }}F dp={{ dew_point
+        }}F irr={{ irradiance }}W/m2 | Z1={{ zone1_temp }}F target={{ zone1_target
+        }}F floor={{ zone1_min_temp }}F | Z2={{ zone2_temp }}F target={{ zone2_target
+        }}F | CO2 1F={{ co2_first_floor }}ppm BR={{ co2_bedroom }}ppm | damper_24h={{
+        damper_24h }}h | trigger={{ trigger.id | default(''manual'') }} -> primary={{
+        run_primary }} basement={{ run_basement }} damper={{ run_primary or run_basement
+        }}'
+      level: info
+  mode: restart
+- id: '1777031732859'
+  alias: Front Guest Bedroom Pico - Open Shades
+  description: ''
+  triggers:
+  - device_id: dbd00a673efa053d63fa6d9d979888dd
+    domain: lutron_caseta
+    type: press
+    subtype: 'on'
+    platform: device
+  conditions: []
+  actions:
+  - action: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.front_guest_bedroom_shades
+  mode: single
+- id: '1777031734880'
+  alias: Front Guest Bedroom Pico - Close Shades
+  description: ''
+  triggers:
+  - device_id: dbd00a673efa053d63fa6d9d979888dd
+    domain: lutron_caseta
+    type: press
+    subtype: 'off'
+    platform: device
+  conditions: []
+  actions:
+  - action: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.front_guest_bedroom_shades
+  mode: single
+- id: '1777225146361'
+  alias: Basement Bathroom Exhaust Fan Turns Off after 45 min
+  description: '45-min auto-off timer for basement bathroom fan after a manual/external
+    press. Trigger condition checks the state-change context: if both context.parent_id
+    and context.user_id are null, the fan was turned on by a physical wall press or
+    external integration — NOT an HA automation. Skips if HA automation started the
+    fan. After 45 min, only turns off if the fan is still on.'
+  triggers:
+  - platform: state
+    entity_id:
+    - switch.basement_bathroom_exhaust_fan
+    from:
+    - 'off'
+    to:
+    - 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.to_state.context.parent_id is none and trigger.to_state.context.user_id
+      is none }}'
+  actions:
+  - delay:
+      hours: 0
+      minutes: 45
+      seconds: 0
+  - if:
+    - condition: state
+      entity_id: switch.basement_bathroom_exhaust_fan
+      state: 'on'
+    then:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.basement_bathroom_exhaust_fan
+  mode: single
+- id: '1777328807450'
+  alias: Primary Bedroom Shades – Schedule & Adaptive
+  description: 'Primary bedroom shading framework matching first-floor design. Weekday
+    8:00 and weekend 9:00 morning opens plus 15-min adaptive ticks all run the same
+    template formula on bedroom_back (north), bedroom_left (west), and bedroom_right/hallway_1/hallway_2
+    (east). Adaptive runs from 09:01 until sunset. At sunset+30 or 8pm: bedroom_left/right
+    and both closets always close; bedroom_back closes ONLY in Nov-Mar (winter insulation).
+    Replaces the four existing bedroom shade automations.'
+  triggers:
+  - at: 08:00:00
+    id: weekday_open
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    platform: time
+  - at: 09:00:00
+    id: weekend_open
+    weekday:
+    - sat
+    - sun
+    platform: time
+  - minutes: /30
+    id: adaptive
+    platform: time_pattern
+  - event: sunset
+    offset: 00:30:00
+    id: sunset_close
+    platform: sun
+  - at: '20:00:00'
+    id: evening_close
+    platform: time
+  conditions:
+  - condition: time
+    after: 07:59:00
+    before: '20:01:00'
+  actions:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: trigger
+          id: weekday_open
+        - condition: trigger
+          id: weekend_open
+        - condition: and
+          conditions:
+          - condition: trigger
+            id: adaptive
+          - condition: time
+            after: 09:01:00
+          - condition: numeric_state
+            entity_id: sun.sun
+            attribute: elevation
+            above: 0
+      sequence:
+      - variables:
+          comfort: 68
+          closure_responsiveness: 20
+          indoor: '{{ state_attr(''climate.master_bedroom_thermostat'', ''current_temperature'')
+            | float(70) }}'
+          effw_back: '{{ states(''sensor.sun_hitting_north'') | float(0) }}'
+          effw_left: '{{ states(''sensor.sun_hitting_west'') | float(0) }}'
+          effw_east: '{{ states(''sensor.sun_hitting_east'') | float(0) }}'
+          target_back: '{% if effw_back == 0 or indoor <= comfort %}100{% else %}{%
+            set excess = indoor - comfort %}{% set closure = excess * effw_back /
+            closure_responsiveness %}{{ [[100 - closure, 0] | max, 100] | min | round(0)
+            | int }}{% endif %}'
+          target_left: '{% if effw_left == 0 or indoor <= comfort %}100{% else %}{%
+            set excess = indoor - comfort %}{% set closure = excess * effw_left /
+            closure_responsiveness %}{{ [[100 - closure, 0] | max, 100] | min | round(0)
+            | int }}{% endif %}'
+          target_east: '{% if effw_east == 0 or indoor <= comfort %}100{% else %}{%
+            set excess = indoor - comfort %}{% set closure = excess * effw_east /
+            closure_responsiveness %}{{ [[100 - closure, 0] | max, 100] | min | round(0)
+            | int }}{% endif %}'
+      - action: cover.set_cover_position
+        target:
+          entity_id: cover.bedroom_back
+        data:
+          position: '{{ target_back | int }}'
+      - action: cover.set_cover_position
+        target:
+          entity_id: cover.bedroom_left
+        data:
+          position: '{{ target_left | int }}'
+      - action: cover.set_cover_position
+        target:
+          entity_id:
+          - cover.bedroom_right
+          - cover.hallway_1
+          - cover.hallway_2
+        data:
+          position: '{{ target_east | int }}'
+      - action: system_log.write
+        data:
+          message: 'Primary Bedroom Shading ({{ trigger.id }}): indoor={{ indoor }}F
+            comfort={{ comfort }}F | back -> {{ target_back }}% (effw {{ effw_back
+            }} W/m2 N) | left -> {{ target_left }}% (effw {{ effw_left }} W/m2 W)
+            | east(right+closets) -> {{ target_east }}% (effw {{ effw_east }} W/m2
+            E)'
+          level: info
+    - conditions:
+      - condition: trigger
+        id:
+        - sunset_close
+        - evening_close
+      sequence:
+      - action: cover.close_cover
+        target:
+          entity_id:
+          - cover.bedroom_left
+          - cover.bedroom_right
+          - cover.hallway_1
+          - cover.hallway_2
+      - if:
+        - condition: template
+          value_template: '{{ now().month in [1, 2, 3, 11, 12] }}'
+        then:
+        - action: cover.close_cover
+          target:
+            entity_id: cover.bedroom_back
+  mode: single
+- id: '1777329382086'
+  alias: Back Guest Bedroom Shades – Schedule & Adaptive
+  description: Back guest bedroom shading framework matching primary bedroom design.
+    Weekday 8:00 and weekend 9:00 morning opens plus 15-min adaptive ticks all run
+    the same template formula on back_left/back_right (north) and side (west). Adaptive
+    runs from 09:01 until sunset. At sunset+30 or 8pm all three shades close. ENTIRE
+    automation paused when guest_mode is on (no shade movement when guests are present).
+    Indoor temp from sensor.guest_bedroom_sensor_temperature. Comfort 68. Replaces
+    8am/9am opens and sunset close automations.
+  triggers:
+  - at: 08:00:00
+    id: weekday_open
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    platform: time
+  - at: 09:00:00
+    id: weekend_open
+    weekday:
+    - sat
+    - sun
+    platform: time
+  - minutes: /30
+    id: adaptive
+    platform: time_pattern
+  - event: sunset
+    offset: 00:30:00
+    id: sunset_close
+    platform: sun
+  - at: '20:00:00'
+    id: evening_close
+    platform: time
+  conditions:
+  - condition: time
+    after: 07:59:00
+    before: '20:01:00'
+  - condition: state
+    entity_id: input_boolean.guest_mode
+    state: 'off'
+  actions:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: trigger
+          id: weekday_open
+        - condition: trigger
+          id: weekend_open
+        - condition: and
+          conditions:
+          - condition: trigger
+            id: adaptive
+          - condition: time
+            after: 09:01:00
+          - condition: numeric_state
+            entity_id: sun.sun
+            attribute: elevation
+            above: 0
+      sequence:
+      - variables:
+          comfort: 68
+          closure_responsiveness: 20
+          indoor: '{{ states(''sensor.guest_bedroom_sensor_temperature'') | float(70)
+            }}'
+          effw_back: '{{ states(''sensor.sun_hitting_north'') | float(0) }}'
+          effw_side: '{{ states(''sensor.sun_hitting_west'') | float(0) }}'
+          target_back: '{% if effw_back == 0 or indoor <= comfort %}100{% else %}{%
+            set excess = indoor - comfort %}{% set closure = excess * effw_back /
+            closure_responsiveness %}{{ [[100 - closure, 0] | max, 100] | min | round(0)
+            | int }}{% endif %}'
+          target_side: '{% if effw_side == 0 or indoor <= comfort %}100{% else %}{%
+            set excess = indoor - comfort %}{% set closure = excess * effw_side /
+            closure_responsiveness %}{{ [[100 - closure, 0] | max, 100] | min | round(0)
+            | int }}{% endif %}'
+      - action: cover.set_cover_position
+        target:
+          entity_id:
+          - cover.back_guest_bedroom_back_left
+          - cover.back_guest_bedroom_back_right
+        data:
+          position: '{{ target_back | int }}'
+      - action: cover.set_cover_position
+        target:
+          entity_id: cover.back_guest_bedroom_side
+        data:
+          position: '{{ target_side | int }}'
+      - action: system_log.write
+        data:
+          message: 'Back Guest Bedroom Shading ({{ trigger.id }}): indoor={{ indoor
+            }}F comfort={{ comfort }}F | back -> {{ target_back }}% (effw {{ effw_back
+            }} W/m2 N) | side -> {{ target_side }}% (effw {{ effw_side }} W/m2 W)'
+          level: info
+    - conditions:
+      - condition: trigger
+        id:
+        - sunset_close
+        - evening_close
+      sequence:
+      - action: cover.close_cover
+        target:
+          entity_id:
+          - cover.back_guest_bedroom_back_left
+          - cover.back_guest_bedroom_back_right
+          - cover.back_guest_bedroom_side
+  mode: single
+- id: '1777329849707'
+  alias: Front Guest Bedroom Shades – Schedule & Adaptive
+  description: Front guest bedroom shading framework matching primary/back guest design.
+    Weekday 8:00 and weekend 9:00 morning opens plus 15-min adaptive ticks all run
+    the same template formula on front_left/front_right (south) and side (west). Adaptive
+    runs from 09:01 until sunset. At sunset+30 or 8pm all three shades close. ENTIRE
+    automation paused when guest_mode is on (no shade movement when guests are present).
+    Indoor temp from sensor.front_guest_bedroom_sensor_temperature. Comfort 68. Replaces
+    8am/9am opens and sunset close automations.
+  triggers:
+  - at: 08:00:00
+    id: weekday_open
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    platform: time
+  - at: 09:00:00
+    id: weekend_open
+    weekday:
+    - sat
+    - sun
+    platform: time
+  - minutes: /30
+    id: adaptive
+    platform: time_pattern
+  - event: sunset
+    offset: 00:30:00
+    id: sunset_close
+    platform: sun
+  - at: '20:00:00'
+    id: evening_close
+    platform: time
+  conditions:
+  - condition: time
+    after: 07:59:00
+    before: '20:01:00'
+  - condition: state
+    entity_id: input_boolean.guest_mode
+    state: 'off'
+  actions:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: trigger
+          id: weekday_open
+        - condition: trigger
+          id: weekend_open
+        - condition: and
+          conditions:
+          - condition: trigger
+            id: adaptive
+          - condition: time
+            after: 09:01:00
+          - condition: numeric_state
+            entity_id: sun.sun
+            attribute: elevation
+            above: 0
+      sequence:
+      - variables:
+          comfort: 68
+          closure_responsiveness: 20
+          indoor: '{{ states(''sensor.front_guest_bedroom_sensor_temperature'') |
+            float(70) }}'
+          effw_front: '{{ states(''sensor.sun_hitting_south'') | float(0) }}'
+          effw_side: '{{ states(''sensor.sun_hitting_west'') | float(0) }}'
+          target_front: '{% if effw_front == 0 or indoor <= comfort %}100{% else %}{%
+            set excess = indoor - comfort %}{% set closure = excess * effw_front /
+            closure_responsiveness %}{{ [[100 - closure, 0] | max, 100] | min | round(0)
+            | int }}{% endif %}'
+          target_side: '{% if effw_side == 0 or indoor <= comfort %}100{% else %}{%
+            set excess = indoor - comfort %}{% set closure = excess * effw_side /
+            closure_responsiveness %}{{ [[100 - closure, 0] | max, 100] | min | round(0)
+            | int }}{% endif %}'
+      - action: cover.set_cover_position
+        target:
+          entity_id:
+          - cover.front_guest_bedroom_front_left
+          - cover.front_guest_bedroom_front_right
+        data:
+          position: '{{ target_front | int }}'
+      - action: cover.set_cover_position
+        target:
+          entity_id: cover.front_guest_bedroom_side
+        data:
+          position: '{{ target_side | int }}'
+      - action: system_log.write
+        data:
+          message: 'Front Guest Bedroom Shading ({{ trigger.id }}): indoor={{ indoor
+            }}F comfort={{ comfort }}F | front -> {{ target_front }}% (effw {{ effw_front
+            }} W/m2 S) | side -> {{ target_side }}% (effw {{ effw_side }} W/m2 W)'
+          level: info
+    - conditions:
+      - condition: trigger
+        id:
+        - sunset_close
+        - evening_close
+      sequence:
+      - action: cover.close_cover
+        target:
+          entity_id:
+          - cover.front_guest_bedroom_front_left
+          - cover.front_guest_bedroom_front_right
+          - cover.front_guest_bedroom_side
+  mode: single
+- id: '1777372737730'
+  alias: HVAC Fan - Living Room Air Filter
+  description: Run Living Room HVAC fan on when First Floor PM2.5 spikes above 5 µg/m³;
+    return to auto when it drops below 2.
+  triggers:
+  - platform: numeric_state
+    entity_id: sensor.first_floor_air_quality_monitor_pm2_5
+    above: 5
+    for: 00:00:30
+    id: pm25_high
+  - platform: numeric_state
+    entity_id: sensor.first_floor_air_quality_monitor_pm2_5
+    below: 2
+    for: 00:05:00
+    id: pm25_low
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: pm25_high
+      sequence:
+      - target:
+          entity_id: climate.living_room_thermostat
+        data:
+          fan_mode: 'on'
+        action: climate.set_fan_mode
+    - conditions:
+      - condition: trigger
+        id: pm25_low
+      sequence:
+      - target:
+          entity_id: climate.living_room_thermostat
+        data:
+          fan_mode: auto
+        action: climate.set_fan_mode
+  mode: single
+- id: '1777372741480'
+  alias: HVAC Fan - Bedroom Air Filter
+  description: Run Master Bedroom HVAC fan on when Bedroom PM2.5 spikes above 5 µg/m³;
+    return to auto when it drops below 2.
+  triggers:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_air_quality_pm2_5
+    above: 5
+    for: 00:00:30
+    id: pm25_high
+  - platform: numeric_state
+    entity_id: sensor.bedroom_air_quality_pm2_5
+    below: 2
+    for: 00:05:00
+    id: pm25_low
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: pm25_high
+      sequence:
+      - target:
+          entity_id: climate.master_bedroom_thermostat
+        data:
+          fan_mode: 'on'
+        action: climate.set_fan_mode
+    - conditions:
+      - condition: trigger
+        id: pm25_low
+      sequence:
+      - target:
+          entity_id: climate.master_bedroom_thermostat
+        data:
+          fan_mode: auto
+        action: climate.set_fan_mode
+  mode: single
+- id: '1777374012037'
+  alias: Primary Bathroom Exhaust Fan Turns Off after 45 min
+  description: '45-min auto-off timer for primary bathroom fan after a manual/external
+    press (e.g., shower). Trigger condition checks the state-change context: if both
+    context.parent_id and context.user_id are null, the fan was turned on by a physical
+    wall press or external integration (Lutron app) — NOT an HA automation. Skips
+    if HA automation started the fan (economizer, safety shutoff, etc.). After 45
+    min, only turns off if the fan is still on (might have been turned off earlier
+    by something else).'
+  triggers:
+  - platform: state
+    entity_id:
+    - switch.primary_bathroom_exhaust_fan
+    from:
+    - 'off'
+    to:
+    - 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.to_state.context.parent_id is none and trigger.to_state.context.user_id
+      is none }}'
+  actions:
+  - delay:
+      hours: 0
+      minutes: 45
+      seconds: 0
+  - if:
+    - condition: state
+      entity_id: switch.primary_bathroom_exhaust_fan
+      state: 'on'
+    then:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.primary_bathroom_exhaust_fan
+  mode: single
+- id: '1777540759790'
+  alias: Power cycle outlet when driveway_zone_2_2 unavailable
+  description: 'When switch.driveway_zone_2_2 is unavailable for 2 minutes (and was
+    previously available), power-cycle switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet:
+    off for 30 seconds, then back on. Includes 10-minute cooldown to avoid rapid re-triggering,
+    and ignores HA restart noise via from_state check.'
+  triggers:
+  - platform: state
+    entity_id: switch.driveway_zone_2_2
+    to: unavailable
+    for:
+      minutes: 2
+  conditions:
+  - condition: template
+    alias: Only if entity was previously available (ignore HA restarts)
+    value_template: '{{ trigger.from_state is not none and trigger.from_state.state
+      not in [''unavailable'', ''unknown'', ''none''] }}'
+  - condition: template
+    alias: 10-minute cooldown since last run
+    value_template: '{{ this.attributes.last_triggered is none or (now() - this.attributes.last_triggered).total_seconds()
+      > 600 }}'
+  actions:
+  - alias: Turn outlet off
+    target:
+      entity_id: switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet
+    action: switch.turn_off
+  - alias: Wait 30 seconds
+    delay:
+      seconds: 30
+  - alias: Turn outlet back on
+    target:
+      entity_id: switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet
+    action: switch.turn_on
+  mode: single
+- id: '1777851014172'
+  alias: Washing Machine Live Activity
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.front_load_washer
+    attribute: run_state
+  - trigger: state
+    entity_id:
+    - sensor.front_load_washer_remaining_time
+  conditions: []
+  actions:
+  - action: rest_command.update_live_activity
+    response_variable: aivi_response
+    data:
+      slug: washing_machine
+      payload: "{% set running = is_state(\"sensor.front_load_washer\", \"on\") %}
+        {\n  \"state\": \"{{ 'ONGOING' if running else 'IDLE' }}\",\n  \"content\":
+        {\n    \"template\": \"generic\",\n    \"state\": \"{{ states('sensor.front_load_washer_run_state')
+        }}\",\n    \"remaining_time\": {{ states('sensor.front_load_washer_remaining_time')
+        }},\n    \"icon\": \"washer\"\n  }\n}"
+  mode: single
+- id: '1778025144757'
+  alias: Bedroom Air Quality
+  description: When bedroom CO2 (5-min avg) exceeds 800 ppm, send a persistent notification
+    suggesting a window. During daytime (7am-10pm), also turn on the master bedroom
+    HVAC blower to mix bedroom air with the rest of the house. At 10pm sharp, the
+    blower is forced back to auto regardless of CO2 state -- quiet hours, no noisy
+    circulation overnight even if CO2 hasn't recovered. During quiet hours (10pm-7am),
+    the blower will not be turned on by CO2 spikes; only the notification fires. When
+    CO2 drops below 600 ppm, restore blower to auto and dismiss the notification.
+    The bathroom exhaust fan running (driven by Fresh Air Ventilation when bedroom
+    CO2 is high) helps further by pulling fresh outdoor air through the damper. A
+    bedroom window is still the most direct fix.
+  triggers:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_co2_5min
+    above: 800
+    for: 00:05:00
+    id: co2_high
+  - platform: numeric_state
+    entity_id: sensor.bedroom_co2_5min
+    below: 600
+    for: 00:05:00
+    id: co2_recovered
+  - platform: time
+    at: '22:00:00'
+    id: quiet_hours_start
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: co2_high
+      sequence:
+      - action: persistent_notification.create
+        data:
+          title: Bedroom CO2 elevated
+          message: Bedroom CO2 at {{ states('sensor.bedroom_co2_5min') }} ppm (5-min
+            avg). Open a bedroom window for direct relief.{% if now().hour >= 7 and
+            now().hour < 22 %} The master bedroom HVAC blower is also running to mix
+            air with the rest of the house.{% else %} HVAC blower stays off during
+            quiet hours (10pm-7am).{% endif %}
+          notification_id: bedroom_co2_high
+      - if:
+        - condition: time
+          after: 07:00:00
+          before: '22:00:00'
+        then:
+        - action: climate.set_fan_mode
+          target:
+            entity_id: climate.master_bedroom_thermostat
+          data:
+            fan_mode: 'on'
+    - conditions:
+      - condition: trigger
+        id: co2_recovered
+      sequence:
+      - action: climate.set_fan_mode
+        target:
+          entity_id: climate.master_bedroom_thermostat
+        data:
+          fan_mode: auto
+      - action: persistent_notification.dismiss
+        data:
+          notification_id: bedroom_co2_high
+    - conditions:
+      - condition: trigger
+        id: quiet_hours_start
+      sequence:
+      - action: climate.set_fan_mode
+        target:
+          entity_id: climate.master_bedroom_thermostat
+        data:
+          fan_mode: auto
+  mode: restart
+- id: '1780678371300'
+  alias: 'Pool: Raise Pump Speed When Heating'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.omnilogic_pool_heat_pump_status
+    from:
+    - 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+    to:
+    - 'on'
+  conditions: []
+  actions:
+  - action: number.set_value
+    metadata: {}
+    target:
+      entity_id: number.omnilogic_pool_filter_pump_speed
+    data:
+      value: '2470'
+  mode: single
+- id: '1780678610791'
+  alias: 'Pool: Lower Pump Speed When Heating Complete'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.omnilogic_pool_heat_pump_status
+    from:
+    - 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+    to:
+    - 'off'
+  conditions: []
+  actions:
+  - action: number.set_value
+    metadata: {}
+    target:
+      entity_id: number.omnilogic_pool_filter_pump_speed
+    data:
+      value: '2000'
+  mode: single
