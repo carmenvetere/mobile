@@ -382,8 +382,7 @@
         - switch.transformer_zone_1
         - switch.transformer_zone_2
         - switch.transformer_zone_3
-        - switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet
-      for: "00:00:01"
+      for: "00:00:02"
   binary_sensor:
     - name: "Scene Good Morning"
       unique_id: scene_good_morning
@@ -526,19 +525,6 @@
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:glass-cocktail
 
-    - name: "Scene First Floor Cleaning"
-      unique_id: scene_first_floor_cleaning
-      state: >
-        {% set checks = [
-          is_state('light.kitchen_main_lights', 'on') and state_attr('light.kitchen_main_lights', 'brightness') | int(0) in range(245, 266),
-          is_state('light.kitchen_island_pendants', 'on') and state_attr('light.kitchen_island_pendants', 'brightness') | int(0) in range(245, 266),
-          is_state('light.kitchen_outer_wall', 'on') and state_attr('light.kitchen_outer_wall', 'brightness') | int(0) in range(245, 266),
-          is_state('light.living_room_main_lights', 'on') and state_attr('light.living_room_main_lights', 'brightness') | int(0) in range(245, 266),
-          is_state('light.dining_room_main_lights', 'on') and state_attr('light.dining_room_main_lights', 'brightness') | int(0) in range(245, 266)
-        ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
-      icon: mdi:spray-bottle
-
     - name: "Scene Welcome"
       unique_id: scene_welcome
       state: >
@@ -594,17 +580,6 @@
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:desk-lamp
 
-    - name: "Scene Upstairs Evening"
-      unique_id: scene_upstairs_evening
-      state: >
-        {% set checks = [
-          is_state('light.office_floor_lamp', 'on') and state_attr('light.office_floor_lamp', 'brightness') | int(0) in range(66, 87),
-          is_state('light.upstairs_hallway_main_lights', 'on') and state_attr('light.upstairs_hallway_main_lights', 'brightness') | int(0) in range(15, 36),
-          is_state('light.eve_light_strip_a5a4', 'on') and state_attr('light.eve_light_strip_a5a4', 'brightness') | int(0) in range(64, 85)
-        ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
-      icon: mdi:moon-waning-crescent
-
     - name: "Scene Outdoor On"
       unique_id: scene_outdoor_on
       state: >
@@ -621,41 +596,6 @@
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:outdoor-lamp
-
-    - name: "Scene Outdoor On Bright"
-      unique_id: scene_outdoor_on_bright
-      state: >
-        {% set checks = [
-          is_state('light.patio_back_porch_lights', 'on') and state_attr('light.patio_back_porch_lights', 'brightness') | int(0) in range(245, 266),
-          is_state('light.driveway_sconces', 'on') and state_attr('light.driveway_sconces', 'brightness') | int(0) in range(245, 266),
-          is_state('light.front_porch_overhead_light', 'on') and state_attr('light.front_porch_overhead_light', 'brightness') | int(0) in range(245, 266),
-          is_state('switch.driveway_zone_2_2', 'on'),
-          is_state('switch.driveway_zone_3_2', 'on'),
-          is_state('switch.driveway_zone_1_2', 'on'),
-          is_state('switch.transformer_zone_2', 'on'),
-          is_state('switch.transformer_zone_1', 'on'),
-          is_state('switch.transformer_zone_3', 'on')
-        ] %}
-        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
-      icon: mdi:outdoor-lamp
-
-    - name: "Scene Outdoor Off"
-      unique_id: scene_outdoor_off
-      state: >
-        {% set checks = [
-          is_state('light.patio_back_porch_lights', 'off'),
-          is_state('light.driveway_sconces', 'off'),
-          is_state('light.front_porch_overhead_light', 'off'),
-          is_state('switch.driveway_zone_2_2', 'off'),
-          is_state('switch.driveway_zone_3_2', 'off'),
-          is_state('switch.driveway_zone_1_2', 'off'),
-          is_state('switch.transformer_zone_1', 'off'),
-          is_state('switch.transformer_zone_2', 'off'),
-          is_state('switch.transformer_zone_3', 'off'),
-          is_state('switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet', 'off')
-        ] %}
-        {{ checks | select('equalto', true) | list | count == checks | count }}
-      icon: mdi:lightbulb-multiple-off-outline
 
 - trigger:
     - platform: time_pattern
