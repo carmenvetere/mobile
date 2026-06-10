@@ -8,6 +8,13 @@ my:
 frontend:
   themes: !include_dir_merge_named themes
 
+# Harden the HTTP frontend: enable brute-force protection (auto-bans an IP
+# after repeated failed logins). If HA sits behind a reverse proxy, also set
+# use_x_forwarded_for: true and list the proxy under trusted_proxies.
+http:
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
@@ -125,7 +132,7 @@ utility_meter:
     cycle: daily
 
 recorder:
-  db_url: mysql://carmenv:REDACTED@core-mariadb/homeassistant?charset=utf8mb4
+  db_url: !secret recorder_db_url
   purge_keep_days: 30
   commit_interval: 30          # NEW: batch DB writes every 10s instead of every 1s
   auto_purge: true
@@ -246,35 +253,23 @@ lovelace:
       type: module
     - url: /browser_mod.js
       type: module      
-    - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
-      type: module 
-    - url: /hacsfiles/lovelace-expander-card/expander-card.js 
+    - url: /hacsfiles/lovelace-expander-card/expander-card.js
       type: module
     - url: /hacsfiles/stack-in-card/stack-in-card.js 
       type: module
     - url: /hacsfiles/llmvision-card/llmvision-card.js 
       type: module
-    - url: /hacsfiles/vacuum-card/vacuum-card.js  
-      type: module    
     - url: /hacsfiles/custom-sonos-card/custom-sonos-card.js
       type: module
     - url: /hacsfiles/simple-swipe-card/simple-swipe-card.js
       type: module
-    - url: /hacsfiles/Ultra-Vehicle-Card/ultra-vehicle-card.js 
-      type: module
-    - url: /hacsfiles/alarmo-card/alarmo-card.js 
-      type: module
-    - url: /hacsfiles/apexcharts-card/apexcharts-card.js 
+    - url: /hacsfiles/apexcharts-card/apexcharts-card.js
       type: module
     - url: /hacsfiles/weather-radar-card/weather-radar-card.js 
       type: module 
     - url: /hacsfiles/energy-sankey/energy-sankey.js 
       type: module
-    - url: /hacsfiles/mediocre-hass-media-player-cards/mediocre-hass-media-player-cards.js
-      type: module
     - url: /hacsfiles/config-template-card/config-template-card.js
-      type: module
-    - url: /hacsfiles/weather-forecast-card/weather-forecast-card.js
       type: module
     - url: /hacsfiles/custom-sonos-card-v2/custom-sonos-card-v2.js
       type: module
