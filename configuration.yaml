@@ -236,6 +236,12 @@ lovelace:
       icon: mdi:alarm-panel
       show_in_sidebar: true
       filename: dashboards/wall-panel-v2/living-room-wall-panel.yaml
+    nspanel-dash:
+      mode: yaml
+      title: "NSPanel Pro - YAML"
+      icon: mdi:tablet-dashboard
+      show_in_sidebar: true
+      filename: dashboards/nspanel/nspanel.yaml
   resources: 
     - url: /hacsfiles/lovelace-layout-card/layout-card.js
       type: module
