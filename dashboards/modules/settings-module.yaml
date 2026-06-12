@@ -721,8 +721,8 @@
   {% endif %}
     - type: custom:bubble-card
       card_type: button
-      entity: automation.7_30_am_first_floor_shades_weekdays
-      name: 7:30AM First Floor Shades Open (Weekdays)
+      entity: automation.living_room_adaptive_shading
+      name: First Floor Shades – Schedule & Adaptive
       icon: mdi:roller-shade
       show_state: false
       scrolling_effect: false
@@ -733,7 +733,7 @@
         action: toggle
       card_layout: large
       sub_button:
-        - entity: automation.7_30_am_first_floor_shades_weekdays
+        - entity: automation.living_room_adaptive_shading
           show_state: true
           show_icon: false
           state_background: false
@@ -742,8 +742,8 @@
         - "{{ settings_module }}"
     - type: custom:bubble-card
       card_type: button
-      entity: automation.8_00_am_first_floor_shades_weekends
-      name: 8:00AM First Floor Shades Open (Weekends)
+      entity: automation.dining_room_adaptive_shading
+      name: Dining Room Adaptive Shading
       icon: mdi:roller-shade
       show_state: false
       scrolling_effect: false
@@ -754,7 +754,7 @@
         action: toggle
       card_layout: large
       sub_button:
-        - entity: automation.8_00_am_first_floor_shades_weekends
+        - entity: automation.dining_room_adaptive_shading
           show_state: true
           show_icon: false
           state_background: false
@@ -763,8 +763,8 @@
         - "{{ settings_module }}"
     - type: custom:bubble-card
       card_type: button
-      entity: automation.800am_bedroom_hallway_shades
-      name: 8:00AM Primary Bedroom Shades Open (Weekdays)
+      entity: automation.primary_bedroom_shades_schedule_adaptive
+      name: Primary Bedroom Shades – Schedule & Adaptive
       icon: mdi:roller-shade
       show_state: false
       scrolling_effect: false
@@ -775,7 +775,7 @@
         action: toggle
       card_layout: large
       sub_button:
-        - entity: automation.800am_bedroom_hallway_shades
+        - entity: automation.primary_bedroom_shades_schedule_adaptive
           show_state: true
           show_icon: false
           state_background: false
@@ -784,8 +784,8 @@
         - "{{ settings_module }}"
     - type: custom:bubble-card
       card_type: button
-      entity: automation.8am_back_guest_bedroom_shades_weekdays
-      name: 8:00AM Back Guest Bedroom Shades Open (Weekdays)
+      entity: automation.back_guest_bedroom_shades_schedule_adaptive
+      name: Back Guest Bedroom Shades – Schedule & Adaptive
       icon: mdi:roller-shade
       show_state: false
       scrolling_effect: false
@@ -796,7 +796,7 @@
         action: toggle
       card_layout: large
       sub_button:
-        - entity: automation.8am_back_guest_bedroom_shades_weekdays
+        - entity: automation.back_guest_bedroom_shades_schedule_adaptive
           show_state: true
           show_icon: false
           state_background: false
@@ -805,8 +805,8 @@
         - "{{ settings_module }}"
     - type: custom:bubble-card
       card_type: button
-      entity: automation.8_00_am_front_guest_bedroom_shades_weekdays
-      name: 8:00AM Front Guest Bedroom Shades Open (Weekdays)
+      entity: automation.front_guest_bedroom_shades_schedule_adaptive
+      name: Front Guest Bedroom Shades – Schedule & Adaptive
       icon: mdi:roller-shade
       show_state: false
       scrolling_effect: false
@@ -817,133 +817,7 @@
         action: toggle
       card_layout: large
       sub_button:
-        - entity: automation.8_00_am_front_guest_bedroom_shades_weekdays
-          show_state: true
-          show_icon: false
-          state_background: false
-          show_background: false
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      entity: automation.900am_bedroom_shades_open_weekends
-      name: 9:00AM Primary Bedroom Shades Open (Weekends)
-      icon: mdi:roller-shade
-      show_state: false
-      scrolling_effect: false
-      button_action:
-        tap_action:
-          action: toggle
-      tap_action:
-        action: toggle
-      card_layout: large
-      sub_button:
-        - entity: automation.900am_bedroom_shades_open_weekends
-          show_state: true
-          show_icon: false
-          state_background: false
-          show_background: false
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      entity: automation.9am_back_guest_bedroom_shades_weekends
-      name: 9:00AM Back Guest Bedroom Shades Open (Weekends)
-      icon: mdi:roller-shade
-      show_state: false
-      scrolling_effect: false
-      button_action:
-        tap_action:
-          action: toggle
-      tap_action:
-        action: toggle
-      card_layout: large
-      sub_button:
-        - entity: automation.9am_back_guest_bedroom_shades_weekends
-          show_state: true
-          show_icon: false
-          state_background: false
-          show_background: false
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      entity: automation.9_00_am_front_guest_bedroom_shades_weekends_2
-      name: 9:00AM Front Guest Bedroom Shades Open (Weekends)
-      icon: mdi:roller-shade
-      show_state: false
-      scrolling_effect: false
-      button_action:
-        tap_action:
-          action: toggle
-      tap_action:
-        action: toggle
-      card_layout: large
-      sub_button:
-        - entity: automation.9_00_am_front_guest_bedroom_shades_weekends_2
-          show_state: true
-          show_icon: false
-          state_background: false
-          show_background: false
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      entity: automation.10_30_am_dining_room_shades
-      name: 10:30AM East Facing Shades Open Fully
-      icon: mdi:roller-shade
-      show_state: false
-      scrolling_effect: false
-      button_action:
-        tap_action:
-          action: toggle
-      tap_action:
-        action: toggle
-      card_layout: large
-      sub_button:
-        - entity: automation.1_00_pm_first_floor_sun_shading
-          show_state: true
-          show_icon: false
-          state_background: false
-          show_background: false
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      entity: automation.1_00_pm_first_floor_sun_shading
-      name: 1:00PM West Facing Shades Sun Shading
-      icon: mdi:roller-shade
-      show_state: false
-      scrolling_effect: false
-      button_action:
-        tap_action:
-          action: toggle
-      tap_action:
-        action: toggle
-      card_layout: large
-      sub_button:
-        - entity: automation.1_00_pm_first_floor_sun_shading
-          show_state: true
-          show_icon: false
-          state_background: false
-          show_background: false
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      entity: automation.3_00_pm_living_room_side_shades
-      name: 3:00PM Living Room Shades Sun Position
-      icon: mdi:roller-shade
-      show_state: false
-      scrolling_effect: false
-      button_action:
-        tap_action:
-          action: toggle
-      tap_action:
-        action: toggle
-      card_layout: large
-      sub_button:
-        - entity: automation.3_00_pm_living_room_side_shades
+        - entity: automation.front_guest_bedroom_shades_schedule_adaptive
           show_state: true
           show_icon: false
           state_background: false
@@ -965,90 +839,6 @@
       card_layout: large
       sub_button:
         - entity: automation.3_00pm_bedroom_back_shading
-          show_state: true
-          show_icon: false
-          state_background: false
-          show_background: false
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      entity: automation.sunset_30_or_8_00_pm_close_shades
-      name: Evening Close First Floor Shades
-      icon: mdi:roller-shade
-      show_state: false
-      scrolling_effect: false
-      button_action:
-        tap_action:
-          action: toggle
-      tap_action:
-        action: toggle
-      card_layout: large
-      sub_button:
-        - entity: automation.sunset_30_or_8_00_pm_close_shades
-          show_state: true
-          show_icon: false
-          state_background: false
-          show_background: false
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm
-      name: Evening Close Bedroom Shades
-      icon: mdi:roller-shade
-      show_state: false
-      scrolling_effect: false
-      button_action:
-        tap_action:
-          action: toggle
-      tap_action:
-        action: toggle
-      card_layout: large
-      sub_button:
-        - entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm
-          show_state: true
-          show_icon: false
-          state_background: false
-          show_background: false
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm
-      name: Evening Close Back Guest Bedroom Shades
-      icon: mdi:roller-shade
-      show_state: false
-      scrolling_effect: false
-      button_action:
-        tap_action:
-          action: toggle
-      tap_action:
-        action: toggle
-      card_layout: large
-      sub_button:
-        - entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm
-          show_state: true
-          show_icon: false
-          state_background: false
-          show_background: false
-      modules:
-        - "{{ settings_module }}"
-    - type: custom:bubble-card
-      card_type: button
-      entity: automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm
-      name: Evening Close Front Guest Bedroom Shades
-      icon: mdi:roller-shade
-      show_state: false
-      scrolling_effect: false
-      button_action:
-        tap_action:
-          action: toggle
-      tap_action:
-        action: toggle
-      card_layout: large
-      sub_button:
-        - entity: automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm
           show_state: true
           show_icon: false
           state_background: false
