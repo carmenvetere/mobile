@@ -1,0 +1,413 @@
+title: Music
+path: music
+icon: mdi:music
+background: '#16181a'
+type: custom:grid-layout
+layout:
+  grid-template-columns: 480px
+  margin: 0
+  padding: 0
+cards:
+  # config-template-card rebinds the player to the room picked in
+  # input_select.sonos_speaker_select. NOTE: no JS template literals
+  # ("${...}") inside this file — config-template-card would evaluate them.
+  - type: custom:config-template-card
+    variables:
+      PLAYER: "'media_player.' + states['input_select.sonos_speaker_select'].state.toLowerCase().split(' ').join('_')"
+    entities:
+      - input_select.sonos_speaker_select
+      - media_player.living_room
+      - media_player.kitchen
+      - media_player.office
+      - media_player.deck
+      - media_player.pool
+      - media_player.primary_bedroom
+      - media_player.primary_bathroom
+      - media_player.gym
+      - media_player.mud_room
+      - media_player.media_room
+    card:
+      type: custom:button-card
+      template: nspanel_screen
+      styles:
+        grid:
+          - grid-template-areas: '"header" "body"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: auto minmax(0,1fr)
+        custom_fields:
+          body:
+            - min-height: 0
+            - height: 100%
+            - overflow-y: auto
+      custom_fields:
+        header:
+          card:
+            type: custom:button-card
+            template: nspanel_header
+            custom_fields:
+              title: '<div style="font:800 24px Manrope;color:#e9e5dd;">Music</div>'
+        body:
+          card:
+            type: custom:button-card
+            template: nspanel_base
+            styles:
+              card:
+                - padding: 2px 16px 18px
+              grid:
+                - grid-template-areas: '"nowplaying" "roomslabel" "rooms"'
+                - grid-template-columns: 1fr
+                - grid-template-rows: auto auto auto
+            custom_fields:
+              nowplaying:
+                card:
+                  type: custom:button-card
+                  template: nspanel_base
+                  entity: ${PLAYER}
+                  styles:
+                    card:
+                      - background: '#2b2f34'
+                      - border: 1px solid rgba(234,230,221,0.08)
+                      - border-radius: 20px
+                      - padding: 18px
+                    grid:
+                      - grid-template-areas: '"top" "progress" "transport" "volume"'
+                      - grid-template-columns: 1fr
+                      - grid-template-rows: auto auto auto auto
+                  custom_fields:
+                    top: |
+                      [[[
+                        const a = entity ? entity.attributes : {};
+                        const room = states['input_select.sonos_speaker_select'].state;
+                        const track = a.media_title || 'Nothing playing';
+                        const artist = a.media_artist || '';
+                        const pic = a.entity_picture;
+                        const art = pic
+                          ? '<img src="' + pic + '" style="width:104px;height:104px;border-radius:16px;flex:none;object-fit:cover;border:1px solid rgba(234,230,221,.08);"/>'
+                          : '<div style="width:104px;height:104px;border-radius:16px;flex:none;background:repeating-linear-gradient(135deg,#34393f,#34393f 8px,#2b2f34 8px,#2b2f34 16px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(234,230,221,.08);">'
+                            + '<span class="ms" style="font-size:38px;color:#565b61;font-variation-settings:\'FILL\' 1,\'wght\' 400;">album</span></div>';
+                        return '<div style="display:flex;gap:16px;align-items:center;width:100%;">' + art
+                          + '<div style="min-width:0;flex:1;text-align:left;">'
+                          + '<div style="display:flex;align-items:center;gap:5px;">'
+                          + '<span class="ms" style="font-size:15px;color:#7295b2;">graphic_eq</span>'
+                          + '<span class="ell" style="font:700 13px Manrope;color:#7295b2;">' + room + '</span></div>'
+                          + '<div class="ell" style="font:800 24px Manrope;color:#e9e5dd;margin-top:7px;letter-spacing:-.5px;">' + track + '</div>'
+                          + '<div class="ell" style="font:600 15px Manrope;color:#9a988f;margin-top:3px;">' + artist + '</div>'
+                          + '</div></div>';
+                      ]]]
+                    progress: |
+                      [[[
+                        const a = entity ? entity.attributes : {};
+                        const dur = a.media_duration || 0;
+                        let pos = a.media_position || 0;
+                        if (entity && entity.state === 'playing' && a.media_position_updated_at) {
+                          pos += (Date.now() - new Date(a.media_position_updated_at).getTime()) / 1000;
+                        }
+                        pos = Math.max(0, Math.min(pos, dur));
+                        const pct = dur > 0 ? Math.round(pos / dur * 100) : 0;
+                        const fmt = function (s) { s = Math.floor(s); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); };
+                        return '<div style="margin-top:18px;width:100%;">'
+                          + '<div style="height:6px;background:rgba(234,230,221,.09);border-radius:999px;overflow:hidden;">'
+                          + '<div style="width:' + pct + '%;height:100%;background:#7295b2;border-radius:999px;"></div></div>'
+                          + '<div style="display:flex;justify-content:space-between;margin-top:7px;">'
+                          + '<span style="font:600 12px Manrope;color:#8b8980;font-variant-numeric:tabular-nums;">' + (dur ? fmt(pos) : '0:00') + '</span>'
+                          + '<span style="font:600 12px Manrope;color:#8b8980;font-variant-numeric:tabular-nums;">' + (dur ? fmt(dur) : '0:00') + '</span>'
+                          + '</div></div>';
+                      ]]]
+                    transport:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_base
+                        styles:
+                          card:
+                            - margin-top: 14px
+                          grid:
+                            - display: flex
+                            - align-items: center
+                            - justify-content: center
+                            - gap: 24px
+                        custom_fields:
+                          shuffle:
+                            card:
+                              type: custom:button-card
+                              template: nspanel_btn
+                              entity: ${PLAYER}
+                              tap_action:
+                                action: perform-action
+                                perform_action: media_player.shuffle_set
+                                target:
+                                  entity_id: ${PLAYER}
+                                data:
+                                  shuffle: '[[[ return !(entity && entity.attributes.shuffle) ]]]'
+                              custom_fields:
+                                glyph: |
+                                  [[[
+                                    const on = entity && entity.attributes.shuffle;
+                                    return '<span class="ms ms-out" style="font-size:25px;color:' + (on ? '#7295b2' : '#8b8980') + ';">shuffle</span>';
+                                  ]]]
+                          prev:
+                            card:
+                              type: custom:button-card
+                              template: nspanel_btn
+                              tap_action:
+                                action: perform-action
+                                perform_action: media_player.media_previous_track
+                                target:
+                                  entity_id: ${PLAYER}
+                              custom_fields:
+                                glyph: '<span class="ms" style="font-size:34px;color:#c4c0b6;">skip_previous</span>'
+                          play:
+                            card:
+                              type: custom:button-card
+                              template: nspanel_btn
+                              entity: ${PLAYER}
+                              tap_action:
+                                action: perform-action
+                                perform_action: media_player.media_play_pause
+                                target:
+                                  entity_id: ${PLAYER}
+                              styles:
+                                card:
+                                  - width: 64px
+                                  - height: 64px
+                                  - border-radius: 50%
+                                  - background: '#7295b2'
+                                  - box-shadow: 0 6px 18px rgba(114,149,178,.3)
+                                grid:
+                                  - display: flex
+                                  - align-items: center
+                                  - justify-content: center
+                                  - height: 100%
+                              custom_fields:
+                                glyph: |
+                                  [[[
+                                    const playing = entity && entity.state === 'playing';
+                                    return '<span class="ms ms-bold" style="font-size:34px;color:#f4f2ec;">' + (playing ? 'pause' : 'play_arrow') + '</span>';
+                                  ]]]
+                          next:
+                            card:
+                              type: custom:button-card
+                              template: nspanel_btn
+                              tap_action:
+                                action: perform-action
+                                perform_action: media_player.media_next_track
+                                target:
+                                  entity_id: ${PLAYER}
+                              custom_fields:
+                                glyph: '<span class="ms" style="font-size:34px;color:#c4c0b6;">skip_next</span>'
+                          repeat:
+                            card:
+                              type: custom:button-card
+                              template: nspanel_btn
+                              entity: ${PLAYER}
+                              tap_action:
+                                action: perform-action
+                                perform_action: media_player.repeat_set
+                                target:
+                                  entity_id: ${PLAYER}
+                                data:
+                                  repeat: "[[[ return entity && entity.attributes.repeat !== 'off' ? 'off' : 'all' ]]]"
+                              custom_fields:
+                                glyph: |
+                                  [[[
+                                    const on = entity && entity.attributes.repeat && entity.attributes.repeat !== 'off';
+                                    return '<span class="ms ms-out" style="font-size:25px;color:' + (on ? '#7295b2' : '#8b8980') + ';">repeat</span>';
+                                  ]]]
+                    volume:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_base
+                        entity: ${PLAYER}
+                        styles:
+                          card:
+                            - margin-top: 16px
+                          grid:
+                            - display: flex
+                            - align-items: center
+                            - gap: 12px
+                          custom_fields:
+                            slider:
+                              - flex: '1'
+                              - min-width: 0
+                        custom_fields:
+                          icon: '<span class="ms" style="font-size:23px;color:#8b8980;">volume_down</span>'
+                          slider:
+                            card:
+                              type: custom:bubble-card
+                              card_type: button
+                              button_type: slider
+                              entity: ${PLAYER}
+                              show_icon: false
+                              show_name: false
+                              show_state: false
+                              slider_live_update: true
+                              tap_action:
+                                action: none
+                              hold_action:
+                                action: none
+                              double_tap_action:
+                                action: none
+                              styles: |
+                                ha-card { background: transparent !important; border: none !important; box-shadow: none !important;
+                                  height: 28px !important; overflow: visible !important; position: relative; }
+                                ha-card::before { content: ''; position: absolute; left: 0; right: 0; top: 50%;
+                                  transform: translateY(-50%); height: 8px; border-radius: 999px; background: rgba(234,230,221,.09); }
+                                .bubble-button-background { display: none !important; }
+                                .bubble-button-card-container { background: transparent !important; height: 28px !important; }
+                                .bubble-range-fill { position: absolute !important; left: 0 !important; top: 50% !important;
+                                  transform: translateY(-50%) !important; height: 8px !important; border-radius: 999px !important;
+                                  background: rgb(114,149,178) !important; overflow: visible !important; }
+                                .bubble-range-fill::after { content: ''; position: absolute; right: -9px; top: 50%;
+                                  transform: translateY(-50%); width: 18px; height: 18px; border-radius: 50%;
+                                  background: rgb(233,229,221); box-shadow: 0 2px 6px rgba(0,0,0,.45); }
+                                .bubble-icon-container, .bubble-name-container, .bubble-name, .bubble-state { display: none !important; }
+                          level: |
+                            [[[
+                              const v = entity && entity.attributes.volume_level != null ? Math.round(entity.attributes.volume_level * 100) : 0;
+                              return '<span style="font:700 15px Manrope;color:#b4afa4;width:32px;display:inline-block;text-align:right;font-variant-numeric:tabular-nums;">' + v + '</span>';
+                            ]]]
+              roomslabel:
+                card:
+                  type: custom:button-card
+                  template: nspanel_base
+                  styles:
+                    card:
+                      - margin: 18px 2px 10px
+                    grid:
+                      - display: flex
+                      - justify-content: flex-start
+                  custom_fields:
+                    label: '<div style="font:700 13px Manrope;color:#8b8980;letter-spacing:.4px;text-transform:uppercase;">Playing in</div>'
+              rooms:
+                card:
+                  type: custom:button-card
+                  template: nspanel_base
+                  styles:
+                    card:
+                      - padding-bottom: 4px
+                      - overflow-x: auto
+                    grid:
+                      - display: flex
+                      - gap: 8px
+                      - overflow-x: auto
+                  custom_fields:
+                    c1:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        entity: input_select.sonos_speaker_select
+                        variables: { room: Living Room }
+                        tap_action: &room_tap
+                          action: perform-action
+                          perform_action: input_select.select_option
+                          target:
+                            entity_id: input_select.sonos_speaker_select
+                          data:
+                            option: '[[[ return variables.room ]]]'
+                        styles: &room_chip_styles
+                          card:
+                            - padding: 10px 16px
+                            - border-radius: 999px
+                            - white-space: nowrap
+                            - flex: none
+                            - background: "[[[ return entity.state === variables.room ? 'rgba(114,149,178,0.16)' : '#2b2f34' ]]]"
+                            - border: "[[[ return '1px solid ' + (entity.state === variables.room ? 'rgba(114,149,178,0.5)' : 'rgba(234,230,221,0.08)') ]]]"
+                          grid:
+                            - display: flex
+                            - align-items: center
+                            - justify-content: center
+                        custom_fields:
+                          label: &room_chip_label |
+                            [[[
+                              const active = entity.state === variables.room;
+                              return '<span style="font:600 14px Manrope;white-space:nowrap;color:' + (active ? '#a9c4dd' : '#b4afa4') + ';">' + variables.room + '</span>';
+                            ]]]
+                    c2:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        entity: input_select.sonos_speaker_select
+                        variables: { room: Kitchen }
+                        tap_action: *room_tap
+                        styles: *room_chip_styles
+                        custom_fields:
+                          label: *room_chip_label
+                    c3:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        entity: input_select.sonos_speaker_select
+                        variables: { room: Office }
+                        tap_action: *room_tap
+                        styles: *room_chip_styles
+                        custom_fields:
+                          label: *room_chip_label
+                    c4:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        entity: input_select.sonos_speaker_select
+                        variables: { room: Deck }
+                        tap_action: *room_tap
+                        styles: *room_chip_styles
+                        custom_fields:
+                          label: *room_chip_label
+                    c5:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        entity: input_select.sonos_speaker_select
+                        variables: { room: Pool }
+                        tap_action: *room_tap
+                        styles: *room_chip_styles
+                        custom_fields:
+                          label: *room_chip_label
+                    c6:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        entity: input_select.sonos_speaker_select
+                        variables: { room: Primary Bedroom }
+                        tap_action: *room_tap
+                        styles: *room_chip_styles
+                        custom_fields:
+                          label: *room_chip_label
+                    c7:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        entity: input_select.sonos_speaker_select
+                        variables: { room: Primary Bathroom }
+                        tap_action: *room_tap
+                        styles: *room_chip_styles
+                        custom_fields:
+                          label: *room_chip_label
+                    c8:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        entity: input_select.sonos_speaker_select
+                        variables: { room: Gym }
+                        tap_action: *room_tap
+                        styles: *room_chip_styles
+                        custom_fields:
+                          label: *room_chip_label
+                    c9:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        entity: input_select.sonos_speaker_select
+                        variables: { room: Mud Room }
+                        tap_action: *room_tap
+                        styles: *room_chip_styles
+                        custom_fields:
+                          label: *room_chip_label
+                    c10:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        entity: input_select.sonos_speaker_select
+                        variables: { room: Media Room }
+                        tap_action: *room_tap
+                        styles: *room_chip_styles
+                        custom_fields:
+                          label: *room_chip_label

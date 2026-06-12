@@ -1,0 +1,303 @@
+title: Settings
+path: panel-settings
+icon: mdi:tune
+background: '#16181a'
+type: custom:grid-layout
+layout:
+  grid-template-columns: 480px
+  margin: 0
+  padding: 0
+cards:
+  - type: custom:button-card
+    template: nspanel_screen
+    styles:
+      grid:
+        - grid-template-areas: '"header" "body"'
+        - grid-template-columns: 1fr
+        - grid-template-rows: auto minmax(0,1fr)
+      custom_fields:
+        body:
+          - min-height: 0
+          - height: 100%
+          - overflow-y: auto
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          template: nspanel_header
+          custom_fields:
+            title: '<div style="font:800 24px Manrope;color:#e9e5dd;">Settings</div>'
+      body:
+        card:
+          type: custom:button-card
+          template: nspanel_base
+          styles:
+            card:
+              - padding: 0 16px 18px
+            grid:
+              - grid-template-areas: '"g1" "g2" "g3" "g4"'
+              - grid-template-columns: 1fr
+          custom_fields:
+            # ── Home Modes ──────────────────────────────────────────
+            g1:
+              card:
+                type: custom:button-card
+                template: nspanel_base
+                styles:
+                  card: [margin-bottom: 4px]
+                  grid:
+                    - grid-template-areas: '"h" "r1" "r2" "r3" "r4"'
+                    - grid-template-columns: 1fr
+                custom_fields:
+                  h: |
+                    [[[
+                      return `<div style="display:flex;align-items:center;gap:9px;margin:12px 4px 10px;width:100%;">
+                        <span class="ms" style="font-size:19px;color:#b4afa4;">home</span>
+                        <div style="font:800 15px Manrope;color:#e9e5dd;white-space:nowrap;">Home Modes</div>
+                        <div style="flex:1;height:2px;background:rgba(234,230,221,.1);border-radius:2px;"></div>
+                      </div>`;
+                    ]]]
+                  r1:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: input_boolean.dinner_party
+                      variables: { row_label: Dinner Party, row_icon: celebration }
+                      tap_action:
+                        action: toggle
+                      styles: &settings_row_styles
+                        card:
+                          - height: 54px
+                          - border-radius: 15px
+                          - margin-bottom: 8px
+                          - padding: 0 16px
+                          - background: "[[[ return entity.state === 'on' ? '#7295b2' : '#363b41' ]]]"
+                          - border: "[[[ return '1px solid ' + (entity.state === 'on' ? 'rgba(255,255,255,0.08)' : 'rgba(234,230,221,0.08)') ]]]"
+                        grid:
+                          - display: flex
+                          - align-items: center
+                          - height: 100%
+                        custom_fields:
+                          content:
+                            - width: 100%
+                      custom_fields:
+                        content: &settings_row_content |
+                          [[[
+                            const on = entity.state === 'on';
+                            return `<div style="display:flex;align-items:center;gap:12px;width:100%;">
+                              <span class="ms" style="font-size:21px;color:${on ? '#f4f2ec' : '#b4afa4'};flex:none;">${variables.row_icon}</span>
+                              <div class="ell" style="flex:1;min-width:0;font:700 15px Manrope;text-align:left;color:${on ? '#ffffff' : '#c4c0b6'};">${variables.row_label}</div>
+                              <div style="font:700 14px Manrope;flex:none;color:${on ? '#eaf2f8' : '#8b8980'};">${on ? 'On' : 'Off'}</div>
+                            </div>`;
+                          ]]]
+                  r2:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: input_boolean.guest_mode
+                      variables: { row_label: Overnight Guests, row_icon: king_bed }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+                  r3:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: input_boolean.cleaners_mode
+                      variables: { row_label: Cleaners Mode, row_icon: cleaning_services }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+                  r4:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: input_boolean.away_mode
+                      variables: { row_label: Away, row_icon: luggage }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+            # ── Automations ─────────────────────────────────────────
+            g2:
+              card:
+                type: custom:button-card
+                template: nspanel_base
+                styles:
+                  card: [margin-bottom: 4px]
+                  grid:
+                    - grid-template-areas: '"h" "r1" "r2" "r3" "r4"'
+                    - grid-template-columns: 1fr
+                custom_fields:
+                  h: |
+                    [[[
+                      return `<div style="display:flex;align-items:center;gap:9px;margin:12px 4px 10px;width:100%;">
+                        <span class="ms" style="font-size:19px;color:#b4afa4;">bolt</span>
+                        <div style="font:800 15px Manrope;color:#e9e5dd;white-space:nowrap;">Automations</div>
+                        <div style="flex:1;height:2px;background:rgba(234,230,221,.1);border-radius:2px;"></div>
+                      </div>`;
+                    ]]]
+                  r1:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: automation.alarm_arm_away_when_everyone_leaves
+                      variables: { row_label: Auto-Arm Away when leaving, row_icon: shield }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+                  r2:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm
+                      variables: { row_label: Auto-Arm Home at 11pm, row_icon: bedtime }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+                  r3:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: automation.alarm_disarm_upon_arriving_home
+                      variables: { row_label: Auto-Disarm on arrival, row_icon: lock_open }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+                  r4:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: automation.12_00am_roborock_s8_vacuum_basement
+                      variables: { row_label: Nightly Vacuum at 12am, row_icon: cleaning_services }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+            # ── Climate Schedules ───────────────────────────────────
+            g3:
+              card:
+                type: custom:button-card
+                template: nspanel_base
+                styles:
+                  card: [margin-bottom: 4px]
+                  grid:
+                    - grid-template-areas: '"h" "r1" "r2" "r3" "r4"'
+                    - grid-template-columns: 1fr
+                custom_fields:
+                  h: |
+                    [[[
+                      return `<div style="display:flex;align-items:center;gap:9px;margin:12px 4px 10px;width:100%;">
+                        <span class="ms" style="font-size:19px;color:#b4afa4;">mode_fan</span>
+                        <div style="font:800 15px Manrope;color:#e9e5dd;white-space:nowrap;">Climate Schedules</div>
+                        <div style="flex:1;height:2px;background:rgba(234,230,221,.1);border-radius:2px;"></div>
+                      </div>`;
+                    ]]]
+                  r1:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: automation.living_room_hvac_schedule_v3
+                      variables: { row_label: Living Room Thermostat, row_icon: device_thermostat }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+                  r2:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: automation.bedroom_hvac_schedule
+                      variables: { row_label: Bedroom Thermostat, row_icon: device_thermostat }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+                  r3:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: automation.office_thermostat_schedule_v2
+                      variables: { row_label: Office Thermostat, row_icon: device_thermostat }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+                  r4:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: automation.basement_hvac_schedule
+                      variables: { row_label: Basement Thermostat, row_icon: device_thermostat }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+            # ── Shade Schedules ─────────────────────────────────────
+            g4:
+              card:
+                type: custom:button-card
+                template: nspanel_base
+                styles:
+                  card: [margin-bottom: 4px]
+                  grid:
+                    - grid-template-areas: '"h" "r1" "r2" "r3"'
+                    - grid-template-columns: 1fr
+                custom_fields:
+                  h: |
+                    [[[
+                      return `<div style="display:flex;align-items:center;gap:9px;margin:12px 4px 10px;width:100%;">
+                        <span class="ms" style="font-size:19px;color:#b4afa4;">blinds</span>
+                        <div style="font:800 15px Manrope;color:#e9e5dd;white-space:nowrap;">Shade Schedules</div>
+                        <div style="flex:1;height:2px;background:rgba(234,230,221,.1);border-radius:2px;"></div>
+                      </div>`;
+                    ]]]
+                  r1:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: automation.living_room_adaptive_shading
+                      variables: { row_label: Living Room Adaptive, row_icon: blinds }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+                  r2:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: automation.dining_room_adaptive_shading
+                      variables: { row_label: Dining Room Adaptive, row_icon: blinds }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content
+                  r3:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: automation.primary_bedroom_shades_schedule_adaptive
+                      variables: { row_label: Primary Bedroom Adaptive, row_icon: blinds }
+                      tap_action:
+                        action: toggle
+                      styles: *settings_row_styles
+                      custom_fields:
+                        content: *settings_row_content

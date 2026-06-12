@@ -1,0 +1,366 @@
+title: Security
+path: security
+icon: mdi:shield-home
+background: '#16181a'
+type: custom:grid-layout
+layout:
+  grid-template-columns: 480px
+  margin: 0
+  padding: 0
+cards:
+  - type: custom:button-card
+    template: nspanel_screen
+    styles:
+      grid:
+        - grid-template-areas: '"header" "status" "keypad" "modes"'
+        - grid-template-columns: 1fr
+        - grid-template-rows: auto auto minmax(0,1fr) auto
+      custom_fields:
+        keypad:
+          - min-height: 0
+          - height: 100%
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          template: nspanel_header
+          custom_fields:
+            title: '<div style="font:800 24px Manrope;color:#e9e5dd;">Security</div>'
+      # ── Status card: ready / not ready / armed + code dots ──────────
+      status:
+        card:
+          type: custom:button-card
+          template: nspanel_base
+          entity: alarm_control_panel.alarmo
+          triggers_update:
+            - binary_sensor.all_doors_including_garage
+            - input_text.alarm_code_input
+          styles:
+            card:
+              - margin: 2px 16px 0
+              - padding: 13px 15px
+              - background: '#2b2f34'
+              - border: 1px solid rgba(234,230,221,0.08)
+              - border-radius: 18px
+            grid:
+              - display: flex
+            custom_fields:
+              content:
+                - width: 100%
+          custom_fields:
+            content: |
+              [[[
+                const s = entity.state;
+                const armed = s.startsWith('armed');
+                const doorsOpen = states['binary_sensor.all_doors_including_garage']
+                  && states['binary_sensor.all_doors_including_garage'].state === 'on';
+                let icon, title, sub, titleColor, iconColor, chipBg;
+                if (s === 'triggered') {
+                  icon = 'emergency_home'; title = 'Alarm triggered'; sub = 'Enter code to disarm';
+                  titleColor = '#c8805f'; iconColor = '#c8805f'; chipBg = 'rgba(200,128,95,0.14)';
+                } else if (s === 'arming' || s === 'pending') {
+                  icon = 'timer'; title = s === 'arming' ? 'Arming…' : 'Enter code'; sub = 'Alarm pending';
+                  titleColor = '#cba14e'; iconColor = '#cba14e'; chipBg = 'rgba(203,161,78,0.14)';
+                } else if (armed) {
+                  const mode = { armed_away: 'Away', armed_home: 'Home', armed_night: 'Night', armed_vacation: 'Vacation' }[s] || '';
+                  icon = 'verified_user'; title = 'Armed · ' + mode; sub = 'Enter code to disarm';
+                  titleColor = '#a9c4dd'; iconColor = '#7295b2'; chipBg = 'rgba(114,149,178,0.16)';
+                } else if (doorsOpen) {
+                  icon = 'error'; title = 'Not ready to arm'; sub = 'Door or garage open';
+                  titleColor = '#cba14e'; iconColor = '#cba14e'; chipBg = 'rgba(203,161,78,0.14)';
+                } else {
+                  icon = 'check_circle'; title = 'Ready to arm'; sub = 'All doors closed';
+                  titleColor = '#e9e5dd'; iconColor = '#b4afa4'; chipBg = 'rgba(234,230,221,0.06)';
+                }
+                const codeState = states['input_text.alarm_code_input'] ? states['input_text.alarm_code_input'].state : '';
+                const len = (codeState && codeState !== 'unknown') ? Math.min(codeState.length, 4) : 0;
+                let dots = '';
+                for (let i = 0; i < 4; i++) {
+                  const filled = i < len;
+                  dots += `<div style="width:14px;height:14px;border-radius:50%;background:${filled ? '#7295b2' : 'transparent'};border:2px solid ${filled ? '#7295b2' : 'rgba(234,230,221,0.25)'};"></div>`;
+                }
+                return `<div style="display:flex;align-items:center;gap:13px;width:100%;">
+                  <div style="width:46px;height:46px;border-radius:13px;flex:none;display:flex;align-items:center;justify-content:center;background:${chipBg};">
+                    <span class="ms" style="font-size:25px;color:${iconColor};">${icon}</span>
+                  </div>
+                  <div style="flex:1;min-width:0;text-align:left;">
+                    <div style="font:800 20px Manrope;color:${titleColor};">${title}</div>
+                    <div class="ell" style="font:600 13px Manrope;color:#9a988f;margin-top:2px;">${sub}</div>
+                  </div>
+                  <div style="display:flex;gap:9px;flex:none;">${dots}</div>
+                </div>`;
+              ]]]
+      # ── Keypad: digits append via script (auto-submits 4th digit) ───
+      keypad:
+        card:
+          type: custom:button-card
+          template: nspanel_base
+          styles:
+            card:
+              - margin: 12px 16px
+              - height: calc(100% - 24px)
+            grid:
+              - grid-template-areas: '"k1 k2 k3" "k4 k5 k6" "k7 k8 k9" "kc k0 kb"'
+              - grid-template-columns: repeat(3, 1fr)
+              - grid-template-rows: repeat(4, 1fr)
+              - gap: 9px
+              - height: 100%
+            custom_fields:
+              k1: &key_cell [height: 100%, min-height: 0]
+              k2: *key_cell
+              k3: *key_cell
+              k4: *key_cell
+              k5: *key_cell
+              k6: *key_cell
+              k7: *key_cell
+              k8: *key_cell
+              k9: *key_cell
+              kc: *key_cell
+              k0: *key_cell
+              kb: *key_cell
+          custom_fields:
+            k1:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action: &digit_tap_1
+                  action: perform-action
+                  perform_action: script.nspanel_keypad_digit
+                  data:
+                    digit: '1'
+                styles: &digit_key_styles
+                  card:
+                    - height: 100%
+                    - background: '#2b2f34'
+                    - border: 1px solid rgba(234,230,221,0.08)
+                    - border-radius: 14px
+                  grid:
+                    - display: flex
+                    - align-items: center
+                    - justify-content: center
+                    - height: 100%
+                custom_fields:
+                  glyph: '<span style="font:700 27px Manrope;color:#e9e5dd;">1</span>'
+            k2:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: script.nspanel_keypad_digit
+                  data:
+                    digit: '2'
+                styles: *digit_key_styles
+                custom_fields:
+                  glyph: '<span style="font:700 27px Manrope;color:#e9e5dd;">2</span>'
+            k3:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: script.nspanel_keypad_digit
+                  data:
+                    digit: '3'
+                styles: *digit_key_styles
+                custom_fields:
+                  glyph: '<span style="font:700 27px Manrope;color:#e9e5dd;">3</span>'
+            k4:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: script.nspanel_keypad_digit
+                  data:
+                    digit: '4'
+                styles: *digit_key_styles
+                custom_fields:
+                  glyph: '<span style="font:700 27px Manrope;color:#e9e5dd;">4</span>'
+            k5:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: script.nspanel_keypad_digit
+                  data:
+                    digit: '5'
+                styles: *digit_key_styles
+                custom_fields:
+                  glyph: '<span style="font:700 27px Manrope;color:#e9e5dd;">5</span>'
+            k6:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: script.nspanel_keypad_digit
+                  data:
+                    digit: '6'
+                styles: *digit_key_styles
+                custom_fields:
+                  glyph: '<span style="font:700 27px Manrope;color:#e9e5dd;">6</span>'
+            k7:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: script.nspanel_keypad_digit
+                  data:
+                    digit: '7'
+                styles: *digit_key_styles
+                custom_fields:
+                  glyph: '<span style="font:700 27px Manrope;color:#e9e5dd;">7</span>'
+            k8:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: script.nspanel_keypad_digit
+                  data:
+                    digit: '8'
+                styles: *digit_key_styles
+                custom_fields:
+                  glyph: '<span style="font:700 27px Manrope;color:#e9e5dd;">8</span>'
+            k9:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: script.nspanel_keypad_digit
+                  data:
+                    digit: '9'
+                styles: *digit_key_styles
+                custom_fields:
+                  glyph: '<span style="font:700 27px Manrope;color:#e9e5dd;">9</span>'
+            kc:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: input_text.set_value
+                  target:
+                    entity_id: input_text.alarm_code_input
+                  data:
+                    value: ''
+                styles: &fn_key_styles
+                  card:
+                    - height: 100%
+                    - background: rgba(234,230,221,0.04)
+                    - border: 1px solid rgba(234,230,221,0.08)
+                    - border-radius: 14px
+                  grid:
+                    - display: flex
+                    - align-items: center
+                    - justify-content: center
+                    - height: 100%
+                custom_fields:
+                  glyph: '<span class="ms ms-out" style="font-size:22px;color:#8b8980;">close</span>'
+            k0:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: script.nspanel_keypad_digit
+                  data:
+                    digit: '0'
+                styles: *digit_key_styles
+                custom_fields:
+                  glyph: '<span style="font:700 27px Manrope;color:#e9e5dd;">0</span>'
+            kb:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: input_text.set_value
+                  target:
+                    entity_id: input_text.alarm_code_input
+                  data:
+                    value: |
+                      [[[
+                        const v = states['input_text.alarm_code_input'] ? states['input_text.alarm_code_input'].state : '';
+                        return (v && v !== 'unknown') ? v.slice(0, -1) : '';
+                      ]]]
+                styles: *fn_key_styles
+                custom_fields:
+                  glyph: '<span class="ms ms-out" style="font-size:24px;color:#b4afa4;">backspace</span>'
+      # ── Arm mode row ────────────────────────────────────────────────
+      modes:
+        card:
+          type: custom:button-card
+          template: nspanel_base
+          styles:
+            card:
+              - margin: 0 16px 16px
+            grid:
+              - grid-template-areas: '"away home night"'
+              - grid-template-columns: repeat(3, 1fr)
+              - gap: 10px
+          custom_fields:
+            away:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                entity: alarm_control_panel.alarmo
+                variables: { arm_state: armed_away, arm_label: Away, arm_icon: directions_walk }
+                tap_action:
+                  action: perform-action
+                  perform_action: alarm_control_panel.alarm_arm_away
+                  target:
+                    entity_id: alarm_control_panel.alarmo
+                styles: &mode_btn_styles
+                  card:
+                    - height: 52px
+                    - border-radius: 14px
+                    - background: "[[[ return entity.state === variables.arm_state ? 'rgba(114,149,178,0.14)' : '#2b2f34' ]]]"
+                    - border: "[[[ return '1px solid ' + (entity.state === variables.arm_state ? 'rgba(114,149,178,0.55)' : 'rgba(234,230,221,0.08)') ]]]"
+                  grid:
+                    - display: flex
+                    - align-items: center
+                    - justify-content: center
+                    - gap: 8px
+                    - height: 100%
+                custom_fields:
+                  content: &mode_btn_content |
+                    [[[
+                      const active = entity.state === variables.arm_state;
+                      return `<div style="display:flex;align-items:center;gap:8px;">
+                        <span class="ms" style="font-size:22px;color:${active ? '#7295b2' : '#b4afa4'};">${variables.arm_icon}</span>
+                        <span style="font:700 15px Manrope;color:${active ? '#a9c4dd' : '#e9e5dd'};">${variables.arm_label}</span>
+                      </div>`;
+                    ]]]
+            home:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                entity: alarm_control_panel.alarmo
+                variables: { arm_state: armed_home, arm_label: Home, arm_icon: home }
+                tap_action:
+                  action: perform-action
+                  perform_action: alarm_control_panel.alarm_arm_home
+                  target:
+                    entity_id: alarm_control_panel.alarmo
+                styles: *mode_btn_styles
+                custom_fields:
+                  content: *mode_btn_content
+            night:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                entity: alarm_control_panel.alarmo
+                variables: { arm_state: armed_night, arm_label: Night, arm_icon: bedtime }
+                tap_action:
+                  action: perform-action
+                  perform_action: alarm_control_panel.alarm_arm_night
+                  target:
+                    entity_id: alarm_control_panel.alarmo
+                styles: *mode_btn_styles
+                custom_fields:
+                  content: *mode_btn_content
