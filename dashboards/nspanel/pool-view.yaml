@@ -1,0 +1,323 @@
+title: Pool
+path: pool
+icon: mdi:pool
+background: '#16181a'
+type: custom:grid-layout
+layout:
+  grid-template-columns: 480px
+  margin: 0
+  padding: 0
+cards:
+  - type: custom:button-card
+    template: nspanel_screen
+    styles:
+      grid:
+        - grid-template-areas: '"header" "body"'
+        - grid-template-columns: 1fr
+        - grid-template-rows: auto minmax(0,1fr)
+      custom_fields:
+        body:
+          - min-height: 0
+          - height: 100%
+          - overflow-y: auto
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          template: nspanel_header
+          custom_fields:
+            title: '<div style="font:800 24px Manrope;color:#e9e5dd;">Pool</div>'
+      body:
+        card:
+          type: custom:button-card
+          template: nspanel_base
+          styles:
+            card:
+              - padding: 2px 16px 18px
+            grid:
+              - grid-template-areas: '"temp" "filterlabel" "filter" "heaterlabel" "heater" "setpoint"'
+              - grid-template-columns: 1fr
+          custom_fields:
+            # ── Water temperature ───────────────────────────────────
+            temp:
+              card:
+                type: custom:button-card
+                template: nspanel_base
+                entity: sensor.omnilogic_pool_watersensor
+                tap_action:
+                  action: more-info
+                styles:
+                  card:
+                    - padding: 15px 16px
+                    - background: '#2b2f34'
+                    - border: 1px solid rgba(234,230,221,0.08)
+                    - border-radius: 18px
+                    - margin-bottom: 16px
+                  grid:
+                    - display: flex
+                  custom_fields:
+                    content:
+                      - width: 100%
+                custom_fields:
+                  content: |
+                    [[[
+                      const t = ['unknown','unavailable'].includes(entity.state) ? '--' : Math.round(parseFloat(entity.state));
+                      return `<div style="display:flex;align-items:center;gap:13px;width:100%;">
+                        <div style="width:44px;height:44px;border-radius:13px;background:rgba(114,149,178,.16);display:flex;align-items:center;justify-content:center;flex:none;">
+                          <span class="ms" style="font-size:24px;color:#7295b2;">waves</span>
+                        </div>
+                        <div style="flex:1;min-width:0;text-align:left;">
+                          <div style="font:700 17px Manrope;color:#e9e5dd;">Water Temperature</div>
+                          <div style="font:600 13px Manrope;color:#9a988f;margin-top:2px;">Pump &amp; heater controls</div>
+                        </div>
+                        <div style="font:800 28px Manrope;color:#e9e5dd;font-variant-numeric:tabular-nums;">${t}&deg;</div>
+                      </div>`;
+                    ]]]
+            filterlabel:
+              card:
+                type: custom:button-card
+                template: nspanel_base
+                styles:
+                  card: [margin: 0 2px 10px]
+                  grid: [display: flex, justify-content: flex-start]
+                custom_fields:
+                  label: '<div style="font:700 13px Manrope;color:#8b8980;letter-spacing:.4px;text-transform:uppercase;">Filter Speed</div>'
+            # ── Filter speed segmented control ──────────────────────
+            filter:
+              card:
+                type: custom:button-card
+                template: nspanel_base
+                styles:
+                  card:
+                    - margin-bottom: 20px
+                  grid:
+                    - grid-template-areas: '"seg_off seg_low seg_med seg_high"'
+                    - grid-template-columns: repeat(4, 1fr)
+                    - gap: 8px
+                custom_fields:
+                  seg_off:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: switch.omnilogic_pool_filter_pump
+                      triggers_update:
+                        - number.omnilogic_pool_filter_pump_speed
+                      variables: { seg: 'off', seg_label: 'Off' }
+                      tap_action:
+                        action: perform-action
+                        perform_action: switch.turn_off
+                        target:
+                          entity_id: switch.omnilogic_pool_filter_pump
+                      styles: &filter_seg_styles
+                        card:
+                          - height: 58px
+                          - border-radius: 14px
+                          - background: |
+                              [[[
+                                const pumpOn = states['switch.omnilogic_pool_filter_pump'].state === 'on';
+                                const v = parseFloat(states['number.omnilogic_pool_filter_pump_speed'].state) || 0;
+                                const cur = !pumpOn ? 'off' : (v <= 50 ? 'low' : (v <= 80 ? 'med' : 'high'));
+                                return cur === variables.seg ? 'rgba(114,149,178,0.16)' : '#2b2f34';
+                              ]]]
+                          - border: |
+                              [[[
+                                const pumpOn = states['switch.omnilogic_pool_filter_pump'].state === 'on';
+                                const v = parseFloat(states['number.omnilogic_pool_filter_pump_speed'].state) || 0;
+                                const cur = !pumpOn ? 'off' : (v <= 50 ? 'low' : (v <= 80 ? 'med' : 'high'));
+                                return '1px solid ' + (cur === variables.seg ? 'rgba(114,149,178,0.55)' : 'rgba(234,230,221,0.08)');
+                              ]]]
+                        grid:
+                          - display: flex
+                          - align-items: center
+                          - justify-content: center
+                          - height: 100%
+                      custom_fields:
+                        label: &filter_seg_label |
+                          [[[
+                            const pumpOn = states['switch.omnilogic_pool_filter_pump'].state === 'on';
+                            const v = parseFloat(states['number.omnilogic_pool_filter_pump_speed'].state) || 0;
+                            const cur = !pumpOn ? 'off' : (v <= 50 ? 'low' : (v <= 80 ? 'med' : 'high'));
+                            const active = cur === variables.seg;
+                            return `<span style="font:700 16px Manrope;color:${active ? '#a9c4dd' : '#b4afa4'};">${variables.seg_label}</span>`;
+                          ]]]
+                  seg_low:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: switch.omnilogic_pool_filter_pump
+                      triggers_update:
+                        - number.omnilogic_pool_filter_pump_speed
+                      variables: { seg: low, seg_label: 'Low' }
+                      tap_action:
+                        action: perform-action
+                        perform_action: button.press
+                        target:
+                          entity_id: button.omnilogic_pool_filter_pump_low_speed
+                      styles: *filter_seg_styles
+                      custom_fields:
+                        label: *filter_seg_label
+                  seg_med:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: switch.omnilogic_pool_filter_pump
+                      triggers_update:
+                        - number.omnilogic_pool_filter_pump_speed
+                      variables: { seg: med, seg_label: Med }
+                      tap_action:
+                        action: perform-action
+                        perform_action: button.press
+                        target:
+                          entity_id: button.omnilogic_pool_filter_pump_medium_speed
+                      styles: *filter_seg_styles
+                      custom_fields:
+                        label: *filter_seg_label
+                  seg_high:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: switch.omnilogic_pool_filter_pump
+                      triggers_update:
+                        - number.omnilogic_pool_filter_pump_speed
+                      variables: { seg: high, seg_label: High }
+                      tap_action:
+                        action: perform-action
+                        perform_action: button.press
+                        target:
+                          entity_id: button.omnilogic_pool_filter_pump_high_speed
+                      styles: *filter_seg_styles
+                      custom_fields:
+                        label: *filter_seg_label
+            heaterlabel:
+              card:
+                type: custom:button-card
+                template: nspanel_base
+                styles:
+                  card: [margin: 0 2px 10px]
+                  grid: [display: flex, justify-content: flex-start]
+                custom_fields:
+                  label: '<div style="font:700 13px Manrope;color:#8b8980;letter-spacing:.4px;text-transform:uppercase;">Heater</div>'
+            # ── Heater on/off ───────────────────────────────────────
+            heater:
+              card:
+                type: custom:button-card
+                template: nspanel_base
+                entity: water_heater.omnilogic_pool_heater
+                styles:
+                  card:
+                    - padding: 13px 16px
+                    - background: '#2b2f34'
+                    - border: 1px solid rgba(234,230,221,0.08)
+                    - border-radius: 18px
+                    - margin-bottom: 11px
+                  grid:
+                    - display: flex
+                    - align-items: center
+                    - gap: 13px
+                  custom_fields:
+                    info:
+                      - flex: '1'
+                      - min-width: 0
+                custom_fields:
+                  info: |
+                    [[[
+                      const on = entity.state !== 'off';
+                      return `<div style="display:flex;align-items:center;gap:13px;width:100%;">
+                        <div style="width:44px;height:44px;border-radius:13px;flex:none;display:flex;align-items:center;justify-content:center;background:${on ? 'rgba(114,149,178,0.16)' : 'rgba(234,230,221,0.06)'};">
+                          <span class="ms" style="font-size:24px;color:${on ? '#7295b2' : '#b4afa4'};">mode_heat</span>
+                        </div>
+                        <div style="flex:1;font:700 17px Manrope;color:#e9e5dd;text-align:left;">Heater</div>
+                      </div>`;
+                    ]]]
+                  toggle:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      entity: water_heater.omnilogic_pool_heater
+                      tap_action:
+                        action: toggle
+                      styles:
+                        card:
+                          - width: 58px
+                          - height: 34px
+                          - border-radius: 999px
+                          - flex: none
+                          - background: "[[[ return entity.state !== 'off' ? '#7295b2' : 'rgba(234,230,221,0.12)' ]]]"
+                          - transition: background .15s
+                        grid:
+                          - display: block
+                          - position: relative
+                          - height: 100%
+                      custom_fields:
+                        knob: |
+                          [[[
+                            const on = entity.state !== 'off';
+                            return `<div style="position:absolute;top:3px;left:${on ? '27px' : '3px'};width:28px;height:28px;border-radius:50%;background:#f4f2ec;transition:left .15s;box-shadow:0 2px 5px rgba(0,0,0,0.4);"></div>`;
+                          ]]]
+            # ── Setpoint stepper (dimmed when heater off) ───────────
+            setpoint:
+              card:
+                type: custom:button-card
+                template: nspanel_base
+                entity: input_number.pool_heater_setpoint
+                triggers_update:
+                  - water_heater.omnilogic_pool_heater
+                styles:
+                  card:
+                    - padding: 14px 18px
+                    - background: '#2b2f34'
+                    - border: 1px solid rgba(234,230,221,0.08)
+                    - border-radius: 18px
+                    - opacity: "[[[ return states['water_heater.omnilogic_pool_heater'].state !== 'off' ? '1' : '0.5' ]]]"
+                    - transition: opacity .15s
+                  grid:
+                    - display: flex
+                    - align-items: center
+                    - justify-content: space-between
+                    - gap: 14px
+                custom_fields:
+                  dec:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_number.decrement
+                        target:
+                          entity_id: input_number.pool_heater_setpoint
+                      styles: &step_btn_styles
+                        card:
+                          - width: 60px
+                          - height: 60px
+                          - border-radius: 17px
+                          - background: '#2b2f34'
+                          - border: 1px solid rgba(234,230,221,0.08)
+                          - flex: none
+                        grid:
+                          - display: flex
+                          - align-items: center
+                          - justify-content: center
+                          - height: 100%
+                      custom_fields:
+                        glyph: '<span class="ms ms-out" style="font-size:28px;color:#e9e5dd;">remove</span>'
+                  value: |
+                    [[[
+                      const on = states['water_heater.omnilogic_pool_heater'].state !== 'off';
+                      const v = Math.round(parseFloat(entity.state));
+                      return `<div style="text-align:center;">
+                        <div style="font:800 42px Manrope;line-height:1;font-variant-numeric:tabular-nums;color:${on ? '#e9e5dd' : '#8b8980'};">${v}&deg;</div>
+                        <div style="font:600 12px Manrope;color:#8b8980;margin-top:4px;text-transform:uppercase;letter-spacing:.4px;">Set Temperature</div>
+                      </div>`;
+                    ]]]
+                  inc:
+                    card:
+                      type: custom:button-card
+                      template: nspanel_btn
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_number.increment
+                        target:
+                          entity_id: input_number.pool_heater_setpoint
+                      styles: *step_btn_styles
+                      custom_fields:
+                        glyph: '<span class="ms ms-out" style="font-size:28px;color:#e9e5dd;">add</span>'
