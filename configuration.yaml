@@ -160,12 +160,12 @@ recorder:
       - switch.*_detections_speaking
       - sensor.bedroom_air_quality*
       - sensor.first_floor_air_quality_monitor*
-
+    
     entities:
       - sensor.date
       - sensor.time
       - sensor.last_boot
-      - sun.sun
+      - sun.sun 
       - sensor.powerwall_discharge_time
       - sensor.bayberry_tempest_wind_speed
       - sensor.bayberry_tempest_wind_direction
@@ -189,7 +189,7 @@ recorder:
       - sensor.myggspray_wrlss_mtn_sensor_illuminance
       - update.myggspray_wrlss_mtn_sensor_firmware
       - button.myggspray_wrlss_mtn_sensor_identify_1
-      - button.myggspray_wrlss_mtn_sensor_identify_2
+      - button.myggspray_wrlss_mtn_sensor_identify_2  
       - binary_sensor.myggspray_wrlss_mtn_sensor_occupancy_2
       - sensor.myggspray_wrlss_mtn_sensor_battery_2
       - sensor.myggspray_wrlss_mtn_sensor_battery_voltage_2
@@ -217,13 +217,13 @@ lovelace:
       title: "Mobile - YAML"
       icon: mdi:cellphone
       show_in_sidebar: true
-      filename: dashboards/mobile/mobile.yaml
+      filename: dashboards/mobile/mobile.yaml 
     desktop-dash:
       mode: yaml
       title: "Desktop - YAML"
       icon: mdi:desktop-classic
       show_in_sidebar: true
-      filename: dashboards/desktop/desktop.yaml
+      filename: dashboards/desktop/desktop.yaml 
     mudroom-wall-panel-dash:
       mode: yaml
       title: Mudroom Wall Panel - YAML
@@ -236,7 +236,13 @@ lovelace:
       icon: mdi:alarm-panel
       show_in_sidebar: true
       filename: dashboards/wall-panel-v2/living-room-wall-panel.yaml
-  resources:
+    nspanel-dash:
+      mode: yaml
+      title: "NSPanel Pro - YAML"
+      icon: mdi:tablet-dashboard
+      show_in_sidebar: true
+      filename: dashboards/nspanel/nspanel.yaml
+  resources: 
     - url: /hacsfiles/lovelace-layout-card/layout-card.js
       type: module
     - url: /hacsfiles/kiosk-mode/kiosk-mode.js
@@ -252,12 +258,12 @@ lovelace:
     - url: /hacsfiles/lovelace-card-mod/card-mod.js
       type: module
     - url: /browser_mod.js
-      type: module
+      type: module      
     - url: /hacsfiles/lovelace-expander-card/expander-card.js
       type: module
-    - url: /hacsfiles/stack-in-card/stack-in-card.js
+    - url: /hacsfiles/stack-in-card/stack-in-card.js 
       type: module
-    - url: /hacsfiles/llmvision-card/llmvision-card.js
+    - url: /hacsfiles/llmvision-card/llmvision-card.js 
       type: module
     - url: /hacsfiles/custom-sonos-card/custom-sonos-card.js
       type: module
@@ -265,16 +271,16 @@ lovelace:
       type: module
     - url: /hacsfiles/apexcharts-card/apexcharts-card.js
       type: module
-    - url: /hacsfiles/weather-radar-card/weather-radar-card.js
-      type: module
-    - url: /hacsfiles/energy-sankey/energy-sankey.js
+    - url: /hacsfiles/weather-radar-card/weather-radar-card.js 
+      type: module 
+    - url: /hacsfiles/energy-sankey/energy-sankey.js 
       type: module
     - url: /hacsfiles/config-template-card/config-template-card.js
       type: module
     - url: /hacsfiles/custom-sonos-card-v2/custom-sonos-card-v2.js
       type: module
     - url: /hacsfiles/custom-media-card/wall-panel-sonos-card.js
-      type: module
+      type: module      
 
 sensor:
   - platform: filter
