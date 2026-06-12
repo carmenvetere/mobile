@@ -71,8 +71,8 @@ cards:
                           - border-radius: 15px
                           - margin-bottom: 8px
                           - padding: 0 16px
-                          - background: "[[[ return entity.state === 'on' ? '#7295b2' : '#363b41' ]]]"
-                          - border: "[[[ return '1px solid ' + (entity.state === 'on' ? 'rgba(255,255,255,0.08)' : 'rgba(234,230,221,0.08)') ]]]"
+                          - background: "[[[ return entity && entity.state === 'on' ? '#7295b2' : '#363b41' ]]]"
+                          - border: "[[[ return '1px solid ' + (entity && entity.state === 'on' ? 'rgba(255,255,255,0.08)' : 'rgba(234,230,221,0.08)') ]]]"
                         grid:
                           - display: flex
                           - align-items: center
@@ -83,7 +83,7 @@ cards:
                       custom_fields:
                         content: &settings_row_content |
                           [[[
-                            const on = entity.state === 'on';
+                            const on = entity && entity.state === 'on';
                             return `<div style="display:flex;align-items:center;gap:12px;width:100%;">
                               <span class="ms" style="font-size:21px;color:${on ? '#f4f2ec' : '#b4afa4'};flex:none;">${variables.row_icon}</span>
                               <div class="ell" style="flex:1;min-width:0;font:700 15px Manrope;text-align:left;color:${on ? '#ffffff' : '#c4c0b6'};">${variables.row_label}</div>
