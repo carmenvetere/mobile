@@ -391,3 +391,21 @@ sensor:
     filters:
       - filter: time_throttle
         window_size: "00:05"
+  # HVAC cumulative energy, integrated from the estimated power
+  # template sensors defined in sensors2.yaml.
+  - platform: integration
+    name: "Upper HVAC Energy"
+    unique_id: upper_hvac_energy
+    source: sensor.upper_hvac_estimated_power
+    method: left
+    round: 3
+    unit_prefix: k
+    unit_time: h
+  - platform: integration
+    name: "Lower HVAC Energy"
+    unique_id: lower_hvac_energy
+    source: sensor.lower_hvac_estimated_power
+    method: left
+    round: 3
+    unit_prefix: k
+    unit_time: h
