@@ -466,3 +466,88 @@ alarm_keypad_disarm:
     data:
       value: ''
   description: ''
+
+nspanel_keypad_digit:
+  alias: NSPanel Keypad Digit
+  description: >-
+    Appends a digit to the alarm code input. When the 4th digit lands it
+    auto-submits - disarming if armed, arming Away if disarmed - then clears
+    the input.
+  mode: queued
+  max: 10
+  fields:
+    digit:
+      description: The digit pressed on the keypad (0-9)
+      example: "1"
+  sequence:
+  - variables:
+      current: >-
+        {{ states('input_text.alarm_code_input')
+           if states('input_text.alarm_code_input') not in ['unknown', 'unavailable']
+           else '' }}
+      code: '{{ (current ~ digit)[:4] }}'
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ code | length >= 4 }}'
+      sequence:
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: alarm_control_panel.alarmo
+            state: disarmed
+          sequence:
+          - action: alarm_control_panel.alarm_arm_away
+            target:
+              entity_id: alarm_control_panel.alarmo
+            data:
+              code: '{{ code }}'
+        default:
+        - action: alarm_control_panel.alarm_disarm
+          target:
+            entity_id: alarm_control_panel.alarmo
+          data:
+            code: '{{ code }}'
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.alarm_code_input
+        data:
+          value: ''
+    default:
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.alarm_code_input
+      data:
+        value: '{{ code }}'
+
+nspanel_all_off:
+  alias: NSPanel All Off
+  description: >-
+    All Off from the NSPanel scenes screen - runs the Good Night scene,
+    pauses every Sonos player, and closes all shade groups.
+  mode: single
+  sequence:
+  - action: scene.turn_on
+    target:
+      entity_id: scene.good_night
+  - action: media_player.media_pause
+    target:
+      entity_id:
+      - media_player.living_room
+      - media_player.kitchen
+      - media_player.office
+      - media_player.deck
+      - media_player.pool
+      - media_player.primary_bedroom
+      - media_player.primary_bathroom
+      - media_player.gym
+      - media_player.mud_room
+      - media_player.media_room
+  - action: cover.close_cover
+    target:
+      entity_id:
+      - cover.first_floor_all
+      - cover.bedroom_side_shades
+      - cover.bedroom_back
+      - cover.front_guest_bedroom_shades
+      - cover.back_guest_bedroom_shades
