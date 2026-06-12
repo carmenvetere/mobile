@@ -1,0 +1,215 @@
+title: Scenes
+path: scenes
+icon: mdi:auto-fix
+background: '#16181a'
+type: custom:grid-layout
+layout:
+  grid-template-columns: 480px
+  margin: 0
+  padding: 0
+cards:
+  - type: custom:button-card
+    template: nspanel_screen
+    variables:
+      scene_ids: &scene_ids
+        - scene.good_morning_2
+        - scene.movie
+        - scene.evening
+        - scene.good_night
+        - scene.entertaining
+        - scene.welcome
+    styles:
+      grid:
+        - grid-template-areas: '"header" "body"'
+        - grid-template-columns: 1fr
+        - grid-template-rows: auto minmax(0,1fr)
+      custom_fields:
+        body:
+          - min-height: 0
+          - height: 100%
+          - overflow-y: auto
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          template: nspanel_header
+          custom_fields:
+            title: '<div style="font:800 24px Manrope;color:#e9e5dd;">Scenes</div>'
+      body:
+        card:
+          type: custom:button-card
+          template: nspanel_base
+          styles:
+            card:
+              - padding: 2px 16px 18px
+            grid:
+              - grid-template-areas: '"s1 s2" "s3 s4" "s5 s6" "alloff alloff"'
+              - grid-template-columns: 1fr 1fr
+              - grid-template-rows: 96px 96px 96px 58px
+              - gap: 12px
+          custom_fields:
+            # Active scene = most recently activated of the six (radio behavior)
+            s1:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                entity: scene.good_morning_2
+                triggers_update: *scene_ids
+                tap_action:
+                  action: perform-action
+                  perform_action: scene.turn_on
+                  target:
+                    entity_id: scene.good_morning_2
+                variables:
+                  scene_name: Morning
+                  scene_icon: wb_twilight
+                styles: &scene_card_styles
+                  card:
+                    - height: 96px
+                    - border-radius: 18px
+                    - padding: 16px
+                    - background: |
+                        [[[
+                          const ids = ['scene.good_morning_2','scene.movie','scene.evening','scene.good_night','scene.entertaining','scene.welcome'];
+                          let best = null, bt = 0;
+                          ids.forEach(id => { const s = states[id]; if (!s) return;
+                            const t = Date.parse(s.state); if (!isNaN(t) && t > bt) { bt = t; best = id; } });
+                          return best === entity.entity_id ? 'rgba(114,149,178,0.13)' : '#2b2f34';
+                        ]]]
+                    - border: |
+                        [[[
+                          const ids = ['scene.good_morning_2','scene.movie','scene.evening','scene.good_night','scene.entertaining','scene.welcome'];
+                          let best = null, bt = 0;
+                          ids.forEach(id => { const s = states[id]; if (!s) return;
+                            const t = Date.parse(s.state); if (!isNaN(t) && t > bt) { bt = t; best = id; } });
+                          return '1px solid ' + (best === entity.entity_id ? 'rgba(114,149,178,0.55)' : 'rgba(234,230,221,0.08)');
+                        ]]]
+                  grid:
+                    - display: flex
+                    - flex-direction: column
+                    - justify-content: space-between
+                    - align-items: flex-start
+                    - height: 100%
+                custom_fields:
+                  content: &scene_card_content |
+                    [[[
+                      const ids = ['scene.good_morning_2','scene.movie','scene.evening','scene.good_night','scene.entertaining','scene.welcome'];
+                      let best = null, bt = 0;
+                      ids.forEach(id => { const s = states[id]; if (!s) return;
+                        const t = Date.parse(s.state); if (!isNaN(t) && t > bt) { bt = t; best = id; } });
+                      const active = best === entity.entity_id;
+                      return `<div style="display:flex;flex-direction:column;justify-content:space-between;height:64px;align-items:flex-start;">
+                        <div style="width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:${active ? 'rgba(114,149,178,0.2)' : 'rgba(234,230,221,0.06)'};">
+                          <span class="ms" style="font-size:25px;color:${active ? '#7295b2' : '#b4afa4'};">${variables.scene_icon}</span>
+                        </div>
+                        <div style="font:700 18px Manrope;color:#e9e5dd;">${variables.scene_name}</div>
+                      </div>`;
+                    ]]]
+            s2:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                entity: scene.movie
+                triggers_update: *scene_ids
+                tap_action:
+                  action: perform-action
+                  perform_action: scene.turn_on
+                  target:
+                    entity_id: scene.movie
+                variables:
+                  scene_name: Movie
+                  scene_icon: movie
+                styles: *scene_card_styles
+                custom_fields:
+                  content: *scene_card_content
+            s3:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                entity: scene.evening
+                triggers_update: *scene_ids
+                tap_action:
+                  action: perform-action
+                  perform_action: scene.turn_on
+                  target:
+                    entity_id: scene.evening
+                variables:
+                  scene_name: Evening
+                  scene_icon: nights_stay
+                styles: *scene_card_styles
+                custom_fields:
+                  content: *scene_card_content
+            s4:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                entity: scene.good_night
+                triggers_update: *scene_ids
+                tap_action:
+                  action: perform-action
+                  perform_action: scene.turn_on
+                  target:
+                    entity_id: scene.good_night
+                variables:
+                  scene_name: Goodnight
+                  scene_icon: bedtime
+                styles: *scene_card_styles
+                custom_fields:
+                  content: *scene_card_content
+            s5:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                entity: scene.entertaining
+                triggers_update: *scene_ids
+                tap_action:
+                  action: perform-action
+                  perform_action: scene.turn_on
+                  target:
+                    entity_id: scene.entertaining
+                variables:
+                  scene_name: Dinner
+                  scene_icon: restaurant
+                styles: *scene_card_styles
+                custom_fields:
+                  content: *scene_card_content
+            s6:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                entity: scene.welcome
+                triggers_update: *scene_ids
+                tap_action:
+                  action: perform-action
+                  perform_action: scene.turn_on
+                  target:
+                    entity_id: scene.welcome
+                variables:
+                  scene_name: Welcome
+                  scene_icon: waving_hand
+                styles: *scene_card_styles
+                custom_fields:
+                  content: *scene_card_content
+            # All Off: good night scene + pause music + close shade groups
+            alloff:
+              card:
+                type: custom:button-card
+                template: nspanel_btn
+                tap_action:
+                  action: perform-action
+                  perform_action: script.nspanel_all_off
+                styles:
+                  card:
+                    - height: 58px
+                    - border-radius: 18px
+                    - background: '#2b2f34'
+                    - border: 1px solid rgba(234,230,221,0.08)
+                  grid:
+                    - display: flex
+                    - align-items: center
+                    - justify-content: center
+                    - gap: 10px
+                    - height: 100%
+                custom_fields:
+                  glyph: '<span class="ms" style="font-size:24px;color:#b4afa4;">power_settings_new</span>'
+                  label: '<span style="font:700 18px Manrope;color:#e9e5dd;">All Off</span>'
