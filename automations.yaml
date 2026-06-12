@@ -342,79 +342,6 @@
     action: light.turn_off
   mode: restart
   max_exceeded: silent
-- id: '1720717911111'
-  alias: 3:00PM Bedroom Back Shading
-  description: ''
-  triggers:
-  - at: '15:00:00'
-    trigger: time
-  conditions:
-  - condition: numeric_state
-    entity_id: sensor.bayberry_tempest_illuminance
-    above: 40000
-  - condition: template
-    value_template: '{{ now().month in [5,6,7,8,9] }}'
-  actions:
-  - choose:
-    - conditions:
-      - condition: numeric_state
-        entity_id: sensor.bayberry_tempest_temperature
-        below: 65
-      sequence: []
-    - conditions:
-      - condition: numeric_state
-        entity_id: sensor.bayberry_tempest_temperature
-        above: 65
-        below: 85
-      sequence:
-      - metadata: {}
-        data:
-          position: 60
-        target:
-          entity_id: cover.bedroom_back
-        action: cover.set_cover_position
-      - if:
-        - condition: state
-          entity_id: input_boolean.guest_mode
-          state: 'off'
-        then:
-        - action: cover.set_cover_position
-          metadata: {}
-          data:
-            position: 55
-          target:
-            entity_id:
-            - cover.back_guest_bedroom_back_left
-            - cover.back_guest_bedroom_back_right
-    - conditions:
-      - condition: numeric_state
-        entity_id: sensor.bayberry_tempest_temperature
-        above: 85
-      sequence:
-      - metadata: {}
-        data:
-          position: 0
-        target:
-          entity_id: cover.bedroom_back
-        action: cover.set_cover_position
-      - device_id: 07f5977792d4adc7c8c896fed6ce411a
-        domain: cover
-        entity_id: 6b3acb17f8a29e70547f00920a48a205
-        type: set_position
-        position: 0
-      - if:
-        - condition: state
-          entity_id: input_boolean.guest_mode
-          state: 'off'
-        then:
-        - action: cover.close_cover
-          metadata: {}
-          data: {}
-          target:
-            entity_id:
-            - cover.back_guest_bedroom_back_left
-            - cover.back_guest_bedroom_back_right
-  mode: restart
 - id: '1720808246611'
   alias: 11:00 PM Good Night
   description: ''
@@ -708,30 +635,6 @@
     continue_on_error: true
     enabled: false
   mode: single
-- id: '1723033111640'
-  alias: Bathroom Humidity Above 70
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id:
-    - sensor.bathroom_air_sensor_humidity_sensor
-    above: 72
-  condition: []
-  action:
-  - type: turn_on
-    device_id: 3d8b3db67e8c40e8f70ad5313193cfa8
-    entity_id: c612964c772de69849bbd0a7913a9352
-    domain: switch
-  - delay:
-      hours: 0
-      minutes: 30
-      seconds: 0
-      milliseconds: 0
-  - type: turn_off
-    device_id: 3d8b3db67e8c40e8f70ad5313193cfa8
-    entity_id: c612964c772de69849bbd0a7913a9352
-    domain: switch
-  mode: single
 - id: '1727728973670'
   alias: Daily Restart
   description: ''
@@ -1004,100 +907,6 @@
   - action: script.clean_basement
     metadata: {}
     data: {}
-  mode: single
-- id: '1731187286362'
-  alias: HVAC Fan when Vacuum Cleaning
-  description: ''
-  triggers:
-  - device_id: 02fe3ab5522c52665d396f1dc5e56f77
-    domain: vacuum
-    entity_id: 07233e24c1ee7f70a04032cd446cbb5a
-    type: cleaning
-    trigger: device
-  conditions:
-  - condition: state
-    entity_id: input_boolean.away_mode
-    state: 'off'
-  actions:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 20
-      milliseconds: 0
-  - choose:
-    - conditions:
-      - condition: state
-        entity_id: select.roborock_s8_selected_map
-        state: Basement
-      sequence:
-      - action: climate.set_fan_mode
-        metadata: {}
-        data:
-          fan_mode: 'on'
-        target:
-          entity_id: climate.basement_thermostat
-    - conditions:
-      - condition: state
-        entity_id: select.roborock_s8_selected_map
-        state: Second Floor
-      sequence:
-      - action: climate.set_fan_mode
-        metadata: {}
-        data:
-          fan_mode: 'on'
-        target:
-          entity_id:
-          - climate.master_bedroom_thermostat
-          - climate.office_thermostat
-    - conditions:
-      - condition: state
-        entity_id: select.roborock_s8_selected_map
-        state: First Floor
-      sequence:
-      - action: climate.set_fan_mode
-        metadata: {}
-        data:
-          fan_mode: 'on'
-        target:
-          entity_id: climate.living_room_thermostat
-- id: '1731187353280'
-  alias: HVAC Fan when Vacuum Finished
-  description: ''
-  triggers:
-  - type: not_running
-    device_id: 02fe3ab5522c52665d396f1dc5e56f77
-    entity_id: 2301f39028746dfbf971190154bdbdc3
-    domain: binary_sensor
-    trigger: device
-  conditions:
-  - condition: state
-    entity_id: input_boolean.away_mode
-    state: 'off'
-  actions:
-  - delay:
-      hours: 0
-      minutes: 10
-      seconds: 0
-      milliseconds: 0
-  - action: climate.set_fan_mode
-    metadata: {}
-    data:
-      fan_mode: auto
-    target:
-      device_id:
-      - ad083d27029b75d6dff9f9925c6e0d6d
-      - b5dd5a5d880c08e0cb400eefceecba46
-      - ea7d0311040cfb5cdc34e51fbb6cf40e
-      - 98bd8135f812bb40ba7abc2b8c69c8a4
-  - action: climate.set_preset_mode
-    metadata: {}
-    data:
-      preset_mode: NoHold
-    target:
-      device_id:
-      - ad083d27029b75d6dff9f9925c6e0d6d
-      - b5dd5a5d880c08e0cb400eefceecba46
-      - ea7d0311040cfb5cdc34e51fbb6cf40e
   mode: single
 - id: '1733360364746'
   alias: 11:00PM - Turn Off Landscape Spotlights (S-Th)
@@ -1492,62 +1301,6 @@
           entity_id: scene.emergency
         data: {}
       auto_mode: queued
-- id: '1734869940914'
-  alias: 'Driveway: Detections when alarm armed'
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - binary_sensor.driveway_person_detected_2
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.driveway_vehicle_detected_2
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.driveway_object_detected_2
-    from: 'off'
-    to: 'on'
-  conditions:
-  - condition: or
-    conditions:
-    - condition: state
-      entity_id: alarm_control_panel.bayberry_alarm_v2
-      state: armed_away
-    - condition: state
-      entity_id: alarm_control_panel.bayberry_alarm_v2
-      state: armed_home
-    enabled: true
-  actions:
-  - action: llmvision.stream_analyzer
-    data:
-      remember: true
-      use_memory: true
-      duration: 5
-      max_frames: 3
-      include_filename: false
-      target_width: 1280
-      max_tokens: 100
-      temperature: 0.2
-      generate_title: false
-      expose_images: true
-      provider: 01JTV2RGDQZAB56NF78CBRRFCT
-      image_entity:
-      - camera.driveway_high_resolution_channel_2
-      message: what is happening in the driveway? summarize critical information in
-        178 characters or less.
-    response_variable: response
-  - action: notify.mobile_app_carmens_iphone
-    data:
-      message: '{{ response.response_text }}'
-      title: Motion in driveway!
-      data:
-        image: /media/llmvision/snapshots/{{ response.key_frame | replace('/config/media/llmvision/snapshots/',
-          '') }}
-  mode: single
 - id: '1734892746784'
   alias: Away Mode Turns On
   description: ''
@@ -1736,7 +1489,7 @@
     entity_id:
     - sensor.first_floor_average_lux
     above: 10
-    for: '00:05:00'
+    for: 00:05:00
   - trigger: time
     at: 09:00:00
   conditions:
@@ -1776,7 +1529,7 @@
     entity_id:
     - sensor.first_floor_average_lux
     below: 10
-    for: '00:05:00'
+    for: 00:05:00
   conditions:
   - condition: sun
     after: sunset
@@ -2033,7 +1786,7 @@
     data:
       stop_actions: true
     target:
-      entity_id: automation.enhanced_first_floor_climate_manager
+      entity_id: automation.living_room_hvac_schedule_v3
   - wait_for_trigger:
     - trigger: state
       entity_id:
@@ -2051,7 +1804,7 @@
     metadata: {}
     data: {}
     target:
-      entity_id: automation.enhanced_first_floor_climate_manager
+      entity_id: automation.living_room_hvac_schedule_v3
   mode: single
 - id: '1739720362966'
   alias: Mudroom Door Left Open - Climate Off
@@ -2132,7 +1885,7 @@
   - action: alarm_control_panel.alarm_disarm
     metadata: {}
     data:
-      code: !secret alarm_code
+      code: 'REDACTED'
     target:
       entity_id:
       - alarm_control_panel.alarmo
@@ -2190,11 +1943,8 @@
     - binary_sensor.someone_home
     from: 'off'
     to: 'on'
-    for: '00:00:30'
+    for: 00:00:30
   conditions:
-  # Only auto-disarm when the house was actually armed for an empty home.
-  # A brief presence flap or a spoofed tracker should not silently disarm
-  # an armed_home/armed_night state.
   - condition: state
     entity_id: alarm_control_panel.alarmo
     state: armed_away
@@ -2202,7 +1952,7 @@
   - action: alarm_control_panel.alarm_disarm
     metadata: {}
     data:
-      code: !secret alarm_code
+      code: 'REDACTED'
     target:
       entity_id: alarm_control_panel.alarmo
   mode: single
@@ -2240,46 +1990,6 @@
         data: {}
         target:
           entity_id: alarm_control_panel.alarmo
-  mode: single
-- id: '1739819825520'
-  alias: Alarm - Armed Home Triggers
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - binary_sensor.living_room_french_doors
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.front_door
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.kitchen_french_doors
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.mudroom_entry_door
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.mudroom_garage_door
-    from: 'off'
-    to: 'on'
-  conditions:
-  - condition: state
-    entity_id: alarm_control_panel.bayberry_alarm_v2
-    state: armed_home
-  actions:
-  - action: alarm_control_panel.alarm_trigger
-    metadata: {}
-    data: {}
-    target:
-      entity_id: alarm_control_panel.bayberry_alarm_v2
   mode: single
 - id: '1739820500853'
   alias: Alarm - Triggered
@@ -2349,51 +2059,6 @@
       - condition: state
         entity_id: alarm_control_panel.alarmo
         state: disarmed
-  mode: single
-- id: '1739820699426'
-  alias: Alarm - Armed Away Triggers
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - binary_sensor.living_room_french_doors
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.front_door
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.kitchen_french_doors
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.mudroom_entry_door
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.mudroom_garage_door
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - cover.garage_door_garage
-    from: closed
-    to: open
-  conditions:
-  - condition: state
-    entity_id: alarm_control_panel.alarmo
-    state: armed_away
-  actions:
-  - action: alarm_control_panel.alarm_trigger
-    metadata: {}
-    data: {}
-    target:
-      entity_id: alarm_control_panel.alarmo
   mode: single
 - id: '1743103086408'
   alias: Bedroom - Close Shades at Sunset +30min or 8:00PM
@@ -2495,40 +2160,6 @@
       sensor_entity: input_boolean.pool_cover_pump_text_analysis
     response_variable: response
   mode: single
-- id: '1746823776776'
-  alias: Pool Heater - If sunny, turn on at 10AM on Weekends
-  description: ''
-  triggers:
-  - trigger: time
-    at: '10:00:00'
-  conditions:
-  - condition: time
-    weekday:
-    - sun
-    - sat
-  - condition: state
-    entity_id: weather.openweathermap
-    state: sunny
-  - condition: state
-    entity_id: binary_sensor.pool_cover
-    state: 'on'
-  actions:
-  - action: water_heater.turn_on
-    metadata: {}
-    data: {}
-    target:
-      entity_id: water_heater.omnilogic_pool_heater
-  - action: water_heater.set_temperature
-    metadata: {}
-    data:
-      temperature: 80
-    target:
-      entity_id: water_heater.omnilogic_pool_heater
-  - device_id: 0aabb641babaa0fbd27317cd2ff3780f
-    domain: button
-    entity_id: 782f306b8d017953075554de8fc81e4d
-    type: press
-  mode: single
 - id: '1746823846975'
   alias: Pool Heater - Turn off daily at 6pm
   description: ''
@@ -2580,54 +2211,6 @@
         on'
     response_variable: response
   mode: single
-- id: '1746891205815'
-  alias: 'Front: detections when alarm armed'
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - binary_sensor.front_person_detected
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.front_vehicle_detected
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.front_object_detected
-    from: 'off'
-    to: 'on'
-  conditions: []
-  actions:
-  - action: llmvision.stream_analyzer
-    data:
-      remember: true
-      use_memory: true
-      duration: 5
-      max_frames: 3
-      include_filename: false
-      target_width: 1280
-      max_tokens: 100
-      temperature: 0.2
-      generate_title: false
-      expose_images: true
-      provider: 01JTV2RGDQZAB56NF78CBRRFCT
-      image_entity:
-      - camera.front_high_resolution_channel
-      message: 'what is happening in the front of the house? summarize critical information
-        in 178 characters or less describing people, packages or vehicles that are
-        visible. '
-    response_variable: response
-  - action: notify.mobile_app_carmens_iphone
-    data:
-      message: '{{ response.response_text }}'
-      title: Person in front!
-      data:
-        image: /media/llmvision/snapshots/{{ response.key_frame | replace('/config/media/llmvision/snapshots/',
-          '') }}
-  mode: single
 - id: '1746915817877'
   alias: Rain Check
   description: ''
@@ -2648,71 +2231,6 @@
         %}{% set ns.items = ns.items + [{''datetime'': m.datetime.isoformat(), ''precipitation'':
         (m.precipitation / 25.4) | round(3)}] %}{% endfor %}{{ ns.items }}'
   mode: single
-- id: '1746917722683'
-  alias: Pool - Detections while alarm armed
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - binary_sensor.pool_person_detected
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.pool_vehicle_detected
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.pool_object_detected
-    from: 'off'
-    to: 'on'
-  - trigger: state
-    entity_id:
-    - binary_sensor.pool_animal_detected
-    from: 'off'
-    to: 'on'
-  conditions:
-  - condition: state
-    entity_id: alarm_control_panel.bayberry_alarm_v2
-    state: armed_home
-    enabled: true
-  - condition: state
-    entity_id: alarm_control_panel.bayberry_alarm_v2
-    state: armed_away
-    enabled: true
-  actions:
-  - action: llmvision.stream_analyzer
-    data:
-      remember: true
-      use_memory: true
-      duration: 5
-      max_frames: 3
-      include_filename: false
-      target_width: 1280
-      max_tokens: 100
-      temperature: 0.2
-      generate_title: false
-      expose_images: true
-      provider: 01JTV2RGDQZAB56NF78CBRRFCT
-      image_entity:
-      - camera.pool_high_resolution_channel
-      message: 'what is happening in the pool area of the house? summarize critical
-        information in 178 characters or less describing people, packages or vehicles
-        that are visible. '
-    response_variable: response
-  - variables:
-      frame_url: "{% set base = state_attr('homeassistant', 'external_url')\n              or
-        state_attr('homeassistant', 'internal_url')\n              or 'https://YOUR-HA-URL'
-        %}\n{{ base ~ key_frame | replace('/config/www', '/local') }}\n"
-  - action: notify.mobile_app_carmens_iphone
-    data:
-      message: '{{ response.response_text }}'
-      title: Person near the pool!
-      data:
-        image: /media/llmvision/snapshots/{{ response.key_frame | replace('/config/media/llmvision/snapshots/',
-          '') }}
-  mode: single
 - id: '1746998610947'
   alias: Pool Light 30 min before sunset
   description: ''
@@ -2730,34 +2248,6 @@
       entity_id: light.omnilogic_pool_color_lights
     data:
       effect: TRANQUILITY
-  mode: single
-- id: '1748168285728'
-  alias: Pool Heater Schedule
-  description: ''
-  triggers:
-  - trigger: numeric_state
-    entity_id:
-    - sensor.bayberry_charge
-    above: 98
-  conditions:
-  - condition: time
-    after: 09:00:00
-    before: '18:00:00'
-  - condition: state
-    entity_id: sensor.dryer
-    state: 'off'
-  - condition: numeric_state
-    entity_id: sensor.solcast_pv_forecast_forecast_today
-    above: 40
-  actions:
-  - device_id: 0aabb641babaa0fbd27317cd2ff3780f
-    domain: water_heater
-    entity_id: 856a2447fcfabcdd985f09926edd3fb9
-    type: turn_on
-  - device_id: 0aabb641babaa0fbd27317cd2ff3780f
-    domain: button
-    entity_id: 782f306b8d017953075554de8fc81e4d
-    type: press
   mode: single
 - id: '1748205472100'
   description: ''
@@ -4717,32 +4207,6 @@
               - cover.hallway_2
               - cover.hallway_1
       time_before_long_press: 2
-- id: '1750639338019'
-  alias: Morning Basement Lights Off (Lux)
-  description: ''
-  triggers:
-  - trigger: numeric_state
-    entity_id:
-    - sensor.mudroom_garage_illuminance
-    above: 10
-  conditions:
-  - condition: state
-    entity_id: binary_sensor.mudroom_garage_door
-    state: 'off'
-  - condition: time
-    after: 05:00:00
-    before: '10:00:00'
-  actions:
-  - action: light.turn_off
-    metadata: {}
-    data:
-      transition: 300
-    target:
-      entity_id:
-      - light.laundry_room_main_lights
-      - light.basement_hallway_main_lights
-      - light.media_room_main_lights
-  mode: single
 - id: '1750804925752'
   alias: Basement HVAC Schedule
   description: Manages basement with comfort hours and energy savings
@@ -5159,38 +4623,6 @@
       entity_id: switch.primary_bathroom_exhaust_fan
     data: {}
   mode: single
-- id: '1754736519416'
-  alias: Pool Heater Setpoint
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - input_number.pool_heater_setpoint
-  actions:
-  - target:
-      entity_id: water_heater.omnilogic_pool_heater
-    data:
-      temperature: '{{ states(''input_number.pool_heater_setpoint'') | float }}'
-    action: water_heater.set_temperature
-- id: '1754736635842'
-  alias: Water Heater to Pool Heater Setpoint
-  description: ''
-  triggers:
-  - entity_id: water_heater.omnilogic_pool_heater
-    attribute: temperature
-    trigger: state
-  conditions:
-  - condition: template
-    value_template: "{{ state_attr('water_heater.omnilogic_pool_heater','temperature')
-      is not none\n   and (states('input_number.pool_heater_setpoint')|float)\n       !=
-      (state_attr('water_heater.omnilogic_pool_heater','temperature')|float) }}\n"
-  actions:
-  - target:
-      entity_id: input_number.pool_heater_setpoint
-    data:
-      value: '{{ state_attr(''water_heater.omnilogic_pool_heater'',''temperature'')
-        | float }}'
-    action: input_number.set_value
 - id: '1756339831821'
   alias: Turn Laundry Room Lights on When Door Opens After Dark
   description: ''
@@ -6467,10 +5899,10 @@
             - condition: time
               before: '17:00:00'
             - condition: template
-              value_template: '{{ state_attr(''cover.first_floor_front'',
-                ''current_position'') | int(0) > 5 or state_attr(''cover.dining_room_side'',
-                ''current_position'') | int(0) > 5 or state_attr(''cover.living_room_side_shades'',
-                ''current_position'') | int(0) > 5 }}'
+              value_template: '{{ state_attr(''cover.first_floor_front'', ''current_position'')
+                | int(0) > 5 or state_attr(''cover.dining_room_side'', ''current_position'')
+                | int(0) > 5 or state_attr(''cover.living_room_side_shades'', ''current_position'')
+                | int(0) > 5 }}'
       sequence:
       - variables:
           comfort: 70
@@ -6604,82 +6036,86 @@
     so the OFF path always executes. Pre-cool high uses today''s forecast after midnight,
     tomorrow''s in the evening. Publishes input_boolean.basement_hvac_fresh_air_available
     (free cooling: outdoor >=4F below warmest indoor zone, dew<65, no rain; releases
-    within 1F). Damper follows fan state; fan off->on trigger re-syncs after manual
-    presses.'
+    within 1F). Damper opens only for economizer-owned fan runs (manual bathroom fan
+    presses do NOT open the damper; makeup air then comes via envelope leakage). The
+    fan off->on trigger re-syncs damper/blower state after manual presses. If a wanted
+    fan is already running but unowned (manual press or shutdown race), the economizer
+    ADOPTS it by setting the ownership flag, so the damper opens and clean shutdown
+    works.'
   triggers:
-  - platform: time_pattern
-    hours: /1
+  - hours: /1
     id: hourly
-  - platform: time
-    at: 07:00:00
+    trigger: time_pattern
+  - at: 07:00:00
     id: primary_window_start
-  - platform: time
-    at: '22:00:00'
+    trigger: time
+  - at: '22:00:00'
     id: quiet_start
-  - platform: time
-    at: 08:00:00
+    trigger: time
+  - at: 08:00:00
     id: quiet_end
-  - platform: numeric_state
-    entity_id: sensor.bayberry_tempest_irradiance
+    trigger: time
+  - entity_id: sensor.bayberry_tempest_irradiance
     above: 200
     for: 00:10:00
     id: solar_start
-  - platform: numeric_state
-    entity_id: sensor.bayberry_tempest_precipitation
+    trigger: numeric_state
+  - entity_id: sensor.bayberry_tempest_precipitation
     below: 0.01
     for: 00:05:00
     id: rain_stop
-  - platform: numeric_state
-    entity_id: sensor.bayberry_tempest_precipitation
+    trigger: numeric_state
+  - entity_id: sensor.bayberry_tempest_precipitation
     above: 0.01
     id: rain_start
-  - platform: numeric_state
-    entity_id: sensor.bayberry_tempest_dew_point
+    trigger: numeric_state
+  - entity_id: sensor.bayberry_tempest_dew_point
     below: 55
     for: 00:10:00
     id: dew_low
-  - platform: numeric_state
-    entity_id: sensor.bayberry_tempest_dew_point
+    trigger: numeric_state
+  - entity_id: sensor.bayberry_tempest_dew_point
     above: 65
     for: 00:05:00
     id: dew_high
-  - platform: numeric_state
-    entity_id: sensor.living_room_thermostat_current_temperature
+    trigger: numeric_state
+  - entity_id: sensor.living_room_thermostat_current_temperature
     below: 67.5
     for: 00:02:00
     id: z1_cooled
-  - platform: numeric_state
-    entity_id: sensor.basement_thermostat_homekit_current_temperature
+    trigger: numeric_state
+  - entity_id: sensor.basement_thermostat_homekit_current_temperature
     below: 71.5
     for: 00:02:00
     id: z2_cooled
-  - platform: numeric_state
-    entity_id: sensor.first_floor_co2_5min
+    trigger: numeric_state
+  - entity_id: sensor.first_floor_co2_5min
     above: 800
     for: 00:05:00
     id: co2_high_first
-  - platform: numeric_state
-    entity_id: sensor.first_floor_co2_5min
+    trigger: numeric_state
+  - entity_id: sensor.first_floor_co2_5min
     below: 600
     for: 00:05:00
     id: co2_recovered_first
-  - platform: numeric_state
-    entity_id: sensor.bedroom_co2_5min
+    trigger: numeric_state
+  - entity_id: sensor.bedroom_co2_5min
     above: 800
     for: 00:05:00
     id: co2_high_bedroom
-  - platform: numeric_state
-    entity_id: sensor.fresh_air_damper_on_24_h
+    trigger: numeric_state
+  - entity_id: sensor.fresh_air_damper_on_24_h
     above: 1
     for: 00:05:00
     id: fallback_satisfied
-  - platform: state
-    entity_id:
+    trigger: numeric_state
+  - entity_id:
     - switch.primary_bathroom_exhaust_fan
     - switch.basement_bathroom_exhaust_fan
     from: 'off'
     to: 'on'
     id: fan_on
+    trigger: state
   actions:
   - action: weather.get_forecasts
     data:
@@ -6762,13 +6198,20 @@
     - condition: template
       value_template: '{{ run_primary }}'
     then:
-    - if:
-      - condition: template
-        value_template: '{{ not primary_running }}'
+    - alias: Adopt ownership whenever we want it running
+      if:
+      - condition: state
+        entity_id: input_boolean.economizer_owns_primary_fan
+        state: 'off'
       then:
       - action: input_boolean.turn_on
         target:
           entity_id: input_boolean.economizer_owns_primary_fan
+    - if:
+      - condition: state
+        entity_id: switch.primary_bathroom_exhaust_fan
+        state: 'off'
+      then:
       - action: switch.turn_on
         target:
           entity_id: switch.primary_bathroom_exhaust_fan
@@ -6792,13 +6235,20 @@
     - condition: template
       value_template: '{{ run_basement }}'
     then:
-    - if:
-      - condition: template
-        value_template: '{{ not basement_running }}'
+    - alias: Adopt ownership whenever we want it running
+      if:
+      - condition: state
+        entity_id: input_boolean.economizer_owns_basement_fan
+        state: 'off'
       then:
       - action: input_boolean.turn_on
         target:
           entity_id: input_boolean.economizer_owns_basement_fan
+    - if:
+      - condition: state
+        entity_id: switch.basement_bathroom_exhaust_fan
+        state: 'off'
+      then:
       - action: switch.turn_on
         target:
           entity_id: switch.basement_bathroom_exhaust_fan
@@ -6817,16 +6267,26 @@
       - action: input_boolean.turn_off
         target:
           entity_id: input_boolean.economizer_owns_basement_fan
-  - alias: Damper follows fans
+  - alias: Damper follows economizer-owned fans only
     if:
     - condition: or
       conditions:
-      - condition: state
-        entity_id: switch.primary_bathroom_exhaust_fan
-        state: 'on'
-      - condition: state
-        entity_id: switch.basement_bathroom_exhaust_fan
-        state: 'on'
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: switch.primary_bathroom_exhaust_fan
+          state: 'on'
+        - condition: state
+          entity_id: input_boolean.economizer_owns_primary_fan
+          state: 'on'
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: switch.basement_bathroom_exhaust_fan
+          state: 'on'
+        - condition: state
+          entity_id: input_boolean.economizer_owns_basement_fan
+          state: 'on'
     then:
     - action: switch.turn_on
       target:
@@ -6946,11 +6406,11 @@
   mode: single
 - id: '1777225146361'
   alias: Basement Bathroom Exhaust Fan Turns Off after 45 min
-  description: '45-min auto-off timer for basement bathroom fan after a manual/external
-    press. Trigger condition checks the state-change context: if both context.parent_id
-    and context.user_id are null, the fan was turned on by a physical wall press or
-    external integration — NOT an HA automation. Skips if HA automation started the
-    fan. After 45 min, only turns off if the fan is still on.'
+  description: '45-min auto-off timer for the basement bathroom fan after a manual/external
+    press. Skips when input_boolean.economizer_owns_basement_fan is on — that flag
+    means the Fresh Air Ventilation economizer started the fan and will turn it off
+    itself. Re-checks the flag and fan state after the delay so it never fights the
+    economizer. mode: restart so a new press restarts the 45-min window.'
   triggers:
   - platform: state
     entity_id:
@@ -6964,9 +6424,9 @@
       minutes: 0
       seconds: 30
   conditions:
-  - condition: template
-    value_template: '{{ trigger.to_state.context.parent_id is none and trigger.to_state.context.user_id
-      is none }}'
+  - condition: state
+    entity_id: input_boolean.economizer_owns_basement_fan
+    state: 'off'
   actions:
   - delay:
       hours: 0
@@ -6976,11 +6436,14 @@
     - condition: state
       entity_id: switch.basement_bathroom_exhaust_fan
       state: 'on'
+    - condition: state
+      entity_id: input_boolean.economizer_owns_basement_fan
+      state: 'off'
     then:
     - action: switch.turn_off
       target:
         entity_id: switch.basement_bathroom_exhaust_fan
-  mode: single
+  mode: restart
 - id: '1777328807450'
   alias: Primary Bedroom Shades – Schedule & Adaptive
   description: 'Primary bedroom shading framework matching first-floor design. Weekday
@@ -7399,13 +6862,12 @@
   mode: single
 - id: '1777374012037'
   alias: Primary Bathroom Exhaust Fan Turns Off after 45 min
-  description: '45-min auto-off timer for primary bathroom fan after a manual/external
-    press (e.g., shower). Trigger condition checks the state-change context: if both
-    context.parent_id and context.user_id are null, the fan was turned on by a physical
-    wall press or external integration (Lutron app) — NOT an HA automation. Skips
-    if HA automation started the fan (economizer, safety shutoff, etc.). After 45
-    min, only turns off if the fan is still on (might have been turned off earlier
-    by something else).'
+  description: '45-min auto-off timer for the primary bathroom fan after a manual/external
+    press (wall switch, Lutron app, shower use). Skips when input_boolean.economizer_owns_primary_fan
+    is on — that flag means the Fresh Air Ventilation economizer started the fan and
+    will turn it off itself. Re-checks the flag and fan state after the delay so it
+    never fights the economizer. mode: restart so a new press restarts the 45-min
+    window.'
   triggers:
   - platform: state
     entity_id:
@@ -7419,9 +6881,9 @@
       minutes: 0
       seconds: 30
   conditions:
-  - condition: template
-    value_template: '{{ trigger.to_state.context.parent_id is none and trigger.to_state.context.user_id
-      is none }}'
+  - condition: state
+    entity_id: input_boolean.economizer_owns_primary_fan
+    state: 'off'
   actions:
   - delay:
       hours: 0
@@ -7431,11 +6893,14 @@
     - condition: state
       entity_id: switch.primary_bathroom_exhaust_fan
       state: 'on'
+    - condition: state
+      entity_id: input_boolean.economizer_owns_primary_fan
+      state: 'off'
     then:
     - action: switch.turn_off
       target:
         entity_id: switch.primary_bathroom_exhaust_fan
-  mode: single
+  mode: restart
 - id: '1777540759790'
   alias: Power cycle outlet when driveway_zone_2_2 unavailable
   description: 'When switch.driveway_zone_2_2 is unavailable for 2 minutes (and was
