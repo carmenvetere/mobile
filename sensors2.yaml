@@ -811,3 +811,86 @@
             | map(attribute='precipitation') | sum | round(2) }}
       attributes:
         minutely: "{{ trigger.event.data.minutely }}"
+# ═══════════════════════════════════════════════════════════════════
+# HVAC estimated power sensors
+# Fitted 2026-06-12 from 12 days of Powerwall load vs thermostat run history.
+# Model: P(t) = P_max - (P_max - P_start) * e^(-t/tau), t = minutes since compressor start.
+#   Upper (Bedroom/Master Bedroom/Office): 480 W -> 1030 W, tau 26 min
+#   Lower (Living Room/Basement):          300 W ->  550 W, tau 22 min
+#   Fan-only: 120 W. Gas backup (below input_number.hvac_gas_switchover_temperature): 250 W blower.
+# Requires: input_number.hvac_gas_switchover_temperature (already created via UI).
+# ═══════════════════════════════════════════════════════════════════
+- binary_sensor:
+    - name: "Upper HVAC Compressor Running"
+      unique_id: upper_hvac_compressor_running
+      device_class: running
+      state: >-
+        {% set acts = [state_attr('climate.bedroom_thermostat','hvac_action'),
+                       state_attr('climate.master_bedroom_thermostat','hvac_action'),
+                       state_attr('climate.office_thermostat','hvac_action')] %}
+        {{ 'cooling' in acts or 'heating' in acts }}
+    - name: "Lower HVAC Compressor Running"
+      unique_id: lower_hvac_compressor_running
+      device_class: running
+      state: >-
+        {% set acts = [state_attr('climate.living_room_thermostat','hvac_action'),
+                       state_attr('climate.basement_thermostat','hvac_action')] %}
+        {{ 'cooling' in acts or 'heating' in acts }}
+
+- sensor:
+    - name: "Upper HVAC Estimated Power"
+      unique_id: upper_hvac_estimated_power
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      state: >-
+        {%- set comp = 'binary_sensor.upper_hvac_compressor_running' -%}
+        {%- set acts = [state_attr('climate.bedroom_thermostat','hvac_action'),
+                        state_attr('climate.master_bedroom_thermostat','hvac_action'),
+                        state_attr('climate.office_thermostat','hvac_action')] -%}
+        {%- set fans = [state_attr('climate.bedroom_thermostat','fan_mode'),
+                        state_attr('climate.master_bedroom_thermostat','fan_mode'),
+                        state_attr('climate.office_thermostat','fan_mode')] -%}
+        {%- set t = ((now() - states[comp].last_changed).total_seconds() / 60)
+                    if (states[comp] is not none and is_state(comp,'on')) else 0 -%}
+        {%- if 'cooling' in acts -%}
+          {{ (1030 - 550 * e**(-t/26)) | round(0) }}
+        {%- elif 'heating' in acts -%}
+          {%- if states('sensor.bayberry_tempest_temperature') | float(50)
+                < states('input_number.hvac_gas_switchover_temperature') | float(35) -%}
+            250
+          {%- else -%}
+            {{ (1030 - 550 * e**(-t/26)) | round(0) }}
+          {%- endif -%}
+        {%- elif 'fan' in acts or 'on' in fans -%}
+          120
+        {%- else -%}
+          0
+        {%- endif -%}
+    - name: "Lower HVAC Estimated Power"
+      unique_id: lower_hvac_estimated_power
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      state: >-
+        {%- set comp = 'binary_sensor.lower_hvac_compressor_running' -%}
+        {%- set acts = [state_attr('climate.living_room_thermostat','hvac_action'),
+                        state_attr('climate.basement_thermostat','hvac_action')] -%}
+        {%- set fans = [state_attr('climate.living_room_thermostat','fan_mode'),
+                        state_attr('climate.basement_thermostat','fan_mode')] -%}
+        {%- set t = ((now() - states[comp].last_changed).total_seconds() / 60)
+                    if (states[comp] is not none and is_state(comp,'on')) else 0 -%}
+        {%- if 'cooling' in acts -%}
+          {{ (550 - 250 * e**(-t/22)) | round(0) }}
+        {%- elif 'heating' in acts -%}
+          {%- if states('sensor.bayberry_tempest_temperature') | float(50)
+                < states('input_number.hvac_gas_switchover_temperature') | float(35) -%}
+            250
+          {%- else -%}
+            {{ (550 - 250 * e**(-t/22)) | round(0) }}
+          {%- endif -%}
+        {%- elif 'fan' in acts or 'on' in fans -%}
+          120
+        {%- else -%}
+          0
+        {%- endif -%}

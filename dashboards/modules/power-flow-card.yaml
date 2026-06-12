@@ -85,6 +85,18 @@ entities:
       color_value: false
       display_zero: false
       icon: mdi:pool
+    - entity: sensor.upper_hvac_estimated_power
+      name: Upper HVAC
+      color: var(--accent-color)
+      color_value: false
+      display_zero: false
+      icon: mdi:hvac
+    - entity: sensor.lower_hvac_estimated_power
+      name: Lower HVAC
+      color: var(--accent-color)
+      color_value: false
+      display_zero: false
+      icon: mdi:hvac
 display_zero_lines:
   mode: show
   transparency: 50
