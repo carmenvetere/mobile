@@ -151,8 +151,8 @@ cards:
                 custom_fields:
                   head: &shade_card_head |
                     [[[
-                      const p = entity.attributes.current_position;
-                      const label = p === undefined ? entity.state : (p === 0 ? 'Closed' : (p === 100 ? 'Open' : p + '% open'));
+                      const p = entity && entity.attributes ? entity.attributes.current_position : undefined;
+                      const label = p === undefined ? (entity ? entity.state : '--') : (p === 0 ? 'Closed' : (p === 100 ? 'Open' : p + '% open'));
                       return `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;width:100%;">
                         <div style="font:700 18px Manrope;color:#e9e5dd;">${variables.shade_name}</div>
                         <div style="font:600 14px Manrope;color:#9a988f;">${label}</div>

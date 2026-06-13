@@ -40,7 +40,9 @@ cards:
           custom_fields:
             clock: |
               [[[
-                const t = states['sensor.time'].state.split(':');
+                const ts = states['sensor.time'];
+                if (!ts) return '';
+                const t = ts.state.split(':');
                 let h = parseInt(t[0], 10); const m = t[1];
                 const ap = h >= 12 ? 'PM' : 'AM';
                 h = h % 12; if (h === 0) h = 12;
@@ -54,7 +56,9 @@ cards:
                   'snowy-rainy':'weather_mix', 'windy':'air', 'windy-variant':'air' };
                 const w = states['weather.bayberry'];
                 const ic = (w && map[w.state]) ? map[w.state] : 'partly_cloudy_day';
-                const temp = Math.round(parseFloat(states['sensor.bayberry_tempest_temperature'].state));
+                const tEnt = states['sensor.bayberry_tempest_temperature'];
+                const tVal = tEnt ? Math.round(parseFloat(tEnt.state)) : NaN;
+                const temp = isNaN(tVal) ? '--' : tVal;
                 return `<div style="display:flex;align-items:center;gap:7px;margin-right:14px;">
                   <span class="ms" style="font-size:28px;color:#b4afa4;font-variation-settings:'FILL' 1,'wght' 400;">${ic}</span>
                   <span style="font:800 26px Manrope;color:#e9e5dd;">${temp}&deg;</span>
@@ -90,7 +94,7 @@ cards:
                   glyph: '<span class="ms" style="font-size:23px;color:#b4afa4;">notifications</span>'
                   badge: |
                     [[[
-                      const n = parseInt(entity.state, 10) || 0;
+                      const n = entity ? (parseInt(entity.state, 10) || 0) : 0;
                       if (n === 0) return '';
                       return `<div style="min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#c8805f;display:flex;align-items:center;justify-content:center;border:2px solid #202327;">
                         <span style="font:800 11px Manrope;color:#211a16;">${n}</span></div>`;
@@ -320,7 +324,7 @@ cards:
                 custom_fields:
                   content: |
                     [[[
-                      const room = entity.state;
+                      const room = entity ? entity.state : '';
                       const p = states['media_player.' + room.toLowerCase().split(' ').join('_')];
                       let sub = 'Paused';
                       if (p && p.state === 'playing') sub = p.attributes.media_title || 'Playing';
@@ -372,7 +376,7 @@ cards:
                 custom_fields:
                   content: |
                     [[[
-                      const s = entity.state;
+                      const s = entity ? entity.state : 'unknown';
                       const labels = { disarmed: 'Disarmed', armed_away: 'Armed · Away', armed_home: 'Armed · Home',
                         armed_night: 'Armed · Night', armed_vacation: 'Armed · Vacation', arming: 'Arming…',
                         pending: 'Enter code', triggered: 'ALARM' };
@@ -403,9 +407,12 @@ cards:
                     [[[
                       const heaterOn = entity && entity.state !== 'off';
                       const pumpOn = states['switch.omnilogic_pool_filter_pump'] && states['switch.omnilogic_pool_filter_pump'].state === 'on';
-                      const v = parseFloat(states['number.omnilogic_pool_filter_pump_speed'].state) || 0;
+                      const speedEnt = states['number.omnilogic_pool_filter_pump_speed'];
+                      const v = speedEnt ? (parseFloat(speedEnt.state) || 0) : 0;
                       const speed = !pumpOn ? 'Off' : (v <= 50 ? 'Low' : (v <= 80 ? 'Medium' : 'High'));
-                      const setp = Math.round(parseFloat(states['input_number.pool_heater_setpoint'].state));
+                      const spEnt = states['input_number.pool_heater_setpoint'];
+                      const setpVal = spEnt ? Math.round(parseFloat(spEnt.state)) : NaN;
+                      const setp = isNaN(setpVal) ? '--' : setpVal;
                       const sub = heaterOn ? `Heater ${setp}° · ${speed}` : (pumpOn ? `Filter ${speed}` : 'Idle');
                       return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
                         <span class="ms" style="font-size:30px;color:${heaterOn ? '#7295b2' : '#b4afa4'};flex:none;">pool</span>
