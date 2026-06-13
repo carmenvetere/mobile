@@ -280,13 +280,15 @@
     
 #   Calculate "Other" usage
 #   Required sensors (total, well) must be available or we hold the last value.
-#   Optional sensors (EV, pool) are treated as 0 when unavailable.
+#   Optional sensors (EV, pool, HVAC) are treated as 0 when unavailable.
 - trigger:
     - platform: state
       entity_id:
         - sensor.bayberry_load_import
         - sensor.well_pump_energy2
         - sensor.wall_charger_energy
+        - sensor.upper_hvac_energy
+        - sensor.lower_hvac_energy
     - platform: homeassistant
       event: start
   sensor:
@@ -310,7 +312,12 @@
           {% set ev = states('sensor.wall_charger_energy') %}
           {% set ev = ev | float(0) if ev not in ['unavailable', 'unknown'] else 0 %}
 
-          {{ [total - well - ev, 0] | max | round(2) }}
+          {% set hvac_up = states('sensor.upper_hvac_energy') %}
+          {% set hvac_up = hvac_up | float(0) if hvac_up not in ['unavailable', 'unknown'] else 0 %}
+          {% set hvac_low = states('sensor.lower_hvac_energy') %}
+          {% set hvac_low = hvac_low | float(0) if hvac_low not in ['unavailable', 'unknown'] else 0 %}
+
+          {{ [total - well - ev - hvac_up - hvac_low, 0] | max | round(2) }}
         {% endif %}
 
 - sensor:
