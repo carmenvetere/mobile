@@ -61,6 +61,7 @@ cards:
               custom_fields:
                 content: |
                   [[[
+                    if (!entity) return '';
                     const rel = (iso) => { const m = (Date.now() - new Date(iso).getTime()) / 60000;
                       if (m < 1) return 'now'; if (m < 60) return Math.floor(m) + ' min ago';
                       const h = m / 60; if (h < 24) return Math.floor(h) + (Math.floor(h) < 2 ? ' hr ago' : ' hrs ago');
@@ -94,6 +95,7 @@ cards:
               custom_fields:
                 content: |
                   [[[
+                    if (!entity) return '';
                     const rel = (iso) => { const m = (Date.now() - new Date(iso).getTime()) / 60000;
                       if (m < 1) return 'now'; if (m < 60) return Math.floor(m) + ' min ago';
                       const h = m / 60; if (h < 24) return Math.floor(h) + (Math.floor(h) < 2 ? ' hr ago' : ' hrs ago');
@@ -127,6 +129,7 @@ cards:
               custom_fields:
                 content: |
                   [[[
+                    if (!entity) return '';
                     const rel = (iso) => { const m = (Date.now() - new Date(iso).getTime()) / 60000;
                       if (m < 1) return 'now'; if (m < 60) return Math.floor(m) + ' min ago';
                       const h = m / 60; if (h < 24) return Math.floor(h) + (Math.floor(h) < 2 ? ' hr ago' : ' hrs ago');
@@ -157,6 +160,7 @@ cards:
               custom_fields:
                 content: |
                   [[[
+                    if (!entity) return '';
                     const rel = (iso) => { const m = (Date.now() - new Date(iso).getTime()) / 60000;
                       if (m < 1) return 'now'; if (m < 60) return Math.floor(m) + ' min ago';
                       const h = m / 60; if (h < 24) return Math.floor(h) + (Math.floor(h) < 2 ? ' hr ago' : ' hrs ago');
@@ -188,6 +192,7 @@ cards:
               custom_fields:
                 content: |
                   [[[
+                    if (!entity) return '';
                     const rel = (iso) => { const m = (Date.now() - new Date(iso).getTime()) / 60000;
                       if (m < 1) return 'now'; if (m < 60) return Math.floor(m) + ' min ago';
                       const h = m / 60; if (h < 24) return Math.floor(h) + (Math.floor(h) < 2 ? ' hr ago' : ' hrs ago');
@@ -222,6 +227,7 @@ cards:
               custom_fields:
                 content: |
                   [[[
+                    if (!entity) return '';
                     const rel = (iso) => { const m = (Date.now() - new Date(iso).getTime()) / 60000;
                       if (m < 1) return 'now'; if (m < 60) return Math.floor(m) + ' min ago';
                       const h = m / 60; if (h < 24) return Math.floor(h) + (Math.floor(h) < 2 ? ' hr ago' : ' hrs ago');
@@ -252,6 +258,7 @@ cards:
               custom_fields:
                 content: |
                   [[[
+                    if (!entity) return '';
                     const rel = (iso) => { const m = (Date.now() - new Date(iso).getTime()) / 60000;
                       if (m < 1) return 'now'; if (m < 60) return Math.floor(m) + ' min ago';
                       const h = m / 60; if (h < 24) return Math.floor(h) + (Math.floor(h) < 2 ? ' hr ago' : ' hrs ago');
@@ -286,6 +293,7 @@ cards:
               custom_fields:
                 content: |
                   [[[
+                    if (!entity) return '';
                     const rel = (iso) => { const m = (Date.now() - new Date(iso).getTime()) / 60000;
                       if (m < 1) return 'now'; if (m < 60) return Math.floor(m) + ' min ago';
                       const h = m / 60; if (h < 24) return Math.floor(h) + (Math.floor(h) < 2 ? ' hr ago' : ' hrs ago');
@@ -318,6 +326,7 @@ cards:
               custom_fields:
                 content: |
                   [[[
+                    if (!entity) return '';
                     const rel = (iso) => { const m = (Date.now() - new Date(iso).getTime()) / 60000;
                       if (m < 1) return 'now'; if (m < 60) return Math.floor(m) + ' min ago';
                       const h = m / 60; if (h < 24) return Math.floor(h) + (Math.floor(h) < 2 ? ' hr ago' : ' hrs ago');
@@ -348,6 +357,7 @@ cards:
               custom_fields:
                 content: |
                   [[[
+                    if (!entity) return '';
                     const rel = (iso) => { const m = (Date.now() - new Date(iso).getTime()) / 60000;
                       if (m < 1) return 'now'; if (m < 60) return Math.floor(m) + ' min ago';
                       const h = m / 60; if (h < 24) return Math.floor(h) + (Math.floor(h) < 2 ? ' hr ago' : ' hrs ago');

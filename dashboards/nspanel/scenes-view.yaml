@@ -74,7 +74,7 @@ cards:
                           let best = null, bt = 0;
                           ids.forEach(id => { const s = states[id]; if (!s) return;
                             const t = Date.parse(s.state); if (!isNaN(t) && t > bt) { bt = t; best = id; } });
-                          return best === entity.entity_id ? 'rgba(114,149,178,0.13)' : '#2b2f34';
+                          return (entity && best === entity.entity_id) ? 'rgba(114,149,178,0.13)' : '#2b2f34';
                         ]]]
                     - border: |
                         [[[
@@ -82,7 +82,7 @@ cards:
                           let best = null, bt = 0;
                           ids.forEach(id => { const s = states[id]; if (!s) return;
                             const t = Date.parse(s.state); if (!isNaN(t) && t > bt) { bt = t; best = id; } });
-                          return '1px solid ' + (best === entity.entity_id ? 'rgba(114,149,178,0.55)' : 'rgba(234,230,221,0.08)');
+                          return '1px solid ' + ((entity && best === entity.entity_id) ? 'rgba(114,149,178,0.55)' : 'rgba(234,230,221,0.08)');
                         ]]]
                   grid:
                     - display: flex
@@ -97,7 +97,7 @@ cards:
                       let best = null, bt = 0;
                       ids.forEach(id => { const s = states[id]; if (!s) return;
                         const t = Date.parse(s.state); if (!isNaN(t) && t > bt) { bt = t; best = id; } });
-                      const active = best === entity.entity_id;
+                      const active = entity && best === entity.entity_id;
                       return `<div style="display:flex;flex-direction:column;justify-content:space-between;height:64px;align-items:flex-start;">
                         <div style="width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:${active ? 'rgba(114,149,178,0.2)' : 'rgba(234,230,221,0.06)'};">
                           <span class="ms" style="font-size:25px;color:${active ? '#7295b2' : '#b4afa4'};">${variables.scene_icon}</span>
