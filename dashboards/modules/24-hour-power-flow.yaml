@@ -61,6 +61,22 @@ series:
     opacity: .8
     show:
       in_header: false
+  - entity: sensor.upper_hvac_estimated_power
+    name: Upper HVAC
+    type: line
+    stroke_width: 2
+    color: "#E0A458"
+    transform: "return x / 1000;"
+    show:
+      in_header: false
+  - entity: sensor.lower_hvac_estimated_power
+    name: Lower HVAC
+    type: line
+    stroke_width: 2
+    color: "#9498AC"
+    transform: "return x / 1000;"
+    show:
+      in_header: false
   - entity: sensor.bayberry_solar_generated
     yaxis_id: header_only
     name: Solar

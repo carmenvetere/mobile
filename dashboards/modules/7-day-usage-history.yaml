@@ -81,6 +81,26 @@ series:
     show:
       legend_value: false
       in_header: false
+  - entity: sensor.upper_hvac_energy
+    name: Upper HVAC
+    type: column
+    color: "#E0A458"
+    group_by:
+      func: diff
+      duration: 1d
+    show:
+      legend_value: false
+      in_header: false
+  - entity: sensor.lower_hvac_energy
+    name: Lower HVAC
+    type: column
+    color: "#9498AC"
+    group_by:
+      func: diff
+      duration: 1d
+    show:
+      legend_value: false
+      in_header: false
   # - entity: sensor.pool_pump_energy
   #   name: Pool Pump
   #   type: column
@@ -121,6 +141,28 @@ series:
     name: Well Pump
     type: column
     color: var(--primary-text-color)
+    group_by:
+      func: diff
+      duration: 7d
+    show:
+      legend_value: false
+      in_header: true
+      in_chart: false
+  - entity: sensor.upper_hvac_energy
+    name: Upper HVAC
+    type: column
+    color: "#E0A458"
+    group_by:
+      func: diff
+      duration: 7d
+    show:
+      legend_value: false
+      in_header: true
+      in_chart: false
+  - entity: sensor.lower_hvac_energy
+    name: Lower HVAC
+    type: column
+    color: "#9498AC"
     group_by:
       func: diff
       duration: 7d
