@@ -33,6 +33,8 @@ cards:
         grid:
           - grid-template-areas: '"header" "body"'
           - grid-template-columns: 1fr
+          - justify-items: stretch
+          - align-items: stretch
           - grid-template-rows: auto minmax(0,1fr)
         custom_fields:
           body:
@@ -56,6 +58,8 @@ cards:
               grid:
                 - grid-template-areas: '"nowplaying" "roomslabel" "rooms"'
                 - grid-template-columns: 1fr
+                - justify-items: stretch
+                - align-items: stretch
                 - grid-template-rows: auto auto auto
             custom_fields:
               nowplaying:
@@ -72,6 +76,8 @@ cards:
                     grid:
                       - grid-template-areas: '"top" "progress" "transport" "volume"'
                       - grid-template-columns: 1fr
+                      - justify-items: stretch
+                      - align-items: stretch
                       - grid-template-rows: auto auto auto auto
                   custom_fields:
                     top: |

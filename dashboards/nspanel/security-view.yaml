@@ -14,6 +14,8 @@ cards:
       grid:
         - grid-template-areas: '"header" "status" "keypad" "modes"'
         - grid-template-columns: 1fr
+        - justify-items: stretch
+        - align-items: stretch
         - grid-template-rows: auto auto minmax(0,1fr) auto
       custom_fields:
         keypad:
@@ -102,6 +104,8 @@ cards:
             grid:
               - grid-template-areas: '"k1 k2 k3" "k4 k5 k6" "k7 k8 k9" "kc k0 kb"'
               - grid-template-columns: repeat(3, 1fr)
+              - justify-items: stretch
+              - align-items: stretch
               - grid-template-rows: repeat(4, 1fr)
               - gap: 9px
               - height: 100%
@@ -302,6 +306,8 @@ cards:
             grid:
               - grid-template-areas: '"away home night"'
               - grid-template-columns: repeat(3, 1fr)
+              - justify-items: stretch
+              - align-items: stretch
               - gap: 10px
           custom_fields:
             away:
