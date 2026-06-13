@@ -14,6 +14,8 @@ cards:
       grid:
         - grid-template-areas: '"header" "body"'
         - grid-template-columns: 1fr
+        - justify-items: stretch
+        - align-items: stretch
         - grid-template-rows: auto minmax(0,1fr)
       custom_fields:
         body:
@@ -37,6 +39,8 @@ cards:
             grid:
               - grid-template-areas: '"running" "idle" "zoneslabel" "z1" "z2" "z3" "z4" "z5" "z6" "z7"'
               - grid-template-columns: 1fr
+              - justify-items: stretch
+              - align-items: stretch
           custom_fields:
             # ── Watering now (any Rachio zone on) ───────────────────
             running:
@@ -67,6 +71,8 @@ cards:
                   grid:
                     - grid-template-areas: '"info" "stop"'
                     - grid-template-columns: 1fr
+                    - justify-items: stretch
+                    - align-items: stretch
                 custom_fields:
                   info: |
                     [[[
