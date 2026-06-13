@@ -50,7 +50,7 @@ cards:
           custom_fields:
             content: |
               [[[
-                const s = entity.state;
+                const s = entity ? entity.state : 'unknown';
                 const armed = s.startsWith('armed');
                 const doorsOpen = states['binary_sensor.all_doors_including_garage']
                   && states['binary_sensor.all_doors_including_garage'].state === 'on';
@@ -319,8 +319,8 @@ cards:
                   card:
                     - height: 52px
                     - border-radius: 14px
-                    - background: "[[[ return entity.state === variables.arm_state ? 'rgba(114,149,178,0.14)' : '#2b2f34' ]]]"
-                    - border: "[[[ return '1px solid ' + (entity.state === variables.arm_state ? 'rgba(114,149,178,0.55)' : 'rgba(234,230,221,0.08)') ]]]"
+                    - background: "[[[ return entity && entity.state === variables.arm_state ? 'rgba(114,149,178,0.14)' : '#2b2f34' ]]]"
+                    - border: "[[[ return '1px solid ' + (entity && entity.state === variables.arm_state ? 'rgba(114,149,178,0.55)' : 'rgba(234,230,221,0.08)') ]]]"
                   grid:
                     - display: flex
                     - align-items: center
@@ -330,7 +330,7 @@ cards:
                 custom_fields:
                   content: &mode_btn_content |
                     [[[
-                      const active = entity.state === variables.arm_state;
+                      const active = entity && entity.state === variables.arm_state;
                       return `<div style="display:flex;align-items:center;gap:8px;">
                         <span class="ms" style="font-size:22px;color:${active ? '#7295b2' : '#b4afa4'};">${variables.arm_icon}</span>
                         <span style="font:700 15px Manrope;color:${active ? '#a9c4dd' : '#e9e5dd'};">${variables.arm_label}</span>

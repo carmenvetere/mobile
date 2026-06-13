@@ -61,7 +61,7 @@ cards:
                 custom_fields:
                   content: |
                     [[[
-                      const t = ['unknown','unavailable'].includes(entity.state) ? '--' : Math.round(parseFloat(entity.state));
+                      const t = (!entity || ['unknown','unavailable'].includes(entity.state)) ? '--' : Math.round(parseFloat(entity.state));
                       return `<div style="display:flex;align-items:center;gap:13px;width:100%;">
                         <div style="width:44px;height:44px;border-radius:13px;background:rgba(114,149,178,.16);display:flex;align-items:center;justify-content:center;flex:none;">
                           <span class="ms" style="font-size:24px;color:#7295b2;">waves</span>
@@ -114,15 +114,15 @@ cards:
                           - border-radius: 14px
                           - background: |
                               [[[
-                                const pumpOn = states['switch.omnilogic_pool_filter_pump'].state === 'on';
-                                const v = parseFloat(states['number.omnilogic_pool_filter_pump_speed'].state) || 0;
+                                const pumpOn = (states['switch.omnilogic_pool_filter_pump'] || {}).state === 'on';
+                                const v = parseFloat((states['number.omnilogic_pool_filter_pump_speed'] || {}).state) || 0;
                                 const cur = !pumpOn ? 'off' : (v <= 50 ? 'low' : (v <= 80 ? 'med' : 'high'));
                                 return cur === variables.seg ? 'rgba(114,149,178,0.16)' : '#2b2f34';
                               ]]]
                           - border: |
                               [[[
-                                const pumpOn = states['switch.omnilogic_pool_filter_pump'].state === 'on';
-                                const v = parseFloat(states['number.omnilogic_pool_filter_pump_speed'].state) || 0;
+                                const pumpOn = (states['switch.omnilogic_pool_filter_pump'] || {}).state === 'on';
+                                const v = parseFloat((states['number.omnilogic_pool_filter_pump_speed'] || {}).state) || 0;
                                 const cur = !pumpOn ? 'off' : (v <= 50 ? 'low' : (v <= 80 ? 'med' : 'high'));
                                 return '1px solid ' + (cur === variables.seg ? 'rgba(114,149,178,0.55)' : 'rgba(234,230,221,0.08)');
                               ]]]
@@ -134,8 +134,8 @@ cards:
                       custom_fields:
                         label: &filter_seg_label |
                           [[[
-                            const pumpOn = states['switch.omnilogic_pool_filter_pump'].state === 'on';
-                            const v = parseFloat(states['number.omnilogic_pool_filter_pump_speed'].state) || 0;
+                            const pumpOn = (states['switch.omnilogic_pool_filter_pump'] || {}).state === 'on';
+                            const v = parseFloat((states['number.omnilogic_pool_filter_pump_speed'] || {}).state) || 0;
                             const cur = !pumpOn ? 'off' : (v <= 50 ? 'low' : (v <= 80 ? 'med' : 'high'));
                             const active = cur === variables.seg;
                             return `<span style="font:700 16px Manrope;color:${active ? '#a9c4dd' : '#b4afa4'};">${variables.seg_label}</span>`;
@@ -221,7 +221,7 @@ cards:
                 custom_fields:
                   info: |
                     [[[
-                      const on = entity.state !== 'off';
+                      const on = entity && entity.state !== 'off';
                       return `<div style="display:flex;align-items:center;gap:13px;width:100%;">
                         <div style="width:44px;height:44px;border-radius:13px;flex:none;display:flex;align-items:center;justify-content:center;background:${on ? 'rgba(114,149,178,0.16)' : 'rgba(234,230,221,0.06)'};">
                           <span class="ms" style="font-size:24px;color:${on ? '#7295b2' : '#b4afa4'};">mode_heat</span>
@@ -242,7 +242,7 @@ cards:
                           - height: 34px
                           - border-radius: 999px
                           - flex: none
-                          - background: "[[[ return entity.state !== 'off' ? '#7295b2' : 'rgba(234,230,221,0.12)' ]]]"
+                          - background: "[[[ return entity && entity.state !== 'off' ? '#7295b2' : 'rgba(234,230,221,0.12)' ]]]"
                           - transition: background .15s
                         grid:
                           - display: block
@@ -251,7 +251,7 @@ cards:
                       custom_fields:
                         knob: |
                           [[[
-                            const on = entity.state !== 'off';
+                            const on = entity && entity.state !== 'off';
                             return `<div style="position:absolute;top:3px;left:${on ? '27px' : '3px'};width:28px;height:28px;border-radius:50%;background:#f4f2ec;transition:left .15s;box-shadow:0 2px 5px rgba(0,0,0,0.4);"></div>`;
                           ]]]
             # ── Setpoint stepper (dimmed when heater off) ───────────
@@ -268,7 +268,7 @@ cards:
                     - background: '#2b2f34'
                     - border: 1px solid rgba(234,230,221,0.08)
                     - border-radius: 18px
-                    - opacity: "[[[ return states['water_heater.omnilogic_pool_heater'].state !== 'off' ? '1' : '0.5' ]]]"
+                    - opacity: "[[[ return (states['water_heater.omnilogic_pool_heater'] || {state: 'off'}).state !== 'off' ? '1' : '0.5' ]]]"
                     - transition: opacity .15s
                   grid:
                     - display: flex
@@ -302,8 +302,9 @@ cards:
                         glyph: '<span class="ms ms-out" style="font-size:28px;color:#e9e5dd;">remove</span>'
                   value: |
                     [[[
-                      const on = states['water_heater.omnilogic_pool_heater'].state !== 'off';
-                      const v = Math.round(parseFloat(entity.state));
+                      const on = (states['water_heater.omnilogic_pool_heater'] || {state: 'off'}).state !== 'off';
+                      const vNum = entity ? Math.round(parseFloat(entity.state)) : NaN;
+                      const v = isNaN(vNum) ? '--' : vNum;
                       return `<div style="text-align:center;">
                         <div style="font:800 42px Manrope;line-height:1;font-variant-numeric:tabular-nums;color:${on ? '#e9e5dd' : '#8b8980'};">${v}&deg;</div>
                         <div style="font:600 12px Manrope;color:#8b8980;margin-top:4px;text-transform:uppercase;letter-spacing:.4px;">Set Temperature</div>
