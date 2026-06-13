@@ -14,6 +14,8 @@ cards:
       grid:
         - grid-template-areas: '"header" "body"'
         - grid-template-columns: 1fr
+        - justify-items: stretch
+        - align-items: stretch
         - grid-template-rows: auto minmax(0,1fr)
       custom_fields:
         body:
@@ -37,6 +39,8 @@ cards:
             grid:
               - grid-template-areas: '"temp" "filterlabel" "filter" "heaterlabel" "heater" "setpoint"'
               - grid-template-columns: 1fr
+              - justify-items: stretch
+              - align-items: stretch
           custom_fields:
             # ── Water temperature ───────────────────────────────────
             temp:
@@ -93,6 +97,8 @@ cards:
                   grid:
                     - grid-template-areas: '"seg_off seg_low seg_med seg_high"'
                     - grid-template-columns: repeat(4, 1fr)
+                    - justify-items: stretch
+                    - align-items: stretch
                     - gap: 8px
                 custom_fields:
                   seg_off:
