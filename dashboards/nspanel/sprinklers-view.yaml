@@ -213,7 +213,7 @@ cards:
                 custom_fields:
                   content: &zone_row_content |
                     [[[
-                      const on = entity.state === 'on';
+                      const on = entity && entity.state === 'on';
                       const c = on ? '#7295b2' : '#8b8980';
                       const bg = on ? 'rgba(114,149,178,0.14)' : 'rgba(234,230,221,0.06)';
                       return `<div style="display:flex;align-items:center;gap:12px;width:100%;">
