@@ -820,11 +820,21 @@
         minutely: "{{ trigger.event.data.minutely }}"
 # ═══════════════════════════════════════════════════════════════════
 # HVAC estimated power sensors
-# Fitted 2026-06-12 from 12 days of Powerwall load vs thermostat run history.
 # Model: P(t) = P_max - (P_max - P_start) * e^(-t/tau), t = minutes since compressor start.
-#   Upper (Bedroom/Master Bedroom/Office): 480 W -> 1030 W, tau 26 min
-#   Lower (Living Room/Basement):          300 W ->  550 W, tau 22 min
+#
+# REFIT 2026-06-14 from warm-weather AC runs (Powerwall load step vs thermostat history):
+#   Upper (Bedroom/Master Bedroom/Office): 600 W -> 1100 W, tau 5 min   (was 480->1030, tau 26)
+#   Lower (Living Room/Basement):          600 W -> 1100 W, tau 5 min   (was 300->550, tau 22)
 #   Fan-only: 120 W. Gas backup (below input_number.hvac_gas_switchover_temperature): 250 W blower.
+#
+# Upper and lower are the same equipment, so both use the identical curve (per Carmen).
+#
+# WHY: original tau=26 min ramp was far too slow. Real compressors reach plateau in ~5 min,
+# but cooling cycles here only last ~13-16 min, so the old model ended every cycle still at
+# ~700 W when the unit was actually drawing 850-1100 W -- under-counting cooling energy by
+# ~30-40%. Fit is from 9 clean warm upper-unit cycles (all <=79F); the lower unit's own runs
+# all overlapped the pool pump and couldn't be isolated, so it inherits the upper-unit fit.
+# P_max is a warm-weather asymptote (runs a bit higher on truly hot days, ~+12 W/F above ~68F).
 # Requires: input_number.hvac_gas_switchover_temperature (already created via UI).
 # ═══════════════════════════════════════════════════════════════════
 - binary_sensor:
@@ -861,13 +871,13 @@
         {%- set t = ((now() - states[comp].last_changed).total_seconds() / 60)
                     if (states[comp] is not none and is_state(comp,'on')) else 0 -%}
         {%- if 'cooling' in acts -%}
-          {{ (1030 - 550 * e**(-t/26)) | round(0) }}
+          {{ (1100 - 500 * e**(-t/5)) | round(0) }}
         {%- elif 'heating' in acts -%}
           {%- if states('sensor.bayberry_tempest_temperature') | float(50)
                 < states('input_number.hvac_gas_switchover_temperature') | float(35) -%}
             250
           {%- else -%}
-            {{ (1030 - 550 * e**(-t/26)) | round(0) }}
+            {{ (1100 - 500 * e**(-t/5)) | round(0) }}
           {%- endif -%}
         {%- elif 'fan' in acts or 'on' in fans -%}
           120
@@ -888,13 +898,13 @@
         {%- set t = ((now() - states[comp].last_changed).total_seconds() / 60)
                     if (states[comp] is not none and is_state(comp,'on')) else 0 -%}
         {%- if 'cooling' in acts -%}
-          {{ (550 - 250 * e**(-t/22)) | round(0) }}
+          {{ (1100 - 500 * e**(-t/5)) | round(0) }}
         {%- elif 'heating' in acts -%}
           {%- if states('sensor.bayberry_tempest_temperature') | float(50)
                 < states('input_number.hvac_gas_switchover_temperature') | float(35) -%}
             250
           {%- else -%}
-            {{ (550 - 250 * e**(-t/22)) | round(0) }}
+            {{ (1100 - 500 * e**(-t/5)) | round(0) }}
           {%- endif -%}
         {%- elif 'fan' in acts or 'on' in fans -%}
           120
