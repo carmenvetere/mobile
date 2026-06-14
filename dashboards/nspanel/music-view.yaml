@@ -31,15 +31,17 @@ cards:
       template: nspanel_screen
       styles:
         grid:
-          - grid-template-areas: '"header" "body"'
-          - grid-template-columns: 1fr
-          - justify-items: stretch
+          - display: flex
+          - flex-direction: column
+          - height: 480px
+          - width: 480px
           - align-items: stretch
-          - grid-template-rows: auto minmax(0,1fr)
         custom_fields:
+          header:
+            - flex: none
           body:
+            - flex: '1'
             - min-height: 0
-            - height: 100%
             - overflow-y: auto
       custom_fields:
         header:

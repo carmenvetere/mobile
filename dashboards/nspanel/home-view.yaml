@@ -12,11 +12,21 @@ cards:
     template: nspanel_screen
     styles:
       grid:
-        - grid-template-areas: '"header" "banners" "tiles"'
-        - grid-template-columns: 1fr
-        - justify-items: stretch
+        - display: flex
+        - flex-direction: column
+        - height: 480px
+        - width: 480px
         - align-items: stretch
-        - grid-template-rows: auto auto minmax(0,1fr)
+      custom_fields:
+        header:
+          - flex: none
+        banners:
+          - flex: none
+        tiles:
+          - flex: '1'
+          - min-height: 0
+          - display: flex
+          - flex-direction: column
     custom_fields:
       # ── Header: clock · weather · bell ──────────────────────────────
       header:
@@ -259,6 +269,9 @@ cards:
             card:
               - padding: 4px 16px 14px
               - height: 100%
+              - width: 100%
+              - flex: '1'
+              - min-height: 0
             grid:
               - grid-template-areas: '"scenes music" "shades alarm" "pool settings"'
               - grid-template-columns: 1fr 1fr
@@ -267,6 +280,7 @@ cards:
               - grid-template-rows: repeat(3, minmax(0, 1fr))
               - gap: 10px
               - height: 100%
+              - width: 100%
             custom_fields:
               scenes: [height: 100%, min-height: 0]
               music: [height: 100%, min-height: 0]
