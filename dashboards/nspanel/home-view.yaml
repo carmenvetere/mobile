@@ -8,478 +8,433 @@ layout:
   margin: 0
   padding: 0
 cards:
+  # The button-card provides the 480x480 charcoal screen frame. All layout
+  # is done with custom:grid-layout (layout-card), which stretches its child
+  # cards to fill their grid tracks reliably — unlike button-card custom_fields.
   - type: custom:button-card
     template: nspanel_screen
     styles:
       grid:
-        - display: flex
-        - flex-direction: column
-        - height: 480px
-        - width: 480px
-        - align-items: stretch
-      custom_fields:
-        header:
-          - flex: none
-        banners:
-          - flex: none
-        tiles:
-          - flex: '1'
-          - min-height: 0
-          - display: flex
-          - flex-direction: column
+        - display: block
     custom_fields:
-      # ── Header: clock · weather · bell ──────────────────────────────
-      header:
+      screen:
         card:
-          type: custom:button-card
-          template: nspanel_base
-          entity: sensor.time
-          triggers_update:
-            - weather.bayberry
-            - sensor.bayberry_tempest_temperature
-          styles:
-            card:
-              - padding: 18px 20px 14px
-            grid:
-              - display: flex
-              - align-items: center
-              - justify-content: space-between
-            custom_fields:
-              clock:
-                - flex: '1'
-                - min-width: 0
-                - text-align: left
-          custom_fields:
-            clock: |
-              [[[
-                const ts = states['sensor.time'];
-                if (!ts) return '';
-                const t = ts.state.split(':');
-                let h = parseInt(t[0], 10); const m = t[1];
-                const ap = h >= 12 ? 'PM' : 'AM';
-                h = h % 12; if (h === 0) h = 12;
-                return `<div style="font:800 56px/1 Manrope;color:#e9e5dd;letter-spacing:-2px;font-variant-numeric:tabular-nums;text-align:left;">${h}:${m}<span style="font:700 19px Manrope;color:#8b8980;margin-left:6px;letter-spacing:0;">${ap}</span></div>`;
-              ]]]
-            weather: |
-              [[[
-                const map = { 'sunny':'sunny', 'clear-night':'clear_night', 'partlycloudy':'partly_cloudy_day',
-                  'cloudy':'cloud', 'fog':'foggy', 'rainy':'rainy', 'pouring':'rainy', 'lightning':'thunderstorm',
-                  'lightning-rainy':'thunderstorm', 'hail':'weather_hail', 'snowy':'weather_snowy',
-                  'snowy-rainy':'weather_mix', 'windy':'air', 'windy-variant':'air' };
-                const w = states['weather.bayberry'];
-                const ic = (w && map[w.state]) ? map[w.state] : 'partly_cloudy_day';
-                const tEnt = states['sensor.bayberry_tempest_temperature'];
-                const tVal = tEnt ? Math.round(parseFloat(tEnt.state)) : NaN;
-                const temp = isNaN(tVal) ? '--' : tVal;
-                return `<div style="display:flex;align-items:center;gap:7px;margin-right:14px;">
-                  <span class="ms" style="font-size:28px;color:#b4afa4;font-variation-settings:'FILL' 1,'wght' 400;">${ic}</span>
-                  <span style="font:800 26px Manrope;color:#e9e5dd;">${temp}&deg;</span>
-                </div>`;
-              ]]]
-            bell:
-              card:
-                type: custom:button-card
-                template: nspanel_btn
-                entity: sensor.notification_alert_counter
-                tap_action:
-                  action: navigate
-                  navigation_path: /nspanel-dash/alerts
-                styles:
-                  card:
-                    - width: 42px
-                    - height: 42px
-                    - border-radius: 12px
-                    - background: '#2b2f34'
-                    - border: 1px solid rgba(234,230,221,0.08)
-                  grid:
-                    - display: flex
-                    - align-items: center
-                    - justify-content: center
-                    - height: 100%
-                    - position: relative
-                  custom_fields:
-                    badge:
-                      - position: absolute
-                      - top: '-4px'
-                      - right: '-4px'
+          type: custom:grid-layout
+          layout:
+            grid-template-columns: 1fr
+            grid-template-rows: auto auto 1fr
+            height: 480px
+            width: 480px
+            margin: 0
+            padding: 0
+            grid-gap: 0
+          cards:
+            # ── Header: clock · weather · bell ──────────────────────────
+            - type: custom:button-card
+              template: nspanel_base
+              entity: sensor.time
+              triggers_update:
+                - weather.bayberry
+                - sensor.bayberry_tempest_temperature
+              styles:
+                card:
+                  - padding: 18px 20px 14px
+                grid:
+                  - display: flex
+                  - align-items: center
+                  - justify-content: space-between
                 custom_fields:
-                  glyph: '<span class="ms" style="font-size:23px;color:#b4afa4;">notifications</span>'
-                  badge: |
-                    [[[
-                      const n = entity ? (parseInt(entity.state, 10) || 0) : 0;
-                      if (n === 0) return '';
-                      return `<div style="min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#c8805f;display:flex;align-items:center;justify-content:center;border:2px solid #202327;">
-                        <span style="font:800 11px Manrope;color:#211a16;">${n}</span></div>`;
-                    ]]]
-      # ── Contextual banners (collapse when inactive) ─────────────────
-      banners:
-        card:
-          type: custom:button-card
-          template: nspanel_base
-          styles:
-            grid:
-              - grid-template-areas: '"outage" "sprinklers"'
-              - grid-template-columns: 1fr
-              - justify-items: stretch
-              - align-items: stretch
-              - grid-template-rows: auto auto
-          custom_fields:
-            # Power outage → running on battery backup (Powerwall grid status)
-            outage:
-              card:
-                type: custom:button-card
-                template: nspanel_btn
-                entity: binary_sensor.bayberry_grid_status
-                tap_action:
-                  action: navigate
-                  navigation_path: /nspanel-dash/alerts
-                styles:
+                  clock:
+                    - flex: '1'
+                    - min-width: 0
+                    - text-align: left
+              custom_fields:
+                clock: |
+                  [[[
+                    const ts = states['sensor.time'];
+                    if (!ts) return '';
+                    const t = ts.state.split(':');
+                    let h = parseInt(t[0], 10); const m = t[1];
+                    const ap = h >= 12 ? 'PM' : 'AM';
+                    h = h % 12; if (h === 0) h = 12;
+                    return `<div style="font:800 56px/1 Manrope;color:#e9e5dd;letter-spacing:-2px;font-variant-numeric:tabular-nums;text-align:left;">${h}:${m}<span style="font:700 19px Manrope;color:#8b8980;margin-left:6px;letter-spacing:0;">${ap}</span></div>`;
+                  ]]]
+                weather: |
+                  [[[
+                    const map = { 'sunny':'sunny', 'clear-night':'clear_night', 'partlycloudy':'partly_cloudy_day',
+                      'cloudy':'cloud', 'fog':'foggy', 'rainy':'rainy', 'pouring':'rainy', 'lightning':'thunderstorm',
+                      'lightning-rainy':'thunderstorm', 'hail':'weather_hail', 'snowy':'weather_snowy',
+                      'snowy-rainy':'weather_mix', 'windy':'air', 'windy-variant':'air' };
+                    const w = states['weather.bayberry'];
+                    const ic = (w && map[w.state]) ? map[w.state] : 'partly_cloudy_day';
+                    const tEnt = states['sensor.bayberry_tempest_temperature'];
+                    const tVal = tEnt ? Math.round(parseFloat(tEnt.state)) : NaN;
+                    const temp = isNaN(tVal) ? '--' : tVal;
+                    return `<div style="display:flex;align-items:center;gap:7px;margin-right:14px;">
+                      <span class="ms" style="font-size:28px;color:#b4afa4;font-variation-settings:'FILL' 1,'wght' 400;">${ic}</span>
+                      <span style="font:800 26px Manrope;color:#e9e5dd;">${temp}&deg;</span>
+                    </div>`;
+                  ]]]
+                bell:
                   card:
-                    - display: "[[[ return entity && entity.state === 'off' ? 'block' : 'none' ]]]"
-                    - margin: 0 16px 8px
-                    - padding: 12px 14px
-                    - border-radius: 15px
-                    - background: rgba(200,128,95,.12)
-                    - border: 1px solid rgba(200,128,95,.3)
-                  grid:
-                    - display: flex
-                  custom_fields:
-                    content:
-                      - width: 100%
-                custom_fields:
-                  content: |
-                    [[[
-                      return `<div style="display:flex;align-items:center;gap:11px;width:100%;">
-                        <span class="ms ms-bold pulse" style="font-size:23px;color:#c8805f;">bolt</span>
-                        <div style="flex:1;min-width:0;text-align:left;">
-                          <div style="font:700 15px Manrope;color:#d49476;">Power outage detected</div>
-                          <div style="font:600 13px Manrope;color:#9a988f;margin-top:1px;">Running on battery backup</div>
-                        </div>
-                        <span class="ms ms-out" style="font-size:20px;color:#c8805f;font-variation-settings:'wght' 600;">chevron_right</span>
-                      </div>`;
-                    ]]]
-            # Sprinklers running (any Rachio zone on); inline Pause stops zones
-            sprinklers:
-              card:
-                type: custom:button-card
-                template: nspanel_base
-                entity: switch.pool_180s
-                triggers_update:
-                  - switch.front_180s
-                  - switch.front_and_side_90s
-                  - switch.pool_90s
-                  - switch.pool_shrubs
-                  - switch.firepit_shrubs
-                  - switch.retaining_wall_drip
-                styles:
-                  card:
-                    - display: |
+                    type: custom:button-card
+                    template: nspanel_btn
+                    entity: sensor.notification_alert_counter
+                    tap_action:
+                      action: navigate
+                      navigation_path: /nspanel-dash/alerts
+                    styles:
+                      card:
+                        - width: 42px
+                        - height: 42px
+                        - border-radius: 12px
+                        - background: '#2b2f34'
+                        - border: 1px solid rgba(234,230,221,0.08)
+                      grid:
+                        - display: flex
+                        - align-items: center
+                        - justify-content: center
+                        - height: 100%
+                        - position: relative
+                      custom_fields:
+                        badge:
+                          - position: absolute
+                          - top: '-4px'
+                          - right: '-4px'
+                    custom_fields:
+                      glyph: '<span class="ms" style="font-size:23px;color:#b4afa4;">notifications</span>'
+                      badge: |
                         [[[
-                          const z = ['switch.front_180s','switch.front_and_side_90s','switch.pool_180s',
-                                     'switch.pool_90s','switch.pool_shrubs','switch.firepit_shrubs','switch.retaining_wall_drip'];
-                          return z.some(id => states[id] && states[id].state === 'on') ? 'block' : 'none';
+                          const n = entity ? (parseInt(entity.state, 10) || 0) : 0;
+                          if (n === 0) return '';
+                          return `<div style="min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#c8805f;display:flex;align-items:center;justify-content:center;border:2px solid #202327;">
+                            <span style="font:800 11px Manrope;color:#211a16;">${n}</span></div>`;
                         ]]]
-                    - margin: 0 16px 8px
-                    - padding: 12px 12px 12px 14px
-                    - border-radius: 15px
-                    - background: rgba(114,149,178,.12)
-                    - border: 1px solid rgba(114,149,178,.3)
-                  grid:
-                    - display: flex
-                    - align-items: center
-                    - gap: 6px
+            # ── Contextual banners (each collapses when inactive) ───────
+            - type: vertical-stack
+              cards:
+                # Power outage → running on battery backup (Powerwall grid status)
+                - type: custom:button-card
+                  template: nspanel_btn
+                  entity: binary_sensor.bayberry_grid_status
+                  tap_action:
+                    action: navigate
+                    navigation_path: /nspanel-dash/alerts
+                  styles:
+                    card:
+                      - display: "[[[ return entity && entity.state === 'off' ? 'block' : 'none' ]]]"
+                      - margin: 0 16px 8px
+                      - padding: 12px 14px
+                      - border-radius: 15px
+                      - background: rgba(200,128,95,.12)
+                      - border: 1px solid rgba(200,128,95,.3)
+                    grid:
+                      - display: flex
+                    custom_fields:
+                      content:
+                        - width: 100%
+                  custom_fields:
+                    content: |
+                      [[[
+                        return `<div style="display:flex;align-items:center;gap:11px;width:100%;">
+                          <span class="ms ms-bold pulse" style="font-size:23px;color:#c8805f;">bolt</span>
+                          <div style="flex:1;min-width:0;text-align:left;">
+                            <div style="font:700 15px Manrope;color:#d49476;">Power outage detected</div>
+                            <div style="font:600 13px Manrope;color:#9a988f;margin-top:1px;">Running on battery backup</div>
+                          </div>
+                          <span class="ms ms-out" style="font-size:20px;color:#c8805f;font-variation-settings:'wght' 600;">chevron_right</span>
+                        </div>`;
+                      ]]]
+                # Sprinklers running (any Rachio zone on); inline Pause stops zones
+                - type: custom:button-card
+                  template: nspanel_base
+                  entity: switch.pool_180s
+                  triggers_update:
+                    - switch.front_180s
+                    - switch.front_and_side_90s
+                    - switch.pool_90s
+                    - switch.pool_shrubs
+                    - switch.firepit_shrubs
+                    - switch.retaining_wall_drip
+                  styles:
+                    card:
+                      - display: |
+                          [[[
+                            const z = ['switch.front_180s','switch.front_and_side_90s','switch.pool_180s',
+                                       'switch.pool_90s','switch.pool_shrubs','switch.firepit_shrubs','switch.retaining_wall_drip'];
+                            return z.some(id => states[id] && states[id].state === 'on') ? 'block' : 'none';
+                          ]]]
+                      - margin: 0 16px 8px
+                      - padding: 12px 12px 12px 14px
+                      - border-radius: 15px
+                      - background: rgba(114,149,178,.12)
+                      - border: 1px solid rgba(114,149,178,.3)
+                    grid:
+                      - display: flex
+                      - align-items: center
+                      - gap: 6px
+                    custom_fields:
+                      info:
+                        - flex: '1'
+                        - min-width: 0
+                      pause:
+                        - flex: none
                   custom_fields:
                     info:
-                      - flex: '1'
-                      - min-width: 0
-                    pause:
-                      - flex: none
-                custom_fields:
-                  info:
-                    card:
-                      type: custom:button-card
-                      template: nspanel_btn
-                      entity: switch.pool_180s
-                      triggers_update:
-                        - switch.front_180s
-                        - switch.front_and_side_90s
-                        - switch.pool_90s
-                        - switch.pool_shrubs
-                        - switch.firepit_shrubs
-                        - switch.retaining_wall_drip
-                      tap_action:
-                        action: navigate
-                        navigation_path: /nspanel-dash/sprinklers
-                      styles:
-                        grid:
-                          - display: flex
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        entity: switch.pool_180s
+                        triggers_update:
+                          - switch.front_180s
+                          - switch.front_and_side_90s
+                          - switch.pool_90s
+                          - switch.pool_shrubs
+                          - switch.firepit_shrubs
+                          - switch.retaining_wall_drip
+                        tap_action:
+                          action: navigate
+                          navigation_path: /nspanel-dash/sprinklers
+                        styles:
+                          grid:
+                            - display: flex
+                          custom_fields:
+                            content:
+                              - width: 100%
                         custom_fields:
-                          content:
-                            - width: 100%
-                      custom_fields:
-                        content: |
-                          [[[
-                            const zones = [['switch.front_180s','Front 180s'],['switch.front_and_side_90s','Front & Side 90s'],
-                              ['switch.pool_180s','Pool 180s'],['switch.pool_90s','Pool 90s'],['switch.pool_shrubs','Pool Shrubs'],
-                              ['switch.firepit_shrubs','Firepit Shrubs'],['switch.retaining_wall_drip','Retaining Wall Drip']];
-                            const on = zones.filter(z => states[z[0]] && states[z[0]].state === 'on').map(z => z[1]);
-                            const sub = on.length ? on.join(' · ') : '';
-                            return `<div style="display:flex;align-items:center;gap:11px;width:100%;">
-                              <span class="ms pulse" style="font-size:23px;color:#7295b2;animation-duration:1.7s;">water_drop</span>
-                              <div style="flex:1;min-width:0;text-align:left;">
-                                <div style="font:700 15px Manrope;color:#9cbdd9;">Sprinklers running</div>
-                                <div class="ell" style="font:600 13px Manrope;color:#9a988f;margin-top:1px;">${sub}</div>
-                              </div>
-                            </div>`;
-                          ]]]
-                  pause:
-                    card:
-                      type: custom:button-card
-                      template: nspanel_btn
-                      tap_action:
-                        action: perform-action
-                        perform_action: switch.turn_off
-                        target:
-                          entity_id:
-                            - switch.front_180s
-                            - switch.front_and_side_90s
-                            - switch.pool_180s
-                            - switch.pool_90s
-                            - switch.pool_shrubs
-                            - switch.firepit_shrubs
-                            - switch.retaining_wall_drip
-                      styles:
-                        card:
-                          - padding: 9px 14px
-                          - border-radius: 11px
-                          - background: '#7295b2'
-                        grid:
-                          - display: flex
-                          - align-items: center
-                          - gap: 6px
-                      custom_fields:
-                        glyph: '<span class="ms ms-bold" style="font-size:18px;color:#f4f2ec;">pause</span>'
-                        label: '<span style="font:800 14px Manrope;color:#f4f2ec;">Pause</span>'
-      # ── 2x3 tile grid ───────────────────────────────────────────────
-      tiles:
-        card:
-          type: custom:button-card
-          template: nspanel_base
-          styles:
-            card:
-              - padding: 4px 16px 14px
-              - height: 100%
-              - width: 100%
-              - flex: '1'
-              - min-height: 0
-            grid:
-              - grid-template-areas: '"scenes music" "shades alarm" "pool settings"'
-              - grid-template-columns: 1fr 1fr
-              - justify-items: stretch
-              - align-items: stretch
-              - grid-template-rows: repeat(3, minmax(0, 1fr))
-              - gap: 10px
-              - height: 100%
-              - width: 100%
-            custom_fields:
-              scenes: [height: 100%, min-height: 0]
-              music: [height: 100%, min-height: 0]
-              shades: [height: 100%, min-height: 0]
-              alarm: [height: 100%, min-height: 0]
-              pool: [height: 100%, min-height: 0]
-              settings: [height: 100%, min-height: 0]
-          custom_fields:
-            scenes:
-              card:
-                type: custom:button-card
-                template: nspanel_tile
-                entity: scene.good_morning_2
-                triggers_update:
-                  - scene.movie
-                  - scene.evening
-                  - scene.good_night
-                  - scene.entertaining
-                  - scene.welcome
-                tap_action:
-                  action: navigate
-                  navigation_path: /nspanel-dash/scenes
-                custom_fields:
-                  content: |
-                    [[[
-                      const names = { 'scene.good_morning_2':'Morning', 'scene.movie':'Movie', 'scene.evening':'Evening',
-                        'scene.good_night':'Goodnight', 'scene.entertaining':'Dinner', 'scene.welcome':'Welcome' };
-                      let best = null, bt = 0;
-                      Object.keys(names).forEach(id => {
-                        const st = states[id]; if (!st) return;
-                        const t = Date.parse(st.state);
-                        if (!isNaN(t) && t > bt) { bt = t; best = id; }
-                      });
-                      const sub = best ? names[best] + ' active' : 'None active';
-                      return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
-                        <span class="ms" style="font-size:30px;color:#b4afa4;flex:none;">auto_awesome</span>
-                        <div style="min-width:0;text-align:left;">
-                          <div style="font:700 20px Manrope;color:#e9e5dd;">Scenes</div>
-                          <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${sub}</div>
-                        </div></div>`;
-                    ]]]
-            music:
-              card:
-                type: custom:button-card
-                template: nspanel_tile
-                entity: input_select.sonos_speaker_select
-                triggers_update:
-                  - media_player.living_room
-                  - media_player.kitchen
-                  - media_player.office
-                  - media_player.deck
-                  - media_player.pool
-                  - media_player.primary_bedroom
-                  - media_player.primary_bathroom
-                  - media_player.gym
-                  - media_player.mud_room
-                  - media_player.media_room
-                tap_action:
-                  action: navigate
-                  navigation_path: /nspanel-dash/music
-                custom_fields:
-                  content: |
-                    [[[
-                      const room = entity ? entity.state : '';
-                      const p = states['media_player.' + room.toLowerCase().split(' ').join('_')];
-                      let sub = 'Paused';
-                      if (p && p.state === 'playing') sub = p.attributes.media_title || 'Playing';
-                      return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
-                        <span class="ms" style="font-size:30px;color:#b4afa4;flex:none;">music_note</span>
-                        <div style="min-width:0;text-align:left;">
-                          <div style="font:700 20px Manrope;color:#e9e5dd;">Music</div>
-                          <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${sub}</div>
-                        </div></div>`;
-                    ]]]
-            shades:
-              card:
-                type: custom:button-card
-                template: nspanel_tile
-                entity: cover.first_floor_all
-                triggers_update:
-                  - cover.bedroom_side_shades
-                  - cover.bedroom_back
-                  - cover.front_guest_bedroom_shades
-                  - cover.back_guest_bedroom_shades
-                tap_action:
-                  action: navigate
-                  navigation_path: /nspanel-dash/shades
-                custom_fields:
-                  content: |
-                    [[[
-                      const g = ['cover.first_floor_all','cover.bedroom_side_shades','cover.bedroom_back',
-                                 'cover.front_guest_bedroom_shades','cover.back_guest_bedroom_shades'];
-                      const open = g.filter(id => {
-                        const s = states[id]; if (!s) return false;
-                        const p = s.attributes.current_position;
-                        return p !== undefined ? p > 0 : s.state === 'open';
-                      }).length;
-                      return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
-                        <span class="ms" style="font-size:30px;color:#b4afa4;flex:none;">blinds</span>
-                        <div style="min-width:0;text-align:left;">
-                          <div style="font:700 20px Manrope;color:#e9e5dd;">Shades</div>
-                          <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${open} of ${g.length} open</div>
-                        </div></div>`;
-                    ]]]
-            alarm:
-              card:
-                type: custom:button-card
-                template: nspanel_tile
-                entity: alarm_control_panel.alarmo
-                tap_action:
-                  action: navigate
-                  navigation_path: /nspanel-dash/security
-                custom_fields:
-                  content: |
-                    [[[
-                      const s = entity ? entity.state : 'unknown';
-                      const labels = { disarmed: 'Disarmed', armed_away: 'Armed · Away', armed_home: 'Armed · Home',
-                        armed_night: 'Armed · Night', armed_vacation: 'Armed · Vacation', arming: 'Arming…',
-                        pending: 'Enter code', triggered: 'ALARM' };
-                      const armed = s.startsWith('armed');
-                      const icon = armed ? 'verified_user' : 'shield';
-                      const color = s === 'triggered' ? '#c8805f' : (armed ? '#7295b2' : '#8b8980');
-                      return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
-                        <span class="ms" style="font-size:30px;color:${color};flex:none;">${icon}</span>
-                        <div style="min-width:0;text-align:left;">
-                          <div style="font:700 20px Manrope;color:#e9e5dd;">Alarm</div>
-                          <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${labels[s] || s}</div>
-                        </div></div>`;
-                    ]]]
-            pool:
-              card:
-                type: custom:button-card
-                template: nspanel_tile
-                entity: water_heater.omnilogic_pool_heater
-                triggers_update:
-                  - input_number.pool_heater_setpoint
-                  - switch.omnilogic_pool_filter_pump
-                  - number.omnilogic_pool_filter_pump_speed
-                tap_action:
-                  action: navigate
-                  navigation_path: /nspanel-dash/pool
-                custom_fields:
-                  content: |
-                    [[[
-                      const heaterOn = entity && entity.state !== 'off';
-                      const pumpOn = states['switch.omnilogic_pool_filter_pump'] && states['switch.omnilogic_pool_filter_pump'].state === 'on';
-                      const speedEnt = states['number.omnilogic_pool_filter_pump_speed'];
-                      const v = speedEnt ? (parseFloat(speedEnt.state) || 0) : 0;
-                      const speed = !pumpOn ? 'Off' : (v <= 50 ? 'Low' : (v <= 80 ? 'Medium' : 'High'));
-                      const spEnt = states['input_number.pool_heater_setpoint'];
-                      const setpVal = spEnt ? Math.round(parseFloat(spEnt.state)) : NaN;
-                      const setp = isNaN(setpVal) ? '--' : setpVal;
-                      const sub = heaterOn ? `Heater ${setp}° · ${speed}` : (pumpOn ? `Filter ${speed}` : 'Idle');
-                      return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
-                        <span class="ms" style="font-size:30px;color:${heaterOn ? '#7295b2' : '#b4afa4'};flex:none;">pool</span>
-                        <div style="min-width:0;text-align:left;">
-                          <div style="font:700 20px Manrope;color:#e9e5dd;">Pool</div>
-                          <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${sub}</div>
-                        </div></div>`;
-                    ]]]
-            settings:
-              card:
-                type: custom:button-card
-                template: nspanel_tile
-                entity: input_boolean.dinner_party
-                triggers_update:
-                  - input_boolean.guest_mode
-                  - input_boolean.cleaners_mode
-                  - input_boolean.away_mode
-                  - automation.alarm_arm_away_when_everyone_leaves
-                  - automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm
-                  - automation.alarm_disarm_upon_arriving_home
-                  - automation.12_00am_roborock_s8_vacuum_basement
-                  - automation.living_room_hvac_schedule_v3
-                  - automation.bedroom_hvac_schedule
-                  - automation.office_thermostat_schedule_v2
-                  - automation.basement_hvac_schedule
-                  - automation.living_room_adaptive_shading
-                  - automation.dining_room_adaptive_shading
-                  - automation.primary_bedroom_shades_schedule_adaptive
-                tap_action:
-                  action: navigate
-                  navigation_path: /nspanel-dash/panel-settings
-                custom_fields:
-                  content: |
-                    [[[
-                      const ids = ['input_boolean.dinner_party','input_boolean.guest_mode','input_boolean.cleaners_mode',
-                        'input_boolean.away_mode','automation.alarm_arm_away_when_everyone_leaves',
-                        'automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm',
-                        'automation.alarm_disarm_upon_arriving_home','automation.12_00am_roborock_s8_vacuum_basement',
-                        'automation.living_room_hvac_schedule_v3','automation.bedroom_hvac_schedule',
-                        'automation.office_thermostat_schedule_v2','automation.basement_hvac_schedule',
-                        'automation.living_room_adaptive_shading','automation.dining_room_adaptive_shading',
-                        'automation.primary_bedroom_shades_schedule_adaptive'];
-                      const n = ids.filter(id => states[id] && states[id].state === 'on').length;
-                      return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
-                        <span class="ms" style="font-size:30px;color:#b4afa4;flex:none;">tune</span>
-                        <div style="min-width:0;text-align:left;">
-                          <div style="font:700 20px Manrope;color:#e9e5dd;">Settings</div>
-                          <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${n} enabled</div>
-                        </div></div>`;
-                    ]]]
+                          content: |
+                            [[[
+                              const zones = [['switch.front_180s','Front 180s'],['switch.front_and_side_90s','Front & Side 90s'],
+                                ['switch.pool_180s','Pool 180s'],['switch.pool_90s','Pool 90s'],['switch.pool_shrubs','Pool Shrubs'],
+                                ['switch.firepit_shrubs','Firepit Shrubs'],['switch.retaining_wall_drip','Retaining Wall Drip']];
+                              const on = zones.filter(z => states[z[0]] && states[z[0]].state === 'on').map(z => z[1]);
+                              const sub = on.length ? on.join(' · ') : '';
+                              return `<div style="display:flex;align-items:center;gap:11px;width:100%;">
+                                <span class="ms pulse" style="font-size:23px;color:#7295b2;animation-duration:1.7s;">water_drop</span>
+                                <div style="flex:1;min-width:0;text-align:left;">
+                                  <div style="font:700 15px Manrope;color:#9cbdd9;">Sprinklers running</div>
+                                  <div class="ell" style="font:600 13px Manrope;color:#9a988f;margin-top:1px;">${sub}</div>
+                                </div>
+                              </div>`;
+                            ]]]
+                    pause:
+                      card:
+                        type: custom:button-card
+                        template: nspanel_btn
+                        tap_action:
+                          action: perform-action
+                          perform_action: switch.turn_off
+                          target:
+                            entity_id:
+                              - switch.front_180s
+                              - switch.front_and_side_90s
+                              - switch.pool_180s
+                              - switch.pool_90s
+                              - switch.pool_shrubs
+                              - switch.firepit_shrubs
+                              - switch.retaining_wall_drip
+                        styles:
+                          card:
+                            - padding: 9px 14px
+                            - border-radius: 11px
+                            - background: '#7295b2'
+                          grid:
+                            - display: flex
+                            - align-items: center
+                            - gap: 6px
+                        custom_fields:
+                          glyph: '<span class="ms ms-bold" style="font-size:18px;color:#f4f2ec;">pause</span>'
+                          label: '<span style="font:800 14px Manrope;color:#f4f2ec;">Pause</span>'
+            # ── 2x3 tile grid (real CSS grid: equal cols & rows, fills) ──
+            - type: custom:grid-layout
+              layout:
+                grid-template-columns: 1fr 1fr
+                grid-template-rows: 1fr 1fr 1fr
+                grid-gap: 10px
+                height: 100%
+                width: 100%
+                margin: 0
+                padding: 4px 16px 14px
+              cards:
+                - type: custom:button-card
+                  template: nspanel_tile
+                  entity: scene.good_morning_2
+                  triggers_update:
+                    - scene.movie
+                    - scene.evening
+                    - scene.good_night
+                    - scene.entertaining
+                    - scene.welcome
+                  tap_action:
+                    action: navigate
+                    navigation_path: /nspanel-dash/scenes
+                  custom_fields:
+                    content: |
+                      [[[
+                        const names = { 'scene.good_morning_2':'Morning', 'scene.movie':'Movie', 'scene.evening':'Evening',
+                          'scene.good_night':'Goodnight', 'scene.entertaining':'Dinner', 'scene.welcome':'Welcome' };
+                        let best = null, bt = 0;
+                        Object.keys(names).forEach(id => {
+                          const st = states[id]; if (!st) return;
+                          const t = Date.parse(st.state);
+                          if (!isNaN(t) && t > bt) { bt = t; best = id; }
+                        });
+                        const sub = best ? names[best] + ' active' : 'None active';
+                        return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
+                          <span class="ms" style="font-size:30px;color:#b4afa4;flex:none;">auto_awesome</span>
+                          <div style="min-width:0;text-align:left;">
+                            <div style="font:700 20px Manrope;color:#e9e5dd;">Scenes</div>
+                            <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${sub}</div>
+                          </div></div>`;
+                      ]]]
+                - type: custom:button-card
+                  template: nspanel_tile
+                  entity: input_select.sonos_speaker_select
+                  triggers_update:
+                    - media_player.living_room
+                    - media_player.kitchen
+                    - media_player.office
+                    - media_player.deck
+                    - media_player.pool
+                    - media_player.primary_bedroom
+                    - media_player.primary_bathroom
+                    - media_player.gym
+                    - media_player.mud_room
+                    - media_player.media_room
+                  tap_action:
+                    action: navigate
+                    navigation_path: /nspanel-dash/music
+                  custom_fields:
+                    content: |
+                      [[[
+                        const room = entity ? entity.state : '';
+                        const p = states['media_player.' + room.toLowerCase().split(' ').join('_')];
+                        let sub = 'Paused';
+                        if (p && p.state === 'playing') sub = p.attributes.media_title || 'Playing';
+                        return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
+                          <span class="ms" style="font-size:30px;color:#b4afa4;flex:none;">music_note</span>
+                          <div style="min-width:0;text-align:left;">
+                            <div style="font:700 20px Manrope;color:#e9e5dd;">Music</div>
+                            <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${sub}</div>
+                          </div></div>`;
+                      ]]]
+                - type: custom:button-card
+                  template: nspanel_tile
+                  entity: cover.first_floor_all
+                  triggers_update:
+                    - cover.bedroom_side_shades
+                    - cover.bedroom_back
+                    - cover.front_guest_bedroom_shades
+                    - cover.back_guest_bedroom_shades
+                  tap_action:
+                    action: navigate
+                    navigation_path: /nspanel-dash/shades
+                  custom_fields:
+                    content: |
+                      [[[
+                        const g = ['cover.first_floor_all','cover.bedroom_side_shades','cover.bedroom_back',
+                                   'cover.front_guest_bedroom_shades','cover.back_guest_bedroom_shades'];
+                        const open = g.filter(id => {
+                          const s = states[id]; if (!s) return false;
+                          const p = s.attributes.current_position;
+                          return p !== undefined ? p > 0 : s.state === 'open';
+                        }).length;
+                        return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
+                          <span class="ms" style="font-size:30px;color:#b4afa4;flex:none;">blinds</span>
+                          <div style="min-width:0;text-align:left;">
+                            <div style="font:700 20px Manrope;color:#e9e5dd;">Shades</div>
+                            <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${open} of ${g.length} open</div>
+                          </div></div>`;
+                      ]]]
+                - type: custom:button-card
+                  template: nspanel_tile
+                  entity: alarm_control_panel.alarmo
+                  tap_action:
+                    action: navigate
+                    navigation_path: /nspanel-dash/security
+                  custom_fields:
+                    content: |
+                      [[[
+                        const s = entity ? entity.state : 'unknown';
+                        const labels = { disarmed: 'Disarmed', armed_away: 'Armed · Away', armed_home: 'Armed · Home',
+                          armed_night: 'Armed · Night', armed_vacation: 'Armed · Vacation', arming: 'Arming…',
+                          pending: 'Enter code', triggered: 'ALARM' };
+                        const armed = s.startsWith('armed');
+                        const icon = armed ? 'verified_user' : 'shield';
+                        const color = s === 'triggered' ? '#c8805f' : (armed ? '#7295b2' : '#8b8980');
+                        return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
+                          <span class="ms" style="font-size:30px;color:${color};flex:none;">${icon}</span>
+                          <div style="min-width:0;text-align:left;">
+                            <div style="font:700 20px Manrope;color:#e9e5dd;">Alarm</div>
+                            <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${labels[s] || s}</div>
+                          </div></div>`;
+                      ]]]
+                - type: custom:button-card
+                  template: nspanel_tile
+                  entity: water_heater.omnilogic_pool_heater
+                  triggers_update:
+                    - input_number.pool_heater_setpoint
+                    - switch.omnilogic_pool_filter_pump
+                    - number.omnilogic_pool_filter_pump_speed
+                  tap_action:
+                    action: navigate
+                    navigation_path: /nspanel-dash/pool
+                  custom_fields:
+                    content: |
+                      [[[
+                        const heaterOn = entity && entity.state !== 'off';
+                        const pumpOn = states['switch.omnilogic_pool_filter_pump'] && states['switch.omnilogic_pool_filter_pump'].state === 'on';
+                        const speedEnt = states['number.omnilogic_pool_filter_pump_speed'];
+                        const v = speedEnt ? (parseFloat(speedEnt.state) || 0) : 0;
+                        const speed = !pumpOn ? 'Off' : (v <= 50 ? 'Low' : (v <= 80 ? 'Medium' : 'High'));
+                        const spEnt = states['input_number.pool_heater_setpoint'];
+                        const setpVal = spEnt ? Math.round(parseFloat(spEnt.state)) : NaN;
+                        const setp = isNaN(setpVal) ? '--' : setpVal;
+                        const sub = heaterOn ? `Heater ${setp}° · ${speed}` : (pumpOn ? `Filter ${speed}` : 'Idle');
+                        return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
+                          <span class="ms" style="font-size:30px;color:${heaterOn ? '#7295b2' : '#b4afa4'};flex:none;">pool</span>
+                          <div style="min-width:0;text-align:left;">
+                            <div style="font:700 20px Manrope;color:#e9e5dd;">Pool</div>
+                            <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${sub}</div>
+                          </div></div>`;
+                      ]]]
+                - type: custom:button-card
+                  template: nspanel_tile
+                  entity: input_boolean.dinner_party
+                  triggers_update:
+                    - input_boolean.guest_mode
+                    - input_boolean.cleaners_mode
+                    - input_boolean.away_mode
+                    - automation.alarm_arm_away_when_everyone_leaves
+                    - automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm
+                    - automation.alarm_disarm_upon_arriving_home
+                    - automation.12_00am_roborock_s8_vacuum_basement
+                    - automation.living_room_hvac_schedule_v3
+                    - automation.bedroom_hvac_schedule
+                    - automation.office_thermostat_schedule_v2
+                    - automation.basement_hvac_schedule
+                    - automation.living_room_adaptive_shading
+                    - automation.dining_room_adaptive_shading
+                    - automation.primary_bedroom_shades_schedule_adaptive
+                  tap_action:
+                    action: navigate
+                    navigation_path: /nspanel-dash/panel-settings
+                  custom_fields:
+                    content: |
+                      [[[
+                        const ids = ['input_boolean.dinner_party','input_boolean.guest_mode','input_boolean.cleaners_mode',
+                          'input_boolean.away_mode','automation.alarm_arm_away_when_everyone_leaves',
+                          'automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm',
+                          'automation.alarm_disarm_upon_arriving_home','automation.12_00am_roborock_s8_vacuum_basement',
+                          'automation.living_room_hvac_schedule_v3','automation.bedroom_hvac_schedule',
+                          'automation.office_thermostat_schedule_v2','automation.basement_hvac_schedule',
+                          'automation.living_room_adaptive_shading','automation.dining_room_adaptive_shading',
+                          'automation.primary_bedroom_shades_schedule_adaptive'];
+                        const n = ids.filter(id => states[id] && states[id].state === 'on').length;
+                        return `<div style="display:flex;align-items:center;gap:15px;min-width:0;">
+                          <span class="ms" style="font-size:30px;color:#b4afa4;flex:none;">tune</span>
+                          <div style="min-width:0;text-align:left;">
+                            <div style="font:700 20px Manrope;color:#e9e5dd;">Settings</div>
+                            <div class="ell" style="font:600 14px Manrope;color:#9a988f;margin-top:3px;">${n} enabled</div>
+                          </div></div>`;
+                      ]]]
