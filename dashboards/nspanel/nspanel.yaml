@@ -112,7 +112,10 @@ button_card_templates:
         card:
           type: custom:button-card
           template: nspanel_back
-  # Home screen tile (2x3 grid)
+  # Home screen tile (2x3 grid). Width is hard-coded: the screen is always
+  # 480px wide with two columns, so each tile is a fixed 219px
+  # (480 − 32 side padding − 10 gap, ÷ 2). button-card does not reliably
+  # stretch a tile to fill its grid cell, so we set the width explicitly.
   nspanel_tile:
     template: nspanel_btn
     styles:
@@ -122,7 +125,7 @@ button_card_templates:
         - border-radius: 18px
         - padding: 13px 17px
         - height: 100%
-        - width: 100%
+        - width: 219px
         - overflow: hidden
       grid:
         - display: flex
