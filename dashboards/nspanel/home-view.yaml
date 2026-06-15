@@ -301,17 +301,20 @@ cards:
                   grid:
                     - grid-template-areas: '"scenes music" "shades alarm" "pool settings"'
                     - grid-template-columns: 219px 219px
-                    # Row height computed from body (392) minus active banners,
-                    # so tiles fill the screen and shrink when a banner appears.
-                    - grid-auto-rows: |
+                    # Explicit row heights (not grid-auto-rows, which is ignored
+                    # for template-area rows). Computed from the 392px body minus
+                    # active banners so tiles fill and shrink when a banner shows.
+                    - grid-template-rows: |
                         [[[
                           const outage = states['binary_sensor.bayberry_grid_status'] && states['binary_sensor.bayberry_grid_status'].state === 'off';
                           const zones = ['switch.front_180s','switch.front_and_side_90s','switch.pool_180s','switch.pool_90s','switch.pool_shrubs','switch.firepit_shrubs','switch.retaining_wall_drip'];
                           const sprink = zones.some(id => states[id] && states[id].state === 'on');
                           const banners = (outage ? 1 : 0) + (sprink ? 1 : 0);
-                          return Math.max(70, Math.floor((354 - banners * 70) / 3)) + 'px';
+                          const h = Math.max(70, Math.floor((354 - banners * 70) / 3));
+                          return h + 'px ' + h + 'px ' + h + 'px';
                         ]]]
                     - justify-content: center
+                    - align-content: start
                     - align-items: stretch
                     - column-gap: 10px
                     - row-gap: 10px
