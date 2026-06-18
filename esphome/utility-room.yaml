@@ -1,0 +1,66 @@
+esphome:
+  name: utility-room
+  friendly_name: Utility Room
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf
+    
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "qK1sx419hNkbtvQtO9NMz+rW9aARq3RAglprF8qpBpg="
+
+ota:
+  - platform: esphome
+    password: "689d3c66c9c1a554705b17b10c7c17f4"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  power_save_mode: NONE
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Utility-Room Fallback Hotspot"
+    password: "pKSoYNhwR3zc"
+
+captive_portal:
+    
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 1100ms
+    window: 1100ms
+    active: true
+
+bluetooth_proxy:
+  active: true
+
+########################################################
+# New Section: GPIO Outputs for Fan Remote Transistors #
+########################################################
+
+
+output:
+ - platform: gpio
+   id: ventilation_power_output
+   pin: GPIO6
+   inverted: false
+
+
+##################################################
+# Switche Switch for Ventilation Relay
+##################################################
+
+
+switch:
+  - platform: output
+    name: "Ventilation Damper"
+    output: ventilation_power_output
+       
+
+ 
