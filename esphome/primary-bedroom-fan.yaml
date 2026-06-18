@@ -1,0 +1,92 @@
+esphome:
+  name: primary-bedroom-fan
+  friendly_name: Primary Bedroom Fan
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "PY5lBNGo+zK4D61VPXabEzq+Dbveh7NKGcDzZltEl1w="
+
+ota:
+  - platform: esphome
+    password: "072d025e1bbcbde73149e4dffdf30d7d"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Primary-Bedroom-Fan"
+    password: "T66kcjqMsGyL"
+
+captive_portal:
+ 
+# Lets web.esphome.io configure wifi over USB right after install
+improv_serial:
+ 
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 1100ms
+    window: 1100ms
+    active: true
+ 
+# Improv over BLE — alternative wifi onboarding from a phone/laptop
+esp32_improv:
+  authorizer: none
+ 
+bluetooth_proxy:
+  active: true
+ 
+output:
+  - platform: gpio
+    id: fan_speed_up_output
+    pin: GPIO4
+  - platform: gpio
+    id: fan_speed_down_output
+    pin: GPIO5
+  - platform: gpio
+    id: fan_reverse_output
+    pin: GPIO6
+  - platform: gpio
+    id: fan_power_output
+    pin: GPIO7
+ 
+button:
+  - platform: template
+    name: "Fan Speed Up"
+    icon: "mdi:fan-plus"
+    on_press:
+      - output.turn_on: fan_speed_up_output
+      - delay: 200ms
+      - output.turn_off: fan_speed_up_output
+  - platform: template
+    name: "Fan Speed Down"
+    icon: "mdi:fan-minus"
+    on_press:
+      - output.turn_on: fan_speed_down_output
+      - delay: 200ms
+      - output.turn_off: fan_speed_down_output
+  - platform: template
+    name: "Fan Reverse Direction"
+    icon: "mdi:autorenew"
+    on_press:
+      - output.turn_on: fan_reverse_output
+      - delay: 200ms
+      - output.turn_off: fan_reverse_output
+  - platform: template
+    name: "Fan Power"
+    icon: "mdi:power"
+    on_press:
+      - output.turn_on: fan_power_output
+      - delay: 200ms
+      - output.turn_off: fan_power_output
+    
