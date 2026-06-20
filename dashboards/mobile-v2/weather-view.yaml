@@ -1,4 +1,9 @@
-# lovelace_gen
+# NOTE: intentionally NO "# lovelace_gen" marker on line 1. This view has no
+# !include/params to expand, and its NWS-alert markdown uses runtime HA
+# template filters (as_timestamp, timestamp_custom). With the marker present,
+# lovelace_gen would try to compile that Jinja at generation time, fail on the
+# unknown filter, and break the whole dashboard. Without it, the markdown is
+# passed through verbatim and rendered live by HA's markdown card (like v1).
 # ============================================================================
 #  Mobile Dash v2  ·  Weather  ·  Dune Mist
 #  Per the handoff: big current temp + condition -> 5-day forecast row ->
