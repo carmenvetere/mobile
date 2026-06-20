@@ -1,0 +1,503 @@
+title: Security
+icon: mdi:cctv
+theme: Dune Mist
+path: security
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 15px
+        - padding-bottom: 5px
+        - padding-left: 5px
+        - padding-top: 2px
+        - height: auto
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
+      grid:
+        - grid-template-areas: |
+            "header"
+            "chips"
+            "front"
+            "front_right"
+            "driveway"
+            "pool"
+            "kimberly"
+            "recent"
+        - grid-template-columns: auto
+        - grid-template-rows: 60px 60px auto auto
+        - row-gap: 5px
+        - align-items: start
+        - column-gap: 2px
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          show_state: false
+          show_name: false
+          show_icon: false
+          styles:
+            card:
+              - background-color: transparent
+              - padding-bottom: 5px
+              - padding-top: 0px
+            grid:
+              - grid-template-areas: |
+                  "name gap"
+              - grid-template-columns: 150px auto
+              - grid-template-rows: 60px
+              - column-gap: 0px
+            main:
+          custom_fields:
+            name:
+              card:
+                type: custom:button-card
+                show_state: false
+                show_name: true
+                show_icon: true
+                show_label: false
+                layout: icon_name
+                icon: mdi:cctv
+                name: Security
+                size: 60%
+                icon_color: var(--primary-text-color)
+                styles: 
+                  name: 
+                    - font-size: 22px
+                    - font-weight: bold
+                  card:
+                    - align-items: start
+                    - justify-content: flex-start 
+                    - text-align: left
+                    - padding-left: 8px
+                    - background-color: transparent
+      chips:
+        card:
+          type: custom:mushroom-chips-card
+          card_mod:
+            style: |
+              ha-card {
+                overflow: hidden !important;
+                max-width: calc(100vw - 30px) !important; 
+                margin-right: 10px !important;
+                box-sizing: border-box !important; 
+              }
+              ha-card > * {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                gap: 8px !important;
+              }
+              ha-card > * > * {
+                flex-shrink: 0 !important;
+              }
+              ha-card ::-webkit-scrollbar {
+                height: 4px;
+              }
+              ha-card ::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              ha-card ::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 2px;
+              }
+              mushroom-chips,
+              .chip-container,
+              [class*="chip"] {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+              }
+              mushroom-chip,
+              [class*="chip"]:not([class*="container"]) {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+              }
+          chips:
+            - type: template
+              content: Back
+              tap_action:
+                action: navigate
+                navigation_path: /mobile-dash-v2/mobile-home
+              icon: mdi:chevron-left
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }   
+            - type: template
+              icon: mdi:shield-home
+              content: |-
+                {{ states('alarm_control_panel.alarmo')
+                      | replace('_', ' ')
+                      | title }}
+              entity: alarm_control_panel.alarmo
+              tap_action:
+                action: more-info
+              icon_color: >-
+                {% if states('alarm_control_panel.alarmo') ==
+                'disarmed' %}
+                  green
+                {% elif states('alarm_control_panel.alarmo') ==
+                'armed_home' %}
+                  orange
+                {% elif states('alarm_control_panel.alarmo') ==
+                'armed_away' %}
+                  red
+                {% else %}
+                  gray
+                {% endif %}
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }   
+            - type: template
+              icon: mdi:door-closed
+              entity: binary_sensor.all_doors_including_garage
+              content: >-
+                {% set s =
+                states('binary_sensor.all_doors_including_garage') %} {{
+                'Open' if s == 'on' else 'All Closed' if s == 'off' else s
+                | replace('_', ' ') | title }}
+              tap_action:
+                action: more-info
+              icon_color: >-
+                {% if states('binary_sensor.all_doors_including_garage')
+                == 'off' %}
+                  green
+                {% elif states('binary_sensor.all_doors_including_garage')
+                == 'on' %}
+                  amber
+                {% else %}
+                  gray
+                {% endif %}
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }   
+      front:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                border-radius: 20px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Front
+              icon: mdi:cctv
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: picture-entity
+              show_state: false
+              show_name: false
+              camera_view: auto
+              fit_mode: cover
+              entity: camera.front_high_resolution_channel
+              camera_image: camera.front_high_resolution_channel
+              card_mod:
+                style: |
+                  ha-card {
+                    border-radius: 5px;
+                    padding: 5px;
+                  }
+      front_right:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background-2);
+                border-radius: 20px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Front Right
+              icon: mdi:cctv
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: picture-entity
+              show_state: false
+              show_name: false
+              camera_view: auto
+              fit_mode: cover
+              entity: camera.blueberry_high_resolution_channel
+              camera_image: camera.blueberry_high_resolution_channel
+              card_mod:
+                style: |
+                  ha-card {
+                    border-radius: 5px;
+                    padding: 5px;
+                  }
+      driveway:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background);
+                border-radius: 20px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Driveway
+              icon: mdi:cctv
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: picture-entity
+              show_state: false
+              show_name: false
+              camera_view: auto
+              fit_mode: cover
+              entity: camera.driveway_high_resolution_channel_2
+              camera_image: camera.driveway_high_resolution_channel_2
+              card_mod:
+                style: |
+                  ha-card {
+                    border-radius: 5px;
+                    padding: 5px;
+                  } 
+      pool:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background);
+                border-radius: 20px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Pool
+              icon: mdi:cctv
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: picture-entity
+              show_state: false
+              show_name: false
+              camera_view: auto
+              fit_mode: cover
+              entity: camera.pool_high_resolution_channel
+              camera_image: camera.pool_high_resolution_channel
+              card_mod:
+                style: |
+                  ha-card {
+                    border-radius: 5px;
+                    padding: 5px;
+                  }
+      kimberly:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background);
+                border-radius: 20px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Kimberly Side
+              icon: mdi:cctv
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: picture-entity
+              show_state: false
+              show_name: false
+              camera_view: auto
+              fit_mode: cover
+              entity: camera.kimberly_high_resolution_channel
+              camera_image: camera.kimberly_high_resolution_channel
+              card_mod:
+                style: |
+                  ha-card {
+                    border-radius: 5px;
+                    padding: 5px;
+                  }
+      recent:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--ha-card-background);
+                border-radius: 20px;
+                padding: 10;
+              }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Recent Events
+              icon: mdi:motion-sensor
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: custom:llmvision-card
+              entity: calendar.llm_vision_timeline_2
+              number_of_hours: 168
+              number_of_events: 5
+              language: en
+              card_mod:
+                style: |
+                  ha-card {
+                    border-radius: 5px;
+                    padding: 5px;
+                    text-align: left;
+                  }
+
+
+    # - type: custom:expander-card
+    #   expanded: false
+    #   title-card-clickable: true
+    #   title-card:
+    #     type: custom:bubble-card
+    #     card_type: separator
+    #     name: Door Status
+    #     icon: mdi:lock
+    #     rows: 0.75
+    #     styles: |
+    #       .bubble-name {
+    #         font-size: 20px !important;  /* title */
+    #         font-weight: bold !important;
+    #       }
+    #       .bubble-sub-button 
+    #       {
+    #         font-size: 20px !important;
+    #         font-weight: 700 !important;
+    #       }
+    #       .bubble-line {
+    #         background: var(--primary-text-color);
+    #         opacity: 0.1;
+    #       }
+    #       .card-content {
+    #         padding-top: 7px !important;
+    #       }
+    #   cards:
+    #     - type: entities
+    #       card_mod:
+    #         style: |
+    #           ha-card {
+    #             font-size: 16px;
+    #             font-weight: bold;
+    #           }
+    #       entities:
+    #         - entity: binary_sensor.front_door
+    #         - entity: binary_sensor.living_room_french_doors
+    #         - entity: binary_sensor.kitchen_french_doors
+    #         - entity: binary_sensor.mudroom_entry_door
+    #         - entity: binary_sensor.mudroom_garage_door
+    #         - entity: cover.garage_door_garage
+
+
+
+
