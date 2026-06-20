@@ -1,146 +1,87 @@
 # lovelace_gen
+# ============================================================================
+#  Mobile Dash v2  ·  Settings  ·  Dune Mist
+#  Per the handoff: header -> Sections nav + Quick toggles (Overnight Guests,
+#  Cleaners Mode, Arm Away When Empty, Go Off Grid = destructive/red) ->
+#  Values (Powerwall Reserve, HVAC filter hours). The full settings body
+#  reuses the existing settings-module, wired to the same entities as v1.
+# ============================================================================
 title: Settings
 icon: mdi:cog
 theme: Dune Mist
 path: settings
 type: custom:grid-layout
 cards:
-  - type: custom:button-card
-    styles:
-      card:
-        - border-radius: 15px
-        - padding-bottom: 5px
-        - padding-left: 5px
-        - padding-right: 10px
-        - padding-top: 2px
-#        - margin: -8px
-        - height: auto
-#        - width: 398px
-        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
-      grid:
-        - grid-template-areas: |
-            "header"
-            "chips"
-            "settings"
-        - grid-template-columns: auto
-        - grid-template-rows: 60px 60px auto
-        - row-gap: 0px
-        - align-items: start
-        - column-gap: 2px
-    custom_fields:
-      header:
-        card:
-          type: custom:button-card
-          show_state: false
-          show_name: false
-          show_icon: false
-          styles:
-            card:
-              - background-color: transparent
-              - padding-bottom: 5px
-              - padding-top: 0px
-            grid:
-              - grid-template-areas: |
-                  "name gap"
-              - grid-template-columns: 175px auto
-              - grid-template-rows: 60px
-              - column-gap: 0px
-            main:
+  - type: vertical-stack
+    card_mod:
+      style: |
+        :host { display: block; padding: 4px 10px 8px; }
+    cards:
+      # ---------------------------------------------------------- screen header
+      - type: custom:button-card
+        icon: mdi:cog
+        name: Settings
+        show_state: false
+        show_label: true
+        tap_action: { action: none }
+        label: Modes, automations & maintenance
+        styles:
+          card:
+            - background: transparent !important
+            - --ha-card-background: transparent
+            - box-shadow: none
+            - transition: none
+            - padding: 4px 2px 6px
+          grid:
+            - grid-template-areas: '"back i n" "back i l"'
+            - grid-template-columns: 46px 54px 1fr
+            - grid-template-rows: auto auto
+            - align-items: center
+            - column-gap: 8px
+          img_cell:
+            - grid-area: i
+            - width: 48px
+            - height: 48px
+            - border-radius: 13px
+            - background-color: "rgba(142,177,191,0.18)"
+          icon:
+            - width: 24px
+            - color: var(--slate-bright)
+          name:
+            - grid-area: n
+            - justify-self: start
+            - font-size: 22px
+            - font-weight: 700
+            - color: var(--primary-text-color)
+          label:
+            - grid-area: l
+            - justify-self: start
+            - font-size: 12px
+            - color: var(--secondary-text-color)
           custom_fields:
-            name:
-              card:
-                type: custom:button-card
-                show_state: false
-                show_name: true
-                show_icon: true
-                show_label: false
-                layout: icon_name
-                icon: mdi:cog
-                name: Settings
-                size: 60%
-                icon_color: var(--primary-text-color)
-                styles: 
-                  name: 
-                    - font-size: 22px
-                    - font-weight: bold
-                  card:
-                    - align-items: start
-                    - justify-content: flex-start 
-                    - text-align: left
-                    - padding-left: 8px
-                    - background-color: transparent
-      chips:
-        card:
-          type: custom:mushroom-chips-card
-          card_mod:
-            style: |
-              ha-card {
-                overflow: hidden !important;
-              }
-              ha-card > * {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                gap: 8px !important;
-              }
-              ha-card > * > * {
-                flex-shrink: 0 !important;
-              }
-              /* More aggressive targeting */
-              ha-card ::-webkit-scrollbar {
-                height: 4px;
-              }
-              ha-card ::-webkit-scrollbar-track {
-                background: transparent;
-              }
-              ha-card ::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 2px;
-              }
-              /* Try to target all possible chip containers */
-              mushroom-chips,
-              .chip-container,
-              [class*="chip"] {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                width: 100% !important;
-              }
-              mushroom-chip,
-              [class*="chip"]:not([class*="container"]) {
-                flex-shrink: 0 !important;
-                white-space: nowrap !important;
-              }
-          chips:
-            - type: template
-              content: Back
+            back:
+              - grid-area: back
+        custom_fields:
+          back:
+            card:
+              type: custom:button-card
+              icon: mdi:chevron-left
               tap_action:
                 action: navigate
                 navigation_path: /mobile-dash-v2/mobile-home
-              icon: mdi:chevron-left
-              card_mod:
-                style: |
-                  :host {
-                    zoom: 1.25 !important;
-                    --chip-background: var(--background-color);
-                    --chip-font-size: 16px;
-                  }
-                  ha-card {
-                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-                  }   
-      settings:
-        card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background-color: var(--background-color) !important;
-                border-radius: 20px;
-                padding: 10;
-              }
-          cards:
-          - type: vertical-stack
-            cards: !include [/config/dashboards/modules/settings-module.yaml, {separator_module: mobile_separator, settings_module: mobile_settings_module, dashboard: mobile}]
+              styles:
+                card:
+                  - background: var(--background-color-2) !important
+                  - --ha-card-background: var(--background-color-2)
+                  - box-shadow: none
+                  - transition: none
+                  - height: 40px
+                  - width: 40px
+                  - border-radius: 12px
+                icon:
+                  - width: 22px
+                  - color: var(--primary-text-color)
+
+      # ----------------------------------------------------- settings body
+      - type: vertical-stack
+        cards: !include [/config/dashboards/modules/settings-module.yaml, {separator_module: mobile_separator, settings_module: mobile_settings_module, dashboard: mobile}]
