@@ -1,0 +1,704 @@
+# lovelace_gen
+# ============================================================================
+#  Mobile Dash v2  ·  Home  ·  Dune Mist
+#  Status-first home: greeting + active-scene chips, 2-up status tiles,
+#  "Running now" progress rows, 3-up scenes grid, wide menu nav list.
+#  All wired to the same entities as the v1 mobile dashboard.
+# ============================================================================
+title: Home
+icon: mdi:home
+theme: Dune Mist
+path: mobile-home
+type: custom:grid-layout
+cards:
+  - type: custom:stack-in-card
+    mode: vertical
+    card_mod:
+      style: |
+        ha-card {
+          background: transparent !important;
+          box-shadow: none !important;
+          padding: 4px 10px 8px;
+        }
+    cards:
+      # ---------------------------------------------------------------- header
+      - type: custom:button-card
+        entity: sensor.bayberry_tempest_temperature
+        tap_action:
+          action: navigate
+          navigation_path: /mobile-dash-v2/weather
+        show_icon: false
+        show_name: true
+        show_state: true
+        show_label: true
+        name: |
+          [[[
+            var h = new Date().getHours();
+            return h < 12 ? 'Good morning' : (h < 18 ? 'Good afternoon' : 'Good evening');
+          ]]]
+        label: |
+          [[[
+            return new Date().toLocaleDateString('en-US',
+              { weekday:'long', month:'long', day:'numeric' });
+          ]]]
+        state_display: |
+          [[[ return Math.round(entity.state) + '°'; ]]]
+        styles:
+          card:
+            - background: transparent
+            - box-shadow: none
+            - padding: 6px 6px 2px
+          grid:
+            - grid-template-areas: '"n s" "l s"'
+            - grid-template-columns: 1fr auto
+            - grid-template-rows: auto auto
+            - align-items: center
+          name:
+            - justify-self: start
+            - font-size: 22px
+            - font-weight: 700
+            - color: var(--primary-text-color)
+          label:
+            - justify-self: start
+            - font-size: 13px
+            - color: var(--secondary-text-color)
+          state:
+            - grid-area: s
+            - align-self: center
+            - font-size: 34px
+            - font-weight: 300
+            - color: var(--primary-text-color)
+
+      # ----------------------------------------------------- active-scene chips
+      - type: custom:mushroom-chips-card
+        alignment: start
+        card_mod:
+          style: |
+            ha-card { background: transparent !important; box-shadow: none !important; }
+        chips:
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.scene_good_morning
+                state: "on"
+            chip:
+              type: template
+              entity: scene.good_morning_2
+              icon: mdi:weather-sunset-up
+              content: Morning
+              icon_color: teal
+              tap_action: { action: toggle }
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.scene_welcome
+                state: "on"
+            chip:
+              type: template
+              entity: scene.welcome
+              icon: mdi:human-greeting
+              content: Welcome
+              icon_color: teal
+              tap_action: { action: toggle }
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.scene_evening
+                state: "on"
+            chip:
+              type: template
+              entity: scene.evening
+              icon: mdi:weather-night
+              content: Evening
+              icon_color: teal
+              tap_action: { action: toggle }
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.scene_entertaining
+                state: "on"
+            chip:
+              type: template
+              entity: scene.entertaining
+              icon: mdi:glass-cocktail
+              content: Entertain
+              icon_color: teal
+              tap_action: { action: toggle }
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.scene_outdoor_on
+                state: "on"
+            chip:
+              type: template
+              entity: scene.outdoor_on
+              icon: mdi:coach-lamp
+              content: Outdoor
+              icon_color: teal
+              tap_action: { action: toggle }
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.scene_nightlight
+                state: "on"
+            chip:
+              type: template
+              entity: scene.nightlight
+              icon: mdi:lightbulb-night
+              content: Nightlight
+              icon_color: teal
+              tap_action: { action: toggle }
+
+      # -------------------------------------------------- status tiles (2-up)
+      - type: custom:bubble-card
+        card_type: separator
+        name: Status
+        icon: mdi:view-dashboard-outline
+        rows: 0.75
+        styles: |
+          .bubble-name { font-size: 13px !important; font-weight: 700 !important;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            color: rgba(255,255,255,0.6) !important; }
+          .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
+          .card-content { padding-top: 7px !important; }
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          # Alarm
+          - type: custom:button-card
+            entity: alarm_control_panel.alarmo
+            icon: mdi:shield-home
+            name: Alarm
+            show_state: true
+            show_label: true
+            tap_action: { action: more-info }
+            state_display: |
+              [[[
+                var m = {disarmed:'Disarmed', armed_home:'Armed Home',
+                  armed_away:'Armed Away', armed_night:'Armed Night',
+                  arming:'Arming', pending:'Pending', triggered:'Triggered'};
+                return m[entity.state] || entity.state;
+              ]]]
+            label: |
+              [[[
+                return entity.state === 'disarmed' ? 'All clear' : 'Protecting home';
+              ]]]
+            styles: &tile_styles
+              card:
+                - padding: 13px
+                - border-radius: 16px
+                - background: var(--background-color-2)
+                - box-shadow: none
+              grid:
+                - grid-template-areas: '"i n" "i s" "i l"'
+                - grid-template-columns: 46px 1fr
+                - grid-template-rows: min-content min-content min-content
+                - align-items: center
+                - column-gap: 12px
+              name:
+                - justify-self: start
+                - font-size: 12px
+                - font-weight: 600
+                - color: var(--secondary-text-color)
+              state:
+                - justify-self: start
+                - font-size: 17px
+                - font-weight: 700
+                - color: var(--primary-text-color)
+              label:
+                - justify-self: start
+                - font-size: 11px
+                - color: var(--secondary-text-color)
+              img_cell:
+                - align-self: center
+                - width: 44px
+                - height: 44px
+                - border-radius: 12px
+                - background-color: "rgba(224,167,94,0.18)"
+              icon:
+                - width: 22px
+                - color: var(--amber-color)
+          # Doors & Windows
+          - type: custom:button-card
+            entity: binary_sensor.all_doors_including_garage
+            icon: mdi:door
+            name: Doors & Windows
+            show_state: true
+            show_label: true
+            tap_action: { action: more-info }
+            state_display: |
+              [[[ return entity.state === 'on' ? 'Open' : 'All Closed'; ]]]
+            label: Doors & windows
+            styles:
+              <<: *tile_styles
+              img_cell:
+                - align-self: center
+                - width: 44px
+                - height: 44px
+                - border-radius: 12px
+                - background-color: "rgba(139,166,128,0.18)"
+              icon:
+                - width: 22px
+                - color: var(--sage-color)
+          # Lights
+          - type: custom:button-card
+            entity: sensor.lights_on_count
+            icon: mdi:lightbulb-group
+            name: Lights
+            show_state: true
+            show_label: true
+            tap_action:
+              action: navigate
+              navigation_path: /mobile-dash-v2/lights-main
+            state_display: |
+              [[[ return entity.state + ' on'; ]]]
+            label: Tap to control
+            styles:
+              <<: *tile_styles
+              img_cell:
+                - align-self: center
+                - width: 44px
+                - height: 44px
+                - border-radius: 12px
+                - background-color: "rgba(226,193,104,0.18)"
+              icon:
+                - width: 22px
+                - color: var(--gold-color)
+          # Climate
+          - type: custom:button-card
+            entity: climate.living_room_thermostat
+            icon: mdi:thermostat
+            name: Climate
+            show_state: true
+            show_label: true
+            tap_action:
+              action: navigate
+              navigation_path: /mobile-dash-v2/climate-main
+            state_display: |
+              [[[
+                var t = entity.attributes.current_temperature;
+                return (t != null ? Math.round(t) + '°' : entity.state);
+              ]]]
+            label: |
+              [[[
+                var a = entity.attributes.hvac_action || entity.state;
+                return a.charAt(0).toUpperCase() + a.slice(1);
+              ]]]
+            styles:
+              <<: *tile_styles
+              img_cell:
+                - align-self: center
+                - width: 44px
+                - height: 44px
+                - border-radius: 12px
+                - background-color: "rgba(142,177,191,0.18)"
+              icon:
+                - width: 22px
+                - color: var(--slate-bright)
+          # Music
+          - type: custom:button-card
+            entity: media_player.living_room
+            icon: mdi:music
+            name: Music
+            show_state: true
+            show_label: true
+            tap_action:
+              action: navigate
+              navigation_path: /mobile-dash-v2/music
+            state_display: |
+              [[[
+                var m = {playing:'Playing', paused:'Paused', idle:'Idle',
+                  off:'Off', standby:'Idle'};
+                return m[entity.state] || entity.state;
+              ]]]
+            label: |
+              [[[
+                return entity.attributes.source || 'Living Room';
+              ]]]
+            styles:
+              <<: *tile_styles
+              img_cell:
+                - align-self: center
+                - width: 44px
+                - height: 44px
+                - border-radius: 12px
+                - background-color: "rgba(182,210,220,0.18)"
+              icon:
+                - width: 22px
+                - color: var(--slate-bright)
+          # Energy
+          - type: custom:button-card
+            entity: sensor.bayberry_charge
+            icon: mdi:home-battery
+            name: Energy
+            show_state: true
+            show_label: true
+            tap_action:
+              action: navigate
+              navigation_path: /mobile-dash-v2/energy
+            state_display: |
+              [[[ return 'Battery ' + Math.round(entity.state) + '%'; ]]]
+            label: |
+              [[[
+                var s = states['sensor.bayberry_solar_generated'];
+                return s ? '+' + Math.round(s.state) + ' kWh today' : 'Solar today';
+              ]]]
+            styles:
+              <<: *tile_styles
+              img_cell:
+                - align-self: center
+                - width: 44px
+                - height: 44px
+                - border-radius: 12px
+                - background-color: "rgba(226,193,104,0.18)"
+              icon:
+                - width: 22px
+                - color: var(--gold-color)
+
+      # ------------------------------------------------------- running now
+      - type: custom:bubble-card
+        card_type: separator
+        name: Running now
+        icon: mdi:progress-clock
+        rows: 0.75
+        styles: |
+          .bubble-name { font-size: 13px !important; font-weight: 700 !important;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            color: rgba(255,255,255,0.6) !important; }
+          .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
+          .card-content { padding-top: 7px !important; }
+      - type: custom:button-card
+        entity: sensor.washer_cycle_progress
+        icon: mdi:washing-machine
+        name: Washer
+        show_state: false
+        tap_action: { action: more-info }
+        custom_fields:
+          val: |
+            [[[ return (entity ? Math.round(entity.state) : 0) + '%'; ]]]
+          bar: |
+            [[[
+              var p = entity ? Math.round(entity.state) : 0;
+              return `<div style="background:#383b41;border-radius:6px;height:6px;width:100%;">
+                <div style="background:var(--sage-color);height:6px;border-radius:6px;width:${p}%;"></div></div>`;
+            ]]]
+        styles: &progress_styles
+          card:
+            - padding: 12px 13px
+            - border-radius: 16px
+            - background: var(--background-color-2)
+            - box-shadow: none
+            - margin-bottom: 8px
+          grid:
+            - grid-template-areas: '"i n val" "i bar bar"'
+            - grid-template-columns: 44px 1fr auto
+            - grid-template-rows: auto auto
+            - align-items: center
+            - column-gap: 12px
+            - row-gap: 8px
+          name:
+            - justify-self: start
+            - font-size: 14px
+            - font-weight: 600
+            - color: var(--primary-text-color)
+          custom_fields:
+            val:
+              - justify-self: end
+              - font-size: 14px
+              - font-weight: 700
+              - color: var(--secondary-text-color)
+            bar:
+              - width: 100%
+          img_cell:
+            - align-self: center
+            - width: 42px
+            - height: 42px
+            - border-radius: 12px
+            - background-color: "rgba(139,166,128,0.18)"
+          icon:
+            - width: 20px
+            - color: var(--sage-color)
+      - type: custom:button-card
+        entity: sensor.r1t_battery_state_of_charge
+        icon: mdi:car-electric
+        name: Rivian charging
+        show_state: false
+        tap_action: { action: more-info }
+        custom_fields:
+          val: |
+            [[[
+              var soc = entity ? Math.round(entity.state) : 0;
+              var lim = states['sensor.r1t_battery_state_of_charge_limit'];
+              return lim ? soc + '% → ' + Math.round(lim.state) + '%' : soc + '%';
+            ]]]
+          bar: |
+            [[[
+              var p = entity ? Math.round(entity.state) : 0;
+              return `<div style="background:#383b41;border-radius:6px;height:6px;width:100%;">
+                <div style="background:var(--slate-color);height:6px;border-radius:6px;width:${p}%;"></div></div>`;
+            ]]]
+        styles:
+          <<: *progress_styles
+          img_cell:
+            - align-self: center
+            - width: 42px
+            - height: 42px
+            - border-radius: 12px
+            - background-color: "rgba(142,177,191,0.18)"
+          icon:
+            - width: 20px
+            - color: var(--slate-bright)
+
+      # ----------------------------------------------------------- scenes (3-up)
+      - type: custom:bubble-card
+        card_type: separator
+        name: Scenes
+        icon: mdi:palette
+        rows: 0.75
+        styles: |
+          .bubble-name { font-size: 13px !important; font-weight: 700 !important;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            color: rgba(255,255,255,0.6) !important; }
+          .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
+          .card-content { padding-top: 7px !important; }
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: custom:button-card
+            entity: binary_sensor.scene_good_morning
+            name: Morning
+            icon: mdi:weather-sunset-up
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.good_morning_2 }
+            styles: &scene_styles
+              card:
+                - padding: 14px 6px
+                - border-radius: 16px
+                - background: var(--background-color-2)
+                - box-shadow: none
+              grid:
+                - grid-template-areas: '"i" "n"'
+                - grid-template-rows: auto auto
+                - row-gap: 7px
+              name:
+                - font-size: 12px
+                - font-weight: 600
+                - color: var(--secondary-text-color)
+              img_cell:
+                - justify-self: center
+                - width: 42px
+                - height: 42px
+                - border-radius: 12px
+                - background-color: "rgba(255,255,255,0.06)"
+              icon:
+                - width: 22px
+                - color: var(--secondary-text-color)
+            state: &scene_on
+              - value: "on"
+                styles:
+                  img_cell:
+                    - background-color: "rgba(226,193,104,0.20)"
+                  icon:
+                    - color: var(--gold-color)
+                  name:
+                    - color: var(--primary-text-color)
+          - type: custom:button-card
+            entity: binary_sensor.scene_welcome
+            name: Welcome
+            icon: mdi:human-greeting
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.welcome }
+            styles: *scene_styles
+            state: *scene_on
+          - type: custom:button-card
+            entity: binary_sensor.scene_evening
+            name: Evening
+            icon: mdi:weather-night
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.evening }
+            styles: *scene_styles
+            state: *scene_on
+          - type: custom:button-card
+            entity: binary_sensor.scene_entertaining
+            name: Entertain
+            icon: mdi:glass-cocktail
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.entertaining }
+            styles: *scene_styles
+            state: *scene_on
+          - type: custom:button-card
+            entity: binary_sensor.scene_outdoor_on
+            name: Outdoor
+            icon: mdi:coach-lamp
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.outdoor_on }
+            styles: *scene_styles
+            state: *scene_on
+          - type: custom:button-card
+            name: All Off
+            icon: mdi:power
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.good_night }
+            styles: *scene_styles
+
+      # ------------------------------------------------------------- menu list
+      - type: custom:bubble-card
+        card_type: separator
+        name: Menu
+        icon: mdi:menu
+        rows: 0.75
+        styles: |
+          .bubble-name { font-size: 13px !important; font-weight: 700 !important;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            color: rgba(255,255,255,0.6) !important; }
+          .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
+          .card-content { padding-top: 7px !important; }
+      - type: custom:button-card
+        name: Lights
+        icon: mdi:lightbulb
+        show_state: false
+        show_label: true
+        label: |
+          [[[ var s=states['sensor.lights_on_count']; return s ? s.state+' on' : ''; ]]]
+        tap_action: { action: navigate, navigation_path: /mobile-dash-v2/lights-main }
+        custom_fields:
+          chev: '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'
+        styles: &menu_styles
+          card:
+            - padding: 12px 14px
+            - border-radius: 14px
+            - background: var(--background-color-2)
+            - box-shadow: none
+            - margin-bottom: 7px
+          grid:
+            - grid-template-areas: '"i n l chev"'
+            - grid-template-columns: 40px 1fr auto 24px
+            - align-items: center
+            - column-gap: 12px
+          name:
+            - justify-self: start
+            - font-size: 15px
+            - font-weight: 600
+            - color: var(--primary-text-color)
+          label:
+            - justify-self: end
+            - font-size: 13px
+            - color: var(--secondary-text-color)
+          img_cell:
+            - width: 38px
+            - height: 38px
+            - border-radius: 11px
+            - background-color: "rgba(142,177,191,0.16)"
+          icon:
+            - width: 20px
+            - color: var(--slate-bright)
+          custom_fields:
+            chev:
+              - justify-self: end
+      - type: custom:button-card
+        name: Climate
+        icon: mdi:thermostat
+        show_state: false
+        show_label: true
+        label: |
+          [[[ var s=states['climate.living_room_thermostat']; var t=s&&s.attributes.current_temperature; return t!=null?Math.round(t)+'°':''; ]]]
+        tap_action: { action: navigate, navigation_path: /mobile-dash-v2/climate-main }
+        custom_fields:
+          chev: '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'
+        styles: *menu_styles
+      - type: custom:button-card
+        name: Shades
+        icon: mdi:roller-shade
+        show_state: false
+        tap_action: { action: navigate, navigation_path: /mobile-dash-v2/shades-main }
+        custom_fields:
+          chev: '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'
+        styles: *menu_styles
+      - type: custom:button-card
+        name: Music
+        icon: mdi:music
+        show_state: false
+        show_label: true
+        label: |
+          [[[ var s=states['media_player.living_room']; return s&&s.state==='playing'?'Playing':''; ]]]
+        tap_action: { action: navigate, navigation_path: /mobile-dash-v2/music }
+        custom_fields:
+          chev: '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'
+        styles: *menu_styles
+      - type: custom:button-card
+        name: Security
+        icon: mdi:cctv
+        show_state: false
+        show_label: true
+        label: |
+          [[[ var s=states['alarm_control_panel.alarmo']; if(!s)return ''; var m={disarmed:'Disarmed',armed_home:'Armed Home',armed_away:'Armed Away'}; return m[s.state]||s.state; ]]]
+        tap_action: { action: navigate, navigation_path: /mobile-dash-v2/security }
+        custom_fields:
+          chev: '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'
+        styles: *menu_styles
+      - type: custom:button-card
+        name: Energy
+        icon: mdi:lightning-bolt
+        show_state: false
+        show_label: true
+        label: |
+          [[[ var s=states['sensor.bayberry_charge']; return s?Math.round(s.state)+'%':''; ]]]
+        tap_action: { action: navigate, navigation_path: /mobile-dash-v2/energy }
+        custom_fields:
+          chev: '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'
+        styles: *menu_styles
+      - type: custom:button-card
+        name: Pool
+        icon: mdi:pool
+        show_state: false
+        show_label: true
+        label: |
+          [[[ var s=states['sensor.omnilogic_pool_watersensor']; return s?Math.round(s.state)+'°':''; ]]]
+        tap_action: { action: navigate, navigation_path: /mobile-dash-v2/pool }
+        custom_fields:
+          chev: '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'
+        styles: *menu_styles
+      - type: custom:button-card
+        name: Weather
+        icon: mdi:weather-partly-cloudy
+        show_state: false
+        show_label: true
+        label: |
+          [[[ var s=states['sensor.bayberry_tempest_temperature']; return s?Math.round(s.state)+'°':''; ]]]
+        tap_action: { action: navigate, navigation_path: /mobile-dash-v2/weather }
+        custom_fields:
+          chev: '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'
+        styles: *menu_styles
+      - type: custom:button-card
+        name: Vacuum
+        icon: mdi:robot-vacuum
+        show_state: false
+        show_label: true
+        label: |
+          [[[ var s=states['vacuum.roborock_s8']; return s?(s.state.charAt(0).toUpperCase()+s.state.slice(1)):''; ]]]
+        tap_action: { action: navigate, navigation_path: /mobile-dash-v2/vacuum }
+        custom_fields:
+          chev: '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'
+        styles: *menu_styles
+      - type: custom:button-card
+        name: Settings
+        icon: mdi:cog
+        show_state: false
+        tap_action: { action: navigate, navigation_path: /mobile-dash-v2/settings }
+        custom_fields:
+          chev: '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'
+        styles: *menu_styles
