@@ -11,13 +11,16 @@ theme: Dune Mist
 path: mobile-home
 type: custom:grid-layout
 cards:
-  - type: custom:stack-in-card
-    mode: vertical
+  - type: vertical-stack
+    # NOTE: a plain vertical-stack (not stack-in-card) is intentional here.
+    # stack-in-card strips/neutralizes each child card's ha-card background to
+    # merge them into one surface, which races with the per-tile backgrounds
+    # below and makes them intermittently fail to paint. vertical-stack leaves
+    # child backgrounds alone. Side padding is applied to the stack host.
     card_mod:
       style: |
-        ha-card {
-          background: transparent !important;
-          box-shadow: none !important;
+        :host {
+          display: block;
           padding: 4px 10px 8px;
         }
     cards:
