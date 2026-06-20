@@ -1,0 +1,306 @@
+title: Weather
+icon: mdi:weather-partly-cloudy
+theme: Dune Mist
+path: weather
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 15px
+        - padding-bottom: 5px
+        - padding-left: 5px
+        - padding-right: 10px
+        - padding-top: 2px
+#       - margin: -8px
+        - height: auto
+#       - width: 398px
+        - box-shadow: none
+        - background-color: var(--background-color-2)
+      grid:
+        - grid-template-areas: |
+            "header"
+            "chips"
+            "alerts"
+            "weather"
+        - grid-template-columns: auto
+        - grid-template-rows: 60px 60px auto auto
+        - row-gap: 2px
+        - align-items: start
+        - column-gap: 2px
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          show_state: false
+          show_name: false
+          show_icon: false
+          styles:
+            card:
+              - background-color: transparent
+              - padding-bottom: 5px
+              - padding-top: 0px
+            grid:
+              - grid-template-areas: |
+                  "name gap"
+              - grid-template-columns: 150px auto
+              - grid-template-rows: 60px
+              - column-gap: 0px
+            main:
+          custom_fields:
+            name:
+              card:
+                type: custom:button-card
+                show_state: false
+                show_name: true
+                show_icon: true
+                show_label: false
+                layout: icon_name
+                icon: mdi:weather-partly-cloudy
+                name: Weather
+                size: 60%
+                icon_color: var(--primary-text-color)
+                styles: 
+                  name: 
+                    - font-size: 22px
+                    - font-weight: bold
+                  card:
+                    - align-items: start
+                    - justify-content: flex-start 
+                    - text-align: left
+                    - padding-left: 8px
+                    - background-color: transparent
+      chips:
+        card:
+          type: custom:mushroom-chips-card
+          card_mod:
+            style: |
+              ha-card {
+                overflow: hidden !important;
+              }
+              ha-card > * {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                gap: 8px !important;
+              }
+              ha-card > * > * {
+                flex-shrink: 0 !important;
+              }
+              /* More aggressive targeting */
+              ha-card ::-webkit-scrollbar {
+                height: 4px;
+              }
+              ha-card ::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              ha-card ::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 2px;
+              }
+              /* Try to target all possible chip containers */
+              mushroom-chips,
+              .chip-container,
+              [class*="chip"] {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                width: 100% !important;
+              }
+              mushroom-chip,
+              [class*="chip"]:not([class*="container"]) {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+              }
+          chips:
+            - type: template
+              content: Back
+              tap_action:
+                action: navigate
+                navigation_path: /mobile-dash-v2/mobile-home
+              icon: mdi:chevron-left
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--ha-card-background-2);
+                  }
+      alerts:
+        card:
+          type: conditional
+          conditions:
+            - condition: numeric_state
+              entity: sensor.nws_alerts_alerts
+              above: 0
+          card:
+            type: custom:expander-card
+            expanded: true
+            title-card-clickable: true
+            card_mod:
+              style: |
+                ha-card {
+                  background: var(--background-color-2);
+                  }
+            title-card:
+              type: custom:bubble-card
+              card_type: separator
+              name: Active Weather Alerts
+              icon: mdi:alert
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }  
+            cards:
+              - type: markdown
+                content: |                    
+                  {% set alerts = state_attr('sensor.nws_alerts_alerts', 'Alerts') %}
+                  {% if alerts and alerts|length > 0 %}
+                    {% for alert in alerts %}
+                  ### {{ alert.Event }}
+                  
+                  **{{ alert.Headline }}**
+                  
+                  {{ alert.Description }}
+                  
+                  {% if alert.Instruction %}
+                  **Instructions:**
+                  {{ alert.Instruction }}
+                  {% endif %}
+                  
+                  *Expires: {{ alert.Expires | as_timestamp | timestamp_custom('%B %d, %Y at %I:%M %p') }}*
+                  
+                  ---
+                    {% endfor %}
+                  {% else %}
+                  ✅ **No active weather alerts**
+                  {% endif %}
+                card_mod:
+                  style: |
+                    ha-card {
+                      text-align: left !important;
+                    }
+                    ha-markdown {
+                      text-align: left !important;
+                    }
+                    ha-markdown p, 
+                    ha-markdown h3, 
+                    ha-markdown h2, 
+                    ha-markdown h1 {
+                      text-align: left !important;
+                    }
+      weather:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          keep:
+            background: true
+            border_radius: true
+          card_mod:
+            style: |
+              ha-card {
+                background-color: var(--ha-card-background-2);
+                border-radius: 20px;
+                padding: 12px 12px 4px;
+                }
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Live Weather
+              icon: mdi:weather-partly-cloudy
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: grid
+              columns: 2
+              square: false
+              cards:
+                - graph: line
+                  type: sensor
+                  entity: sensor.tempest_temperature_5min
+                  detail: 2
+                  name: Temperature
+                  theme: Bubble
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background: var(--ha-card-background);
+                        border-radius: 18px;
+                      }
+                - graph: line
+                  type: sensor
+                  entity: sensor.tempest_humidity_5min
+                  detail: 1
+                  name: Humidity
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background: var(--ha-card-background);
+                        border-radius: 18px;
+                      }
+                - graph: line
+                  type: sensor
+                  entity: sensor.tempest_wind_speed_average_5min
+                  detail: 1
+                  name: Average Wind Speed
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background: var(--ha-card-background);
+                        border-radius: 18px;
+                      }
+                - graph: line
+                  type: sensor
+                  entity: sensor.tempest_wind_gust_5min
+                  detail: 1
+                  name: Wind Gust
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background: var(--ha-card-background);
+                        border-radius: 18px;
+                      }
+                - graph: line
+                  type: sensor
+                  entity: sensor.bayberry_tempest_precipitation
+                  detail: 1
+                  name: Precipitation
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background: var(--ha-card-background);
+                        border-radius: 18px;
+                      }
+                - graph: line
+                  type: sensor
+                  entity: sensor.tempest_illuminance_5min
+                  detail: 1
+                  name: Illuminance
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background: var(--ha-card-background);
+                        border-radius: 18px;
+                      }

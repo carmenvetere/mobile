@@ -1,0 +1,394 @@
+title: Shades
+icon: mdi:roller-shade
+theme: Dune Mist
+path: shades-main
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 15px
+        - padding-bottom: 5px
+        - padding-left: 5px
+        - padding-right: 10px
+        - padding-top: 2px
+#        - margin: -8px
+        - height: auto
+#        - width: 398px
+        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
+      grid:
+        - grid-template-areas: |
+            "header"
+            "chips"
+            "groups"
+            "first"
+            "bedroom"
+            "front_guest"
+            "back_guest"
+        - grid-template-columns: auto
+        - grid-template-rows: 60px 60px auto auto
+        - row-gap: 0px
+        - align-items: start
+        - column-gap: 2px
+    custom_fields:
+      header:
+        card:
+          type: custom:button-card
+          show_state: false
+          show_name: false
+          show_icon: false
+          styles:
+            card:
+              - background-color: transparent
+              - padding-bottom: 5px
+              - padding-top: 0px
+            grid:
+              - grid-template-areas: |
+                  "name gap"
+              - grid-template-columns: 150px auto
+              - grid-template-rows: 60px
+              - column-gap: 0px
+            main:
+          custom_fields:
+            name:
+              card:
+                type: custom:button-card
+                show_state: false
+                show_name: true
+                show_icon: true
+                show_label: false
+                layout: icon_name
+                icon: mdi:roller-shade
+                name: Shades
+                size: 60%
+                icon_color: var(--primary-text-color)
+                styles: 
+                  name: 
+                    - font-size: 22px
+                    - font-weight: bold
+                  card:
+                    - align-items: start
+                    - justify-content: flex-start 
+                    - text-align: left
+                    - padding-left: 8px
+                    - background-color: transparent
+      chips:
+        card:
+          type: custom:mushroom-chips-card
+          card_mod:
+            style: |
+              ha-card {
+                overflow: hidden !important;
+              }
+              ha-card > * {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                gap: 8px !important;
+              }
+              ha-card > * > * {
+                flex-shrink: 0 !important;
+              }
+              /* More aggressive targeting */
+              ha-card ::-webkit-scrollbar {
+                height: 4px;
+              }
+              ha-card ::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              ha-card ::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 2px;
+              }
+              /* Try to target all possible chip containers */
+              mushroom-chips,
+              .chip-container,
+              [class*="chip"] {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                width: 100% !important;
+              }
+              mushroom-chip,
+              [class*="chip"]:not([class*="container"]) {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+              }
+          chips:
+            - type: template
+              content: Back
+              tap_action:
+                action: navigate
+                navigation_path: /mobile-dash-v2/mobile-home
+              icon: mdi:chevron-left
+              card_mod:
+                style: |
+                  :host {
+                    zoom: 1.25 !important;
+                    --chip-background: var(--background-color);
+                    --chip-font-size: 16px;
+                  }
+                  ha-card {
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                  }   
+      groups:
+        card:
+          type: custom:stack-in-card
+          mode: vertical
+          card_mod:
+            style: |
+              ha-card {
+                border-radius: 20px;
+                padding: 3px 12px 4px;       /* top / sides / bottom */
+                }
+          cards:
+            - type: vertical-stack
+              cards: 
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: Groups
+                  icon: mdi:roller-shade
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                      font-size: 20px !important;  /* title */
+                      font-weight: bold !important;
+                    }
+                    .bubble-sub-button 
+                    {
+                      font-size: 20px !important;
+                      font-weight: 700 !important;
+                    }
+                    .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                    }
+                    .card-content {
+                      padding-top: 7px !important;
+                    }
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: First Floor
+                  icon: mdi:sofa
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                      font-size: 16px !important;  /* title */
+                      font-weight: bold !important;
+                    }
+                    .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                    }
+                    .card-content {
+                      padding-top: 7px !important;
+                    }
+                - type: vertical-stack
+                  cards: !include /config/dashboards/modules/first-floor-shades-groups.yaml
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: Primary Bedroom
+                  icon: mdi:bed-king
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                      font-size: 16px !important;  /* title */
+                      font-weight: bold !important;
+                    }
+                    .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                    }
+                    .card-content {
+                      padding-top: 7px !important;
+                    }
+                - type: vertical-stack
+                  cards: !include /config/dashboards/modules/primary-bedroom-shades-groups.yaml
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: Back Guest Bedroom
+                  icon: mdi:bed-king
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                      font-size: 16px !important;  /* title */
+                      font-weight: bold !important;
+                    }
+                    .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                    }
+                    .card-content {
+                      padding-top: 7px !important;
+                    }
+                - type: vertical-stack
+                  cards: !include /config/dashboards/modules/front-guest-bedroom-shades-group.yaml
+                - type: custom:bubble-card
+                  card_type: separator
+                  name: Front Guest Bedroom
+                  icon: mdi:bed-king
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                      font-size: 16px !important;  /* title */
+                      font-weight: bold !important;
+                    }
+                    .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                    }
+                    .card-content {
+                      padding-top: 7px !important;
+                    }
+                - type: vertical-stack
+                  cards: !include /config/dashboards/modules/front-guest-bedroom-shades-group.yaml
+      first:
+        card:
+          type: custom:expander-card
+          expanded: false
+          title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--background-color) !important;
+                margin-top: 5px !important;
+              }
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: First Floor
+            icon: mdi:home-floor-1
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          cards:
+            - type: vertical-stack
+              cards: !include /config/dashboards/modules/first-floor-shades-individuals.yaml
+      bedroom:
+        card:
+          type: custom:expander-card
+          expanded: false
+          title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--background-color) !important;
+                margin-top: 5px !important;
+              }
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Primary Bedroom
+            icon: mdi:bed-king
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          cards:
+            - type: vertical-stack
+              cards: !include /config/dashboards/modules/primary-bedroom-shades-individuals.yaml
+      front_guest:
+        card:
+          type: custom:expander-card
+          expanded: false
+          title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--background-color) !important;
+                margin-top: 5px !important;
+              }
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Front Guest Bedroom
+            icon: mdi:bed-king
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          cards:
+            - type: vertical-stack
+              cards: !include /config/dashboards/modules/front-guest-bedroom-shades-individuals.yaml
+      back_guest:
+        card:
+          type: custom:expander-card
+          expanded: false
+          title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--background-color) !important;
+                margin-top: 5px !important;
+              }
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Back Guest Bedroom
+            icon: mdi:bed-king
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          cards:
+            - type: vertical-stack
+              cards: !include /config/dashboards/modules/back-guest-bedroom-shades-individuals.yaml
