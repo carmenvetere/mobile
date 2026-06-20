@@ -48,8 +48,10 @@ cards:
           [[[ return Math.round(entity.state) + '°'; ]]]
         styles:
           card:
-            - background: transparent
+            - background: transparent !important
+            - --ha-card-background: transparent
             - box-shadow: none
+            - transition: none
             - padding: 6px 6px 2px
           grid:
             - grid-template-areas: '"n s" "l s"'
@@ -185,8 +187,10 @@ cards:
               card:
                 - padding: 13px
                 - border-radius: 16px
-                - background: var(--background-color-2)
+                - background: var(--background-color-2) !important
+                - --ha-card-background: var(--background-color-2)
                 - box-shadow: none
+                - transition: none
               grid:
                 - grid-template-areas: '"i n" "i s" "i l"'
                 - grid-template-columns: 46px 1fr
@@ -384,8 +388,10 @@ cards:
           card:
             - padding: 12px 13px
             - border-radius: 16px
-            - background: var(--background-color-2)
+            - background: var(--background-color-2) !important
+            - --ha-card-background: var(--background-color-2)
             - box-shadow: none
+            - transition: none
             - margin-bottom: 8px
           grid:
             - grid-template-areas: '"i n val" "i bar bar"'
@@ -476,8 +482,10 @@ cards:
               card:
                 - padding: 14px 6px
                 - border-radius: 16px
-                - background: var(--background-color-2)
+                - background: var(--background-color-2) !important
+                - --ha-card-background: var(--background-color-2)
                 - box-shadow: none
+                - transition: none
               grid:
                 - grid-template-areas: '"i" "n"'
                 - grid-template-rows: auto auto
@@ -584,8 +592,10 @@ cards:
           card:
             - padding: 12px 14px
             - border-radius: 14px
-            - background: var(--background-color-2)
+            - background: var(--background-color-2) !important
+            - --ha-card-background: var(--background-color-2)
             - box-shadow: none
+            - transition: none
             - margin-bottom: 7px
           grid:
             - grid-template-areas: '"i n l chev"'
