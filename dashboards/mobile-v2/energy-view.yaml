@@ -1,276 +1,200 @@
+# lovelace_gen
+# ============================================================================
+#  Mobile Dash v2  ·  Energy  ·  Dune Mist
+#  Per the handoff: header (off-grid / battery) -> live Power-flow diagram +
+#  device row -> 2-up Produced / Used today -> solar forecast + trend charts.
+#  Power-flow, forecast and history charts reuse the existing modules, so
+#  every energy/solar/powerwall entity maps to the same one as v1.
+# ============================================================================
 title: Energy
 icon: mdi:lightning-bolt
 theme: Dune Mist
 path: energy
 type: custom:grid-layout
 cards:
-  - type: custom:button-card
-    styles:
-      card:
-        - border-radius: 15px
-        - padding-bottom: 5px
-        - padding-left: 5px
-        - padding-right: 10px
-        - padding-top: 2px
-#        - margin: -8px
-        - height: auto
-#        - width: 398px
-        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
-      grid:
-        - grid-template-areas: |
-            "header"
-            "chips"
-            "power_flow"
-            "solar_forecast"
-        - grid-template-columns: auto
-        - grid-template-rows: 60px 60px auto auto
-        - row-gap: 5px
-        - align-items: start
-        - column-gap: 2px
-      custom_fields:
-        power_flow:
-        - max-width: 99%
-    custom_fields:
-      header:
-        card:
-          type: custom:button-card
-          show_state: false
-          show_name: false
-          show_icon: false
-          styles:
-            card:
-              - background-color: transparent
-              - padding-bottom: 5px
-              - padding-top: 0px
-            grid:
-              - grid-template-areas: |
-                  "name gap"
-              - grid-template-columns: 150px auto
-              - grid-template-rows: 60px
-              - column-gap: 0px
-            main:
+  - type: vertical-stack
+    card_mod:
+      style: |
+        :host { display: block; padding: 4px 10px 8px; }
+    cards:
+      # ---------------------------------------------------------- screen header
+      - type: custom:button-card
+        entity: sensor.bayberry_charge
+        icon: mdi:lightning-bolt
+        name: Energy
+        show_state: false
+        show_label: true
+        tap_action: { action: none }
+        label: |
+          [[[
+            var b = states['sensor.bayberry_charge'];
+            var og = states['switch.bayberry_off_grid_operation'];
+            var grid = (og && og.state === 'on') ? 'Off-grid' : 'Grid-tied';
+            return grid + ' · Battery ' + (b ? Math.round(b.state) : '?') + '%';
+          ]]]
+        styles:
+          card:
+            - background: transparent !important
+            - --ha-card-background: transparent
+            - box-shadow: none
+            - transition: none
+            - padding: 4px 2px 6px
+          grid:
+            - grid-template-areas: '"back i n" "back i l"'
+            - grid-template-columns: 46px 54px 1fr
+            - grid-template-rows: auto auto
+            - align-items: center
+            - column-gap: 8px
+          img_cell:
+            - grid-area: i
+            - width: 48px
+            - height: 48px
+            - border-radius: 13px
+            - background-color: "rgba(226,193,104,0.18)"
+          icon:
+            - width: 24px
+            - color: var(--gold-color)
+          name:
+            - grid-area: n
+            - justify-self: start
+            - font-size: 22px
+            - font-weight: 700
+            - color: var(--primary-text-color)
+          label:
+            - grid-area: l
+            - justify-self: start
+            - font-size: 12px
+            - color: var(--secondary-text-color)
           custom_fields:
-            name:
-              card:
-                type: custom:button-card
-                show_state: false
-                show_name: true
-                show_icon: true
-                show_label: false
-                layout: icon_name
-                icon: mdi:lightning-bolt
-                name: Energy
-                size: 60%
-                icon_color: var(--primary-text-color)
-                styles: 
-                  name: 
-                    - font-size: 22px
-                    - font-weight: bold
-                  card:
-                    - align-items: start
-                    - justify-content: flex-start 
-                    - text-align: left
-                    - padding-left: 8px
-                    - background-color: transparent
-      chips:
-        card: 
-          type: custom:mushroom-chips-card
-          card_mod:
-            style: |
-              ha-card {
-                overflow: hidden !important;
-              }
-              ha-card > * {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                gap: 8px !important;
-              }
-              ha-card > * > * {
-                flex-shrink: 0 !important;
-              }
-              /* More aggressive targeting */
-              ha-card ::-webkit-scrollbar {
-                height: 4px;
-              }
-              ha-card ::-webkit-scrollbar-track {
-                background: transparent;
-              }
-              ha-card ::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 2px;
-              }
-              /* Try to target all possible chip containers */
-              mushroom-chips,
-              .chip-container,
-              [class*="chip"] {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                width: 100% !important;
-              }
-              mushroom-chip,
-              [class*="chip"]:not([class*="container"]) {
-                flex-shrink: 0 !important;
-                white-space: nowrap !important;
-              }
-          chips:
-            - type: template
-              content: Back
+            back:
+              - grid-area: back
+        custom_fields:
+          back:
+            card:
+              type: custom:button-card
+              icon: mdi:chevron-left
               tap_action:
                 action: navigate
                 navigation_path: /mobile-dash-v2/mobile-home
-              icon: mdi:chevron-left
-              card_mod:
-                style: |
-                  :host {
-                    zoom: 1.25 !important;
-                    --chip-background: var(--background-color);
-                    --chip-font-size: 16px;
-                  }
-                  ha-card {
-                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-                  }   
-            - type: conditional
-              conditions:
-                - condition: state
-                  entity: switch.bayberry_off_grid_operation
-                  state: 'on'
-              chip:
-                type: entity
-                entity: sensor.bayberry_charge
-                icon: mdi:home-battery
-                icon_color: red
-                tap_action:
-                  action: more-info
-                card_mod:
-                  style: |
-                    :host {
-                      zoom: 1.25 !important;
-                      --chip-background: var(--background-color);
-                      --chip-font-size: 16px;
-                    }
-                    ha-card {
-                      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-                    }   
-      solar_forecast:
-        card: 
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background-color: var(--background-color) !important;
-                border-radius: 20px;
-                padding: 10;
-              }
-          cards:
-            - type: custom:bubble-card
-              card_type: separator
-              name: Today's Solar Forecast
-              icon: mdi:flash
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }            
-            - !include /config/dashboards/modules/solar-forecast-today.yaml
-            - type: custom:bubble-card
-              card_type: separator
-              name: 7-Day Solar Forecast
-              icon: mdi:flash
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }  
-            - !include /config/dashboards/modules/7-day-solar-forecast.yaml
-            - type: custom:bubble-card
-              card_type: separator
-              name: Last 24 Hours Power Flow
-              icon: mdi:flash
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }  
-            - !include /config/dashboards/modules/24-hour-power-flow.yaml
-            - type: custom:bubble-card
-              card_type: separator
-              name: Last 7 Days Home Energy Usage
-              icon: mdi:flash
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }  
-            - !include /config/dashboards/modules/7-day-usage-history.yaml
-      power_flow:
-        card: 
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background-color: var(--background-color) !important;
-                border-radius: 20px;
-                padding: 10;
-              }
-          cards:
-            - type: custom:bubble-card
-              card_type: separator
-              name: Live Power Flow
-              icon: mdi:flash
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
-            - !include /config/dashboards/modules/power-flow-card.yaml
+              styles:
+                card:
+                  - background: var(--background-color-2) !important
+                  - --ha-card-background: var(--background-color-2)
+                  - box-shadow: none
+                  - transition: none
+                  - height: 40px
+                  - width: 40px
+                  - border-radius: 12px
+                icon:
+                  - width: 22px
+                  - color: var(--primary-text-color)
+
+      # --------------------------------------------------------- live power flow
+      - type: custom:bubble-card
+        card_type: separator
+        name: Live power flow
+        icon: mdi:transmission-tower
+        rows: 0.75
+        styles: &sep_section |
+          .bubble-name { font-size: 13px !important; font-weight: 700 !important;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            color: rgba(255,255,255,0.6) !important; }
+          .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
+          .card-content { padding-top: 7px !important; }
+      - !include /config/dashboards/modules/power-flow-card.yaml
+
+      # -------------------------------------------------- produced / used today
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:button-card
+            entity: sensor.bayberry_solar_generated
+            name: Produced today
+            icon: mdi:solar-power-variant
+            show_state: true
+            tap_action: { action: more-info }
+            state_display: |
+              [[[ return (Math.round(entity.state * 10) / 10) + ' kWh'; ]]]
+            styles: &stat_styles
+              card:
+                - padding: 14px
+                - border-radius: 16px
+                - background: var(--background-color-2) !important
+                - --ha-card-background: var(--background-color-2)
+                - box-shadow: none
+                - transition: none
+              grid:
+                - grid-template-areas: '"i" "s" "n"'
+                - grid-template-rows: auto auto auto
+                - row-gap: 5px
+                - justify-items: start
+              img_cell:
+                - width: 40px
+                - height: 40px
+                - border-radius: 11px
+                - background-color: "rgba(226,193,104,0.18)"
+              icon:
+                - width: 20px
+                - color: var(--gold-color)
+              state:
+                - font-size: 22px
+                - font-weight: 700
+                - color: var(--primary-text-color)
+              name:
+                - font-size: 12px
+                - color: var(--secondary-text-color)
+          - type: custom:button-card
+            entity: sensor.bayberry_home_usage
+            name: Used today
+            icon: mdi:home-lightning-bolt
+            show_state: true
+            tap_action: { action: more-info }
+            state_display: |
+              [[[ return (Math.round(entity.state * 10) / 10) + ' kWh'; ]]]
+            styles:
+              <<: *stat_styles
+              img_cell:
+                - width: 40px
+                - height: 40px
+                - border-radius: 11px
+                - background-color: "rgba(142,177,191,0.18)"
+              icon:
+                - width: 20px
+                - color: var(--slate-bright)
+
+      # ------------------------------------------------- today's solar forecast
+      - type: custom:bubble-card
+        card_type: separator
+        name: Today's solar forecast
+        icon: mdi:weather-sunny
+        rows: 0.75
+        styles: *sep_section
+      - !include /config/dashboards/modules/solar-forecast-today.yaml
+
+      # ----------------------------------------------------- 7-day solar forecast
+      - type: custom:bubble-card
+        card_type: separator
+        name: 7-day solar forecast
+        icon: mdi:white-balance-sunny
+        rows: 0.75
+        styles: *sep_section
+      - !include /config/dashboards/modules/7-day-solar-forecast.yaml
+
+      # ------------------------------------------------------ last 24h power flow
+      - type: custom:bubble-card
+        card_type: separator
+        name: Last 24 hours
+        icon: mdi:chart-line
+        rows: 0.75
+        styles: *sep_section
+      - !include /config/dashboards/modules/24-hour-power-flow.yaml
+
+      # --------------------------------------------------- last 7 days home usage
+      - type: custom:bubble-card
+        card_type: separator
+        name: Last 7 days usage
+        icon: mdi:chart-bar
+        rows: 0.75
+        styles: *sep_section
+      - !include /config/dashboards/modules/7-day-usage-history.yaml
