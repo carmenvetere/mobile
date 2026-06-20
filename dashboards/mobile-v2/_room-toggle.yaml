@@ -1,0 +1,45 @@
+# lovelace_gen
+# Reusable "clean a room" toggle tile for the v2 Vacuum view.
+# Params: entity (input_boolean.*), name (label). Shows a check when selected.
+type: custom:button-card
+entity: {{ entity }}
+name: {{ name }}
+icon: mdi:broom
+show_state: false
+tap_action:
+  action: toggle
+styles:
+  card:
+    - padding: 11px 12px
+    - border-radius: 13px
+    - background: var(--background-color-2) !important
+    - --ha-card-background: var(--background-color-2)
+    - box-shadow: none
+    - transition: none
+    - border: 1px solid transparent
+  grid:
+    - grid-template-areas: '"i n"'
+    - grid-template-columns: 26px 1fr
+    - align-items: center
+    - column-gap: 9px
+  img_cell:
+    - width: 26px
+    - height: 26px
+  icon:
+    - width: 19px
+    - color: var(--secondary-text-color)
+  name:
+    - justify-self: start
+    - font-size: 13px
+    - font-weight: 600
+    - color: var(--secondary-text-color)
+state:
+  - value: "on"
+    icon: mdi:check-circle
+    styles:
+      card:
+        - border: 1px solid var(--slate-color)
+      icon:
+        - color: var(--slate-bright)
+      name:
+        - color: var(--primary-text-color)
