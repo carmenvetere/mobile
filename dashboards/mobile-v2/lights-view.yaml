@@ -21,14 +21,14 @@ cards:
       # ---------------------------------------------------------- screen header
       - type: custom:button-card
         entity: sensor.lights_on_count
-        icon: mdi:lightbulb-group
+        icon: mdi:lightbulb
         name: Lights
         show_state: true
         show_label: true
         tap_action: { action: none }
         state_display: |
           [[[ return entity.state + ' on'; ]]]
-        label: Tap a room to expand
+        label: "36 fixtures ·"
         styles:
           card:
             - background: transparent !important
@@ -37,9 +37,9 @@ cards:
             - transition: none
             - padding: 4px 2px 6px
           grid:
-            - grid-template-areas: '"back i n" "back i s" "back i l"'
-            - grid-template-columns: 46px 54px 1fr
-            - grid-template-rows: auto auto auto
+            - grid-template-areas: '"back i n n" "back i l s"'
+            - grid-template-columns: 46px 54px auto 1fr
+            - grid-template-rows: auto auto
             - align-items: center
             - column-gap: 8px
           img_cell:
@@ -92,6 +92,119 @@ cards:
                   - width: 22px
                   - color: var(--primary-text-color)
 
+      # ------------------------------------------------------------- scenes (3-up)
+      - type: custom:bubble-card
+        card_type: separator
+        name: Scenes
+        icon: mdi:palette
+        rows: 0.75
+        styles: |
+          .bubble-name { font-size: 13px !important; font-weight: 700 !important;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            color: rgba(255,255,255,0.6) !important; }
+          .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
+          .card-content { padding-top: 7px !important; }
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: custom:button-card
+            entity: binary_sensor.scene_good_morning
+            name: Morning
+            icon: mdi:weather-sunset-up
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.good_morning_2 }
+            styles: &lscene_styles
+              card:
+                - padding: 14px 6px
+                - border-radius: 16px
+                - background: var(--background-color-2) !important
+                - --ha-card-background: var(--background-color-2)
+                - box-shadow: none
+                - transition: none
+              grid:
+                - grid-template-areas: '"i" "n"'
+                - grid-template-rows: auto auto
+                - row-gap: 7px
+              name:
+                - font-size: 11px
+                - font-weight: 600
+                - color: var(--secondary-text-color)
+              img_cell:
+                - justify-self: center
+                - width: 42px
+                - height: 42px
+                - border-radius: 12px
+                - background-color: "rgba(255,255,255,0.06)"
+              icon:
+                - width: 22px
+                - color: var(--secondary-text-color)
+            state: &lscene_on
+              - value: "on"
+                styles:
+                  img_cell:
+                    - background-color: "rgba(226,193,104,0.20)"
+                  icon:
+                    - color: var(--gold-color)
+                  name:
+                    - color: var(--primary-text-color)
+          - type: custom:button-card
+            entity: binary_sensor.scene_welcome
+            name: Welcome
+            icon: mdi:human-greeting
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.welcome }
+            styles: *lscene_styles
+            state: *lscene_on
+          - type: custom:button-card
+            entity: binary_sensor.scene_evening
+            name: Evening
+            icon: mdi:moon-waning-crescent
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.evening }
+            styles: *lscene_styles
+            state: *lscene_on
+          - type: custom:button-card
+            entity: binary_sensor.scene_entertaining
+            name: Entertain
+            icon: mdi:glass-cocktail
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.entertaining }
+            styles: *lscene_styles
+            state: *lscene_on
+          - type: custom:button-card
+            entity: binary_sensor.scene_outdoor_on
+            name: Outdoor
+            icon: mdi:coach-lamp
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.outdoor_on }
+            styles: *lscene_styles
+            state: *lscene_on
+          - type: custom:button-card
+            name: All Off
+            icon: mdi:lightbulb-off
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: { entity_id: scene.good_night }
+            styles: *lscene_styles
+
       # --------------------------------------------------------- First Floor
       - type: custom:expander-card
         expanded: true
@@ -102,6 +215,11 @@ cards:
           name: First Floor
           icon: mdi:home-floor-1
           rows: 0.75
+          sub_button:
+            - entity: sensor.first_floor_lights_on_count
+              show_state: true
+              show_icon: false
+              show_background: false
           styles: &sep_style |
             .bubble-name { font-size: 17px !important; font-weight: 700 !important; }
             .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
@@ -165,6 +283,45 @@ cards:
           - type: vertical-stack
             cards: !include [/config/dashboards/modules/first-floor-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
 
+      # ------------------------------------------------------------ Basement
+      - type: custom:expander-card
+        expanded: false
+        title-card-clickable: true
+        title-card:
+          type: custom:bubble-card
+          card_type: separator
+          name: Basement
+          icon: mdi:home-floor-b
+          rows: 0.75
+          sub_button:
+            - entity: sensor.basement_lights_on_count
+              show_state: true
+              show_icon: false
+              show_background: false
+          styles: *sep_style
+        card_mod:
+          style: *exp_mod
+        cards:
+          - type: custom:button-card
+            name: All Off
+            icon: mdi:lightbulb-off-outline
+            show_state: false
+            tap_action:
+              action: perform-action
+              perform_action: homeassistant.turn_off
+              target:
+                entity_id:
+                  - light.gym_main_lights
+                  - light.media_room_table_lamp
+                  - light.laundry_room_main_lights
+                  - light.basement_hallway_main_lights
+                  - light.media_room_main_lights
+                  - light.stairs_main_lights
+                  - light.stairs_spot_lights
+            styles: *alloff_style
+          - type: vertical-stack
+            cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
+
       # -------------------------------------------------------- Second Floor
       - type: custom:expander-card
         expanded: false
@@ -175,6 +332,11 @@ cards:
           name: Second Floor
           icon: mdi:home-floor-2
           rows: 0.75
+          sub_button:
+            - entity: sensor.second_floor_lights_on_count
+              show_state: true
+              show_icon: false
+              show_background: false
           styles: *sep_style
         card_mod:
           style: *exp_mod
@@ -202,40 +364,6 @@ cards:
           - type: vertical-stack
             cards: !include [/config/dashboards/modules/second-floor-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
 
-      # ------------------------------------------------------------ Basement
-      - type: custom:expander-card
-        expanded: false
-        title-card-clickable: true
-        title-card:
-          type: custom:bubble-card
-          card_type: separator
-          name: Basement
-          icon: mdi:home-floor-b
-          rows: 0.75
-          styles: *sep_style
-        card_mod:
-          style: *exp_mod
-        cards:
-          - type: custom:button-card
-            name: All Off
-            icon: mdi:lightbulb-off-outline
-            show_state: false
-            tap_action:
-              action: perform-action
-              perform_action: homeassistant.turn_off
-              target:
-                entity_id:
-                  - light.gym_main_lights
-                  - light.media_room_table_lamp
-                  - light.laundry_room_main_lights
-                  - light.basement_hallway_main_lights
-                  - light.media_room_main_lights
-                  - light.stairs_main_lights
-                  - light.stairs_spot_lights
-            styles: *alloff_style
-          - type: vertical-stack
-            cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
-
       # ------------------------------------------------------------- Outdoor
       - type: custom:expander-card
         expanded: false
@@ -246,6 +374,11 @@ cards:
           name: Outdoor
           icon: mdi:outdoor-lamp
           rows: 0.75
+          sub_button:
+            - entity: sensor.outdoor_lights_on_count
+              show_state: true
+              show_icon: false
+              show_background: false
           styles: *sep_style
         card_mod:
           style: *exp_mod

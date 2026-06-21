@@ -27,15 +27,6 @@
       name: Living Room Main Lights
       icon: mdi:light-recessed
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.living_room_main_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
@@ -52,15 +43,6 @@
       name: Living Room Floor Lamps
       icon: mdi:floor-lamp
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.living_room_floor_lamps
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
@@ -77,15 +59,6 @@
       name: Kitchen Main Lights
       icon: mdi:light-recessed
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.kitchen_main_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
@@ -102,15 +75,6 @@
       name: Kitchen Outer Wall
       icon: mdi:spotlight-beam
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.kitchen_outer_wall
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
@@ -127,15 +91,6 @@
       name: Kitchen Island Pendants
       icon: mdi:ceiling-light-multiple
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.kitchen_island_pendants
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
@@ -152,15 +107,6 @@
       name: Kitchen Window Seat Sconce
       icon: mdi:wall-sconce
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.kitchen_window_seat_sconce
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
@@ -177,15 +123,6 @@
       name: Dining Room Main Lights
       icon: mdi:light-recessed
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.dining_room_main_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
@@ -202,15 +139,6 @@
       name: Dining Room Table Lamps
       icon: mdi:lamps
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.dining_room_table_lamps
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
@@ -227,15 +155,6 @@
       name: Dining Room Accent Light
       icon: mdi:spotlight-beam
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.dining_room_accent_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
