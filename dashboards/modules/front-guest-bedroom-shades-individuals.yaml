@@ -15,6 +15,14 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.front_guest_bedroom_side_battery']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -34,6 +42,14 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.front_guest_bedroom_front_left_battery']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -53,5 +69,13 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.front_guest_bedroom_front_right_battery']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 

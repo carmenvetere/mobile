@@ -960,3 +960,49 @@
           'light.driveway_sconces','switch.driveway_zone_2_2',
           'switch.driveway_zone_1_2','switch.driveway_zone_3_2'] %}
         {{ ents | select('is_state','on') | list | count }} of {{ ents | count }} on
+
+# ---------------------------------------------------------------------------
+# Open-shades count for the Mobile Dash v2 Shades header ("N shades · M open").
+# state = covers with current_position > 0 (or state 'open' when no position);
+# total attribute = number of individual shade covers.
+# ---------------------------------------------------------------------------
+- sensor:
+    - name: Shades Open Count
+      unique_id: shades_open_count
+      icon: mdi:roller-shade-open
+      state: >
+        {% set covers = [
+          'cover.living_room_front_left_cover','cover.living_room_front_right',
+          'cover.living_room_side_left_1_cover','cover.living_room_side_left_2_cover_2',
+          'cover.living_room_side_right_1_cover','cover.living_room_side_right_2_cover',
+          'cover.front_right_cover','cover.front_left_cover',
+          'cover.side_right_cover','cover.side_left_cover',
+          'cover.bedroom_left','cover.bedroom_right',
+          'cover.bedroom_back_1_cover','cover.bedroom_back_4_cover','cover.bedroom_back_5_cover',
+          'cover.front_guest_bedroom_front_left','cover.front_guest_bedroom_front_right',
+          'cover.front_guest_bedroom_side','cover.back_guest_bedroom_back_left',
+          'cover.back_guest_bedroom_back_right','cover.back_guest_bedroom_side',
+          'cover.back_2','cover.back_3','cover.hallway_1','cover.hallway_2'] %}
+        {% set ns = namespace(open=0) %}
+        {% for c in covers %}
+          {% set p = state_attr(c,'current_position') %}
+          {% if (p is not none and p | int(0) > 0) or (p is none and is_state(c,'open')) %}
+            {% set ns.open = ns.open + 1 %}
+          {% endif %}
+        {% endfor %}
+        {{ ns.open }}
+      attributes:
+        total: >
+          {% set covers = [
+            'cover.living_room_front_left_cover','cover.living_room_front_right',
+            'cover.living_room_side_left_1_cover','cover.living_room_side_left_2_cover_2',
+            'cover.living_room_side_right_1_cover','cover.living_room_side_right_2_cover',
+            'cover.front_right_cover','cover.front_left_cover',
+            'cover.side_right_cover','cover.side_left_cover',
+            'cover.bedroom_left','cover.bedroom_right',
+            'cover.bedroom_back_1_cover','cover.bedroom_back_4_cover','cover.bedroom_back_5_cover',
+            'cover.front_guest_bedroom_front_left','cover.front_guest_bedroom_front_right',
+            'cover.front_guest_bedroom_side','cover.back_guest_bedroom_back_left',
+            'cover.back_guest_bedroom_back_right','cover.back_guest_bedroom_side',
+            'cover.back_2','cover.back_3','cover.hallway_1','cover.hallway_2'] %}
+          {{ covers | count }}
