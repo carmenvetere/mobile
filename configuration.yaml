@@ -262,7 +262,15 @@ lovelace:
     - url: /hacsfiles/custom-sonos-card-v2/custom-sonos-card-v2.js
       type: module
     - url: /hacsfiles/custom-media-card/wall-panel-sonos-card.js
-      type: module      
+      type: module
+    # Notification Center card (Mobile Dash v2 home pop-up). resource_mode is
+    # "yaml", so the card JS must be listed here manually even though the
+    # integration is installed. If your install serves it elsewhere, change
+    # this URL to match (check Settings > Dashboards > Resources or the
+    # integration docs) — e.g. a custom_components path like
+    # /notification_center/notification-center-card.js
+    - url: /hacsfiles/notifications/notification-center-card.js
+      type: module
 
 sensor:
   - platform: filter

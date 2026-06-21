@@ -611,6 +611,18 @@ cards:
         hash: "#notifications"
         theme: Dune Mist
         show_header: false
-      - type: custom:notification-center-card
-        title: Notifications
-        show_header: true
+      # Gate the card so it is only instantiated once the Notification Center
+      # integration is installed (sensor.notification_center has a numeric
+      # state). Without this, HA tries to build custom:notification-center-card
+      # before its resource exists and shows a "configuration error". When the
+      # integration is absent the condition is false and nothing renders; the
+      # header chip that opens this pop-up is hidden in that case too.
+      - type: conditional
+        conditions:
+          - condition: numeric_state
+            entity: sensor.notification_center
+            above: -1
+        card:
+          type: custom:notification-center-card
+          title: Notifications
+          show_header: true

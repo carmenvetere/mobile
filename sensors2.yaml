@@ -911,3 +911,52 @@
         {%- else -%}
           0
         {%- endif -%}
+
+# ---------------------------------------------------------------------------
+# Per-floor "lights on" counts for the Mobile Dash v2 Lights view section
+# headers (e.g. "3 of 9 on"). Counts lights/switches that are on per floor.
+# ---------------------------------------------------------------------------
+- sensor:
+    - name: First Floor Lights On Count
+      unique_id: first_floor_lights_on_count
+      icon: mdi:lightbulb-group
+      state: >
+        {% set ents = [
+          'light.living_room_main_lights','light.living_room_floor_lamps',
+          'light.kitchen_main_lights','light.kitchen_outer_wall',
+          'light.kitchen_island_pendants','light.kitchen_window_seat_sconce',
+          'light.dining_room_main_lights','light.dining_room_table_lamps',
+          'light.dining_room_accent_lights'] %}
+        {{ ents | select('is_state','on') | list | count }} of {{ ents | count }} on
+    - name: Basement Lights On Count
+      unique_id: basement_lights_on_count
+      icon: mdi:lightbulb-group
+      state: >
+        {% set ents = [
+          'light.gym_main_lights','light.media_room_table_lamp',
+          'light.laundry_room_main_lights','light.basement_hallway_main_lights',
+          'light.media_room_main_lights','light.stairs_main_lights',
+          'light.stairs_spot_lights'] %}
+        {{ ents | select('is_state','on') | list | count }} of {{ ents | count }} on
+    - name: Second Floor Lights On Count
+      unique_id: second_floor_lights_on_count
+      icon: mdi:lightbulb-group
+      state: >
+        {% set ents = [
+          'light.upstairs_hallway_main_lights','light.office_main_lights',
+          'light.office_floor_lamp','light.eve_light_strip_a5a4',
+          'light.master_bedroom_main_lights','light.master_bedroom_closet_light',
+          'light.master_bedroom_sconces','switch.bedroom_floor_lamp_switch',
+          'light.master_bathroom_main_lights','light.master_bathroom_vanity_lights'] %}
+        {{ ents | select('is_state','on') | list | count }} of {{ ents | count }} on
+    - name: Outdoor Lights On Count
+      unique_id: outdoor_lights_on_count
+      icon: mdi:lightbulb-group
+      state: >
+        {% set ents = [
+          'light.front_porch_overhead_light','switch.transformer_zone_1',
+          'switch.transformer_zone_2','light.patio_back_porch_lights',
+          'switch.transformer_zone_3','light.omnilogic_pool_color_lights',
+          'light.driveway_sconces','switch.driveway_zone_2_2',
+          'switch.driveway_zone_1_2','switch.driveway_zone_3_2'] %}
+        {{ ents | select('is_state','on') | list | count }} of {{ ents | count }} on
