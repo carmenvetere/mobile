@@ -27,15 +27,6 @@
       name: Front Entry
       icon: mdi:light-recessed
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.front_porch_overhead_light
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
@@ -52,57 +43,6 @@
       name: Front Path
       icon: mdi:lamp
       button_type: switch
-      sub_button:
-        main:
-          - entity: switch.transformer_zone_1
-            show_state: true
-            show_icon: false
-            state_background: false
-            show_background: false
-      modules:
-        - {{ module_name }}
-      button_action:
-        tap_action:
-          action: perform-action
-          perform_action: switch.toggle
-          target:
-            entity_id: switch.transformer_zone_1
-    - type: custom:bubble-card
-      card_type: button
-      entity: switch.transformer_zone_2
-      name: Front Tree Spotlights
-      icon: mdi:light-flood-up
-      button_type: switch
-      sub_button:
-        main:
-          - entity: switch.transformer_zone_2
-            show_state: true
-            show_icon: false
-            state_background: false
-            show_background: false
-      modules:
-        - {{ module_name }}
-      button_action:
-        tap_action:
-          action: perform-action
-          perform_action: switch.toggle
-          target:
-            entity_id: switch.transformer_zone_2
-    - type: custom:bubble-card
-      card_type: button
-      entity: light.patio_back_porch_lights
-      name: Pool Door
-      icon: mdi:outdoor-lamp
-      button_type: slider
-      sub_button:
-        main:
-          - entity: light.patio_back_porch_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
@@ -119,36 +59,6 @@
       name: Pool Retaining Wall
       icon: mdi:light-flood-up
       button_type: switch
-      sub_button:
-        main:
-          - entity: switch.transformer_zone_3
-            show_state: true
-            show_icon: false
-            state_background: false
-            show_background: false
-      modules:
-        - {{ module_name }}
-      button_action:
-        tap_action:
-          action: perform-action
-          perform_action: switch.toggle
-          target:
-            entity_id: switch.transformer_zone_3
-    - type: custom:bubble-card
-      card_type: button
-      entity: light.omnilogic_pool_color_lights
-      name: Pool Lights
-      icon: mdi:pool
-      button_type: slider
-      sub_button:
-        main:
-          - entity: light.omnilogic_pool_color_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:
@@ -165,15 +75,6 @@
       name: Deck and Driveway Sconces
       icon: mdi:outdoor-lamp
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.driveway_sconces
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }}
       button_action:

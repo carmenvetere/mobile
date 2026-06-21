@@ -27,15 +27,6 @@
       name: Media Room Main Lights      
       icon: mdi:light-recessed
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.gym_main_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }} 
       button_action:
@@ -52,15 +43,6 @@
       name: Media Room Table Lamp 
       icon: mdi:floor-lamp    
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.media_room_table_lamp
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }} 
       button_action:
@@ -77,15 +59,6 @@
       name: Mud Room Main Lights 
       icon: mdi:light-recessed   
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.laundry_room_main_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }} 
       button_action:
@@ -102,15 +75,6 @@
       name: Hallway Main Lights 
       icon: mdi:light-recessed   
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.basement_hallway_main_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }} 
       button_action:
@@ -127,15 +91,6 @@
       name: Gym Main Lights 
       icon: mdi:light-recessed   
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.media_room_main_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }} 
       button_action:
@@ -152,15 +107,6 @@
       name: Basement Stairs 
       icon: mdi:light-recessed   
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.stairs_main_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }} 
       button_action:
@@ -177,15 +123,6 @@
       name: Basement Stairs Accent
       icon: mdi:spotlight-beam
       button_type: slider
-      sub_button:
-        main:
-          - entity: light.stairs_spot_lights
-            show_state: true
-            show_attribute: true
-            show_icon: false
-            state_background: false
-            show_background: false
-            attribute: brightness
       modules:
         - {{ module_name }} 
       button_action:
