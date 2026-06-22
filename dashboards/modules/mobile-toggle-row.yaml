@@ -8,7 +8,10 @@
 #   toggle_entity - switch.*/fan.* entity id (must support toggle)
 #   row_name      - display name
 # Optional vars:
-#   row_icon      - mdi icon shown at the left (e.g. mdi:fan for exhaust fans)
+#   row_icon        - mdi icon shown at the left (e.g. mdi:fan for exhaust fans)
+#   track_on_color  - toggle track colour when on (default slate; pass a red
+#                     rgba for destructive switches)
+#   confirm_text    - if set, tap shows a confirmation dialog with this text
 type: custom:button-card
 entity: {{ toggle_entity }}
 name: {{ row_name }}
@@ -18,6 +21,9 @@ show_label: false
 icon: {{ row_icon }}{% else %}show_icon: false{% endif %}
 tap_action:
   action: toggle
+{% if confirm_text is defined %}  confirmation:
+    text: {{ confirm_text }}
+{% endif %}
 state_display: |
   [[[ return entity.state === 'on' ? 'On' : 'Off'; ]]]
 styles:
@@ -67,7 +73,7 @@ custom_fields:
     [[[
       var on = entity.state === 'on';
       return '<div style="width:38px;height:22px;border-radius:999px;background:'
-        + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+        + (on ? '{{ track_on_color | default("rgba(142,177,191,0.55)") }}' : 'rgba(255,255,255,0.28)')
         + ';position:relative;transition:background .2s ease;">'
         + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
         + ';width:18px;height:18px;border-radius:50%;background:#fff;'
