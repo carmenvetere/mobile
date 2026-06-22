@@ -15,6 +15,14 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.hallway_1_battery']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -34,6 +42,14 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.hallway_2_battery_0']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -53,6 +69,14 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.bedroom_right_battery_0']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -72,6 +96,14 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.bedroom_left_battery_0']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -91,6 +123,14 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.bedroom_back_1_battery_0']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -110,6 +150,14 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.back_2_battery']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -129,6 +177,14 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.back_3_battery']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -148,6 +204,14 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.bedroom_back_4_battery_0']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -167,5 +231,13 @@
       show_background: false
       show_state: true
   rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.bedroom_back_5_battery_0']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
   modules:
   - mobile_shades_module 

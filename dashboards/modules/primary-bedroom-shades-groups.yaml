@@ -22,6 +22,14 @@
       show_background: false
       show_state: false
   rows: 1
+  styles: |
+    .bubble-range-fill { background-color: rgba(142,177,191,0.30) !important; }
+    .bubble-button-card-container { background: var(--card-background-color) !important;
+      border-radius: 16px !important; box-shadow: none !important; }
+    .bubble-icon-container { background: rgba(142,177,191,0.18) !important; }
+    .bubble-icon { color: var(--slate-bright) !important; }
+    .bubble-name { color: var(--primary-text-color) !important; font-size: 15px !important; font-weight: 600 !important; }
+    .bubble-state { color: #c3c7cc !important; }
   modules:
   - mobile_shades_module    
 - type: custom:bubble-card
@@ -47,5 +55,13 @@
       show_background: false
       show_state: false
   rows: 1
+  styles: |
+    .bubble-range-fill { background-color: rgba(142,177,191,0.30) !important; }
+    .bubble-button-card-container { background: var(--card-background-color) !important;
+      border-radius: 16px !important; box-shadow: none !important; }
+    .bubble-icon-container { background: rgba(142,177,191,0.18) !important; }
+    .bubble-icon { color: var(--slate-bright) !important; }
+    .bubble-name { color: var(--primary-text-color) !important; font-size: 15px !important; font-weight: 600 !important; }
+    .bubble-state { color: #c3c7cc !important; }
   modules:
   - mobile_shades_module 
