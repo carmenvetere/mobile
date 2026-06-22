@@ -1006,3 +1006,21 @@
             'cover.back_guest_bedroom_back_right','cover.back_guest_bedroom_side',
             'cover.back_2','cover.back_3','cover.hallway_1','cover.hallway_2'] %}
           {{ covers | count }}
+
+# ---------------------------------------------------------------------------
+# Average of the 4 climate zone current temps for the Mobile Dash v2 Climate
+# header subhead ("4 zones · avg N°").
+# ---------------------------------------------------------------------------
+- sensor:
+    - name: Climate Zones Avg Temp
+      unique_id: climate_zones_avg_temp
+      unit_of_measurement: "°"
+      icon: mdi:thermometer
+      state: >
+        {% set ts = [
+          state_attr('climate.living_room_thermostat','current_temperature'),
+          state_attr('climate.basement_thermostat','current_temperature'),
+          state_attr('climate.office_thermostat','current_temperature'),
+          state_attr('climate.master_bedroom_thermostat','current_temperature')]
+          | select('is_number') | map('float') | list %}
+        {{ ((ts | sum) / (ts | count)) | round(0) | int if ts | count > 0 else 'unknown' }}
