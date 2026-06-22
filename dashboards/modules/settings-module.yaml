@@ -361,7 +361,7 @@
         - "{{ settings_module }}"
     - type: custom:bubble-card
       card_type: button
-      entity: automation.alarm_disarm_upon_arriving_home
+      entity: automation.alarm_disarm_at_7am_or_good_morning_scene_activate
       name: Automatically Disarm at 7am
       icon: mdi:shield-lock-open
       show_state: false
@@ -373,7 +373,7 @@
         action: toggle
       card_layout: large
       sub_button:
-        - entity: automation.alarm_disarm_upon_arriving_home
+        - entity: automation.alarm_disarm_at_7am_or_good_morning_scene_activate
           show_state: true
           show_icon: false
           state_background: false
@@ -700,7 +700,7 @@
         action: toggle
       card_layout: large
       sub_button:
-        - entity: automation.outdoor_off_at_11pm
+        - entity: automation.11_00pm_turn_off_landscape_spotlights_s_th
           show_state: true
           show_icon: false
           state_background: false

@@ -1,0 +1,332 @@
+# lovelace_gen
+# ============================================================================
+#  Mobile Dash v2 · Settings body (MOBILE-ONLY, curated)
+#  Per the handoff restructure: Quick toggles (4) -> 6 Section nav rows that
+#  open bubble-card pop-ups -> Values read-outs. The full per-group lists live
+#  inside the pop-ups. The shared settings-module.yaml (wall/NSPanel flat list)
+#  is intentionally untouched by this file.
+#
+#  Bubble-card styling modules are hardcoded (mobile_settings_module /
+#  mobile_separator) since this module is mobile-only.
+# ============================================================================
+{% macro srow(entity, name, icon) %}
+    - type: custom:bubble-card
+      card_type: button
+      entity: {{ entity }}
+      name: {{ name }}
+      icon: {{ icon }}
+      show_state: false
+      scrolling_effect: false
+      button_action:
+        tap_action:
+          action: toggle
+      tap_action:
+        action: toggle
+      card_layout: large
+      sub_button:
+        - entity: {{ entity }}
+          show_state: true
+          show_icon: false
+          state_background: false
+          show_background: false
+      modules:
+        - mobile_settings_module
+{% endmacro %}
+{% macro sep(name, icon) %}
+    - type: custom:bubble-card
+      card_type: separator
+      name: {{ name }}
+      icon: {{ icon }}
+      modules:
+        - mobile_separator
+{% endmacro %}
+{% macro slider(entity, icon) %}
+    - type: custom:bubble-card
+      card_type: button
+      button_type: slider
+      entity: {{ entity }}
+      show_last_changed: false
+      show_state: false
+      scrolling_effect: false
+      icon: {{ icon }}
+      card_layout: large
+      sub_button:
+        - entity: {{ entity }}
+          show_state: true
+          show_icon: false
+          show_background: false
+      modules:
+        - mobile_settings_module
+{% endmacro %}
+{% macro staterow(entity) %}
+    - type: custom:bubble-card
+      card_type: button
+      button_type: state
+      entity: {{ entity }}
+      show_state: false
+      scrolling_effect: false
+      card_layout: large
+      sub_button:
+        - entity: {{ entity }}
+          state_background: false
+          show_last_changed: false
+          show_state: true
+          show_background: false
+      button_action:
+        tap_action:
+          action: more-info
+      modules:
+        - mobile_settings_module
+{% endmacro %}
+{% macro namerow(entity, name) %}
+    - type: custom:bubble-card
+      card_type: button
+      button_type: name
+      entity: {{ entity }}
+      name: {{ name }}
+      card_layout: large
+      show_state: false
+      scrolling_effect: false
+      sub_button:
+        - entity: {{ entity }}
+          show_state: true
+          show_attribute: false
+          show_icon: false
+          state_background: false
+          show_background: false
+      button_action:
+        tap_action:
+          action: more-info
+      modules:
+        - mobile_settings_module
+{% endmacro %}
+
+# ----------------------------------------------------------- QUICK TOGGLES
+- type: custom:bubble-card
+  card_type: separator
+  name: Quick Toggles
+  icon: mdi:gesture-tap-button
+  rows: 0.75
+  styles: &zone_sep |
+    .bubble-name { font-size: 13px !important; font-weight: 700 !important;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.6) !important; }
+    .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
+    .card-content { padding-top: 7px !important; }
+- type: vertical-stack
+  card_mod:
+    style: &flat_card |
+      :host { display: block; background: var(--card-background-color);
+        border: 1px solid rgba(255,255,255,0.06); border-radius: 16px;
+        overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
+  cards:
+    - !include [/config/dashboards/modules/mobile-toggle-row.yaml, {toggle_entity: input_boolean.guest_mode, row_name: Overnight Guests}]
+    - !include [/config/dashboards/modules/mobile-toggle-row.yaml, {toggle_entity: input_boolean.cleaners_mode, row_name: Cleaners Mode}]
+    - !include [/config/dashboards/modules/mobile-toggle-row.yaml, {toggle_entity: automation.alarm_arm_away_when_everyone_leaves, row_name: Arm Away When Empty}]
+    - !include [/config/dashboards/modules/mobile-toggle-row.yaml, {toggle_entity: switch.bayberry_off_grid_operation, row_name: Go Off Grid, track_on_color: 'rgba(224,105,91,0.65)', confirm_text: 'Are you sure you want to go off grid?'}]
+
+# --------------------------------------------------------------- SECTIONS
+- type: custom:bubble-card
+  card_type: separator
+  name: Sections
+  icon: mdi:format-list-bulleted
+  rows: 0.75
+  styles: *zone_sep
+- type: vertical-stack
+  card_mod:
+    style: *flat_card
+  cards:
+    - !include [/config/dashboards/modules/mobile-nav-row.yaml, {row_name: Home Modes, row_sub: "Party · guests · cleaners · away", row_icon: mdi:home-automation, target_hash: "#set-home-modes"}]
+    - !include [/config/dashboards/modules/mobile-nav-row.yaml, {row_name: Climate Schedules, row_sub: "4 thermostats · fresh air · filters", row_icon: mdi:fan-clock, target_hash: "#set-climate"}]
+    - !include [/config/dashboards/modules/mobile-nav-row.yaml, {row_name: Alarm Automations, row_sub: "4 rules", row_icon: mdi:shield-lock, target_hash: "#set-alarm"}]
+    - !include [/config/dashboards/modules/mobile-nav-row.yaml, {row_name: "Motion & Lights", row_sub: "9 rules", row_icon: mdi:motion-sensor, target_hash: "#set-motion-lights"}]
+    - !include [/config/dashboards/modules/mobile-nav-row.yaml, {row_name: "Energy & Grid", row_sub: "Powerwall · consumption", row_icon: mdi:transmission-tower, target_hash: "#set-energy"}]
+    - !include [/config/dashboards/modules/mobile-nav-row.yaml, {row_name: Room Schedules, row_sub: "Shades · pool · vacuum", row_icon: mdi:calendar-clock, target_hash: "#set-room-schedules"}]
+
+# ----------------------------------------------------------------- VALUES
+- type: custom:bubble-card
+  card_type: separator
+  name: Values
+  icon: mdi:gauge
+  rows: 0.75
+  styles: *zone_sep
+- type: vertical-stack
+  card_mod:
+    style: *flat_card
+  cards:
+    - type: custom:button-card
+      entity: number.bayberry_backup_reserve
+      name: Powerwall Reserve
+      icon: mdi:battery-charging-high
+      show_state: true
+      tap_action: { action: more-info }
+      state_display: |
+        [[[ return Math.round(Number(entity.state)) + '%'; ]]]
+      styles: &value_styles
+        card:
+          - background: transparent !important
+          - box-shadow: none
+          - border-radius: 0
+          - border-top: 1px solid rgba(255,255,255,0.06)
+          - padding: 13px 4px
+          - transition: none
+        grid:
+          - grid-template-areas: '"i n v"'
+          - grid-template-columns: 44px 1fr auto
+          - align-items: center
+          - column-gap: 11px
+        img_cell:
+          - grid-area: i
+          - width: 38px
+          - height: 38px
+          - border-radius: 11px
+          - background-color: "rgba(167,192,152,0.18)"
+        icon:
+          - width: 20px
+          - color: var(--sage-color)
+        name:
+          - grid-area: n
+          - justify-self: start
+          - font-size: 14px
+          - font-weight: 600
+          - color: var(--primary-text-color)
+        state:
+          - grid-area: v
+          - justify-self: end
+          - font-size: 15px
+          - font-weight: 700
+          - color: var(--sage-color)
+    - type: custom:button-card
+      entity: input_number.lower_floors_hvac_filter_hours
+      name: Lower HVAC Filter
+      icon: mdi:air-filter
+      show_state: true
+      tap_action: { action: more-info }
+      state_display: |
+        [[[ return Math.round(Number(entity.state)) + ' h'; ]]]
+      styles:
+        <<: *value_styles
+        img_cell:
+          - grid-area: i
+          - width: 38px
+          - height: 38px
+          - border-radius: 11px
+          - background-color: "rgba(224,167,94,0.18)"
+        icon:
+          - width: 20px
+          - color: "#E0A75E"
+        state:
+          - grid-area: v
+          - justify-self: end
+          - font-size: 15px
+          - font-weight: 700
+          - color: "#E0A75E"
+
+# =========================================================== POP-UP DRILL-DOWNS
+- type: vertical-stack
+  cards:
+    - type: custom:bubble-card
+      card_type: pop-up
+      name: Home Modes
+      icon: mdi:home-automation
+      hash: "#set-home-modes"
+      theme: Dune Mist
+      show_header: true
+{{ srow('input_boolean.dinner_party', 'Dinner Party', 'mdi:party-popper') }}
+{{ srow('input_boolean.guest_mode', 'Overnight Guests', 'mdi:bed') }}
+{{ srow('input_boolean.cleaners_mode', 'Cleaners Mode', 'mdi:spray-bottle') }}
+{{ srow('input_boolean.away_mode', 'Away', 'mdi:bag-suitcase') }}
+
+- type: vertical-stack
+  cards:
+    - type: custom:bubble-card
+      card_type: pop-up
+      name: Climate Schedules
+      icon: mdi:fan-clock
+      hash: "#set-climate"
+      theme: Dune Mist
+      show_header: true
+{{ sep('Thermostat Schedules', 'mdi:fan-clock') }}
+{{ srow('automation.living_room_hvac_schedule_v3', 'Living Room Thermostat Schedule', 'mdi:fan-clock') }}
+{{ srow('automation.basement_hvac_schedule', 'Basement Thermostat Schedule', 'mdi:fan-clock') }}
+{{ srow('automation.office_thermostat_schedule_v2', 'Office Thermostat Schedule', 'mdi:fan-clock') }}
+{{ srow('automation.bedroom_hvac_schedule', 'Bedroom Thermostat Schedule', 'mdi:fan-clock') }}
+{{ sep('Fresh Air Controls', 'mdi:tailwind') }}
+{{ slider('input_number.living_room_fresh_air_min_temp', 'mdi:home-thermometer-outline') }}
+{{ slider('input_number.basement_fresh_air_minimum_temp', 'mdi:home-thermometer-outline') }}
+{{ sep('Filter Maintenance', 'mdi:air-filter') }}
+{{ staterow('input_number.upper_floor_hvac_filter_hours') }}
+{{ staterow('input_number.lower_floors_hvac_filter_hours') }}
+{{ sep('Water Heater', 'mdi:water-boiler') }}
+{{ staterow('input_datetime.water_heater_last_flushed') }}
+
+- type: vertical-stack
+  cards:
+    - type: custom:bubble-card
+      card_type: pop-up
+      name: Alarm Automations
+      icon: mdi:shield-lock
+      hash: "#set-alarm"
+      theme: Dune Mist
+      show_header: true
+{{ srow('automation.alarm_arm_away_when_everyone_leaves', 'Automatically Arm Away Mode When Leaving', 'mdi:shield-lock') }}
+{{ srow('automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm', 'Automatically Arm Home Mode at 11pm', 'mdi:shield-lock') }}
+{{ srow('automation.alarm_disarm_at_7am_or_good_morning_scene_activate', 'Automatically Disarm at 7am', 'mdi:shield-lock-open') }}
+{{ srow('automation.alarm_disarm_upon_arriving_home', 'Automatically Disarm When Arrive Home', 'mdi:shield-lock-open') }}
+
+- type: vertical-stack
+  cards:
+    - type: custom:bubble-card
+      card_type: pop-up
+      name: Motion & Lights
+      icon: mdi:motion-sensor
+      hash: "#set-motion-lights"
+      theme: Dune Mist
+      show_header: true
+{{ sep('Motion', 'mdi:motion') }}
+{{ srow('automation.outdoor_motion_after_11pm_before_sunrise', 'Outdoor Lights Motion Detection - 11pm - Sunrise', 'mdi:motion') }}
+{{ srow('automation.motion_bathroom_day', 'Bathroom Lights Motion - Day', 'mdi:motion') }}
+{{ srow('automation.gym_motion_sensor', 'Gym Motion Lights', 'mdi:motion') }}
+{{ sep('Lights', 'mdi:lightbulb-auto') }}
+{{ srow('automation.evening_lights_on_lux', 'Automatically Turn Lights On In Evening', 'mdi:lightbulb-auto') }}
+{{ srow('automation.morning_lights_off_lux_over_5000_or_9am', 'Automatically Turn Lights Off in Morning', 'mdi:lightbulb-auto') }}
+{{ srow('automation.11_00_pm_good_night', 'Automatically Set Good Night at 11PM', 'mdi:lightbulb-auto') }}
+{{ srow('automation.sunset_outdoor_off', 'Automatically Turn Outdoor Lights On At Sunset', 'mdi:lightbulb-auto') }}
+{{ srow('automation.outdoor_off_at_11pm', 'Automatically Turn Off Outdoor Lights at Midnight', 'mdi:motion') }}
+{{ srow('automation.11_00pm_turn_off_landscape_spotlights_s_th', 'Automatically Turn Off Outdoor Spotlights at 11PM (Sun-Thurs)', 'mdi:motion') }}
+
+- type: vertical-stack
+  cards:
+    - type: custom:bubble-card
+      card_type: pop-up
+      name: Energy & Grid
+      icon: mdi:transmission-tower
+      hash: "#set-energy"
+      theme: Dune Mist
+      show_header: true
+{{ slider('number.bayberry_backup_reserve', 'mdi:battery-charging-high') }}
+{{ sep('Energy Consumption', 'mdi:lightning-bolt') }}
+{{ namerow('sensor.well_pump_energy', 'Well Pump Energy Consumed') }}
+{{ namerow('sensor.pool_pump_energy', 'Pool Pump Energy Consumed') }}
+{{ namerow('sensor.wall_charger_energy', 'EV Charger Energy Consumed') }}
+
+- type: vertical-stack
+  cards:
+    - type: custom:bubble-card
+      card_type: pop-up
+      name: Room Schedules
+      icon: mdi:calendar-clock
+      hash: "#set-room-schedules"
+      theme: Dune Mist
+      show_header: true
+{{ sep('Shades', 'mdi:roller-shade') }}
+{{ srow('automation.living_room_adaptive_shading', 'First Floor Shades – Schedule & Adaptive', 'mdi:roller-shade') }}
+{{ srow('automation.dining_room_adaptive_shading', 'Dining Room Adaptive Shading', 'mdi:roller-shade') }}
+{{ srow('automation.primary_bedroom_shades_schedule_adaptive', 'Primary Bedroom Shades – Schedule & Adaptive', 'mdi:roller-shade') }}
+{{ srow('automation.back_guest_bedroom_shades_schedule_adaptive', 'Back Guest Bedroom Shades – Schedule & Adaptive', 'mdi:roller-shade') }}
+{{ srow('automation.front_guest_bedroom_shades_schedule_adaptive', 'Front Guest Bedroom Shades – Schedule & Adaptive', 'mdi:roller-shade') }}
+{{ srow('automation.3_00pm_bedroom_back_shading', '3:00PM Bedroom Shades Sun Position', 'mdi:roller-shade') }}
+{{ sep('Pool', 'mdi:pool') }}
+{{ srow('automation.pool_heater_schedule', 'Pool Heater Schedule', 'mdi:heat-wave') }}
+{{ sep('Vacuum', 'mdi:vacuum') }}
+{{ srow('automation.12_00am_roborock_s8_vacuum_basement', '12:00AM Vacuum Basement Nightly', 'mdi:vacuum') }}
