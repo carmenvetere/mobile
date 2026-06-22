@@ -24,7 +24,7 @@ cards:
         show_state: false
         show_label: true
         tap_action: { action: none }
-        label: Modes, automations & maintenance
+        label: "Modes · automations · maintenance"
         styles:
           card:
             - background: transparent !important
@@ -83,5 +83,8 @@ cards:
                   - color: var(--primary-text-color)
 
       # ----------------------------------------------------- settings body
+      # Curated mobile restructure: Quick toggles -> Section nav rows (pop-up
+      # drill-downs) -> Values. The wall/NSPanel flat list still uses the
+      # shared settings-module.yaml; this file is mobile-only.
       - type: vertical-stack
-        cards: !include [/config/dashboards/modules/settings-module.yaml, {separator_module: mobile_separator, settings_module: mobile_settings_module, dashboard: mobile}]
+        cards: !include /config/dashboards/modules/mobile-settings-module.yaml
