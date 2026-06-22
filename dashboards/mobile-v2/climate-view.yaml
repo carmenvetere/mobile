@@ -21,12 +21,17 @@ cards:
     cards:
       # ---------------------------------------------------------- screen header
       - type: custom:button-card
-        icon: mdi:thermostat
+        entity: sensor.climate_zones_avg_temp
+        icon: mdi:fan
         name: Climate
         show_state: false
         show_label: true
         tap_action: { action: none }
-        label: Tap a zone to adjust
+        label: |
+          [[[
+            var t = entity ? Math.round(Number(entity.state)) : null;
+            return '4 zones · avg ' + (t != null && !isNaN(t) ? t : '–') + '°';
+          ]]]
         styles:
           card:
             - background: transparent !important
@@ -58,7 +63,7 @@ cards:
           label:
             - grid-area: l
             - justify-self: start
-            - font-size: 12px
+            - font-size: 13px
             - color: var(--secondary-text-color)
           custom_fields:
             back:
@@ -148,27 +153,35 @@ cards:
                 - width: 20px
                 - color: var(--slate-color)
           - type: custom:button-card
-            entity: sensor.first_floor_air_quality_pm2_5
-            name: Air Quality
-            icon: mdi:leaf
+            entity: switch.utility_room_ventilation_damper
+            name: Fresh Air
             show_state: true
-            tap_action: { action: more-info }
+            show_icon: true
+            tap_action: { action: toggle }
+            icon: |
+              [[[ return entity.state === 'on' ? 'mdi:window-open-variant' : 'mdi:window-closed-variant'; ]]]
             state_display: |
-              [[[
-                var v = parseFloat(entity.state);
-                if (isNaN(v)) return entity.state;
-                return v < 12 ? 'Good' : (v < 35 ? 'Fair' : 'Poor');
-              ]]]
+              [[[ return entity.state === 'on' ? 'Open' : 'Closed'; ]]]
             styles:
               <<: *stat_styles
+              card:
+                - padding: 13px 8px
+                - border-radius: 16px
+                - background: var(--background-color-2) !important
+                - --ha-card-background: var(--background-color-2)
+                - box-shadow: none
+                - transition: none
+                - cursor: pointer
               img_cell:
                 - width: 40px
                 - height: 40px
                 - border-radius: 11px
-                - background-color: "rgba(139,166,128,0.18)"
+                - background-color: |
+                    [[[ return entity.state === 'on' ? 'rgba(167,192,152,0.18)' : 'rgba(154,160,168,0.15)'; ]]]
               icon:
                 - width: 20px
-                - color: var(--sage-color)
+                - color: |
+                    [[[ return entity.state === 'on' ? 'var(--sage-color)' : '#9aa0a8'; ]]]
 
       # ----------------------------------------- air-quality / fresh-air alerts
       - type: custom:mushroom-chips-card
@@ -332,12 +345,49 @@ cards:
                   - climate_entity: climate.basement_thermostat
                     thermostat_name: Hallway Thermostat
                     module_name: mobile_climate
-              - !include
-                  - /config/dashboards/modules/mobile-priority-row.yaml
-                  - switch_entity: switch.basement_thermostat_family_room_priority
-                    row_name: Media Room Priority
-                    temp_sensor: sensor.family_room_air_sensor_01_temperature_sensor
-                    humidity_sensor: sensor.family_room_air_sensor_01_humidity_sensor
+              # ----- Room Priority sub-panel
+              - type: vertical-stack
+                card_mod:
+                  style: &subpanel_mod |
+                    :host { display: block; background: rgba(0,0,0,0.18);
+                      border-radius: 13px; padding: 2px 12px 8px; margin: 6px 2px 4px; }
+                cards:
+                  - type: custom:button-card
+                    name: ROOM PRIORITY
+                    show_icon: false
+                    tap_action: { action: none }
+                    styles: &subpanel_hdr
+                      card:
+                        - background: transparent !important
+                        - box-shadow: none
+                        - padding: 10px 2px 2px
+                      grid:
+                        - grid-template-areas: '"n"'
+                      name:
+                        - justify-self: start
+                        - font-size: 11px
+                        - font-weight: 700
+                        - letter-spacing: 0.05em
+                        - color: "#9aa0a8"
+                  - !include
+                      - /config/dashboards/modules/mobile-toggle-row.yaml
+                      - toggle_entity: switch.basement_thermostat_family_room_priority
+                        row_name: Media Room
+              # ----- Exhaust Fan sub-panel
+              - type: vertical-stack
+                card_mod:
+                  style: *subpanel_mod
+                cards:
+                  - type: custom:button-card
+                    name: EXHAUST FAN
+                    show_icon: false
+                    tap_action: { action: none }
+                    styles: *subpanel_hdr
+                  - !include
+                      - /config/dashboards/modules/mobile-toggle-row.yaml
+                      - toggle_entity: switch.basement_bathroom_exhaust_fan
+                        row_name: Basement Bathroom
+                        row_icon: mdi:fan
 
       # --------------------------------------------- zone: Office & Bedrooms
       - type: custom:expander-card
@@ -365,24 +415,28 @@ cards:
                   - climate_entity: climate.office_thermostat
                     thermostat_name: Office Thermostat
                     module_name: mobile_climate
-              - !include
-                  - /config/dashboards/modules/mobile-priority-row.yaml
-                  - switch_entity: switch.office_thermostat_front_guest_bedroom_priority
-                    row_name: Front Guest Room Priority
-                    temp_sensor: sensor.front_guest_bedroom_air_sensor_02_temperature_sensor
-                    humidity_sensor: sensor.front_guest_bedroom_air_sensor_02_humidity_sensor
-              - !include
-                  - /config/dashboards/modules/mobile-priority-row.yaml
-                  - switch_entity: switch.office_thermostat_guest_bedroom_priority
-                    row_name: Back Guest Room Priority
-                    temp_sensor: sensor.guest_bedroom_air_sensor_01_temperature_sensor
-                    humidity_sensor: sensor.guest_bedroom_air_sensor_01_humidity_sensor
-              - !include
-                  - /config/dashboards/modules/mobile-priority-row.yaml
-                  - switch_entity: switch.office_thermostat_office_priority
-                    row_name: Office Priority
-                    temp_sensor: sensor.office_thermostat_homekit_current_temperature
-                    humidity_sensor: sensor.office_thermostat_homekit_current_humidity
+              # ----- Room Priority sub-panel
+              - type: vertical-stack
+                card_mod:
+                  style: *subpanel_mod
+                cards:
+                  - type: custom:button-card
+                    name: ROOM PRIORITY
+                    show_icon: false
+                    tap_action: { action: none }
+                    styles: *subpanel_hdr
+                  - !include
+                      - /config/dashboards/modules/mobile-toggle-row.yaml
+                      - toggle_entity: switch.office_thermostat_front_guest_bedroom_priority
+                        row_name: Front Guest Room
+                  - !include
+                      - /config/dashboards/modules/mobile-toggle-row.yaml
+                      - toggle_entity: switch.office_thermostat_guest_bedroom_priority
+                        row_name: Back Guest Room
+                  - !include
+                      - /config/dashboards/modules/mobile-toggle-row.yaml
+                      - toggle_entity: switch.office_thermostat_office_priority
+                        row_name: Office
 
       # ------------------------------------------------- zone: Primary Bed
       - type: custom:expander-card
@@ -422,9 +476,32 @@ cards:
                   - climate_entity: climate.master_bedroom_thermostat
                     thermostat_name: Bedroom Thermostat
                     module_name: mobile_climate
-              - !include
-                  - /config/dashboards/modules/mobile-priority-row.yaml
-                  - switch_entity: switch.master_bedroom_thermostat_primary_bathroom_priority
-                    row_name: Bathroom Priority
-                    temp_sensor: sensor.primary_bathroom_air_sensor_01_temperature_sensor
-                    humidity_sensor: sensor.primary_bathroom_air_sensor_01_humidity_sensor
+              # ----- Room Priority sub-panel
+              - type: vertical-stack
+                card_mod:
+                  style: *subpanel_mod
+                cards:
+                  - type: custom:button-card
+                    name: ROOM PRIORITY
+                    show_icon: false
+                    tap_action: { action: none }
+                    styles: *subpanel_hdr
+                  - !include
+                      - /config/dashboards/modules/mobile-toggle-row.yaml
+                      - toggle_entity: switch.master_bedroom_thermostat_primary_bathroom_priority
+                        row_name: Bathroom
+              # ----- Exhaust Fan sub-panel
+              - type: vertical-stack
+                card_mod:
+                  style: *subpanel_mod
+                cards:
+                  - type: custom:button-card
+                    name: EXHAUST FAN
+                    show_icon: false
+                    tap_action: { action: none }
+                    styles: *subpanel_hdr
+                  - !include
+                      - /config/dashboards/modules/mobile-toggle-row.yaml
+                      - toggle_entity: switch.primary_bathroom_exhaust_fan
+                        row_name: Primary Bathroom
+                        row_icon: mdi:fan

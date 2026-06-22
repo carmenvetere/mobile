@@ -21,12 +21,16 @@ cards:
     cards:
       # ---------------------------------------------------------- screen header
       - type: custom:button-card
+        entity: sensor.shades_open_count
         icon: mdi:roller-shade
         name: Shades
-        show_state: false
+        show_state: true
         show_label: true
         tap_action: { action: none }
-        label: Tap a room to expand
+        state_display: |
+          [[[ return entity.state + ' open'; ]]]
+        label: |
+          [[[ return (entity.attributes.total || '0') + ' shades ·'; ]]]
         styles:
           card:
             - background: transparent !important
@@ -35,8 +39,8 @@ cards:
             - transition: none
             - padding: 4px 2px 6px
           grid:
-            - grid-template-areas: '"back i n closeall" "back i l closeall"'
-            - grid-template-columns: 46px 54px 1fr auto
+            - grid-template-areas: '"back i n n closeall" "back i l s closeall"'
+            - grid-template-columns: 46px 54px auto 1fr auto
             - grid-template-rows: auto auto
             - align-items: center
             - column-gap: 8px
@@ -55,16 +59,24 @@ cards:
             - font-size: 22px
             - font-weight: 700
             - color: var(--primary-text-color)
+          state:
+            - grid-area: s
+            - justify-self: start
+            - font-size: 13px
+            - font-weight: 700
+            - color: var(--slate-bright)
           label:
             - grid-area: l
             - justify-self: start
-            - font-size: 12px
+            - font-size: 13px
             - color: var(--secondary-text-color)
           custom_fields:
             back:
               - grid-area: back
             closeall:
               - grid-area: closeall
+              - justify-self: end
+              - min-width: max-content
         custom_fields:
           back:
             card:
@@ -88,7 +100,7 @@ cards:
           closeall:
             card:
               type: custom:button-card
-              icon: mdi:arrow-down-box
+              icon: mdi:arrow-collapse-vertical
               name: Close All
               show_icon: true
               show_name: true
@@ -104,8 +116,8 @@ cards:
                     - cover.back_guest_bedroom_shades
               styles:
                 card:
-                  - background: var(--background-color-2) !important
-                  - --ha-card-background: var(--background-color-2)
+                  - background: var(--card-background-color) !important
+                  - --ha-card-background: var(--card-background-color)
                   - box-shadow: none
                   - transition: none
                   - height: 40px
@@ -184,15 +196,15 @@ cards:
         title-card-clickable: true
         card_mod:
           style: &room_exp |
-            ha-card {
-              background: var(--card-background-color) !important;
-              --ha-card-background: var(--card-background-color);
-              border: 1px solid rgba(255,255,255,0.06) !important;
-              border-radius: 18px !important;
-              box-shadow: none !important;
-              margin: 0 2px 9px !important;
-              padding: 2px 8px !important;
+            :host {
+              display: block;
+              background: var(--card-background-color);
+              border: 1px solid rgba(255,255,255,0.06);
+              border-radius: 18px;
+              overflow: hidden;
+              margin: 0 2px 9px;
             }
+            ha-card { background: transparent !important; box-shadow: none !important; }
         title-card:
           type: custom:bubble-card
           card_type: separator
