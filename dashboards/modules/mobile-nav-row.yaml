@@ -1,0 +1,61 @@
+# lovelace_gen
+#
+# Settings "Section" navigation row for Mobile Dash v2: rounded icon tile +
+# name + sub-label + chevron. Tapping navigates to a bubble-card pop-up hash.
+#
+# Required vars:
+#   row_name    - section title
+#   row_sub     - secondary line (e.g. "9 rules")
+#   row_icon    - mdi icon
+#   target_hash - pop-up hash to open (e.g. "#set-alarm")
+type: custom:button-card
+name: {{ row_name }}
+label: {{ row_sub }}
+icon: {{ row_icon }}
+show_label: true
+tap_action:
+  action: navigate
+  navigation_path: "{{ target_hash }}"
+styles:
+  card:
+    - background: transparent !important
+    - --ha-card-background: transparent
+    - box-shadow: none
+    - border-radius: 0
+    - border-top: 1px solid rgba(255,255,255,0.06)
+    - padding: 13px 4px
+    - transition: none
+    - cursor: pointer
+  grid:
+    - grid-template-areas: '"i n chev" "i l chev"'
+    - grid-template-columns: 44px 1fr auto
+    - grid-template-rows: auto auto
+    - align-items: center
+    - column-gap: 11px
+  img_cell:
+    - grid-area: i
+    - width: 38px
+    - height: 38px
+    - border-radius: 11px
+    - background-color: "rgba(142,177,191,0.18)"
+  icon:
+    - width: 20px
+    - color: var(--slate-bright)
+  name:
+    - grid-area: n
+    - justify-self: start
+    - font-size: 14px
+    - font-weight: 600
+    - color: var(--primary-text-color)
+  label:
+    - grid-area: l
+    - justify-self: start
+    - font-size: 11px
+    - color: var(--secondary-text-color)
+  custom_fields:
+    chev:
+      - grid-area: chev
+      - justify-self: end
+custom_fields:
+  chev: |
+    [[[ return '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:#9aa0a8;"></ha-icon>'; ]]]
