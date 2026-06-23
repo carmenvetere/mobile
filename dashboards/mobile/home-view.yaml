@@ -512,22 +512,22 @@ cards:
       - type: custom:bubble-card
         card_type: pop-up
         name: Notifications
-        icon: mdi:bell-alert
-        hash: "#notifications-chip"
-        button_type: separator
-        show_header: true
-        popup_mode: centered
-        bg_color: var(--ha-card-background)  
-        styles: |
-          .bubble-name {
-            font-size: 16px !important;
-              }
-          .bubble-button-card-container {
-            margin: 2px 10px 2px 10px !important;
-            background-color: var(--ha-card-background) !important;
-            }
-          .bubble-line {
-            color: var(--ha-card-background) !important;
-            }
-      - type: vertical-stack
-        cards: !include [/config/dashboards/modules/notifications.yaml, {module_name: notifications_module}]    
+        icon: mdi:bell-badge
+        hash: "#notifications"
+        theme: Dune Mist
+        show_header: false
+      # Gate the card so it is only instantiated once the Notification Center
+      # integration is installed (sensor.notification_center has a numeric
+      # state). Without this, HA tries to build custom:notification-center-card
+      # before its resource exists and shows a "configuration error". When the
+      # integration is absent the condition is false and nothing renders; the
+      # header chip that opens this pop-up is hidden in that case too.
+      - type: conditional
+        conditions:
+          - condition: numeric_state
+            entity: sensor.notification_center
+            above: -1
+        card:
+          type: custom:notification-center-card
+          title: Notifications
+          show_header: true
