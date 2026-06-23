@@ -35,7 +35,7 @@ cards:
           entity: sensor.bayberry_tempest_temperature
           tap_action:
             action: navigate
-            navigation_path: /mobile-dash-v2/weather
+            navigation_path: /mobile/weather
           show_icon: false
           show_name: true
           show_state: true
