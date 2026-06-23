@@ -94,7 +94,8 @@ cards:
                     - align-items: center
                     - column-gap: 5px
                   icon:
-                    - width: 16px
+                    - width: 22px
+                    - height: 22px
                     - color: |
                         [[[ var p = states['sensor.notification_center_priority'];
                             return (p && p.attributes.color) || '#7295B2'; ]]]
