@@ -1,0 +1,151 @@
+timer_progress:
+    name: "Timer Progress Bar"
+    version: "1.4"
+    creator: "Florian Kohn"
+    link: "https://github.com/Clooos/Bubble-Card/discussions/1655"
+
+    supported:
+        - button
+
+    description: |
+        A progress bar for timers.
+        Turn the background of a button into a progress bar responsive to the timer.
+        
+        <br><br>
+        <code-block><pre>
+        timer_progress: 
+            inverted: YOUR_VALUE
+        </pre></code-block>
+
+    code: |
+        .bubble-content-container{
+          --timer-progress-opacity: 1;
+          --timer-progress-bg: var(--bubble-button-accent-color, var(--bubble-accent-color, var(--bubble-default-color)));
+        }
+        
+        .bubble-content-container:before{
+          content: "";
+          width: 100%;
+          height: 100%;
+          opacity: var(--timer-progress-opacity);
+          position: absolute;
+          left: -100%;
+          background-color: var(--timer-progress-bg);
+          transition: transform 1s, opacity 0.5s, background-color 1s;
+          transform: translateX(var(--timer-progress));
+          pointer-events: none;
+        }
+        
+        ${(() => {
+          const timer_entity = this.config.timer_progress?.timer_entity || entity;
+          const state = hass.states[timer_entity].state;
+          const timer = hass.states[timer_entity].attributes;
+          const start_color = this.config.timer_progress?.startColor || "primary";
+          const end_color = this.config.timer_progress?.endColor || "primary";
+          const invert = this.config.timer_progress?.inverted;
+        
+          function hexToRgb(h){return['0x'+h[1]+h[2]|0,'0x'+h[3]+h[4]|0,'0x'+h[5]+h[6]|0, 1]}
+          function strToRgb(s){
+            return s.replace(/^rgba?\(|\s+|\)$/g, '')
+                  .split(',') // splits them at ","
+                  .map(string => parseFloat(string));
+          }
+          let startColor;
+          let themeStartColor = window.getComputedStyle(card).getPropertyValue(`--${start_color}-color`);
+          if (themeStartColor !== "") {
+            startColor = hexToRgb(themeStartColor)
+          } else {
+            startColor = strToRgb(start_color)
+          };
+          let endColor;
+          let themeEndColor = window.getComputedStyle(card).getPropertyValue(`--${end_color}-color`);
+          if (themeEndColor !== "") {
+            endColor = hexToRgb(themeEndColor);
+          } else {
+            endColor = strToRgb(end_color);
+          }
+        
+          function setRemainingText(text) {
+            card.querySelector(".timer-progress-remaining")?.remove();
+            const remContainer = document.createElement('span');
+            remContainer.className = 'timer-progress-remaining';
+            remContainer.innerText = text;
+            card.querySelector(".bubble-state").appendChild(remContainer);
+          }
+          
+          function computeColor(progress){
+            const percentFade = progress/100;
+            
+            let diffRed = endColor[0] - startColor[0];
+            let diffGreen = endColor[1] - startColor[1];
+            let diffBlue = endColor[2] - startColor[2];
+            let diffAlpha = endColor[3] - startColor[3];
+            
+            diffRed = Math.floor((diffRed * percentFade) + startColor[0]);
+            diffGreen = Math.floor((diffGreen * percentFade) + startColor[1]);
+            diffBlue = Math.floor((diffBlue * percentFade) + startColor[2]);
+            diffAlpha = (diffAlpha * percentFade) + startColor[3];
+            return `rgba(${diffRed}, ${diffGreen}, ${diffBlue}, ${diffAlpha})`;
+          }
+        
+          const duration = timer.duration.split(":");
+          const dur_secs = parseInt(duration[0]) * 60 * 60 + parseInt(duration[1]) * 60 + parseInt(duration[2]);
+          function update(){
+            const rem_secs = Math.floor((Date.parse(timer.finishes_at)-Date.now()) / 1000);
+            const completed = (rem_secs/dur_secs).toFixed(2)*100;
+            
+            const rem_hours = Math.floor(rem_secs/3600).toString().padStart(2, "0");
+            const rem_minutes = Math.floor((rem_secs%3600)/60).toString().padStart(2, "0");
+            const rem_seconds = (rem_secs%60).toString().padStart(2, "0");
+            const rem_string = ` • ${rem_hours}:${rem_minutes}:${rem_seconds}`;
+            setRemainingText(rem_string);
+        
+            const completedAdjusted = invert?completed:100-completed;
+            card.querySelector(".bubble-content-container").style.setProperty("--timer-progress", `${completedAdjusted}%`);
+            card.querySelector(".bubble-content-container").style.setProperty("--timer-progress-bg", computeColor(completedAdjusted));
+          }
+        
+          if(state !== "active" && card.dataset.timer_progress_interval){
+            clearInterval(card.dataset.timer_progress_interval);
+            card.removeAttribute('data-timer_progress_interval');
+            card.removeAttribute('data-timer_progress_duration');
+            card.querySelector(".bubble-content-container").style.setProperty("--timer-progress-opacity",  "0");
+            setRemainingText("");
+          }
+          if(state === "active" && !card.dataset.timer_progress_interval){
+          card.querySelector(".bubble-content-container").style.setProperty("--timer-progress-opacity",  "1");
+            card.dataset.timer_progress_interval = setInterval(update, 1000);
+            card.dataset.timer_progress_duration = timer.duration;
+          }
+          if(state === "active") {
+            if(card.dataset.timer_progress_duration !== timer.duration){
+              clearInterval(card.dataset.timer_progress_interval);
+              card.dataset.timer_progress_interval = setInterval(update, 1000);
+            }
+            update();
+          }
+        })()}
+
+    editor:
+      - name: inverted
+        label: Invert Progress
+        selector:
+          boolean: {}
+      - name: startColor
+        label: Progress Start Color
+        selector:
+          ui_color:
+            default_color: primary
+            include_none: false
+      - name: endColor
+        label: Progress End Color
+        selector:
+          ui_color:
+            default_color: primary
+            include_none: false
+      - name: timer_entity
+        label: Target Timer
+        selector:
+          entity:
+            filter:
+              domain: timer

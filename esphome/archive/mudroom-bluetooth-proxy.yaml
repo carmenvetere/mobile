@@ -1,0 +1,22 @@
+esphome:
+  name: mudroom-bluetooth-proxy
+  friendly_name: Mudroom Bluetooth Proxy
+  min_version: 2024.11.0
+  name_add_mac_suffix: false
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+# Allow Over-The-Air updates
+ota:
+- platform: esphome
+
+wifi:

@@ -1,0 +1,38 @@
+pop-up-module:
+  name: Pop Up Module
+  version: '1.0'
+  creator: ''
+  description: ''
+  code: |-
+    #root:not(.editor){
+      position: fixed;
+      top: 50% !important;
+      transform: translate(0, -50%) !important;
+      vertical-align: center !important;
+      height: 70vh !important;
+      --desktop-width: 60vw !important;
+      width: 99%;
+    }
+    .bubble-pop-up-container{
+      padding: 20px !important;
+      mask-image: none !important;
+    }
+    .bubble-pop-up-background{
+      border-radius: 20px !important;
+      background-color: var(--background-color) !important;
+      opacity: 1 !important;
+    }
+    .bubble-backdrop{
+      transition-delay: 0 !important;
+      transition: opacity 0.2s !important;
+      background-color: null !important;
+    }
+    .is-popup-closed { 
+      opacity: 0;
+      transition: opacity 0.4s !important;
+    }
+    .is-popup-opened, .is-popup-closed.editor {
+      opacity: 1;
+      transition: opacity 0.2s !important;
+    }
+  editor: ''

@@ -1,0 +1,23 @@
+wall_panel_separator:
+  name: Wall Panel Separator
+  version: '1.0'
+  creator: ''
+  description: ''
+  code: |2-
+          .bubble-name {
+            font-size: 24px !important;  /* title */
+            font-weight: bold !important;
+          }
+          .bubble-sub-button 
+          {
+            font-size: 20px !important;
+            font-weight: 700 !important;
+          }
+          .bubble-line {
+            background: var(--primary-text-color);
+            opacity: 0.1;
+          }
+          .card-content {
+            padding-top: 5px !important;
+          }
+  editor: ''

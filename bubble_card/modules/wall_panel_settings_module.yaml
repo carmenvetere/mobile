@@ -1,0 +1,48 @@
+wall_panel_settings_module:
+  name: Wall Panel Settings Module
+  version: '1.0'
+  creator: ''
+  supported:
+    - button
+    - climate
+    - cover
+    - horizontal-buttons-stack
+    - media-player
+    - pop-up
+    - select
+    - separator
+    - sub-buttons
+  description: ''
+  code: |2-
+        .bubble-button-card-container {
+          border-radius: 30px !important;
+          margin-left: 20px !important;
+          margin-right: 10px !important;
+          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+          min-height: 80px !important;
+          max-width: 440px !important;
+          background: var(--background-color) !important;
+          }
+      .bubble-name { 
+        font-size: 22px !important;
+        line-height: 1.1 !important;
+        text-align: left !important;
+        } 
+
+      .bubble-button-background {
+        background-color: ${state === 'on' ? 'var(--accent-color)' : 'var(--background-color)'} !important;
+        }   
+        
+      .bubble-sub-button { 
+       font-size: 20px !important;
+       margin-right: 15px;
+       font-weight: bold; 
+       }
+      .bubble-icon-container {
+       background: transparent !important;
+       }
+      .bubble-icon {
+       color: var(--text-color) !important;
+       opacity: 1 !important;
+       }
+  editor: ''

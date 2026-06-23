@@ -1,0 +1,48 @@
+mobile_settings_module:
+  name: Mobile Settings Module
+  version: '1.0'
+  creator: ''
+  supported:
+    - button
+    - climate
+    - cover
+    - horizontal-buttons-stack
+    - media-player
+    - pop-up
+    - select
+    - separator
+    - sub-buttons
+  description: ''
+  code: |2-
+      ha-card {
+        bubble-main-background-color: var(--background-color-2) !important;
+        border-radius: 30px !important;
+        margin: 2px 5px 2px 5px !important;
+      }
+      
+      .bubble-button-card-container {
+        border-radius: 30px !important;
+        margin: 2px 5px 2px 5px !important;
+        background-color: ${state === 'on' ? 'var(--accent-color)': 'var(--background-color-2)'} !important;
+        opacity: 1 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+        }
+      
+      .bubble-name { 
+        font-size: 16px !important;
+        text-align: left !important;
+        } 
+        
+      .bubble-sub-button { 
+       font-size: 14px !important; 
+       font-weight: bold; 
+       margin-right: 10px;
+       }
+      .bubble-icon-container {
+       background: transparent !important;
+       }
+      .bubble-icon {
+       opacity: 1 !important;
+       color: var(--text-color) !important;
+       }
+  editor: ''

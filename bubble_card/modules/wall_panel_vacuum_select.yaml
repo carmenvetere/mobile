@@ -1,0 +1,73 @@
+wall_panel_vacuum_select:
+  name: Wall Panel Vacuum Select
+  version: '1.0'
+  creator: ''
+  supported:
+    - button
+    - climate
+    - cover
+    - horizontal-buttons-stack
+    - media-player
+    - pop-up
+    - select
+    - separator
+    - sub-buttons
+  description: ''
+  code: |2-
+        ha-card {
+          width: 310px !important;
+          height: 70px !important;
+          background: transparent !important;
+          box-shadow: none !important;
+        }
+        
+        :host {
+          width: 310px !important;
+          height: 70px !important;
+        }
+        
+        .bubble-select-card-container {
+          border-radius: 20px !important;
+    #      margin: 2px 10px 2px 10px !important;
+          background-color: var(--ha-card-background) !important;
+          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+          height: 70px !important;
+          max-width: 320px !important;
+          }
+
+        .bubble-select-background {
+          background-color: var(--ha-card-background) !important;
+          } 
+
+        .bubble-name {
+          font-size: 22px !important;
+          text-align: left !important;
+          color: var(--secondary-text-color) !important;
+          line-height: 1.1;
+            }
+       
+        .bubble-sub-button { 
+          font-size: 20px !important;
+          font-weight: bold; 
+          color: var(--secondary-text-color) !important;
+          }
+        
+        .bubble-state {
+          font-size: 20px !important;
+          font-weight: bold !important;
+          text-align: left !important;
+          text-transform: capitalize;
+          color: var(--secondary-text-color) !important;
+            }
+
+        .bubble-icon {
+          opacity: 1 !important;
+          color: var(--secondary-text-color) !important;
+          --mdc-icon-size: 36px !important;
+          }
+
+        .bubble-icon-container {
+          background-color: transparent !important;
+          margin-left: 20px !important;
+          }
+  editor: ''

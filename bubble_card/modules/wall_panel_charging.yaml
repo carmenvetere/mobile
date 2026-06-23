@@ -1,0 +1,54 @@
+wall_panel_charging:
+  name: Wall Panel Charging
+  version: '1.0'
+  creator: ''
+  description: ''
+  code: |2-
+        .bubble-button-card-container {
+          border-radius: 30px !important;
+          margin: 2px 20px 2px 10px !important;
+          background-color: var(--background-color-2) !important;
+          max-width: 90% !important;
+          }
+       
+        .bubble-sub-button { 
+          font-size: 22px !important;
+          font-weight: bold; 
+          color: ${state === 'on' ? 'var(--secondary-text-color)' : 'var(--text-color)'} !important;
+          }
+        
+        .bubble-state {
+          font-size: 20px !important;
+          font-weight: bold !important;
+          text-align: left !important;
+            }
+        .bubble-sub-button-slider {
+          margin-left: 20px;
+          margin-right: 20px;
+          margin-bottom: 20px;      
+          }
+
+        .bubble-range-fill {
+          background: var(--accent-color-2) !important;
+          }
+
+        .bubble-range-value {
+          font-size: 0px !important;
+          }
+
+        .bubble-range-slider {
+          background: var(--background-color-2) !important;
+          }
+          
+        .bubble-icon {
+          opacity: 1 !important;
+          color: var(--secondary-text-color) !important;
+          --mdc-icon-size: 36px !important;
+          }
+
+        .bubble-icon-container {
+          background-color: transparent !important;
+          margin-left: 20px !important;
+
+          }
+  editor: ''

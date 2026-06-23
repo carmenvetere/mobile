@@ -1,0 +1,51 @@
+mobile_lights_scenes:
+  name: Mobile Lights Scenes Module
+  version: '1.0'
+  creator: ''
+  supported:
+    - button
+    - select
+  description: ''
+  code: |-
+    ha-card {t;
+      bubble-main-background-color: var(--background-color-2) !important;
+      border-radius: 30px !important;
+      margin: 2px 5px 2px 5px !important;
+      bubble-color-on: var(--secondary-text-color) !important;
+      bubble-color-off: var(--secondary-text-color) !important;
+    }
+
+    .bubble-button-card-container {
+      border-radius: 30px !important;
+      margin: 2px 5px 2px 5px !important;
+      background-color: ${state === 'on' ? 'var(--ha-card-background)' : 'var(--background-color-2)'} !important;
+      opacity: 1 !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+      }
+
+      .bubble-button-background {
+        background-color: ${state === 'on' ? 'var(--ha-card-background)' : 'var(--background-color-2)'} !important;
+      }
+
+    .bubble-name {
+      font-size: 16px !important;
+      text-align: left !important;
+      color: ${state === 'on' ? 'var(--primary-text-color)' : 'var(--primary-text-color)'} !important;
+        }
+            
+    .bubble-sub-button {
+      font-size: 14px !important;
+      font-weight: bold; 
+      background: transparent !important;
+      }
+            
+    .bubble-icon {
+      color: ${state === 'on' ? 'var(--primary-text-color)' : 'var(--primary-text-color)'} !important;
+      opacity: 1 !important;
+      }
+
+    .bubble-icon-container {
+      background-color: transparent !important;
+      opacity: 1 !important;
+      }
+  editor: ''
