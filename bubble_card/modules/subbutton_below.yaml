@@ -1,0 +1,69 @@
+subbutton_below:
+    name: "Sub-button below"
+    version: "v2025.10.01"
+    creator: "MrBearPresident"
+    link: "https://github.com/Clooos/Bubble-Card/discussions/1291"
+
+    supported:
+        - button
+        - calendar
+        - climate
+        - cover
+        - media-player
+        - select
+        - separator
+
+    description: |
+        This module adds all the necessary css to move the subbuttons below and make full use of the witdh. In meantime give the main feature and title the room to use that witdh. Only applicable when multirow sections are used.
+        <br><br>
+        <code-block><pre>
+        subbutton_below: 
+            # Your configuration here
+        </pre></code-block>
+
+    code: |
+        :host{
+          --row-size-copy: var(--row-size,1);
+        }
+        
+        .bubble-button-container{
+          --row-size-copy: var(--row-size,1);
+        }
+        
+        .large .bubble-wrapper {
+          position: relative;
+          display: grid;
+          grid-template-areas:
+          'i n a' 'b b b' !important;
+          grid-template-columns: auto 1fr auto;
+          grid-template-rows: var(--row-height,56px) 1fr;
+          justify-self: start;
+          justify-items: start;
+          align-self: center;
+          align-items: center;
+          width: 100%;
+          gap: 0px;
+        }
+        .large .bubble-content-container {
+          justify-content: flex-start;
+          grid-area: n;
+          overflow: hidden;
+          max-width: calc(100% - 2 * var(--gap-to-edge,7px));
+        }
+        .large .bubble-sub-button-container {
+          --row-size: calc( var(--row-size-copy) - 1);
+          max-width: calc(100% - 20px);
+          max-height: calc(100% - 20px);
+          grid-area: b;
+          justify-self: center;
+          align-self: center;
+          justify-content: center;
+          align-content: start;
+          justify-items: center;
+          margin: 0;
+          left: 0;
+          right: 0;
+        }
+        .large .bubble-buttons-container{
+          grid-area: a;
+        }

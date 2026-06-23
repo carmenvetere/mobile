@@ -1,0 +1,68 @@
+mobile_shades_module:
+  name: Mobile Shades Module
+  version: '1.0'
+  creator: ''
+  supported:
+    - button
+    - climate
+    - cover
+    - horizontal-buttons-stack
+    - media-player
+    - pop-up
+    - select
+    - separator
+    - sub-buttons
+  description: ''
+  code: |2-
+        .bubble-button-card-container {
+          background-color: var(--background-color-2) !important;
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+          }
+
+        .bubble-button-background {
+          background-color: ${state === 'open' ? 'var(--ha-card-background)' : 'var(--background-color-2)'} !important;
+          } 
+      
+      .bubble-name {
+          font-size: 16px !important; text-align: left !important;
+        }
+      .bubble-state {
+          text-align: left !important;
+          font-size: 14px !important;
+          }
+      .bubble-icon-container {
+        background: transparent !important;
+        }
+      .bubble-icon {
+        --mdc-icon-size: 36px !important;
+        }
+      .bubble-sub-button {
+        background: transparent !important;
+        font-size: 14px !important;
+        }
+      .bubble-sub-button-icon {
+        --mdc-icon-size: 30px !important;
+        }
+      .bubble-cover-button-icon {
+        --mdc-icon-size: 30px !important;
+      }
+      .bubble-state {
+        visibility: hidden;
+        position: relative;
+      }
+      .bubble-state::before {
+        visibility: visible;
+        position: absolute;
+        left: 0;
+        top: 0;
+        content: "${(() => {
+          const e = hass.states[this.config.entity];
+          if (!e) return '';
+          const pos = e.attributes.current_position;
+          if (e.state === 'closed' || pos === 0) return 'Closed';
+          if (pos === 100 || e.state === 'open' && pos === undefined) return 'Open';
+          if (pos === undefined || pos === null) return '';
+          return pos + '% open';
+        })()}";
+      }
+  editor: ''

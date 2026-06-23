@@ -1,0 +1,283 @@
+blueprint:
+  name: 'Aivi: Generic activity — progress + ETA (sensors)
+
+    '
+  description: 'Updates an Aivi Live Activity from Home Assistant sensors using the
+    Generic template.
+
+
+    See the [docs](https://docs.getaivi.app/templates/#generic-template) for more
+    info about the template.
+
+    '
+  domain: automation
+  input:
+    slug:
+      name: Activity slug
+      description: The slug of the activity
+    state:
+      name: Aivi activity state
+      description: The sensor tells Aivi whether the activity is ongoing or not.
+      selector:
+        entity:
+          filter:
+          - domain:
+            - binary_sensor
+          reorder: false
+          multiple: false
+    progress:
+      name: Progress
+      description: Progress of the activity (0-100).
+      selector:
+        entity:
+          filter:
+          - domain:
+            - sensor
+          reorder: false
+          multiple: false
+    human_state:
+      name: Human readable activity state
+      description: 'This state should describe the current activity state, for example:
+        "Starting", "Washing", "Drying", "Done", etc.'
+      default:
+      selector:
+        entity:
+          filter:
+          - domain:
+            - sensor
+          reorder: false
+          multiple: false
+    eta:
+      name: ETA
+      description: Estimated time when the activity is done. Can be either a relative
+        (timedelta) or absolute (timestamp) value. If omitted, no ETA will be shown.
+      default:
+      selector:
+        entity:
+          filter:
+          - domain:
+            - sensor
+            device_class:
+            - timestamp
+          - domain:
+            - sensor
+            device_class:
+            - duration
+          reorder: false
+          multiple: false
+    icon:
+      name: Icon
+      description: 'An [SF Symbols](https://developer.apple.com/sf-symbols/) icon.
+
+        Example: washer.
+
+        '
+    icon_customization:
+      name: Icon customization
+      icon: mdi:palette
+      description: 'Advanced rendering options for the SF Symbol icon. Leave at defaults
+
+        for the standard monochrome appearance.
+
+        '
+      input:
+        icon_rendering_mode:
+          name: Rendering mode
+          default: default
+          selector:
+            select:
+              mode: dropdown
+              options:
+              - label: Default
+                value: default
+              - label: Monochrome
+                value: monochrome
+              - label: Hierarchical
+                value: hierarchical
+              - label: Palette
+                value: palette
+              - label: Multicolor
+                value: multicolor
+              sort: false
+              custom_value: false
+              multiple: false
+        icon_primary_color:
+          name: Primary color
+          default: default
+          selector:
+            select:
+              options:
+              - default
+              - red
+              - orange
+              - yellow
+              - green
+              - mint
+              - teal
+              - cyan
+              - blue
+              - indigo
+              - purple
+              - pink
+              - brown
+              - gray
+              - gray2
+              - gray3
+              - gray4
+              - gray5
+              - gray6
+              sort: false
+              custom_value: false
+              multiple: false
+        icon_secondary_color:
+          name: Secondary color (palette mode)
+          default: default
+          selector:
+            select:
+              options:
+              - default
+              - red
+              - orange
+              - yellow
+              - green
+              - mint
+              - teal
+              - cyan
+              - blue
+              - indigo
+              - purple
+              - pink
+              - brown
+              - gray
+              - gray2
+              - gray3
+              - gray4
+              - gray5
+              - gray6
+              sort: false
+              custom_value: false
+              multiple: false
+        icon_tertiary_color:
+          name: Tertiary color (palette mode)
+          default: default
+          selector:
+            select:
+              options:
+              - default
+              - red
+              - orange
+              - yellow
+              - green
+              - mint
+              - teal
+              - cyan
+              - blue
+              - indigo
+              - purple
+              - pink
+              - brown
+              - gray
+              - gray2
+              - gray3
+              - gray4
+              - gray5
+              - gray6
+              sort: false
+              custom_value: false
+              multiple: false
+        icon_color_rendering:
+          name: Color rendering
+          default: default
+          selector:
+            select:
+              mode: dropdown
+              options:
+              - label: Default
+                value: default
+              - label: Flat
+                value: flat
+              - label: Gradient
+                value: gradient
+              sort: false
+              custom_value: false
+              multiple: false
+    tap_url:
+      name: Tap URL
+      icon: mdi:link
+      input:
+        tap_url_template:
+          name: Tap URL (template)
+          default: ''
+          description: 'A Jinja2 template for the URL opened when the Live Activity
+            is tapped.
+
+            Supports any URL scheme (https://, homeassistant://, etc.).
+
+            '
+          selector:
+            template: {}
+  source_url: https://ha.getaivi.app/blueprints/generic-sensors-v1.yaml
+trigger_variables:
+  human_state_trigger: !input human_state
+  eta_trigger: !input eta
+triggers:
+- trigger: state
+  entity_id:
+  - !input state
+  - !input progress
+- trigger: event
+  event_type: state_changed
+  event_data:
+    entity_id: !input human_state
+  enabled: '{{ human_state_trigger is not none }}'
+- trigger: event
+  event_type: state_changed
+  event_data:
+    entity_id: !input eta
+  enabled: '{{ eta_trigger is not none }}'
+variables:
+  slug: !input slug
+  icon: !input icon
+  icon_rendering_mode: !input icon_rendering_mode
+  icon_primary_color: !input icon_primary_color
+  icon_secondary_color: !input icon_secondary_color
+  icon_tertiary_color: !input icon_tertiary_color
+  icon_color_rendering: !input icon_color_rendering
+  state_entity: !input state
+  human_state_entity: !input human_state
+  progress_entity: !input progress
+  eta_entity: !input eta
+  tap_url_template: !input tap_url_template
+mode: queued
+max: 10
+max_exceeded: silent
+actions:
+- variables:
+    state: '{{ "ONGOING" if is_state(state_entity, "on") else "IDLE" }}'
+- variables:
+    progress: "{% if state == \"IDLE\" %}\n  {{ 1.0 }}\n{% else %}\n  {% set p = states(progress_entity)|float(0)
+      / 100 %}\n  {{ min(max(p, 0), 1) }}\n{% endif %}"
+    human_state: "{% if human_state_entity is none %}\n  {{ None }}\n{% else %}\n
+      \ {{ state_translated(human_state_entity) }}\n{% endif %}"
+    eta: "{% if eta_entity is none %}\n  {% set remaining = None %}\n{% elif state
+      == \"IDLE\" %}\n  {% set remaining = None %}\n{% elif state_attr(eta_entity,
+      \"device_class\") == \"timestamp\" %}\n  {% set t_now = now() %}\n  {% set t_eta
+      = as_datetime(states(eta_entity), t_now) %}\n  {% set remaining = (t_eta - t_now).total_seconds()
+      %}\n{% else %}\n  {% set remaining = states(eta_entity) %}\n{% endif %} {{ max(int(remaining),
+      0) if remaining is not none else None }}"
+- variables:
+    tap_url: '{{ tap_url_template|string if tap_url_template else None }}'
+- action: rest_command.update_live_activity
+  response_variable: aivi_response
+  data:
+    slug: '{{ slug }}'
+    payload: "{\n  \"state\": {{ state|to_json }},\n  \"content\": {\n    \"template\":
+      \"generic\",\n    \"state\": {{ human_state|to_json }},\n    \"remaining_time\":
+      {{ eta|to_json }},\n    \"progress\": {{ progress|to_json }},\n    \"icon\":
+      {{ ({\n      \"name\": icon,\n      \"rendering_mode\": icon_rendering_mode
+      if icon_rendering_mode != \"default\" else None,\n      \"primary_color\": icon_primary_color
+      if icon_primary_color != \"default\" else None,\n      \"secondary_color\":
+      icon_secondary_color if icon_secondary_color != \"default\" else None,\n      \"tertiary_color\":
+      icon_tertiary_color if icon_tertiary_color != \"default\" else None,\n      \"color_rendering\":
+      icon_color_rendering if icon_color_rendering != \"default\" else None,\n    }
+      if icon else None) | to_json }},\n    \"tap_url\": {{ tap_url|to_json }}\n  }\n}"

@@ -1,0 +1,65 @@
+wall_panel_energy_gauge:
+  name: Wall Panel Energy Gauge
+  version: '1.0'
+  creator: ''
+  supported:
+    - button
+    - climate
+    - cover
+    - horizontal-buttons-stack
+    - media-player
+    - pop-up
+    - select
+    - separator
+    - sub-buttons
+  description: ''
+  code: |2-
+        .bubble-button-card-container {
+          border-radius: 30px !important;
+          margin-top: 0px !important;
+          background-color: var(--background-color) !important;
+          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55)
+             !important;
+          min-height: 115px !important;
+          max-width: 223px !important;
+          }
+
+        .bubble-button-background {
+          background-color: var(--background-color) !important;
+          } 
+
+        .bubble-name {
+          font-size: 26px !important;
+          text-align: left !important;
+          color: var(--text-color) !important;
+          line-height: 1.1;
+          padding-left: 10px;
+            }
+
+        .bubble-sub-button { 
+          font-size: 26px !important;
+          line-height: 1.1;
+          font-weight: bold; 
+          background-color: transparent !important;
+          margin-right: 50px;
+          }
+       
+        .bubble-icon {
+          opacity: 1 !important;
+          color: var(--text-color) !important;
+          --mdc-icon-size: 38px !important;
+          overflow: visible !important;
+          }
+
+        .bubble-icon-container {
+          background-color: transparent !important;
+          margin-left: 20px !important;
+          overflow: visible !important;
+          }
+          .bubble-sub-button-container {
+            position: absolute;
+            left: 50px;
+            right: auto;
+            margin-left: 10px;
+          }
+  editor: ''

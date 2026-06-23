@@ -1,0 +1,58 @@
+- name: Home Assistant Bridge
+  port: 21063
+  filter:
+    include_entities:
+      - binary_sensor.front_door
+      - binary_sensor.kitchen_french_doors
+      - binary_sensor.living_room_french_doors
+      - binary_sensor.mudroom_entry_door
+      - binary_sensor.mudroom_garage_door
+      - cover.back_2
+      - cover.back_3
+      - cover.living_room_front_right
+      - switch.driveway_zone_2_2
+      - switch.driveway_zone_3_2
+      - switch.driveway_zone_1_2
+      - switch.transformer_zone_2
+      - switch.transformer_zone_3
+      - switch.transformer_zone_1
+      - climate.bedroom_thermostat
+      - climate.living_room_thermostat_homekit
+      - climate.basement_thermostat_homekit
+      - climate.office_thermostat_homekit
+      - light.eve_light_strip_a5a4
+      - alarm_control_panel.alarmo
+      - switch.outdoor_on_stateful_scene
+      - switch.outdoor_off_stateful_scene
+      - cover.eve_motionblinds_7378
+
+- name: Cameras
+  port: 21065
+  filter:
+    include_entities:
+      - camera.driveway_high_resolution_channel_2
+      - camera.front_high_resolution_channel
+      - camera.pool_high_resolution_channel
+      - camera.blueberry_high_resolution_channel
+      - camera.kimberly_high_resolution_channel
+  entity_config:
+    camera.driveway_high_resolution_channel_2:
+        name: Driveway Camera
+        linked_motion_sensor: binary_sensor.driveway_object_detected_2
+        support_audio: true
+    camera.front_high_resolution_channel:
+        name: Front Camera
+        linked_motion_sensor: binary_sensor.front_object_detected
+        support_audio: true        
+    camera.pool_high_resolution_channel:
+        name: Pool Camera
+        linked_motion_sensor: binary_sensor.pool_object_detected
+        support_audio: true          
+    camera.blueberry_high_resolution_channel:
+        name: Front Right Camera
+        linked_motion_sensor: binary_sensor.blueberry_object_detected
+        support_audio: true
+    camera.kimberly_high_resolution_channel:
+        name: Kimberly Side Camera
+        linked_motion_sensor: binary_sensor.kimberly_object_detected
+        support_audio: true

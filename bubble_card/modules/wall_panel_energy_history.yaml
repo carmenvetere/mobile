@@ -1,0 +1,49 @@
+wall_panel_energy_history:
+  name: Wall Panel Energy History
+  version: '1.0'
+  creator: ''
+  description: ''
+  code: |2-
+        .bubble-button-card-container {
+          border-radius: 30px !important;
+          margin: 2px 20px 2px 0px !important;
+          background-color: var(--background-color) !important;
+          box-shadow: ${ state === 'on'
+            ? '0 0 10px rgba(255, 255, 255, 0.6)'
+            : '0 6px 14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06)'
+            } !important;
+          min-height: 110px !important;
+          max-width: 100% !important;
+          }
+
+        .bubble-button-background {
+          background-color: ${state === 'on' ? 'var(--ha-card-background-2)' : 'var(--background-color)'} !important;
+          } 
+
+        .bubble-name {
+          font-size: 26px !important;
+          text-align: left !important;
+          color: ${state === 'on' ? 'var(--secondary-text-color)' : 'var(--text-color)'} !important;
+          line-height: 1.1;
+          padding-left: 10px;
+            }
+
+        .bubble-sub-button { 
+          font-size: 24px !important;
+          line-height: 1.1;
+          font-weight: bold; 
+          background-color: transparent !important;
+          margin-right: 20px;
+          }
+       
+        .bubble-icon {
+          opacity: 1 !important;
+          color: ${state === 'on' ? 'var(--secondary-text-color)' : 'var(--text-color)'} !important;
+          --mdc-icon-size: 38px !important;
+          }
+
+        .bubble-icon-container {
+          background-color: transparent !important;
+          margin-left: 20px !important;
+          }
+  editor: ''

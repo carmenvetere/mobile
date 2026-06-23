@@ -1772,8 +1772,9 @@
       seconds: 0
   conditions:
   - condition: state
-    entity_id: automation.enhanced_first_floor_climate_manager
-    state: 'on'
+    entity_id: automation.living_room_hvac_schedule_v3
+    state:
+    - 'on'
   actions:
   - action: climate.set_hvac_mode
     metadata: {}
@@ -5965,278 +5966,197 @@
   mode: single
 - id: '1777026025997'
   alias: Exhaust Fan Economizer - Safety Shutoff
-  description: Immediately closes the fresh air damper when outdoor conditions become
-    unsafe for ventilation (sustained rain >0.01in for 5min, dew point >65F, or outdoor
-    >73F). Bathroom fans turned off ONLY if HA started them (state-change context
-    shows automation parent_id or user_id). Manually-started shower fans left alone
-    since they only exhaust bathroom air, not draw outside air. No ownership helpers
-    needed.
+  description: 'Closes the fresh-air damper when outdoor conditions are unsafe for
+    ventilation: sustained rain (>0.01in/5min) or dew point >65F ALWAYS close. High
+    outdoor temp (>73F/5min) closes too, EXCEPT when a deliberate CO2 air-quality
+    flush is active (input_boolean.co2_vent_active on) and outdoor is still <=80F
+    — that flush is allowed up to 80F by the Fresh Air Ventilation automation, so
+    the backstop defers to it. Bathroom fans turned off only if HA started them (context
+    check). No ownership helpers needed.'
   triggers:
-  - platform: numeric_state
+  - trigger: numeric_state
     entity_id: sensor.bayberry_tempest_precipitation
     above: 0.01
     for: 00:05:00
-  - platform: numeric_state
+    id: rain
+  - trigger: numeric_state
     entity_id: sensor.bayberry_tempest_dew_point
     above: 65
     for: 00:02:00
-  - platform: numeric_state
+    id: dew
+  - trigger: numeric_state
     entity_id: sensor.bayberry_tempest_temperature
     above: 73
     for: 00:05:00
+    id: temp
   conditions: []
   actions:
-  - action: switch.turn_off
-    target:
-      entity_id: switch.utility_room_ventilation_damper
   - if:
     - condition: template
-      value_template: '{{ is_state(''switch.primary_bathroom_exhaust_fan'', ''on'')
-        and (states.switch.primary_bathroom_exhaust_fan.context.parent_id is not none
-        or states.switch.primary_bathroom_exhaust_fan.context.user_id is not none)
-        }}'
+      value_template: '{{ trigger.id in [''rain'',''dew''] or not is_state(''input_boolean.co2_vent_active'',''on'')
+        or (states(''sensor.bayberry_tempest_temperature'') | float(99)) > 80 }}'
     then:
     - action: switch.turn_off
       target:
-        entity_id: switch.primary_bathroom_exhaust_fan
-  - if:
-    - condition: template
-      value_template: '{{ is_state(''switch.basement_bathroom_exhaust_fan'', ''on'')
-        and (states.switch.basement_bathroom_exhaust_fan.context.parent_id is not
-        none or states.switch.basement_bathroom_exhaust_fan.context.user_id is not
-        none) }}'
-    then:
-    - action: switch.turn_off
-      target:
-        entity_id: switch.basement_bathroom_exhaust_fan
-  - action: system_log.write
-    data:
-      message: 'Economizer Safety Shutoff: damper closed. Precip={{ states(''sensor.bayberry_tempest_precipitation'')
-        }}in, DewPt={{ states(''sensor.bayberry_tempest_dew_point'') }}F, Outdoor={{
-        states(''sensor.bayberry_tempest_temperature'') }}F. Primary fan: {% set pf=states.switch.primary_bathroom_exhaust_fan
-        %}{% if pf.state == ''on'' and (pf.context.parent_id is not none or pf.context.user_id
-        is not none) %}turned off (HA-owned){% elif pf.state == ''on'' %}left alone
-        (manual){% else %}already off{% endif %}. Basement fan: {% set bf=states.switch.basement_bathroom_exhaust_fan
-        %}{% if bf.state == ''on'' and (bf.context.parent_id is not none or bf.context.user_id
-        is not none) %}turned off (HA-owned){% elif bf.state == ''on'' %}left alone
-        (manual){% else %}already off{% endif %}.'
-      level: warning
+        entity_id: switch.utility_room_ventilation_damper
+    - if:
+      - condition: template
+        value_template: '{{ is_state(''switch.primary_bathroom_exhaust_fan'', ''on'')
+          and (states.switch.primary_bathroom_exhaust_fan.context.parent_id is not
+          none or states.switch.primary_bathroom_exhaust_fan.context.user_id is not
+          none) }}'
+      then:
+      - action: switch.turn_off
+        target:
+          entity_id: switch.primary_bathroom_exhaust_fan
+    - if:
+      - condition: template
+        value_template: '{{ is_state(''switch.basement_bathroom_exhaust_fan'', ''on'')
+          and (states.switch.basement_bathroom_exhaust_fan.context.parent_id is not
+          none or states.switch.basement_bathroom_exhaust_fan.context.user_id is not
+          none) }}'
+      then:
+      - action: switch.turn_off
+        target:
+          entity_id: switch.basement_bathroom_exhaust_fan
+    - action: system_log.write
+      data:
+        message: 'Economizer Safety Shutoff: damper closed (trigger={{ trigger.id
+          }}). Precip={{ states(''sensor.bayberry_tempest_precipitation'') }}in DewPt={{
+          states(''sensor.bayberry_tempest_dew_point'') }}F Outdoor={{ states(''sensor.bayberry_tempest_temperature'')
+          }}F.'
+        level: warning
+    else:
+    - action: system_log.write
+      data:
+        message: 'Economizer Safety Shutoff: temp backstop DEFERRED - CO2 flush active
+          and outdoor <=80F. Damper left open.'
+        level: info
   mode: single
 - id: '1777026130089'
   alias: Fresh Air Ventilation
-  description: 'Economizer + stale-air flush. FIRST FLOOR (zone 1) is the primary
-    cooling target. Daytime (07:00-22:00): primary bathroom fan + living-room blower.
-    Overnight (22:00-08:00): the primary bathroom fan stays off; zone 1 is cooled
-    by NIGHT ASSIST — the basement bathroom fan (allowed only in the 22:00-08:00 quiet
-    window) exhausts while the living-room blower circulates the incoming cool air
-    through the first floor. Basement keeps its own demand logic and its min-temp
-    floor always protects the media room from overcooling. Ownership tracked via input_boolean.economizer_owns_primary_fan
-    / _basement_fan: flag set before fan-on, cleared on fan-off; the 45-min manual-press
-    timers skip owned fans. Wet weather (dew>=65F or rain) is part of the run decision
-    so the OFF path always executes. Pre-cool high uses today''s forecast after midnight,
-    tomorrow''s in the evening. Publishes input_boolean.basement_hvac_fresh_air_available
-    (free cooling: outdoor >=4F below warmest indoor zone, dew<65, no rain; releases
-    within 1F). Damper opens only for economizer-owned fan runs (manual bathroom fan
-    presses do NOT open the damper; makeup air then comes via envelope leakage). The
-    fan off->on trigger re-syncs damper/blower state after manual presses. If a wanted
-    fan is already running but unowned (manual press or shutdown race), the economizer
-    ADOPTS it by setting the ownership flag, so the damper opens and clean shutdown
-    works.'
+  description: 'Two-path basement+first-floor ventilation. PATH A (CO2 air quality,
+    any hour, year-round): when first-floor CO2 > 850ppm and intake air is OK (32F
+    < outdoor < 80F; free cooling needs outdoor >=5F below the zone, dew < 65F, no
+    rain), open damper + run living-room blower to dilute. No bathroom fan, so quiet
+    at all hours. Latches via input_boolean.co2_vent_active, clears below 700ppm.
+    PATH B (free cooling): 20:00-22:00 pre-cool damper+blowers only; 22:00-08:00 adds
+    basement bathroom fan. Cools each zone toward its input_number floor while outdoor<indoor
+    and dew/rain OK. Basement fan ownership via input_boolean.economizer_owns_basement_fan
+    so the 45-min manual timer never fights it. Primary bathroom fan and bedroom CO2
+    removed. Heat lockout 80F intentionally exceeds the Safety Shutoff 73F backstop;
+    Safety Shutoff is CO2-flush-aware.'
   triggers:
-  - hours: /1
+  - trigger: time_pattern
+    hours: /1
     id: hourly
-    trigger: time_pattern
-  - at: 07:00:00
-    id: primary_window_start
-    trigger: time
-  - at: '22:00:00'
-    id: quiet_start
-    trigger: time
-  - at: 08:00:00
-    id: quiet_end
-    trigger: time
-  - entity_id: sensor.bayberry_tempest_irradiance
-    above: 200
-    for: 00:10:00
-    id: solar_start
-    trigger: numeric_state
-  - entity_id: sensor.bayberry_tempest_precipitation
-    below: 0.01
+  - trigger: time
+    at: '20:00:00'
+    id: precool_start
+  - trigger: time
+    at: '22:00:00'
+    id: fan_window_start
+  - trigger: time
+    at: 08:00:00
+    id: window_end
+  - trigger: numeric_state
+    entity_id: sensor.first_floor_co2_5min
+    above: 850
     for: 00:05:00
-    id: rain_stop
-    trigger: numeric_state
-  - entity_id: sensor.bayberry_tempest_precipitation
-    above: 0.01
-    id: rain_start
-    trigger: numeric_state
-  - entity_id: sensor.bayberry_tempest_dew_point
-    below: 55
-    for: 00:10:00
-    id: dew_low
-    trigger: numeric_state
-  - entity_id: sensor.bayberry_tempest_dew_point
+    id: co2_high
+  - trigger: numeric_state
+    entity_id: sensor.first_floor_co2_5min
+    below: 700
+    for: 00:05:00
+    id: co2_recovered
+  - trigger: numeric_state
+    entity_id: sensor.bayberry_tempest_dew_point
     above: 65
     for: 00:05:00
     id: dew_high
-    trigger: numeric_state
-  - entity_id: sensor.living_room_thermostat_current_temperature
-    below: 67.5
+  - trigger: numeric_state
+    entity_id: sensor.bayberry_tempest_dew_point
+    below: 65
+    for: 00:10:00
+    id: dew_low
+  - trigger: numeric_state
+    entity_id: sensor.bayberry_tempest_precipitation
+    above: 0.01
+    id: rain_start
+  - trigger: numeric_state
+    entity_id: sensor.bayberry_tempest_precipitation
+    below: 0.01
+    for: 00:05:00
+    id: rain_stop
+  - trigger: numeric_state
+    entity_id: sensor.tempest_temperature_5min
+    below: 80
+    for: 00:05:00
+    id: temp_below_max
+  - trigger: numeric_state
+    entity_id: sensor.tempest_temperature_5min
+    below: 32
+    id: temp_below_min
+  - trigger: numeric_state
+    entity_id: sensor.tempest_temperature_5min
+    above: 32
+    for: 00:10:00
+    id: temp_above_min
+  - trigger: numeric_state
+    entity_id: sensor.living_room_thermostat_current_temperature
+    below: 67
     for: 00:02:00
     id: z1_cooled
-    trigger: numeric_state
-  - entity_id: sensor.basement_thermostat_homekit_current_temperature
-    below: 71.5
+  - trigger: numeric_state
+    entity_id: sensor.basement_thermostat_homekit_current_temperature
+    below: 70
     for: 00:02:00
     id: z2_cooled
-    trigger: numeric_state
-  - entity_id: sensor.first_floor_co2_5min
-    above: 800
-    for: 00:05:00
-    id: co2_high_first
-    trigger: numeric_state
-  - entity_id: sensor.first_floor_co2_5min
-    below: 600
-    for: 00:05:00
-    id: co2_recovered_first
-    trigger: numeric_state
-  - entity_id: sensor.bedroom_co2_5min
-    above: 800
-    for: 00:05:00
-    id: co2_high_bedroom
-    trigger: numeric_state
-  - entity_id: sensor.fresh_air_damper_on_24_h
-    above: 1
-    for: 00:05:00
-    id: fallback_satisfied
-    trigger: numeric_state
-  - entity_id:
-    - switch.primary_bathroom_exhaust_fan
-    - switch.basement_bathroom_exhaust_fan
-    from: 'off'
-    to: 'on'
-    id: fan_on
-    trigger: state
   actions:
-  - action: weather.get_forecasts
-    data:
-      type: daily
-    target:
-      entity_id: weather.bayberry
-    response_variable: weather_forecast
-    continue_on_error: true
   - variables:
-      outdoor_temp: '{{ states(''sensor.tempest_temperature_5min'') | float(70) }}'
-      dew_point: '{{ states(''sensor.bayberry_tempest_dew_point'') | float(50) }}'
-      irradiance: '{{ states(''sensor.bayberry_tempest_irradiance'') | float(0) }}'
-      zone1_temp: '{{ states(''sensor.living_room_thermostat_current_temperature'')
-        | float(72) }}'
-      zone2_temp: '{{ states(''sensor.basement_thermostat_homekit_current_temperature'')
-        | float(72) }}'
-      zone1_min_temp: '{{ states(''input_number.living_room_fresh_air_min_temp'')
-        | float(65) }}'
-      zone2_min_temp: '{{ states(''input_number.basement_fresh_air_minimum_temp'')
-        | float(65) }}'
-      co2_first_floor: '{{ states(''sensor.first_floor_co2_5min'') | float(400) }}'
-      co2_bedroom: '{{ states(''sensor.bedroom_co2_5min'') | float(400) }}'
-      damper_24h: '{{ states(''sensor.fresh_air_damper_on_24_h'') | float(0) }}'
+      co2_first: '{{ states(''sensor.first_floor_co2_5min'') | float(400) }}'
+      outdoor: '{{ states(''sensor.tempest_temperature_5min'') | float(70) }}'
+      dew: '{{ states(''sensor.bayberry_tempest_dew_point'') | float(50) }}'
+      precip: '{{ states(''sensor.bayberry_tempest_precipitation'') | float(0) }}'
+      z1: '{{ states(''sensor.living_room_thermostat_current_temperature'') | float(72)
+        }}'
+      z2: '{{ states(''sensor.basement_thermostat_homekit_current_temperature'') |
+        float(72) }}'
+      z1_min: '{{ states(''input_number.living_room_fresh_air_min_temp'') | float(65)
+        }}'
+      z2_min: '{{ states(''input_number.basement_fresh_air_minimum_temp'') | float(65)
+        }}'
       warmest_indoor: '{{ states(''sensor.warmest_indoor_zone'') | float(72) }}'
-      is_overnight: '{{ now().hour >= 20 or now().hour < 8 }}'
-      primary_window: '{{ now().hour >= 7 and now().hour < 22 }}'
-      basement_window: '{{ now().hour >= 22 or now().hour < 8 }}'
-      dry_ok: '{{ dew_point < 65 and (states(''sensor.bayberry_tempest_precipitation'')
-        | float(0)) < 0.01 }}'
-      upcoming_high: '{% set fc = (weather_forecast | default({})).get(''weather.bayberry'',
-        {}).get(''forecast'', []) %}{% if fc | count >= 2 %}{{ (fc[1].temperature
-        if now().hour >= 12 else fc[0].temperature) | float(75) }}{% else %}75{% endif
-        %}'
-      precool_z1: '{{ is_overnight and (upcoming_high | float(75) > 72) }}'
-      zone1_floor_eff: '{% if precool_z1 %}{{ [zone1_min_temp - 2, 62] | max }}{%
-        else %}{{ zone1_min_temp }}{% endif %}'
-      zone1_target: '{% if not is_overnight %}{{ 68 - (1 if irradiance > 200 else
-        0) }}{% elif upcoming_high | float(75) > 72 %}{{ zone1_floor_eff }}{% else
-        %}70{% endif %}'
-      zone2_target: '{% if not is_overnight %}{{ 72 - (1 if irradiance > 200 else
-        0) }}{% elif upcoming_high | float(75) > 72 %}{{ zone2_min_temp + 1 }}{% else
-        %}70{% endif %}'
-      primary_running: '{{ is_state(''switch.primary_bathroom_exhaust_fan'', ''on'')
+      co2_ceiling: 850
+      co2_recover: 700
+      out_min: 32
+      out_max: 80
+      flush_active: '{{ is_state(''input_boolean.co2_vent_active'', ''on'') }}'
+      dry_ok: '{{ dew < 65 and precip < 0.01 }}'
+      co2_intake_ok: '{{ dry_ok and outdoor > out_min and outdoor < out_max }}'
+      co2_want: '{{ co2_intake_ok and ((not flush_active and co2_first > co2_ceiling)
+        or (flush_active and co2_first > co2_recover)) }}'
+      evening_precool: '{{ now().hour >= 20 and now().hour < 22 }}'
+      overnight_fan: '{{ now().hour >= 22 or now().hour < 8 }}'
+      freecool_window: '{{ overnight_fan or evening_precool }}'
+      z1_cool_ok: '{{ z1 > z1_min and outdoor < (z1 - 5) }}'
+      z2_cool_ok: '{{ z2 > z2_min and outdoor < (z2 - 5) }}'
+      freecool_demand: '{{ dry_ok and freecool_window and (z1_cool_ok or z2_cool_ok)
         }}'
-      basement_running: '{{ is_state(''switch.basement_bathroom_exhaust_fan'', ''on'')
-        }}'
-      primary_owned: '{{ is_state(''input_boolean.economizer_owns_primary_fan'', ''on'')
-        }}'
-      basement_owned: '{{ is_state(''input_boolean.economizer_owns_basement_fan'',
-        ''on'') }}'
+      run_basement_fan: '{{ freecool_demand and overnight_fan and z2_cool_ok }}'
+      z1_blower_on: '{{ co2_want or freecool_demand }}'
+      z2_blower_on: '{{ freecool_demand and z2_cool_ok }}'
+      damper_open: '{{ co2_want or freecool_demand }}'
       fa_currently: '{{ is_state(''input_boolean.basement_hvac_fresh_air_available'',
         ''on'') }}'
-      fresh_air_available: '{{ dry_ok and ( (not fa_currently and outdoor_temp < (warmest_indoor
-        - 4)) or (fa_currently and outdoor_temp < (warmest_indoor - 1)) ) }}'
-      z1_served: '{{ primary_running or state_attr(''climate.living_room_thermostat'',
-        ''fan_mode'') == ''on'' }}'
-      z2_ok: '{{ zone2_temp > zone2_min_temp and outdoor_temp < zone2_temp }}'
-      co2_demand: '{{ co2_first_floor > 800 or co2_bedroom > 800 }}'
-      z1_temp_demand: '{% set t = zone1_target | float %}{% set hyst = (z1_served
-        and zone1_temp > (t - 0.5)) or (not z1_served and zone1_temp > (t + 0.5))
-        %}{{ hyst and zone1_temp > (zone1_floor_eff | float(65)) and outdoor_temp
-        < zone1_temp }}'
-      run_primary: '{% set b_will_couple = z2_ok and basement_window %}{% set effective_cfm
-        = 110 + (290 if b_will_couple else 0) %}{% set worth_running = (effective_cfm
-        * (zone1_temp - outdoor_temp) * 1.08) > 600 %}{% set fallback_demand = (primary_running
-        and damper_24h < 1.0) or (not primary_running and damper_24h < 0.5) %}{{ dry_ok
-        and primary_window and ((z1_temp_demand and worth_running) or co2_demand or
-        fallback_demand) }}'
-      z1_night_assist: '{% set worth_running = (290 * (zone1_temp - outdoor_temp)
-        * 1.08) > 600 %}{{ dry_ok and basement_window and not primary_window and z2_ok
-        and ((z1_temp_demand and worth_running) or co2_demand) }}'
-      run_basement: '{% set t = zone2_target | float %}{% set hyst = (basement_running
-        and zone2_temp > (t - 0.5)) or (not basement_running and zone2_temp > (t +
-        0.5)) %}{% set worth_running = (290 * (zone2_temp - outdoor_temp) * 1.08)
-        > 600 %}{{ dry_ok and basement_window and z2_ok and ((hyst and worth_running)
-        or run_primary or z1_night_assist) }}'
-      z1_blower: '{{ run_primary or z1_night_assist }}'
-  - alias: Primary fan on/off with ownership
+      fresh_air_available: '{{ dry_ok and ((not fa_currently and outdoor < warmest_indoor
+        - 4) or (fa_currently and outdoor < warmest_indoor - 1)) }}'
+  - alias: Basement fan (Path B overnight) with ownership
     if:
     - condition: template
-      value_template: '{{ run_primary }}'
+      value_template: '{{ run_basement_fan }}'
     then:
-    - alias: Adopt ownership whenever we want it running
-      if:
-      - condition: state
-        entity_id: input_boolean.economizer_owns_primary_fan
-        state: 'off'
-      then:
-      - action: input_boolean.turn_on
-        target:
-          entity_id: input_boolean.economizer_owns_primary_fan
     - if:
-      - condition: state
-        entity_id: switch.primary_bathroom_exhaust_fan
-        state: 'off'
-      then:
-      - action: switch.turn_on
-        target:
-          entity_id: switch.primary_bathroom_exhaust_fan
-    else:
-    - if:
-      - condition: template
-        value_template: '{{ primary_owned }}'
-      then:
-      - if:
-        - condition: template
-          value_template: '{{ primary_running }}'
-        then:
-        - action: switch.turn_off
-          target:
-            entity_id: switch.primary_bathroom_exhaust_fan
-      - action: input_boolean.turn_off
-        target:
-          entity_id: input_boolean.economizer_owns_primary_fan
-  - alias: Basement fan on/off with ownership
-    if:
-    - condition: template
-      value_template: '{{ run_basement }}'
-    then:
-    - alias: Adopt ownership whenever we want it running
-      if:
       - condition: state
         entity_id: input_boolean.economizer_owns_basement_fan
         state: 'off'
@@ -6254,12 +6174,14 @@
           entity_id: switch.basement_bathroom_exhaust_fan
     else:
     - if:
-      - condition: template
-        value_template: '{{ basement_owned }}'
+      - condition: state
+        entity_id: input_boolean.economizer_owns_basement_fan
+        state: 'on'
       then:
       - if:
-        - condition: template
-          value_template: '{{ basement_running }}'
+        - condition: state
+          entity_id: switch.basement_bathroom_exhaust_fan
+          state: 'on'
         then:
         - action: switch.turn_off
           target:
@@ -6267,26 +6189,22 @@
       - action: input_boolean.turn_off
         target:
           entity_id: input_boolean.economizer_owns_basement_fan
-  - alias: Damper follows economizer-owned fans only
+  - alias: CO2 flush active flag
     if:
-    - condition: or
-      conditions:
-      - condition: and
-        conditions:
-        - condition: state
-          entity_id: switch.primary_bathroom_exhaust_fan
-          state: 'on'
-        - condition: state
-          entity_id: input_boolean.economizer_owns_primary_fan
-          state: 'on'
-      - condition: and
-        conditions:
-        - condition: state
-          entity_id: switch.basement_bathroom_exhaust_fan
-          state: 'on'
-        - condition: state
-          entity_id: input_boolean.economizer_owns_basement_fan
-          state: 'on'
+    - condition: template
+      value_template: '{{ co2_want }}'
+    then:
+    - action: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.co2_vent_active
+    else:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.co2_vent_active
+  - alias: Damper follows either path
+    if:
+    - condition: template
+      value_template: '{{ damper_open }}'
     then:
     - action: switch.turn_on
       target:
@@ -6295,10 +6213,10 @@
     - action: switch.turn_off
       target:
         entity_id: switch.utility_room_ventilation_damper
-  - alias: Zone 1 blower
+  - alias: Living-room (first floor) blower
     if:
     - condition: template
-      value_template: '{{ z1_blower }}'
+      value_template: '{{ z1_blower_on }}'
     then:
     - if:
       - condition: template
@@ -6321,10 +6239,10 @@
           entity_id: climate.living_room_thermostat
         data:
           fan_mode: auto
-  - alias: Zone 2 blower
+  - alias: Basement blower
     if:
     - condition: template
-      value_template: '{{ run_basement }}'
+      value_template: '{{ z2_blower_on }}'
     then:
     - if:
       - condition: template
@@ -6361,15 +6279,11 @@
         entity_id: input_boolean.basement_hvac_fresh_air_available
   - action: system_log.write
     data:
-      message: 'Fresh Air Ventilation: outdoor={{ outdoor_temp }}F dp={{ dew_point
-        }}F irr={{ irradiance }}W/m2 dry_ok={{ dry_ok }} | Z1={{ zone1_temp }}F target={{
-        zone1_target }}F floor_eff={{ zone1_floor_eff }}F precool={{ precool_z1 }}
-        | Z2={{ zone2_temp }}F target={{ zone2_target }}F | upcoming_high={{ upcoming_high
-        }}F | warmest_indoor={{ warmest_indoor }}F free_cooling_available={{ fresh_air_available
-        }} | CO2 1F={{ co2_first_floor }}ppm BR={{ co2_bedroom }}ppm | damper_24h={{
-        damper_24h }}h | owned P={{ primary_owned }} B={{ basement_owned }} | trigger={{
-        trigger.id | default(''manual'') }} -> primary={{ run_primary }} night_assist={{
-        z1_night_assist }} basement={{ run_basement }} z1_blower={{ z1_blower }}'
+      message: 'Fresh Air Ventilation: CO2_1F={{ co2_first }}ppm outdoor={{ outdoor
+        }}F dew={{ dew }}F dry_ok={{ dry_ok }} intake_ok={{ co2_intake_ok }} | Z1={{
+        z1 }}/{{ z1_min }} Z2={{ z2 }}/{{ z2_min }} | trig={{ trigger.id | default(''manual'')
+        }} -> co2_want={{ co2_want }} freecool={{ freecool_demand }} bfan={{ run_basement_fan
+        }} damper={{ damper_open }} z1b={{ z1_blower_on }} z2b={{ z2_blower_on }}'
       level: info
   mode: restart
 - id: '1777031732859'
@@ -7078,4 +6992,97 @@
       entity_id: number.omnilogic_pool_filter_pump_speed
     data:
       value: '2000'
+  mode: single
+- id: '1782073941879'
+  alias: Office Shades – Schedule & Adaptive
+  description: Office shading framework matching the front guest bedroom design. Weekday
+    8:00 and weekend 9:00 morning opens plus 30-min adaptive ticks all run the same
+    template formula on cover.office_office_right and cover.office_office_left (both
+    south-facing). Adaptive runs from 09:01 until sunset. At sunset+30 or 8pm the
+    shades close. Indoor temp from sensor.office_thermostat_homekit_current_temperature.
+    Comfort 72. (No guest_mode pause — that is specific to guest rooms.)
+  triggers:
+  - at: 08:00:00
+    id: weekday_open
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    trigger: time
+  - at: 09:00:00
+    id: weekend_open
+    weekday:
+    - sat
+    - sun
+    trigger: time
+  - minutes: /30
+    id: adaptive
+    trigger: time_pattern
+  - event: sunset
+    offset: 00:30:00
+    id: sunset_close
+    trigger: sun
+  - at: '20:00:00'
+    id: evening_close
+    trigger: time
+  conditions:
+  - condition: time
+    after: 07:59:00
+    before: '20:01:00'
+  actions:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: trigger
+          id: weekday_open
+        - condition: trigger
+          id: weekend_open
+        - condition: and
+          conditions:
+          - condition: trigger
+            id: adaptive
+          - condition: time
+            after: 09:01:00
+            before: '19:55:00'
+          - condition: numeric_state
+            entity_id: sun.sun
+            attribute: elevation
+            above: 0
+      sequence:
+      - variables:
+          comfort: 72
+          closure_responsiveness: 20
+          indoor: '{{ states(''sensor.office_thermostat_homekit_current_temperature'')
+            | float(70) }}'
+          effw: '{{ states(''sensor.sun_hitting_south'') | float(0) }}'
+          target: '{% if effw == 0 or indoor <= comfort %}100{% else %}{% set excess
+            = indoor - comfort %}{% set closure = excess * effw / closure_responsiveness
+            %}{{ [[100 - closure, 0] | max, 100] | min | round(0) | int }}{% endif
+            %}'
+      - action: cover.set_cover_position
+        target:
+          entity_id:
+          - cover.office_office_right
+          - cover.office_office_left
+        data:
+          position: '{{ target | int }}'
+      - action: system_log.write
+        data:
+          message: 'Office Shading ({{ trigger.id }}): indoor={{ indoor }}F comfort={{
+            comfort }}F | office -> {{ target }}% (effw {{ effw }} W/m2 S)'
+          level: info
+    - conditions:
+      - condition: trigger
+        id:
+        - sunset_close
+        - evening_close
+      sequence:
+      - action: cover.close_cover
+        target:
+          entity_id:
+          - cover.office_office_right
+          - cover.office_office_left
   mode: single

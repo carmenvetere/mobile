@@ -1,0 +1,44 @@
+Wall:
+  # Fonts
+  primary-font-family: "sans-serif"
+  paper-font-common-base_-_font-family: "var(--primary-font-family)"
+  paper-font-body1_-_font-family: "var(--primary-font-family)"
+  ha-card-header-font-family: "var(--primary-font-family)"
+
+  # Text
+  text-color: "#e0e4ea"
+  primary-text-color: "var(--text-color)"
+  secondary-text-color: "#BAC0C6"
+  disabled-text-color: "#626569"
+
+  # Accent
+  accent-color: "#B9BAB6"
+  primary-color: "var(--accent-color)"
+
+  # Background
+  background-color: "#99948B"
+  background-color-2: "#716D67"
+  primary-background-color: "var(--background-color)"
+  secondary-background-color: "var(--background-color-2)"
+
+  # Cards
+  ha-card-background: "#96918A"
+  ha-card-background-2: "#A8A9A9"
+  ha-card-box-shadow: "none"
+  ha-card-box-shadow-active: '0 0 3px 3px rgba(255,255,255,0.5)'
+  ha-card-border-radius: "5px"
+  ha-card-border-width: "0px"
+  ha-card-border-color: "none"
+  grid-card-gap: "0px"
+
+  # Icons
+  paper-item-icon-color: "var(--text-color)"
+  paper-item-icon-active-color: "var(--accent-color)"
+
+  card-mod-theme: Wall
+  
+  card-mod-card: |
+    ha-card {
+      transition: none;
+      border-style: none !important;
+    }
