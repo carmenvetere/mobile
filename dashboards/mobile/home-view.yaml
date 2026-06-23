@@ -1,7 +1,7 @@
 # lovelace_gen
 title: Home
 icon: mdi:home
-theme: Dark Dune
+theme: Dark Mist
 path: mobile-home
 type: custom:grid-layout
 cards:
@@ -32,69 +32,174 @@ cards:
       header:
         card:
           type: custom:button-card
-          show_state: false
-          show_name: false
+          entity: sensor.bayberry_tempest_temperature
+          tap_action:
+            action: navigate
+            navigation_path: /mobile-dash-v2/weather
           show_icon: false
+          show_name: true
+          show_state: true
+          show_label: true
+          name: |
+            [[[
+              var h = new Date().getHours();
+              return h < 12 ? 'Good morning' : (h < 18 ? 'Good afternoon' : 'Good evening');
+            ]]]
+          label: |
+            [[[
+              var d = new Date();
+              return d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' })
+                + ', ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+            ]]]
+          state_display: |
+            [[[ return Math.round(entity.state) + '°'; ]]]
+          # Notification chip (left of the weather temp). Driven by the separate
+          # Notification Center integration (sensor.notification_center*). It hides
+          # itself when there are no active alerts OR the integration isn't
+          # installed yet, so it degrades gracefully until those entities exist.
+          custom_fields:
+            notif:
+              card:
+                type: custom:button-card
+                entity: sensor.notification_center
+                show_icon: true
+                show_name: true
+                show_state: false
+                icon: |
+                  [[[ var p = states['sensor.notification_center_priority'];
+                      return (p && p.attributes.icon) || 'mdi:bell'; ]]]
+                name: |
+                  [[[ var c = states['sensor.notification_center'];
+                      return c ? c.state : ''; ]]]
+                tap_action: { action: navigate, navigation_path: "#notifications" }
+                styles:
+                  card:
+                    - display: |
+                        [[[ var c = states['sensor.notification_center'];
+                            return (c && parseInt(c.state) > 0) ? 'flex' : 'none'; ]]]
+                    - background: |
+                        [[[ var p = states['sensor.notification_center_priority'];
+                            var c = (p && p.attributes.color) || '#7295B2';
+                            var h = c.replace('#','');
+                            var r = parseInt(h.substr(0,2),16), g = parseInt(h.substr(2,2),16), b = parseInt(h.substr(4,2),16);
+                            return 'rgba(' + r + ',' + g + ',' + b + ',0.18)'; ]]]
+                    - --ha-card-background: transparent
+                    - box-shadow: none
+                    - transition: none
+                    - border-radius: 999px
+                    - padding: 5px 10px
+                  grid:
+                    - grid-template-areas: '"i n"'
+                    - grid-template-columns: auto auto
+                    - align-items: center
+                    - column-gap: 5px
+                  icon:
+                    - width: 16px
+                    - color: |
+                        [[[ var p = states['sensor.notification_center_priority'];
+                            return (p && p.attributes.color) || '#7295B2'; ]]]
+                  name:
+                    - font-size: 13px
+                    - font-weight: 700
+                    - color: |
+                        [[[ var p = states['sensor.notification_center_priority'];
+                            return (p && p.attributes.color) || '#7295B2'; ]]]
           styles:
             card:
-              - background-color: transparent
-              - padding-bottom: 5px
-              - padding-top: 0px
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - transition: none
+              - padding: 6px 6px 2px
             grid:
-              - grid-template-areas: |
-                  "name gap temperature"
-              - grid-template-columns: 120px auto 110px
-              - grid-template-rows: 60px
-              - column-gap: 0px
-            main:
-          custom_fields:
+              - grid-template-areas: '"n notif s" "l notif s"'
+              - grid-template-columns: 1fr auto auto
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 10px
             name:
-              card:
-                type: custom:button-card
-                show_state: false
-                show_name: true
-                show_icon: true
-                show_label: false
-                layout: icon_name
-                icon: mdi:home
-                name: Home
-                size: 70%
-                icon_color: var(--primary-text-color)
-                styles: 
-                  name: 
-                    - font-size: 22px
-                    - font-weight: bold
-                  card:
-                    - align-items: start
-                    - justify-content: flex-start 
-                    - text-align: left
-                    - padding-left: 8px
-                    - background-color: transparent
-            temperature:
-              card:
-                type: custom:button-card
-                entity: sensor.bayberry_tempest_temperature
-                tap_action:
-                  action: more-info
-                  entity: sensor.tempest_temperature_5min
-                show_state: true
-                show_name: false
-                show_icon: true
-                show_label: false
-                layout: icon_state
-                icon: mdi:thermometer
-                size: 60%
-                icon_color: var(--primary-text-color)
-                styles: 
-                  state: 
-                    - font-size: 16px
-                    - font-weight: bold
-                  card:
-                    - align-items: start
-                    - justify-content: right
-                    - text-align: right
-                    - padding-right: 15px
-                    - background-color: transparent
+              - justify-self: start
+              - font-size: 25px
+              - font-weight: 700
+              - color: var(--primary-text-color)
+            label:
+              - justify-self: start
+              - font-size: 13px
+              - color: var(--secondary-text-color)
+            state:
+              - grid-area: s
+              - align-self: center
+              - font-size: 26px
+              - font-weight: 300
+              - color: var(--primary-text-color)
+            custom_fields:
+              notif:
+                - grid-area: notif
+                - align-self: center
+          # type: custom:button-card
+          # show_state: false
+          # show_name: false
+          # show_icon: false
+          # styles:
+          #   card:
+          #     - background-color: transparent
+          #     - padding-bottom: 5px
+          #     - padding-top: 0px
+          #   grid:
+          #     - grid-template-areas: |
+          #         "name gap temperature"
+          #     - grid-template-columns: 120px auto 110px
+          #     - grid-template-rows: 60px
+          #     - column-gap: 0px
+          #   main:
+          # custom_fields:
+          #   name:
+          #     card:
+          #       type: custom:button-card
+          #       show_state: false
+          #       show_name: true
+          #       show_icon: true
+          #       show_label: false
+          #       layout: icon_name
+          #       icon: mdi:home
+          #       name: Home
+          #       size: 70%
+          #       icon_color: var(--primary-text-color)
+          #       styles: 
+          #         name: 
+          #           - font-size: 22px
+          #           - font-weight: bold
+          #         card:
+          #           - align-items: start
+          #           - justify-content: flex-start 
+          #           - text-align: left
+          #           - padding-left: 8px
+          #           - background-color: transparent
+          #   temperature:
+          #     card:
+          #       type: custom:button-card
+          #       entity: sensor.bayberry_tempest_temperature
+          #       tap_action:
+          #         action: more-info
+          #         entity: sensor.tempest_temperature_5min
+          #       show_state: true
+          #       show_name: false
+          #       show_icon: true
+          #       show_label: false
+          #       layout: icon_state
+          #       icon: mdi:thermometer
+          #       size: 60%
+          #       icon_color: var(--primary-text-color)
+          #       styles: 
+          #         state: 
+          #           - font-size: 16px
+          #           - font-weight: bold
+          #         card:
+          #           - align-items: start
+          #           - justify-content: right
+          #           - text-align: right
+          #           - padding-right: 15px
+          #           - background-color: transparent
       chips:
         card: !include /config/dashboards/modules/chips.yaml
       notifications:
