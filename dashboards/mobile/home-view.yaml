@@ -52,7 +52,7 @@ cards:
                 + ', ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
             ]]]
           state_display: |
-            [[[ return Math.round(entity.state) + '°'; ]]]
+            [[[ return (entity && !isNaN(entity.state)) ? Math.round(entity.state) + '°' : ''; ]]]
           # Notification chip (left of the weather temp). Driven by the separate
           # Notification Center integration (sensor.notification_center*). It hides
           # itself when there are no active alerts OR the integration isn't
