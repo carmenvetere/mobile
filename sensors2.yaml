@@ -1031,6 +1031,9 @@
 - sensor:
     - name: Menu Lights Status
       unique_id: menu_lights_status
+      icon: >
+        {{ 'mdi:lightbulb-off' if states('sensor.lights_on_count') == 'All Off'
+           else 'mdi:lightbulb' }}
       state: >
         {% set s = states('sensor.lights_on_count') %}
         {% if s in ['unknown','unavailable','none'] or s is none %}
@@ -1038,6 +1041,9 @@
         {% else %}{{ s }} on{% endif %}
     - name: Menu Shades Status
       unique_id: menu_shades_status
+      icon: >
+        {{ 'mdi:roller-shade' if states('sensor.shades_open_count') | int(0) > 0
+           else 'mdi:roller-shade-closed' }}
       state: >
         {% set n = states('sensor.shades_open_count') | int(-1) %}
         {% if n < 0 %}
@@ -1045,6 +1051,7 @@
         {% else %}{{ n }} Open{% endif %}
     - name: Menu Music Status
       unique_id: menu_music_status
+      icon: mdi:music
       state: >
         {% set players = [
           'media_player.deck','media_player.gym','media_player.kitchen',
