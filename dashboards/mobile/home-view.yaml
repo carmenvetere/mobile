@@ -21,7 +21,6 @@ cards:
         - grid-template-areas: |
             "header"
             "chips"
-            "notifications"
             "menu"
         - grid-template-columns: auto
         - grid-template-rows: 60px 70px auto auto
@@ -203,8 +202,6 @@ cards:
           #           - background-color: transparent
       chips:
         card: !include /config/dashboards/modules/chips.yaml
-      notifications:
-        card: !include /config/dashboards/modules/dynamic-cards.yaml
       menu:
         card:
           type: custom:stack-in-card
@@ -267,6 +264,13 @@ cards:
                       action: navigate
                       navigation_path: /mobile-dash/lights-main
                   sub_button:
+                      - icon: mdi:lightbulb
+                        entity: sensor.lights_on_count
+                        show_state: true
+                        state_background: false
+                        tap_action:
+                          action: navigate
+                          navigation_path: /mobile-dash/lights-main  
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:
