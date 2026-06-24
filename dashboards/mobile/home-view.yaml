@@ -371,6 +371,12 @@ cards:
                       action: navigate
                       navigation_path: /mobile-dash/security
                   sub_button:
+                      entity: alarm_control_panel.alarmo
+                      show_state: true
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/security-view 
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:
