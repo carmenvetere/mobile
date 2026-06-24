@@ -264,13 +264,12 @@ cards:
                       action: navigate
                       navigation_path: /mobile-dash/lights-main
                   sub_button:
-                    - icon: mdi:lightbulb
-                      entity: sensor.lights_on_count
+                    - entity: sensor.menu_lights_status
                       show_state: true
                       state_background: false
                       tap_action:
                         action: navigate
-                        navigation_path: /mobile-dash/lights-main  
+                        navigation_path: /mobile-dash/lights-main
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:
@@ -280,7 +279,7 @@ cards:
                   styles: |-
                     .bubble-name {
                         font-size: 16px !important;
-                          }
+                      }
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/lights-main
@@ -289,18 +288,24 @@ cards:
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
-                  name: Climate
-                  icon: mdi:fan
+                  name: Security
+                  icon: mdi:cctv
                   button_action:
                     tap_action:
                       action: navigate
-                      navigation_path: /mobile-dash/climate-main
+                      navigation_path: /mobile-dash/security
                   sub_button:
+                    - entity: alarm_control_panel.alarmo
+                      show_state: true
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/security-view
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:
                         action: navigate
-                        navigation_path: /mobile-dash/climate-main
+                        navigation_path: /mobile-dash/security
                   card_layout: normal
                   styles: |-
                     .bubble-name {
@@ -308,7 +313,7 @@ cards:
                       }
                   tap_action:
                     action: navigate
-                    navigation_path: /mobile-dash/climate-main
+                    navigation_path: /mobile-dash/security
                   modules:
                     - mobile_lights_scenes
                 - type: custom:bubble-card
@@ -321,6 +326,12 @@ cards:
                       action: navigate
                       navigation_path: /mobile-dash/shades-main
                   sub_button:
+                    - entity: sensor.menu_shades_status
+                      show_state: true
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/shades-main
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:
@@ -346,6 +357,12 @@ cards:
                       action: navigate
                       navigation_path: /mobile-dash/music
                   sub_button:
+                    - entity: sensor.menu_music_status
+                      show_state: true
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/music
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:
@@ -358,30 +375,30 @@ cards:
                       }
                   tap_action:
                     action: navigate
-                    navigation_path: /mobile-dash/music                  
+                    navigation_path: /mobile-dash/music
                   modules:
                     - mobile_lights_scenes
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
-                  name: Security
-                  icon: mdi:cctv
+                  name: Climate
+                  icon: mdi:fan
                   button_action:
                     tap_action:
                       action: navigate
-                      navigation_path: /mobile-dash/security
+                      navigation_path: /mobile-dash/climate-main
                   sub_button:
-                    - entity: alarm_control_panel.alarmo
+                    - entity: sensor.climate_zones_avg_temp
                       show_state: true
                       state_background: false
                       tap_action:
                         action: navigate
-                        navigation_path: /mobile-dash/security-view 
+                        navigation_path: /mobile-dash/climate-main
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:
                         action: navigate
-                        navigation_path: /mobile-dash/security
+                        navigation_path: /mobile-dash/climate-main
                   card_layout: normal
                   styles: |-
                     .bubble-name {
@@ -389,7 +406,7 @@ cards:
                       }
                   tap_action:
                     action: navigate
-                    navigation_path: /mobile-dash/security
+                    navigation_path: /mobile-dash/climate-main
                   modules:
                     - mobile_lights_scenes
                 - type: custom:bubble-card
@@ -402,6 +419,12 @@ cards:
                       action: navigate
                       navigation_path: /mobile-dash/energy
                   sub_button:
+                    - entity: sensor.bayberry_charge
+                      show_state: true
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/energy
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:
@@ -427,6 +450,12 @@ cards:
                       action: navigate
                       navigation_path: /mobile-dash/pool
                   sub_button:
+                    - entity: sensor.menu_pool_status
+                      show_state: true
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/pool
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:
@@ -477,6 +506,12 @@ cards:
                       action: navigate
                       navigation_path: /mobile-dash/weather
                   sub_button:
+                    - entity: sensor.bayberry_tempest_temperature
+                      show_state: true
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/weather
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:
@@ -502,6 +537,12 @@ cards:
                       action: navigate
                       navigation_path: /mobile-dash/settings
                   sub_button:
+                    - entity: sensor.menu_settings_status
+                      show_state: true
+                      state_background: false
+                      tap_action:
+                        action: navigate
+                        navigation_path: /mobile-dash/settings
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:

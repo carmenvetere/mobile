@@ -1024,3 +1024,43 @@
           state_attr('climate.master_bedroom_thermostat','current_temperature')]
           | select('is_number') | map('float') | list %}
         {{ ((ts | sum) / (ts | count)) | round(0) | int if ts | count > 0 else 'unknown' }}
+
+# ---------------------------------------------------------------------------
+# Status labels for the v1 Mobile dashboard Home menu sub-buttons.
+# ---------------------------------------------------------------------------
+- sensor:
+    - name: Menu Lights Status
+      unique_id: menu_lights_status
+      state: >
+        {% set s = states('sensor.lights_on_count') %}
+        {% if s in ['unknown','unavailable','none'] or s is none %}
+        {% elif s == 'All Off' %}All Off
+        {% else %}{{ s }} on{% endif %}
+    - name: Menu Shades Status
+      unique_id: menu_shades_status
+      state: >
+        {% set n = states('sensor.shades_open_count') | int(-1) %}
+        {% if n < 0 %}
+        {% elif n == 0 %}All Closed
+        {% else %}{{ n }} Open{% endif %}
+    - name: Menu Music Status
+      unique_id: menu_music_status
+      state: >
+        {% set players = [
+          'media_player.deck','media_player.gym','media_player.kitchen',
+          'media_player.living_room','media_player.media_room',
+          'media_player.mud_room','media_player.office','media_player.pool'] %}
+        {% set playing = players | select('is_state','playing') | list %}
+        {% if playing | length > 0 %}{{ state_attr(playing[0],'friendly_name') }} Playing
+        {% else %}All Paused{% endif %}
+    - name: Menu Pool Status
+      unique_id: menu_pool_status
+      state: >
+        {% set t = states('sensor.omnilogic_pool_watersensor') %}
+        {% if t is number or (t is string and t | is_number) %}{{ t | round(0) | int }}°{% endif %}
+    - name: Menu Settings Status
+      unique_id: menu_settings_status
+      state: >
+        {% if is_state('input_boolean.dinner_party','on') %}Dinner Party
+        {% elif is_state('input_boolean.guest_mode','on') %}Overnight Guests
+        {% endif %}
