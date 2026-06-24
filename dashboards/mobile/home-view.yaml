@@ -452,6 +452,7 @@ cards:
                   sub_button:
                     - entity: sensor.menu_pool_status
                       show_state: true
+                      show_icon: false
                       state_background: false
                       tap_action:
                         action: navigate
@@ -539,6 +540,7 @@ cards:
                   sub_button:
                     - entity: sensor.menu_settings_status
                       show_state: true
+                      show_icon: false
                       state_background: false
                       tap_action:
                         action: navigate
