@@ -207,6 +207,11 @@ cards:
       menu:
         card:
           type: vertical-stack
+          card_mod: 
+            style: |
+              ha-card {
+                padding-left: 0px;
+                }
           # type: custom:stack-in-card
           # mode: vertical
           # card_mod:
