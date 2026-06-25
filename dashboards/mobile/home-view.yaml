@@ -205,16 +205,17 @@ cards:
         card: !include /config/dashboards/modules/chips.yaml
       menu:
         card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background: transparent !important;
-                border-radius: 0px;
-                box-shadow: none;
-                padding: 3px 12px 4px;
-                }
+          type: vertical-stack
+          # type: custom:stack-in-card
+          # mode: vertical
+          # card_mod:
+          #   style: |
+          #     ha-card {
+          #       background: transparent !important;
+          #       border-radius: 0px;
+          #       box-shadow: none;
+          #       padding: 3px 12px 4px;
+          #       }
           cards:
             - type: vertical-stack
               cards:
