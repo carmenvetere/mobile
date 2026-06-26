@@ -381,11 +381,12 @@ cards:
                     - mobile_lights_scenes
                   styles: |
                     ${(() => {
-                      const on = hass.states['light.all_lights']?.state === 'on';
-                      const c = on ? '#E2C168' : 'var(--secondary-text-color)';
+                      const s = hass.states['sensor.lights_on_count']?.state;
+                      const c = (s && s !== 'All Off') ? '#E2C168' : 'var(--secondary-text-color)';
                       return `
-                        .bubble-sub-button-1,
-                        .bubble-sub-button-1 ha-icon { color: ${c} !important; }
+                        .bubble-sub-button-1.bubble-sub-button-1,
+                        .bubble-sub-button-1.bubble-sub-button-1 ha-icon,
+                        .bubble-sub-button-1.bubble-sub-button-1 ha-state-icon { color: ${c} !important; }
                       `;
                     })()}
                 - type: custom:bubble-card
@@ -417,14 +418,14 @@ cards:
                     - mobile_lights_scenes
                   styles: |
                     ${(() => {
-                      const s = hass.states['alarm_control_panel.home']?.state;
+                      const s = hass.states['alarm_control_panel.alarmo']?.state;
                       const c = s === 'triggered' ? '#E0695B'
                               : (s || '').startsWith('armed') ? '#8BA680'
                               : 'var(--secondary-text-color)';
                       return `
-                        .bubble-sub-button-1,
-                        .bubble-sub-button-1 ha-icon,
-                        .bubble-sub-button-1 ha-state-icon { color: ${c} !important; }
+                        .bubble-sub-button-1.bubble-sub-button-1,
+                        .bubble-sub-button-1.bubble-sub-button-1 ha-icon,
+                        .bubble-sub-button-1.bubble-sub-button-1 ha-state-icon { color: ${c} !important; }
                       `;
                     })()}
                 - type: custom:bubble-card
@@ -537,11 +538,12 @@ cards:
                     - mobile_lights_scenes
                   styles: |
                     ${(() => {
-                      const v = Number(hass.states['sensor.battery_soc']?.state);
+                      const v = Number(hass.states['sensor.bayberry_charge']?.state);
                       const c = v <= 10 ? '#E0695B' : v <= 25 ? '#E0A75E' : 'var(--secondary-text-color)';
                       return `
-                        .bubble-sub-button-1,
-                        .bubble-sub-button-1 ha-icon { color: ${c} !important; }
+                        .bubble-sub-button-1.bubble-sub-button-1,
+                        .bubble-sub-button-1.bubble-sub-button-1 ha-icon,
+                        .bubble-sub-button-1.bubble-sub-button-1 ha-state-icon { color: ${c} !important; }
                       `;
                     })()}
                 - type: custom:bubble-card
