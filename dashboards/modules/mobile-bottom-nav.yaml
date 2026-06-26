@@ -1,0 +1,162 @@
+# lovelace_gen
+# ============================================================================
+#  Mobile Dash (v1) · Sticky bottom navigation  ·  Dune Mist
+#  Var: active  ->  home | lights | climate | security | more
+#  Renders a fixed 76px bottom bar (Home / Lights / Climate / Security / More)
+#  + a bubble-card pop-up (#more-menu) holding the 6 secondary views.
+#  Include once per view, e.g.:
+#    - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: home}]
+# ============================================================================
+{% macro tab(icon, label, path, key, active) %}
+        card:
+          type: custom:button-card
+          icon: {{ icon }}
+          name: {{ label }}
+          tap_action:
+            action: navigate
+            navigation_path: {{ path }}
+          styles:
+            card:
+              - background: transparent
+              - box-shadow: none
+              - transition: none
+              - padding: 0
+            grid:
+              - grid-template-areas: '"i" "n"'
+              - grid-template-rows: auto auto
+              - row-gap: 4px
+              - justify-items: center
+            img_cell:
+              - padding: 5px 18px
+              - border-radius: 999px
+              - background: {{ 'rgba(156,194,208,0.20)' if active == key else 'transparent' }}
+            icon:
+              - width: 23px
+              - color: {{ '#9CC2D0' if active == key else '#8d939a' }}
+            name:
+              - font-size: 11px
+              - font-weight: {{ '600' if active == key else '500' }}
+              - color: {{ '#9CC2D0' if active == key else '#8d939a' }}
+{% endmacro %}
+{% macro tile(label, icon, path) %}
+            - type: custom:button-card
+              icon: {{ icon }}
+              name: {{ label }}
+              tap_action:
+                action: navigate
+                navigation_path: {{ path }}
+              styles:
+                card:
+                  - background: rgba(255,255,255,0.05)
+                  - border-radius: 16px
+                  - padding: 16px 8px
+                  - box-shadow: none
+                  - transition: none
+                grid:
+                  - grid-template-areas: '"i" "n"'
+                  - grid-template-rows: auto auto
+                  - row-gap: 9px
+                  - justify-items: center
+                icon:
+                  - width: 25px
+                  - color: '#cdd1d6'
+                name:
+                  - font-size: 12px
+                  - font-weight: 600
+                  - color: '#e7e9ec'
+{% endmacro %}
+type: vertical-stack
+cards:
+  # ------------------------------------------------------------- fixed bar
+  - type: custom:button-card
+    tap_action: { action: none }
+    show_icon: false
+    show_name: false
+    styles:
+      card:
+        - position: fixed
+        - left: 0
+        - right: 0
+        - bottom: 0
+        - z-index: 6
+        - height: 76px
+        - box-sizing: border-box
+        - background: "#33363b"
+        - border-top: 1px solid rgba(255,255,255,0.06)
+        - border-radius: 0
+        - box-shadow: 0 -10px 28px rgba(0,0,0,0.4)
+        - padding: 0 6px calc(6px + env(safe-area-inset-bottom))
+        - transition: none
+      grid:
+        - grid-template-areas: '"home lights climate security more"'
+        - grid-template-columns: repeat(5, 1fr)
+        - align-items: center
+      custom_fields:
+        home:
+          - grid-area: home
+          - justify-self: center
+        lights:
+          - grid-area: lights
+          - justify-self: center
+        climate:
+          - grid-area: climate
+          - justify-self: center
+        security:
+          - grid-area: security
+          - justify-self: center
+        more:
+          - grid-area: more
+          - justify-self: center
+    custom_fields:
+      home:
+{{ tab('mdi:home','Home','/mobile-dash/mobile-home','home', active) }}
+      lights:
+{{ tab('mdi:lightbulb','Lights','/mobile-dash/lights-main','lights', active) }}
+      climate:
+{{ tab('mdi:fan','Climate','/mobile-dash/climate-main','climate', active) }}
+      security:
+{{ tab('mdi:cctv','Security','/mobile-dash/security','security', active) }}
+      more:
+{{ tab('mdi:dots-horizontal','More','#more-menu','more', active) }}
+
+  # --------------------------------------------------- More sheet (#more-menu)
+  - type: vertical-stack
+    cards:
+      - type: custom:bubble-card
+        card_type: pop-up
+        hash: "#more-menu"
+        show_header: false
+        styles: |
+          .bubble-pop-up {
+            background: #3a3e44 !important;
+            border-radius: 22px !important;
+            box-shadow: 0 -16px 44px rgba(0,0,0,0.55) !important;
+          }
+      - type: custom:button-card
+        name: MORE
+        show_icon: false
+        tap_action: { action: none }
+        styles:
+          card:
+            - background: transparent
+            - box-shadow: none
+            - padding: 2px 2px 12px
+          grid:
+            - grid-template-areas: '"n"'
+          name:
+            - justify-self: start
+            - font-size: 13px
+            - font-weight: 600
+            - text-transform: uppercase
+            - letter-spacing: 0.04em
+            - color: "#9aa0a7"
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+{{ tile('Shades','mdi:roller-shade','/mobile-dash/shades-main') }}
+{{ tile('Music','mdi:music','/mobile-dash/music') }}
+{{ tile('Energy','mdi:lightning-bolt','/mobile-dash/energy') }}
+{{ tile('Pool','mdi:pool','/mobile-dash/pool') }}
+{{ tile('Weather','mdi:weather-partly-cloudy','/mobile-dash/weather') }}
+{{ tile('Settings','mdi:cog','/mobile-dash/settings') }}
