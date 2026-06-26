@@ -21,10 +21,9 @@ cards:
       grid:
         - grid-template-areas: |
             "header"
-            "chips"
             "menu"
         - grid-template-columns: auto
-        - grid-template-rows: 60px 70px auto auto
+        - grid-template-rows: 60px auto
         - row-gap: 0px
         - align-items: start
         - column-gap: 2px
@@ -32,32 +31,20 @@ cards:
       header:
         card:
           type: custom:button-card
-          entity: sensor.bayberry_tempest_temperature
+          # sensor.time re-renders the clock every minute (Time & Date
+          # integration). Without it the time still shows but won't tick until
+          # the card refreshes.
+          entity: sensor.time
           tap_action:
-            action: navigate
-            navigation_path: /mobile-dash/weather
+            action: none
           show_icon: false
           show_name: true
-          show_state: true
+          show_state: false
           show_label: false
           name: |
-            [[[
-              var h = new Date().getHours();
-              return h < 12 ? 'Good morning' : (h < 18 ? 'Good afternoon' : 'Good evening');
-            ]]]
-          label: |
-            [[[
-              var d = new Date();
-              return d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' })
-                + ', ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
-            ]]]
-          state_display: |
-            [[[ return (entity && !isNaN(entity.state)) ? Math.round(entity.state) + '°' : ''; ]]]
-          # Notification chip (left of the weather temp). Driven by the separate
-          # Notification Center integration (sensor.notification_center*). It hides
-          # itself when there are no active alerts OR the integration isn't
-          # installed yet, so it degrades gracefully until those entities exist.
+            [[[ return new Date().toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' }); ]]]
           custom_fields:
+            # --- Notification center chip (only shows when count > 0) ---
             notif:
               card:
                 type: custom:button-card
@@ -69,8 +56,7 @@ cards:
                   [[[ var p = states['sensor.notification_center_priority'];
                       return (p && p.attributes.icon) || 'mdi:bell'; ]]]
                 name: |
-                  [[[ var c = states['sensor.notification_center'];
-                      return c ? c.state : ''; ]]]
+                  [[[ var c = states['sensor.notification_center']; return c ? c.state : ''; ]]]
                 tap_action: { action: navigate, navigation_path: "#notifications" }
                 styles:
                   card:
@@ -87,24 +73,119 @@ cards:
                     - box-shadow: none
                     - transition: none
                     - border-radius: 999px
-                    - padding: 5px 10px
+                    - padding: 4px 9px
                   grid:
                     - grid-template-areas: '"i n"'
                     - grid-template-columns: auto auto
                     - align-items: center
                     - column-gap: 5px
                   icon:
-                    - width: 26px
-                    - height: 26px
+                    - width: 30px
+                    - height: 30px
                     - color: |
                         [[[ var p = states['sensor.notification_center_priority'];
                             return (p && p.attributes.color) || '#7295B2'; ]]]
                   name:
-                    - font-size: 13px
+                    - font-size: 14px
                     - font-weight: 700
                     - color: |
                         [[[ var p = states['sensor.notification_center_priority'];
                             return (p && p.attributes.color) || '#7295B2'; ]]]
+            # --- Alarm state -> Security view ---
+            alarm:
+              card:
+                type: custom:button-card
+                entity: alarm_control_panel.alarmo
+                show_icon: true
+                show_name: false
+                show_state: false
+                icon: |
+                  [[[ var s = entity.state;
+                      return s === 'disarmed' ? 'mdi:shield-off-outline'
+                        : (s === 'triggered' ? 'mdi:shield-alert' : 'mdi:shield-lock'); ]]]
+                tap_action: { action: navigate, navigation_path: /mobile-dash/security }
+                styles:
+                  card:
+                    - background: transparent !important
+                    - --ha-card-background: transparent
+                    - box-shadow: none
+                    - transition: none
+                    - padding: 4px
+                  icon:
+                    - width: 26px
+                    - height: 26px
+                    - color: |
+                        [[[ var s = entity.state;
+                            return s === 'disarmed' ? '#9aa0a8'
+                              : (s === 'triggered' ? '#E0695B' : '#E0A75E'); ]]]
+            # --- Overnight Guests -> Settings (hidden when off) ---
+            guests:
+              card:
+                type: custom:button-card
+                entity: input_boolean.guest_mode
+                show_icon: true
+                show_name: false
+                show_state: false
+                icon: mdi:bed
+                tap_action: { action: navigate, navigation_path: /mobile-dash/settings }
+                styles:
+                  card:
+                    - background: transparent !important
+                    - --ha-card-background: transparent
+                    - box-shadow: none
+                    - transition: none
+                    - padding: 4px
+                    - display: |
+                        [[[ return entity.state === 'on' ? 'flex' : 'none'; ]]]
+                  icon:
+                    - width: 26px
+                    - height: 26px
+                    - color: '#7295B2'
+            # --- Dinner Party -> Settings (hidden when off) ---
+            dinner:
+              card:
+                type: custom:button-card
+                entity: input_boolean.dinner_party
+                show_icon: true
+                show_name: false
+                show_state: false
+                icon: mdi:party-popper
+                tap_action: { action: navigate, navigation_path: /mobile-dash/settings }
+                styles:
+                  card:
+                    - background: transparent !important
+                    - --ha-card-background: transparent
+                    - box-shadow: none
+                    - transition: none
+                    - padding: 4px
+                    - display: |
+                        [[[ return entity.state === 'on' ? 'flex' : 'none'; ]]]
+                  icon:
+                    - width: 26px
+                    - height: 26px
+                    - color: '#E0A75E'
+            # --- Temperature -> Weather (only this opens weather) ---
+            temp:
+              card:
+                type: custom:button-card
+                entity: sensor.bayberry_tempest_temperature
+                show_icon: false
+                show_name: false
+                show_state: true
+                tap_action: { action: navigate, navigation_path: /mobile-dash/weather }
+                state_display: |
+                  [[[ return (entity && !isNaN(entity.state)) ? Math.round(entity.state) + '°' : ''; ]]]
+                styles:
+                  card:
+                    - background: transparent !important
+                    - --ha-card-background: transparent
+                    - box-shadow: none
+                    - transition: none
+                    - padding: 0 2px
+                  state:
+                    - font-size: 26px
+                    - font-weight: 700
+                    - color: var(--primary-text-color)
           styles:
             card:
               - background: transparent !important
@@ -113,24 +194,15 @@ cards:
               - transition: none
               - padding: 6px 6px 2px
             grid:
-              - grid-template-areas: '"n notif s" "l notif s"'
-              - grid-template-columns: 1fr auto auto
-              - grid-template-rows: auto auto
+              - grid-template-areas: '"n notif alarm guests dinner temp"'
+              - grid-template-columns: 1fr auto auto auto auto auto
+              - grid-template-rows: auto
               - align-items: center
-              - column-gap: 10px
+              - column-gap: 8px
             name:
+              - grid-area: n
               - justify-self: start
               - align-items: center
-              - font-size: 26px
-              - font-weight: 700
-              - color: var(--primary-text-color)
-            label:
-              - justify-self: start
-              - font-size: 16px
-              - color: var(--secondary-text-color)
-            state:
-              - grid-area: s
-              - align-self: center
               - font-size: 26px
               - font-weight: 700
               - color: var(--primary-text-color)
@@ -138,6 +210,19 @@ cards:
               notif:
                 - grid-area: notif
                 - align-self: center
+              alarm:
+                - grid-area: alarm
+                - align-self: center
+              guests:
+                - grid-area: guests
+                - align-self: center
+              dinner:
+                - grid-area: dinner
+                - align-self: center
+              temp:
+                - grid-area: temp
+                - align-self: center
+                - justify-self: end
           # type: custom:button-card
           # show_state: false
           # show_name: false
@@ -202,8 +287,6 @@ cards:
           #           - text-align: right
           #           - padding-right: 15px
           #           - background-color: transparent
-      chips:
-        card: !include /config/dashboards/modules/chips.yaml
       menu:
         card:
           type: vertical-stack
