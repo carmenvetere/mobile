@@ -374,15 +374,20 @@ cards:
                         action: navigate
                         navigation_path: /mobile-dash/lights-main
                   card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/lights-main
                   modules:
                     - mobile_lights_scenes
+                  styles: |
+                    ${(() => {
+                      const on = hass.states['light.all_lights']?.state === 'on';
+                      const c = on ? '#E2C168' : 'var(--secondary-text-color)';
+                      return `
+                        .bubble-sub-button-1,
+                        .bubble-sub-button-1 ha-icon { color: ${c} !important; }
+                      `;
+                    })()}
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -405,15 +410,23 @@ cards:
                         action: navigate
                         navigation_path: /mobile-dash/security
                   card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/security
                   modules:
                     - mobile_lights_scenes
+                  styles: |
+                    ${(() => {
+                      const s = hass.states['alarm_control_panel.home']?.state;
+                      const c = s === 'triggered' ? '#E0695B'
+                              : (s || '').startsWith('armed') ? '#8BA680'
+                              : 'var(--secondary-text-color)';
+                      return `
+                        .bubble-sub-button-1,
+                        .bubble-sub-button-1 ha-icon,
+                        .bubble-sub-button-1 ha-state-icon { color: ${c} !important; }
+                      `;
+                    })()}
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
@@ -436,10 +449,6 @@ cards:
                         action: navigate
                         navigation_path: /mobile-dash/shades-main
                   card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/shades-main
@@ -467,10 +476,6 @@ cards:
                         action: navigate
                         navigation_path: /mobile-dash/music
                   card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/music
@@ -498,10 +503,6 @@ cards:
                         action: navigate
                         navigation_path: /mobile-dash/climate-main
                   card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/climate-main
@@ -529,15 +530,20 @@ cards:
                         action: navigate
                         navigation_path: /mobile-dash/energy
                   card_layout: normal
-                  styles: |-
-                    .bubble-name {
-                        font-size: 16px !important;
-                      }
                   tap_action:
                     action: navigate
                     navigation_path: /mobile-dash/energy
                   modules:
                     - mobile_lights_scenes
+                  styles: |
+                    ${(() => {
+                      const v = Number(hass.states['sensor.battery_soc']?.state);
+                      const c = v <= 10 ? '#E0695B' : v <= 25 ? '#E0A75E' : 'var(--secondary-text-color)';
+                      return `
+                        .bubble-sub-button-1,
+                        .bubble-sub-button-1 ha-icon { color: ${c} !important; }
+                      `;
+                    })()}
                 - type: custom:bubble-card
                   card_type: button
                   button_type: name
