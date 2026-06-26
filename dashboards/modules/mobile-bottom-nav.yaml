@@ -14,13 +14,14 @@
           name: {{ label }}
           tap_action:
             action: navigate
-            navigation_path: {{ path }}
+            navigation_path: "{{ path }}"
           styles:
             card:
               - background: transparent
               - box-shadow: none
               - transition: none
               - padding: 0
+              - overflow: visible
             grid:
               - grid-template-areas: '"i" "n"'
               - grid-template-rows: auto auto
@@ -44,7 +45,7 @@
               name: {{ label }}
               tap_action:
                 action: navigate
-                navigation_path: {{ path }}
+                navigation_path: "{{ path }}"
               styles:
                 card:
                   - background: rgba(255,255,255,0.05)
@@ -87,6 +88,7 @@ cards:
         - box-shadow: 0 -10px 28px rgba(0,0,0,0.4)
         - padding: 0 6px calc(6px + env(safe-area-inset-bottom))
         - transition: none
+        - overflow: visible
       grid:
         - grid-template-areas: '"home lights climate security more"'
         - grid-template-columns: repeat(5, 1fr)
@@ -95,18 +97,23 @@ cards:
         home:
           - grid-area: home
           - justify-self: center
+          - overflow: visible
         lights:
           - grid-area: lights
           - justify-self: center
+          - overflow: visible
         climate:
           - grid-area: climate
           - justify-self: center
+          - overflow: visible
         security:
           - grid-area: security
           - justify-self: center
+          - overflow: visible
         more:
           - grid-area: more
           - justify-self: center
+          - overflow: visible
     custom_fields:
       home:
 {{ tab('mdi:home','Home','/mobile-dash/mobile-home','home', active) }}
