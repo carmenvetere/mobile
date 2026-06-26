@@ -100,7 +100,8 @@ cards:
                 show_name: false
                 show_state: false
                 icon: |
-                  [[[ var s = entity ? entity.state : 'disarmed';
+                  [[[ var a = states['alarm_control_panel.alarmo'];
+                      var s = a ? a.state : 'disarmed';
                       return s === 'disarmed' ? 'mdi:shield-off-outline'
                         : (s === 'triggered' ? 'mdi:shield-alert' : 'mdi:shield-lock'); ]]]
                 tap_action: { action: navigate, navigation_path: /mobile-dash/security }
@@ -115,7 +116,8 @@ cards:
                     - width: 26px
                     - height: 26px
                     - color: |
-                        [[[ var s = entity ? entity.state : 'disarmed';
+                        [[[ var a = states['alarm_control_panel.alarmo'];
+                            var s = a ? a.state : 'disarmed';
                             return s === 'disarmed' ? '#9aa0a8'
                               : (s === 'triggered' ? '#E0695B' : '#E0A75E'); ]]]
             # --- Overnight Guests -> Settings (hidden when off) ---
@@ -136,7 +138,8 @@ cards:
                     - transition: none
                     - padding: 4px
                     - display: |
-                        [[[ return (entity && entity.state === 'on') ? 'flex' : 'none'; ]]]
+                        [[[ var g = states['input_boolean.guest_mode'];
+                            return (g && g.state === 'on') ? 'flex' : 'none'; ]]]
                   icon:
                     - width: 26px
                     - height: 26px
@@ -159,7 +162,8 @@ cards:
                     - transition: none
                     - padding: 4px
                     - display: |
-                        [[[ return (entity && entity.state === 'on') ? 'flex' : 'none'; ]]]
+                        [[[ var d = states['input_boolean.dinner_party'];
+                            return (d && d.state === 'on') ? 'flex' : 'none'; ]]]
                   icon:
                     - width: 26px
                     - height: 26px
@@ -174,7 +178,8 @@ cards:
                 show_state: true
                 tap_action: { action: navigate, navigation_path: /mobile-dash/weather }
                 state_display: |
-                  [[[ return (entity && !isNaN(entity.state)) ? Math.round(entity.state) + '°' : ''; ]]]
+                  [[[ var t = states['sensor.bayberry_tempest_temperature'];
+                      return (t && !isNaN(parseFloat(t.state))) ? Math.round(parseFloat(t.state)) + '°' : ''; ]]]
                 styles:
                   card:
                     - background: transparent !important
