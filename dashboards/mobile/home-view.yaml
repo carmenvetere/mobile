@@ -5,12 +5,14 @@ theme: Dune Mist
 path: mobile-home
 type: custom:grid-layout
 cards:
+  # Sticky bottom nav (TEST: Home view only for now). active=home highlights the Home tab.
+  - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: home}]
   - type: custom:button-card
     styles:
       card:
         - border-radius: 0px
         - box-shadow: none
-        - padding-bottom: 5px
+        - padding-bottom: 90px
         - padding-left: 5px
         - padding-right: 5px
         - padding-top: 2px
