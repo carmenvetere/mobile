@@ -44,9 +44,9 @@ cards:
           tap_action:
             action: none
           state_display: |
-            [[[ return entity.state + ' open'; ]]]
+            [[[ var e = states['sensor.shades_open_count']; return (e ? e.state : '0') + ' open'; ]]]
           label: |
-            [[[ return (entity.attributes.total || '0') + ' shades ·'; ]]]
+            [[[ var e = states['sensor.shades_open_count']; return ((e && e.attributes.total) || '0') + ' shades ·'; ]]]
           styles:
             card:
               - background: transparent !important
