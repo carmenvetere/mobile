@@ -5,6 +5,8 @@ theme: Dark Dune
 path: climate-main
 type: custom:grid-layout
 cards:
+  # Sticky bottom nav
+  - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: climate}]
   - type: custom:button-card
     styles:
       card:
@@ -38,7 +40,7 @@ cards:
           styles:
             card:
               - background-color: transparent
-              - padding-bottom: 5px
+              - padding-bottom: 90px
               - padding-top: 0px
             grid:
               - grid-template-areas: |

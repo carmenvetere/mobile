@@ -4,11 +4,13 @@ theme: Dark Dune
 path: shades-main
 type: custom:grid-layout
 cards:
+  # Sticky bottom nav
+  - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: more}]
   - type: custom:button-card
     styles:
       card:
         - border-radius: 15px
-        - padding-bottom: 5px
+        - padding-bottom: 90px
         - padding-left: 5px
         - padding-right: 10px
         - padding-top: 2px
