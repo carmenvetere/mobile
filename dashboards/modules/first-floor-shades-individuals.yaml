@@ -42,9 +42,9 @@
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
     }
-    .bubble-button-background {
+    ha-card {
       background-color: var(--background-color-2) !important;
-      }
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
