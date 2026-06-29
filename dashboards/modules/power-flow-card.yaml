@@ -41,16 +41,16 @@ entities:
     entity: sensor.bayberry_battery_power
     state_of_charge: sensor.bayberry_charge
     color:
-      consumption: var(--accent-color-2)
-      production: var(--accent-color-2)
+      consumption: var(--sage-color)
+      production: var(--sage-color)
     color_icon: true
     show_state_of_charge: true
   grid:
     entity: sensor.bayberry_site_power
     color_icon: false
     color:
-      consumption: var(--primary-text-color)
-      production: var(--primary-text-color)
+      consumption: var(--secondary-text-color)
+      production: var(--secondary-text-color)
       color_value: true
     power_outage:
       icon_alert: mdi:flash-alert
@@ -63,7 +63,7 @@ entities:
   solar:
     entity: sensor.bayberry_solar_power
     color_icon: false
-    color: var(--accent-color-3)
+    color: var(--gold-color)
   home:
     entity: sensor.bayberry_load_power
     subtract_individual: true
@@ -72,28 +72,28 @@ entities:
       display_zero: false
       name: Car Charging
       icon: mdi:car-electric
-      color: var(--accent-color-2)
+      color: var(--sage-color)
     - entity: sensor.well_pump_power
       name: Well Pump
-      color: var(--accent-color)
+      color: var(--slate-color)
       color_value: false
       display_zero: false
       icon: mdi:sprinkler-variant
     - entity: sensor.omnilogic_pool_filter_pump_power
       name: Pool Filter
-      color: var(--accent-color)
+      color: var(--slate-color)
       color_value: false
       display_zero: false
       icon: mdi:pool
     - entity: sensor.upper_hvac_estimated_power
       name: Upper HVAC
-      color: var(--accent-color)
+      color: var(--slate-bright)
       color_value: false
       display_zero: false
       icon: mdi:hvac
     - entity: sensor.lower_hvac_estimated_power
       name: Lower HVAC
-      color: var(--accent-color)
+      color: var(--slate-bright)
       color_value: false
       display_zero: false
       icon: mdi:hvac
