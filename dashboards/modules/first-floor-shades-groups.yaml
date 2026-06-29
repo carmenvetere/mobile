@@ -7,28 +7,7 @@
   show_state: true
   tap_action:
     action: toggle
-  button_action: {}
-  sub_button:
-    - entity: cover.first_floor_all
-      icon: mdi:sun-angle
-      state_background: false
-      show_state: false
-      tap_action:
-        action: perform-action
-        perform_action: cover.set_cover_position
-        target:
-          entity_id: cover.first_floor_all
-        data:
-          position: 55
   rows: 1
-  styles: |
-    .bubble-range-fill { background-color: rgba(142,177,191,0.30) !important; }
-    .bubble-button-card-container { background: var(--card-background-color) !important;
-      border-radius: 16px !important; box-shadow: none !important; }
-    .bubble-icon-container { background: rgba(142,177,191,0.18) !important; }
-    .bubble-icon { color: var(--slate-bright) !important; }
-    .bubble-name { color: var(--primary-text-color) !important; font-size: 15px !important; font-weight: 600 !important; }
-    .bubble-state { color: #c3c7cc !important; }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -39,28 +18,7 @@
   show_state: true
   tap_action:
     action: toggle
-  button_action: {}
-  sub_button:
-    - entity: cover.first_floor_front
-      icon: mdi:sun-angle
-      state_background: false
-      show_state: false
-      tap_action:
-        action: perform-action
-        perform_action: cover.set_cover_position
-        target:
-          entity_id: cover.first_floor_front
-        data:
-          position: 55
   rows: 1
-  styles: |
-    .bubble-range-fill { background-color: rgba(142,177,191,0.30) !important; }
-    .bubble-button-card-container { background: var(--card-background-color) !important;
-      border-radius: 16px !important; box-shadow: none !important; }
-    .bubble-icon-container { background: rgba(142,177,191,0.18) !important; }
-    .bubble-icon { color: var(--slate-bright) !important; }
-    .bubble-name { color: var(--primary-text-color) !important; font-size: 15px !important; font-weight: 600 !important; }
-    .bubble-state { color: #c3c7cc !important; }
   modules:
   - mobile_shades_module  
 - type: custom:bubble-card
@@ -71,28 +29,7 @@
   show_state: true
   tap_action:
     action: toggle
-  button_action: {}
-  sub_button:
-    - entity: cover.living_room_side_shades
-      icon: mdi:sun-angle
-      state_background: false
-      show_state: false
-      tap_action:
-        action: perform-action
-        perform_action: cover.set_cover_position
-        target:
-          entity_id: cover.living_room_side_shades
-        data:
-          position: 55
   rows: 1
-  styles: |
-    .bubble-range-fill { background-color: rgba(142,177,191,0.30) !important; }
-    .bubble-button-card-container { background: var(--card-background-color) !important;
-      border-radius: 16px !important; box-shadow: none !important; }
-    .bubble-icon-container { background: rgba(142,177,191,0.18) !important; }
-    .bubble-icon { color: var(--slate-bright) !important; }
-    .bubble-name { color: var(--primary-text-color) !important; font-size: 15px !important; font-weight: 600 !important; }
-    .bubble-state { color: #c3c7cc !important; }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -103,27 +40,6 @@
   show_state: true
   tap_action:
     action: toggle
-  button_action: {}
-  sub_button:
-    - entity: cover.dining_room_side
-      icon: mdi:sun-angle
-      state_background: false
-      show_state: false
-      tap_action:
-        action: perform-action
-        perform_action: cover.set_cover_position
-        target:
-          entity_id: cover.dining_room_side
-        data:
-          position: 55
   rows: 1
-  styles: |
-    .bubble-range-fill { background-color: rgba(142,177,191,0.30) !important; }
-    .bubble-button-card-container { background: var(--card-background-color) !important;
-      border-radius: 16px !important; box-shadow: none !important; }
-    .bubble-icon-container { background: rgba(142,177,191,0.18) !important; }
-    .bubble-icon { color: var(--slate-bright) !important; }
-    .bubble-name { color: var(--primary-text-color) !important; font-size: 15px !important; font-weight: 600 !important; }
-    .bubble-state { color: #c3c7cc !important; }
   modules:
   - mobile_shades_module 
