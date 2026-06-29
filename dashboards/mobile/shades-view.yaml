@@ -17,7 +17,7 @@ cards:
 #        - margin: -8px
         - height: auto
 #        - width: 398px
-        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
+        - background: var(--primary-background-color)
       grid:
         - grid-template-areas: |
             "header"
@@ -36,105 +36,101 @@ cards:
       header:
         card:
           type: custom:button-card
-          show_state: false
-          show_name: false
-          show_icon: false
+          entity: sensor.shades_open_count
+          icon: mdi:roller-shade
+          name: Shades
+          show_state: true
+          show_label: true
+          tap_action:
+            action: none
+          state_display: |
+            [[[ return entity.state + ' open'; ]]]
+          label: |
+            [[[ return (entity.attributes.total || '0') + ' shades ·'; ]]]
           styles:
             card:
-              - background-color: transparent
-              - padding-bottom: 5px
-              - padding-top: 0px
+              - background: transparent !important
+              - "--ha-card-background": transparent
+              - box-shadow: none
+              - transition: none
+              - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: |
-                  "name gap"
-              - grid-template-columns: 150px auto
-              - grid-template-rows: 60px
-              - column-gap: 0px
-            main:
-          custom_fields:
+              - grid-template-areas: "\"i n n closeall\" \"i l s closeall\""
+              - grid-template-columns: 54px auto 1fr auto
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 8px
+            img_cell:
+              - grid-area: i
+              - width: 48px
+              - height: 48px
+              - border-radius: 13px
+              - background-color: rgba(142,177,191,0.18)
+            icon:
+              - width: 24px
+              - color: var(--slate-bright)
             name:
+              - grid-area: "n"
+              - justify-self: start
+              - font-size: 22px
+              - font-weight: 700
+              - color: var(--primary-text-color)
+            state:
+              - grid-area: s
+              - justify-self: start
+              - font-size: 14px
+              - font-weight: 700
+              - color: var(--slate-bright)
+            label:
+              - grid-area: l
+              - justify-self: start
+              - font-size: 14px
+              - color: var(--secondary-text-color)
+            custom_fields:
+              closeall:
+                - grid-area: closeall
+                - justify-self: end
+                - min-width: max-content
+          custom_fields:
+            closeall:
               card:
                 type: custom:button-card
-                show_state: false
-                show_name: true
+                icon: mdi:arrow-collapse-vertical
+                name: Close All
                 show_icon: true
-                show_label: false
-                layout: icon_name
-                icon: mdi:roller-shade
-                name: Shades
-                size: 60%
-                icon_color: var(--primary-text-color)
-                styles: 
-                  name: 
-                    - font-size: 22px
-                    - font-weight: bold
+                show_name: true
+                tap_action:
+                  action: perform-action
+                  perform_action: cover.close_cover
+                  target:
+                    entity_id:
+                      - cover.first_floor_all
+                      - cover.bedroom_side_shades
+                      - cover.bedroom_back
+                      - cover.front_guest_bedroom_shades
+                      - cover.back_guest_bedroom_shades
+                      - cover.office_shades
+                styles:
                   card:
-                    - align-items: start
-                    - justify-content: flex-start 
-                    - text-align: left
-                    - padding-left: 8px
-                    - background-color: transparent
-      chips:
-        card:
-          type: custom:mushroom-chips-card
-          card_mod:
-            style: |
-              ha-card {
-                overflow: hidden !important;
-              }
-              ha-card > * {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                gap: 8px !important;
-              }
-              ha-card > * > * {
-                flex-shrink: 0 !important;
-              }
-              /* More aggressive targeting */
-              ha-card ::-webkit-scrollbar {
-                height: 4px;
-              }
-              ha-card ::-webkit-scrollbar-track {
-                background: transparent;
-              }
-              ha-card ::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 2px;
-              }
-              /* Try to target all possible chip containers */
-              mushroom-chips,
-              .chip-container,
-              [class*="chip"] {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                width: 100% !important;
-              }
-              mushroom-chip,
-              [class*="chip"]:not([class*="container"]) {
-                flex-shrink: 0 !important;
-                white-space: nowrap !important;
-              }
-          chips:
-            - type: template
-              content: Back
-              tap_action:
-                action: navigate
-                navigation_path: /mobile-dash/mobile-home
-              icon: mdi:chevron-left
-              card_mod:
-                style: |
-                  :host {
-                    zoom: 1.25 !important;
-                    --chip-background: var(--background-color);
-                    --chip-font-size: 16px;
-                  }
-                  ha-card {
-                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-                  }   
+                    - background: var(--card-background-color) !important
+                    - "--ha-card-background": var(--card-background-color)
+                    - box-shadow: none
+                    - transition: none
+                    - height: 40px
+                    - border-radius: 999px
+                    - padding: 0 14px
+                  grid:
+                    - grid-template-areas: "\"i n\""
+                    - grid-template-columns: auto auto
+                    - align-items: center
+                    - column-gap: 6px
+                  icon:
+                    - width: 18px
+                    - color: var(--slate-bright)
+                  name:
+                    - font-size: 14px
+                    - font-weight: 600
+                    - color: var(--primary-text-color)
       groups:
         card:
           type: custom:stack-in-card
@@ -142,7 +138,7 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background: var(--background-color) !important;
+                background: transparent !important;
                 border-radius: 20px;
                 padding: 3px 12px 4px;       /* top / sides / bottom */
                 }
