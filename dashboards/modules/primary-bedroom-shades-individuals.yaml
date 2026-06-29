@@ -23,6 +23,9 @@
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
     }
+    ha-card {
+      background-color: var(--background-color-2) !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -49,6 +52,9 @@
           : b < 20 ? 'var(--error-color)'
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
+    }
+    ha-card {
+      background-color: var(--background-color-2) !important;
     }
   modules:
   - mobile_shades_module 
@@ -77,6 +83,9 @@
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
     }
+    ha-card {
+      background-color: var(--background-color-2) !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -103,6 +112,9 @@
           : b < 20 ? 'var(--error-color)'
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
+    }
+    ha-card {
+      background-color: var(--background-color-2) !important;
     }
   modules:
   - mobile_shades_module 
@@ -131,6 +143,9 @@
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
     }
+    ha-card {
+      background-color: var(--background-color-2) !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -157,6 +172,9 @@
           : b < 20 ? 'var(--error-color)'
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
+    }
+    ha-card {
+      background-color: var(--background-color-2) !important;
     }
   modules:
   - mobile_shades_module 
@@ -185,6 +203,9 @@
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
     }
+    ha-card {
+      background-color: var(--background-color-2) !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -212,6 +233,9 @@
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
     }
+    ha-card {
+      background-color: var(--background-color-2) !important;
+    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -238,6 +262,9 @@
           : b < 20 ? 'var(--error-color)'
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
+    }
+    ha-card {
+      background-color: var(--background-color-2) !important;
     }
   modules:
   - mobile_shades_module 
