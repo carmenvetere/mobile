@@ -1,0 +1,54 @@
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.office_office_left
+  name: Left
+  icon: mdi:roller-shade
+  show_state: true
+  scrolling_effect: false
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.office_office_left_battery
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.office_office_left_battery']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
+  modules:
+  - mobile_shades_module 
+- type: custom:bubble-card
+  card_type: cover
+  entity: cover.office_office_right
+  name: Right
+  icon: mdi:roller-shade
+  show_state: true
+  scrolling_effect: false
+  slider_live_update: true
+  card_layout: large
+  tap_action:
+    action: toggle
+  sub_button:
+    - entity: sensor.office_office_right_battery
+      icon: mdi:battery
+      show_background: false
+      show_state: true
+  rows: 1
+  styles: |
+    .bubble-sub-button-1 ha-icon {
+      color: ${(() => { const b = Number(hass.states['sensor.office_office_right_battery']?.state);
+        return isNaN(b) ? 'var(--secondary-text-color)'
+          : b < 20 ? 'var(--error-color)'
+          : b < 40 ? 'var(--gold-color)'
+          : 'var(--sage-color)'; })()} !important;
+    }
+  modules:
+  - mobile_shades_module 

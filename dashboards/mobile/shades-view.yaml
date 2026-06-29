@@ -21,14 +21,14 @@ cards:
       grid:
         - grid-template-areas: |
             "header"
-            "chips"
             "groups"
             "first"
             "bedroom"
+            "office"
             "front_guest"
             "back_guest"
         - grid-template-columns: auto
-        - grid-template-rows: 60px 60px auto auto
+        - grid-template-rows: 60px auto auto auto auto auto auto
         - row-gap: 0px
         - align-items: start
         - column-gap: 2px
@@ -207,6 +207,25 @@ cards:
                   cards: !include /config/dashboards/modules/primary-bedroom-shades-groups.yaml
                 - type: custom:bubble-card
                   card_type: separator
+                  name: Office
+                  icon: mdi:desk-lamp
+                  rows: 0.75
+                  styles: |
+                    .bubble-name {
+                      font-size: 16px !important;  /* title */
+                      font-weight: bold !important;
+                    }
+                    .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                    }
+                    .card-content {
+                      padding-top: 7px !important;
+                    }
+                - type: vertical-stack
+                  cards: !include /config/dashboards/modules/office-shades-group.yaml
+                - type: custom:bubble-card
+                  card_type: separator
                   name: Back Guest Bedroom
                   icon: mdi:bed-king
                   rows: 0.75
@@ -317,6 +336,43 @@ cards:
           cards:
             - type: vertical-stack
               cards: !include /config/dashboards/modules/primary-bedroom-shades-individuals.yaml
+      office:
+        card:
+          type: custom:expander-card
+          expanded: false
+          title-card-clickable: true
+          card_mod: 
+            style: |
+              ha-card {
+                background-color: var(--background-color) !important;
+                margin-top: 5px !important;
+              }
+          title-card:
+            type: custom:bubble-card
+            card_type: separator
+            name: Office
+            icon: mdi:desk-lamp
+            rows: 0.75
+            styles: |
+              .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+              }
+              .bubble-sub-button 
+              {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+              }
+              .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+              }
+              .card-content {
+                padding-top: 7px !important;
+              }
+          cards:
+            - type: vertical-stack
+              cards: !include /config/dashboards/modules/office-shades-individuals.yaml
       front_guest:
         card:
           type: custom:expander-card
