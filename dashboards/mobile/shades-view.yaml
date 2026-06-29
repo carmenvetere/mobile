@@ -18,6 +18,7 @@ cards:
         - height: auto
 #        - width: 398px
         - background: var(--primary-background-color)
+        - box-shadow: none
       grid:
         - grid-template-areas: |
             "header"
@@ -139,6 +140,7 @@ cards:
             style: |
               ha-card {
                 background: transparent !important;
+                box-shadow: none;
                 border-radius: 20px;
                 padding: 3px 12px 4px;       /* top / sides / bottom */
                 }
