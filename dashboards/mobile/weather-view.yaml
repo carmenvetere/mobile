@@ -109,7 +109,7 @@ cards:
               above: 0
           card:
             type: custom:expander-card
-            expanded: true
+            expanded: false
             title-card-clickable: true
             card_mod:
               style: |
@@ -163,6 +163,7 @@ cards:
                   style: |
                     ha-card {
                       text-align: left !important;
+                      box-shadow: none !important;
                     }
                     ha-markdown {
                       text-align: left !important;
