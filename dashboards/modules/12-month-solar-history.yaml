@@ -8,7 +8,7 @@ span:
 series:
   - entity: sensor.bayberry_solar_export
     type: column
-    color: var(--accent-color-3)
+    color: var(--gold-color)
     statistics:
       type: change
       period: month
@@ -38,7 +38,7 @@ apex_config:
     style:
       fontSize: 14px
       colors:
-        - var(--primary-text-color)
+        - var(--gold-color)
     formatter: |
       EVAL:function(value) {
         return value.toFixed(0) ;
