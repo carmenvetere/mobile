@@ -1,8 +1,9 @@
 # lovelace_gen
 # Climate sub-panel toggle row (v1 mobile): card surface + CSS toggle switch.
-# Reads state via states[...] so it can't throw regardless of nesting, and a
-# 5px top margin gives the rows breathing room inside the stack.
+# Reads state via states[...] so it can't throw regardless of nesting; 5px top
+# margin gives the rows breathing room inside the stack.
 # Required vars: toggle_entity, row_name, row_icon
+# Optional vars: temp_sensor, humidity_sensor  (small chips shown before the switch)
 type: custom:button-card
 entity: {{ toggle_entity }}
 name: {{ row_name }}
@@ -24,10 +25,10 @@ styles:
     - transition: none
     - cursor: pointer
   grid:
-    - grid-template-areas: '"ic n st sw"'
-    - grid-template-columns: auto 1fr auto auto
+    - grid-template-areas: '"ic n{% if temp_sensor is defined %} temp hum{% endif %} st sw"'
+    - grid-template-columns: auto 1fr{% if temp_sensor is defined %} auto auto{% endif %} auto auto
     - align-items: center
-    - column-gap: 10px
+    - column-gap: 8px
   img_cell:
     - grid-area: ic
     - width: 22px
@@ -53,6 +54,26 @@ styles:
     sw:
       - grid-area: sw
       - justify-self: end
+{% if temp_sensor is defined %}
+    temp:
+      - grid-area: temp
+      - justify-self: end
+      - font-size: 12px
+      - font-weight: 600
+      - color: var(--secondary-text-color)
+      - background: rgba(255,255,255,0.06)
+      - border-radius: 8px
+      - padding: 2px 7px
+    hum:
+      - grid-area: hum
+      - justify-self: end
+      - font-size: 12px
+      - font-weight: 600
+      - color: var(--secondary-text-color)
+      - background: rgba(255,255,255,0.06)
+      - border-radius: 8px
+      - padding: 2px 7px
+{% endif %}
 custom_fields:
   sw: |
     [[[
@@ -64,3 +85,9 @@ custom_fields:
         + ';width:18px;height:18px;border-radius:50%;background:#fff;'
         + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
     ]]]
+{% if temp_sensor is defined %}
+  temp: |
+    [[[ var e = states['{{ temp_sensor }}']; return (e && !isNaN(parseFloat(e.state))) ? Math.round(parseFloat(e.state)) + '°' : ''; ]]]
+  hum: |
+    [[[ var e = states['{{ humidity_sensor }}']; return (e && !isNaN(parseFloat(e.state))) ? Math.round(parseFloat(e.state)) + '%' : ''; ]]]
+{% endif %}

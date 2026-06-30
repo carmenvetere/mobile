@@ -247,6 +247,8 @@ cards:
                     - toggle_entity: switch.basement_thermostat_family_room_priority
                       row_name: Media Room Priority
                       row_icon: mdi:television
+                      temp_sensor: sensor.family_room_air_sensor_01_temperature_sensor
+                      humidity_sensor: sensor.family_room_air_sensor_01_humidity_sensor
                 - !include
                     - /config/dashboards/modules/mobile-climate-toggle.yaml
                     - toggle_entity: switch.utility_room_ventilation_damper
@@ -334,16 +336,22 @@ cards:
                     - toggle_entity: switch.office_thermostat_front_guest_bedroom_priority
                       row_name: Front Guest Room Priority
                       row_icon: mdi:bed
+                      temp_sensor: sensor.front_guest_bedroom_air_sensor_02_temperature_sensor
+                      humidity_sensor: sensor.front_guest_bedroom_air_sensor_02_humidity_sensor
                 - !include
                     - /config/dashboards/modules/mobile-climate-toggle.yaml
                     - toggle_entity: switch.office_thermostat_guest_bedroom_priority
                       row_name: Back Guest Room Priority
                       row_icon: mdi:bed
+                      temp_sensor: sensor.guest_bedroom_air_sensor_01_temperature_sensor
+                      humidity_sensor: sensor.guest_bedroom_air_sensor_01_humidity_sensor
                 - !include
                     - /config/dashboards/modules/mobile-climate-toggle.yaml
                     - toggle_entity: switch.office_thermostat_office_priority
                       row_name: Office Priority
                       row_icon: mdi:desk
+                      temp_sensor: sensor.office_thermostat_homekit_current_temperature
+                      humidity_sensor: sensor.office_thermostat_homekit_current_humidity
       primbed:
         card:
           type: custom:expander-card
@@ -433,3 +441,5 @@ cards:
                     - toggle_entity: switch.master_bedroom_thermostat_primary_bathroom_priority
                       row_name: Bathroom Priority
                       row_icon: mdi:shower
+                      temp_sensor: sensor.primary_bathroom_air_sensor_01_temperature_sensor
+                      humidity_sensor: sensor.primary_bathroom_air_sensor_01_humidity_sensor
