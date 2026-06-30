@@ -36,44 +36,51 @@ cards:
       header:
         card:
           type: custom:button-card
+          entity: sensor.bayberry_charge
+          icon: mdi:lightning-bolt
+          name: Energy
           show_state: false
-          show_name: false
-          show_icon: false
+          show_label: true
+          tap_action: { action: none }
+          label: |
+            [[[
+              var b = states['sensor.bayberry_charge'];
+              var og = states['switch.bayberry_off_grid_operation'];
+              var grid = (og && og.state === 'on') ? 'Off-grid' : 'Grid-tied';
+              return grid + ' · Battery ' + (b ? Math.round(b.state) : '?') + '%';
+            ]]]
           styles:
             card:
-              - background-color: transparent
-              - padding-bottom: 5px
-              - padding-top: 0px
+              - background: transparent !important
+              - box-shadow: none
+              - transition: none
+              - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: |
-                  "name gap"
-              - grid-template-columns: 150px auto
-              - grid-template-rows: 60px
-              - column-gap: 0px
-            main:
-          custom_fields:
+              - grid-template-areas: '"i n" "i l"'
+              - grid-template-columns: 54px 1fr
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 8px
+            img_cell:
+              - grid-area: i
+              - width: 48px
+              - height: 48px
+              - border-radius: 13px
+              - background-color: "rgba(226,193,104,0.18)"
+            icon:
+              - width: 24px
+              - color: var(--gold-color)
             name:
-              card:
-                type: custom:button-card
-                show_state: false
-                show_name: true
-                show_icon: true
-                show_label: false
-                layout: icon_name
-                icon: mdi:lightning-bolt
-                name: Energy
-                size: 60%
-                icon_color: var(--primary-text-color)
-                styles: 
-                  name: 
-                    - font-size: 22px
-                    - font-weight: bold
-                  card:
-                    - align-items: start
-                    - justify-content: flex-start 
-                    - text-align: left
-                    - padding-left: 8px
-                    - background-color: transparent
+              - grid-area: n
+              - justify-self: start
+              - font-size: 22px
+              - font-weight: 700
+              - color: var(--primary-text-color)
+            label:
+              - grid-area: l
+              - justify-self: start
+              - font-size: 14px
+              - color: var(--secondary-text-color)
       solar_forecast:
         card: 
           type: custom:stack-in-card
