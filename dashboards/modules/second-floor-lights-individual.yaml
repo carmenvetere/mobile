@@ -27,6 +27,19 @@
       name: Hallway Main Lights
       icon: mdi:light-recessed
       button_type: slider
+      sub_button:
+        main:
+          - entity: light.upstairs_hallway_main_lights
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+      styles: |
+        ha-card {
+          background-color: var(--background-color-2) !important;
+        }
       modules:
         - {{ module_name }}
       button_action:
@@ -43,6 +56,19 @@
       name: Office Main Lights
       icon: mdi:light-recessed
       button_type: slider
+      sub_button:
+        main:
+          - entity: light.office_main_lights
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+      styles: |
+        ha-card {
+          background-color: var(--background-color-2) !important;
+        }
       modules:
         - {{ module_name }}
       button_action:
@@ -59,6 +85,19 @@
       name: Office Floor Lamp
       icon: mdi:floor-lamp
       button_type: slider
+      sub_button:
+        main:
+          - entity: light.office_floor_lamp
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+      styles: |
+        ha-card {
+          background-color: var(--background-color-2) !important;
+        }
       modules:
         - {{ module_name }}
       button_action:
@@ -75,6 +114,19 @@
       name: Office Desk Accent
       icon: mdi:light-flood-down
       button_type: slider
+      sub_button:
+        main:
+          - entity: light.eve_light_strip_a5a4
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+      styles: |
+        ha-card {
+          background-color: var(--background-color-2) !important;
+        }
       modules:
         - {{ module_name }}
       button_action:
@@ -91,6 +143,19 @@
       name: Bedroom Main Lights
       icon: mdi:light-recessed
       button_type: slider
+      sub_button:
+        main:
+          - entity: light.master_bedroom_main_lights
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+      styles: |
+        ha-card {
+          background-color: var(--background-color-2) !important;
+        }
       modules:
         - {{ module_name }}
       button_action:
@@ -107,6 +172,19 @@
       name: Bedroom Closet Light
       icon: mdi:light-recessed
       button_type: slider
+      sub_button:
+        main:
+          - entity: light.master_bedroom_closet_light
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+      styles: |
+        ha-card {
+          background-color: var(--background-color-2) !important;
+        }
       modules:
         - {{ module_name }}
       button_action:
@@ -123,6 +201,19 @@
       name: Bedroom Sconces
       icon: mdi:wall-sconce
       button_type: slider
+      sub_button:
+        main:
+          - entity: light.master_bedroom_sconces
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+      styles: |
+        ha-card {
+          background-color: var(--background-color-2) !important;
+        }
       modules:
         - {{ module_name }}
       button_action:
@@ -139,6 +230,44 @@
       name: Bedroom Floor Lamp
       icon: mdi:floor-lamp
       button_type: switch
+      sub_button:
+        main:
+          - entity: switch.bedroom_floor_lamp_switch
+            show_state: true
+            show_icon: false
+            state_background: false
+            show_background: false
+      styles: |
+        ha-card {
+          background-color: var(--background-color-2) !important;
+        }
+      modules:
+        - {{ module_name }}
+      button_action:
+        tap_action:
+          action: perform-action
+          perform_action: switch.toggle
+          target:
+            entity_id: switch.bedroom_floor_lamp_switch
+    - type: custom:bubble-card
+      card_type: button
+      entity: light.master_bathroom_main_lights
+      name: Bathroom Main Lights
+      icon: mdi:light-recessed
+      button_type: slider
+      sub_button:
+        main:
+          - entity: light.master_bathroom_main_lights
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+      styles: |
+        ha-card {
+          background-color: var(--background-color-2) !important;
+        }
       modules:
         - {{ module_name }}
       button_action:
@@ -155,6 +284,19 @@
       name: Bathroom Vanity Lights
       icon: mdi:wall-sconce
       button_type: slider
+      sub_button:
+        main:
+          - entity: light.master_bathroom_vanity_lights
+            show_state: true
+            show_attribute: true
+            show_icon: false
+            state_background: false
+            show_background: false
+            attribute: brightness
+      styles: |
+        ha-card {
+          background-color: var(--background-color-2) !important;
+        }
       modules:
         - {{ module_name }}
       button_action:
