@@ -43,7 +43,11 @@ cards:
           show_label: true
           tap_action: { action: none }
           state_display: |
-            [[[ return entity.state + ' on'; ]]]
+            [[[
+              var e = states['sensor.lights_on_count'];
+              if (!e || e.state === 'unknown' || e.state === 'unavailable') return '';
+              return e.state === 'All Off' ? 'All Off' : e.state + ' on';
+            ]]]
           label: "36 fixtures ·"
           styles:
             card:
