@@ -11,7 +11,7 @@ cards:
     styles:
       card:
         - border-radius: 15px
-        - padding: 2px 10px 5px 5px
+        - padding: 2px 10px 90px 5px
         - height: auto
         - box-sizing: border-box
         - max-width: 98%
@@ -443,3 +443,8 @@ cards:
                       row_icon: mdi:shower
                       temp_sensor: sensor.primary_bathroom_air_sensor_01_temperature_sensor
                       humidity_sensor: sensor.primary_bathroom_air_sensor_01_humidity_sensor
+                - !include
+                    - /config/dashboards/modules/mobile-climate-toggle.yaml
+                    - toggle_entity: switch.primary_bathroom_exhaust_fan
+                      row_name: Primary Bathroom Exhaust Fan
+                      row_icon: mdi:fan
