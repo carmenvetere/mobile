@@ -353,18 +353,18 @@ sensor:
         window_size: "00:05"
   - platform: filter
     name: "Tempest Humidity (5min)"
+    unique_id: tempest_humidity_5min
     entity_id: sensor.bayberry_tempest_humidity
     filters:
-      - filter: time_simple_moving_average
+      - filter: time_throttle
         window_size: "00:05"
-        precision: 1
   - platform: filter
     name: "Tempest Illuminance (5min)"
+    unique_id: tempest_illuminance_5min
     entity_id: sensor.bayberry_tempest_illuminance
     filters:
-      - filter: time_simple_moving_average
+      - filter: time_throttle
         window_size: "00:05"
-        precision: 1
   - platform: filter
     name: "Tempest Irradiance (5min)"
     entity_id: sensor.bayberry_tempest_irradiance
@@ -373,25 +373,25 @@ sensor:
         window_size: "00:05"
   - platform: filter
     name: "Tempest Temperature (5min)"
+    unique_id: tempest_temperature_5min
     entity_id: sensor.bayberry_tempest_temperature
     filters:
-      - filter: time_simple_moving_average
+      - filter: time_throttle
         window_size: "00:05"
-        precision: 1
   - platform: filter
     name: "Tempest Wind Gust (5min)"
+    unique_id: tempest_wind_gust_5min
     entity_id: sensor.bayberry_tempest_wind_gust
     filters:
-      - filter: time_simple_moving_average
+      - filter: time_throttle
         window_size: "00:05"
-        precision: 1
   - platform: filter
     name: "Tempest Wind Speed Average (5min)"
+    unique_id: tempest_wind_speed_average_5min
     entity_id: sensor.bayberry_tempest_wind_speed_average
     filters:
-      - filter: time_simple_moving_average
+      - filter: time_throttle
         window_size: "00:05"
-        precision: 1
   # HVAC cumulative energy, integrated from the estimated power
   # template sensors defined in sensors2.yaml.
   - platform: integration
