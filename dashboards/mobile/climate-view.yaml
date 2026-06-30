@@ -242,142 +242,23 @@ cards:
                     - climate_entity: climate.basement_thermostat
                       thermostat_name: Hallway Thermostat
                       module_name: mobile_climate
-                - type: custom:button-card
-                  entity: switch.basement_thermostat_family_room_priority
-                  name: Media Room Priority
-                  show_state: true
-                  show_label: false
-                  show_icon: true
-                  icon: mdi:television
-                  tap_action:
-                    action: toggle
-                  state_display: >
-                    [[[ return
-                    (states['switch.basement_thermostat_family_room_priority'] ||
-                    {}).state === 'on' ? 'On' : 'Off'; ]]]
-                  styles:
-                    card:
-                      - background: var(--background-color-2)
-                      - border-radius: 15px
-                      - border-top: 1px solid rgba(255,255,255,0.06)
-                      - padding: 15px
-                      - transition: none
-                      - cursor: pointer
-                    grid:
-                      - grid-template-areas: "\"ic n st sw\""
-                      - grid-template-columns: auto 1fr auto auto
-                      - align-items: center
-                      - column-gap: 10px
-                    img_cell:
-                      - grid-area: ic
-                      - width: 22px
-                      - height: 22px
-                    icon:
-                      - width: 18px
-                      - color: >
-                          [[[ return
-                          (states['switch.basement_thermostat_family_room_priority']
-                          || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8';
-                          ]]]
-                    name:
-                      - grid-area: "n"
-                      - justify-self: start
-                      - font-size: 16px
-                      - font-weight: 600
-                      - color: var(--primary-text-color)
-                    state:
-                      - grid-area: st
-                      - justify-self: end
-                      - font-size: 14px
-                      - font-weight: 600
-                      - color: >
-                          [[[ return
-                          (states['switch.basement_thermostat_family_room_priority']
-                          || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8';
-                          ]]]
-                    custom_fields:
-                      sw:
-                        - grid-area: sw
-                        - justify-self: end
-                  custom_fields:
-                    sw: |
-                      [[[
-                        var on = (states['switch.basement_thermostat_family_room_priority'] || {}).state === 'on';
-                        return '<div style="width:38px;height:22px;border-radius:999px;background:'
-                          + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
-                          + ';position:relative;transition:background .2s ease;">'
-                          + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
-                          + ';width:18px;height:18px;border-radius:50%;background:#fff;'
-                          + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
-                      ]]]
-            - type: custom:button-card
-              entity: switch.utility_room_ventilation_damper
-              name: Basement Fresh Air Damper
-              show_state: true
-              show_label: false
-              show_icon: true
-              icon: mdi:tailwind
-              tap_action:
-                action: toggle
-              state_display: >
-                [[[ return
-                (states['switch.utility_room_ventilation_damper'] ||
-                {}).state === 'on' ? 'On' : 'Off'; ]]]
-              styles:
-                card:
-                  - background: var(--background-color-2)
-                  - border-radius: 15px
-                  - border-top: 1px solid rgba(255,255,255,0.06)
-                  - padding: 15px
-                  - transition: none
-                  - cursor: pointer
-                grid:
-                  - grid-template-areas: "\"ic n st sw\""
-                  - grid-template-columns: auto 1fr auto auto
-                  - align-items: center
-                  - column-gap: 10px
-                img_cell:
-                  - grid-area: ic
-                  - width: 22px
-                  - height: 22px
-                icon:
-                  - width: 18px
-                  - color: >
-                      [[[ return
-                      (states['switch.utility_room_ventilation_damper']
-                      || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8';
-                      ]]]
-                name:
-                  - grid-area: "n"
-                  - justify-self: start
-                  - font-size: 16px
-                  - font-weight: 600
-                  - color: var(--primary-text-color)
-                state:
-                  - grid-area: st
-                  - justify-self: end
-                  - font-size: 14px
-                  - font-weight: 600
-                  - color: >
-                      [[[ return
-                      (states['switch.utility_room_ventilation_damper']
-                      || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8';
-                      ]]]
-                custom_fields:
-                  sw:
-                    - grid-area: sw
-                    - justify-self: end
-              custom_fields:
-                sw: |
-                  [[[
-                    var on = (states['switch.utility_room_ventilation_damper'] || {}).state === 'on';
-                    return '<div style="width:38px;height:22px;border-radius:999px;background:'
-                      + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
-                      + ';position:relative;transition:background .2s ease;">'
-                      + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
-                      + ';width:18px;height:18px;border-radius:50%;background:#fff;'
-                      + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
-                  ]]]
+                - !include
+                    - /config/dashboards/modules/mobile-climate-toggle.yaml
+                    - toggle_entity: switch.basement_thermostat_family_room_priority
+                      row_name: Media Room Priority
+                      row_icon: mdi:television
+                      temp_sensor: sensor.family_room_air_sensor_01_temperature_sensor
+                      humidity_sensor: sensor.family_room_air_sensor_01_humidity_sensor
+                - !include
+                    - /config/dashboards/modules/mobile-climate-toggle.yaml
+                    - toggle_entity: switch.utility_room_ventilation_damper
+                      row_name: Basement Fresh Air Damper
+                      row_icon: mdi:tailwind
+                - !include
+                    - /config/dashboards/modules/mobile-climate-toggle.yaml
+                    - toggle_entity: switch.basement_bathroom_exhaust_fan
+                      row_name: Basement Bathroom Exhaust Fan
+                      row_icon: mdi:fan
       office:
         card:
           type: custom:expander-card
@@ -451,21 +332,24 @@ cards:
                       thermostat_name: Office Thermostat
                       module_name: mobile_climate
                 - !include
-                    - /config/dashboards/modules/mobile-priority-row.yaml
-                    - switch_entity: switch.office_thermostat_front_guest_bedroom_priority
+                    - /config/dashboards/modules/mobile-climate-toggle.yaml
+                    - toggle_entity: switch.office_thermostat_front_guest_bedroom_priority
                       row_name: Front Guest Room Priority
+                      row_icon: mdi:bed
                       temp_sensor: sensor.front_guest_bedroom_air_sensor_02_temperature_sensor
                       humidity_sensor: sensor.front_guest_bedroom_air_sensor_02_humidity_sensor
                 - !include
-                    - /config/dashboards/modules/mobile-priority-row.yaml
-                    - switch_entity: switch.office_thermostat_guest_bedroom_priority
+                    - /config/dashboards/modules/mobile-climate-toggle.yaml
+                    - toggle_entity: switch.office_thermostat_guest_bedroom_priority
                       row_name: Back Guest Room Priority
+                      row_icon: mdi:bed
                       temp_sensor: sensor.guest_bedroom_air_sensor_01_temperature_sensor
                       humidity_sensor: sensor.guest_bedroom_air_sensor_01_humidity_sensor
                 - !include
-                    - /config/dashboards/modules/mobile-priority-row.yaml
-                    - switch_entity: switch.office_thermostat_office_priority
+                    - /config/dashboards/modules/mobile-climate-toggle.yaml
+                    - toggle_entity: switch.office_thermostat_office_priority
                       row_name: Office Priority
+                      row_icon: mdi:desk
                       temp_sensor: sensor.office_thermostat_homekit_current_temperature
                       humidity_sensor: sensor.office_thermostat_homekit_current_humidity
       primbed:
@@ -553,8 +437,9 @@ cards:
                       thermostat_name: Bedroom Thermostat
                       module_name: mobile_climate
                 - !include
-                    - /config/dashboards/modules/mobile-priority-row.yaml
-                    - switch_entity: switch.master_bedroom_thermostat_primary_bathroom_priority
+                    - /config/dashboards/modules/mobile-climate-toggle.yaml
+                    - toggle_entity: switch.master_bedroom_thermostat_primary_bathroom_priority
                       row_name: Bathroom Priority
+                      row_icon: mdi:shower
                       temp_sensor: sensor.primary_bathroom_air_sensor_01_temperature_sensor
                       humidity_sensor: sensor.primary_bathroom_air_sensor_01_humidity_sensor
