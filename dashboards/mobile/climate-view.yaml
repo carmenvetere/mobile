@@ -242,29 +242,74 @@ cards:
                     - climate_entity: climate.basement_thermostat
                       thermostat_name: Hallway Thermostat
                       module_name: mobile_climate
-                - !include
-                    - /config/dashboards/modules/mobile-priority-row.yaml
-                    - switch_entity: switch.basement_thermostat_family_room_priority
-                      row_name: Media Room Priority
-                      temp_sensor: sensor.family_room_air_sensor_01_temperature_sensor
-                      humidity_sensor: sensor.family_room_air_sensor_01_humidity_sensor
                 - type: custom:button-card
-                  name: ROOM PRIORITY
-                  show_icon: false
-                  tap_action: { action: none }
-                  styles: &subpanel_hdr
+                  entity: switch.basement_thermostat_family_room_priority
+                  name: Media Room Priority
+                  show_state: true
+                  show_label: false
+                  show_icon: true
+                  icon: mdi:television
+                  tap_action:
+                    action: toggle
+                  state_display: >
+                    [[[ return
+                    (states['switch.basement_thermostat_family_room_priority'] ||
+                    {}).state === 'on' ? 'On' : 'Off'; ]]]
+                  styles:
                     card:
-                      - background: transparent !important
-                      - box-shadow: none
-                      - padding: 10px 2px 2px
+                      - background: var(--background-color-2)
+                      - border-radius: 15px
+                      - border-top: 1px solid rgba(255,255,255,0.06)
+                      - padding: 15px
+                      - transition: none
+                      - cursor: pointer
                     grid:
-                      - grid-template-areas: '"n"'
+                      - grid-template-areas: "\"ic n st sw\""
+                      - grid-template-columns: auto 1fr auto auto
+                      - align-items: center
+                      - column-gap: 10px
+                    img_cell:
+                      - grid-area: ic
+                      - width: 22px
+                      - height: 22px
+                    icon:
+                      - width: 18px
+                      - color: >
+                          [[[ return
+                          (states['switch.basement_thermostat_family_room_priority']
+                          || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8';
+                          ]]]
                     name:
+                      - grid-area: "n"
                       - justify-self: start
-                      - font-size: 11px
-                      - font-weight: 700
-                      - letter-spacing: 0.05em
-                      - color: "#9aa0a8"
+                      - font-size: 16px
+                      - font-weight: 600
+                      - color: var(--primary-text-color)
+                    state:
+                      - grid-area: st
+                      - justify-self: end
+                      - font-size: 14px
+                      - font-weight: 600
+                      - color: >
+                          [[[ return
+                          (states['switch.basement_thermostat_family_room_priority']
+                          || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8';
+                          ]]]
+                    custom_fields:
+                      sw:
+                        - grid-area: sw
+                        - justify-self: end
+                  custom_fields:
+                    sw: |
+                      [[[
+                        var on = (states['switch.basement_thermostat_family_room_priority'] || {}).state === 'on';
+                        return '<div style="width:38px;height:22px;border-radius:999px;background:'
+                          + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+                          + ';position:relative;transition:background .2s ease;">'
+                          + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+                          + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+                          + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+                      ]]]
       office:
         card:
           type: custom:expander-card
