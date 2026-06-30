@@ -310,6 +310,74 @@ cards:
                           + ';width:18px;height:18px;border-radius:50%;background:#fff;'
                           + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
                       ]]]
+            - type: custom:button-card
+              entity: switch.utility_room_ventilation_damper
+              name: Basement Fresh Air Damper
+              show_state: true
+              show_label: false
+              show_icon: true
+              icon: mdi:tailwind
+              tap_action:
+                action: toggle
+              state_display: >
+                [[[ return
+                (states['switch.utility_room_ventilation_damper'] ||
+                {}).state === 'on' ? 'On' : 'Off'; ]]]
+              styles:
+                card:
+                  - background: var(--background-color-2)
+                  - border-radius: 15px
+                  - border-top: 1px solid rgba(255,255,255,0.06)
+                  - padding: 15px
+                  - transition: none
+                  - cursor: pointer
+                grid:
+                  - grid-template-areas: "\"ic n st sw\""
+                  - grid-template-columns: auto 1fr auto auto
+                  - align-items: center
+                  - column-gap: 10px
+                img_cell:
+                  - grid-area: ic
+                  - width: 22px
+                  - height: 22px
+                icon:
+                  - width: 18px
+                  - color: >
+                      [[[ return
+                      (states['switch.utility_room_ventilation_damper']
+                      || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8';
+                      ]]]
+                name:
+                  - grid-area: "n"
+                  - justify-self: start
+                  - font-size: 16px
+                  - font-weight: 600
+                  - color: var(--primary-text-color)
+                state:
+                  - grid-area: st
+                  - justify-self: end
+                  - font-size: 14px
+                  - font-weight: 600
+                  - color: >
+                      [[[ return
+                      (states['switch.utility_room_ventilation_damper']
+                      || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8';
+                      ]]]
+                custom_fields:
+                  sw:
+                    - grid-area: sw
+                    - justify-self: end
+              custom_fields:
+                sw: |
+                  [[[
+                    var on = (states['switch.utility_room_ventilation_damper'] || {}).state === 'on';
+                    return '<div style="width:38px;height:22px;border-radius:999px;background:'
+                      + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+                      + ';position:relative;transition:background .2s ease;">'
+                      + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+                      + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+                      + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+                  ]]]
       office:
         card:
           type: custom:expander-card
