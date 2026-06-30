@@ -354,12 +354,14 @@ sensor:
   - platform: filter
     name: "Tempest Humidity (5min)"
     entity_id: sensor.bayberry_tempest_humidity
+    precision: 1
     filters:
       - filter: time_throttle
         window_size: "00:05"
   - platform: filter
     name: "Tempest Illuminance (5min)"
     entity_id: sensor.bayberry_tempest_illuminance
+    precision: 1
     filters:
       - filter: time_throttle
         window_size: "00:05"
@@ -372,18 +374,21 @@ sensor:
   - platform: filter
     name: "Tempest Temperature (5min)"
     entity_id: sensor.bayberry_tempest_temperature
+    precision: 1
     filters:
       - filter: time_throttle
         window_size: "00:05"
   - platform: filter
     name: "Tempest Wind Gust (5min)"
     entity_id: sensor.bayberry_tempest_wind_gust
+    precision: 1
     filters:
       - filter: time_throttle
         window_size: "00:05"
   - platform: filter
     name: "Tempest Wind Speed Average (5min)"
     entity_id: sensor.bayberry_tempest_wind_speed_average
+    precision: 1
     filters:
       - filter: time_throttle
         window_size: "00:05"
