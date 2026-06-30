@@ -42,7 +42,7 @@ series:
     name: Grid
     type: line
     stroke_width: 2
-    color: var(--accent-color)
+    color: var(--secondary-text-color)
     show:
       in_header: false
       legend_value: true
@@ -50,14 +50,14 @@ series:
     name: Solar
     type: line
     stroke_width: 2
-    color: var(--accent-color-3)
+    color: var(--gold-color)
     show:
       in_header: false
   - entity: sensor.load_power_5min
     name: Home
     type: line
     stroke_width: 2
-    color: var(--primary-text-color)
+    color: var(--sage-color)
     opacity: .8
     show:
       in_header: false
@@ -65,7 +65,7 @@ series:
     name: Upper HVAC
     type: line
     stroke_width: 2
-    color: "#E0A458"
+    color: var(--slate-color)
     transform: "return x / 1000;"
     show:
       in_header: false
@@ -73,7 +73,7 @@ series:
     name: Lower HVAC
     type: line
     stroke_width: 2
-    color: "#9498AC"
+    color: var(--slate-bright)
     transform: "return x / 1000;"
     show:
       in_header: false
@@ -81,7 +81,7 @@ series:
     yaxis_id: header_only
     name: Solar
     stroke_width: 2
-    color: var(--accent-color-3)
+    color: var(--gold-color)
     show:
       legend_value: false
       in_header: true
@@ -90,14 +90,14 @@ series:
     yaxis_id: header_only
     name: Home
     stroke_width: 2
-    color: var(--primary-text-color)
+    color: var(--sage-color)
     show:
       legend_value: true
       in_header: true
       in_chart: false
   - entity: sensor.bayberry_grid_imported
     name: Net Grid
-    color: var(--accent-color)
+    color: var(--secondary-text-color)
     show:
       in_header: true
       in_chart: false
