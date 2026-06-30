@@ -115,6 +115,8 @@ cards:
               style: |
                 ha-card {
                   background: var(--background-color-2);
+                  padding-top: 3px !important;
+                  padding-bottom: 3px !important;
                   }
             title-card:
               type: custom:bubble-card
@@ -132,9 +134,9 @@ cards:
                 opacity: 0.1;
                 }
                 .card-content {
-                padding-top: 10px !important;
+                padding-top: 7px !important;
                 padding-left: 10px !important;
-                }  
+                }
             cards:
               - type: markdown
                 content: |                    
