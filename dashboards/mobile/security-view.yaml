@@ -14,16 +14,12 @@ cards:
         - padding-left: 5px
         - padding-top: 2px
         - height: auto
-        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
+        - background: var(--primary-background-color)
+        - box-shadow: none
       grid:
         - grid-template-areas: |
             "header"
-            "chips"
-            "front"
-            "front_right"
-            "driveway"
-            "pool"
-            "kimberly"
+            "cameras"
             "recent"
         - grid-template-columns: auto
         - grid-template-rows: 60px 60px auto auto
@@ -34,387 +30,147 @@ cards:
       header:
         card:
           type: custom:button-card
-          show_state: false
-          show_name: false
-          show_icon: false
+          entity: alarm_control_panel.alarmo
+          icon: mdi:cctv
+          name: Security
+          show_state: true
+          show_label: false
+          tap_action: { action: more-info }
+          state_display: |
+            [[[
+              var m = {disarmed:'Disarmed', armed_home:'Armed Home',
+                armed_away:'Armed Away', armed_night:'Armed Night',
+                arming:'Arming…', pending:'Pending', triggered:'Triggered'};
+              return m[entity.state] || entity.state;
+            ]]]
           styles:
             card:
-              - background-color: transparent
-              - padding-bottom: 5px
-              - padding-top: 0px
+              - background: transparent !important
+              - box-shadow: none
+              - transition: none
+              - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: |
-                  "name gap"
-              - grid-template-columns: 150px auto
-              - grid-template-rows: 60px
-              - column-gap: 0px
-            main:
-          custom_fields:
+              - grid-template-areas: '"i n" "i s"'
+              - grid-template-columns: 54px 1fr
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 8px
+            img_cell:
+              - grid-area: i
+              - width: 48px
+              - height: 48px
+              - border-radius: 13px
+              - background-color: "rgba(142,177,191,0.18)"
+            icon:
+              - width: 24px
+              - color: var(--slate-bright)
             name:
-              card:
-                type: custom:button-card
+              - grid-area: n
+              - justify-self: start
+              - font-size: 22px
+              - font-weight: 700
+              - color: var(--primary-text-color)
+            state:
+              - grid-area: s
+              - justify-self: start
+              - font-size: 14px
+              - font-weight: 700
+              - color: var(--amber-color)
+            custom_fields:
+              back:
+                - grid-area: back
+          state:
+            - value: disarmed
+              styles:
+                state:
+                  - color: var(--sage-color)
+            - value: triggered
+              styles:
+                state:
+                  - color: var(--error-color)   
+      cameras:
+        card:
+          type: vertical-stack
+          cards:
+          - type: custom:bubble-card
+            card_type: separator
+            name: Cameras
+            icon: mdi:cctv
+            rows: 0.75
+            styles: &sep_section |
+              .bubble-name { font-size: 13px !important; font-weight: 700 !important;
+                text-transform: uppercase; letter-spacing: 0.06em;
+                color: rgba(255,255,255,0.6) !important; }
+              .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
+              .card-content { padding-top: 7px !important; }
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - type: picture-entity
+                entity: camera.front_high_resolution_channel
+                camera_image: camera.front_high_resolution_channel
+                camera_view: auto
+                fit_mode: cover
                 show_state: false
                 show_name: true
-                show_icon: true
-                show_label: false
-                layout: icon_name
-                icon: mdi:cctv
-                name: Security
-                size: 60%
-                icon_color: var(--primary-text-color)
-                styles: 
-                  name: 
-                    - font-size: 22px
-                    - font-weight: bold
-                  card:
-                    - align-items: start
-                    - justify-content: flex-start 
-                    - text-align: left
-                    - padding-left: 8px
-                    - background-color: transparent
-      chips:
-        card:
-          type: custom:mushroom-chips-card
-          card_mod:
-            style: |
-              ha-card {
-                overflow: hidden !important;
-                max-width: calc(100vw - 30px) !important; 
-                margin-right: 10px !important;
-                box-sizing: border-box !important; 
-              }
-              ha-card > * {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                gap: 8px !important;
-              }
-              ha-card > * > * {
-                flex-shrink: 0 !important;
-              }
-              ha-card ::-webkit-scrollbar {
-                height: 4px;
-              }
-              ha-card ::-webkit-scrollbar-track {
-                background: transparent;
-              }
-              ha-card ::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 2px;
-              }
-              mushroom-chips,
-              .chip-container,
-              [class*="chip"] {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-              }
-              mushroom-chip,
-              [class*="chip"]:not([class*="container"]) {
-                flex-shrink: 0 !important;
-                white-space: nowrap !important;
-              }
-          chips:
-            - type: template
-              content: Back
-              tap_action:
-                action: navigate
-                navigation_path: /mobile-dash/mobile-home
-              icon: mdi:chevron-left
-              card_mod:
-                style: |
-                  :host {
-                    zoom: 1.25 !important;
-                    --chip-background: var(--background-color);
-                    --chip-font-size: 16px;
-                  }
-                  ha-card {
-                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-                  }   
-            - type: template
-              icon: mdi:shield-home
-              content: |-
-                {{ states('alarm_control_panel.alarmo')
-                      | replace('_', ' ')
-                      | title }}
-              entity: alarm_control_panel.alarmo
-              tap_action:
-                action: more-info
-              icon_color: >-
-                {% if states('alarm_control_panel.alarmo') ==
-                'disarmed' %}
-                  green
-                {% elif states('alarm_control_panel.alarmo') ==
-                'armed_home' %}
-                  orange
-                {% elif states('alarm_control_panel.alarmo') ==
-                'armed_away' %}
-                  red
-                {% else %}
-                  gray
-                {% endif %}
-              card_mod:
-                style: |
-                  :host {
-                    zoom: 1.25 !important;
-                    --chip-background: var(--background-color);
-                    --chip-font-size: 16px;
-                  }
-                  ha-card {
-                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-                  }   
-            - type: template
-              icon: mdi:door-closed
-              entity: binary_sensor.all_doors_including_garage
-              content: >-
-                {% set s =
-                states('binary_sensor.all_doors_including_garage') %} {{
-                'Open' if s == 'on' else 'All Closed' if s == 'off' else s
-                | replace('_', ' ') | title }}
-              tap_action:
-                action: more-info
-              icon_color: >-
-                {% if states('binary_sensor.all_doors_including_garage')
-                == 'off' %}
-                  green
-                {% elif states('binary_sensor.all_doors_including_garage')
-                == 'on' %}
-                  amber
-                {% else %}
-                  gray
-                {% endif %}
-              card_mod:
-                style: |
-                  :host {
-                    zoom: 1.25 !important;
-                    --chip-background: var(--background-color);
-                    --chip-font-size: 16px;
-                  }
-                  ha-card {
-                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-                  }   
-      front:
-        card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background: var(--background-color) !important;
-                border-radius: 20px;
-                padding-right: 10px;
-                padding-bottom: 10px;
-              }
-          cards:
-            - type: custom:bubble-card
-              card_type: separator
-              name: Front
-              icon: mdi:cctv
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
-            - type: picture-entity
-              show_state: false
-              show_name: false
-              camera_view: auto
-              fit_mode: cover
-              entity: camera.front_high_resolution_channel
-              camera_image: camera.front_high_resolution_channel
-              card_mod:
-                style: |
-                  ha-card {
-                    border-radius: 5px;
-                    padding: 5px;
-                  }
-      front_right:
-        card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background: var(--ha-card-background-2);
-                border-radius: 20px;
-                padding-right: 10px;
-                padding-bottom: 10px;
-              }
-          cards:
-            - type: custom:bubble-card
-              card_type: separator
-              name: Front Right
-              icon: mdi:cctv
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
-            - type: picture-entity
-              show_state: false
-              show_name: false
-              camera_view: auto
-              fit_mode: cover
-              entity: camera.blueberry_high_resolution_channel
-              camera_image: camera.blueberry_high_resolution_channel
-              card_mod:
-                style: |
-                  ha-card {
-                    border-radius: 5px;
-                    padding: 5px;
-                  }
-      driveway:
-        card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background: var(--ha-card-background);
-                border-radius: 20px;
-                padding-right: 10px;
-                padding-bottom: 10px;
-              }
-          cards:
-            - type: custom:bubble-card
-              card_type: separator
-              name: Driveway
-              icon: mdi:cctv
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
-            - type: picture-entity
-              show_state: false
-              show_name: false
-              camera_view: auto
-              fit_mode: cover
-              entity: camera.driveway_high_resolution_channel_2
-              camera_image: camera.driveway_high_resolution_channel_2
-              card_mod:
-                style: |
-                  ha-card {
-                    border-radius: 5px;
-                    padding: 5px;
-                  } 
-      pool:
-        card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background: var(--ha-card-background);
-                border-radius: 20px;
-                padding-right: 10px;
-                padding-bottom: 10px;
-              }
-          cards:
-            - type: custom:bubble-card
-              card_type: separator
-              name: Pool
-              icon: mdi:cctv
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
-            - type: picture-entity
-              show_state: false
-              show_name: false
-              camera_view: auto
-              fit_mode: cover
-              entity: camera.pool_high_resolution_channel
-              camera_image: camera.pool_high_resolution_channel
-              card_mod:
-                style: |
-                  ha-card {
-                    border-radius: 5px;
-                    padding: 5px;
-                  }
-      kimberly:
-        card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background: var(--ha-card-background);
-                border-radius: 20px;
-                padding-right: 10px;
-                padding-bottom: 10px;
-              }
-          cards:
-            - type: custom:bubble-card
-              card_type: separator
-              name: Kimberly Side
-              icon: mdi:cctv
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
-            - type: picture-entity
-              show_state: false
-              show_name: false
-              camera_view: auto
-              fit_mode: cover
-              entity: camera.kimberly_high_resolution_channel
-              camera_image: camera.kimberly_high_resolution_channel
-              card_mod:
-                style: |
-                  ha-card {
-                    border-radius: 5px;
-                    padding: 5px;
-                  }
+                name: Front
+                tap_action: { action: more-info }
+                card_mod: &cam_style
+                  style: |
+                    ha-card {
+                      border-radius: 16px; overflow: hidden;
+                      background: transparent !important;
+                      --ha-card-background: transparent;
+                      box-shadow: none !important;
+                    }
+                    ha-card::before {
+                      content: "● LIVE";
+                      position: absolute; top: 8px; left: 8px; z-index: 2;
+                      font-size: 9px; font-weight: 700; color: #fff;
+                      background: rgba(224,105,91,0.85);
+                      padding: 2px 7px; border-radius: 999px; letter-spacing: 0.04em;
+                    }
+              - type: picture-entity
+                entity: camera.blueberry_high_resolution_channel
+                camera_image: camera.blueberry_high_resolution_channel
+                camera_view: auto
+                fit_mode: cover
+                show_state: false
+                show_name: true
+                name: Front Right
+                tap_action: { action: more-info }
+                card_mod: *cam_style
+              - type: picture-entity
+                entity: camera.driveway_high_resolution_channel_2
+                camera_image: camera.driveway_high_resolution_channel_2
+                camera_view: auto
+                fit_mode: cover
+                show_state: false
+                show_name: true
+                name: Driveway
+                tap_action: { action: more-info }
+                card_mod: *cam_style
+              - type: picture-entity
+                entity: camera.pool_high_resolution_channel
+                camera_image: camera.pool_high_resolution_channel
+                camera_view: auto
+                fit_mode: cover
+                show_state: false
+                show_name: true
+                name: Pool
+                tap_action: { action: more-info }
+                card_mod: *cam_style
+          - type: picture-entity
+            entity: camera.kimberly_high_resolution_channel
+            camera_image: camera.kimberly_high_resolution_channel
+            camera_view: auto
+            fit_mode: cover
+            show_state: false
+            show_name: true
+            name: Kimberly Side
+            tap_action: { action: more-info }
+            card_mod: *cam_style
       recent:
         card:
           type: custom:stack-in-card
