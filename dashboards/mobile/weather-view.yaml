@@ -200,9 +200,10 @@ cards:
           card_mod:
             style: |
               ha-card {
-                background-color: var(--ha-card-background-2);
+                background: transparent !important;
                 border-radius: 20px;
                 padding: 12px 12px 4px;
+                box-shadow: none;
                 }
           cards:
             - type: custom:bubble-card
@@ -236,6 +237,7 @@ cards:
                   card_mod:
                     style: |
                       ha-card {
+                        background: var(--ha-card-background);
                         border-radius: 18px;
                       }
                 - graph: line
