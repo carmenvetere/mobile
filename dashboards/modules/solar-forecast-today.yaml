@@ -49,7 +49,7 @@ series:
     type: line
     stroke_width: 2
     float_precision: 2
-    color: var(--accent-color-3)
+    color: var(--gold-color)
     opacity: 1
     stroke_width: 3
     yaxis_id: kWh
@@ -97,7 +97,7 @@ series:
     yaxis_id: header_only
     name: Today Actual
     stroke_width: 2
-    color: var(--accent-color-3)
+    color: var(--gold-color)
     show:
       legend_value: true
       in_header: true
