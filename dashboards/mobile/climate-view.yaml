@@ -1,7 +1,7 @@
 # lovelace_gen
 title: Climate
 icon: mdi:fan
-theme: Dark Dune
+theme: Dune Mist
 path: climate-main
 type: custom:grid-layout
 cards:
@@ -16,17 +16,16 @@ cards:
         - box-sizing: border-box
         - max-width: 98%
         - box-shadow: none
-        - background: "radial-gradient(120% 80% at 50% 0%, #23262c 0%, #0e1013 55%, #000 100%)"
+        - background: var(--primary-background-color)
       grid:
         - grid-template-areas: |
             "header"
-            "chips"
             "first"
             "basement"
             "office"
             "primbed"
         - grid-template-columns: minmax(0, 1fr)
-        - grid-template-rows: 60px 60px auto auto auto auto
+        - grid-template-rows: 60px auto auto auto auto
         - row-gap: 10px
         - align-items: start
         - column-gap: 2px
@@ -34,188 +33,50 @@ cards:
       header:
         card:
           type: custom:button-card
+          entity: sensor.climate_zones_avg_temp
+          icon: mdi:fan
+          name: Climate
           show_state: false
-          show_name: false
-          show_icon: false
+          show_label: true
+          tap_action:
+            action: none
+          label: |
+            [[[
+              var t = entity ? Math.round(Number(entity.state)) : null;
+              return '4 zones · avg ' + (t != null && !isNaN(t) ? t : '–') + '°';
+            ]]]
           styles:
             card:
-              - background-color: transparent
-              - padding-bottom: 90px
-              - padding-top: 0px
+              - background: transparent !important
+              - box-shadow: none
+              - transition: none
+              - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: |
-                  "name gap"
-              - grid-template-columns: 160px auto
-              - grid-template-rows: 60px
-              - column-gap: 0px
-          custom_fields:
+              - grid-template-areas: "\"i n\" \"i l\""
+              - grid-template-columns: 54px 1fr
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 8px
+            img_cell:
+              - grid-area: i
+              - width: 48px
+              - height: 48px
+              - border-radius: 13px
+              - background-color: rgba(142,177,191,0.18)
+            icon:
+              - width: 24px
+              - color: var(--slate-bright)
             name:
-              card:
-                type: custom:button-card
-                show_state: false
-                show_name: true
-                show_icon: true
-                layout: icon_name
-                icon: mdi:fan
-                name: Climate
-                size: 55%
-                icon_color: "#f2f3f5"
-                styles:
-                  name:
-                    - font-size: 26px
-                    - font-weight: 700
-                    - letter-spacing: "-0.3px"
-                    - color: "#f2f3f5"
-                  card:
-                    - align-items: start
-                    - justify-content: flex-start
-                    - text-align: left
-                    - padding-left: 8px
-                    - background-color: transparent
-      chips:
-        card:
-          type: custom:mushroom-chips-card
-          card_mod:
-            style: |
-              ha-card {
-                overflow: hidden !important;
-                max-width: calc(100vw - 30px) !important;
-                margin-right: 10px !important;
-                box-sizing: border-box !important;
-                --chip-background: rgba(255,255,255,0.14);
-                --chip-font-size: 14px;
-                --chip-font-weight: 600;
-                --chip-border-radius: 999px;
-                --chip-padding: 8px 14px;
-                --chip-icon-size: 16px;
-                --chip-box-shadow: none;
-              }
-              ha-card > * {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                gap: 8px !important;
-              }
-              ha-card > * > * {
-                flex-shrink: 0 !important;
-              }
-              ha-card ::-webkit-scrollbar { height: 4px; }
-              ha-card ::-webkit-scrollbar-track { background: transparent; }
-              ha-card ::-webkit-scrollbar-thumb {
-                background: rgba(255,255,255,0.3);
-                border-radius: 2px;
-              }
-          chips:
-            - type: template
-              content: Back
-              tap_action:
-                action: navigate
-                navigation_path: /mobile-dash/mobile-home
-              icon: mdi:chevron-left
-              card_mod: &chip_style
-                style: |
-                  :host {
-                    zoom: 1.25 !important;
-                    --chip-background: var(--background-color);
-                    --chip-font-size: 16px;
-                  }
-                  ha-card {
-                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-                  }
-            - type: entity
-              entity: sensor.bayberry_tempest_temperature
-              tap_action:
-                action: more-info
-                entity: sensor.tempest_temperature_5min
-              icon: mdi:thermometer
-              icon_color: "#5ec8ff"
-              card_mod: *chip_style
-            - type: entity
-              entity: sensor.bayberry_tempest_humidity
-              tap_action:
-                action: more-info
-                entity: sensor.tempest_humidity_5min
-              icon: mdi:water-percent
-              icon_color: "#5ec8ff"
-              card_mod: *chip_style
-            - type: entity
-              entity: sensor.first_floor_air_quality_pm2_5
-              tap_action:
-                action: more-info
-              icon: mdi:leaf
-              icon_color: "#4ade80"
-              card_mod: *chip_style
-            - type: conditional
-              conditions:
-                - condition: state
-                  entity: switch.utility_room_ventilation_damper
-                  state: 'on'
-              chip:
-                type: template
-                content: Fresh Air
-                entity: switch.utility_room_ventilation_damper
-                tap_action:
-                  action: more-info
-                icon: mdi:tailwind
-                icon_color: "#4ade80"
-                card_mod: *chip_style
-            - type: conditional
-              conditions:
-                - condition: numeric_state
-                  entity: sensor.bedroom_co2_5min
-                  above: 800
-              chip:
-                type: template
-                content: Bedroom High CO2
-                entity: sensor.bedroom_co2_5min
-                tap_action:
-                  action: more-info
-                icon: mdi:cloud-alert
-                icon_color: "#EF8C00"
-                card_mod: *chip_style
-            - type: conditional
-              conditions:
-                - condition: numeric_state
-                  entity: sensor.first_floor_co2_5min
-                  above: 800
-              chip:
-                type: template
-                content: First Floor High CO2
-                entity: sensor.first_floor_co2_5min
-                tap_action:
-                  action: more-info
-                icon: mdi:cloud-alert
-                icon_color: "#EF8C00"
-                card_mod: *chip_style
-            - type: conditional
-              conditions:
-                - condition: numeric_state
-                  entity: sensor.bedroom_pm2_5_5min
-                  above: 10
-              chip:
-                type: template
-                content: Bedroom High PM2.5
-                entity: sensor.bedroom_pm2_5_5min
-                tap_action:
-                  action: more-info
-                icon: mdi:weather-dust
-                icon_color: "#EF8C00"
-                card_mod: *chip_style
-            - type: conditional
-              conditions:
-                - condition: numeric_state
-                  entity: sensor.first_floor_pm2_5_5min
-                  above: 10
-              chip:
-                type: template
-                content: First Floor High PM2.5
-                entity: sensor.first_floor_pm2_5_5min
-                tap_action:
-                  action: more-info
-                icon: mdi:weather-dust
-                icon_color: "#EF8C00"
-                card_mod: *chip_style
+              - grid-area: "n"
+              - justify-self: start
+              - font-size: 22px
+              - font-weight: 700
+              - color: var(--primary-text-color)
+            label:
+              - grid-area: l
+              - justify-self: start
+              - font-size: 14px
+              - color: var(--secondary-text-color)
       first:
         card:
           type: custom:expander-card
@@ -387,6 +248,23 @@ cards:
                       row_name: Media Room Priority
                       temp_sensor: sensor.family_room_air_sensor_01_temperature_sensor
                       humidity_sensor: sensor.family_room_air_sensor_01_humidity_sensor
+                - type: custom:button-card
+                  name: ROOM PRIORITY
+                  show_icon: false
+                  tap_action: { action: none }
+                  styles: &subpanel_hdr
+                    card:
+                      - background: transparent !important
+                      - box-shadow: none
+                      - padding: 10px 2px 2px
+                    grid:
+                      - grid-template-areas: '"n"'
+                    name:
+                      - justify-self: start
+                      - font-size: 11px
+                      - font-weight: 700
+                      - letter-spacing: 0.05em
+                      - color: "#9aa0a8"
       office:
         card:
           type: custom:expander-card
