@@ -38,10 +38,12 @@ cards:
           tap_action: { action: more-info }
           state_display: |
             [[[
+              var e = states['alarm_control_panel.alarmo'];
+              var s = e ? e.state : 'unknown';
               var m = {disarmed:'Disarmed', armed_home:'Armed Home',
                 armed_away:'Armed Away', armed_night:'Armed Night',
                 arming:'Arming…', pending:'Pending', triggered:'Triggered'};
-              return m[entity.state] || entity.state;
+              return m[s] || s;
             ]]]
           styles:
             card:
