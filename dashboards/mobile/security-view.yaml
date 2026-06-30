@@ -34,7 +34,7 @@ cards:
           icon: mdi:cctv
           name: Security
           show_state: true
-          show_label: false
+          show_label: true
           tap_action: { action: more-info }
           state_display: |
             [[[
@@ -45,6 +45,22 @@ cards:
                 arming:'Arming…', pending:'Pending', triggered:'Triggered'};
               return m[s] || s;
             ]]]
+          label: |
+            [[[
+              var doors = [
+                ['binary_sensor.front_door','Front Door'],
+                ['binary_sensor.kitchen_french_doors','Kitchen French Doors'],
+                ['binary_sensor.living_room_french_doors','Living Room French Doors'],
+                ['binary_sensor.mudroom_entry_door','Mudroom Door'],
+                ['binary_sensor.mudroom_garage_door','Garage Entry'],
+                ['cover.garage_door_garage','Garage Door']
+              ];
+              var open = doors.filter(function(d){
+                var e = states[d[0]];
+                return e && (e.state === 'on' || e.state === 'open');
+              }).map(function(d){ return d[1]; });
+              return open.length ? open.join(', ') + ' open' : 'All doors closed';
+            ]]]
           styles:
             card:
               - background: transparent !important
@@ -52,9 +68,9 @@ cards:
               - transition: none
               - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: '"i n" "i s"'
+              - grid-template-areas: '"i n" "i s" "i l"'
               - grid-template-columns: 54px 1fr
-              - grid-template-rows: auto auto
+              - grid-template-rows: auto auto auto
               - align-items: center
               - column-gap: 8px
             img_cell:
@@ -78,6 +94,20 @@ cards:
               - font-size: 14px
               - font-weight: 700
               - color: var(--amber-color)
+            label:
+              - grid-area: l
+              - justify-self: start
+              - font-size: 13px
+              - font-weight: 600
+              - padding-top: 2px
+              - color: |
+                  [[[
+                    var ids = ['binary_sensor.front_door','binary_sensor.kitchen_french_doors',
+                      'binary_sensor.living_room_french_doors','binary_sensor.mudroom_entry_door',
+                      'binary_sensor.mudroom_garage_door','cover.garage_door_garage'];
+                    var open = ids.some(function(id){ var e = states[id]; return e && (e.state === 'on' || e.state === 'open'); });
+                    return open ? 'var(--amber-color)' : 'var(--secondary-text-color)';
+                  ]]]
             custom_fields:
               back:
                 - grid-area: back
