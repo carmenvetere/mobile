@@ -1,6 +1,6 @@
 title: Weather
 icon: mdi:weather-partly-cloudy
-theme: Dark Dune
+theme: Dune Mist
 path: weather
 type: custom:grid-layout
 cards:
@@ -18,15 +18,16 @@ cards:
         - height: auto
 #       - width: 398px
         - box-shadow: none
-        - background-color: var(--background-color-2)
+        - background-color: var(--primary-background-color)
+        - box-shadow: none
       grid:
         - grid-template-areas: |
             "header"
-            "chips"
             "alerts"
+            "7day"
             "weather"
         - grid-template-columns: auto
-        - grid-template-rows: 60px 60px auto auto
+        - grid-template-rows: 60px auto auto
         - row-gap: 2px
         - align-items: start
         - column-gap: 2px
@@ -34,101 +35,71 @@ cards:
       header:
         card:
           type: custom:button-card
-          show_state: false
-          show_name: false
-          show_icon: false
+          entity: weather.bayberry
+          icon: mdi:weather-partly-cloudy
+          name: Weather
+          show_state: true
+          show_label: false
+          tap_action: { action: none }
+          state_display: |
+            [[[
+              var e = states['weather.bayberry'];
+              var s = e ? e.state : '';
+              var m = {
+                'clear-night':'Clear Night',
+                'cloudy':'Cloudy',
+                'fog':'Fog',
+                'hail':'Hail',
+                'lightning':'Lightning',
+                'lightning-rainy':'Lightning, Rainy',
+                'partlycloudy':'Partly Cloudy',
+                'pouring':'Pouring',
+                'rainy':'Rainy',
+                'snowy':'Snowy',
+                'snowy-rainy':'Snowy, Rainy',
+                'sunny':'Sunny',
+                'windy':'Windy',
+                'windy-variant':'Windy',
+                'exceptional':'Exceptional'
+              };
+              return m[s] || (s ? s.replace(/-/g,' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); }) : '');
+            ]]]
           styles:
             card:
-              - background-color: transparent
-              - padding-bottom: 5px
-              - padding-top: 0px
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - transition: none
+              - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: |
-                  "name gap"
-              - grid-template-columns: 150px auto
-              - grid-template-rows: 60px
-              - column-gap: 0px
-            main:
-          custom_fields:
+              - grid-template-areas: '"i n" "i s"'
+              - grid-template-columns: 54px 1fr
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 8px
+            img_cell:
+              - grid-area: i
+              - width: 48px
+              - height: 48px
+              - border-radius: 13px
+              - background-color: "rgba(182,210,220,0.18)"
+            icon:
+              - width: 24px
+              - color: var(--slate-bright)
             name:
-              card:
-                type: custom:button-card
-                show_state: false
-                show_name: true
-                show_icon: true
-                show_label: false
-                layout: icon_name
-                icon: mdi:weather-partly-cloudy
-                name: Weather
-                size: 60%
-                icon_color: var(--primary-text-color)
-                styles: 
-                  name: 
-                    - font-size: 22px
-                    - font-weight: bold
-                  card:
-                    - align-items: start
-                    - justify-content: flex-start 
-                    - text-align: left
-                    - padding-left: 8px
-                    - background-color: transparent
-      chips:
-        card:
-          type: custom:mushroom-chips-card
-          card_mod:
-            style: |
-              ha-card {
-                overflow: hidden !important;
-              }
-              ha-card > * {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                gap: 8px !important;
-              }
-              ha-card > * > * {
-                flex-shrink: 0 !important;
-              }
-              /* More aggressive targeting */
-              ha-card ::-webkit-scrollbar {
-                height: 4px;
-              }
-              ha-card ::-webkit-scrollbar-track {
-                background: transparent;
-              }
-              ha-card ::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 2px;
-              }
-              /* Try to target all possible chip containers */
-              mushroom-chips,
-              .chip-container,
-              [class*="chip"] {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                width: 100% !important;
-              }
-              mushroom-chip,
-              [class*="chip"]:not([class*="container"]) {
-                flex-shrink: 0 !important;
-                white-space: nowrap !important;
-              }
-          chips:
-            - type: template
-              content: Back
-              tap_action:
-                action: navigate
-                navigation_path: /mobile-dash/mobile-home
-              icon: mdi:chevron-left
-              card_mod:
-                style: |
-                  :host {
-                    zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2);
-                  }
+              - grid-area: n
+              - justify-self: start
+              - font-size: 22px
+              - font-weight: 700
+              - color: var(--primary-text-color)
+            state:
+              - grid-area: s
+              - justify-self: start
+              - font-size: 14px
+              - color: var(--secondary-text-color)
+            custom_fields:
+              back:
+                - grid-area: back
       alerts:
         card:
           type: conditional
@@ -202,6 +173,23 @@ cards:
                     ha-markdown h1 {
                       text-align: left !important;
                     }
+      7day:
+        card:
+          type: weather-forecast
+          entity: weather.bayberry
+          forecast_type: daily
+          show_current: true
+          show_forecast: true
+          name: Bayberry
+          card_mod:
+            style: |
+              ha-card {
+                background: var(--card-background-color) !important;
+                --ha-card-background: var(--card-background-color);
+                border-radius: 18px !important;
+                box-shadow: none !important;
+                padding: 6px 10px 10px;
+              }
       weather:
         card:
           type: custom:stack-in-card
@@ -248,7 +236,6 @@ cards:
                   card_mod:
                     style: |
                       ha-card {
-                        background: var(--ha-card-background);
                         border-radius: 18px;
                       }
                 - graph: line
