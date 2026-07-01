@@ -36,38 +36,6 @@ input_number:
     step: 1
     mode: box
 
-input_boolean:
-  sonos_group_select_living_room:
-    name: Group Living Room
-    icon: mdi:sofa
-  sonos_group_select_kitchen:
-    name: Group Kitchen
-    icon: mdi:countertop
-  sonos_group_select_office:
-    name: Group Office
-    icon: mdi:desk
-  sonos_group_select_deck:
-    name: Group Deck
-    icon: mdi:table-chair
-  sonos_group_select_pool:
-    name: Group Pool
-    icon: mdi:pool
-  sonos_group_select_primary_bedroom:
-    name: Group Primary Bedroom
-    icon: mdi:bed
-  sonos_group_select_primary_bathroom:
-    name: Group Primary Bathroom
-    icon: mdi:shower
-  sonos_group_select_gym:
-    name: Group Gym
-    icon: mdi:dumbbell
-  sonos_group_select_mud_room:
-    name: Group Mud Room
-    icon: mdi:door
-  sonos_group_select_media_room:
-    name: Group Media Room
-    icon: mdi:television
-
 input_select:
   sonos_speaker_select:
     name: Sonos Speaker
@@ -84,21 +52,6 @@ input_select:
       - Media Room
     initial: Living Room
     icon: mdi:speaker
-  sonos_group_coordinator:
-    name: Sonos Group Coordinator
-    options:
-      - living_room
-      - kitchen
-      - office
-      - deck
-      - pool
-      - primary_bedroom
-      - primary_bathroom
-      - gym
-      - mud_room
-      - media_room
-    initial: living_room
-    icon: mdi:speaker-multiple
 
 utility_meter:
   daily_well_pump:
@@ -250,5 +203,8 @@ lovelace:
       type: module
     - url: /hacsfiles/weather-forecast-card/weather-forecast-card.js
       type: module
-    - url: /hacsfiles/custom-sonos-card-v2/custom-sonos-card-v2.js
-      type: module      
+    # Disabled: redundant second registration of the sonos-card element.
+    # custom:sonos-card is served by custom-sonos-card.js (loaded above).
+    # Nothing references a v2-specific card type. Re-enable if the card breaks.
+    # - url: /hacsfiles/custom-sonos-card-v2/custom-sonos-card-v2.js
+    #   type: module

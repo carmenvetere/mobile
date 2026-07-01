@@ -62,7 +62,8 @@ cards:
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
+            - border-radius: var(--ha-card-border-radius, 12px)
+            - box-shadow: var(--ha-card-box-shadow)
             - height: 70px
             - margin: 4px
           name:
@@ -106,7 +107,8 @@ cards:
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
+            - border-radius: var(--ha-card-border-radius, 12px)
+            - box-shadow: var(--ha-card-box-shadow)
             - height: 70px
             - margin: 4px
           name:
@@ -150,7 +152,8 @@ cards:
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
+            - border-radius: var(--ha-card-border-radius, 12px)
+            - box-shadow: var(--ha-card-box-shadow)
             - height: 70px
             - margin: 4px
           name:
@@ -194,7 +197,8 @@ cards:
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
+            - border-radius: var(--ha-card-border-radius, 12px)
+            - box-shadow: var(--ha-card-box-shadow)
             - height: 70px
             - margin: 4px
           name:
@@ -238,7 +242,8 @@ cards:
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
+            - border-radius: var(--ha-card-border-radius, 12px)
+            - box-shadow: var(--ha-card-box-shadow)
             - height: 70px
             - margin: 4px
           name:
@@ -282,7 +287,8 @@ cards:
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
+            - border-radius: var(--ha-card-border-radius, 12px)
+            - box-shadow: var(--ha-card-box-shadow)
             - height: 70px
             - margin: 4px
           name:
@@ -324,7 +330,8 @@ cards:
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
+            - border-radius: var(--ha-card-border-radius, 12px)
+            - box-shadow: var(--ha-card-box-shadow)
             - height: 70px
             - margin: 4px
           name:
@@ -368,7 +375,8 @@ cards:
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
+            - border-radius: var(--ha-card-border-radius, 12px)
+            - box-shadow: var(--ha-card-box-shadow)
             - height: 70px
             - margin: 4px
           name:
@@ -412,7 +420,8 @@ cards:
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
+            - border-radius: var(--ha-card-border-radius, 12px)
+            - box-shadow: var(--ha-card-box-shadow)
             - height: 70px
             - margin: 4px
           name:
@@ -456,7 +465,8 @@ cards:
         styles:
           card:
             - background: var(--background-color-2)
-            - border-radius: 12px
+            - border-radius: var(--ha-card-border-radius, 12px)
+            - box-shadow: var(--ha-card-box-shadow)
             - height: 70px
             - margin: 4px
           name:
