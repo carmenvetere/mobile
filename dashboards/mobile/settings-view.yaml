@@ -97,7 +97,8 @@ cards:
             name: Overnight Guests
             show_state: true
             show_label: false
-            show_icon: false
+            show_icon: true
+            icon: mdi:bed
             tap_action:
               action: toggle
             state_display: |
@@ -113,11 +114,19 @@ cards:
               - transition: none
               - cursor: pointer
               grid:
-              - grid-template-areas: '"n st sw"'
-              - grid-template-columns: 1fr auto auto
+              - grid-template-areas: '"ic n st sw"'
+              - grid-template-columns: auto 1fr auto auto
               - grid-template-rows: 1fr
               - align-items: center
               - column-gap: 10px
+              img_cell:
+              - grid-area: ic
+              - width: 22px
+              - height: 22px
+              icon:
+              - width: 18px
+              - color: |
+                  [[[ return (states['input_boolean.guest_mode'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -156,7 +165,8 @@ cards:
             name: Cleaners Mode
             show_state: true
             show_label: false
-            show_icon: false
+            show_icon: true
+            icon: mdi:spray-bottle
             tap_action:
               action: toggle
             state_display: |
@@ -172,11 +182,19 @@ cards:
               - transition: none
               - cursor: pointer
               grid:
-              - grid-template-areas: '"n st sw"'
-              - grid-template-columns: 1fr auto auto
+              - grid-template-areas: '"ic n st sw"'
+              - grid-template-columns: auto 1fr auto auto
               - grid-template-rows: 1fr
               - align-items: center
               - column-gap: 10px
+              img_cell:
+              - grid-area: ic
+              - width: 22px
+              - height: 22px
+              icon:
+              - width: 18px
+              - color: |
+                  [[[ return (states['input_boolean.cleaners_mode'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -215,7 +233,8 @@ cards:
             name: Arm Away When Empty
             show_state: true
             show_label: false
-            show_icon: false
+            show_icon: true
+            icon: mdi:shield-lock
             tap_action:
               action: toggle
             state_display: |
@@ -231,11 +250,19 @@ cards:
               - transition: none
               - cursor: pointer
               grid:
-              - grid-template-areas: '"n st sw"'
-              - grid-template-columns: 1fr auto auto
+              - grid-template-areas: '"ic n st sw"'
+              - grid-template-columns: auto 1fr auto auto
               - grid-template-rows: 1fr
               - align-items: center
               - column-gap: 10px
+              img_cell:
+              - grid-area: ic
+              - width: 22px
+              - height: 22px
+              icon:
+              - width: 18px
+              - color: |
+                  [[[ return (states['automation.alarm_arm_away_when_everyone_leaves'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -274,7 +301,8 @@ cards:
             name: Go Off Grid
             show_state: true
             show_label: false
-            show_icon: false
+            show_icon: true
+            icon: mdi:transmission-tower-off
             tap_action:
               action: toggle
               confirmation:
@@ -292,11 +320,19 @@ cards:
               - transition: none
               - cursor: pointer
               grid:
-              - grid-template-areas: '"n st sw"'
-              - grid-template-columns: 1fr auto auto
+              - grid-template-areas: '"ic n st sw"'
+              - grid-template-columns: auto 1fr auto auto
               - grid-template-rows: 1fr
               - align-items: center
               - column-gap: 10px
+              img_cell:
+              - grid-area: ic
+              - width: 22px
+              - height: 22px
+              icon:
+              - width: 18px
+              - color: |
+                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -381,6 +417,14 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
+              img_cell:
+              - grid-area: ic
+              - width: 22px
+              - height: 22px
+              icon:
+              - width: 18px
+              - color: |
+                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -431,6 +475,14 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
+              img_cell:
+              - grid-area: ic
+              - width: 22px
+              - height: 22px
+              icon:
+              - width: 18px
+              - color: |
+                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -481,6 +533,14 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
+              img_cell:
+              - grid-area: ic
+              - width: 22px
+              - height: 22px
+              icon:
+              - width: 18px
+              - color: |
+                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -531,6 +591,14 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
+              img_cell:
+              - grid-area: ic
+              - width: 22px
+              - height: 22px
+              icon:
+              - width: 18px
+              - color: |
+                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -581,6 +649,14 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
+              img_cell:
+              - grid-area: ic
+              - width: 22px
+              - height: 22px
+              icon:
+              - width: 18px
+              - color: |
+                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -631,6 +707,14 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
+              img_cell:
+              - grid-area: ic
+              - width: 22px
+              - height: 22px
+              icon:
+              - width: 18px
+              - color: |
+                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
