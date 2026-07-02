@@ -194,7 +194,7 @@ cards:
             show_state: true
             show_attribute: true
           modules:
-          - Mobile Module Theme
+          - mobile_settings_module
         - type: custom:bubble-card
           card_type: button
           entity: number.omnilogic_pool_filter_pump_speed
@@ -242,7 +242,7 @@ cards:
               target:
                 entity_id: button.omnilogic_pool_filter_pump_high_speed
           modules:
-          - Mobile Module Theme
+          - mobile_settings_module
         # ----------------------------------------------------------- heater
         - type: custom:bubble-card
           card_type: separator
@@ -302,11 +302,11 @@ cards:
             tap_action:
               action: toggle
           modules:
-          - Mobile Module Theme
+          - mobile_settings_module
         # ----------------------------------------------- chlorinator & cover
         - type: custom:bubble-card
           card_type: separator
-          name: Chlorinator & Cover
+          name: Chlorinator
           icon: mdi:toggle-switch-variant
           rows: 0.75
           styles: |
@@ -330,90 +330,4 @@ cards:
             show_attribute: true
             show_background: false
           modules:
-          - Mobile Module Theme
-        - type: grid
-          columns: 2
-          square: false
-          cards:
-          - type: custom:button-card
-            entity: binary_sensor.pool_cover
-            name: Cover
-            icon: mdi:garage-variant
-            show_state: true
-            tap_action:
-              action: more-info
-            state_display: |
-              [[[
-                var e = states['binary_sensor.pool_cover'];
-                if (!e || e.state === 'unknown' || e.state === 'unavailable') return '—';
-                return e.state === 'on' ? 'Open' : 'Closed';
-              ]]]
-            styles:
-              card:
-              - padding: 14px
-              - border-radius: 16px
-              - background: var(--background-color-2) !important
-              - --ha-card-background: var(--background-color-2)
-              - box-shadow: none
-              - transition: none
-              grid:
-              - grid-template-areas: '"i" "s" "n"'
-              - grid-template-rows: auto auto auto
-              - row-gap: 5px
-              - justify-items: start
-              img_cell:
-              - width: 40px
-              - height: 40px
-              - border-radius: 11px
-              - background-color: rgba(224,167,94,0.18)
-              icon:
-              - width: 20px
-              - color: var(--amber-color)
-              state:
-              - font-size: 22px
-              - font-weight: 700
-              - color: var(--primary-text-color)
-              name:
-              - font-size: 14px
-              - color: var(--secondary-text-color)
-          - type: custom:button-card
-            entity: binary_sensor.pool_cover_pump
-            name: Cover Pump
-            icon: mdi:water-pump
-            show_state: true
-            tap_action:
-              action: more-info
-            state_display: |
-              [[[
-                var e = states['binary_sensor.pool_cover_pump'];
-                if (!e || e.state === 'unknown' || e.state === 'unavailable') return '—';
-                return e.state === 'on' ? 'On' : 'Off';
-              ]]]
-            styles:
-              card:
-              - padding: 14px
-              - border-radius: 16px
-              - background: var(--background-color-2) !important
-              - --ha-card-background: var(--background-color-2)
-              - box-shadow: none
-              - transition: none
-              grid:
-              - grid-template-areas: '"i" "s" "n"'
-              - grid-template-rows: auto auto auto
-              - row-gap: 5px
-              - justify-items: start
-              img_cell:
-              - width: 40px
-              - height: 40px
-              - border-radius: 11px
-              - background-color: rgba(94,200,255,0.18)
-              icon:
-              - width: 20px
-              - color: '#5ec8ff'
-              state:
-              - font-size: 22px
-              - font-weight: 700
-              - color: var(--primary-text-color)
-              name:
-              - font-size: 14px
-              - color: var(--secondary-text-color)
+          - mobile_settings_module
