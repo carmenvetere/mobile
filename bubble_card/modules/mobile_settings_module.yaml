@@ -16,14 +16,14 @@ mobile_settings_module:
   code: |2-
       ha-card {
         bubble-main-background-color: var(--background-color-2) !important;
-        border-radius: 30px !important;
+        border-radius: 15px !important;
         margin: 2px 5px 2px 5px !important;
       }
       
       .bubble-button-card-container {
-        border-radius: 30px !important;
+        border-radius: 15px !important;
         margin: 2px 5px 2px 5px !important;
-        background-color: ${state === 'on' ? 'var(--accent-color)': 'var(--background-color-2)'} !important;
+        background-color: ${state === 'on' ? 'var(--slate-color)': 'var(--background-color-2)'} !important;
         opacity: 1 !important;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
         }
