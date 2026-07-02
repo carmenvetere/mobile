@@ -11,8 +11,8 @@ mobile_lights_scenes:
       bubble-main-background-color: var(--background-color-2) !important;
       border-radius: 15px !important;
       margin: 2px 5px 2px 5px !important;
-      bubble-color-on: var(--secondary-text-color) !important;
-      bubble-color-off: var(--secondary-text-color) !important;
+      --bubble-color-on: var(--slate-color) !important;
+      --bubble-color-off: var(--secondary-text-color) !important;
     }
 
     .bubble-button-card-container {
@@ -24,7 +24,7 @@ mobile_lights_scenes:
       }
 
     .bubble-button-background {
-      background-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color-2'} !important;
+      background-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color-2)'} !important;
     }
 
     .bubble-name {

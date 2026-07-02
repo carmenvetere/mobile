@@ -6995,12 +6995,14 @@
   mode: single
 - id: '1782073941879'
   alias: Office Shades – Schedule & Adaptive
-  description: Office shading framework matching the front guest bedroom design. Weekday
-    8:00 and weekend 9:00 morning opens plus 30-min adaptive ticks all run the same
-    template formula on cover.office_office_right and cover.office_office_left (both
-    south-facing). Adaptive runs from 09:01 until sunset. At sunset+30 or 8pm the
-    shades close. Indoor temp from sensor.office_thermostat_homekit_current_temperature.
-    Comfort 72. (No guest_mode pause — that is specific to guest rooms.)
+  description: 'Office shading framework matching the front guest bedroom design.
+    Weekday 8:00 and weekend 9:00 morning opens plus 30-min adaptive ticks all run
+    the same template formula on cover.office_office_right and cover.office_office_left
+    (both south-facing). Adaptive runs from 09:01 until sunset. At sunset+30 or 8pm
+    the shades close (with verify-and-retry: up to 4 attempts, waiting 30s each for
+    both to report closed, to handle Matter/Thread command drops on the right shade).
+    Indoor temp from sensor.office_thermostat_homekit_current_temperature. Comfort
+    72. (No guest_mode pause — that is specific to guest rooms.)'
   triggers:
   - at: 08:00:00
     id: weekday_open
@@ -7080,9 +7082,33 @@
         - sunset_close
         - evening_close
       sequence:
-      - action: cover.close_cover
-        target:
-          entity_id:
-          - cover.office_office_right
-          - cover.office_office_left
+      - repeat:
+          sequence:
+          - action: cover.close_cover
+            target:
+              entity_id:
+              - cover.office_office_right
+              - cover.office_office_left
+          - wait_template: '{{ is_state(''cover.office_office_right'',''closed'')
+              and is_state(''cover.office_office_left'',''closed'') }}'
+            timeout: 00:00:30
+            continue_on_timeout: true
+          until:
+          - condition: template
+            value_template: '{{ (is_state(''cover.office_office_right'',''closed'')
+              and is_state(''cover.office_office_left'',''closed'')) or repeat.index
+              >= 4 }}'
+      - choose:
+        - conditions:
+          - condition: template
+            value_template: '{{ not (is_state(''cover.office_office_right'',''closed'')
+              and is_state(''cover.office_office_left'',''closed'')) }}'
+          sequence:
+          - action: system_log.write
+            data:
+              message: 'Office Shading ({{ trigger.id }}): shades still not closed
+                after {{ repeat.index if repeat is defined else 4 }} attempts — right={{
+                states(''cover.office_office_right'') }} left={{ states(''cover.office_office_left'')
+                }}'
+              level: warning
   mode: single
