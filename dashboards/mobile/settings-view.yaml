@@ -1,148 +1,1635 @@
-# lovelace_gen
 title: Settings
 icon: mdi:cog
-theme: Dark Dune
+theme: Dune Mist
 path: settings
 type: custom:grid-layout
 cards:
-  # Sticky bottom nav
-  - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: more}]
-  - type: custom:button-card
-    styles:
+# Sticky bottom nav
+- !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: more}]
+- type: custom:button-card
+  styles:
+    card:
+    - border-radius: 15px
+    - padding-bottom: 90px
+    - padding-left: 5px
+    - padding-right: 10px
+    - padding-top: 2px
+    - height: auto
+    - box-shadow: none
+    - background: var(--primary-background-color)
+    grid:
+    - grid-template-areas: |
+        "header"
+        "main"
+    - grid-template-columns: auto
+    - grid-template-rows: 60px auto
+    - row-gap: 0px
+    - align-items: start
+    - column-gap: 2px
+  custom_fields:
+    header:
       card:
-        - border-radius: 15px
-        - padding-bottom: 90px
-        - padding-left: 5px
-        - padding-right: 10px
-        - padding-top: 2px
-#        - margin: -8px
-        - height: auto
-#        - width: 398px
-        - background: radial-gradient(circle,rgba(85, 89, 92, 1) 0%, rgba(0, 0, 0, 1) 85%);
-      grid:
-        - grid-template-areas: |
-            "header"
-            "chips"
-            "settings"
-        - grid-template-columns: auto
-        - grid-template-rows: 60px 60px auto
-        - row-gap: 0px
-        - align-items: start
-        - column-gap: 2px
-    custom_fields:
-      header:
-        card:
-          type: custom:button-card
-          show_state: false
-          show_name: false
-          show_icon: false
-          styles:
-            card:
-              - background-color: transparent
-              - padding-bottom: 5px
-              - padding-top: 0px
-            grid:
-              - grid-template-areas: |
-                  "name gap"
-              - grid-template-columns: 175px auto
-              - grid-template-rows: 60px
-              - column-gap: 0px
-            main:
-          custom_fields:
-            name:
-              card:
-                type: custom:button-card
-                show_state: false
-                show_name: true
-                show_icon: true
-                show_label: false
-                layout: icon_name
-                icon: mdi:cog
-                name: Settings
-                size: 60%
-                icon_color: var(--primary-text-color)
-                styles: 
-                  name: 
-                    - font-size: 22px
-                    - font-weight: bold
-                  card:
-                    - align-items: start
-                    - justify-content: flex-start 
-                    - text-align: left
-                    - padding-left: 8px
-                    - background-color: transparent
-      chips:
-        card:
-          type: custom:mushroom-chips-card
+        type: custom:button-card
+        icon: mdi:cog
+        name: Settings
+        show_state: false
+        show_label: true
+        tap_action:
+          action: none
+        label: Modes · automations · maintenance
+        styles:
+          card:
+          - background: transparent !important
+          - --ha-card-background: transparent
+          - box-shadow: none
+          - transition: none
+          - padding: 4px 2px 6px
+          grid:
+          - grid-template-areas: '"i n" "i l"'
+          - grid-template-columns: 54px 1fr
+          - grid-template-rows: auto auto
+          - align-items: center
+          - column-gap: 8px
+          img_cell:
+          - grid-area: i
+          - width: 48px
+          - height: 48px
+          - border-radius: 13px
+          - background-color: rgba(142,177,191,0.18)
+          icon:
+          - width: 24px
+          - color: var(--slate-bright)
+          name:
+          - grid-area: n
+          - justify-self: start
+          - font-size: 22px
+          - font-weight: 700
+          - color: var(--primary-text-color)
+          label:
+          - grid-area: l
+          - justify-self: start
+          - font-size: 14px
+          - color: var(--secondary-text-color)
+    main:
+      card:
+        type: vertical-stack
+        cards:
+        - type: custom:bubble-card
+          card_type: separator
+          name: Quick Toggles
+          icon: mdi:gesture-tap-button
+          rows: 0.75
+          styles: |
+            .bubble-name { font-size: 14px !important; font-weight: 700 !important;
+              text-transform: uppercase; letter-spacing: 0.06em;
+              color: rgba(255,255,255,0.6) !important; }
+            .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
+            .card-content { padding-top: 7px !important; }
+        - type: vertical-stack
           card_mod:
             style: |
-              ha-card {
-                overflow: hidden !important;
-              }
-              ha-card > * {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                gap: 8px !important;
-              }
-              ha-card > * > * {
-                flex-shrink: 0 !important;
-              }
-              /* More aggressive targeting */
-              ha-card ::-webkit-scrollbar {
-                height: 4px;
-              }
-              ha-card ::-webkit-scrollbar-track {
-                background: transparent;
-              }
-              ha-card ::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 2px;
-              }
-              /* Try to target all possible chip containers */
-              mushroom-chips,
-              .chip-container,
-              [class*="chip"] {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                width: 100% !important;
-              }
-              mushroom-chip,
-              [class*="chip"]:not([class*="container"]) {
-                flex-shrink: 0 !important;
-                white-space: nowrap !important;
-              }
-          chips:
-            - type: template
-              content: Back
-              tap_action:
-                action: navigate
-                navigation_path: /mobile-dash/mobile-home
-              icon: mdi:chevron-left
-              card_mod:
-                style: |
-                  :host {
-                    zoom: 1.25 !important;
-                    --chip-background: var(--background-color);
-                    --chip-font-size: 16px;
-                  }
-                  ha-card {
-                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-                  }   
-      settings:
-        card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background-color: var(--background-color) !important;
-                border-radius: 20px;
-                padding: 10;
-              }
+              :host { display: block; background: var(--card-background-color);
+                border: 1px solid rgba(255,255,255,0.06); border-radius: 16px;
+                overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
           cards:
-          - type: vertical-stack
-            cards: !include [/config/dashboards/modules/settings-module.yaml, {separator_module: mobile_separator, settings_module: mobile_settings_module, dashboard: mobile}]
+          - type: custom:button-card
+            entity: input_boolean.guest_mode
+            name: Overnight Guests
+            show_state: true
+            show_label: false
+            show_icon: false
+            tap_action:
+              action: toggle
+            state_display: |
+              [[[ return (states['input_boolean.guest_mode'] || {}).state === 'on' ? 'On' : 'Off'; ]]]
+            styles:
+              card:
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 11px 2px
+              - transition: none
+              - cursor: pointer
+              grid:
+              - grid-template-areas: '"n st sw"'
+              - grid-template-columns: 1fr auto auto
+              - align-items: center
+              - column-gap: 10px
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              - align-self: center
+              - line-height: 22px
+              state:
+              - grid-area: st
+              - justify-self: end
+              - font-size: 14px
+              - font-weight: 600
+              - color: |
+                  [[[ return (states['input_boolean.guest_mode'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
+              - align-self: center
+              - line-height: 22px
+              custom_fields:
+                sw:
+                - grid-area: sw
+                - justify-self: end
+                - align-self: center
+            custom_fields:
+              sw: |-
+                [[[
+                  var on = (states['input_boolean.guest_mode'] || {}).state === 'on';
+                  return '<div style="width:38px;height:22px;border-radius:999px;background:'
+                    + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+                    + ';position:relative;transition:background .2s ease;">'
+                    + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+                    + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+                    + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+                ]]]
+          - type: custom:button-card
+            entity: input_boolean.cleaners_mode
+            name: Cleaners Mode
+            show_state: true
+            show_label: false
+            show_icon: false
+            tap_action:
+              action: toggle
+            state_display: |
+              [[[ return (states['input_boolean.cleaners_mode'] || {}).state === 'on' ? 'On' : 'Off'; ]]]
+            styles:
+              card:
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 11px 2px
+              - transition: none
+              - cursor: pointer
+              grid:
+              - grid-template-areas: '"n st sw"'
+              - grid-template-columns: 1fr auto auto
+              - align-items: center
+              - column-gap: 10px
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              - align-self: center
+              - line-height: 22px
+              state:
+              - grid-area: st
+              - justify-self: end
+              - font-size: 14px
+              - font-weight: 600
+              - color: |
+                  [[[ return (states['input_boolean.cleaners_mode'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
+              - align-self: center
+              - line-height: 22px
+              custom_fields:
+                sw:
+                - grid-area: sw
+                - justify-self: end
+                - align-self: center
+            custom_fields:
+              sw: |-
+                [[[
+                  var on = (states['input_boolean.cleaners_mode'] || {}).state === 'on';
+                  return '<div style="width:38px;height:22px;border-radius:999px;background:'
+                    + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+                    + ';position:relative;transition:background .2s ease;">'
+                    + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+                    + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+                    + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+                ]]]
+          - type: custom:button-card
+            entity: automation.alarm_arm_away_when_everyone_leaves
+            name: Arm Away When Empty
+            show_state: true
+            show_label: false
+            show_icon: false
+            tap_action:
+              action: toggle
+            state_display: |
+              [[[ return (states['automation.alarm_arm_away_when_everyone_leaves'] || {}).state === 'on' ? 'On' : 'Off'; ]]]
+            styles:
+              card:
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 11px 2px
+              - transition: none
+              - cursor: pointer
+              grid:
+              - grid-template-areas: '"n st sw"'
+              - grid-template-columns: 1fr auto auto
+              - align-items: center
+              - column-gap: 10px
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              - align-self: center
+              - line-height: 22px
+              state:
+              - grid-area: st
+              - justify-self: end
+              - font-size: 14px
+              - font-weight: 600
+              - color: |
+                  [[[ return (states['automation.alarm_arm_away_when_everyone_leaves'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
+              - align-self: center
+              - line-height: 22px
+              custom_fields:
+                sw:
+                - grid-area: sw
+                - justify-self: end
+                - align-self: center
+            custom_fields:
+              sw: |-
+                [[[
+                  var on = (states['automation.alarm_arm_away_when_everyone_leaves'] || {}).state === 'on';
+                  return '<div style="width:38px;height:22px;border-radius:999px;background:'
+                    + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+                    + ';position:relative;transition:background .2s ease;">'
+                    + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+                    + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+                    + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+                ]]]
+          - type: custom:button-card
+            entity: switch.bayberry_off_grid_operation
+            name: Go Off Grid
+            show_state: true
+            show_label: false
+            show_icon: false
+            tap_action:
+              action: toggle
+              confirmation:
+                text: Are you sure you want to go off grid?
+            state_display: |
+              [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'On' : 'Off'; ]]]
+            styles:
+              card:
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 11px 2px
+              - transition: none
+              - cursor: pointer
+              grid:
+              - grid-template-areas: '"n st sw"'
+              - grid-template-columns: 1fr auto auto
+              - align-items: center
+              - column-gap: 10px
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              - align-self: center
+              - line-height: 22px
+              state:
+              - grid-area: st
+              - justify-self: end
+              - font-size: 14px
+              - font-weight: 600
+              - color: |
+                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
+              - align-self: center
+              - line-height: 22px
+              custom_fields:
+                sw:
+                - grid-area: sw
+                - justify-self: end
+                - align-self: center
+            custom_fields:
+              sw: |-
+                [[[
+                  var on = (states['switch.bayberry_off_grid_operation'] || {}).state === 'on';
+                  return '<div style="width:38px;height:22px;border-radius:999px;background:'
+                    + (on ? 'rgba(224,105,91,0.65)' : 'rgba(255,255,255,0.28)')
+                    + ';position:relative;transition:background .2s ease;">'
+                    + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+                    + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+                    + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+                ]]]
+        - type: custom:bubble-card
+          card_type: separator
+          name: Sections
+          icon: mdi:format-list-bulleted
+          rows: 0.75
+          styles: |
+            .bubble-name { font-size: 14px !important; font-weight: 700 !important;
+              text-transform: uppercase; letter-spacing: 0.06em;
+              color: rgba(255,255,255,0.6) !important; }
+            .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
+            .card-content { padding-top: 7px !important; }
+        - type: vertical-stack
+          card_mod:
+            style: |
+              :host { display: block; background: var(--card-background-color);
+                border: 1px solid rgba(255,255,255,0.06); border-radius: 16px;
+                overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
+          cards:
+          - type: custom:button-card
+            name: Home Modes
+            label: Party · guests · cleaners · away
+            icon: mdi:home-automation
+            show_label: true
+            tap_action:
+              action: navigate
+              navigation_path: '#set-home-modes'
+            styles:
+              card:
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 13px 4px
+              - transition: none
+              - cursor: pointer
+              grid:
+              - grid-template-areas: '"i n chev" "i l chev"'
+              - grid-template-columns: 44px 1fr auto
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 11px
+              img_cell:
+              - grid-area: i
+              - width: 38px
+              - height: 38px
+              - border-radius: 11px
+              - background-color: rgba(142,177,191,0.18)
+              icon:
+              - width: 20px
+              - color: var(--slate-bright)
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              label:
+              - grid-area: l
+              - justify-self: start
+              - font-size: 14px
+              - color: var(--secondary-text-color)
+              custom_fields:
+                chev:
+                - grid-area: chev
+                - justify-self: end
+            custom_fields:
+              chev: '[[[ return ''<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:#9aa0a8;"></ha-icon>''; ]]]'
+          - type: custom:button-card
+            name: Climate Schedules
+            label: 4 thermostats · fresh air · filters
+            icon: mdi:fan-clock
+            show_label: true
+            tap_action:
+              action: navigate
+              navigation_path: '#set-climate'
+            styles:
+              card:
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 13px 4px
+              - transition: none
+              - cursor: pointer
+              grid:
+              - grid-template-areas: '"i n chev" "i l chev"'
+              - grid-template-columns: 44px 1fr auto
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 11px
+              img_cell:
+              - grid-area: i
+              - width: 38px
+              - height: 38px
+              - border-radius: 11px
+              - background-color: rgba(142,177,191,0.18)
+              icon:
+              - width: 20px
+              - color: var(--slate-bright)
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              label:
+              - grid-area: l
+              - justify-self: start
+              - font-size: 14px
+              - color: var(--secondary-text-color)
+              custom_fields:
+                chev:
+                - grid-area: chev
+                - justify-self: end
+            custom_fields:
+              chev: '[[[ return ''<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:#9aa0a8;"></ha-icon>''; ]]]'
+          - type: custom:button-card
+            name: Alarm Automations
+            label: 4 rules
+            icon: mdi:shield-lock
+            show_label: true
+            tap_action:
+              action: navigate
+              navigation_path: '#set-alarm'
+            styles:
+              card:
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 13px 4px
+              - transition: none
+              - cursor: pointer
+              grid:
+              - grid-template-areas: '"i n chev" "i l chev"'
+              - grid-template-columns: 44px 1fr auto
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 11px
+              img_cell:
+              - grid-area: i
+              - width: 38px
+              - height: 38px
+              - border-radius: 11px
+              - background-color: rgba(142,177,191,0.18)
+              icon:
+              - width: 20px
+              - color: var(--slate-bright)
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              label:
+              - grid-area: l
+              - justify-self: start
+              - font-size: 14px
+              - color: var(--secondary-text-color)
+              custom_fields:
+                chev:
+                - grid-area: chev
+                - justify-self: end
+            custom_fields:
+              chev: '[[[ return ''<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:#9aa0a8;"></ha-icon>''; ]]]'
+          - type: custom:button-card
+            name: Motion & Lights
+            label: 9 rules
+            icon: mdi:motion-sensor
+            show_label: true
+            tap_action:
+              action: navigate
+              navigation_path: '#set-motion-lights'
+            styles:
+              card:
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 13px 4px
+              - transition: none
+              - cursor: pointer
+              grid:
+              - grid-template-areas: '"i n chev" "i l chev"'
+              - grid-template-columns: 44px 1fr auto
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 11px
+              img_cell:
+              - grid-area: i
+              - width: 38px
+              - height: 38px
+              - border-radius: 11px
+              - background-color: rgba(142,177,191,0.18)
+              icon:
+              - width: 20px
+              - color: var(--slate-bright)
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              label:
+              - grid-area: l
+              - justify-self: start
+              - font-size: 14px
+              - color: var(--secondary-text-color)
+              custom_fields:
+                chev:
+                - grid-area: chev
+                - justify-self: end
+            custom_fields:
+              chev: '[[[ return ''<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:#9aa0a8;"></ha-icon>''; ]]]'
+          - type: custom:button-card
+            name: Energy & Grid
+            label: Powerwall · consumption
+            icon: mdi:transmission-tower
+            show_label: true
+            tap_action:
+              action: navigate
+              navigation_path: '#set-energy'
+            styles:
+              card:
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 13px 4px
+              - transition: none
+              - cursor: pointer
+              grid:
+              - grid-template-areas: '"i n chev" "i l chev"'
+              - grid-template-columns: 44px 1fr auto
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 11px
+              img_cell:
+              - grid-area: i
+              - width: 38px
+              - height: 38px
+              - border-radius: 11px
+              - background-color: rgba(142,177,191,0.18)
+              icon:
+              - width: 20px
+              - color: var(--slate-bright)
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              label:
+              - grid-area: l
+              - justify-self: start
+              - font-size: 14px
+              - color: var(--secondary-text-color)
+              custom_fields:
+                chev:
+                - grid-area: chev
+                - justify-self: end
+            custom_fields:
+              chev: '[[[ return ''<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:#9aa0a8;"></ha-icon>''; ]]]'
+          - type: custom:button-card
+            name: Room Schedules
+            label: Shades · pool · vacuum
+            icon: mdi:calendar-clock
+            show_label: true
+            tap_action:
+              action: navigate
+              navigation_path: '#set-room-schedules'
+            styles:
+              card:
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 13px 4px
+              - transition: none
+              - cursor: pointer
+              grid:
+              - grid-template-areas: '"i n chev" "i l chev"'
+              - grid-template-columns: 44px 1fr auto
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 11px
+              img_cell:
+              - grid-area: i
+              - width: 38px
+              - height: 38px
+              - border-radius: 11px
+              - background-color: rgba(142,177,191,0.18)
+              icon:
+              - width: 20px
+              - color: var(--slate-bright)
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              label:
+              - grid-area: l
+              - justify-self: start
+              - font-size: 14px
+              - color: var(--secondary-text-color)
+              custom_fields:
+                chev:
+                - grid-area: chev
+                - justify-self: end
+            custom_fields:
+              chev: '[[[ return ''<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:#9aa0a8;"></ha-icon>''; ]]]'
+        - type: custom:bubble-card
+          card_type: separator
+          name: Values
+          icon: mdi:gauge
+          rows: 0.75
+          styles: |
+            .bubble-name { font-size: 14px !important; font-weight: 700 !important;
+              text-transform: uppercase; letter-spacing: 0.06em;
+              color: rgba(255,255,255,0.6) !important; }
+            .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
+            .card-content { padding-top: 7px !important; }
+        - type: vertical-stack
+          card_mod:
+            style: |
+              :host { display: block; background: var(--card-background-color);
+                border: 1px solid rgba(255,255,255,0.06); border-radius: 16px;
+                overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
+          cards:
+          - type: custom:button-card
+            entity: number.bayberry_backup_reserve
+            name: Powerwall Reserve
+            icon: mdi:battery-charging-high
+            show_state: true
+            tap_action:
+              action: more-info
+            state_display: |
+              [[[ return Math.round(Number((states['number.bayberry_backup_reserve'] || {}).state)) + '%'; ]]]
+            styles:
+              card:
+              - background: transparent !important
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 13px 4px
+              - transition: none
+              grid:
+              - grid-template-areas: '"i n v"'
+              - grid-template-columns: 44px 1fr auto
+              - align-items: center
+              - column-gap: 11px
+              img_cell:
+              - grid-area: i
+              - width: 38px
+              - height: 38px
+              - border-radius: 11px
+              - background-color: rgba(167,192,152,0.18)
+              icon:
+              - width: 20px
+              - color: var(--sage-color)
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              state:
+              - grid-area: v
+              - justify-self: end
+              - font-size: 16px
+              - font-weight: 700
+              - color: var(--sage-color)
+          - type: custom:button-card
+            entity: input_number.lower_floors_hvac_filter_hours
+            name: Lower HVAC Filter
+            icon: mdi:air-filter
+            show_state: true
+            tap_action:
+              action: more-info
+            state_display: |
+              [[[ return Math.round(Number((states['input_number.lower_floors_hvac_filter_hours'] || {}).state)) + ' h'; ]]]
+            styles:
+              card:
+              - background: transparent !important
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 13px 4px
+              - transition: none
+              grid:
+              - grid-template-areas: '"i n v"'
+              - grid-template-columns: 44px 1fr auto
+              - align-items: center
+              - column-gap: 11px
+              img_cell:
+              - grid-area: i
+              - width: 38px
+              - height: 38px
+              - border-radius: 11px
+              - background-color: rgba(224,167,94,0.18)
+              icon:
+              - width: 20px
+              - color: '#E0A75E'
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              state:
+              - grid-area: v
+              - justify-self: end
+              - font-size: 16px
+              - font-weight: 700
+              - color: '#E0A75E'
+- type: vertical-stack
+  cards:
+  - type: custom:bubble-card
+    card_type: pop-up
+    name: Home Modes
+    icon: mdi:home-automation
+    hash: '#set-home-modes'
+    theme: Dune Mist
+    show_header: true
+  - type: custom:bubble-card
+    card_type: button
+    entity: input_boolean.dinner_party
+    name: Dinner Party
+    icon: mdi:party-popper
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: input_boolean.dinner_party
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: input_boolean.guest_mode
+    name: Overnight Guests
+    icon: mdi:bed
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: input_boolean.guest_mode
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: input_boolean.cleaners_mode
+    name: Cleaners Mode
+    icon: mdi:spray-bottle
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: input_boolean.cleaners_mode
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: input_boolean.away_mode
+    name: Away
+    icon: mdi:bag-suitcase
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: input_boolean.away_mode
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+- type: vertical-stack
+  cards:
+  - type: custom:bubble-card
+    card_type: pop-up
+    name: Climate Schedules
+    icon: mdi:fan-clock
+    hash: '#set-climate'
+    theme: Dune Mist
+    show_header: true
+  - type: custom:bubble-card
+    card_type: separator
+    name: Thermostat Schedules
+    icon: mdi:fan-clock
+    modules:
+    - mobile_separator
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.living_room_hvac_schedule_v3
+    name: Living Room Thermostat Schedule
+    icon: mdi:fan-clock
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.living_room_hvac_schedule_v3
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.basement_hvac_schedule
+    name: Basement Thermostat Schedule
+    icon: mdi:fan-clock
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.basement_hvac_schedule
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.office_thermostat_schedule_v2
+    name: Office Thermostat Schedule
+    icon: mdi:fan-clock
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.office_thermostat_schedule_v2
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.bedroom_hvac_schedule
+    name: Bedroom Thermostat Schedule
+    icon: mdi:fan-clock
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.bedroom_hvac_schedule
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: separator
+    name: Fresh Air Controls
+    icon: mdi:tailwind
+    modules:
+    - mobile_separator
+  - type: custom:bubble-card
+    card_type: button
+    button_type: slider
+    entity: input_number.living_room_fresh_air_min_temp
+    show_last_changed: false
+    show_state: false
+    scrolling_effect: false
+    icon: mdi:home-thermometer-outline
+    card_layout: large
+    sub_button:
+    - entity: input_number.living_room_fresh_air_min_temp
+      show_state: true
+      show_icon: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    button_type: slider
+    entity: input_number.basement_fresh_air_minimum_temp
+    show_last_changed: false
+    show_state: false
+    scrolling_effect: false
+    icon: mdi:home-thermometer-outline
+    card_layout: large
+    sub_button:
+    - entity: input_number.basement_fresh_air_minimum_temp
+      show_state: true
+      show_icon: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: separator
+    name: Filter Maintenance
+    icon: mdi:air-filter
+    modules:
+    - mobile_separator
+  - type: custom:bubble-card
+    card_type: button
+    button_type: state
+    entity: input_number.upper_floor_hvac_filter_hours
+    show_state: false
+    scrolling_effect: false
+    card_layout: large
+    sub_button:
+    - entity: input_number.upper_floor_hvac_filter_hours
+      state_background: false
+      show_last_changed: false
+      show_state: true
+      show_background: false
+    button_action:
+      tap_action:
+        action: more-info
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    button_type: state
+    entity: input_number.lower_floors_hvac_filter_hours
+    show_state: false
+    scrolling_effect: false
+    card_layout: large
+    sub_button:
+    - entity: input_number.lower_floors_hvac_filter_hours
+      state_background: false
+      show_last_changed: false
+      show_state: true
+      show_background: false
+    button_action:
+      tap_action:
+        action: more-info
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: separator
+    name: Water Heater
+    icon: mdi:water-boiler
+    modules:
+    - mobile_separator
+  - type: custom:bubble-card
+    card_type: button
+    button_type: state
+    entity: input_datetime.water_heater_last_flushed
+    show_state: false
+    scrolling_effect: false
+    card_layout: large
+    sub_button:
+    - entity: input_datetime.water_heater_last_flushed
+      state_background: false
+      show_last_changed: false
+      show_state: true
+      show_background: false
+    button_action:
+      tap_action:
+        action: more-info
+    modules:
+    - mobile_settings_module
+- type: vertical-stack
+  cards:
+  - type: custom:bubble-card
+    card_type: pop-up
+    name: Alarm Automations
+    icon: mdi:shield-lock
+    hash: '#set-alarm'
+    theme: Dune Mist
+    show_header: true
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.alarm_arm_away_when_everyone_leaves
+    name: Automatically Arm Away Mode When Leaving
+    icon: mdi:shield-lock
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.alarm_arm_away_when_everyone_leaves
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm
+    name: Automatically Arm Home Mode at 11pm
+    icon: mdi:shield-lock
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.alarm_disarm_at_7am_or_good_morning_scene_activate
+    name: Automatically Disarm at 7am
+    icon: mdi:shield-lock-open
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.alarm_disarm_at_7am_or_good_morning_scene_activate
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.alarm_disarm_upon_arriving_home
+    name: Automatically Disarm When Arrive Home
+    icon: mdi:shield-lock-open
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.alarm_disarm_upon_arriving_home
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+- type: vertical-stack
+  cards:
+  - type: custom:bubble-card
+    card_type: pop-up
+    name: Motion & Lights
+    icon: mdi:motion-sensor
+    hash: '#set-motion-lights'
+    theme: Dune Mist
+    show_header: true
+  - type: custom:bubble-card
+    card_type: separator
+    name: Motion
+    icon: mdi:motion
+    modules:
+    - mobile_separator
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.outdoor_motion_after_11pm_before_sunrise
+    name: Outdoor Lights Motion Detection - 11pm - Sunrise
+    icon: mdi:motion
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.outdoor_motion_after_11pm_before_sunrise
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.motion_bathroom_day
+    name: Bathroom Lights Motion - Day
+    icon: mdi:motion
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.motion_bathroom_day
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.gym_motion_sensor
+    name: Gym Motion Lights
+    icon: mdi:motion
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.gym_motion_sensor
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: separator
+    name: Lights
+    icon: mdi:lightbulb-auto
+    modules:
+    - mobile_separator
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.evening_lights_on_lux
+    name: Automatically Turn Lights On In Evening
+    icon: mdi:lightbulb-auto
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.evening_lights_on_lux
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.morning_lights_off_lux_over_5000_or_9am
+    name: Automatically Turn Lights Off in Morning
+    icon: mdi:lightbulb-auto
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.morning_lights_off_lux_over_5000_or_9am
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.11_00_pm_good_night
+    name: Automatically Set Good Night at 11PM
+    icon: mdi:lightbulb-auto
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.11_00_pm_good_night
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.sunset_outdoor_off
+    name: Automatically Turn Outdoor Lights On At Sunset
+    icon: mdi:lightbulb-auto
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.sunset_outdoor_off
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.outdoor_off_at_11pm
+    name: Automatically Turn Off Outdoor Lights at Midnight
+    icon: mdi:motion
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.outdoor_off_at_11pm
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.11_00pm_turn_off_landscape_spotlights_s_th
+    name: Automatically Turn Off Outdoor Spotlights at 11PM (Sun-Thurs)
+    icon: mdi:motion
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.11_00pm_turn_off_landscape_spotlights_s_th
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+- type: vertical-stack
+  cards:
+  - type: custom:bubble-card
+    card_type: pop-up
+    name: Energy & Grid
+    icon: mdi:transmission-tower
+    hash: '#set-energy'
+    theme: Dune Mist
+    show_header: true
+  - type: custom:bubble-card
+    card_type: button
+    button_type: slider
+    entity: number.bayberry_backup_reserve
+    show_last_changed: false
+    show_state: false
+    scrolling_effect: false
+    icon: mdi:battery-charging-high
+    card_layout: large
+    sub_button:
+    - entity: number.bayberry_backup_reserve
+      show_state: true
+      show_icon: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: separator
+    name: Energy Consumption
+    icon: mdi:lightning-bolt
+    modules:
+    - mobile_separator
+  - type: custom:bubble-card
+    card_type: button
+    button_type: name
+    entity: sensor.well_pump_energy
+    name: Well Pump Energy Consumed
+    card_layout: large
+    show_state: false
+    scrolling_effect: false
+    sub_button:
+    - entity: sensor.well_pump_energy
+      show_state: true
+      show_attribute: false
+      show_icon: false
+      state_background: false
+      show_background: false
+    button_action:
+      tap_action:
+        action: more-info
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    button_type: name
+    entity: sensor.pool_pump_energy
+    name: Pool Pump Energy Consumed
+    card_layout: large
+    show_state: false
+    scrolling_effect: false
+    sub_button:
+    - entity: sensor.pool_pump_energy
+      show_state: true
+      show_attribute: false
+      show_icon: false
+      state_background: false
+      show_background: false
+    button_action:
+      tap_action:
+        action: more-info
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    button_type: name
+    entity: sensor.wall_charger_energy
+    name: EV Charger Energy Consumed
+    card_layout: large
+    show_state: false
+    scrolling_effect: false
+    sub_button:
+    - entity: sensor.wall_charger_energy
+      show_state: true
+      show_attribute: false
+      show_icon: false
+      state_background: false
+      show_background: false
+    button_action:
+      tap_action:
+        action: more-info
+    modules:
+    - mobile_settings_module
+- type: vertical-stack
+  cards:
+  - type: custom:bubble-card
+    card_type: pop-up
+    name: Room Schedules
+    icon: mdi:calendar-clock
+    hash: '#set-room-schedules'
+    theme: Dune Mist
+    show_header: true
+  - type: custom:bubble-card
+    card_type: separator
+    name: Shades
+    icon: mdi:roller-shade
+    modules:
+    - mobile_separator
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.living_room_adaptive_shading
+    name: First Floor Shades – Schedule & Adaptive
+    icon: mdi:roller-shade
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.living_room_adaptive_shading
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.dining_room_adaptive_shading
+    name: Dining Room Adaptive Shading
+    icon: mdi:roller-shade
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.dining_room_adaptive_shading
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.primary_bedroom_shades_schedule_adaptive
+    name: Primary Bedroom Shades – Schedule & Adaptive
+    icon: mdi:roller-shade
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.primary_bedroom_shades_schedule_adaptive
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.back_guest_bedroom_shades_schedule_adaptive
+    name: Back Guest Bedroom Shades – Schedule & Adaptive
+    icon: mdi:roller-shade
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.back_guest_bedroom_shades_schedule_adaptive
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.front_guest_bedroom_shades_schedule_adaptive
+    name: Front Guest Bedroom Shades – Schedule & Adaptive
+    icon: mdi:roller-shade
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.front_guest_bedroom_shades_schedule_adaptive
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.3_00pm_bedroom_back_shading
+    name: 3:00PM Bedroom Shades Sun Position
+    icon: mdi:roller-shade
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.3_00pm_bedroom_back_shading
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: separator
+    name: Pool
+    icon: mdi:pool
+    modules:
+    - mobile_separator
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.pool_heater_schedule
+    name: Pool Heater Schedule
+    icon: mdi:heat-wave
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.pool_heater_schedule
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
+  - type: custom:bubble-card
+    card_type: separator
+    name: Vacuum
+    icon: mdi:vacuum
+    modules:
+    - mobile_separator
+  - type: custom:bubble-card
+    card_type: button
+    entity: automation.12_00am_roborock_s8_vacuum_basement
+    name: 12:00AM Vacuum Basement Nightly
+    icon: mdi:vacuum
+    show_state: false
+    scrolling_effect: false
+    button_action:
+      tap_action:
+        action: toggle
+    tap_action:
+      action: toggle
+    card_layout: large
+    sub_button:
+    - entity: automation.12_00am_roborock_s8_vacuum_basement
+      show_state: true
+      show_icon: false
+      state_background: false
+      show_background: false
+    modules:
+    - mobile_settings_module
