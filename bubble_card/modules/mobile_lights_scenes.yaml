@@ -18,19 +18,19 @@ mobile_lights_scenes:
     .bubble-button-card-container {
       border-radius: 15px !important;
       margin: 2px 5px 2px 5px !important;
-      background-color: ${state === 'on' ? 'var(--ha-card-background)' : 'var(--slate-color)'} !important;
+      background-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color-2)'} !important;
       opacity: 1 !important;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
       }
 
       .bubble-button-background {
-        background-color: ${state === 'on' ? 'var(--ha-card-background)' : 'var(--slate-color)'} !important;
+        background-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color-2'} !important;
       }
 
     .bubble-name {
       font-size: 16px !important;
       text-align: left !important;
-      color: ${state === 'on' ? 'var(--primary-text-color)' : 'var(--primary-background-color)'} !important;
+      color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
         }
             
     .bubble-sub-button {
@@ -40,7 +40,7 @@ mobile_lights_scenes:
       }
             
     .bubble-icon {
-      color: ${state === 'on' ? 'var(--primary-text-color)' : 'var(--primary-background-color)'} !important;
+      color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
       opacity: 1 !important;
       }
 
