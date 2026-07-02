@@ -417,14 +417,6 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
-              img_cell:
-              - grid-area: ic
-              - width: 22px
-              - height: 22px
-              icon:
-              - width: 18px
-              - color: |
-                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -475,14 +467,6 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
-              img_cell:
-              - grid-area: ic
-              - width: 22px
-              - height: 22px
-              icon:
-              - width: 18px
-              - color: |
-                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -533,14 +517,6 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
-              img_cell:
-              - grid-area: ic
-              - width: 22px
-              - height: 22px
-              icon:
-              - width: 18px
-              - color: |
-                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -591,14 +567,6 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
-              img_cell:
-              - grid-area: ic
-              - width: 22px
-              - height: 22px
-              icon:
-              - width: 18px
-              - color: |
-                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -649,14 +617,6 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
-              img_cell:
-              - grid-area: ic
-              - width: 22px
-              - height: 22px
-              icon:
-              - width: 18px
-              - color: |
-                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
@@ -707,14 +667,6 @@ cards:
               icon:
               - width: 20px
               - color: var(--slate-bright)
-              img_cell:
-              - grid-area: ic
-              - width: 22px
-              - height: 22px
-              icon:
-              - width: 18px
-              - color: |
-                  [[[ return (states['switch.bayberry_off_grid_operation'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
               name:
               - grid-area: n
               - justify-self: start
