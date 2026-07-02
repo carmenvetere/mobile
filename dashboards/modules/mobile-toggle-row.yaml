@@ -39,6 +39,7 @@ styles:
   grid:
     - grid-template-areas: '"{% if row_icon is defined %}ic {% endif %}n st sw"'
     - grid-template-columns: {% if row_icon is defined %}auto {% endif %}1fr auto auto
+    - grid-template-rows: 1fr
     - align-items: center
     - column-gap: 10px
 {% if row_icon is defined %}
