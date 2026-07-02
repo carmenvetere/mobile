@@ -1,0 +1,116 @@
+blueprint:
+  name: Lutron Pico Audio Button - Control Media Entity
+  description: This blueprint the association a Lutron Pico Audio Button (model PJ2-3BRL-GXX-X01)
+    with a media entity such as a Sonos.
+  domain: automation
+  input:
+    pico_1:
+      name: Pico Device
+      description: Pico remote to associate with media entity.
+      selector:
+        device:
+          model: PJ2-3BRL-GXX-X01 (Pico3ButtonRaiseLower)
+          multiple: false
+    entity:
+      name: Media Entity
+      description: Media entity to control.
+      selector:
+        entity:
+          domain:
+          - media_player
+          multiple: true
+    middle_button_action:
+      name: Middle (Favorite) Button Override
+      description: Action(s) to execute when MIDDLE button is pressed. If left blank,
+        action will default to setting the light entity to a brightness 80% and color
+        temperature 2700.
+      selector:
+        action: {}
+      default:
+  source_url: https://gist.github.com/ericlegallais/37db4993db7d85b499f08df4dfbedcf8
+trigger:
+- platform: event
+  event_type: lutron_caseta_button_event
+  event_data:
+    device_id: !input pico_1
+    button_type: 'on'
+    action: press
+  id: play_pause_pressed
+- platform: event
+  event_type: lutron_caseta_button_event
+  event_data:
+    device_id: !input pico_1
+    button_type: raise
+    action: press
+  id: up_pressed
+- platform: event
+  event_type: lutron_caseta_button_event
+  event_data:
+    device_id: !input pico_1
+    button_type: stop
+    action: press
+  id: middle_pressed
+- platform: event
+  event_type: lutron_caseta_button_event
+  event_data:
+    device_id: !input pico_1
+    button_type: lower
+    action: press
+  id: lower_pressed
+- platform: event
+  event_type: lutron_caseta_button_event
+  event_data:
+    device_id: !input pico_1
+    button_type: 'off'
+    action: press
+  id: play_next_pressed
+variables:
+  middle_button_action: !input middle_button_action
+condition: []
+action:
+- choose:
+  - conditions:
+    - condition: trigger
+      id: play_pause_pressed
+    sequence:
+    - service: media_player.media_play_pause
+      data: {}
+      target:
+        entity_id: !input entity
+  - conditions:
+    - condition: trigger
+      id: up_pressed
+    sequence:
+    - service: media_player.volume_up
+      data: {}
+      target:
+        entity_id: !input entity
+  - conditions:
+    - condition: trigger
+      id: middle_pressed
+    sequence:
+    - choose:
+      - conditions: '{{ middle_button_action != none }}'
+        sequence: !input middle_button_action
+      default:
+      - service: media_player.media_previous_track
+        data: {}
+        target:
+          entity_id: !input entity
+  - conditions:
+    - condition: trigger
+      id: lower_pressed
+    sequence:
+    - service: media_player.volume_down
+      data: {}
+      target:
+        entity_id: !input entity
+  - conditions:
+    - condition: trigger
+      id: play_next_pressed
+    sequence:
+    - service: media_player.media_next_track
+      data: {}
+      target:
+        entity_id: !input entity
+mode: restart

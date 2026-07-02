@@ -19,3 +19,18 @@ secrets.yaml
 .ha_run.lock
 home-assistant.log*
 .HA_VERSION
+
+# Folders to exclude
+/www/
+/custom_components/
+/blueprints/
+/config/
+/esphome/
+/image/
+/llmvision/
+/lovelace/
+/media/
+/model_cache/
+/solcast_solar/
+/timelapese/
+/tts/
