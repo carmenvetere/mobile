@@ -109,6 +109,31 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
   the slider should be `var(--slate-color)`; the unfilled (right) side stays
   the card's gray background (screenshot 2 currently shows the blue-gray fill
   with mismatched track).
+- **f. Expander border radius.** The expanders' 20px radius looks off — align
+  with the dashboard standard (15px, see R7-b radius audit).
+
+### R7 — Climate view refinements ⬜
+
+- **a. Header average temp broken.** The label reads `avg –°` because it uses
+  the bare `entity` variable, which is not populated in nested custom_fields
+  button-cards (the known `ButtonCardJSTemplateError` pattern — this header
+  slipped through the earlier sweep). `sensor.climate_zones_avg_temp` itself
+  exists and works. Fix: guarded `states['sensor.climate_zones_avg_temp']`.
+- **b. Thermostat cards: drop the glow, fix radius.** Remove the heat/cool
+  glowing border (`box-shadow` ring) from the `mobile_climate` bubble module.
+  Its 25px card radius should also come down to the dashboard standard (15px);
+  audit the same for the lights expanders (R6-f) — radii should be consistent
+  (15px unless a deliberate exception).
+- **c. Priority/fan/vent toggle rows: readability.** In
+  `mobile-climate-toggle.yaml`:
+  - The per-room temp/humidity chips (secondary text on
+    `rgba(255,255,255,0.06)`) are hard to read — restyle for contrast (e.g.
+    primary text, or drop the chip background).
+  - The switches' off state (name/state in `#9aa0a8`) is also low-contrast —
+    improve.
+  - Row icons should be plain `var(--primary-text-color)` in all states,
+    matching the scene and light cards (currently slate-bright when on,
+    `#9aa0a8` when off).
 
 ## Backlog / future candidates
 
@@ -130,7 +155,10 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
    More-destination views.
 6. Lights view: expanders match the scene-card color; inner cards one step
    lighter; single-color left edge on light cards; no hover tint on expanders;
-   on-state slider fill is slate over the card-gray track.
+   on-state slider fill is slate over the card-gray track; radii standardized.
+7. Climate view: header shows the real average temp; thermostat cards have no
+   glow and standard radius; toggle-row temps/humidity/off-state readable and
+   icons primary-text-color.
 
 ## Process
 
