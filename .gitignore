@@ -1,11 +1,21 @@
 # Home Assistant secrets — never commit real credentials.
 secrets.yaml
+.jwt_secret
+*.pem
+*.key
+.cloud/
 
 # Local/runtime artifacts that should not be version-controlled.
 *.db
 *.db-shm
 *.db-wal
 *.log
+*.sql
 .storage/
+.cache/
+.exports
+.timeline
+.vacuum
+.ha_run.lock
 home-assistant.log*
 .HA_VERSION
