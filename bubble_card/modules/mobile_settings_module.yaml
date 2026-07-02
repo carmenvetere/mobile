@@ -15,34 +15,59 @@ mobile_settings_module:
   description: ''
   code: |-
       ha-card {
-        bubble-main-background-color: ${state === 'on' ? 'var(--slate-color)': 'var(--background-color-2)'} !important;
-        border-radius: 15px !important;
-        margin: 2px 5px 2px 5px !important;
+      bubble-main-background-color: var(--background-color-2) !important;
+      border-radius: 15px !important;
+      margin: 2px 5px 2px 5px !important;
+      --bubble-color-on: var(--slate-color) !important;
+      --bubble-color-off: var(--secondary-text-color) !important;
       }
-      
+
+      .bubble-button-background {
+        background-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color-2)'} !important;
+        border-radius: 15px !important;
+        opacity: 1 !important;
+        }
+
       .bubble-button-card-container {
         border-radius: 15px !important;
         margin: 2px 5px 2px 5px !important;
-        background-color: ${state === 'on' ? 'var(--slate-color)': 'var(--background-color-2)'} !important;
+        background-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color-2)'} !important;
         opacity: 1 !important;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
-        }
-      
+      }
+
       .bubble-name { 
         font-size: 16px !important;
         text-align: left !important;
+        color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
+        } 
+
+      .bubble-state {
+        font-size: 14px !important;
+        text-align: left !important;
+        color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
         } 
         
       .bubble-sub-button { 
-       font-size: 14px !important; 
-       font-weight: bold; 
-       margin-right: 10px;
-       }
+      font-size: 14px !important; 
+      font-weight: bold; 
+      margin-right: 10px;
+      }
+      
       .bubble-icon-container {
-       background: transparent !important;
-       }
+      background: transparent !important;
+      }
+      
+      .bubble-sub-button {
+        font-size: 14px !important;
+        font-weight: bold;
+        margin-right: 10px;
+        background: transparent !important;
+        color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
+      }
+      
       .bubble-icon {
-       opacity: 1 !important;
-       color: var(--text-color) !important;
-       }
+      opacity: 1 !important;
+      color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
+      }
   editor: ''
