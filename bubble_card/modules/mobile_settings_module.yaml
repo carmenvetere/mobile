@@ -13,9 +13,9 @@ mobile_settings_module:
     - separator
     - sub-buttons
   description: ''
-  code: |2-
+  code: |
       ha-card {
-        --bubble-main-background-color: ${state === 'on' ? 'var(--slate-color)': 'var(--background-color-2)'} !important;
+        bubble-main-background-color: ${state === 'on' ? 'var(--slate-color)': 'var(--background-color-2)'} !important;
         border-radius: 15px !important;
         margin: 2px 5px 2px 5px !important;
       }
