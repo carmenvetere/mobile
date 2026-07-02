@@ -86,6 +86,30 @@ Two defects in the active-pill highlight:
    carry the active highlight, and (stretch) the matching row inside the More
    pop-up should render in its active style.
 
+### R6 — Lights view refinements ⬜
+
+Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
+
+- **a. Expander color = scene-card color.** The floor expander cards should use
+  the same background color as the bubble scene cards' container
+  (`var(--background-color-2)`, per the `mobile_lights_scenes` module).
+- **b. Inner cards one step lighter.** The individual light cards inside an
+  expander should use the theme color one step lighter than the expander
+  background (next rung on the Dune Mist ladder, e.g.
+  `var(--ha-card-background)` / `var(--card-background-color)` — confirm
+  against the theme).
+- **c. Fix the two-color left edge.** Individual light bubble cards show two
+  colors at the left edge (screenshot 1): the `mobile_lights` module's
+  `.bubble-button-card-container` background peeks out from behind the
+  `.bubble-button-background` / slider overlay (radius/margin mismatch).
+  Align the layers so the edge is a single color.
+- **d. No hover color on expanders.** Remove the expander cards' hover state
+  color (card_mod override on the expander's hover overlay).
+- **e. Slider fill colors.** For a light that is on, the filled (left) side of
+  the slider should be `var(--slate-color)`; the unfilled (right) side stays
+  the card's gray background (screenshot 2 currently shows the blue-gray fill
+  with mismatched track).
+
 ## Backlog / future candidates
 
 - Retire or fold in the now-orphaned v2-only modules (`mobile-toggle-row.yaml`,
@@ -104,6 +128,9 @@ Two defects in the active-pill highlight:
 4. Every menu bubble card's sub-button is secondary-text-color at rest.
 5. Active pill fully contained in the nav bar; More gets the highlight on all
    More-destination views.
+6. Lights view: expanders match the scene-card color; inner cards one step
+   lighter; single-color left edge on light cards; no hover tint on expanders;
+   on-state slider fill is slate over the card-gray track.
 
 ## Process
 
