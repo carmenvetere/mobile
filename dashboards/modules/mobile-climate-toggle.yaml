@@ -27,6 +27,7 @@ styles:
   grid:
     - grid-template-areas: '"ic n{% if temp_sensor is defined %} temp hum{% endif %} st sw"'
     - grid-template-columns: auto 1fr{% if temp_sensor is defined %} auto auto{% endif %} auto auto
+    - grid-template-rows: 1fr
     - align-items: center
     - column-gap: 8px
   img_cell:
