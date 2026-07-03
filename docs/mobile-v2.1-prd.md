@@ -135,6 +135,31 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
     matching the scene and light cards (currently slate-bright when on,
     `#9aa0a8` when off).
 
+### R8 — Shades view refinements ⬜
+
+(See 2026-07-02 Dining Room screenshot.)
+
+- **a. Card border radius.** The shade bubble cards look wrong because
+  `mobile_shades_module` sets no `border-radius`, so cards keep Bubble's ~32px
+  default. Standardize to 15px (the dashboard standard, per R7-b audit).
+- **b. Icon color.** Cover icons render HA's blue domain state color because
+  the module sets no `.bubble-icon` color. Set them to
+  `var(--primary-text-color)` — static, no state dependence (the card
+  background doesn't change with state here).
+- **c. Color hierarchy.** Expander card background = the group cards' color
+  above (`var(--background-color-2)`); cards inside the expander one theme
+  step lighter — same ladder as the lights view (R6 a/b).
+- **d. Expander border radius.** Audit/standardize alongside R6-f (15px).
+- **e. Unequal left/right margins.** The shade groups and expander sections
+  have unequal side margins — the groups section is another
+  `custom:stack-in-card` (shades-view line ~137). Replace with
+  `vertical-stack`, same as R2 / the lights view fix.
+- **f. Battery icon alignment.** In the individual cards, the battery
+  icon + percentage pair shifts horizontally depending on the text width
+  ("100%" vs "55%"), so the icons don't form a column. Give the battery
+  sub-button a fixed width / right-aligned percent so icons line up across
+  cards.
+
 ## Backlog / future candidates
 
 - Retire or fold in the now-orphaned v2-only modules (`mobile-toggle-row.yaml`,
@@ -159,6 +184,9 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
 7. Climate view: header shows the real average temp; thermostat cards have no
    glow and standard radius; toggle-row temps/humidity/off-state readable and
    icons primary-text-color.
+8. Shades view: 15px card and expander radii; primary-text icons; expander
+   color hierarchy matches groups; equal side margins; battery icons aligned
+   in a column.
 
 ## Process
 
