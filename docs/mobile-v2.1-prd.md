@@ -36,7 +36,7 @@ off as they land.
 
 ## Requirements
 
-### R1 — Home header: reorder status icons ⬜
+### R1 — Home header: reorder status icons ✅
 
 The status icons to the left of the outside temperature should read, from the
 temperature outward (right → left): **Alarm** (always present, directly left of
@@ -44,7 +44,7 @@ temp) → **Notifications** → **Dinner Party** → **Overnight Guests**.
 
 Visual order left → right: `[Overnight Guests] [Dinner Party] [Notifications] [Alarm] [Temp]`.
 
-### R2 — Home view: equal margins on Scenes / Lights ⬜
+### R2 — Home view: equal margins on Scenes / Lights ✅
 
 The left and right margins on the scenes and lights sections are unequal —
 caused by the `custom:stack-in-card` wrapper. Replace it with a plain
