@@ -135,7 +135,7 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
     matching the scene and light cards (currently slate-bright when on,
     `#9aa0a8` when off).
 
-### R8 — Shades view refinements ⬜
+### R8 — Shades view refinements ✅
 
 (See 2026-07-02 Dining Room screenshot.)
 
