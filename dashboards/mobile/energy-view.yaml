@@ -129,44 +129,60 @@ cards:
                 padding-left: 10px !important;
                 }  
             - !include /config/dashboards/modules/7-day-solar-forecast.yaml
-            - type: custom:bubble-card
-              card_type: separator
-              name: 12 Month Solar History
-              icon: mdi:flash
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }  
-            - !include /config/dashboards/modules/12-month-solar-history.yaml
-            - type: custom:bubble-card
-              card_type: separator
-              name: Last 24 Hours Power Flow
-              icon: mdi:flash
-              rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }  
-            - !include /config/dashboards/modules/24-hour-power-flow.yaml
+            # Wide chart: tablet/desktop only (R10-b)
+            - type: conditional
+              conditions:
+                - condition: screen
+                  media_query: "(min-width: 768px)"
+              card:
+                type: vertical-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: separator
+                    name: 12 Month Solar History
+                    icon: mdi:flash
+                    rows: 0.75
+                    styles: |
+                      .bubble-name {
+                      font-size: 20px !important;  /* title */
+                      font-weight: bold !important;
+                      }
+                      .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                      }
+                      .card-content {
+                      padding-top: 10px !important;
+                      padding-left: 10px !important;
+                      }
+                  - !include /config/dashboards/modules/12-month-solar-history.yaml
+            # Wide chart: tablet/desktop only (R10-b)
+            - type: conditional
+              conditions:
+                - condition: screen
+                  media_query: "(min-width: 768px)"
+              card:
+                type: vertical-stack
+                cards:
+                  - type: custom:bubble-card
+                    card_type: separator
+                    name: Last 24 Hours Power Flow
+                    icon: mdi:flash
+                    rows: 0.75
+                    styles: |
+                      .bubble-name {
+                      font-size: 20px !important;  /* title */
+                      font-weight: bold !important;
+                      }
+                      .bubble-line {
+                      background: var(--primary-text-color);
+                      opacity: 0.1;
+                      }
+                      .card-content {
+                      padding-top: 10px !important;
+                      padding-left: 10px !important;
+                      }
+                  - !include /config/dashboards/modules/24-hour-power-flow.yaml
             - type: custom:bubble-card
               card_type: separator
               name: Last 7 Days Home Energy Usage
