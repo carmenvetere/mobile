@@ -86,7 +86,7 @@ Two defects in the active-pill highlight:
    carry the active highlight, and (stretch) the matching row inside the More
    pop-up should render in its active style.
 
-### R6 — Lights view refinements ⬜
+### R6 — Lights view refinements ✅
 
 Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
 

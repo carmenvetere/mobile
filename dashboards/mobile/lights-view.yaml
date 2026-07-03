@@ -145,11 +145,20 @@ cards:
               card_mod:
                 style: |
                   ha-card {
-                    background-color: var(--background-color) !important;
+                    background-color: var(--background-color-2) !important;
+                    border-radius: 15px !important;
                     margin-top: 5px !important;
                     padding-top: 3px !important;
                     padding-bottom: 3px !important;
+                    transition: none !important;
                   }
+                  ha-card:hover {
+                    background-color: var(--background-color-2) !important;
+                  }
+                  .title-card-button:hover, .header:hover {
+                    background: transparent !important;
+                  }
+                  ha-card ha-ripple, ha-card mwc-ripple { display: none !important; }
               title-card:
                 type: custom:bubble-card
                 card_type: separator
@@ -175,7 +184,7 @@ cards:
                   }
               cards:
                 - type: vertical-stack
-                  cards: !include [/config/dashboards/modules/first-floor-lights-individual.yaml, {module_name: mobile_lights_scenes, dashboard: mobile}]
+                  cards: !include [/config/dashboards/modules/first-floor-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
             - type: custom:expander-card
               expanded: false
               title-card-clickable: true
@@ -196,11 +205,20 @@ cards:
               card_mod:
                 style: |
                   ha-card {
-                    background-color: var(--background-color) !important;
+                    background-color: var(--background-color-2) !important;
+                    border-radius: 15px !important;
                     margin-top: 5px !important;
                     padding-top: 3px !important;
                     padding-bottom: 3px !important;
+                    transition: none !important;
                   }
+                  ha-card:hover {
+                    background-color: var(--background-color-2) !important;
+                  }
+                  .title-card-button:hover, .header:hover {
+                    background: transparent !important;
+                  }
+                  ha-card ha-ripple, ha-card mwc-ripple { display: none !important; }
               cards:
               - type: vertical-stack
                 cards: !include [/config/dashboards/modules/basement-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
@@ -224,11 +242,20 @@ cards:
               card_mod:
                 style: |
                   ha-card {
-                    background-color: var(--background-color) !important;
+                    background-color: var(--background-color-2) !important;
+                    border-radius: 15px !important;
                     margin-top: 5px !important;
                     padding-top: 3px !important;
                     padding-bottom: 3px !important;
+                    transition: none !important;
                   }
+                  ha-card:hover {
+                    background-color: var(--background-color-2) !important;
+                  }
+                  .title-card-button:hover, .header:hover {
+                    background: transparent !important;
+                  }
+                  ha-card ha-ripple, ha-card mwc-ripple { display: none !important; }
               cards: !include [/config/dashboards/modules/second-floor-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
             - type: custom:expander-card
               expanded: false
@@ -250,9 +277,18 @@ cards:
               card_mod:
                 style: |
                   ha-card {
-                    background-color: var(--background-color) !important;
+                    background-color: var(--background-color-2) !important;
+                    border-radius: 15px !important;
                     margin-top: 5px !important;
                     padding-top: 3px !important;
                     padding-bottom: 3px !important;
+                    transition: none !important;
                   }
+                  ha-card:hover {
+                    background-color: var(--background-color-2) !important;
+                  }
+                  .title-card-button:hover, .header:hover {
+                    background: transparent !important;
+                  }
+                  ha-card ha-ripple, ha-card mwc-ripple { display: none !important; }
               cards: !include [/config/dashboards/modules/outdoor-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]

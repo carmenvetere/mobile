@@ -8,11 +8,10 @@ mobile_lights_scenes:
   description: ''
   code: |-
     ha-card {
-      bubble-main-background-color: var(--background-color-2) !important;
+      --bubble-main-background-color: var(--background-color-2) !important;
+      --bubble-accent-color: var(--slate-color) !important;
       border-radius: 15px !important;
       margin: 2px 5px 2px 5px !important;
-      --bubble-color-on: var(--slate-color) !important;
-      --bubble-color-off: var(--secondary-text-color) !important;
     }
 
     .bubble-button-card-container {
@@ -24,7 +23,9 @@ mobile_lights_scenes:
       }
 
     .bubble-button-background {
+      border-radius: 15px !important;
       background-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color-2)'} !important;
+      opacity: 1 !important;
     }
 
     .bubble-name {
@@ -35,8 +36,9 @@ mobile_lights_scenes:
             
     .bubble-sub-button {
       font-size: 14px !important;
-      font-weight: bold; 
+      font-weight: bold;
       background: transparent !important;
+      color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--secondary-text-color)'} !important;
       }
             
     .bubble-icon {
