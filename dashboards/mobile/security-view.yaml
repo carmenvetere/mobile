@@ -19,10 +19,11 @@ cards:
       grid:
         - grid-template-areas: |
             "header"
+            "alarm"
             "cameras"
             "recent"
         - grid-template-columns: auto
-        - grid-template-rows: 60px auto auto
+        - grid-template-rows: 60px auto auto auto
         - row-gap: 5px
         - align-items: start
         - column-gap: 2px
@@ -35,7 +36,7 @@ cards:
           name: Security
           show_state: true
           show_label: true
-          tap_action: { action: more-info }
+          tap_action: { action: none }
           state_display: |
             [[[
               var e = states['alarm_control_panel.alarmo'];
@@ -120,6 +121,136 @@ cards:
               styles:
                 state:
                   - color: var(--error-color)   
+      alarm:
+        card:
+          type: custom:button-card
+          show_icon: false
+          show_name: false
+          tap_action: { action: none }
+          styles:
+            card:
+              - background: var(--background-color-2)
+              - border-radius: 15px
+              - padding: 4px
+              - box-shadow: none
+              - transition: none
+              - margin-bottom: 4px
+            grid:
+              - grid-template-areas: '"away home disarm"'
+              - grid-template-columns: 1fr 1fr 1fr
+              - grid-template-rows: 1fr
+              - column-gap: 4px
+          custom_fields:
+            away:
+              card:
+                type: custom:button-card
+                name: Armed Away
+                show_icon: false
+                tap_action:
+                  action: call-service
+                  service: alarm_control_panel.alarm_arm_away
+                  target:
+                    entity_id: alarm_control_panel.alarmo
+                styles:
+                  card:
+                    - background: |
+                        [[[
+                          var e = states['alarm_control_panel.alarmo'] || {};
+                          var a = e.attributes || {};
+                          if (e.state === 'armed_away') return 'var(--gold-color)';
+                          if ((e.state === 'arming' || e.state === 'pending') &&
+                              (a.arm_mode === 'armed_away' || a.next_state === 'armed_away')) return 'rgba(226,193,104,0.45)';
+                          return 'transparent';
+                        ]]]
+                    - border-radius: 12px
+                    - box-shadow: none
+                    - transition: none
+                    - padding: 10px 0
+                    - cursor: pointer
+                  grid:
+                    - grid-template-areas: '"n"'
+                    - grid-template-rows: 1fr
+                    - align-items: center
+                  name:
+                    - font-size: 14px
+                    - font-weight: 700
+                    - color: |
+                        [[[
+                          var e = states['alarm_control_panel.alarmo'] || {};
+                          return e.state === 'armed_away' ? 'var(--text-primary-color)' : 'var(--secondary-text-color)';
+                        ]]]
+            home:
+              card:
+                type: custom:button-card
+                name: Armed Home
+                show_icon: false
+                tap_action:
+                  action: call-service
+                  service: alarm_control_panel.alarm_arm_home
+                  target:
+                    entity_id: alarm_control_panel.alarmo
+                styles:
+                  card:
+                    - background: |
+                        [[[
+                          var e = states['alarm_control_panel.alarmo'] || {};
+                          var a = e.attributes || {};
+                          if (e.state === 'armed_home') return 'var(--gold-color)';
+                          if ((e.state === 'arming' || e.state === 'pending') &&
+                              (a.arm_mode === 'armed_home' || a.next_state === 'armed_home')) return 'rgba(226,193,104,0.45)';
+                          return 'transparent';
+                        ]]]
+                    - border-radius: 12px
+                    - box-shadow: none
+                    - transition: none
+                    - padding: 10px 0
+                    - cursor: pointer
+                  grid:
+                    - grid-template-areas: '"n"'
+                    - grid-template-rows: 1fr
+                    - align-items: center
+                  name:
+                    - font-size: 14px
+                    - font-weight: 700
+                    - color: |
+                        [[[
+                          var e = states['alarm_control_panel.alarmo'] || {};
+                          return e.state === 'armed_home' ? 'var(--text-primary-color)' : 'var(--secondary-text-color)';
+                        ]]]
+            disarm:
+              card:
+                type: custom:button-card
+                name: Disarmed
+                show_icon: false
+                tap_action:
+                  action: call-service
+                  service: alarm_control_panel.alarm_disarm
+                  target:
+                    entity_id: alarm_control_panel.alarmo
+                styles:
+                  card:
+                    - background: |
+                        [[[
+                          var e = states['alarm_control_panel.alarmo'] || {};
+                          return e.state === 'disarmed' ? 'var(--sage-color)' : 'transparent';
+                        ]]]
+                    - border-radius: 12px
+                    - box-shadow: none
+                    - transition: none
+                    - padding: 10px 0
+                    - cursor: pointer
+                  grid:
+                    - grid-template-areas: '"n"'
+                    - grid-template-rows: 1fr
+                    - align-items: center
+                  name:
+                    - font-size: 14px
+                    - font-weight: 700
+                    - color: |
+                        [[[
+                          var e = states['alarm_control_panel.alarmo'] || {};
+                          return e.state === 'disarmed' ? 'var(--text-primary-color)' : 'var(--secondary-text-color)';
+                        ]]]
       cameras:
         card:
           type: vertical-stack
@@ -145,7 +276,7 @@ cards:
                 camera_view: auto
                 fit_mode: cover
                 show_state: false
-                show_name: true
+                show_name: false
                 name: Front
                 tap_action: { action: more-info }
                 card_mod: &cam_style
@@ -169,7 +300,7 @@ cards:
                 camera_view: auto
                 fit_mode: cover
                 show_state: false
-                show_name: true
+                show_name: false
                 name: Front Right
                 tap_action: { action: more-info }
                 card_mod: *cam_style
@@ -179,7 +310,7 @@ cards:
                 camera_view: auto
                 fit_mode: cover
                 show_state: false
-                show_name: true
+                show_name: false
                 name: Driveway
                 tap_action: { action: more-info }
                 card_mod: *cam_style
@@ -189,7 +320,7 @@ cards:
                 camera_view: auto
                 fit_mode: cover
                 show_state: false
-                show_name: true
+                show_name: false
                 name: Pool
                 tap_action: { action: more-info }
                 card_mod: *cam_style
@@ -199,7 +330,7 @@ cards:
             camera_view: auto
             fit_mode: cover
             show_state: false
-            show_name: true
+            show_name: false
             name: Kimberly Side
             tap_action: { action: more-info }
             card_mod: *cam_style
