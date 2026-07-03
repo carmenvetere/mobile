@@ -1030,7 +1030,11 @@
   mode: single
 - id: '1733850402691'
   alias: Powerwall - 20%
-  description: ''
+  description: 'Notifies when the Powerwall drops below 20% during a grid outage.
+    The discharge-time countdown is parsed with as_timedelta and simply omitted
+    when sensor.powerwall_discharge_time is unavailable or malformed (the old
+    double split('':'') parsing crashed the whole notification on bad input).
+    Includes heat-specific advice when the living room thermostat is heating.'
   triggers:
   - trigger: numeric_state
     entity_id:
@@ -1044,14 +1048,15 @@
   - action: notify.notify
     data:
       title: Powerwall Critical
-      message: '{% set discharge_state = states(''sensor.powerwall_discharge_time'')
-        %} {% set time = discharge_state.split('':'')[1].split('':'') %} Powerwall
-        is at 20% charge. It will enter standy by mode and stop providing power to
-        the house  when it reaches 10%. It will be completely discharged in {{ time[0]
-        }} hours and {{ time[1] }} minutes. Reduce energy usage immediately.  Consider
-        turning off the breaker for the water heater{% if states(''climate.living_room_thermostat'')
-        == ''heat'' %} and turning off the heat in unused parts of the house{% endif
-        %}.'
+      message: '{% set td = as_timedelta(states(''sensor.powerwall_discharge_time''))
+        %}Powerwall is at 20% charge. It will enter standby mode and stop providing
+        power to the house when it reaches 10%.{% if td is not none %} It will be
+        completely discharged in {{ td.days * 24 + td.seconds // 3600 }} hours and
+        {{ (td.seconds % 3600) // 60 }} minutes.{% endif %} Reduce energy usage
+        immediately. Consider turning off the breaker for the water heater{% if
+        states(''climate.living_room_thermostat'') == ''heat'' %} and turning off
+        the heat in unused parts of the house{% endif %}.'
+  mode: single
 - id: '1733850740208'
   alias: Powerwall - 12%
   description: ''
@@ -1303,7 +1308,18 @@
       auto_mode: queued
 - id: '1734892746784'
   alias: Away Mode Turns On
-  description: ''
+  description: 'Puts all four HVAC zones into away state: turns on the four
+    climate_hold_* booleans (the zone schedules skip while held - no schedules
+    are disabled anymore), sets Lyric preset PermanentHold on the four NATIVE
+    thermostat entities (presets live on the native integration, not the HomeKit
+    mirrors), and applies the season-aware away setpoint
+    (input_number.away_heat_setpoint when heating_season is on, else
+    input_number.away_cool_setpoint) to each zone''s usual setpoint target
+    (HomeKit mirror for LR/basement/office, native for the bedroom). Also
+    disables the evening lights automation (lights, not climate - restored by
+    Away Mode Turns Off). Away holds are cleared ONLY by Away Mode Turns Off;
+    the Climate Hold Watchdog will not clear a hold while away_mode is on. Hold
+    precedence: power_outage > away > door_open.'
   triggers:
   - trigger: state
     entity_id:
@@ -1312,64 +1328,65 @@
     to: 'on'
   conditions: []
   actions:
-  - device_id: b5dd5a5d880c08e0cb400eefceecba46
-    domain: climate
-    entity_id: f9dd17de8716892eab083de47789b8c1
-    type: set_preset_mode
-    preset_mode: PermanentHold
-  - action: climate.set_temperature
-    metadata: {}
-    data:
-      temperature: 62
+  - action: input_boolean.turn_on
     target:
-      device_id: b5dd5a5d880c08e0cb400eefceecba46
-  - device_id: 98bd8135f812bb40ba7abc2b8c69c8a4
-    domain: climate
-    entity_id: 86df71e69ac03a831798ea9249b9b439
-    type: set_preset_mode
-    preset_mode: PermanentHold
-  - action: climate.set_temperature
-    metadata: {}
+      entity_id:
+      - input_boolean.climate_hold_living_room
+      - input_boolean.climate_hold_basement
+      - input_boolean.climate_hold_office
+      - input_boolean.climate_hold_bedroom
+  - action: climate.set_preset_mode
     data:
-      temperature: 62
+      preset_mode: PermanentHold
     target:
-      device_id: 98bd8135f812bb40ba7abc2b8c69c8a4
-  - device_id: ea7d0311040cfb5cdc34e51fbb6cf40e
-    domain: climate
-    entity_id: 3f58ee6b76cd840eaa78d47cc19c6419
-    type: set_preset_mode
-    preset_mode: PermanentHold
-  - action: climate.set_temperature
-    metadata: {}
-    data:
-      temperature: 62
-    target:
-      device_id: ea7d0311040cfb5cdc34e51fbb6cf40e
-  - device_id: ad083d27029b75d6dff9f9925c6e0d6d
-    domain: climate
-    entity_id: 636e9f0ec7cf312ab9d7609301d99d4b
-    type: set_preset_mode
-    preset_mode: PermanentHold
-  - action: climate.set_temperature
-    metadata: {}
-    data:
-      temperature: 62
-    target:
-      device_id: ad083d27029b75d6dff9f9925c6e0d6d
+      entity_id:
+      - climate.living_room_thermostat
+      - climate.basement_thermostat
+      - climate.office_thermostat
+      - climate.master_bedroom_thermostat
+  - if:
+    - condition: state
+      entity_id: input_boolean.heating_season
+      state: 'on'
+    then:
+    - action: climate.set_temperature
+      data:
+        temperature: '{{ states(''input_number.away_heat_setpoint'') | float(62)
+          }}'
+      target:
+        entity_id:
+        - climate.living_room_thermostat_homekit
+        - climate.basement_thermostat_homekit
+        - climate.office_thermostat_homekit
+        - climate.master_bedroom_thermostat
+    else:
+    - action: climate.set_temperature
+      data:
+        temperature: '{{ states(''input_number.away_cool_setpoint'') | float(78)
+          }}'
+      target:
+        entity_id:
+        - climate.living_room_thermostat_homekit
+        - climate.basement_thermostat_homekit
+        - climate.office_thermostat_homekit
+        - climate.master_bedroom_thermostat
   - action: automation.turn_off
     data:
       stop_actions: true
     target:
       entity_id:
-      - automation.office_thermostat_schedule_v2
-      - automation.living_room_hvac_schedule_v3
-      - automation.bedroom_hvac_schedule
       - automation.evening_lights_on_lux
-      - automation.basement_hvac_schedule
   mode: single
 - id: '1734893403809'
   alias: Away Mode Turns Off
-  description: ''
+  description: 'Restores the four HVAC zones from away state: sets Lyric preset
+    NoHold on the four NATIVE thermostat entities, clears each zone''s
+    climate_hold_* boolean ONLY if no other hold cause remains (per-zone: doors
+    closed where the zone has a door cause, grid up - precedence power_outage >
+    away > door_open), then triggers all four zone schedules WITHOUT
+    skip_condition so still-held zones stay paused and released zones snap to the
+    correct current-period setpoint. Also re-enables + triggers the evening
+    lights automation and takes the water heater out of away mode.'
   triggers:
   - trigger: state
     entity_id:
@@ -1378,28 +1395,65 @@
     to: 'off'
   conditions: []
   actions:
-  - device_id: b5dd5a5d880c08e0cb400eefceecba46
-    domain: climate
-    entity_id: f9dd17de8716892eab083de47789b8c1
-    type: set_preset_mode
-    preset_mode: NoHold
-  - device_id: 98bd8135f812bb40ba7abc2b8c69c8a4
-    domain: climate
-    entity_id: 86df71e69ac03a831798ea9249b9b439
-    type: set_preset_mode
-    preset_mode: NoHold
-  - device_id: ea7d0311040cfb5cdc34e51fbb6cf40e
-    domain: climate
-    entity_id: 3f58ee6b76cd840eaa78d47cc19c6419
-    type: set_preset_mode
-    preset_mode: NoHold
-  - device_id: ad083d27029b75d6dff9f9925c6e0d6d
-    domain: climate
-    entity_id: 636e9f0ec7cf312ab9d7609301d99d4b
-    type: set_preset_mode
-    preset_mode: NoHold
+  - action: climate.set_preset_mode
+    data:
+      preset_mode: NoHold
+    target:
+      entity_id:
+      - climate.living_room_thermostat
+      - climate.basement_thermostat
+      - climate.office_thermostat
+      - climate.master_bedroom_thermostat
+  - alias: Clear LR hold unless another cause is active
+    if:
+    - condition: state
+      entity_id: binary_sensor.first_floor_exterior_doors
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.bayberry_grid_status
+      state: 'on'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_living_room
+  - alias: Clear basement hold unless another cause is active
+    if:
+    - condition: state
+      entity_id: binary_sensor.mudroom_entry_door
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.bayberry_grid_status
+      state: 'on'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_basement
+  - alias: Clear office hold unless another cause is active
+    if:
+    - condition: state
+      entity_id: binary_sensor.bayberry_grid_status
+      state: 'on'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_office
+  - alias: Clear bedroom hold unless another cause is active
+    if:
+    - condition: state
+      entity_id: binary_sensor.bayberry_grid_status
+      state: 'on'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_bedroom
   - action: automation.turn_on
     data: {}
+    target:
+      entity_id:
+      - automation.evening_lights_on_lux
+  - action: automation.trigger
+    data:
+      skip_condition: false
     target:
       entity_id:
       - automation.living_room_hvac_schedule_v3
@@ -1410,10 +1464,6 @@
     data: {}
     target:
       entity_id:
-      - automation.living_room_hvac_schedule_v3
-      - automation.basement_hvac_schedule
-      - automation.office_thermostat_schedule_v2
-      - automation.bedroom_hvac_schedule
       - automation.evening_lights_on_lux
   - action: water_heater.set_away_mode
     data:
@@ -1758,58 +1808,108 @@
   mode: single
 - id: '1739720179880'
   alias: First Floor Doors Left Open - Climate Off
-  description: ''
+  description: 'Pauses living-room climate when any first-floor exterior door (group
+    binary_sensor.first_floor_exterior_doors) stays open more than 5 minutes: stores
+    the current HVAC mode in input_select.living_thermostat_last_hvac_mode (only
+    if no hold is already active, so an existing away/outage hold is never overwritten),
+    turns on input_boolean.climate_hold_living_room (which blocks the LR schedule
+    via its hold condition), and sets the zone off on the HomeKit mirror. Sends one
+    reminder notification if the doors stay open 65 minutes. Restore is owned by
+    "First Floor Doors Closed - Restore Climate" and the Climate Hold Watchdog;
+    hold precedence power_outage > away > door_open is enforced at clear time. No
+    wait/timeout here by design - the old in-flight wait died on HA restarts.'
   triggers:
   - trigger: state
     entity_id:
-    - binary_sensor.living_room_french_doors
-    - binary_sensor.kitchen_french_doors
+    - binary_sensor.first_floor_exterior_doors
     from: 'off'
     to: 'on'
     for:
       hours: 0
       minutes: 5
       seconds: 0
-  conditions:
-  - condition: state
-    entity_id: automation.living_room_hvac_schedule_v3
-    state:
-    - 'on'
-  actions:
-  - action: climate.set_hvac_mode
-    metadata: {}
-    data:
-      hvac_mode: 'off'
-    target:
-      device_id: b5dd5a5d880c08e0cb400eefceecba46
-  - action: automation.turn_off
-    metadata: {}
-    data:
-      stop_actions: true
-    target:
-      entity_id: automation.living_room_hvac_schedule_v3
-  - wait_for_trigger:
-    - trigger: state
-      entity_id:
-      - binary_sensor.kitchen_french_doors
-      - binary_sensor.living_room_french_doors
-      from: 'on'
-      to: 'off'
-    continue_on_timeout: false
-    timeout:
-      hours: 5
-      minutes: 0
+    id: open_5m
+  - trigger: state
+    entity_id:
+    - binary_sensor.first_floor_exterior_doors
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 1
+      minutes: 5
       seconds: 0
-      milliseconds: 0
-  - action: automation.turn_on
-    metadata: {}
-    data: {}
-    target:
-      entity_id: automation.living_room_hvac_schedule_v3
+    id: open_65m
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: open_5m
+      sequence:
+      - if:
+        - condition: state
+          entity_id: input_boolean.climate_hold_living_room
+          state: 'off'
+        then:
+        - choose:
+          - conditions:
+            - condition: state
+              state: cool
+              entity_id: climate.living_room_thermostat_homekit
+            sequence:
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.living_thermostat_last_hvac_mode
+              data:
+                option: Cool
+          - conditions:
+            - condition: state
+              state: 'off'
+              entity_id: climate.living_room_thermostat_homekit
+            sequence:
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.living_thermostat_last_hvac_mode
+              data:
+                option: 'Off'
+          - conditions:
+            - condition: state
+              state: heat
+              entity_id: climate.living_room_thermostat_homekit
+            sequence:
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.living_thermostat_last_hvac_mode
+              data:
+                option: Heat
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.climate_hold_living_room
+      - action: climate.set_hvac_mode
+        data:
+          hvac_mode: 'off'
+        target:
+          entity_id: climate.living_room_thermostat_homekit
+    - conditions:
+      - condition: trigger
+        id: open_65m
+      sequence:
+      - action: notify.notify
+        data:
+          title: Doors Still Open
+          message: First-floor doors open for 1 h; living-room climate is paused
+            until they close.
   mode: single
 - id: '1739720362966'
   alias: Mudroom Door Left Open - Climate Off
-  description: ''
+  description: 'Pauses basement climate when the mudroom entry door (the only exterior
+    basement door) stays open more than 5 minutes: stores the current HVAC mode in
+    input_select.basement_thermostat_last_hvac_mode (only if no hold is already active),
+    turns on input_boolean.climate_hold_basement (which blocks the basement schedule
+    via its hold condition), and sets the zone off on the HomeKit mirror. Sends one
+    reminder notification if the door stays open 65 minutes. Restore is owned by
+    "Mudroom Door Closed - Restore Climate" and the Climate Hold Watchdog; hold
+    precedence power_outage > away > door_open is enforced at clear time.'
   triggers:
   - trigger: state
     entity_id:
@@ -1820,40 +1920,77 @@
       hours: 0
       minutes: 5
       seconds: 0
-  conditions:
-  - condition: state
-    entity_id: automation.basement_hvac_schedule
-    state: 'on'
-  actions:
-  - action: climate.set_hvac_mode
-    metadata: {}
-    data:
-      hvac_mode: 'off'
-    target:
-      device_id:
-      - ad083d27029b75d6dff9f9925c6e0d6d
-  - action: automation.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id: automation.basement_hvac_schedule
-  - wait_for_trigger:
-    - trigger: state
-      entity_id:
-      - binary_sensor.mudroom_entry_door
-      from: 'on'
-      to: 'off'
-    continue_on_timeout: false
-    timeout:
-      hours: 5
-      minutes: 0
+    id: open_5m
+  - trigger: state
+    entity_id:
+    - binary_sensor.mudroom_entry_door
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 1
+      minutes: 5
       seconds: 0
-      milliseconds: 0
-  - action: automation.turn_on
-    metadata: {}
-    data: {}
-    target:
-      entity_id: automation.basement_hvac_schedule
+    id: open_65m
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: open_5m
+      sequence:
+      - if:
+        - condition: state
+          entity_id: input_boolean.climate_hold_basement
+          state: 'off'
+        then:
+        - choose:
+          - conditions:
+            - condition: state
+              state: cool
+              entity_id: climate.basement_thermostat_homekit
+            sequence:
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.basement_thermostat_last_hvac_mode
+              data:
+                option: Cool
+          - conditions:
+            - condition: state
+              state: 'off'
+              entity_id: climate.basement_thermostat_homekit
+            sequence:
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.basement_thermostat_last_hvac_mode
+              data:
+                option: 'Off'
+          - conditions:
+            - condition: state
+              state: heat
+              entity_id: climate.basement_thermostat_homekit
+            sequence:
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.basement_thermostat_last_hvac_mode
+              data:
+                option: Heat
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.climate_hold_basement
+      - action: climate.set_hvac_mode
+        data:
+          hvac_mode: 'off'
+        target:
+          entity_id: climate.basement_thermostat_homekit
+    - conditions:
+      - condition: trigger
+        id: open_65m
+      sequence:
+      - action: notify.notify
+        data:
+          title: Door Still Open
+          message: Mudroom door open for 1 h; basement climate is paused until it
+            closes.
   mode: single
 - id: '1739726790399'
   alias: Alarm - Disarm at 7AM or Good Morning Scene Activate
@@ -2461,7 +2598,18 @@
   mode: single
 - id: '1749486825499'
   alias: Power Outage V2
-  description: ''
+  description: 'Grid down (Powerwall islanding): notifies, turns on the four
+    climate_hold_* booleans (the zone schedules skip while held - schedules are
+    no longer disabled/enabled), sets outage lighting scenes, announces on
+    speakers (07:00-22:00), then sheds HVAC per zone: captures the current mode
+    into the input_select.*_last_hvac_mode helpers (options Cool/Off/Heat -
+    Power Returns V2 compares against these exact strings), turns cooling zones
+    off, drops heating zones to 62F with emergency (resistance-free) heat
+    enabled. Outage holds are cleared ONLY by Power Returns V2 (or the Climate
+    Hold Watchdog once the grid is back); precedence power_outage > away >
+    door_open. The four tail device-action blocks (load-shed switches + button)
+    still use device_id targets - resolve them to entity_ids against the live
+    registry (Phase 5) before touching them.'
   triggers:
   - trigger: state
     entity_id:
@@ -2477,15 +2625,13 @@
       message: 'Power outage. Running on battery power. HVAC, Lights, and other appliances
         have been adjusted to reduce load. Avoid using the oven, dryer, and hot water
         if possible. '
-  - action: automation.turn_off
+  - action: input_boolean.turn_on
     target:
       entity_id:
-      - automation.bedroom_hvac_schedule
-      - automation.office_thermostat_schedule_v2
-      - automation.basement_hvac_schedule
-      - automation.living_room_hvac_schedule_v3
-    data:
-      stop_actions: true
+      - input_boolean.climate_hold_living_room
+      - input_boolean.climate_hold_basement
+      - input_boolean.climate_hold_office
+      - input_boolean.climate_hold_bedroom
   - if:
     - condition: time
       before: '22:00:00'
@@ -2818,953 +2964,223 @@
   mode: restart
 - id: '1749498392865'
   alias: Office Thermostat Schedule V2
-  description: ''
+  description: 'Office / guest-room zone schedule. Periods: day 07:00-17:00,
+    evening 17:00-21:00, night 21:00-07:00. Occupied = guest_mode on during
+    day/evening, or guest_mode off on a weekday day (work-from-office hours).
+    Setpoints come from the input_number.office_* helpers: heat 68 occupied / 65
+    unoccupied; cool 72 occupied / 73.5 unoccupied / 68 on guest-mode nights
+    (defaults shown). Only acts when the thermostat is already in heat or cool
+    (dispatch on current mode; never changes mode); writes setpoints to the
+    HomeKit mirror. Lyric room-priority switches preserved from the pre-refactor
+    logic: guest_mode off = office priority only; guest_mode on = guest-room
+    priorities (office priority off), EXCEPT weekday day with guests when all
+    three priorities are on. No fan writes. Skips entirely while
+    input_boolean.climate_hold_office is on (away / power outage - see Climate
+    Hold Watchdog). Re-syncs on HA start (60 s settle) and at 20:02 after the
+    utility demand-response window. Grid-return re-sync is owned by Power Returns
+    V2, not this schedule.'
   triggers:
   - trigger: time
-    at: 07:00:00
+    at: '07:00:00'
   - trigger: time
     at: '17:00:00'
   - trigger: time
     at: '21:00:00'
-  - trigger: state
-    entity_id:
-    - binary_sensor.bayberry_grid_status
-    from: 'off'
-    to: 'on'
-    for:
-      hours: 0
-      minutes: 5
-      seconds: 0
-  conditions: []
+  - trigger: time
+    at: '20:02:00'
+  - trigger: homeassistant
+    event: start
+  conditions:
+  - condition: state
+    entity_id: input_boolean.climate_hold_office
+    state: 'off'
   actions:
-  - choose:
-    - conditions:
-      - condition: time
-        after: 07:00:00
-        before: '17:00:00'
-        weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-      sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'off'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 68
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 72
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'on'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 68
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 72
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-                  - switch.office_thermostat_office_priority
-    - conditions:
-      - condition: time
-        after: '17:00:00'
-        before: '21:00:00'
-        weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-      sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'off'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 65
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 73.5
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'on'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 68
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 72
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-    - conditions:
-      - condition: time
-        after: '21:00:00'
-        before: 07:00:00
-        weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-      sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'off'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 65
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 73.5
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'on'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 65
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 68
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-    - conditions:
-      - condition: time
-        after: 07:00:00
-        before: '17:00:00'
-        weekday:
-        - sat
-        - sun
-      sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'off'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 65
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 73.5
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'on'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 68
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 72
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-    - conditions:
-      - condition: time
-        after: '17:00:00'
-        before: '21:00:00'
-        weekday:
-        - sat
-        - sun
-      sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'off'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 65
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 73.5
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'on'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 68
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 72
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-    - conditions:
-      - condition: time
-        after: '21:00:00'
-        before: 07:00:00
-        weekday:
-        - sat
-        - sun
-      sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'off'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 65
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 73.5
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.guest_mode
-            state: 'on'
-          sequence:
-          - choose:
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: heat
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 65
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
-            - conditions:
-              - condition: state
-                entity_id: climate.office_thermostat_homekit
-                state: cool
-              sequence:
-              - action: climate.set_temperature
-                metadata: {}
-                data:
-                  temperature: 68
-                target:
-                  entity_id: climate.office_thermostat_homekit
-              - action: switch.turn_on
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_guest_bedroom_priority
-                  - switch.office_thermostat_front_guest_bedroom_priority
-              - action: switch.turn_off
-                metadata: {}
-                data: {}
-                target:
-                  entity_id:
-                  - switch.office_thermostat_office_priority
+  - if:
+    - condition: template
+      value_template: '{{ trigger.platform == ''homeassistant'' }}'
+    then:
+    - delay:
+        hours: 0
+        minutes: 1
+        seconds: 0
+  - variables:
+      is_weekday: '{{ now().isoweekday() <= 5 }}'
+      hr: '{{ now().hour + now().minute / 60 }}'
+      period: "{% if 7 <= hr < 17 %}day\n{% elif 17 <= hr < 21 %}evening\n{% else\
+        \ %}night\n{% endif %}"
+      guest: '{{ is_state(''input_boolean.guest_mode'', ''on'') }}'
+      occupied: '{{ (guest and period in [''day'', ''evening'']) or (not guest and
+        is_weekday and period == ''day'') }}'
+      heat_target: "{% if occupied %}{{ states('input_number.office_heat_occupied')\
+        \ | float(68) }}\n{% else %}{{ states('input_number.office_heat_unoccupied')\
+        \ | float(65) }}\n{% endif %}"
+      cool_target: "{% if occupied %}{{ states('input_number.office_cool_occupied')\
+        \ | float(72) }}\n{% elif guest and period == 'night' %}{{ states('input_number.office_cool_guest_night')\
+        \ | float(68) }}\n{% else %}{{ states('input_number.office_cool_unoccupied')\
+        \ | float(73.5) }}\n{% endif %}"
+  - if:
+    - condition: state
+      entity_id: climate.office_thermostat_homekit
+      state:
+      - heat
+      - cool
+    then:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: climate.office_thermostat_homekit
+          state: heat
+        sequence:
+        - action: climate.set_temperature
+          data:
+            temperature: '{{ heat_target }}'
+          target:
+            entity_id: climate.office_thermostat_homekit
+      - conditions:
+        - condition: state
+          entity_id: climate.office_thermostat_homekit
+          state: cool
+        sequence:
+        - action: climate.set_temperature
+          data:
+            temperature: '{{ cool_target }}'
+          target:
+            entity_id: climate.office_thermostat_homekit
+    - choose:
+      - conditions:
+        - condition: template
+          value_template: '{{ not guest }}'
+        sequence:
+        - action: switch.turn_off
+          data: {}
+          target:
+            entity_id:
+            - switch.office_thermostat_guest_bedroom_priority
+            - switch.office_thermostat_front_guest_bedroom_priority
+        - action: switch.turn_on
+          data: {}
+          target:
+            entity_id:
+            - switch.office_thermostat_office_priority
+      - conditions:
+        - condition: template
+          value_template: '{{ guest and is_weekday and period == ''day'' }}'
+        sequence:
+        - action: switch.turn_on
+          data: {}
+          target:
+            entity_id:
+            - switch.office_thermostat_guest_bedroom_priority
+            - switch.office_thermostat_front_guest_bedroom_priority
+            - switch.office_thermostat_office_priority
+      default:
+      - action: switch.turn_on
+        data: {}
+        target:
+          entity_id:
+          - switch.office_thermostat_guest_bedroom_priority
+          - switch.office_thermostat_front_guest_bedroom_priority
+      - action: switch.turn_off
+        data: {}
+        target:
+          entity_id:
+          - switch.office_thermostat_office_priority
   mode: restart
 - id: '1749500468903'
   alias: Bedroom HVAC Schedule
-  description: ''
+  description: 'Master bedroom zone schedule. Periods - weekday: morning 07:00-09:00,
+    day 09:00-19:30, night 19:30-07:00; weekend: morning 08:00-10:00, day
+    10:00-19:30, night 19:30-07:00 (07:00-08:00 weekend deliberately writes
+    nothing, matching the pre-refactor behavior). Setpoints come from the
+    input_number.br_* helpers (heat: morning 68 / weekday day 66 / weekend day 68
+    / night 65; cool: morning 72 / day 73.5 / night 68 defaults). Only acts when
+    the thermostat is already in heat or cool (dispatch on current mode; never
+    changes mode) and writes setpoints to climate.bedroom_thermostat. No fan
+    writes. Skips entirely while input_boolean.climate_hold_bedroom is on (away /
+    power outage - see Climate Hold Watchdog). Re-syncs on HA start (60 s settle)
+    and at 20:02 after the utility demand-response window. Grid-return re-sync is
+    owned by Power Returns V2, not this schedule.'
   triggers:
   - trigger: time
-    at: 07:00:00
+    at: '07:00:00'
   - trigger: time
-    at: 08:00:00
+    at: '08:00:00'
   - trigger: time
-    at: 09:00:00
+    at: '09:00:00'
   - trigger: time
     at: '10:00:00'
   - trigger: time
     at: '19:30:00'
-  - trigger: state
-    entity_id:
-    - binary_sensor.bayberry_grid_status
-    from: 'off'
-    to: 'on'
-    for:
-      hours: 0
-      minutes: 5
-      seconds: 0
-  conditions: []
+  - trigger: time
+    at: '20:02:00'
+  - trigger: homeassistant
+    event: start
+  conditions:
+  - condition: state
+    entity_id: input_boolean.climate_hold_bedroom
+    state: 'off'
   actions:
+  - if:
+    - condition: template
+      value_template: '{{ trigger.platform == ''homeassistant'' }}'
+    then:
+    - delay:
+        hours: 0
+        minutes: 1
+        seconds: 0
+  - variables:
+      is_weekday: '{{ now().isoweekday() <= 5 }}'
+      hr: '{{ now().hour + now().minute / 60 }}'
+      period: "{% if is_weekday %}\n  {% if 7 <= hr < 9 %}morning\n  {% elif 9 <=\
+        \ hr < 19.5 %}day\n  {% else %}night\n  {% endif %}\n{% else %}\n  {% if\
+        \ 8 <= hr < 10 %}morning\n  {% elif 10 <= hr < 19.5 %}day\n  {% elif hr >=\
+        \ 19.5 or hr < 7 %}night\n  {% else %}none\n  {% endif %}\n{% endif %}"
+      heat_target: "{% if period == 'morning' %}{{ states('input_number.br_heat_morning')\
+        \ | float(68) }}\n{% elif period == 'day' and is_weekday %}{{ states('input_number.br_heat_day_weekday')\
+        \ | float(66) }}\n{% elif period == 'day' %}{{ states('input_number.br_heat_day_weekend')\
+        \ | float(68) }}\n{% else %}{{ states('input_number.br_heat_night') | float(65)\
+        \ }}\n{% endif %}"
+      cool_target: "{% if period == 'morning' %}{{ states('input_number.br_cool_morning')\
+        \ | float(72) }}\n{% elif period == 'day' %}{{ states('input_number.br_cool_day')\
+        \ | float(73.5) }}\n{% else %}{{ states('input_number.br_cool_night') |\
+        \ float(68) }}\n{% endif %}"
   - choose:
     - conditions:
-      - condition: time
-        after: 07:00:00
-        before: 09:00:00
-        weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
+      - condition: template
+        value_template: '{{ period != ''none'' }}'
+      - condition: state
+        entity_id: climate.bedroom_thermostat
+        state: heat
       sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: heat
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 68
-            target:
-              entity_id: climate.bedroom_thermostat
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: cool
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 72
-            target:
-              entity_id: climate.bedroom_thermostat
+      - action: climate.set_temperature
+        data:
+          temperature: '{{ heat_target }}'
+        target:
+          entity_id: climate.bedroom_thermostat
     - conditions:
-      - condition: time
-        after: 09:00:00
-        before: '19:30:00'
-        weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
+      - condition: template
+        value_template: '{{ period != ''none'' }}'
+      - condition: state
+        entity_id: climate.bedroom_thermostat
+        state: cool
       sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: heat
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 66
-            target:
-              entity_id: climate.bedroom_thermostat
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: cool
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 73.5
-            target:
-              entity_id: climate.bedroom_thermostat
-    - conditions:
-      - condition: time
-        after: '19:30:00'
-        before: 07:00:00
-        weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-      sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: heat
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 65
-            target:
-              entity_id: climate.bedroom_thermostat
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: cool
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 68
-            target:
-              entity_id: climate.bedroom_thermostat
-    - conditions:
-      - condition: time
-        after: 08:00:00
-        before: '10:00:00'
-        weekday:
-        - sat
-        - sun
-      sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: heat
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 68
-            target:
-              entity_id: climate.bedroom_thermostat
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: cool
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 72
-            target:
-              entity_id: climate.bedroom_thermostat
-    - conditions:
-      - condition: time
-        after: '10:00:00'
-        before: '19:30:00'
-        weekday:
-        - sat
-        - sun
-      sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: heat
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 68
-            target:
-              entity_id: climate.bedroom_thermostat
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: cool
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 73.5
-            target:
-              entity_id: climate.bedroom_thermostat
-    - conditions:
-      - condition: time
-        after: '19:30:00'
-        before: 07:00:00
-        weekday:
-        - sat
-        - sun
-      sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: heat
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 65
-            target:
-              entity_id: climate.bedroom_thermostat
-        - conditions:
-          - condition: state
-            entity_id: climate.bedroom_thermostat
-            state: cool
-          sequence:
-          - action: climate.set_temperature
-            metadata: {}
-            data:
-              temperature: 68
-            target:
-              entity_id: climate.bedroom_thermostat
+      - action: climate.set_temperature
+        data:
+          temperature: '{{ cool_target }}'
+        target:
+          entity_id: climate.bedroom_thermostat
   mode: restart
 - id: '1749504893942'
   alias: Power Returns V2
-  description: ''
+  description: 'Grid back for 5 minutes: notifies, restores each zone''s HVAC mode
+    from the input_select.*_last_hvac_mode helpers captured by Power Outage V2
+    (comparing the exact option strings Cool/Off/Heat - previously two of three
+    branches compared lowercase and never matched), restores evening scenes when
+    appropriate, then clears each zone''s climate_hold_* boolean ONLY if no other
+    hold cause remains (per-zone: doors closed where the zone has a door cause,
+    away_mode off - precedence power_outage > away > door_open) and triggers that
+    zone''s schedule WITHOUT skip_condition so released zones snap to the correct
+    current-period setpoint while still-held zones stay paused.'
   triggers:
   - trigger: state
     entity_id:
@@ -3788,7 +3204,7 @@
     choose:
     - conditions:
       - condition: state
-        state: cool
+        state: Cool
         entity_id: input_select.living_thermostat_last_hvac_mode
       sequence:
       - action: climate.set_hvac_mode
@@ -3800,7 +3216,7 @@
           entity_id: climate.living_room_thermostat_homekit
     - conditions:
       - condition: state
-        state: 'off'
+        state: 'Off'
         entity_id: input_select.living_thermostat_last_hvac_mode
       sequence:
       - action: climate.set_hvac_mode
@@ -3835,7 +3251,7 @@
     choose:
     - conditions:
       - condition: state
-        state: cool
+        state: Cool
         entity_id: input_select.bedroom_thermostat_last_hvac_mode
       sequence:
       - action: climate.set_hvac_mode
@@ -3847,7 +3263,7 @@
           entity_id: climate.bedroom_thermostat
     - conditions:
       - condition: state
-        state: 'off'
+        state: 'Off'
         entity_id: input_select.bedroom_thermostat_last_hvac_mode
       sequence:
       - action: climate.set_hvac_mode
@@ -3859,7 +3275,7 @@
           entity_id: climate.bedroom_thermostat
     - conditions:
       - condition: state
-        state: heat
+        state: Heat
         entity_id: input_select.bedroom_thermostat_last_hvac_mode
       sequence:
       - action: climate.set_hvac_mode
@@ -3881,7 +3297,7 @@
     choose:
     - conditions:
       - condition: state
-        state: cool
+        state: Cool
         entity_id: input_select.office_thermostat_last_hvac_mode
       sequence:
       - action: climate.set_hvac_mode
@@ -3893,7 +3309,7 @@
           entity_id: climate.office_thermostat_homekit
     - conditions:
       - condition: state
-        state: 'off'
+        state: 'Off'
         entity_id: input_select.office_thermostat_last_hvac_mode
       sequence:
       - action: climate.set_hvac_mode
@@ -3905,7 +3321,7 @@
           entity_id: climate.office_thermostat_homekit
     - conditions:
       - condition: state
-        state: heat
+        state: Heat
         entity_id: input_select.office_thermostat_last_hvac_mode
       sequence:
       - action: climate.set_hvac_mode
@@ -3927,7 +3343,7 @@
     choose:
     - conditions:
       - condition: state
-        state: cool
+        state: Cool
         entity_id: input_select.basement_thermostat_last_hvac_mode
       sequence:
       - action: climate.set_hvac_mode
@@ -3939,7 +3355,7 @@
           entity_id: climate.basement_thermostat_homekit
     - conditions:
       - condition: state
-        state: 'off'
+        state: 'Off'
         entity_id: input_select.basement_thermostat_last_hvac_mode
       sequence:
       - action: climate.set_hvac_mode
@@ -3951,7 +3367,7 @@
           entity_id: climate.basement_thermostat_homekit
     - conditions:
       - condition: state
-        state: heat
+        state: Heat
         entity_id: input_select.basement_thermostat_last_hvac_mode
       sequence:
       - action: climate.set_hvac_mode
@@ -3992,23 +3408,68 @@
       data: {}
       target:
         entity_id: scene.outdoor_on
-  - action: automation.turn_on
-    target:
-      entity_id:
-      - automation.bedroom_hvac_schedule
-      - automation.office_thermostat_schedule_v2
-      - automation.basement_hvac_schedule
-      - automation.living_room_hvac_schedule_v3
-    data: {}
-  - action: automation.trigger
-    target:
-      entity_id:
-      - automation.bedroom_hvac_schedule
-      - automation.office_thermostat_schedule_v2
-      - automation.basement_hvac_schedule
-      - automation.living_room_hvac_schedule_v3
-    data:
-      skip_condition: true
+  - alias: Release LR hold unless another cause is active
+    if:
+    - condition: state
+      entity_id: binary_sensor.first_floor_exterior_doors
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: 'off'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_living_room
+    - action: automation.trigger
+      data:
+        skip_condition: false
+      target:
+        entity_id: automation.living_room_hvac_schedule_v3
+  - alias: Release basement hold unless another cause is active
+    if:
+    - condition: state
+      entity_id: binary_sensor.mudroom_entry_door
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: 'off'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_basement
+    - action: automation.trigger
+      data:
+        skip_condition: false
+      target:
+        entity_id: automation.basement_hvac_schedule
+  - alias: Release office hold unless another cause is active
+    if:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: 'off'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_office
+    - action: automation.trigger
+      data:
+        skip_condition: false
+      target:
+        entity_id: automation.office_thermostat_schedule_v2
+  - alias: Release bedroom hold unless another cause is active
+    if:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: 'off'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_bedroom
+    - action: automation.trigger
+      data:
+        skip_condition: false
+      target:
+        entity_id: automation.bedroom_hvac_schedule
   mode: restart
 - id: '1749510932786'
   alias: Basement HVAC Fresh Air Availability
@@ -4210,27 +3671,74 @@
       time_before_long_press: 2
 - id: '1750804925752'
   alias: Basement HVAC Schedule
-  description: Manages basement with comfort hours and energy savings
+  description: 'Basement zone schedule. Cooling season (heating_season off), day
+    = 08:00-20:00 / night = 20:00-08:00: when fresh air is available and the zone
+    is inside the comfort band, coasts with HVAC off + blower on to circulate
+    economizer air; above the band it returns to mechanical cooling. Heating
+    season: weekday 08:00-17:00 runs emergency heat (switch on, 1 min settle,
+    setpoint) at the workday setpoint; weekday evening/night and weekends run
+    normal heat with emergency heat off (sequencing and 1-min delays preserved
+    deliberately - do not "optimize"). All setpoints come from the
+    input_number.bsmt_* helpers (day cool 72 / night cool 74 / fresh-air night
+    cool 73.5 / workday heat 69 / evening+weekend-day heat 68 / night heat 66
+    defaults). Writes mode+setpoint to the HomeKit mirror and fan_mode to the
+    native Lyric entity. Fan writes are owner-aware at the lowest priority
+    (input_select.basement_fan_owner: only touch when none/schedule, claim
+    schedule for fan-on, release to none for auto). Skips entirely while
+    input_boolean.climate_hold_basement is on (mudroom door / away / outage).
+    Re-syncs on HA start (60 s settle), at 20:02 post-demand-response, and when
+    the zone runs above either cool band edge for 5 min.'
   triggers:
-  - entity_id:
+  - trigger: state
+    entity_id:
     - input_boolean.basement_hvac_fresh_air_available
-    platform: state
-  - at: 08:00:00
-    platform: time
-  - at: '17:00:00'
-    platform: time
-  - at: '21:00:00'
-    platform: time
-  - entity_id:
+  - trigger: time
+    at: '08:00:00'
+  - trigger: time
+    at: '17:00:00'
+  - trigger: time
+    at: '21:00:00'
+  - trigger: time
+    at: '20:02:00'
+  - trigger: homeassistant
+    event: start
+  - trigger: numeric_state
+    entity_id:
     - sensor.basement_thermostat_homekit_current_humidity
     for:
       hours: 0
       minutes: 2
       seconds: 0
     above: 70
-    platform: numeric_state
-  conditions: []
+  - trigger: numeric_state
+    entity_id:
+    - sensor.basement_thermostat_homekit_current_temperature
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    above: input_number.bsmt_cool_day
+  - trigger: numeric_state
+    entity_id:
+    - sensor.basement_thermostat_homekit_current_temperature
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    above: input_number.bsmt_cool_night
+  conditions:
+  - condition: state
+    entity_id: input_boolean.climate_hold_basement
+    state: 'off'
   actions:
+  - if:
+    - condition: template
+      value_template: '{{ trigger.platform == ''homeassistant'' }}'
+    then:
+    - delay:
+        hours: 0
+        minutes: 1
+        seconds: 0
   - choose:
     - conditions:
       - condition: state
@@ -4247,97 +3755,129 @@
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: 08:00:00
+                before: '08:00:00'
               - condition: numeric_state
                 entity_id: sensor.basement_thermostat_homekit_current_temperature
                 above: input_number.basement_fresh_air_minimum_temp
-                below: 74
+                below: input_number.bsmt_cool_night
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: 'off'
                 target:
-                  entity_id: climate.basement_thermostat
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: 'on'
-                target:
-                  entity_id: climate.basement_thermostat
+                  entity_id: climate.basement_thermostat_homekit
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.basement_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: 'on'
+                  target:
+                    entity_id: climate.basement_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.basement_fan_owner
+                  data:
+                    option: schedule
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: 08:00:00
+                before: '08:00:00'
               - condition: numeric_state
                 entity_id: sensor.basement_thermostat_homekit_current_temperature
-                above: 74
+                above: input_number.bsmt_cool_night
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: cool
                 target:
                   entity_id: climate.basement_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 73.5
+                  temperature: '{{ states(''input_number.bsmt_cool_night_fa'') |
+                    float(73.5) }}'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.basement_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.basement_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.basement_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.basement_fan_owner
+                  data:
+                    option: none
             - conditions:
               - condition: time
-                after: 08:00:00
+                after: '08:00:00'
                 before: '20:00:00'
               - condition: numeric_state
                 entity_id: sensor.basement_thermostat_homekit_current_temperature
                 above: input_number.basement_fresh_air_minimum_temp
-                below: 72
+                below: input_number.bsmt_cool_day
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: 'off'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: 'on'
-                target:
-                  entity_id: climate.basement_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.basement_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: 'on'
+                  target:
+                    entity_id: climate.basement_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.basement_fan_owner
+                  data:
+                    option: schedule
             - conditions:
               - condition: time
-                after: 08:00:00
+                after: '08:00:00'
                 before: '20:00:00'
               - condition: numeric_state
                 entity_id: sensor.basement_thermostat_homekit_current_temperature
-                above: 72
+                above: input_number.bsmt_cool_day
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: cool
                 target:
                   entity_id: climate.basement_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 72
+                  temperature: '{{ states(''input_number.bsmt_cool_day'') | float(72)
+                    }}'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.basement_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.basement_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.basement_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.basement_fan_owner
+                  data:
+                    option: none
         - conditions:
           - condition: state
             entity_id: input_boolean.basement_hvac_fresh_air_available
@@ -4346,50 +3886,66 @@
           - choose:
             - conditions:
               - condition: time
-                after: 08:00:00
+                after: '08:00:00'
                 before: '20:00:00'
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: cool
                 target:
                   entity_id: climate.basement_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 72
+                  temperature: '{{ states(''input_number.bsmt_cool_day'') | float(72)
+                    }}'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.basement_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.basement_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.basement_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.basement_fan_owner
+                  data:
+                    option: none
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: 08:00:00
+                before: '08:00:00'
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: cool
                 target:
                   entity_id: climate.basement_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 74
+                  temperature: '{{ states(''input_number.bsmt_cool_night'') | float(74)
+                    }}'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.basement_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.basement_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.basement_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.basement_fan_owner
+                  data:
+                    option: none
     - conditions:
       - condition: state
         entity_id: input_boolean.heating_season
@@ -4408,11 +3964,10 @@
           - choose:
             - conditions:
               - condition: time
-                after: 08:00:00
+                after: '08:00:00'
                 before: '17:00:00'
               sequence:
               - action: switch.turn_on
-                metadata: {}
                 target:
                   entity_id: switch.basement_thermostat_basement_emergency_heat
                 data: {}
@@ -4422,24 +3977,32 @@
                   seconds: 0
                   milliseconds: 0
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 69
+                  temperature: '{{ states(''input_number.bsmt_heat_workday'') | float(69)
+                    }}'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.basement_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.basement_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.basement_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.basement_fan_owner
+                  data:
+                    option: none
             - conditions:
               - condition: time
                 after: '17:00:00'
                 before: '21:00:00'
               sequence:
               - action: switch.turn_off
-                metadata: {}
                 target:
                   entity_id: switch.basement_thermostat_basement_emergency_heat
                 data: {}
@@ -4449,30 +4012,37 @@
                   seconds: 0
                   milliseconds: 0
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: heat
                 target:
                   entity_id: climate.basement_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 68
+                  temperature: '{{ states(''input_number.bsmt_heat_evening'') | float(68)
+                    }}'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.basement_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.basement_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.basement_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.basement_fan_owner
+                  data:
+                    option: none
             - conditions:
               - condition: time
                 after: '21:00:00'
-                before: 08:00:00
+                before: '08:00:00'
               sequence:
               - action: switch.turn_off
-                metadata: {}
                 target:
                   entity_id: switch.basement_thermostat_basement_emergency_heat
                 data: {}
@@ -4482,23 +4052,31 @@
                   seconds: 0
                   milliseconds: 0
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: heat
                 target:
                   entity_id: climate.basement_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 66
+                  temperature: '{{ states(''input_number.bsmt_heat_night'') | float(66)
+                    }}'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.basement_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.basement_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.basement_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.basement_fan_owner
+                  data:
+                    option: none
         - conditions:
           - condition: time
             weekday:
@@ -4508,122 +4086,75 @@
           - choose:
             - conditions:
               - condition: time
-                after: 08:00:00
+                after: '08:00:00'
                 before: '20:00:00'
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: heat
                 target:
                   entity_id: climate.basement_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 68
+                  temperature: '{{ states(''input_number.bsmt_heat_evening'') | float(68)
+                    }}'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.basement_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.basement_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.basement_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.basement_fan_owner
+                  data:
+                    option: none
               - action: switch.turn_off
-                metadata: {}
                 target:
                   entity_id: switch.basement_thermostat_basement_emergency_heat
                 data: {}
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: 08:00:00
+                before: '08:00:00'
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: heat
                 target:
                   entity_id: climate.basement_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 66
+                  temperature: '{{ states(''input_number.bsmt_heat_night'') | float(66)
+                    }}'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.basement_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.basement_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.basement_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.basement_fan_owner
+                  data:
+                    option: none
               - action: switch.turn_off
-                metadata: {}
                 target:
                   entity_id: switch.basement_thermostat_basement_emergency_heat
                 data: {}
   mode: restart
-- id: '1752014709217'
-  alias: Periodic Fresh-Air Ventilation
-  description: 'Every 3 h, if outside temp 40-80 °F, RH < 80 %, and the damper
-
-    has run < 1 h in the last 24 h, pull in fresh air for 20 minutes.
-
-    '
-  triggers:
-  - hours: /1
-    minutes: 0
-    seconds: 0
-    trigger: time_pattern
-  conditions:
-  - condition: numeric_state
-    entity_id: sensor.bayberry_tempest_temperature
-    above: 35
-    below: 80
-  - condition: numeric_state
-    entity_id: sensor.bayberry_tempest_humidity
-    below: 90
-  - condition: numeric_state
-    entity_id: sensor.fresh_air_damper_on_24_h
-    below: 3
-  actions:
-  - target:
-      entity_id: input_boolean.periodic_ventilation_active
-    action: input_boolean.turn_on
-    data: {}
-  - target:
-      entity_id: switch.utility_room_ventilation_damper
-    action: switch.turn_on
-    data: {}
-  - target:
-      entity_id: climate.living_room_thermostat
-    data:
-      fan_mode: 'on'
-    action: climate.set_fan_mode
-  - action: switch.turn_on
-    metadata: {}
-    target:
-      entity_id: switch.primary_bathroom_exhaust_fan
-    data: {}
-  - delay: 00:20:00
-  - target:
-      entity_id: switch.utility_room_ventilation_damper
-    action: switch.turn_off
-    data: {}
-  - target:
-      entity_id: climate.living_room_thermostat
-    data:
-      fan_mode: auto
-    action: climate.set_fan_mode
-  - target:
-      entity_id: input_boolean.periodic_ventilation_active
-    action: input_boolean.turn_off
-    data: {}
-  - action: switch.turn_off
-    target:
-      entity_id: switch.primary_bathroom_exhaust_fan
-    data: {}
-  mode: single
 - id: '1756339831821'
   alias: Turn Laundry Room Lights on When Door Opens After Dark
   description: ''
@@ -4985,25 +4516,70 @@
           - light.office_floor_lamp
 - id: '1761995535400'
   alias: Living Room HVAC Schedule V3
-  description: Manages first floor with comfort hours and energy savings
+  description: 'Living-room (first-floor) zone schedule. Day = 08:00-20:00, night
+    = 20:00-08:00; all setpoints come from the input_number.lr_* helpers (day cool
+    72 / night cool 74 / fresh-air night cool 73.5 / day heat 68 / night heat 66
+    defaults). Cooling season (heating_season off): when fresh air is available
+    and the zone is inside the comfort band, coasts with HVAC off + blower on to
+    circulate economizer air; above the band it returns to mechanical cooling.
+    Heating season: plain day/night heat. Writes mode+setpoint to the HomeKit
+    mirror and fan_mode to the native Lyric entity. Fan writes are owner-aware at
+    the lowest priority: they only touch the fan when input_select.living_room_fan_owner
+    is none/schedule, claim "schedule" when forcing the fan on and release to
+    "none" when returning it to auto. Skips entirely while
+    input_boolean.climate_hold_living_room is on (door open / away / power outage
+    - see Climate Hold Watchdog). Re-syncs on HA start (60 s settle), at 20:02
+    after the utility demand-response window, and when the zone runs above either
+    cool band edge for 5 min (prompt hand-back from fan-only to mechanical cool).'
   triggers:
-  - entity_id:
+  - trigger: state
+    entity_id:
     - input_boolean.basement_hvac_fresh_air_available
-    platform: state
-  - at: 08:00:00
-    platform: time
-  - at: '20:00:00'
-    platform: time
-  - entity_id:
+  - trigger: time
+    at: '08:00:00'
+  - trigger: time
+    at: '20:00:00'
+  - trigger: time
+    at: '20:02:00'
+  - trigger: homeassistant
+    event: start
+  - trigger: numeric_state
+    entity_id:
     - sensor.living_room_thermostat_current_humidity
     for:
       hours: 0
       minutes: 2
       seconds: 0
     above: 70
-    platform: numeric_state
-  conditions: []
+  - trigger: numeric_state
+    entity_id:
+    - sensor.living_room_thermostat_current_temperature
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    above: input_number.lr_cool_day
+  - trigger: numeric_state
+    entity_id:
+    - sensor.living_room_thermostat_current_temperature
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    above: input_number.lr_cool_night
+  conditions:
+  - condition: state
+    entity_id: input_boolean.climate_hold_living_room
+    state: 'off'
   actions:
+  - if:
+    - condition: template
+      value_template: '{{ trigger.platform == ''homeassistant'' }}'
+    then:
+    - delay:
+        hours: 0
+        minutes: 1
+        seconds: 0
   - choose:
     - conditions:
       - condition: state
@@ -5020,97 +4596,129 @@
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: 08:00:00
+                before: '08:00:00'
               - condition: numeric_state
                 entity_id: sensor.living_room_thermostat_current_temperature
                 above: input_number.living_room_fresh_air_min_temp
-                below: 74
+                below: input_number.lr_cool_night
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: 'off'
                 target:
                   entity_id: climate.living_room_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: 'on'
-                target:
-                  entity_id: climate.living_room_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: 'on'
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: schedule
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: 08:00:00
+                before: '08:00:00'
               - condition: numeric_state
                 entity_id: sensor.living_room_thermostat_current_temperature
-                above: 74
+                above: input_number.lr_cool_night
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: cool
                 target:
                   entity_id: climate.living_room_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 73.5
+                  temperature: '{{ states(''input_number.lr_cool_night_fa'') | float(73.5)
+                    }}'
                 target:
                   entity_id: climate.living_room_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.living_room_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: none
             - conditions:
               - condition: time
-                after: 08:00:00
+                after: '08:00:00'
                 before: '20:00:00'
               - condition: numeric_state
                 entity_id: sensor.living_room_thermostat_current_temperature
                 above: input_number.living_room_fresh_air_min_temp
-                below: 72
+                below: input_number.lr_cool_day
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: 'off'
                 target:
                   entity_id: climate.living_room_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: 'on'
-                target:
-                  entity_id: climate.living_room_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: 'on'
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: schedule
             - conditions:
               - condition: time
-                after: 08:00:00
+                after: '08:00:00'
                 before: '20:00:00'
               - condition: numeric_state
                 entity_id: sensor.living_room_thermostat_current_temperature
-                above: 72
+                above: input_number.lr_cool_day
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: cool
                 target:
                   entity_id: climate.living_room_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 72
+                  temperature: '{{ states(''input_number.lr_cool_day'') | float(72)
+                    }}'
                 target:
                   entity_id: climate.living_room_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.living_room_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: none
         - conditions:
           - condition: state
             entity_id: input_boolean.basement_hvac_fresh_air_available
@@ -5119,50 +4727,66 @@
           - choose:
             - conditions:
               - condition: time
-                after: 08:00:00
+                after: '08:00:00'
                 before: '20:00:00'
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: cool
                 target:
                   entity_id: climate.living_room_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 72
+                  temperature: '{{ states(''input_number.lr_cool_day'') | float(72)
+                    }}'
                 target:
                   entity_id: climate.living_room_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.living_room_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: none
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: 08:00:00
+                before: '08:00:00'
               sequence:
               - action: climate.set_hvac_mode
-                metadata: {}
                 data:
                   hvac_mode: cool
                 target:
                   entity_id: climate.living_room_thermostat_homekit
               - action: climate.set_temperature
-                metadata: {}
                 data:
-                  temperature: 74
+                  temperature: '{{ states(''input_number.lr_cool_night'') | float(74)
+                    }}'
                 target:
                   entity_id: climate.living_room_thermostat_homekit
-              - action: climate.set_fan_mode
-                metadata: {}
-                data:
-                  fan_mode: auto
-                target:
-                  entity_id: climate.living_room_thermostat
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: none
     - conditions:
       - condition: state
         entity_id: input_boolean.heating_season
@@ -5171,50 +4795,65 @@
       - choose:
         - conditions:
           - condition: time
-            after: 08:00:00
+            after: '08:00:00'
             before: '20:00:00'
           sequence:
           - action: climate.set_hvac_mode
-            metadata: {}
             data:
               hvac_mode: heat
             target:
               entity_id: climate.living_room_thermostat_homekit
           - action: climate.set_temperature
-            metadata: {}
             data:
-              temperature: 68
+              temperature: '{{ states(''input_number.lr_heat_day'') | float(68) }}'
             target:
               entity_id: climate.living_room_thermostat_homekit
-          - action: climate.set_fan_mode
-            metadata: {}
-            data:
-              fan_mode: auto
-            target:
-              entity_id: climate.living_room_thermostat
+          - if:
+            - condition: template
+              value_template: '{{ states(''input_select.living_room_fan_owner'')
+                in [''none'', ''schedule''] }}'
+            then:
+            - action: climate.set_fan_mode
+              data:
+                fan_mode: auto
+              target:
+                entity_id: climate.living_room_thermostat
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.living_room_fan_owner
+              data:
+                option: none
         - conditions:
           - condition: time
             after: '20:00:00'
-            before: 08:00:00
+            before: '08:00:00'
           sequence:
           - action: climate.set_hvac_mode
-            metadata: {}
             data:
               hvac_mode: heat
             target:
               entity_id: climate.living_room_thermostat_homekit
           - action: climate.set_temperature
-            metadata: {}
             data:
-              temperature: 66
+              temperature: '{{ states(''input_number.lr_heat_night'') | float(66)
+                }}'
             target:
               entity_id: climate.living_room_thermostat_homekit
-          - action: climate.set_fan_mode
-            metadata: {}
-            data:
-              fan_mode: auto
-            target:
-              entity_id: climate.living_room_thermostat
+          - if:
+            - condition: template
+              value_template: '{{ states(''input_select.living_room_fan_owner'')
+                in [''none'', ''schedule''] }}'
+            then:
+            - action: climate.set_fan_mode
+              data:
+                fan_mode: auto
+              target:
+                entity_id: climate.living_room_thermostat
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.living_room_fan_owner
+              data:
+                option: none
   mode: restart
 - id: '1762773825765'
   alias: Reload Roborock before to cleaning
@@ -6036,17 +5675,29 @@
   mode: single
 - id: '1777026130089'
   alias: Fresh Air Ventilation
-  description: 'Two-path basement+first-floor ventilation. PATH A (CO2 air quality,
-    any hour, year-round): when first-floor CO2 > 850ppm and intake air is OK (32F
-    < outdoor < 80F; free cooling needs outdoor >=5F below the zone, dew < 65F, no
-    rain), open damper + run living-room blower to dilute. No bathroom fan, so quiet
-    at all hours. Latches via input_boolean.co2_vent_active, clears below 700ppm.
-    PATH B (free cooling): 20:00-22:00 pre-cool damper+blowers only; 22:00-08:00 adds
-    basement bathroom fan. Cools each zone toward its input_number floor while outdoor<indoor
-    and dew/rain OK. Basement fan ownership via input_boolean.economizer_owns_basement_fan
-    so the 45-min manual timer never fights it. Primary bathroom fan and bedroom CO2
-    removed. Heat lockout 80F intentionally exceeds the Safety Shutoff 73F backstop;
-    Safety Shutoff is CO2-flush-aware.'
+  description: 'Three-path basement+first-floor ventilation. PATH A (CO2 air
+    quality, any hour, year-round): when first-floor CO2 > co2_vent_ceiling and
+    intake air is OK (vent_min_outdoor < outdoor < vent_max_outdoor, dew < 65F,
+    no rain), open damper + run living-room blower to dilute. No bathroom fan, so
+    quiet at all hours. Latches via input_boolean.co2_vent_active, clears below
+    co2_vent_recover. PATH B (free cooling): 20:00-22:00 pre-cool damper+blowers
+    only; 22:00-08:00 adds basement bathroom fan. Cools each zone toward its
+    input_number floor while outdoor is at least freecool_differential below the
+    zone and dew/rain OK. Basement fan ownership via
+    input_boolean.economizer_owns_basement_fan so the 45-min manual timer never
+    fights it. PATH C (minimum ventilation, no time-of-day window): when the
+    damper has run less than minvent_floor_minutes in the trailing 24 h
+    (sensor.fresh_air_damper_on_24_h) and intake conditions are OK, opens damper
+    + living-room blower only (quiet) until the floor is met - stateless and
+    self-limiting, no timers or latches. Path C does NOT set co2_vent_active, so
+    the Safety Shutoff 73F backstop correctly closes a Path C vent on hot
+    afternoons; it simply resumes in cooler hours. All thresholds live in
+    input_number helpers (co2_vent_ceiling/co2_vent_recover/vent_min_outdoor/
+    vent_max_outdoor/freecool_differential/minvent_floor_minutes). Blower
+    fan_mode writes claim/release input_select.living_room_fan_owner and
+    input_select.basement_fan_owner as "economizer" (highest priority; releases
+    to none only when it is the owner). Heat lockout 80F intentionally exceeds
+    the Safety Shutoff 73F backstop; Safety Shutoff is CO2-flush-aware.'
   triggers:
   - trigger: time_pattern
     hours: /1
@@ -6113,6 +5764,14 @@
     below: 70
     for: 00:02:00
     id: z2_cooled
+  - trigger: numeric_state
+    entity_id: sensor.fresh_air_damper_on_24_h
+    below: 0.5
+    id: minvent_low
+  - trigger: numeric_state
+    entity_id: sensor.fresh_air_damper_on_24_h
+    above: 0.5
+    id: minvent_met
   actions:
   - variables:
       co2_first: '{{ states(''sensor.first_floor_co2_5min'') | float(400) }}'
@@ -6128,10 +5787,11 @@
       z2_min: '{{ states(''input_number.basement_fresh_air_minimum_temp'') | float(65)
         }}'
       warmest_indoor: '{{ states(''sensor.warmest_indoor_zone'') | float(72) }}'
-      co2_ceiling: 850
-      co2_recover: 700
-      out_min: 32
-      out_max: 80
+      co2_ceiling: '{{ states(''input_number.co2_vent_ceiling'') | float(850) }}'
+      co2_recover: '{{ states(''input_number.co2_vent_recover'') | float(700) }}'
+      out_min: '{{ states(''input_number.vent_min_outdoor'') | float(32) }}'
+      out_max: '{{ states(''input_number.vent_max_outdoor'') | float(80) }}'
+      diff: '{{ states(''input_number.freecool_differential'') | float(5) }}'
       flush_active: '{{ is_state(''input_boolean.co2_vent_active'', ''on'') }}'
       dry_ok: '{{ dew < 65 and precip < 0.01 }}'
       co2_intake_ok: '{{ dry_ok and outdoor > out_min and outdoor < out_max }}'
@@ -6140,14 +5800,20 @@
       evening_precool: '{{ now().hour >= 20 and now().hour < 22 }}'
       overnight_fan: '{{ now().hour >= 22 or now().hour < 8 }}'
       freecool_window: '{{ overnight_fan or evening_precool }}'
-      z1_cool_ok: '{{ z1 > z1_min and outdoor < (z1 - 5) }}'
-      z2_cool_ok: '{{ z2 > z2_min and outdoor < (z2 - 5) }}'
+      z1_cool_ok: '{{ z1 > z1_min and outdoor < (z1 - diff) }}'
+      z2_cool_ok: '{{ z2 > z2_min and outdoor < (z2 - diff) }}'
       freecool_demand: '{{ dry_ok and freecool_window and (z1_cool_ok or z2_cool_ok)
         }}'
+      runtime_24h_min: '{{ states(''sensor.fresh_air_damper_on_24_h'') | float(0)
+        * 60 }}'
+      minvent_floor: '{{ states(''input_number.minvent_floor_minutes'') | float(30)
+        }}'
+      minvent_want: '{{ dry_ok and outdoor > out_min and outdoor < out_max and runtime_24h_min
+        < minvent_floor }}'
       run_basement_fan: '{{ freecool_demand and overnight_fan and z2_cool_ok }}'
-      z1_blower_on: '{{ co2_want or freecool_demand }}'
+      z1_blower_on: '{{ co2_want or freecool_demand or minvent_want }}'
       z2_blower_on: '{{ freecool_demand and z2_cool_ok }}'
-      damper_open: '{{ co2_want or freecool_demand }}'
+      damper_open: '{{ co2_want or freecool_demand or minvent_want }}'
       fa_currently: '{{ is_state(''input_boolean.basement_hvac_fresh_air_available'',
         ''on'') }}'
       fresh_air_available: '{{ dry_ok and ((not fa_currently and outdoor < warmest_indoor
@@ -6202,7 +5868,7 @@
     - action: input_boolean.turn_off
       target:
         entity_id: input_boolean.co2_vent_active
-  - alias: Damper follows either path
+  - alias: Damper follows any path
     if:
     - condition: template
       value_template: '{{ damper_open }}'
@@ -6214,7 +5880,7 @@
     - action: switch.turn_off
       target:
         entity_id: switch.utility_room_ventilation_damper
-  - alias: Living-room (first floor) blower
+  - alias: Living-room (first floor) blower with fan ownership
     if:
     - condition: template
       value_template: '{{ z1_blower_on }}'
@@ -6229,18 +5895,38 @@
           entity_id: climate.living_room_thermostat
         data:
           fan_mode: 'on'
+    - if:
+      - condition: template
+        value_template: '{{ states(''input_select.living_room_fan_owner'') != ''economizer''
+          }}'
+      then:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.living_room_fan_owner
+        data:
+          option: economizer
     else:
     - if:
       - condition: template
-        value_template: '{{ state_attr(''climate.living_room_thermostat'', ''fan_mode'')
-          != ''auto'' }}'
+        value_template: '{{ states(''input_select.living_room_fan_owner'') == ''economizer''
+          }}'
       then:
-      - action: climate.set_fan_mode
+      - if:
+        - condition: template
+          value_template: '{{ state_attr(''climate.living_room_thermostat'', ''fan_mode'')
+            != ''auto'' }}'
+        then:
+        - action: climate.set_fan_mode
+          target:
+            entity_id: climate.living_room_thermostat
+          data:
+            fan_mode: auto
+      - action: input_select.select_option
         target:
-          entity_id: climate.living_room_thermostat
+          entity_id: input_select.living_room_fan_owner
         data:
-          fan_mode: auto
-  - alias: Basement blower
+          option: none
+  - alias: Basement blower with fan ownership
     if:
     - condition: template
       value_template: '{{ z2_blower_on }}'
@@ -6255,17 +5941,37 @@
           entity_id: climate.basement_thermostat
         data:
           fan_mode: 'on'
+    - if:
+      - condition: template
+        value_template: '{{ states(''input_select.basement_fan_owner'') != ''economizer''
+          }}'
+      then:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.basement_fan_owner
+        data:
+          option: economizer
     else:
     - if:
       - condition: template
-        value_template: '{{ state_attr(''climate.basement_thermostat'', ''fan_mode'')
-          != ''auto'' }}'
+        value_template: '{{ states(''input_select.basement_fan_owner'') == ''economizer''
+          }}'
       then:
-      - action: climate.set_fan_mode
+      - if:
+        - condition: template
+          value_template: '{{ state_attr(''climate.basement_thermostat'', ''fan_mode'')
+            != ''auto'' }}'
+        then:
+        - action: climate.set_fan_mode
+          target:
+            entity_id: climate.basement_thermostat
+          data:
+            fan_mode: auto
+      - action: input_select.select_option
         target:
-          entity_id: climate.basement_thermostat
+          entity_id: input_select.basement_fan_owner
         data:
-          fan_mode: auto
+          option: none
   - alias: Publish free-cooling availability
     if:
     - condition: template
@@ -6283,8 +5989,9 @@
       message: 'Fresh Air Ventilation: CO2_1F={{ co2_first }}ppm outdoor={{ outdoor
         }}F dew={{ dew }}F dry_ok={{ dry_ok }} intake_ok={{ co2_intake_ok }} | Z1={{
         z1 }}/{{ z1_min }} Z2={{ z2 }}/{{ z2_min }} | trig={{ trigger.id | default(''manual'')
-        }} -> co2_want={{ co2_want }} freecool={{ freecool_demand }} bfan={{ run_basement_fan
-        }} damper={{ damper_open }} z1b={{ z1_blower_on }} z2b={{ z2_blower_on }}'
+        }} -> co2_want={{ co2_want }} freecool={{ freecool_demand }} minvent={{ minvent_want
+        }} runtime24h={{ runtime_24h_min }}min bfan={{ run_basement_fan }} damper={{
+        damper_open }} z1b={{ z1_blower_on }} z2b={{ z2_blower_on }}'
       level: info
   mode: restart
 - id: '1777031732859'
@@ -6708,8 +6415,13 @@
   mode: single
 - id: '1777372737730'
   alias: HVAC Fan - Living Room Air Filter
-  description: Run Living Room HVAC fan on when First Floor PM2.5 spikes above 5 µg/m³;
-    return to auto when it drops below 2.
+  description: 'Run Living Room HVAC fan on when First Floor PM2.5 spikes above 5
+    µg/m³; return to auto when it drops below 2. Owner-aware
+    (input_select.living_room_fan_owner, priority economizer > air_filter >
+    air_quality > schedule): claims "air_filter" unless the economizer currently
+    owns the fan (never yanks the fan out from under an active free-cool /
+    CO2 flush), and restores auto ONLY while it is still the owner, releasing to
+    none afterwards.'
   triggers:
   - platform: numeric_state
     entity_id: sensor.first_floor_air_quality_monitor_pm2_5
@@ -6726,26 +6438,47 @@
     - conditions:
       - condition: trigger
         id: pm25_high
+      - condition: template
+        value_template: '{{ states(''input_select.living_room_fan_owner'') != ''economizer''
+          }}'
       sequence:
       - target:
           entity_id: climate.living_room_thermostat
         data:
           fan_mode: 'on'
         action: climate.set_fan_mode
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.living_room_fan_owner
+        data:
+          option: air_filter
     - conditions:
       - condition: trigger
         id: pm25_low
+      - condition: state
+        entity_id: input_select.living_room_fan_owner
+        state: air_filter
       sequence:
       - target:
           entity_id: climate.living_room_thermostat
         data:
           fan_mode: auto
         action: climate.set_fan_mode
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.living_room_fan_owner
+        data:
+          option: none
   mode: single
 - id: '1777372741480'
   alias: HVAC Fan - Bedroom Air Filter
-  description: Run Master Bedroom HVAC fan on when Bedroom PM2.5 spikes above 5 µg/m³;
-    return to auto when it drops below 2.
+  description: 'Run Master Bedroom HVAC fan on when Bedroom PM2.5 spikes above 5
+    µg/m³; return to auto when it drops below 2. Owner-aware
+    (input_select.bedroom_fan_owner, priority economizer > air_filter >
+    air_quality > schedule): claims "air_filter" unless the economizer currently
+    owns the fan, and restores auto ONLY while it is still the owner, releasing
+    to none afterwards. The Bedroom Air Quality 22:00 quiet-hours force-to-auto
+    remains absolute and overrides this owner.'
   triggers:
   - platform: numeric_state
     entity_id: sensor.bedroom_air_quality_pm2_5
@@ -6762,21 +6495,37 @@
     - conditions:
       - condition: trigger
         id: pm25_high
+      - condition: template
+        value_template: '{{ states(''input_select.bedroom_fan_owner'') != ''economizer''
+          }}'
       sequence:
       - target:
           entity_id: climate.master_bedroom_thermostat
         data:
           fan_mode: 'on'
         action: climate.set_fan_mode
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.bedroom_fan_owner
+        data:
+          option: air_filter
     - conditions:
       - condition: trigger
         id: pm25_low
+      - condition: state
+        entity_id: input_select.bedroom_fan_owner
+        state: air_filter
       sequence:
       - target:
           entity_id: climate.master_bedroom_thermostat
         data:
           fan_mode: auto
         action: climate.set_fan_mode
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.bedroom_fan_owner
+        data:
+          option: none
   mode: single
 - id: '1777374012037'
   alias: Primary Bathroom Exhaust Fan Turns Off after 45 min
@@ -6878,16 +6627,20 @@
   mode: single
 - id: '1778025144757'
   alias: Bedroom Air Quality
-  description: When bedroom CO2 (5-min avg) exceeds 800 ppm, send a persistent notification
-    suggesting a window. During daytime (7am-10pm), also turn on the master bedroom
-    HVAC blower to mix bedroom air with the rest of the house. At 10pm sharp, the
-    blower is forced back to auto regardless of CO2 state -- quiet hours, no noisy
-    circulation overnight even if CO2 hasn't recovered. During quiet hours (10pm-7am),
-    the blower will not be turned on by CO2 spikes; only the notification fires. When
-    CO2 drops below 600 ppm, restore blower to auto and dismiss the notification.
-    The bathroom exhaust fan running (driven by Fresh Air Ventilation when bedroom
-    CO2 is high) helps further by pulling fresh outdoor air through the damper. A
-    bedroom window is still the most direct fix.
+  description: 'When bedroom CO2 (5-min avg) exceeds 800 ppm, send a persistent
+    notification suggesting a window. During daytime (7am-10pm), also turn on the
+    master bedroom HVAC blower to mix bedroom air with the rest of the house -
+    owner-aware via input_select.bedroom_fan_owner (priority economizer >
+    air_filter > air_quality > schedule): it claims "air_quality" only when
+    neither the economizer nor the air filter owns the fan, and on CO2 recovery
+    (< 600 ppm) restores auto ONLY while it is still the owner. EXCEPTION: at
+    10pm sharp the blower is forced back to auto and the owner reset to none
+    regardless of who owns it - quiet hours are absolute, no noisy circulation
+    overnight even if CO2 has not recovered or a filter run is active. During
+    quiet hours (10pm-7am) CO2 spikes only notify. The bathroom exhaust fan
+    running (driven by Fresh Air Ventilation when bedroom CO2 is high) helps
+    further by pulling fresh outdoor air through the damper. A bedroom window is
+    still the most direct fix.'
   triggers:
   - platform: numeric_state
     entity_id: sensor.bedroom_co2_5min
@@ -6921,21 +6674,39 @@
         - condition: time
           after: 07:00:00
           before: '22:00:00'
+        - condition: template
+          value_template: '{{ states(''input_select.bedroom_fan_owner'') not in [''economizer'',
+            ''air_filter''] }}'
         then:
         - action: climate.set_fan_mode
           target:
             entity_id: climate.master_bedroom_thermostat
           data:
             fan_mode: 'on'
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.bedroom_fan_owner
+          data:
+            option: air_quality
     - conditions:
       - condition: trigger
         id: co2_recovered
       sequence:
-      - action: climate.set_fan_mode
-        target:
-          entity_id: climate.master_bedroom_thermostat
-        data:
-          fan_mode: auto
+      - if:
+        - condition: state
+          entity_id: input_select.bedroom_fan_owner
+          state: air_quality
+        then:
+        - action: climate.set_fan_mode
+          target:
+            entity_id: climate.master_bedroom_thermostat
+          data:
+            fan_mode: auto
+        - action: input_select.select_option
+          target:
+            entity_id: input_select.bedroom_fan_owner
+          data:
+            option: none
       - action: persistent_notification.dismiss
         data:
           notification_id: bedroom_co2_high
@@ -6948,6 +6719,11 @@
           entity_id: climate.master_bedroom_thermostat
         data:
           fan_mode: auto
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.bedroom_fan_owner
+        data:
+          option: none
   mode: restart
 - id: '1780678371300'
   alias: 'Pool: Raise Pump Speed When Heating'
@@ -7438,3 +7214,353 @@
                   level: warning
   mode: queued
   max: 10
+- id: '1783000000001'
+  alias: First Floor Doors Closed - Restore Climate
+  description: 'Restores living-room climate when ALL first-floor exterior doors
+    are closed (group binary_sensor.first_floor_exterior_doors returns to off - one
+    door closing while the other is open does NOT restore). Only acts while
+    input_boolean.climate_hold_living_room is on, and only when no higher-precedence
+    hold cause remains (away_mode off, grid up); precedence: power_outage > away >
+    door_open. Clears the hold, restores the mode stored in
+    input_select.living_thermostat_last_hvac_mode on the HomeKit mirror, then
+    triggers the LR schedule WITHOUT skip_condition for an immediate setpoint
+    correction. The Climate Hold Watchdog is the backstop if this misses the close
+    (e.g. HA down at the time).'
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.first_floor_exterior_doors
+    from: 'on'
+    to: 'off'
+  conditions:
+  - condition: state
+    entity_id: input_boolean.climate_hold_living_room
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.bayberry_grid_status
+    state: 'on'
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.climate_hold_living_room
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.living_thermostat_last_hvac_mode
+        state: Cool
+      sequence:
+      - action: climate.set_hvac_mode
+        data:
+          hvac_mode: cool
+        target:
+          entity_id: climate.living_room_thermostat_homekit
+    - conditions:
+      - condition: state
+        entity_id: input_select.living_thermostat_last_hvac_mode
+        state: 'Off'
+      sequence:
+      - action: climate.set_hvac_mode
+        data:
+          hvac_mode: 'off'
+        target:
+          entity_id: climate.living_room_thermostat_homekit
+    - conditions:
+      - condition: state
+        entity_id: input_select.living_thermostat_last_hvac_mode
+        state: Heat
+      sequence:
+      - action: climate.set_hvac_mode
+        data:
+          hvac_mode: heat
+        target:
+          entity_id: climate.living_room_thermostat_homekit
+  - action: automation.trigger
+    data:
+      skip_condition: false
+    target:
+      entity_id: automation.living_room_hvac_schedule_v3
+  mode: restart
+- id: '1783000000002'
+  alias: Mudroom Door Closed - Restore Climate
+  description: 'Restores basement climate when the mudroom entry door closes. Only
+    acts while input_boolean.climate_hold_basement is on, and only when no
+    higher-precedence hold cause remains (away_mode off, grid up); precedence:
+    power_outage > away > door_open. Clears the hold, restores the mode stored in
+    input_select.basement_thermostat_last_hvac_mode on the HomeKit mirror, then
+    triggers the basement schedule WITHOUT skip_condition for an immediate setpoint
+    correction. The Climate Hold Watchdog is the backstop if this misses the close.'
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.mudroom_entry_door
+    from: 'on'
+    to: 'off'
+  conditions:
+  - condition: state
+    entity_id: input_boolean.climate_hold_basement
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.bayberry_grid_status
+    state: 'on'
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.climate_hold_basement
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.basement_thermostat_last_hvac_mode
+        state: Cool
+      sequence:
+      - action: climate.set_hvac_mode
+        data:
+          hvac_mode: cool
+        target:
+          entity_id: climate.basement_thermostat_homekit
+    - conditions:
+      - condition: state
+        entity_id: input_select.basement_thermostat_last_hvac_mode
+        state: 'Off'
+      sequence:
+      - action: climate.set_hvac_mode
+        data:
+          hvac_mode: 'off'
+        target:
+          entity_id: climate.basement_thermostat_homekit
+    - conditions:
+      - condition: state
+        entity_id: input_select.basement_thermostat_last_hvac_mode
+        state: Heat
+      sequence:
+      - action: climate.set_hvac_mode
+        data:
+          hvac_mode: heat
+        target:
+          entity_id: climate.basement_thermostat_homekit
+  - action: automation.trigger
+    data:
+      skip_condition: false
+    target:
+      entity_id: automation.basement_hvac_schedule
+  mode: restart
+- id: '1783000000003'
+  alias: Climate Hold Watchdog
+  description: 'Self-healing for orphaned climate holds (e.g. HA restarted while
+    a door/away/outage automation was mid-flight). Runs on HA start and every 30
+    minutes. Per zone: if the hold boolean is on but EVERY cause is absent (zone
+    door closed for at least 2 minutes where the zone has a door cause, away_mode
+    off, grid up), it clears the hold, restores the stored last HVAC mode (only if
+    the zone is currently off, so a stale stored mode never stomps a live one),
+    and triggers the zone schedule WITHOUT skip_condition. Hold precedence
+    power_outage > away > door_open is enforced by requiring ALL causes absent:
+    grid down = never clear; away on = only Away Mode Turns Off clears; door open
+    = only the door-closed automations clear. Door causes: living room = first
+    floor door group, basement = mudroom door, office/bedroom = none.'
+  triggers:
+  - trigger: homeassistant
+    event: start
+  - trigger: time_pattern
+    minutes: /30
+  conditions: []
+  actions:
+  - alias: Living room - clear orphaned hold
+    if:
+    - condition: state
+      entity_id: input_boolean.climate_hold_living_room
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.first_floor_exterior_doors
+      state: 'off'
+      for:
+        minutes: 2
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.bayberry_grid_status
+      state: 'on'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_living_room
+    - if:
+      - condition: state
+        entity_id: climate.living_room_thermostat_homekit
+        state: 'off'
+      then:
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: input_select.living_thermostat_last_hvac_mode
+            state: Cool
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: cool
+            target:
+              entity_id: climate.living_room_thermostat_homekit
+        - conditions:
+          - condition: state
+            entity_id: input_select.living_thermostat_last_hvac_mode
+            state: Heat
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: heat
+            target:
+              entity_id: climate.living_room_thermostat_homekit
+    - action: automation.trigger
+      data:
+        skip_condition: false
+      target:
+        entity_id: automation.living_room_hvac_schedule_v3
+  - alias: Basement - clear orphaned hold
+    if:
+    - condition: state
+      entity_id: input_boolean.climate_hold_basement
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.mudroom_entry_door
+      state: 'off'
+      for:
+        minutes: 2
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.bayberry_grid_status
+      state: 'on'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_basement
+    - if:
+      - condition: state
+        entity_id: climate.basement_thermostat_homekit
+        state: 'off'
+      then:
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: input_select.basement_thermostat_last_hvac_mode
+            state: Cool
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: cool
+            target:
+              entity_id: climate.basement_thermostat_homekit
+        - conditions:
+          - condition: state
+            entity_id: input_select.basement_thermostat_last_hvac_mode
+            state: Heat
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: heat
+            target:
+              entity_id: climate.basement_thermostat_homekit
+    - action: automation.trigger
+      data:
+        skip_condition: false
+      target:
+        entity_id: automation.basement_hvac_schedule
+  - alias: Office - clear orphaned hold
+    if:
+    - condition: state
+      entity_id: input_boolean.climate_hold_office
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.bayberry_grid_status
+      state: 'on'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_office
+    - if:
+      - condition: state
+        entity_id: climate.office_thermostat_homekit
+        state: 'off'
+      then:
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: input_select.office_thermostat_last_hvac_mode
+            state: Cool
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: cool
+            target:
+              entity_id: climate.office_thermostat_homekit
+        - conditions:
+          - condition: state
+            entity_id: input_select.office_thermostat_last_hvac_mode
+            state: Heat
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: heat
+            target:
+              entity_id: climate.office_thermostat_homekit
+    - action: automation.trigger
+      data:
+        skip_condition: false
+      target:
+        entity_id: automation.office_thermostat_schedule_v2
+  - alias: Bedroom - clear orphaned hold
+    if:
+    - condition: state
+      entity_id: input_boolean.climate_hold_bedroom
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.bayberry_grid_status
+      state: 'on'
+    then:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.climate_hold_bedroom
+    - if:
+      - condition: state
+        entity_id: climate.bedroom_thermostat
+        state: 'off'
+      then:
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: input_select.bedroom_thermostat_last_hvac_mode
+            state: Cool
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: cool
+            target:
+              entity_id: climate.bedroom_thermostat
+        - conditions:
+          - condition: state
+            entity_id: input_select.bedroom_thermostat_last_hvac_mode
+            state: Heat
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: heat
+            target:
+              entity_id: climate.bedroom_thermostat
+    - action: automation.trigger
+      data:
+        skip_condition: false
+      target:
+        entity_id: automation.bedroom_hvac_schedule
+  mode: single
