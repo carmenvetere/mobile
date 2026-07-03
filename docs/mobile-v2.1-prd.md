@@ -160,7 +160,7 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
   sub-button a fixed width / right-aligned percent so icons line up across
   cards.
 
-### R9 — Security view refinements ⬜
+### R9 — Security view refinements ✅
 
 - **a. Header not clickable.** The header currently opens the Alarmo
   more-info dialog (`tap_action: more-info`, security-view line ~38). Change
