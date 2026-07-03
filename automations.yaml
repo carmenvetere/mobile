@@ -7355,8 +7355,8 @@
                 %}{{ states(src) | float(70) }}{% endif %}'
           - if:
             - condition: template
-              value_template: '{{ not paused and in_window and not privacy_locked
-                }}'
+              value_template: '{{ not paused and in_window and not (privacy_locked
+                | bool(false)) }}'
             then:
             - repeat:
                 for_each: '{{ facades }}'
