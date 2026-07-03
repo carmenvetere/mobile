@@ -7344,12 +7344,12 @@
                 }}'
               in_window: '{{ (not is_adaptive) or now().strftime(''%H:%M'') > open_time
                 }}'
-              privacy_locked: '{% if not is_adaptive or now().hour < 17 %}false{%
-                else %}{% set ns = namespace(all_closed=true) %}{% for e in repeat.item.privacy
-                %}{% set pos = state_attr(e, ''current_position'') %}{% if pos is
-                not none %}{% if pos | int(0) > 5 %}{% set ns.all_closed = false %}{%
-                endif %}{% elif not is_state(e, ''closed'') %}{% set ns.all_closed
-                = false %}{% endif %}{% endfor %}{{ ns.all_closed }}{% endif %}'
+              privacy_locked: '{% set ns = namespace(all_closed=true) %}{% for e
+                in repeat.item.privacy %}{% set pos = state_attr(e, ''current_position'')
+                %}{% if pos is not none %}{% if pos | int(0) > 5 %}{% set ns.all_closed
+                = false %}{% endif %}{% elif not is_state(e, ''closed'') %}{% set
+                ns.all_closed = false %}{% endif %}{% endfor %}{{ is_adaptive and
+                now().hour >= 17 and ns.all_closed }}'
               indoor: '{% set src = repeat.item.indoor %}{% if src.startswith(''climate.'')
                 %}{{ state_attr(src, ''current_temperature'') | float(70) }}{% else
                 %}{{ states(src) | float(70) }}{% endif %}'
