@@ -112,7 +112,7 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
 - **f. Expander border radius.** The expanders' 20px radius looks off — align
   with the dashboard standard (15px, see R7-b radius audit).
 
-### R7 — Climate view refinements ⬜
+### R7 — Climate view refinements ✅
 
 - **a. Header average temp broken.** The label reads `avg –°` because it uses
   the bare `entity` variable, which is not populated in nested custom_fields
