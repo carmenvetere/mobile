@@ -652,16 +652,20 @@ cards:
                     navigation_path: /mobile-dash/settings
                   modules:
                     - mobile_lights_scenes
-#Notifications Pop-up
-  - type: vertical-stack
+#Notifications Pop-up (standalone format)
+  - type: custom:bubble-card
+    card_type: pop-up
+    name: Notifications
+    icon: mdi:bell-badge
+    hash: "#notifications"
+    theme: Dune Mist
+    show_header: false
+    styles: |
+      .bubble-pop-up {
+        overflow-y: auto !important;
+        max-height: 92vh !important;
+      }
     cards:
-      - type: custom:bubble-card
-        card_type: pop-up
-        name: Notifications
-        icon: mdi:bell-badge
-        hash: "#notifications"
-        theme: Dune Mist
-        show_header: false
       # Gate the card so it is only instantiated once the Notification Center
       # integration is installed (sensor.notification_center has a numeric
       # state). Without this, HA tries to build custom:notification-center-card
