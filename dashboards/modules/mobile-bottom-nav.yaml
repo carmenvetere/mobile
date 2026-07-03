@@ -33,11 +33,11 @@
               - background: {{ 'rgba(156,194,208,0.20)' if active == key else 'transparent' }}
             icon:
               - width: 23px
-              - color: {{ '#9CC2D0' if active == key else '#8d939a' }}
+              - color: "{{ '#9CC2D0' if active == key else '#8d939a' }}"
             name:
               - font-size: 11px
               - font-weight: {{ '600' if active == key else '500' }}
-              - color: {{ '#9CC2D0' if active == key else '#8d939a' }}
+              - color: "{{ '#9CC2D0' if active == key else '#8d939a' }}"
 {% endmacro %}
 {% macro tile(label, icon, path) %}
             - type: custom:button-card
@@ -48,7 +48,8 @@
                 navigation_path: "{{ path }}"
               styles:
                 card:
-                  - background: rgba(255,255,255,0.05)
+                  - background: |
+                      [[[ return window.location.pathname === '{{ path }}' ? 'rgba(156,194,208,0.20)' : 'rgba(255,255,255,0.05)'; ]]]
                   - border-radius: 16px
                   - padding: 16px 8px
                   - box-shadow: none
@@ -60,11 +61,13 @@
                   - justify-items: center
                 icon:
                   - width: 25px
-                  - color: '#cdd1d6'
+                  - color: |
+                      [[[ return window.location.pathname === '{{ path }}' ? '#9CC2D0' : '#cdd1d6'; ]]]
                 name:
                   - font-size: 12px
                   - font-weight: 600
-                  - color: '#e7e9ec'
+                  - color: |
+                      [[[ return window.location.pathname === '{{ path }}' ? '#9CC2D0' : '#e7e9ec'; ]]]
 {% endmacro %}
 type: vertical-stack
 cards:
@@ -73,6 +76,12 @@ cards:
     tap_action: { action: none }
     show_icon: false
     show_name: false
+    extra_styles: |
+      /* Keep the bar off the HA sidebar on wide screens; narrow/mobile
+         layouts hide the sidebar so left stays 0 there. */
+      @media (min-width: 870px) {
+        ha-card { left: var(--mdc-drawer-width, 0px) !important; }
+      }
     styles:
       card:
         - position: fixed
@@ -80,7 +89,7 @@ cards:
         - right: 0
         - bottom: 0
         - z-index: 6
-        - height: 76px
+        - height: calc(76px + env(safe-area-inset-bottom))
         - box-sizing: border-box
         - background: "#33363b"
         - border-top: 1px solid rgba(255,255,255,0.06)
