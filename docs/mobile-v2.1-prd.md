@@ -223,6 +223,59 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
 
 Music view: no changes for V2.1.
 
+### R13 — Settings view overhaul ⬜
+
+The largest V2.1 item. Context: the 2026-07-03 climate automation overhaul
+(PR #139, `acf827c`) rewrote the four zone schedules in place (same ids),
+added `input_boolean.climate_hold_*` ×4, `input_select.<zone>_fan_owner` ×4,
+21 setpoint `input_number.*` helpers, 6 ventilation threshold helpers, and
+away setpoints; and the whole-house shade scheduler (`b83d41e`) added
+`automation.shade_scheduler_whole_house` while disabling the five per-room
+"Schedule & Adaptive" automations.
+
+- **a. Quick toggles roster.** Overnight Guests, Cleaners Mode, **Dinner
+  Party Mode** (`input_boolean.dinner_party`), Go Off Grid. (Arm Away When
+  Empty drops out of quick toggles; it stays in the Alarm section.)
+- **b. Quick toggle icons.** Same icon spec as elsewhere: plain
+  `var(--primary-text-color)` in all states (party `mdi:party-popper`,
+  guests `mdi:bed`, cleaners `mdi:spray-bottle`, off-grid
+  `mdi:transmission-tower-off`).
+- **c. Drop section sub-labels.** Remove the sub-head line ("4 rules",
+  "Powerwall · consumption", …) from all Section nav rows — inconsistent;
+  name + icon + chevron only.
+- **d. Section roster & names.** **Home Modes, Climate, Alarm,
+  Motion & Lights, Energy & Grid, Shades, Pool, Vacuum.** (Room Schedules is
+  dissolved into the new Shades / Pool / Vacuum sections.)
+- **e. Pop-up rows become toggles.** Every automation/boolean row inside the
+  pop-ups uses the quick-toggle row style (name + On/Off + CSS toggle
+  switch), replacing the bubble sub-button style. Read-only rows (sensors,
+  datetimes) keep a consistent non-toggle row style.
+- **f. Pop-up title size.** The pop-up header title currently renders smaller
+  than the row names — make it larger (≥18px, clearly a title).
+- **g. Climate pop-up remapped** to the overhaul entities: the four zone
+  schedule automations (ids unchanged), the four
+  `input_boolean.climate_hold_<zone>` holds, and slider rows for the
+  ventilation thresholds (`co2_vent_ceiling`, `co2_vent_recover`,
+  `vent_min_outdoor`, `vent_max_outdoor`, `freecool_differential`,
+  `minvent_floor_minutes`) and away setpoints (`away_heat_setpoint`,
+  `away_cool_setpoint`). The 21 per-zone setpoint helpers stay out of the
+  pop-up (too many — revisit as a dedicated sub-view if wanted). Fresh-air
+  min-temp sliders carry over. Curate final row order at build.
+- **h. Water heater to Values.** `input_datetime.water_heater_last_flushed`
+  moves out of the Climate pop-up into the Values section.
+- **i. + k. All pop-ups scrollable.** Climate scrolls; Lights and Room
+  Schedules don't. Fix the pop-up styling so every pop-up scrolls when its
+  content exceeds the viewport (overflow-y on the pop-up content container in
+  the shared pop-up module/styles).
+- **j. Shades pop-up remapped.** Rows: **Shade Scheduler – Whole House**
+  toggle (the new unified automation). Remove the five per-room
+  "Schedule & Adaptive" rows (those automations are now disabled by design;
+  keep "3:00PM Bedroom Shades Sun Position" only if still active — verify at
+  build).
+- **l. Values completeness.** Values shows Powerwall Reserve, **Upper HVAC
+  Filter** (`input_number.upper_floor_hvac_filter_hours`), Lower HVAC Filter,
+  and the water heater last-flushed row (from h).
+
 ## Backlog / future candidates
 
 - Retire or fold in the now-orphaned v2-only modules (`mobile-toggle-row.yaml`,
@@ -260,6 +313,11 @@ Music view: no changes for V2.1.
     active; forecast section carries a separator label.
 12. Pool view: no glow ring on the heater row; card renders like the other
     bubble rows.
+13. Settings: quick toggles are Guests/Cleaners/Dinner Party/Off Grid with
+    primary-text icons; sections renamed with no sub-labels; pop-up rows are
+    toggles with larger titles; climate & shades pop-ups map to the 2026-07-03
+    automation overhaul entities; water heater + upper filter in Values; every
+    pop-up scrolls.
 
 ## Process
 
