@@ -15,11 +15,10 @@ mobile_settings_module:
   description: ''
   code: |-
       ha-card {
-      bubble-main-background-color: var(--background-color-2) !important;
+      --bubble-main-background-color: var(--background-color-2) !important;
+      --bubble-accent-color: var(--slate-color) !important;
       border-radius: 15px !important;
       margin: 2px 5px 2px 5px !important;
-      --bubble-color-on: var(--slate-color) !important;
-      --bubble-color-off: var(--secondary-text-color) !important;
       }
 
       .bubble-button-background {
@@ -48,12 +47,6 @@ mobile_settings_module:
         color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
         } 
         
-      .bubble-sub-button { 
-      font-size: 14px !important; 
-      font-weight: bold; 
-      margin-right: 10px;
-      }
-      
       .bubble-icon-container {
       background: transparent !important;
       }
@@ -63,7 +56,7 @@ mobile_settings_module:
         font-weight: bold;
         margin-right: 10px;
         background: transparent !important;
-        color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
+        color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--secondary-text-color)'} !important;
       }
       
       .bubble-icon {

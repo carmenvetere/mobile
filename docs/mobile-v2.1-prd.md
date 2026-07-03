@@ -63,7 +63,7 @@ unreachable. Fix so the nav only spans the dashboard panel:
 - Must remain full-width and unaffected in the mobile app / narrow viewports
   where the sidebar is hidden.
 
-### R4 — Consistent sub-button colors on menu bubble cards ⬜
+### R4 — Consistent sub-button colors on menu bubble cards ✅
 
 In the nominal (inactive) state, all bubble-card sub-buttons should render
 `var(--secondary-text-color)`; some currently show `var(--primary-text-color)`.
