@@ -276,6 +276,46 @@ away setpoints; and the whole-house shade scheduler (`b83d41e`) added
   Filter** (`input_number.upper_floor_hvac_filter_hours`), Lower HVAC Filter,
   and the water heater last-flushed row (from h).
 
+Vacuum view: unchanged in V2.1 — deferred to a future release.
+
+### R14 — Settings: Release Notes section ⬜
+
+New section at the bottom of the Settings view:
+
+- Separator label **Release Notes** (zone style), then a card showing the
+  **current dashboard version** (scheme `v2.1.x`, bumped on each v2.1 → main
+  merge checkpoint) and the release notes for what shipped on this branch.
+- Notes content is maintained alongside this PRD (one bullet per shipped
+  R-item, plain language), rendered via a markdown card inside an expander so
+  the section stays compact.
+- The version string lives in one place (the settings view) and matches the
+  notes' latest entry.
+
+### R15 — Bubble Card pop-up migration (standalone format) ⬜
+
+Recent Bubble Card releases replaced the legacy pop-up pattern — a
+`vertical-stack` whose first card is `card_type: pop-up` with the content
+cards as siblings — with a **standalone pop-up**: the pop-up card itself
+carries a `cards:` list. Legacy pop-ups now trigger a "Legacy pop-up
+detected" notice on every first load of a view (the message being seen).
+
+Migrate every pop-up in the repo to the standalone format:
+
+```yaml
+- type: custom:bubble-card
+  card_type: pop-up
+  name: …
+  hash: "#…"
+  cards:
+    - <former sibling rows>
+```
+
+Inventory: the 6+ Settings pop-ups, the bottom-nav **More** sheet
+(`mobile-bottom-nav.yaml`), and any other hash pop-ups
+(grep `card_type: pop-up` across `dashboards/`). Keep hashes unchanged so
+nav paths keep working; verify each pop-up opens, scrolls (R13-i), and
+closes cleanly after migration.
+
 ## Backlog / future candidates
 
 - Retire or fold in the now-orphaned v2-only modules (`mobile-toggle-row.yaml`,
@@ -318,6 +358,10 @@ away setpoints; and the whole-house shade scheduler (`b83d41e`) added
     toggles with larger titles; climate & shades pop-ups map to the 2026-07-03
     automation overhaul entities; water heater + upper filter in Values; every
     pop-up scrolls.
+14. Settings shows the current dashboard version and accurate release notes
+    for everything shipped on the v2.1 branch.
+15. No "Legacy pop-up detected" notice anywhere; all pop-ups use the
+    standalone format and open/scroll/close correctly.
 
 ## Process
 
