@@ -50,7 +50,7 @@
                 card:
                   - background: |
                       [[[ return window.location.pathname === '{{ path }}' ? 'rgba(156,194,208,0.20)' : 'rgba(255,255,255,0.05)'; ]]]
-                  - border-radius: 16px
+                  - border-radius: 15px
                   - padding: 16px 8px
                   - box-shadow: none
                   - transition: none
@@ -76,12 +76,15 @@ cards:
     tap_action: { action: none }
     show_icon: false
     show_name: false
-    extra_styles: |
-      /* Keep the bar off the HA sidebar on wide screens; narrow/mobile
-         layouts hide the sidebar so left stays 0 there. */
-      @media (min-width: 870px) {
-        ha-card { left: var(--mdc-drawer-width, 0px) !important; }
-      }
+    card_mod:
+      style: |
+        /* Keep the bar off the HA sidebar on wide screens. HA docks the
+           sidebar at >=870px (below that it's a hidden hamburger, so left
+           stays 0 and the bar is full-width on mobile). Docked width
+           defaults to 256px; --mdc-drawer-width is used when HA exposes it. */
+        @media (min-width: 870px) {
+          ha-card { left: var(--mdc-drawer-width, 256px) !important; }
+        }
     styles:
       card:
         - position: fixed
@@ -154,8 +157,12 @@ cards:
         margin-top: 0 !important;
         overflow-y: auto !important;
       }
-      /* Don't let the tile grid stretch its rows to fill the sheet */
-      .bubble-pop-up .card-content { height: auto !important; }
+      /* Don't let the tile grid stretch its rows to fill the sheet, and keep
+         the bottom row clear of the fixed 76px nav + iOS safe area. */
+      .bubble-pop-up .card-content {
+        height: auto !important;
+        padding-bottom: calc(90px + env(safe-area-inset-bottom)) !important;
+      }
     cards:
       - type: custom:button-card
         name: MORE
