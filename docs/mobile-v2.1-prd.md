@@ -1,6 +1,6 @@
 # PRD: Mobile Dashboard V2.1
 
-**Status:** Active · **Branch:** `v2.1` · **Owner:** Carmen · **Last updated:** 2026-07-02
+**Status:** R1–R15 implemented (v2.1.0 test build) · **Branch:** `v2.1` · **Owner:** Carmen · **Last updated:** 2026-07-03
 
 ## Background
 
@@ -223,7 +223,7 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
 
 Music view: no changes for V2.1.
 
-### R13 — Settings view overhaul ⬜
+### R13 — Settings view overhaul ✅
 
 The largest V2.1 item. Context: the 2026-07-03 climate automation overhaul
 (PR #139, `acf827c`) rewrote the four zone schedules in place (same ids),
@@ -278,7 +278,7 @@ away setpoints; and the whole-house shade scheduler (`b83d41e`) added
 
 Vacuum view: unchanged in V2.1 — deferred to a future release.
 
-### R14 — Settings: Release Notes section ⬜
+### R14 — Settings: Release Notes section ✅
 
 New section at the bottom of the Settings view:
 
@@ -291,7 +291,7 @@ New section at the bottom of the Settings view:
 - The version string lives in one place (the settings view) and matches the
   notes' latest entry.
 
-### R15 — Bubble Card pop-up migration (standalone format) ⬜
+### R15 — Bubble Card pop-up migration (standalone format) ✅
 
 Recent Bubble Card releases replaced the legacy pop-up pattern — a
 `vertical-stack` whose first card is `card_type: pop-up` with the content

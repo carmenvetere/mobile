@@ -135,28 +135,28 @@ cards:
       more:
 {{ tab('mdi:dots-horizontal','More','#more-menu','more', active) }}
 
-  # --------------------------------------------------- More sheet (#more-menu)
-  - type: vertical-stack
+  # ------------------------- More sheet (#more-menu, standalone pop-up)
+  - type: custom:bubble-card
+    card_type: pop-up
+    hash: "#more-menu"
+    show_header: false
+    close_on_click: true
+    scrolling_effect: false
+    styles: |
+      .bubble-pop-up {
+        background: #3a3e44 !important;
+        border-radius: 22px !important;
+        box-shadow: 0 -16px 44px rgba(0,0,0,0.55) !important;
+        top: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: 85vh !important;
+        margin-top: 0 !important;
+        overflow-y: auto !important;
+      }
+      /* Don't let the tile grid stretch its rows to fill the sheet */
+      .bubble-pop-up .card-content { height: auto !important; }
     cards:
-      - type: custom:bubble-card
-        card_type: pop-up
-        hash: "#more-menu"
-        show_header: false
-        close_on_click: true
-        scrolling_effect: false
-        styles: |
-          .bubble-pop-up {
-            background: #3a3e44 !important;
-            border-radius: 22px !important;
-            box-shadow: 0 -16px 44px rgba(0,0,0,0.55) !important;
-            top: auto !important;
-            height: auto !important;
-            min-height: 0 !important;
-            max-height: 85vh !important;
-            margin-top: 0 !important;
-          }
-          /* Don't let the tile grid stretch its rows to fill the sheet */
-          .bubble-pop-up .card-content { height: auto !important; }
       - type: custom:button-card
         name: MORE
         show_icon: false
