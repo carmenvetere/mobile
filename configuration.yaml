@@ -42,6 +42,294 @@ input_number:
     max: 11
     step: 1
     mode: box
+  # --- Climate overhaul Phase 2: zone schedule setpoints -------------------
+  # Single source of truth for the four zone schedules. Values were extracted
+  # from the pre-refactor automation literals on 2026-07-03 (zero drift).
+  # NOTE: `initial:` resets these to the values below on every HA restart
+  # (there is a daily restart automation). Dashboard tweaks are therefore
+  # temporary by design; to make dashboard changes persistent, delete the
+  # `initial:` lines after the first successful boot.
+  lr_cool_day:
+    name: LR Cool Day
+    initial: 72
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  lr_cool_night:
+    name: LR Cool Night
+    initial: 74
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  lr_cool_night_fa:
+    name: LR Cool Night (Fresh Air)
+    initial: 73.5
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  lr_heat_day:
+    name: LR Heat Day
+    initial: 68
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:fire
+  lr_heat_night:
+    name: LR Heat Night
+    initial: 66
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:fire
+  bsmt_cool_day:
+    name: Basement Cool Day
+    initial: 72
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  bsmt_cool_night:
+    name: Basement Cool Night
+    initial: 74
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  bsmt_cool_night_fa:
+    name: Basement Cool Night (Fresh Air)
+    initial: 73.5
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  bsmt_heat_workday:
+    name: Basement Heat Workday
+    initial: 69
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:fire
+  bsmt_heat_evening:
+    name: Basement Heat Evening
+    initial: 68
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:fire
+  bsmt_heat_night:
+    name: Basement Heat Night
+    initial: 66
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:fire
+  br_heat_morning:
+    name: Bedroom Heat Morning
+    initial: 68
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:fire
+  br_heat_day_weekday:
+    name: Bedroom Heat Day (Weekday)
+    initial: 66
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:fire
+  br_heat_day_weekend:
+    name: Bedroom Heat Day (Weekend)
+    initial: 68
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:fire
+  br_heat_night:
+    name: Bedroom Heat Night
+    initial: 65
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:fire
+  br_cool_morning:
+    name: Bedroom Cool Morning
+    initial: 72
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  br_cool_day:
+    name: Bedroom Cool Day
+    initial: 73.5
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  br_cool_night:
+    name: Bedroom Cool Night
+    initial: 68
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  office_heat_occupied:
+    name: Office Heat Occupied
+    initial: 68
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:fire
+  office_heat_unoccupied:
+    name: Office Heat Unoccupied
+    initial: 65
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:fire
+  office_cool_occupied:
+    name: Office Cool Occupied
+    initial: 72
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  office_cool_unoccupied:
+    name: Office Cool Unoccupied
+    initial: 73.5
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  office_cool_guest_night:
+    name: Office Cool Guest Night
+    initial: 68
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:snowflake
+  # --- Climate overhaul Phase 3: ventilation thresholds --------------------
+  co2_vent_ceiling:
+    name: CO2 Vent Ceiling
+    initial: 850
+    min: 500
+    max: 1500
+    step: 10
+    unit_of_measurement: ppm
+    mode: box
+    icon: mdi:molecule-co2
+  co2_vent_recover:
+    name: CO2 Vent Recover
+    initial: 700
+    min: 400
+    max: 1200
+    step: 10
+    unit_of_measurement: ppm
+    mode: box
+    icon: mdi:molecule-co2
+  vent_min_outdoor:
+    name: Ventilation Min Outdoor Temp
+    initial: 32
+    min: 0
+    max: 60
+    step: 1
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:thermometer-low
+  vent_max_outdoor:
+    name: Ventilation Max Outdoor Temp
+    initial: 80
+    min: 60
+    max: 100
+    step: 1
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:thermometer-high
+  freecool_differential:
+    name: Free Cooling Differential
+    initial: 5
+    min: 1
+    max: 15
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:thermometer-chevron-down
+  minvent_floor_minutes:
+    name: Minimum Ventilation Floor (per 24 h)
+    initial: 30
+    min: 0
+    max: 240
+    step: 5
+    unit_of_measurement: min
+    mode: box
+    icon: mdi:fan-clock
+  # --- Climate overhaul Phase 4: away-mode setpoints -----------------------
+  away_heat_setpoint:
+    name: Away Heat Setpoint
+    initial: 62
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:home-export-outline
+  away_cool_setpoint:
+    name: Away Cool Setpoint
+    initial: 78
+    min: 55
+    max: 85
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:home-export-outline
 
 input_boolean:
   sonos_group_select_living_room:
@@ -74,6 +362,24 @@ input_boolean:
   sonos_group_select_media_room:
     name: Group Media Room
     icon: mdi:television
+  # --- Climate overhaul Phase 1: zone holds --------------------------------
+  # Hold on = the zone schedule must not write that zone. Set by the door-open
+  # automations, Away Mode Turns On, and Power Outage V2; cleared only by the
+  # matching restore automation or the Climate Hold Watchdog when every cause
+  # is gone (precedence: power_outage > away > door_open). Deliberately no
+  # `initial:` so holds survive HA restarts.
+  climate_hold_living_room:
+    name: Climate Hold - Living Room
+    icon: mdi:pause-octagon
+  climate_hold_basement:
+    name: Climate Hold - Basement
+    icon: mdi:pause-octagon
+  climate_hold_office:
+    name: Climate Hold - Office
+    icon: mdi:pause-octagon
+  climate_hold_bedroom:
+    name: Climate Hold - Bedroom
+    icon: mdi:pause-octagon
 
 input_select:
   sonos_speaker_select:
@@ -115,6 +421,49 @@ input_select:
       - Albums
     initial: All
     icon: mdi:filter-variant
+  # --- Climate overhaul Phase 4: HVAC fan-mode ownership -------------------
+  # Which automation currently owns each zone's fan_mode. Priority high->low:
+  # economizer > air_filter > air_quality > schedule (none loses to all).
+  # A writer may set fan `on` only if its priority >= the current owner's,
+  # and may restore `auto` only if it IS the current owner. Exception: the
+  # Bedroom Air Quality 22:00 quiet-hours force-to-auto is absolute.
+  # No `initial:` — first option (none) is the default and state restores.
+  living_room_fan_owner:
+    name: Living Room Fan Owner
+    options:
+      - none
+      - schedule
+      - economizer
+      - air_filter
+      - air_quality
+    icon: mdi:fan-alert
+  basement_fan_owner:
+    name: Basement Fan Owner
+    options:
+      - none
+      - schedule
+      - economizer
+      - air_filter
+      - air_quality
+    icon: mdi:fan-alert
+  office_fan_owner:
+    name: Office Fan Owner
+    options:
+      - none
+      - schedule
+      - economizer
+      - air_filter
+      - air_quality
+    icon: mdi:fan-alert
+  bedroom_fan_owner:
+    name: Bedroom Fan Owner
+    options:
+      - none
+      - schedule
+      - economizer
+      - air_filter
+      - air_quality
+    icon: mdi:fan-alert
 
 input_text:
   sonos_favorites_search:
@@ -273,6 +622,19 @@ lovelace:
     # /notification_center/notification-center-card.js
     - url: /hacsfiles/notifications/notification-center-card.js
       type: module
+
+# Climate overhaul Phase 1: first-floor exterior door group. Default
+# all_entities behavior: `on` (open) if ANY member is open, `off` only when
+# ALL doors are closed — the door-closed restore automation keys off the
+# group returning to `off`.
+binary_sensor:
+  - platform: group
+    name: First Floor Exterior Doors
+    unique_id: first_floor_exterior_doors
+    device_class: door
+    entities:
+      - binary_sensor.living_room_french_doors
+      - binary_sensor.kitchen_french_doors
 
 sensor:
   - platform: filter
