@@ -181,6 +181,23 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
   `show_name: false` (and no state footer) on all camera cards so only the
   image renders; `tap_action: more-info` stays.
 
+### R10 — Energy view refinements ⬜
+
+- **a. 12-month solar history formatting + yearly total.**
+  (`dashboards/modules/12-month-solar-history.yaml`, apexcharts)
+  - Y-axis labels get thousands separators (`1,000` not `1000`) via a
+    `yaxis.labels.formatter` (`toLocaleString`).
+  - The chart header shows the **total MWh over the last 12 months** (e.g.
+    "12.4 MWh last 12 months") instead of the current-state readout — via the
+    apexcharts header/series total if it can sum the statistics, otherwise a
+    small template sensor.
+- **b. Hide the wide charts on narrow screens.** The 12 Month Solar History
+  and Last 24 Hours Power Flow sections are too wide to be useful on mobile.
+  Wrap each (separator + chart) in a conditional card with a `screen`
+  condition (media query, e.g. `(min-width: 768px)`) so they render on
+  tablet/desktop only. The remaining sections keep their current order and
+  spacing on mobile with no gaps where the charts were.
+
 ## Backlog / future candidates
 
 - Retire or fold in the now-orphaned v2-only modules (`mobile-toggle-row.yaml`,
@@ -211,6 +228,9 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
 9. Security view: header inert; segmented Away/Home/Disarm control works with
    correct active colors (gold/gold/green) and transitional states; cameras
    render image-only.
+10. Energy view: y-axis shows comma-separated values; chart header shows the
+    12-month MWh total; the two wide charts hidden on phones but present on
+    wide screens with no layout gaps.
 
 ## Process
 
