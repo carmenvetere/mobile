@@ -198,6 +198,17 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
   tablet/desktop only. The remaining sections keep their current order and
   spacing on mobile with no gaps where the charts were.
 
+### R11 — Weather view refinements ⬜
+
+- **a. Alerts → forecast spacing.** Add a clear gap between the Active
+  Weather Alerts card and the forecast card below it (the view grid currently
+  runs `row-gap: 2px`, so when the conditional alerts card is visible the two
+  cards nearly touch). Margin on the forecast block or a larger row gap —
+  whichever keeps the no-alerts layout unchanged.
+- **b. Forecast separator label.** Give the forecast card a bubble separator
+  label above it (e.g. "Forecast", matching the "Live Weather" section below)
+  so the view's section structure is consistent with the other views.
+
 ## Backlog / future candidates
 
 - Retire or fold in the now-orphaned v2-only modules (`mobile-toggle-row.yaml`,
@@ -231,6 +242,8 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
 10. Energy view: y-axis shows comma-separated values; chart header shows the
     12-month MWh total; the two wide charts hidden on phones but present on
     wide screens with no layout gaps.
+11. Weather view: visible gap between alerts and forecast when alerts are
+    active; forecast section carries a separator label.
 
 ## Process
 
