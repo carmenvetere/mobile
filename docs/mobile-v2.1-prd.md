@@ -160,6 +160,27 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
   sub-button a fixed width / right-aligned percent so icons line up across
   cards.
 
+### R9 — Security view refinements ⬜
+
+- **a. Header not clickable.** The header currently opens the Alarmo
+  more-info dialog (`tap_action: more-info`, security-view line ~38). Change
+  to `action: none`, matching the other view headers.
+- **b. Segmented alarm control under the header.** New full-width
+  `custom:button-card` styled as a 3-position slider/segmented control,
+  driven by `alarm_control_panel.alarmo`:
+  - Left: **Armed Away** — gold when active, grey otherwise.
+  - Center: **Armed Home** — gold when active, grey otherwise.
+  - Right: **Disarmed** — green (theme sage) when active, grey otherwise.
+  - Tapping a segment calls the matching Alarmo service
+    (`alarm_arm_away` / `alarm_arm_home` / `alarm_disarm`).
+  - Transitional states (`arming`, `pending`) render on the target segment in
+    a reduced/pulsing style so the control never looks stuck.
+  - Guarded `states[]` JS throughout (nested custom_fields context).
+- **c. Remove camera name overlays.** The `picture-entity` name footer is too
+  tall on mobile and the views are self-explanatory — set
+  `show_name: false` (and no state footer) on all camera cards so only the
+  image renders; `tap_action: more-info` stays.
+
 ## Backlog / future candidates
 
 - Retire or fold in the now-orphaned v2-only modules (`mobile-toggle-row.yaml`,
@@ -187,6 +208,9 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
 8. Shades view: 15px card and expander radii; primary-text icons; expander
    color hierarchy matches groups; equal side margins; battery icons aligned
    in a column.
+9. Security view: header inert; segmented Away/Home/Disarm control works with
+   correct active colors (gold/gold/green) and transitional states; cameras
+   render image-only.
 
 ## Process
 
