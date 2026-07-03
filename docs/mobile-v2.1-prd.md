@@ -209,6 +209,20 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
   label above it (e.g. "Forecast", matching the "Live Weather" section below)
   so the view's section structure is consistent with the other views.
 
+### R12 — Pool view refinement ⬜
+
+- **a. Remove the heater glow ring.** The Pool Heater row's amber "heating"
+  halo doesn't match the card shape (2026-07-02 screenshot): the ring is a
+  `box-shadow` on the outer `ha-card`, but the visible card is the
+  `.bubble-button-card-container` inside it, which `mobile_settings_module`
+  insets with its own margin and radius — so the halo floats offset around an
+  invisible boundary. Remove the glow entirely, consistent with the R7-b
+  decision to drop the thermostat glow on the climate view. (Alternative,
+  only if a heating indicator is still wanted: move the ring onto the bubble
+  container with matching radius — not the default plan.)
+
+Music view: no changes for V2.1.
+
 ## Backlog / future candidates
 
 - Retire or fold in the now-orphaned v2-only modules (`mobile-toggle-row.yaml`,
@@ -244,6 +258,8 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
     wide screens with no layout gaps.
 11. Weather view: visible gap between alerts and forecast when alerts are
     active; forecast section carries a separator label.
+12. Pool view: no glow ring on the heater row; card renders like the other
+    bubble rows.
 
 ## Process
 
