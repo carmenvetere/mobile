@@ -181,7 +181,7 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
   `show_name: false` (and no state footer) on all camera cards so only the
   image renders; `tap_action: more-info` stays.
 
-### R10 — Energy view refinements ⬜
+### R10 — Energy view refinements ✅
 
 - **a. 12-month solar history formatting + yearly total.**
   (`dashboards/modules/12-month-solar-history.yaml`, apexcharts)
@@ -198,7 +198,7 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
   tablet/desktop only. The remaining sections keep their current order and
   spacing on mobile with no gaps where the charts were.
 
-### R11 — Weather view refinements ⬜
+### R11 — Weather view refinements ✅
 
 - **a. Alerts → forecast spacing.** Add a clear gap between the Active
   Weather Alerts card and the forecast card below it (the view grid currently
@@ -209,7 +209,7 @@ Color hierarchy and polish on the Lights view (see 2026-07-02 screenshots).
   label above it (e.g. "Forecast", matching the "Live Weather" section below)
   so the view's section structure is consistent with the other views.
 
-### R12 — Pool view refinement ⬜
+### R12 — Pool view refinement ✅
 
 - **a. Remove the heater glow ring.** The Pool Heater row's amber "heating"
   halo doesn't match the card shape (2026-07-02 screenshot): the ring is a
