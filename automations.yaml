@@ -5829,6 +5829,7 @@
   mode: single
 - id: '1776980419853'
   alias: First Floor Shades – Schedule & Adaptive
+  initial_state: false
   description: 'First-floor shading: weekday 7:30 and weekend 8:00 morning opens plus
     30-min adaptive ticks all run the same template formula on front/dining/living
     shades. Adaptive runs from 08:01 until sunset (sun above horizon). After 5pm,
@@ -6360,6 +6361,7 @@
   mode: restart
 - id: '1777328807450'
   alias: Primary Bedroom Shades – Schedule & Adaptive
+  initial_state: false
   description: 'Primary bedroom shading framework matching first-floor design. Weekday
     8:00 and weekend 9:00 morning opens plus 15-min adaptive ticks all run the same
     template formula on bedroom_back (north), bedroom_left (west), and bedroom_right/hallway_1/hallway_2
@@ -6486,6 +6488,7 @@
   mode: single
 - id: '1777329382086'
   alias: Back Guest Bedroom Shades – Schedule & Adaptive
+  initial_state: false
   description: Back guest bedroom shading framework matching primary bedroom design.
     Weekday 8:00 and weekend 9:00 morning opens plus 15-min adaptive ticks all run
     the same template formula on back_left/back_right (north) and side (west). Adaptive
@@ -6595,6 +6598,7 @@
   mode: single
 - id: '1777329849707'
   alias: Front Guest Bedroom Shades – Schedule & Adaptive
+  initial_state: false
   description: Front guest bedroom shading framework matching primary/back guest design.
     Weekday 8:00 and weekend 9:00 morning opens plus 15-min adaptive ticks all run
     the same template formula on front_left/front_right (south) and side (west). Adaptive
@@ -6995,6 +6999,7 @@
   mode: single
 - id: '1782073941879'
   alias: Office Shades – Schedule & Adaptive
+  initial_state: false
   description: 'Office shading framework matching the front guest bedroom design.
     Weekday 8:00 and weekend 9:00 morning opens plus 30-min adaptive ticks all run
     the same template formula on cover.office_office_right and cover.office_office_left
@@ -7112,3 +7117,324 @@
                 }}'
               level: warning
   mode: single
+- id: '1783036800000'
+  alias: Shade Scheduler – Whole House
+  description: 'Config-driven whole-house shade scheduler. Replaces the five per-room
+    Schedule & Adaptive automations. A room table in variables drives three phases:
+    morning open (First Floor 07:30 wkday / 08:00 wknd; all other rooms 08:00 / 09:00)
+    positions each room to its adaptive target; a 30-min adaptive tick (sun above
+    horizon, until 19:55, from each room''s own open time) re-runs the same per-facade
+    formula (closure_responsiveness=20); sunset+30 or 8pm (whichever is earlier) closes
+    every room with verify-and-retry (up to 4 attempts, 30s waits — Matter/Thread
+    drop protection). Rooms are walked one at a time via repeat.for_each, so shade
+    commands are serialized by construction. House-wide manual privacy: after 17:00
+    the adaptive tick skips any room whose close set is already closed (position <=5%)
+    — never reopens shades closed by hand. Pauses: dinner_party skips First Floor;
+    guest_mode skips both guest rooms. Primary Bedroom north shade (bedroom_back)
+    closes at evening only Nov-Mar. Adaptive targets per-facade covers; close and
+    privacy check use the room group where one exists.'
+  triggers:
+  - at: 07:30:00
+    id: morning_early
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    trigger: time
+  - at: 08:00:00
+    id: morning_early_wknd
+    weekday:
+    - sat
+    - sun
+    trigger: time
+  - at: 08:00:00
+    id: morning
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    trigger: time
+  - at: 09:00:00
+    id: morning_wknd
+    weekday:
+    - sat
+    - sun
+    trigger: time
+  - minutes: /30
+    id: adaptive
+    trigger: time_pattern
+  - event: sunset
+    offset: 00:30:00
+    id: sunset_close
+    trigger: sun
+  - at: '20:00:00'
+    id: evening_close
+    trigger: time
+  conditions:
+  - condition: time
+    after: 07:29:00
+    before: '20:01:00'
+  variables:
+    closure_responsiveness: 20
+    rooms:
+    - name: First Floor
+      wave: early
+      open_wkday: '07:30'
+      open_wknd: '08:00'
+      pause: input_boolean.dinner_party
+      indoor: climate.living_room_thermostat_homekit
+      comfort: 70
+      facades:
+      - name: front (S)
+        sensor: sensor.sun_hitting_south
+        covers:
+        - cover.first_floor_front
+      - name: dining (E)
+        sensor: sensor.sun_hitting_east
+        covers:
+        - cover.dining_room_side
+      - name: living (W)
+        sensor: sensor.sun_hitting_west
+        covers:
+        - cover.living_room_side_shades
+      close:
+      - cover.first_floor_all
+      privacy:
+      - cover.first_floor_all
+      winter_north: ''
+    - name: Primary Bedroom
+      wave: main
+      open_wkday: '08:00'
+      open_wknd: '09:00'
+      pause: ''
+      indoor: climate.master_bedroom_thermostat
+      comfort: 68
+      facades:
+      - name: left (W)
+        sensor: sensor.sun_hitting_west
+        covers:
+        - cover.bedroom_left
+      - name: right+closets (E)
+        sensor: sensor.sun_hitting_east
+        covers:
+        - cover.bedroom_right
+        - cover.hallway_1
+        - cover.hallway_2
+      - name: back (N)
+        sensor: sensor.sun_hitting_north
+        covers:
+        - cover.bedroom_back
+      close:
+      - cover.bedroom_left
+      - cover.bedroom_right
+      - cover.hallway_1
+      - cover.hallway_2
+      privacy:
+      - cover.bedroom_left
+      - cover.bedroom_right
+      - cover.hallway_1
+      - cover.hallway_2
+      winter_north: cover.bedroom_back
+    - name: Back Guest Bedroom
+      wave: main
+      open_wkday: '08:00'
+      open_wknd: '09:00'
+      pause: input_boolean.guest_mode
+      indoor: sensor.guest_bedroom_sensor_temperature
+      comfort: 68
+      facades:
+      - name: back (N)
+        sensor: sensor.sun_hitting_north
+        covers:
+        - cover.back_guest_bedroom_back_left
+        - cover.back_guest_bedroom_back_right
+      - name: side (W)
+        sensor: sensor.sun_hitting_west
+        covers:
+        - cover.back_guest_bedroom_side
+      close:
+      - cover.back_guest_bedroom_shades
+      privacy:
+      - cover.back_guest_bedroom_shades
+      winter_north: ''
+    - name: Front Guest Bedroom
+      wave: main
+      open_wkday: '08:00'
+      open_wknd: '09:00'
+      pause: input_boolean.guest_mode
+      indoor: sensor.front_guest_bedroom_sensor_temperature
+      comfort: 68
+      facades:
+      - name: front (S)
+        sensor: sensor.sun_hitting_south
+        covers:
+        - cover.front_guest_bedroom_front_left
+        - cover.front_guest_bedroom_front_right
+      - name: side (W)
+        sensor: sensor.sun_hitting_west
+        covers:
+        - cover.front_guest_bedroom_side
+      close:
+      - cover.front_guest_bedroom_shades
+      privacy:
+      - cover.front_guest_bedroom_shades
+      winter_north: ''
+    - name: Office
+      wave: main
+      open_wkday: '08:00'
+      open_wknd: '09:00'
+      pause: ''
+      indoor: sensor.office_thermostat_homekit_current_temperature
+      comfort: 72
+      facades:
+      - name: office (S)
+        sensor: sensor.sun_hitting_south
+        covers:
+        - cover.office_office_right
+        - cover.office_office_left
+      close:
+      - cover.office_office_right
+      - cover.office_office_left
+      privacy:
+      - cover.office_office_right
+      - cover.office_office_left
+      winter_north: ''
+  actions:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: trigger
+          id:
+          - morning_early
+          - morning_early_wknd
+          - morning
+          - morning_wknd
+        - condition: and
+          conditions:
+          - condition: trigger
+            id: adaptive
+          - condition: time
+            before: '19:55:00'
+          - condition: numeric_state
+            entity_id: sun.sun
+            attribute: elevation
+            above: 0
+      sequence:
+      - variables:
+          is_adaptive: '{{ trigger.id == ''adaptive'' }}'
+          wave: '{{ ''early'' if trigger.id in [''morning_early'', ''morning_early_wknd'']
+            else ''main'' }}'
+          rooms_to_run: '{{ rooms if is_adaptive else (rooms | selectattr(''wave'',
+            ''eq'', wave) | list) }}'
+      - repeat:
+          for_each: '{{ rooms_to_run }}'
+          sequence:
+          - variables:
+              room_name: '{{ repeat.item.name }}'
+              facades: '{{ repeat.item.facades }}'
+              comfort: '{{ repeat.item.comfort | float(70) }}'
+              paused: '{{ repeat.item.pause != '''' and is_state(repeat.item.pause,
+                ''on'') }}'
+              open_time: '{{ repeat.item.open_wknd if now().weekday() >= 5 else repeat.item.open_wkday
+                }}'
+              in_window: '{{ (not is_adaptive) or now().strftime(''%H:%M'') > open_time
+                }}'
+              privacy_locked: '{% if not is_adaptive or now().hour < 17 %}false{%
+                else %}{% set ns = namespace(all_closed=true) %}{% for e in repeat.item.privacy
+                %}{% set pos = state_attr(e, ''current_position'') %}{% if pos is
+                not none %}{% if pos | int(0) > 5 %}{% set ns.all_closed = false %}{%
+                endif %}{% elif not is_state(e, ''closed'') %}{% set ns.all_closed
+                = false %}{% endif %}{% endfor %}{{ ns.all_closed }}{% endif %}'
+              indoor: '{% set src = repeat.item.indoor %}{% if src.startswith(''climate.'')
+                %}{{ state_attr(src, ''current_temperature'') | float(70) }}{% else
+                %}{{ states(src) | float(70) }}{% endif %}'
+          - if:
+            - condition: template
+              value_template: '{{ not paused and in_window and not privacy_locked
+                }}'
+            then:
+            - repeat:
+                for_each: '{{ facades }}'
+                sequence:
+                - variables:
+                    effw: '{{ states(repeat.item.sensor) | float(0) }}'
+                    target: '{% if effw == 0 or indoor | float(70) <= comfort | float(70)
+                      %}100{% else %}{% set excess = indoor | float(70) - comfort
+                      | float(70) %}{% set closure = excess * effw / closure_responsiveness
+                      %}{{ [[100 - closure, 0] | max, 100] | min | round(0) | int
+                      }}{% endif %}'
+                - action: cover.set_cover_position
+                  target:
+                    entity_id: '{{ repeat.item.covers }}'
+                  data:
+                    position: '{{ target | int }}'
+                - action: system_log.write
+                  data:
+                    message: 'Shade Scheduler ({{ trigger.id }}) {{ room_name }} /
+                      {{ repeat.item.name }}: indoor={{ indoor }}F comfort={{ comfort
+                      }}F -> {{ target }}% (effw {{ effw }} W/m2)'
+                    level: info
+    - conditions:
+      - condition: trigger
+        id:
+        - sunset_close
+        - evening_close
+      sequence:
+      - repeat:
+          for_each: '{{ rooms }}'
+          sequence:
+          - variables:
+              room_name: '{{ repeat.item.name }}'
+              paused: '{{ repeat.item.pause != '''' and is_state(repeat.item.pause,
+                ''on'') }}'
+              close_targets: '{{ repeat.item.close }}'
+              winter_cover: '{{ repeat.item.winter_north }}'
+              winter_close: '{{ repeat.item.winter_north != '''' and now().month in
+                [1, 2, 3, 11, 12] }}'
+              verify_list: '{{ close_targets + ([winter_cover] if winter_close else
+                []) }}'
+          - if:
+            - condition: template
+              value_template: '{{ not paused }}'
+            then:
+            - repeat:
+                sequence:
+                - action: cover.close_cover
+                  target:
+                    entity_id: '{{ close_targets }}'
+                - if:
+                  - condition: template
+                    value_template: '{{ winter_close }}'
+                  then:
+                  - action: cover.close_cover
+                    target:
+                      entity_id: '{{ winter_cover }}'
+                - wait_template: '{% set ns = namespace(ok=true) %}{% for e in verify_list
+                    %}{% if not is_state(e, ''closed'') %}{% set ns.ok = false %}{%
+                    endif %}{% endfor %}{{ ns.ok }}'
+                  timeout: 00:00:30
+                  continue_on_timeout: true
+                until:
+                - condition: template
+                  value_template: '{% set ns = namespace(ok=true) %}{% for e in verify_list
+                    %}{% if not is_state(e, ''closed'') %}{% set ns.ok = false %}{%
+                    endif %}{% endfor %}{{ ns.ok or repeat.index >= 4 }}'
+            - if:
+              - condition: template
+                value_template: '{% set ns = namespace(ok=true) %}{% for e in verify_list
+                  %}{% if not is_state(e, ''closed'') %}{% set ns.ok = false %}{%
+                  endif %}{% endfor %}{{ not ns.ok }}'
+              then:
+              - action: system_log.write
+                data:
+                  message: 'Shade Scheduler ({{ trigger.id }}) {{ room_name }}: shades
+                    still not closed after 4 attempts — {{ verify_list | join('',
+                    '') }}'
+                  level: warning
+  mode: queued
+  max: 10
