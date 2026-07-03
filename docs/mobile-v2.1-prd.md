@@ -51,7 +51,7 @@ caused by the `custom:stack-in-card` wrapper. Replace it with a plain
 `vertical-stack` (same fix already applied to the Lights view in v1) so insets
 are consistent with the rest of the view.
 
-### R3 — Bottom nav overlays the HA sidebar ⬜
+### R3 — Bottom nav overlays the HA sidebar ✅
 
 The fixed bottom nav renders across the full viewport width, covering the
 bottom of the Home Assistant sidebar — the last two sidebar items are
@@ -74,7 +74,7 @@ Audit the repo bubble modules (`mobile_settings_module`, `mobile_lights`,
 - Nominal sub-button text/icon: `var(--secondary-text-color)`.
 - Active/on sub-button text/icon: unchanged (state color / primary).
 
-### R5 — Bottom nav highlight fixes ⬜
+### R5 — Bottom nav highlight fixes ✅
 
 Two defects in the active-pill highlight:
 
