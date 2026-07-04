@@ -41,7 +41,7 @@ mobile_lights:
           }
 
         .bubble-range-fill {
-          background: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color)'} !important;
+          background: ${state === 'on' ? 'var(--background-color)' : 'var(--background-color)'} !important;
           opacity: 1 !important;
           }
 
