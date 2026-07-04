@@ -1,0 +1,99 @@
+# lovelace_gen
+# ============================================================================
+#  Mobile Dash · "More" sheet (#more-menu) · standalone Bubble pop-up
+#  Split out of mobile-bottom-nav.yaml on purpose: the pop-up must NOT share
+#  a wrapper card with the fixed bottom bar. The standalone pop-up format
+#  styles/animates its host subtree, which can turn a shared ancestor into a
+#  CSS containing block and silently break the bar's position: fixed.
+#  Include once per view, right after the nav include:
+#    - !include /config/dashboards/modules/mobile-more-sheet.yaml
+# ============================================================================
+{% macro tile(label, icon, path) %}
+        - type: custom:button-card
+          icon: {{ icon }}
+          name: {{ label }}
+          tap_action:
+            action: navigate
+            navigation_path: "{{ path }}"
+          styles:
+            card:
+              - background: |
+                  [[[ return window.location.pathname === '{{ path }}' ? 'rgba(156,194,208,0.20)' : 'rgba(255,255,255,0.05)'; ]]]
+              - border-radius: 15px
+              - padding: 16px 8px
+              - box-shadow: none
+              - transition: none
+            grid:
+              - grid-template-areas: '"i" "n"'
+              - grid-template-rows: auto auto
+              - row-gap: 9px
+              - justify-items: center
+            icon:
+              - width: 25px
+              - color: |
+                  [[[ return window.location.pathname === '{{ path }}' ? '#9CC2D0' : '#cdd1d6'; ]]]
+            name:
+              - font-size: 12px
+              - font-weight: 600
+              - color: |
+                  [[[ return window.location.pathname === '{{ path }}' ? '#9CC2D0' : '#e7e9ec'; ]]]
+{% endmacro %}
+type: custom:bubble-card
+card_type: pop-up
+hash: "#more-menu"
+show_header: false
+close_on_click: true
+scrolling_effect: false
+styles: |
+  .bubble-pop-up {
+    --bubble-pop-up-background-color: #3a3e44 !important;
+    --bubble-pop-up-main-background-color: #3a3e44 !important;
+    --bubble-pop-up-border-radius: 22px !important;
+    --bubble-pop-up-content-border-radius: 22px !important;
+    box-shadow: 0 -16px 44px rgba(0,0,0,0.55) !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 85vh !important;
+    margin-top: 0 !important;
+  }
+cards:
+  - type: custom:button-card
+    name: MORE
+    show_icon: false
+    tap_action: { action: none }
+    styles:
+      card:
+        - background: transparent
+        - box-shadow: none
+        - padding: 2px 2px 12px
+      grid:
+        - grid-template-areas: '"n"'
+      name:
+        - justify-self: start
+        - font-size: 13px
+        - font-weight: 600
+        - text-transform: uppercase
+        - letter-spacing: 0.04em
+        - color: "#9aa0a7"
+  - type: grid
+    columns: 3
+    square: false
+    cards:
+{{ tile('Shades','mdi:roller-shade','/mobile-dash/shades-main') }}
+{{ tile('Music','mdi:music','/mobile-dash/music') }}
+{{ tile('Energy','mdi:lightning-bolt','/mobile-dash/energy') }}
+{{ tile('Pool','mdi:pool','/mobile-dash/pool') }}
+{{ tile('Weather','mdi:weather-partly-cloudy','/mobile-dash/weather') }}
+{{ tile('Settings','mdi:cog','/mobile-dash/settings') }}
+  # Spacer so the bottom tile row clears the fixed 76px nav + safe area.
+  - type: custom:button-card
+    show_icon: false
+    show_name: false
+    tap_action: { action: none }
+    styles:
+      card:
+        - background: transparent
+        - box-shadow: none
+        - padding: 0
+        - height: calc(80px + env(safe-area-inset-bottom))

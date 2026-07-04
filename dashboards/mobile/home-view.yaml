@@ -7,6 +7,7 @@ type: custom:grid-layout
 cards:
   # Sticky bottom nav. active=home highlights the Home tab.
   - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: home}]
+  - !include /config/dashboards/modules/mobile-more-sheet.yaml
   - type: custom:button-card
     styles:
       card:
