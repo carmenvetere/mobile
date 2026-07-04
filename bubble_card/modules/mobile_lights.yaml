@@ -12,7 +12,8 @@ mobile_lights:
           }
 
         .bubble-button-background {
-          background-color: ${state === 'on' ? 'var(--ha-card-background)' : 'var(--background-color-3)'} !important;
+          background-color: ${state === 'on' ? 'var(--background-color-3)' : 'var(--background-color-3)'} !important;
+          border-radius: 15px !important;
           } 
 
         .bubble-name {
