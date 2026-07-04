@@ -245,9 +245,11 @@
             state_background: false
             show_background: false
       styles: |
-        ha-card {
-          background-color: var(--background-color-2) !important;
-        }
+        .bubble-button-background {
+          background-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color-3)'} !important;
+          border-radius: 15px !important;
+          opacity: 1 !important;
+          } 
       modules:
         - {{ module_name }}
       button_action:
