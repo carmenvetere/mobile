@@ -83,7 +83,7 @@
             show_background: false
       styles: |
         .bubble-button-background {
-          background-color: ${state === 'on' ? 'var(--background-color-3)' : 'var(--background-color-3)'} !important;
+          background-color: ${state === 'on' ? 'var(--slate-cool)' : 'var(--background-color-3)'} !important;
           border-radius: 15px !important;
           } 
       modules:
