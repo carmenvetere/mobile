@@ -145,23 +145,22 @@ cards:
     show_header: false
     close_on_click: true
     scrolling_effect: false
+    # Bubble Card's built-in "lift above a bottom bar" mode.
+    with_bottom_offset: true
     styles: |
+      /* The new standalone pop-up is variable-driven, layered as an outer
+         pop-up + an inner content surface. Point BOTH layers at the same
+         color and radius (setting raw background/border-radius on only the
+         outer element is what left the two-tone rounded corner), and grow
+         the bottom padding so the last tile row clears the fixed 76px nav
+         + iOS safe area. */
       .bubble-pop-up {
-        background: #3a3e44 !important;
-        border-radius: 22px !important;
+        --bubble-pop-up-background-color: #3a3e44 !important;
+        --bubble-pop-up-main-background-color: #3a3e44 !important;
+        --bubble-pop-up-border-radius: 22px !important;
+        --bubble-pop-up-content-border-radius: 22px !important;
+        --bubble-pop-up-bottom-padding: calc(96px + env(safe-area-inset-bottom)) !important;
         box-shadow: 0 -16px 44px rgba(0,0,0,0.55) !important;
-        top: auto !important;
-        height: auto !important;
-        min-height: 0 !important;
-        max-height: 85vh !important;
-        margin-top: 0 !important;
-        overflow-y: auto !important;
-      }
-      /* Don't let the tile grid stretch its rows to fill the sheet, and keep
-         the bottom row clear of the fixed 76px nav + iOS safe area. */
-      .bubble-pop-up .card-content {
-        height: auto !important;
-        padding-bottom: calc(90px + env(safe-area-inset-bottom)) !important;
       }
     cards:
       - type: custom:button-card
