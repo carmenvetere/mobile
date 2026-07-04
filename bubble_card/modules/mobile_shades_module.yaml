@@ -1,6 +1,6 @@
 mobile_shades_module:
   name: Mobile Shades Module
-  version: '1.2'
+  version: '1.3'
   creator: ''
   supported:
     - button
@@ -18,18 +18,28 @@ mobile_shades_module:
            group cards (default -> background-color-2) and the cards inside an
            expander, which set --shade-card-bg to background-color-3 (one shade
            lighter) so they stand out from the background-color-2 expander. */
+        /* cover cards render the visible surface + icon on cover-specific
+           layers ON TOP of the button-card elements; the container clips
+           them, so radius + color go on the container (with overflow hidden)
+           and the cover overlays are made transparent so the container color
+           shows through. */
         ha-card {
           border-radius: 15px !important;
           }
         .bubble-button-card-container {
           border-radius: 15px !important;
+          overflow: hidden !important;
           background-color: var(--shade-card-bg, var(--background-color-2)) !important;
+          background: var(--shade-card-bg, var(--background-color-2)) !important;
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
           }
 
-        .bubble-button-background {
+        .bubble-button-background,
+        .bubble-cover-background,
+        .bubble-cover-background-crossfade {
+          background: transparent !important;
+          background-color: transparent !important;
           border-radius: 15px !important;
-          background-color: ${state === 'open' ? "var(--shade-card-open-bg, var(--ha-card-background))" : "var(--shade-card-bg, var(--background-color-2))"} !important;
           }
 
       .bubble-name {
@@ -38,15 +48,19 @@ mobile_shades_module:
       .bubble-icon-container {
         background: transparent !important;
         }
-      /* Static primary icon in every state - Bubble drives cover icons off
-         --bubble-icon-color by open/closed, so pin both the var and color. */
-      .bubble-icon {
+      /* Static primary icon in every state. Covers paint the icon on
+         crossfade layers, so pin the color on those too. */
+      .bubble-icon,
+      .bubble-cover-icon-crossfade,
+      .bubble-cover-crossfade-layer--icon {
         --mdc-icon-size: 36px !important;
         --bubble-icon-color: var(--primary-text-color) !important;
         color: var(--primary-text-color) !important;
         }
       .bubble-icon ha-icon,
-      .bubble-icon ha-state-icon {
+      .bubble-icon ha-state-icon,
+      .bubble-cover-crossfade-layer--icon ha-icon,
+      .bubble-cover-crossfade-layer--icon ha-state-icon {
         color: var(--primary-text-color) !important;
         }
       .bubble-sub-button {
