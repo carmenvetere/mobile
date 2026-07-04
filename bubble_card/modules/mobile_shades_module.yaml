@@ -14,8 +14,7 @@ mobile_shades_module:
     - sub-buttons
   description: ''
   code: |2-
-      /* v1.4 - fully static, NO ${} templates (a throwing template breaks the
-         whole module's CSS). If this applies, templates were the problem. */
+      /* v1.4 - fully static CSS, no JS templates at all. */
       ha-card {
         border-radius: 15px !important;
       }
