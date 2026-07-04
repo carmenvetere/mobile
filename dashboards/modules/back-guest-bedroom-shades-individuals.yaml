@@ -23,11 +23,9 @@
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
     }
-    .bubble-button-card-container {
-      background-color: var(--background-color-3) !important;
-    }
-    .bubble-button-background {
-      background-color: var(--background-color-3) !important;
+    ha-card {
+      --shade-card-bg: var(--background-color-3);
+      --shade-card-open-bg: var(--background-color-2);
     }
   modules:
   - mobile_shades_module 
@@ -56,11 +54,9 @@
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
     }
-    .bubble-button-card-container {
-      background-color: var(--background-color-3) !important;
-    }
-    .bubble-button-background {
-      background-color: var(--background-color-3) !important;
+    ha-card {
+      --shade-card-bg: var(--background-color-3);
+      --shade-card-open-bg: var(--background-color-2);
     }
   modules:
   - mobile_shades_module 
@@ -89,11 +85,9 @@
           : b < 40 ? 'var(--gold-color)'
           : 'var(--sage-color)'; })()} !important;
     }
-    .bubble-button-card-container {
-      background-color: var(--background-color-3) !important;
-    }
-    .bubble-button-background {
-      background-color: var(--background-color-3) !important;
+    ha-card {
+      --shade-card-bg: var(--background-color-3);
+      --shade-card-open-bg: var(--background-color-2);
     }
   modules:
   - mobile_shades_module 
