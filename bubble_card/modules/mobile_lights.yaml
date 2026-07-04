@@ -43,16 +43,10 @@ mobile_lights:
           opacity: 1 !important;
           }
 
-        .bubble-range-slider {
-          --bubble-slider-fill-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color)'} !important;
-          --bubble-light-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color)'} !important;
-          }
-
+        /* Fill color comes from --bubble-accent-color (= theme --accent-color,
+           i.e. slate) because each slider card sets use_accent_color: true.
+           The track below stays card-gray so only the filled side is slate. */
         .bubble-range-fill {
-          --bubble-slider-fill-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color)'} !important;
-          --bubble-light-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color)'} !important;
-          background: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color)'} !important;
-          background-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color)'} !important;
           opacity: 1 !important;
           }
 
