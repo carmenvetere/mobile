@@ -106,6 +106,12 @@ cards:
                 x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8200&sn=5
               media_content_type: music
               art: "linear-gradient(135deg, #c8102e 0%, #1a1c1f 100%)"
+            - id: pool_2026
+              name: Pool Mix - 2026
+              type: playlist
+              media_content_id: x-sonos-spotify:playlist:0KkRPLBW2cciKaSkNIdyO3?sid=9812d3d5f8854188
+              media_content_type: playlist
+              art: "linear-gradient(135deg, #00b3a4 0%, #f4d35e 100%)"              
             - id: one_hotel_south_beach
               name: 1 Hotel South Beach Poolside Playlist
               type: playlist
@@ -133,7 +139,7 @@ cards:
             - id: favorite_11
               name: French Riviera Summer Vibes
               type: playlist
-              media_content_id: x-sonos-spotify:playlist:0bBQoJtfEIEtOkqv8e4JZJ?si=78efa99d6d32487d
+              media_content_id: x-sonos-spotify:playlist:0bBQoJtfEIEtOkqv8e4JZJ?sid=78efa99d6d32487d
             - id: hotel_costes_radio
               name: Hotel Costes Radio
               type: playlist
@@ -168,7 +174,7 @@ cards:
             - id: favorite_12
               name: 4th of July Pool Party
               type: playlist
-              media_content_id: x-sonos-spotify:playlist:5lfFrs1X6A1HDxt2WEFr9u?si=948ceafc62cc4c9c
+              media_content_id: x-sonos-spotify:playlist:5lfFrs1X6A1HDxt2WEFr9u?sid=948ceafc62cc4c9c
           favorites_source: config
           groups:
             - id: group_1
