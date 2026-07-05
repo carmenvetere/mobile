@@ -1065,6 +1065,11 @@
       state: >
         {% set t = states('sensor.omnilogic_pool_watersensor') %}
         {% if t is number or (t is string and t | is_number) %}{{ t | round(0) | int }}°{% endif %}
+    - name: Menu Weather Status
+      unique_id: menu_weather_status
+      state: >
+        {% set t = states('sensor.bayberry_tempest_temperature') %}
+        {% if t is number or (t is string and t | is_number) %}{{ t | round(0) | int }}°{% endif %}
     - name: Menu Settings Status
       unique_id: menu_settings_status
       state: >
