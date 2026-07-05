@@ -6,15 +6,14 @@ card_mod:
       /* Override all text in the card to be smaller */
       font-size: 14px !important;
     }
-    /* Mobile only: the 5-node flow diagram is a bit wider than a phone.
-       Give the card extra layout width so the diagram fits, then scale it
-       back to 100% visual width - content shrinks to fit, nothing clips,
-       and desktop is untouched. */
+    /* Mobile only: the 5-node flow diagram is wider than a phone. zoom
+       (WebKit-supported) genuinely shrinks the whole card - layout box
+       included - so it fits with no bleed. width compensates so it still
+       fills the row. */
     @media (max-width: 767px) {
       ha-card {
-        width: 112% !important;
-        transform: scale(0.893) !important;
-        transform-origin: top left !important;
+        zoom: 0.78 !important;
+        width: 128% !important;
         overflow: hidden !important;
       }
     }
