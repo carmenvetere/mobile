@@ -239,7 +239,11 @@ cards:
                   name:
                     - font-size: 14px
                     - font-weight: 700
-                    - color: var(--primary-text-color)
+                    - color: |
+                        [[[
+                          var e = states['alarm_control_panel.alarmo'] || {};
+                          return e.state === 'disarmed' ? 'var(--text-primary-color)' : 'var(--primary-text-color)';
+                        ]]]
       cameras:
         card:
           type: vertical-stack
