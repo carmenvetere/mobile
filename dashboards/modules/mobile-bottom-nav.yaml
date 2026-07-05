@@ -54,7 +54,15 @@ card_mod:
        stays 0 and the bar is full-width on mobile). Docked width
        defaults to 256px; --mdc-drawer-width is used when HA exposes it. */
     @media (min-width: 870px) {
-      ha-card { left: var(--mdc-drawer-width, 256px) !important; }
+      ha-card {
+        left: var(--mdc-drawer-width, 256px) !important;
+        right: 0 !important;
+        /* width: auto so left+right recompute the width - otherwise a
+           width:100% bar just slides right and its right edge (More tab)
+           runs off the screen. This makes the 5 tabs shrink to fit the
+           narrower area instead of being cut off. */
+        width: auto !important;
+      }
     }
 styles:
   card:
