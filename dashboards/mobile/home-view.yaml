@@ -600,8 +600,9 @@ cards:
                       action: navigate
                       navigation_path: /mobile-dash/weather
                   sub_button:
-                    - entity: sensor.bayberry_tempest_temperature
+                    - entity: sensor.menu_weather_status
                       show_state: true
+                      show_icon: false
                       state_background: false
                       tap_action:
                         action: navigate
