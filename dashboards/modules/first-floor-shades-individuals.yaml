@@ -18,7 +18,8 @@
   modules:
   - Mobile Module Theme  
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.living_room_front_left_cover
   name: Front Left
   icon: mdi:roller-shade
@@ -33,6 +34,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.living_room_front_left_cover
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.living_room_front_left_cover
+    - entity: cover.living_room_front_left_cover
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.living_room_front_left_cover
+    - entity: cover.living_room_front_left_cover
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.living_room_front_left_cover
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -49,7 +80,8 @@
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.living_room_front_right
   name: Front Right
   icon: mdi:roller-shade
@@ -64,6 +96,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.living_room_front_right
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.living_room_front_right
+    - entity: cover.living_room_front_right
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.living_room_front_right
+    - entity: cover.living_room_front_right
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.living_room_front_right
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -80,7 +142,8 @@
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.living_room_side_left_1_cover
   name: Side Left 1
   icon: mdi:roller-shade
@@ -95,6 +158,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.living_room_side_left_1_cover
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.living_room_side_left_1_cover
+    - entity: cover.living_room_side_left_1_cover
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.living_room_side_left_1_cover
+    - entity: cover.living_room_side_left_1_cover
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.living_room_side_left_1_cover
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -111,7 +204,8 @@
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.living_room_side_left_2_cover_2
   name: Side Left 2
   icon: mdi:roller-shade
@@ -126,6 +220,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.living_room_side_left_2_cover_2
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.living_room_side_left_2_cover_2
+    - entity: cover.living_room_side_left_2_cover_2
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.living_room_side_left_2_cover_2
+    - entity: cover.living_room_side_left_2_cover_2
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.living_room_side_left_2_cover_2
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -142,7 +266,8 @@
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.living_room_side_right_1_cover
   name: Side Right 1
   icon: mdi:roller-shade
@@ -157,6 +282,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.living_room_side_right_1_cover
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.living_room_side_right_1_cover
+    - entity: cover.living_room_side_right_1_cover
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.living_room_side_right_1_cover
+    - entity: cover.living_room_side_right_1_cover
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.living_room_side_right_1_cover
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -173,7 +328,8 @@
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.living_room_side_right_2_cover
   name: Side Right 2
   icon: mdi:roller-shade
@@ -188,6 +344,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.living_room_side_right_2_cover
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.living_room_side_right_2_cover
+    - entity: cover.living_room_side_right_2_cover
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.living_room_side_right_2_cover
+    - entity: cover.living_room_side_right_2_cover
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.living_room_side_right_2_cover
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -221,7 +407,8 @@
       padding-top: 7px !important;
     }
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.front_right_cover
   name: Front Right
   icon: mdi:roller-shade
@@ -236,6 +423,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.front_right_cover
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.front_right_cover
+    - entity: cover.front_right_cover
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.front_right_cover
+    - entity: cover.front_right_cover
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.front_right_cover
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -252,7 +469,8 @@
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   button_type: slider
   entity: cover.front_left_cover
   name: Front Left
@@ -268,6 +486,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.front_left_cover
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.front_left_cover
+    - entity: cover.front_left_cover
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.front_left_cover
+    - entity: cover.front_left_cover
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.front_left_cover
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -284,7 +532,8 @@
   modules:
   - mobile_shades_module  
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.side_right_cover
   name: Side Right
   icon: mdi:roller-shade
@@ -299,6 +548,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.side_right_cover
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.side_right_cover
+    - entity: cover.side_right_cover
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.side_right_cover
+    - entity: cover.side_right_cover
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.side_right_cover
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -315,7 +594,8 @@
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.side_left_cover
   name: Side Left
   icon: mdi:roller-shade
@@ -330,6 +610,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.side_left_cover
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.side_left_cover
+    - entity: cover.side_left_cover
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.side_left_cover
+    - entity: cover.side_left_cover
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.side_left_cover
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {

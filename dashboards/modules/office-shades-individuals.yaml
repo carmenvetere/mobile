@@ -1,5 +1,6 @@
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.office_office_left
   name: Left
   icon: mdi:roller-shade
@@ -14,6 +15,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.office_office_left
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.office_office_left
+    - entity: cover.office_office_left
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.office_office_left
+    - entity: cover.office_office_left
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.office_office_left
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -30,7 +61,8 @@
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.office_office_right
   name: Right
   icon: mdi:roller-shade
@@ -45,6 +77,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.office_office_right
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.office_office_right
+    - entity: cover.office_office_right
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.office_office_right
+    - entity: cover.office_office_right
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.office_office_right
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {

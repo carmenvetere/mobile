@@ -1,5 +1,6 @@
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.front_guest_bedroom_side
   name: Side
   icon: mdi:roller-shade
@@ -14,6 +15,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.front_guest_bedroom_side
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.front_guest_bedroom_side
+    - entity: cover.front_guest_bedroom_side
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.front_guest_bedroom_side
+    - entity: cover.front_guest_bedroom_side
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.front_guest_bedroom_side
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -30,7 +61,8 @@
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.front_guest_bedroom_front_left
   name: Front Left
   icon: mdi:roller-shade
@@ -45,6 +77,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.front_guest_bedroom_front_left
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.front_guest_bedroom_front_left
+    - entity: cover.front_guest_bedroom_front_left
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.front_guest_bedroom_front_left
+    - entity: cover.front_guest_bedroom_front_left
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.front_guest_bedroom_front_left
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
@@ -61,7 +123,8 @@
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
+  button_type: slider
   entity: cover.front_guest_bedroom_front_right
   name: Front Right
   icon: mdi:roller-shade
@@ -76,6 +139,36 @@
       icon: mdi:battery
       show_background: false
       show_state: true
+    - entity: cover.front_guest_bedroom_front_right
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.front_guest_bedroom_front_right
+    - entity: cover.front_guest_bedroom_front_right
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.front_guest_bedroom_front_right
+    - entity: cover.front_guest_bedroom_front_right
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.front_guest_bedroom_front_right
   rows: 1
   styles: |
     .bubble-sub-button-1 ha-icon {
