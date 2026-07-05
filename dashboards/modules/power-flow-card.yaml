@@ -5,18 +5,13 @@ card_mod:
     ha-card {
       /* Override all text in the card to be smaller */
       font-size: 14px !important;
+      max-width: 95% !important;
     }
-    /* Mobile only: shrink the whole card ~10% so the wide flow diagram fits
-       the phone. Plain zoom reduces the actual footprint (no width/clip
-       tricks); desktop is untouched. */
-    @media (max-width: 767px) {
-      ha-card { zoom: 0.9 !important; }
-    }
+
     /* Try multiple selectors to catch all text elements */
     ha-card * {
       font-size: 12px !important;
       font-weight: bold !important;
-      max-width: 95% !important;
     }
     /* Main entity values */
     ha-card .value,
