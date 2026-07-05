@@ -20,7 +20,9 @@ cards:
 #        - width: 398px
         - background: var(--primary-background-color)
         - box-shadow: none
-        - max-width: 98%
+        - max-width: 100%
+        - box-sizing: border-box
+        - overflow-x: hidden
       grid:
         - grid-template-areas: |
             "header"
