@@ -91,7 +91,8 @@ cards:
               ha-card {
                 background-color: var(--background-color) !important;
                 border-radius: 20px;
-                padding: 10;
+                padding: 10px;
+                overflow: hidden;
               }
           cards:
             - type: custom:bubble-card
@@ -214,7 +215,8 @@ cards:
               ha-card {
                 background-color: var(--background-color) !important;
                 border-radius: 20px;
-                padding: 10;
+                padding: 10px;
+                overflow: hidden;
               }
           cards:
             - type: custom:bubble-card
