@@ -175,11 +175,7 @@ cards:
                   name:
                     - font-size: 14px
                     - font-weight: 700
-                    - color: |
-                        [[[
-                          var e = states['alarm_control_panel.alarmo'] || {};
-                          return e.state === 'armed_away' ? 'var(--text-primary-color)' : 'var(--secondary-text-color)';
-                        ]]]
+                    - color: var(--primary-text-color)
             home:
               card:
                 type: custom:button-card
@@ -213,11 +209,7 @@ cards:
                   name:
                     - font-size: 14px
                     - font-weight: 700
-                    - color: |
-                        [[[
-                          var e = states['alarm_control_panel.alarmo'] || {};
-                          return e.state === 'armed_home' ? 'var(--text-primary-color)' : 'var(--secondary-text-color)';
-                        ]]]
+                    - color: var(--primary-text-color)
             disarm:
               card:
                 type: custom:button-card
@@ -247,11 +239,7 @@ cards:
                   name:
                     - font-size: 14px
                     - font-weight: 700
-                    - color: |
-                        [[[
-                          var e = states['alarm_control_panel.alarmo'] || {};
-                          return e.state === 'disarmed' ? 'var(--text-primary-color)' : 'var(--secondary-text-color)';
-                        ]]]
+                    - color: var(--primary-text-color)
       cameras:
         card:
           type: vertical-stack
@@ -261,12 +249,19 @@ cards:
             name: Cameras
             icon: mdi:cctv
             rows: 0.75
-            styles: &sep_section |
-              .bubble-name { font-size: 13px !important; font-weight: 700 !important;
-                text-transform: uppercase; letter-spacing: 0.06em;
-                color: rgba(255,255,255,0.6) !important; }
-              .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-              .card-content { padding-top: 7px !important; }
+            styles: |
+              .bubble-name {
+              font-size: 20px !important;  /* title */
+              font-weight: bold !important;
+              }
+              .bubble-line {
+              background: var(--primary-text-color);
+              opacity: 0.1;
+              }
+              .card-content {
+              padding-top: 10px !important;
+              padding-left: 10px !important;
+              }
           - type: grid
             columns: 2
             square: false
