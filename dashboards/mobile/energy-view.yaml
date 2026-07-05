@@ -20,9 +20,7 @@ cards:
 #        - width: 398px
         - background: var(--primary-background-color)
         - box-shadow: none
-        - max-width: 100%
-        - box-sizing: border-box
-        - overflow-x: hidden
+        - max-width: 98%
       grid:
         - grid-template-areas: |
             "header"
@@ -91,8 +89,7 @@ cards:
               ha-card {
                 background-color: var(--background-color) !important;
                 border-radius: 20px;
-                padding: 10px;
-                overflow: hidden;
+                padding: 10;
               }
           cards:
             - type: custom:bubble-card
@@ -215,8 +212,7 @@ cards:
               ha-card {
                 background-color: var(--background-color) !important;
                 border-radius: 20px;
-                padding: 10px;
-                overflow: hidden;
+                padding: 10;
               }
           cards:
             - type: custom:bubble-card

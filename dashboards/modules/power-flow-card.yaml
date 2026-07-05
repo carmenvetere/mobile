@@ -5,10 +5,11 @@ card_mod:
     ha-card {
       /* Override all text in the card to be smaller */
       font-size: 14px !important;
-      /* Keep the flow diagram from spilling past the narrow mobile edge */
-      max-width: 100% !important;
-      box-sizing: border-box !important;
-      overflow-x: hidden !important;
+      /* The flow diagram has a minimum width that runs a few px past the
+         narrow mobile edge; scale the whole card down slightly so it fits
+         instead of bleeding. transform-origin keeps it centered. */
+      transform: scale(0.96);
+      transform-origin: top center;
     }
     /* Try multiple selectors to catch all text elements */
     ha-card * {
