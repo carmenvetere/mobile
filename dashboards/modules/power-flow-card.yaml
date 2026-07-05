@@ -6,16 +6,11 @@ card_mod:
       /* Override all text in the card to be smaller */
       font-size: 14px !important;
     }
-    /* Mobile only: the 5-node flow diagram is wider than a phone. zoom
-       (WebKit-supported) genuinely shrinks the whole card - layout box
-       included - so it fits with no bleed. width compensates so it still
-       fills the row. */
+    /* Mobile only: shrink the whole card ~10% so the wide flow diagram fits
+       the phone. Plain zoom reduces the actual footprint (no width/clip
+       tricks); desktop is untouched. */
     @media (max-width: 767px) {
-      ha-card {
-        zoom: 0.78 !important;
-        width: 128% !important;
-        overflow: hidden !important;
-      }
+      ha-card { zoom: 0.9 !important; }
     }
     /* Try multiple selectors to catch all text elements */
     ha-card * {
