@@ -22,22 +22,6 @@ series:
       datalabels: true
     float_precision: 1
     unit: " kWh"
-  # header-only series: 12-month total in MWh (single 12-month bucket)
-  - entity: sensor.bayberry_solar_export
-    name: Last 12 Months
-    color: var(--gold-color)
-    statistics:
-      type: change
-      period: month
-    group_by:
-      func: sum
-      duration: 12month
-    transform: "return x === null ? null : x / 1000;"
-    unit: " MWh"
-    float_precision: 1
-    show:
-      in_chart: false
-      legend_value: false
 apex_config:
   chart:
     height: 300px
