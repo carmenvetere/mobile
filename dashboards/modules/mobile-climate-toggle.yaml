@@ -24,6 +24,7 @@ styles:
     - margin-top: 5px
     - transition: none
     - cursor: pointer
+    - box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
   grid:
     - grid-template-areas: '"ic n{% if temp_sensor is defined %} temp hum{% endif %} st sw"'
     - grid-template-columns: auto 1fr{% if temp_sensor is defined %} auto auto{% endif %} auto auto
