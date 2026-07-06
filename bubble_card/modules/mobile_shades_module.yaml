@@ -1,6 +1,6 @@
 mobile_shades_module:
   name: Mobile Shades Module
-  version: '1.5'
+  version: '1.6'
   creator: ''
   supported:
     - button
@@ -21,7 +21,7 @@ mobile_shades_module:
           }
 
         .bubble-button-background {
-          background-color: ${state === 'open' ? 'var(--background-color-2)' : 'var(--background-color-2)'} !important;
+          background-color: var(--background-color-2) !important;
           opacity: 0 !important;
           } 
 
