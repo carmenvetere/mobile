@@ -117,6 +117,96 @@ Dune Mist:
   mdc-dialog-content-ink-color: "#c3c7cc"
   ha-dialog-surface-background: "#41454b"
 
+  # ---- modern HA form / dialog / menu tokens (Material 3 · HA · Web-Awesome) -
+  # The mdc-* block above only covers LEGACY MDC components. Newer HA dialogs,
+  # selects, dropdown menus and the whole Settings UI use Material 3 (md-sys /
+  # md-filled), the ha-color-* layer and Web-Awesome tokens. Left undefined they
+  # fall back to Material's LIGHT defaults (white surface) while the text stays
+  # light -> illegible light-on-white. Map them all to the dark palette.
+
+  # Material 3 system colors
+  md-sys-color-surface: "var(--card-background-color)"
+  md-sys-color-surface-dim: "var(--secondary-background-color)"
+  md-sys-color-surface-bright: "var(--background-color-2)"
+  md-sys-color-surface-container-lowest: "var(--secondary-background-color)"
+  md-sys-color-surface-container-low: "var(--primary-background-color)"
+  md-sys-color-surface-container: "var(--background-color-2)"
+  md-sys-color-surface-container-high: "var(--card-background-color)"
+  md-sys-color-surface-container-highest: "var(--background-color-3)"
+  md-sys-color-surface-variant: "var(--background-color-2)"
+  md-sys-color-on-surface: "var(--primary-text-color)"
+  md-sys-color-on-surface-variant: "var(--secondary-text-color)"
+  md-sys-color-background: "var(--primary-background-color)"
+  md-sys-color-on-background: "var(--primary-text-color)"
+  md-sys-color-primary: "var(--primary-color)"
+  md-sys-color-on-primary: "var(--text-primary-color)"
+  md-sys-color-primary-container: "rgba(142,177,191,0.22)"
+  md-sys-color-on-primary-container: "var(--primary-text-color)"
+  md-sys-color-secondary: "var(--slate-bright)"
+  md-sys-color-on-secondary: "var(--text-primary-color)"
+  md-sys-color-secondary-container: "rgba(142,177,191,0.22)"
+  md-sys-color-on-secondary-container: "var(--primary-text-color)"
+  md-sys-color-outline: "rgba(255,255,255,0.30)"
+  md-sys-color-outline-variant: "rgba(255,255,255,0.14)"
+  md-sys-color-error: "var(--error-color)"
+  md-sys-color-on-error: "var(--text-primary-color)"
+  md-sys-color-error-container: "#5a2b28"
+  md-sys-color-on-error-container: "#ffd9d5"
+  md-sys-color-inverse-surface: "#e7e9ec"
+  md-sys-color-inverse-on-surface: "var(--text-primary-color)"
+  md-sys-color-inverse-primary: "#2c4d59"
+
+  # Material 3 filled text-field / select (fill + ink)
+  md-filled-field-container-color: "var(--background-color-2)"
+  md-filled-field-content-color: "var(--primary-text-color)"
+  md-filled-field-label-text-color: "var(--secondary-text-color)"
+  md-filled-field-supporting-text-color: "var(--secondary-text-color)"
+  md-filled-field-active-indicator-color: "var(--primary-color)"
+  md-filled-field-hover-state-layer-color: "rgba(255,255,255,0.06)"
+  md-filled-text-field-container-color: "var(--background-color-2)"
+  md-filled-text-field-input-text-color: "var(--primary-text-color)"
+  md-filled-text-field-label-text-color: "var(--secondary-text-color)"
+  md-filled-select-text-field-container-color: "var(--background-color-2)"
+  md-filled-select-text-field-input-text-color: "var(--primary-text-color)"
+
+  # Material 3 menu (dropdown popup + items)
+  md-menu-container-color: "var(--card-background-color)"
+  md-menu-item-label-text-color: "var(--primary-text-color)"
+  md-menu-item-supporting-text-color: "var(--secondary-text-color)"
+  md-menu-item-selected-container-color: "rgba(142,177,191,0.30)"
+  md-menu-item-selected-label-text-color: "var(--primary-text-color)"
+
+  # HA color tokens (transitional design-system layer)
+  ha-color-fill-neutral-quiet-resting: "var(--background-color-2)"
+  ha-color-fill-neutral-quiet-hover: "var(--background-color)"
+  ha-color-on-fill-neutral-quiet: "var(--primary-text-color)"
+  ha-color-fill-neutral-loud-resting: "var(--primary-color)"
+  ha-color-on-fill-neutral-loud: "var(--text-primary-color)"
+  ha-color-fill-primary-quiet-resting: "rgba(142,177,191,0.18)"
+  ha-color-fill-primary-quiet-hover: "rgba(142,177,191,0.28)"
+  ha-color-on-fill-primary-quiet: "var(--primary-text-color)"
+  ha-color-text-field-fill: "var(--background-color-2)"
+  ha-color-text-field-text: "var(--primary-text-color)"
+  ha-color-text-field-label: "var(--secondary-text-color)"
+
+  # Web-Awesome tokens (ha-dropdown / ha-picker-field on 2025.x)
+  wa-color-surface-default: "var(--background-color-2)"
+  wa-color-surface-lowered: "var(--background-color)"
+  wa-color-surface-raised: "var(--card-background-color)"
+  wa-color-text-normal: "var(--primary-text-color)"
+  wa-color-text-quiet: "var(--secondary-text-color)"
+  wa-color-fill-neutral-quiet: "var(--background-color-2)"
+  wa-color-fill-neutral-loud: "var(--primary-color)"
+
+  # Vaadin / Material combo-box overlay (entity & target pickers)
+  material-background-color: "var(--card-background-color)"
+  material-secondary-background-color: "var(--background-color-2)"
+  material-primary-text-color: "var(--primary-text-color)"
+  material-secondary-text-color: "var(--secondary-text-color)"
+  material-disabled-text-color: "var(--disabled-text-color)"
+  material-primary-color: "var(--primary-color)"
+  material-divider-color: "rgba(255,255,255,0.12)"
+
   # ---- menus / list popups --------------------------------------------------
   mdc-menu-surface-background: "#3a3e44"            # dropdown / overflow menu bg
   ha-control-button-background-color: "rgba(255,255,255,0.06)"
