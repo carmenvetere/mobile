@@ -205,6 +205,17 @@ Dune Mist:
   ha-color-text-field-fill: "var(--background-color-2)"
   ha-color-text-field-text: "var(--primary-text-color)"
   ha-color-text-field-label: "var(--secondary-text-color)"
+  # ha-combo-box items + form fields read --ha-color-form-*; undefined it falls
+  # back to a light default -> the white combo-box picker rows.
+  ha-color-form-background: "var(--background-color-2)"
+  ha-color-form-text: "var(--primary-text-color)"
+  ha-color-form-label: "var(--secondary-text-color)"
+  ha-color-form-border: "rgba(255,255,255,0.18)"
+  ha-color-form-border-hover: "rgba(255,255,255,0.30)"
+  ha-color-form-border-focus: "var(--accent-color)"
+  ha-color-form-placeholder: "var(--secondary-text-color)"
+  ha-color-form-disabled-background: "var(--background-color)"
+  ha-color-form-disabled-text: "var(--disabled-text-color)"
 
   # Web-Awesome tokens (ha-dropdown / ha-picker-field on 2025.x)
   wa-color-surface-default: "var(--background-color-2)"
