@@ -1,6 +1,6 @@
 mobile_climate:
   name: Mobile Climate Module
-  version: '1.0'
+  version: '1.1'
   creator: ''
   description: ''
   code: |2-
@@ -48,9 +48,9 @@ mobile_climate:
         color: ${state === 'off'
           ? 'transparent'
           : state === 'heat'
-          ? 'var-primary-text-color'
+          ? 'var(--primary-text-color)'
           : state === 'cool'
-          ? 'var-primary-text-color'
+          ? 'var(--primary-text-color)'
           : '#f2f3f5'} !important;
       }
 

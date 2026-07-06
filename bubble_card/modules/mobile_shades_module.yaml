@@ -1,6 +1,6 @@
 mobile_shades_module:
   name: Mobile Shades Module
-  version: '1.4'
+  version: '1.5'
   creator: ''
   supported:
     - button
@@ -34,7 +34,7 @@ mobile_shades_module:
         .bubble-sub-button { 
           font-size: 14px !important;
           font-weight: bold; 
-          color: ${state === 'open' ? 'var(--primary-text-color)' : 'var(--primary--text-color)'} !important;
+          color: ${state === 'open' ? 'var(--primary-text-color)' : 'var(--primary-text-color)'} !important;
           }
         
         .bubble-state {

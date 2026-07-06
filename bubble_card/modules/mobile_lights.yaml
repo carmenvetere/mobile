@@ -1,6 +1,6 @@
 mobile_lights:
   name: Mobile Lights
-  version: '1.1'
+  version: '1.2'
   creator: ''
   description: ''
   code: |2-
@@ -20,14 +20,14 @@ mobile_lights:
         .bubble-name {
           font-size: 16px !important;
           text-align: left !important;
-          color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--text-color)'} !important;
+          color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
           padding-left: 10px;
             }
        
         .bubble-sub-button { 
           font-size: 16px !important;
           font-weight: bold; 
-          color: ${state === 'on' ? 'var(--primary-text-color)' : 'var(--text-color)'} !important;
+          color: ${state === 'on' ? 'var(--primary-text-color)' : 'var(--primary-text-color)'} !important;
           }
         
         .bubble-state {
@@ -54,13 +54,13 @@ mobile_lights:
           }
 
         .bubble-range-slider {
-          background: ${state === 'on' ? 'var(--background-3)' : 'var(--background-color-3)'} !important;
+          background: ${state === 'on' ? 'var(--background-color-3)' : 'var(--background-color-3)'} !important;
           border-radius: 15px !important;
           }
           
         .bubble-icon {
           opacity: 1 !important;
-          color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--text-color)'} !important;
+          color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
           --mdc-icon-size: 36px !important;
           }
 
