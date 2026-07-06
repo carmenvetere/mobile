@@ -224,6 +224,38 @@ Dune Mist:
   material-primary-color: "var(--primary-color)"
   material-divider-color: "rgba(255,255,255,0.12)"
 
+  # ---- Vaadin Lumo tokens (ha-combo-box: service/entity/target pickers) ------
+  # HA's ha-combo-box is a Vaadin component. Its field + overlay read the
+  # --lumo-* family, which NONE of the MDC / Material / md-sys / input-* layers
+  # above cover. Undefined, --lumo-base-color falls back to WHITE -> the
+  # white-fill, light-text picker (e.g. Developer Tools -> Actions). The filled
+  # input surface is --lumo-base-color tinted by --lumo-contrast-10pct.
+  lumo-base-color: "#5b616a"                 # field / overlay surface (the fix)
+  lumo-body-text-color: "#ffffff"
+  lumo-secondary-text-color: "#c3c7cc"
+  lumo-tertiary-text-color: "rgba(255,255,255,0.55)"
+  lumo-disabled-text-color: "rgba(255,255,255,0.45)"
+  lumo-primary-color: "#8EB1BF"
+  lumo-primary-text-color: "#8EB1BF"
+  lumo-primary-color-50pct: "rgba(142,177,191,0.50)"
+  lumo-primary-color-10pct: "rgba(142,177,191,0.16)"
+  lumo-primary-contrast-color: "#16202a"
+  lumo-error-color: "#E0695B"
+  lumo-error-text-color: "#E0695B"
+  lumo-success-color: "#8BA680"
+  lumo-success-text-color: "#8BA680"
+  lumo-contrast: "#ffffff"
+  lumo-contrast-5pct: "rgba(255,255,255,0.05)"
+  lumo-contrast-10pct: "rgba(255,255,255,0.10)"
+  lumo-contrast-20pct: "rgba(255,255,255,0.20)"
+  lumo-contrast-30pct: "rgba(255,255,255,0.30)"
+  lumo-contrast-40pct: "rgba(255,255,255,0.40)"
+  lumo-contrast-50pct: "rgba(255,255,255,0.50)"
+  lumo-contrast-60pct: "rgba(255,255,255,0.60)"
+  lumo-contrast-70pct: "rgba(255,255,255,0.70)"
+  lumo-contrast-80pct: "rgba(255,255,255,0.80)"
+  lumo-contrast-90pct: "rgba(255,255,255,0.90)"
+
   # ---- menus / list popups --------------------------------------------------
   mdc-menu-surface-background: "#3a3e44"            # dropdown / overflow menu bg
   ha-control-button-background-color: "rgba(255,255,255,0.06)"
