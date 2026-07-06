@@ -813,7 +813,7 @@ cards:
               - font-weight: 700
               - color: |
                   [[[
-                    var e = entity;
+                    var e = states['input_number.upper_floor_hvac_filter_hours'];
                     if (!e || e.state === 'unknown' || e.state === 'unavailable') return 'var(--secondary-text-color)';
                     var v = Number(e.state);
                     if (isNaN(v)) return 'var(--secondary-text-color)';
@@ -870,7 +870,7 @@ cards:
               - font-weight: 700
               - color: |
                   [[[
-                    var e = entity;
+                    var e = states['input_number.lower_floors_hvac_filter_hours'];
                     if (!e || e.state === 'unknown' || e.state === 'unavailable') return 'var(--secondary-text-color)';
                     var v = Number(e.state);
                     if (isNaN(v)) return 'var(--secondary-text-color)';
