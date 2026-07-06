@@ -1,6 +1,6 @@
 # PRD: Mobile Dashboard V2.1
 
-**Status:** R1–R15 implemented (v2.1.0 test build) · **Branch:** `v2.1` · **Owner:** Carmen · **Last updated:** 2026-07-03
+**Status:** R1–R15 implemented + test-cycle refinements (v2.1.0 test build) · **Branch:** `v2.1` · **Owner:** Carmen · **Last updated:** 2026-07-06
 
 ## Background
 
@@ -315,6 +315,79 @@ Inventory: the 6+ Settings pop-ups, the bottom-nav **More** sheet
 (grep `card_type: pop-up` across `dashboards/`). Keep hashes unchanged so
 nav paths keep working; verify each pop-up opens, scrolls (R13-i), and
 closes cleanly after migration.
+
+## Test-cycle refinements (2026-07-06)
+
+Feedback from testing the v2.1.0 build on-device, all landed on `v2.1`:
+
+### Settings view (R13 follow-ups) ✅
+
+- **Pop-up titles too small.** The title selector `.bubble-pop-up-header
+  .bubble-name` matched nothing in the installed Bubble Card build (the title is
+  `.bubble-header .bubble-name`, pinned by a 5-class built-in `!important` rule).
+  Retargeted with a higher-specificity selector at **26px** across all pop-ups.
+- **Climate pop-up.** Removed the Climate Holds section (separator + 4
+  `input_boolean.climate_hold_*` rows); renamed "LR Fresh Air Min Temp" →
+  "Living Room Fresh Air Min Temp".
+- **Setting sliders restyled.** New `mobile_settings_slider` module (`.storage`)
+  — slate `.bubble-range-fill` like the lights/shades sliders, dark
+  (`--primary-background-color`) name/icon over the fill, white sub-button
+  values. All 11 setting sliders re-pointed to it; the `button_type: name` value
+  rows stay on `mobile_settings_module`. (Fixed the "fresh-air slider looks/acts
+  like a flat button" report — the old module had an opaque button background and
+  no range styling.)
+- **Values section.** Icons unified to `--slate-bright` (matching the nav list
+  above); value text now threshold-colored: Powerwall Reserve
+  (<20 % error / 20–30 % gold / >30 % sage), Upper/Lower HVAC Filter
+  (<1800 h sage / 1800–2000 h gold / >2000 h error), Water Heater Flushed
+  (<5 mo sage / 5–6 mo gold / >6 mo error, computed from the datetime).
+- **Release Notes** expander background → `--card-background-color` to match the
+  cards above it.
+
+### Theme legibility (Dune Mist) ✅
+
+The theme only defined **legacy `mdc-*`** tokens. Modern HA dialogs, selects,
+dropdown menus, the Settings UI and combo-box pickers use newer token families
+that were undefined — so they fell back to Material's **light** defaults (white
+surface) with light text = illegible. Ported the full modern set into
+`themes/dune-mist.yaml` (as `dark-dune.yaml` already had): `md-sys-color-*`,
+`md-filled-*`, `md-menu-*`, `ha-color-*`, `wa-color-*`, `material-*` combo-box
+overlay tokens, and the classic **`--input-*`** family (the fix for the
+white-fill service/entity pickers in Developer Tools). Note: Developer Tools /
+Settings / dialogs use the **profile** theme, not the per-view theme — profile
+must be set to Dune Mist for these to apply.
+
+### Final pre-release review ✅ / ⚠
+
+Fixed (flow via git): `home-view` Security tile sub-button pointed at the dead
+path `/mobile-dash/security-view` → `/mobile-dash/security`; `music-view` header
+label 12px → 14px; removed a duplicate `button_type: slider` key in
+`first-floor-shades-individuals`.
+
+Fixed in repo modules (**re-paste to `.storage` to go live**): `mobile_climate`
+v1.1 (set-temp color was malformed `var-primary-text-color`); `mobile_lights`
+v1.2 (undefined `var(--text-color)` → `--primary-text-color`; `--background-3` →
+`--background-color-3`); `mobile_shades_module` v1.5 (double-dash
+`var(--primary--text-color)`).
+
+**⚠ Open — verify before merge to main:**
+
+- **Automation toggle rows in `settings-view.yaml` with no matching alias** (row
+  shows "unavailable" if the entity id is truly dead; may be fine if the id is a
+  UI automation frozen at an old alias — check Developer Tools → States):
+  `automation.gym_motion_sensor` (aliases today: "Gym Motion Sensor - Day"),
+  `automation.outdoor_off_at_11pm`, `automation.pool_heater_schedule`,
+  `automation.sunset_outdoor_off`, `automation.3_00pm_bedroom_back_shading`.
+- **`vacuum-view.yaml`** (deferred view, untouched this cycle):
+  `var(--ha-card-background-2)` is undefined under Dune Mist (→
+  `--background-color-2`); `theme: Bubble` while the file uses Dune-Mist tokens;
+  three `background: …` declarations missing a trailing `;` so the rule is
+  dropped. Fix when the vacuum view is picked up.
+- **Low nits (cosmetic, not fixed):** redundant identical on/off ternaries in
+  `mobile_lights`/`mobile_shades_module`/`mobile-priority-row`; several hardcoded
+  hexes in `home-view` templates that duplicate theme tokens; a 9px "LIVE"
+  camera badge and `padding: 10;` (unitless, no-op) in a couple of card_mods —
+  left as-is because "fixing" the padding would add layout that isn't there now.
 
 ## Backlog / future candidates
 
