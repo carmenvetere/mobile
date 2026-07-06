@@ -1,21 +1,20 @@
 mobile_climate:
   name: Mobile Climate Module
-  version: '1.0'
+  version: '1.1'
   creator: ''
   description: ''
   code: |2-
       ha-card {
         position: relative !important;
         min-height: 110px !important;
-        background: var(--background-color) !important;
+        background: var(--background-color-2) !important;
         border: none !important;
-        border-radius: 25px !important;
-        box-shadow: ${state === 'heat'
-          ? 'inset 0 0 0 1px rgba(255,122,61,0.45), 0 0 26px -8px rgba(255,122,61,0.55)'
-          : state === 'cool'
-          ? 'inset 0 0 0 1px rgba(94,200,255,0.4), 0 0 26px -8px rgba(94,200,255,0.5)'
-          : 'inset 0 0 0 1px rgba(255,255,255,0.05)'} !important;
+        border-radius: 15px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
         padding: 0px 0px !important;
+        --bubble-climate-main-background-color: var(--background-color-2) !important;
+        --bubble-climate-border-radius: 15px !important;
+        --bubble-climate-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
       }
 
       /* TEMP GROUP — pinned LEFT on the card, single flex row */
@@ -28,8 +27,8 @@ mobile_climate:
         display: flex !important;
         align-items: center !important;
         background: transparent !important;
-        border-radius: 22px !important;
-        padding: 8px 50px 8px 14px !important;  /* extra right padding for +/- */
+        border-radius: 15px !important;
+        padding: 8px 50px 8px 14px !important;
         z-index: 2 !important;
       }
 
@@ -49,9 +48,9 @@ mobile_climate:
         color: ${state === 'off'
           ? 'transparent'
           : state === 'heat'
-          ? 'var-primary-text-color'
+          ? 'var(--primary-text-color)'
           : state === 'cool'
-          ? 'var-primary-text-color'
+          ? 'var(--primary-text-color)'
           : '#f2f3f5'} !important;
       }
 

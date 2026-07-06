@@ -1,5 +1,5 @@
 - type: custom:bubble-card
-  card_type: cover
+  card_type: button
   button_type: slider
   entity: cover.back_guest_bedroom_shades
   name: All Shades
@@ -10,5 +10,36 @@
   tap_action:
     action: toggle
   rows: 1
+  sub_button:
+    - entity: cover.back_guest_bedroom_shades
+      icon: mdi:arrow-up
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.open_cover
+        target:
+          entity_id: cover.back_guest_bedroom_shades
+    - entity: cover.back_guest_bedroom_shades
+      icon: mdi:stop
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.stop_cover
+        target:
+          entity_id: cover.back_guest_bedroom_shades
+    - entity: cover.back_guest_bedroom_shades
+      icon: mdi:arrow-down
+      show_state: false
+      state_background: false
+      show_background: false
+      tap_action:
+        action: perform-action
+        perform_action: cover.close_cover
+        target:
+          entity_id: cover.back_guest_bedroom_shades
   modules:
   - mobile_shades_module 

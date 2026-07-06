@@ -27,6 +27,7 @@
       name: Hallway Main Lights
       icon: mdi:light-recessed
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.upstairs_hallway_main_lights
@@ -56,6 +57,7 @@
       name: Office Main Lights
       icon: mdi:light-recessed
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.office_main_lights
@@ -85,6 +87,7 @@
       name: Office Floor Lamp
       icon: mdi:floor-lamp
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.office_floor_lamp
@@ -114,6 +117,7 @@
       name: Office Desk Accent
       icon: mdi:light-flood-down
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.eve_light_strip_a5a4
@@ -143,6 +147,7 @@
       name: Bedroom Main Lights
       icon: mdi:light-recessed
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.master_bedroom_main_lights
@@ -172,6 +177,7 @@
       name: Bedroom Closet Light
       icon: mdi:light-recessed
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.master_bedroom_closet_light
@@ -201,6 +207,7 @@
       name: Bedroom Sconces
       icon: mdi:wall-sconce
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.master_bedroom_sconces
@@ -238,9 +245,11 @@
             state_background: false
             show_background: false
       styles: |
-        ha-card {
-          background-color: var(--background-color-2) !important;
-        }
+        .bubble-button-background {
+          background-color: ${state === 'on' ? 'var(--slate-color)' : 'var(--background-color-3)'} !important;
+          border-radius: 15px !important;
+          opacity: 1 !important;
+          } 
       modules:
         - {{ module_name }}
       button_action:
@@ -255,6 +264,7 @@
       name: Bathroom Main Lights
       icon: mdi:light-recessed
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.master_bathroom_main_lights
@@ -284,6 +294,7 @@
       name: Bathroom Vanity Lights
       icon: mdi:wall-sconce
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.master_bathroom_vanity_lights

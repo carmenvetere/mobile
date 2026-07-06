@@ -27,6 +27,7 @@
       name: Living Room Main Lights
       icon: mdi:light-recessed
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.living_room_main_lights
@@ -56,6 +57,7 @@
       name: Living Room Floor Lamps
       icon: mdi:floor-lamp
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.living_room_floor_lamps
@@ -85,6 +87,7 @@
       name: Kitchen Main Lights
       icon: mdi:light-recessed
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.kitchen_main_lights
@@ -114,6 +117,7 @@
       name: Kitchen Outer Wall
       icon: mdi:spotlight-beam
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.kitchen_outer_wall
@@ -143,6 +147,7 @@
       name: Kitchen Island Pendants
       icon: mdi:ceiling-light-multiple
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.kitchen_island_pendants
@@ -172,6 +177,7 @@
       name: Kitchen Window Seat Sconce
       icon: mdi:wall-sconce
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.kitchen_window_seat_sconce
@@ -201,6 +207,7 @@
       name: Dining Room Main Lights
       icon: mdi:light-recessed
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.dining_room_main_lights
@@ -230,6 +237,7 @@
       name: Dining Room Table Lamps
       icon: mdi:lamps
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.dining_room_table_lamps
@@ -259,6 +267,7 @@
       name: Dining Room Accent Light
       icon: mdi:spotlight-beam
       button_type: slider
+      use_accent_color: true
       sub_button:
         main:
           - entity: light.dining_room_accent_lights

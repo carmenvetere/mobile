@@ -6,6 +6,7 @@ type: custom:grid-layout
 cards:
   # Sticky bottom nav
   - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: more}]
+  - !include /config/dashboards/modules/mobile-more-sheet.yaml
   - type: custom:button-card
     styles:
       card:
@@ -134,17 +135,7 @@ cards:
                     - color: var(--primary-text-color)
       groups:
         card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background: transparent !important;
-                box-shadow: none;
-                border-radius: 20px;
-                margin-bottom: 15px;
-                padding: 3px 12px 4px;       /* top / sides / bottom */
-                }
+          type: vertical-stack
           cards:
             - type: vertical-stack
               cards: 
@@ -290,11 +281,20 @@ cards:
           card_mod: 
             style: |
               ha-card {
-                background-color: var(--background-color) !important;
+                background-color: var(--background-color-2) !important;
+                border-radius: 15px !important;
                 margin-top: 5px !important;
                 padding-top: 3px !important;
                 padding-bottom: 3px !important;
+                transition: none !important;
               }
+              ha-card:hover {
+                background-color: var(--background-color-2) !important;
+              }
+              .title-card-button:hover, .header:hover {
+                background: transparent !important;
+              }
+              ha-card ha-ripple, ha-card mwc-ripple { display: none !important; }
           title-card:
             type: custom:bubble-card
             card_type: separator
@@ -329,11 +329,20 @@ cards:
           card_mod: 
             style: |
               ha-card {
-                background-color: var(--background-color) !important;
+                background-color: var(--background-color-2) !important;
+                border-radius: 15px !important;
                 margin-top: 5px !important;
                 padding-top: 3px !important;
                 padding-bottom: 3px !important;
+                transition: none !important;
               }
+              ha-card:hover {
+                background-color: var(--background-color-2) !important;
+              }
+              .title-card-button:hover, .header:hover {
+                background: transparent !important;
+              }
+              ha-card ha-ripple, ha-card mwc-ripple { display: none !important; }
           title-card:
             type: custom:bubble-card
             card_type: separator
@@ -368,11 +377,20 @@ cards:
           card_mod: 
             style: |
               ha-card {
-                background-color: var(--background-color) !important;
+                background-color: var(--background-color-2) !important;
+                border-radius: 15px !important;
                 margin-top: 5px !important;
                 padding-top: 3px !important;
                 padding-bottom: 3px !important;
+                transition: none !important;
               }
+              ha-card:hover {
+                background-color: var(--background-color-2) !important;
+              }
+              .title-card-button:hover, .header:hover {
+                background: transparent !important;
+              }
+              ha-card ha-ripple, ha-card mwc-ripple { display: none !important; }
           title-card:
             type: custom:bubble-card
             card_type: separator
@@ -407,11 +425,20 @@ cards:
           card_mod: 
             style: |
               ha-card {
-                background-color: var(--background-color) !important;
+                background-color: var(--background-color-2) !important;
+                border-radius: 15px !important;
                 margin-top: 5px !important;
                 padding-top: 3px !important;
                 padding-bottom: 3px !important;
+                transition: none !important;
               }
+              ha-card:hover {
+                background-color: var(--background-color-2) !important;
+              }
+              .title-card-button:hover, .header:hover {
+                background: transparent !important;
+              }
+              ha-card ha-ripple, ha-card mwc-ripple { display: none !important; }
           title-card:
             type: custom:bubble-card
             card_type: separator
@@ -446,11 +473,20 @@ cards:
           card_mod: 
             style: |
               ha-card {
-                background-color: var(--background-color) !important;
+                background-color: var(--background-color-2) !important;
+                border-radius: 15px !important;
                 margin-top: 5px !important;
                 padding-top: 3px !important;
                 padding-bottom: 3px !important;
+                transition: none !important;
               }
+              ha-card:hover {
+                background-color: var(--background-color-2) !important;
+              }
+              .title-card-button:hover, .header:hover {
+                background: transparent !important;
+              }
+              ha-card ha-ripple, ha-card mwc-ripple { display: none !important; }
           title-card:
             type: custom:bubble-card
             card_type: separator
