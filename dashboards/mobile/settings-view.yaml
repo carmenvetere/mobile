@@ -646,50 +646,6 @@ cards:
               chev: |-
                 [[[ return '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'; ]]]
           - type: custom:button-card
-            name: Pool
-            icon: mdi:pool
-            tap_action:
-              action: navigate
-              navigation_path: "#set-pool"
-            styles:
-              card:
-              - background: transparent !important
-              - --ha-card-background: transparent
-              - box-shadow: none
-              - border-radius: 0
-              - border-top: 1px solid rgba(255,255,255,0.06)
-              - padding: 13px 4px
-              - transition: none
-              - cursor: pointer
-              grid:
-              - grid-template-areas: '"i n chev"'
-              - grid-template-columns: 44px 1fr auto
-              - grid-template-rows: 1fr
-              - align-items: center
-              - column-gap: 11px
-              img_cell:
-              - grid-area: i
-              - width: 38px
-              - height: 38px
-              - border-radius: 11px
-              - background-color: rgba(142,177,191,0.18)
-              icon:
-              - width: 20px
-              - color: var(--slate-bright)
-              name:
-              - grid-area: n
-              - justify-self: start
-              - font-size: 16px
-              - font-weight: 600
-              - color: var(--primary-text-color)
-              custom_fields:
-                chev:
-                - grid-area: chev
-                - justify-self: end
-            custom_fields:
-              chev: |-
-                [[[ return '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'; ]]]
-          - type: custom:button-card
             name: Vacuum
             icon: mdi:vacuum
             tap_action:
@@ -3028,35 +2984,17 @@ cards:
             + ';width:18px;height:18px;border-radius:50%;background:#fff;'
             + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
         ]]]
-- type: custom:bubble-card
-  card_type: pop-up
-  name: Pool
-  icon: mdi:pool
-  hash: "#set-pool"
-  theme: Dune Mist
-  show_header: true
-  styles: |
-    .bubble-pop-up {
-      overflow-y: auto !important;
-      max-height: 92vh !important;
-    }
-    .bubble-pop-up .bubble-header-container.bubble-header-container .bubble-header .bubble-name.bubble-name {
-      font-size: 26px !important;
-      font-weight: 700 !important;
-      line-height: 1.2 !important;
-    }
-  cards:
   - type: custom:button-card
-    entity: automation.pool_heater_schedule
-    name: Pool Heater Schedule
+    entity: automation.sunset_30_or_8_00_pm_close_shades
+    name: Close Shades – Sunset +30 / 8PM
     show_state: true
     show_label: false
     show_icon: true
-    icon: mdi:heat-wave
+    icon: mdi:weather-sunset-down
     tap_action:
       action: toggle
     state_display: |
-      [[[ return (states['automation.pool_heater_schedule'] || {}).state === 'on' ? 'On' : 'Off'; ]]]
+      [[[ return (states['automation.sunset_30_or_8_00_pm_close_shades'] || {}).state === 'on' ? 'On' : 'Off'; ]]]
     styles:
       card:
       - background: transparent !important
@@ -3094,7 +3032,7 @@ cards:
       - font-size: 14px
       - font-weight: 600
       - color: |
-          [[[ return (states['automation.pool_heater_schedule'] || {}).state === 'on' ? 'var(--slate-bright)' : 'var(--secondary-text-color)'; ]]]
+          [[[ return (states['automation.sunset_30_or_8_00_pm_close_shades'] || {}).state === 'on' ? 'var(--slate-bright)' : 'var(--secondary-text-color)'; ]]]
       - align-self: center
       - line-height: 22px
       custom_fields:
@@ -3105,7 +3043,208 @@ cards:
     custom_fields:
       sw: |-
         [[[
-          var on = (states['automation.pool_heater_schedule'] || {}).state === 'on';
+          var on = (states['automation.sunset_30_or_8_00_pm_close_shades'] || {}).state === 'on';
+          return '<div style="width:38px;height:22px;border-radius:999px;background:'
+            + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+            + ';position:relative;transition:background .2s ease;">'
+            + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+            + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+            + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+        ]]]
+  - type: custom:button-card
+    entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm
+    name: Bedroom – Close at Sunset
+    show_state: true
+    show_label: false
+    show_icon: true
+    icon: mdi:weather-sunset-down
+    tap_action:
+      action: toggle
+    state_display: |
+      [[[ return (states['automation.bedroom_close_shades_at_sunset_30min_or_8_00pm'] || {}).state === 'on' ? 'On' : 'Off'; ]]]
+    styles:
+      card:
+      - background: transparent !important
+      - --ha-card-background: transparent
+      - box-shadow: none
+      - border-radius: 0
+      - border-top: 1px solid rgba(255,255,255,0.06)
+      - padding: 11px 2px
+      - transition: none
+      - cursor: pointer
+      grid:
+      - grid-template-areas: '"ic n st sw"'
+      - grid-template-columns: auto 1fr auto auto
+      - grid-template-rows: 1fr
+      - align-items: center
+      - column-gap: 10px
+      img_cell:
+      - grid-area: ic
+      - width: 22px
+      - height: 22px
+      icon:
+      - width: 18px
+      - color: var(--primary-text-color)
+      name:
+      - grid-area: n
+      - justify-self: start
+      - font-size: 16px
+      - font-weight: 600
+      - color: var(--primary-text-color)
+      - align-self: center
+      - line-height: 22px
+      state:
+      - grid-area: st
+      - justify-self: end
+      - font-size: 14px
+      - font-weight: 600
+      - color: |
+          [[[ return (states['automation.bedroom_close_shades_at_sunset_30min_or_8_00pm'] || {}).state === 'on' ? 'var(--slate-bright)' : 'var(--secondary-text-color)'; ]]]
+      - align-self: center
+      - line-height: 22px
+      custom_fields:
+        sw:
+        - grid-area: sw
+        - justify-self: end
+        - align-self: center
+    custom_fields:
+      sw: |-
+        [[[
+          var on = (states['automation.bedroom_close_shades_at_sunset_30min_or_8_00pm'] || {}).state === 'on';
+          return '<div style="width:38px;height:22px;border-radius:999px;background:'
+            + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+            + ';position:relative;transition:background .2s ease;">'
+            + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+            + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+            + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+        ]]]
+  - type: custom:button-card
+    entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm
+    name: Back Guest Bedroom – Close at Sunset
+    show_state: true
+    show_label: false
+    show_icon: true
+    icon: mdi:weather-sunset-down
+    tap_action:
+      action: toggle
+    state_display: |
+      [[[ return (states['automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm'] || {}).state === 'on' ? 'On' : 'Off'; ]]]
+    styles:
+      card:
+      - background: transparent !important
+      - --ha-card-background: transparent
+      - box-shadow: none
+      - border-radius: 0
+      - border-top: 1px solid rgba(255,255,255,0.06)
+      - padding: 11px 2px
+      - transition: none
+      - cursor: pointer
+      grid:
+      - grid-template-areas: '"ic n st sw"'
+      - grid-template-columns: auto 1fr auto auto
+      - grid-template-rows: 1fr
+      - align-items: center
+      - column-gap: 10px
+      img_cell:
+      - grid-area: ic
+      - width: 22px
+      - height: 22px
+      icon:
+      - width: 18px
+      - color: var(--primary-text-color)
+      name:
+      - grid-area: n
+      - justify-self: start
+      - font-size: 16px
+      - font-weight: 600
+      - color: var(--primary-text-color)
+      - align-self: center
+      - line-height: 22px
+      state:
+      - grid-area: st
+      - justify-self: end
+      - font-size: 14px
+      - font-weight: 600
+      - color: |
+          [[[ return (states['automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm'] || {}).state === 'on' ? 'var(--slate-bright)' : 'var(--secondary-text-color)'; ]]]
+      - align-self: center
+      - line-height: 22px
+      custom_fields:
+        sw:
+        - grid-area: sw
+        - justify-self: end
+        - align-self: center
+    custom_fields:
+      sw: |-
+        [[[
+          var on = (states['automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm'] || {}).state === 'on';
+          return '<div style="width:38px;height:22px;border-radius:999px;background:'
+            + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+            + ';position:relative;transition:background .2s ease;">'
+            + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+            + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+            + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+        ]]]
+  - type: custom:button-card
+    entity: automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm
+    name: Front Guest Bedroom – Close at Sunset
+    show_state: true
+    show_label: false
+    show_icon: true
+    icon: mdi:weather-sunset-down
+    tap_action:
+      action: toggle
+    state_display: |
+      [[[ return (states['automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm'] || {}).state === 'on' ? 'On' : 'Off'; ]]]
+    styles:
+      card:
+      - background: transparent !important
+      - --ha-card-background: transparent
+      - box-shadow: none
+      - border-radius: 0
+      - border-top: 1px solid rgba(255,255,255,0.06)
+      - padding: 11px 2px
+      - transition: none
+      - cursor: pointer
+      grid:
+      - grid-template-areas: '"ic n st sw"'
+      - grid-template-columns: auto 1fr auto auto
+      - grid-template-rows: 1fr
+      - align-items: center
+      - column-gap: 10px
+      img_cell:
+      - grid-area: ic
+      - width: 22px
+      - height: 22px
+      icon:
+      - width: 18px
+      - color: var(--primary-text-color)
+      name:
+      - grid-area: n
+      - justify-self: start
+      - font-size: 16px
+      - font-weight: 600
+      - color: var(--primary-text-color)
+      - align-self: center
+      - line-height: 22px
+      state:
+      - grid-area: st
+      - justify-self: end
+      - font-size: 14px
+      - font-weight: 600
+      - color: |
+          [[[ return (states['automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm'] || {}).state === 'on' ? 'var(--slate-bright)' : 'var(--secondary-text-color)'; ]]]
+      - align-self: center
+      - line-height: 22px
+      custom_fields:
+        sw:
+        - grid-area: sw
+        - justify-self: end
+        - align-self: center
+    custom_fields:
+      sw: |-
+        [[[
+          var on = (states['automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm'] || {}).state === 'on';
           return '<div style="width:38px;height:22px;border-radius:999px;background:'
             + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
             + ';position:relative;transition:background .2s ease;">'
