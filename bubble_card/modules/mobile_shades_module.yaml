@@ -41,6 +41,7 @@ mobile_shades_module:
           font-size: 14px !important;
           font-weight: bold !important;
           text-align: left !important;
+          color: ${state === 'open' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
             }
         .bubble-sub-button-slider {
           margin-left: 20px;
