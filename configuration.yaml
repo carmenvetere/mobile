@@ -631,54 +631,78 @@ binary_sensor:
       - binary_sensor.kitchen_french_doors
 
 sensor:
-  - platform: filter
+  - platform: statistics
     name: "Bedroom CO2 (5min)"
+    unique_id: bedroom_co2_5min
     entity_id: sensor.bedroom_air_quality_carbon_dioxide
-    filters:
-      - filter: time_throttle
-        window_size: "00:05"
-  - platform: filter
+    state_characteristic: mean
+    max_age:
+      minutes: 5
+    keep_last_sample: true
+    sampling_size: 360
+  - platform: statistics
     name: "Bedroom Humidity (5min)"
+    unique_id: bedroom_humidity_5min
     entity_id: sensor.bedroom_air_quality_humidity
-    filters:
-      - filter: time_throttle
-        window_size: "00:05"
-  - platform: filter
+    state_characteristic: mean
+    max_age:
+      minutes: 5
+    keep_last_sample: true
+    sampling_size: 360
+  - platform: statistics
     name: "Bedroom PM2.5 (5min)"
+    unique_id: bedroom_pm2_5_5min
     entity_id: sensor.bedroom_air_quality_pm2_5
-    filters:
-      - filter: time_throttle
-        window_size: "00:05"
-  - platform: filter
+    state_characteristic: mean
+    max_age:
+      minutes: 5
+    keep_last_sample: true
+    sampling_size: 360
+  - platform: statistics
     name: "Bedroom Temperature (5min)"
+    unique_id: bedroom_temperature_5min
     entity_id: sensor.bedroom_air_quality_temperature
-    filters:
-      - filter: time_throttle
-        window_size: "00:05"
-  - platform: filter
+    state_characteristic: mean
+    max_age:
+      minutes: 5
+    keep_last_sample: true
+    sampling_size: 360
+  - platform: statistics
     name: "First Floor CO2 (5min)"
+    unique_id: first_floor_co2_5min
     entity_id: sensor.first_floor_air_quality_monitor_carbon_dioxide
-    filters:
-      - filter: time_throttle
-        window_size: "00:05"
-  - platform: filter
+    state_characteristic: mean
+    max_age:
+      minutes: 5
+    keep_last_sample: true
+    sampling_size: 360
+  - platform: statistics
     name: "First Floor Humidity (5min)"
+    unique_id: first_floor_humidity_5min
     entity_id: sensor.first_floor_air_quality_monitor_humidity
-    filters:
-      - filter: time_throttle
-        window_size: "00:05"
-  - platform: filter
+    state_characteristic: mean
+    max_age:
+      minutes: 5
+    keep_last_sample: true
+    sampling_size: 360
+  - platform: statistics
     name: "First Floor PM2.5 (5min)"
+    unique_id: first_floor_pm2_5_5min
     entity_id: sensor.first_floor_air_quality_monitor_pm2_5
-    filters:
-      - filter: time_throttle
-        window_size: "00:05"
-  - platform: filter
+    state_characteristic: mean
+    max_age:
+      minutes: 5
+    keep_last_sample: true
+    sampling_size: 360
+  - platform: statistics
     name: "First Floor Temperature (5min)"
+    unique_id: first_floor_temperature_5min
     entity_id: sensor.first_floor_air_quality_monitor_temperature
-    filters:
-      - filter: time_throttle
-        window_size: "00:05"
+    state_characteristic: mean
+    max_age:
+      minutes: 5
+    keep_last_sample: true
+    sampling_size: 360
   - platform: filter
     name: "Battery Power (5min)"
     entity_id: sensor.bayberry_battery_power
