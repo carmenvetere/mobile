@@ -1012,10 +1012,12 @@ cards:
                 - Climate: header average temp fixed; thermostat glow removed; readable toggle rows with primary-color icons
                 - Shades: 15px radii, primary-color icons, color ladder, equal margins, aligned battery column
                 - Security: header no longer opens a dialog; new Armed Away / Armed Home / Disarmed segmented control; image-only cameras
-                - Energy: comma-formatted solar chart axis with 12-month MWh total; wide charts hidden on phones
+                - Energy: comma-formatted solar chart axis; wide charts (12-month history, 24h power flow) hidden on phones
                 - Weather: alert/forecast spacing; Forecast section label
                 - Pool: heater glow removed
-                - Settings: rebuilt — quick toggles (Guests/Cleaners/Dinner Party/Off Grid), simplified sections, toggle-style pop-ups mapped to the new climate & shade automations, Values with both HVAC filters + water heater, this release notes section
+                - Settings: rebuilt — quick toggles (Guests/Cleaners/Dinner Party/Off Grid), simplified sections, larger pop-up titles, toggle-style pop-ups mapped to the new climate & shade automations; slate-fill setting sliders; Values (Powerwall · HVAC filters · water heater) with threshold coloring; this release notes section
+                - Shades pop-up: whole-house adaptive scheduler + evening-close toggles; retired the Pool settings section
+                - Theme: dark styling extended to modern HA dialogs, dropdowns, menus & combo-box pickers (Material 3 / Web-Awesome / Lumo / form tokens) so forms are legible everywhere
                 - All pop-ups migrated to the new Bubble Card standalone format (no more migration notice) and scroll when needed
               card_mod:
                 style: |
