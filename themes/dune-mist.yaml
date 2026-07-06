@@ -112,6 +112,23 @@ Dune Mist:
   mdc-select-ink-color: "#ffffff"
   mdc-select-label-ink-color: "#c3c7cc"
   mdc-select-idle-line-color: "rgba(255,255,255,0.30)"
+
+  # ---- classic input / combo-box tokens (ha-combo-box · service/entity pickers)
+  # ha-textfield / ha-combo-box read the --input-* family, NOT the
+  # mdc-text-field-* ones. Undefined, the filled field falls back to a light
+  # Material surface -> the white-fill / light-text pickers in Developer Tools
+  # and config dialogs. Map them to the dark palette.
+  input-fill-color: "#5b616a"
+  input-ink-color: "#ffffff"
+  input-label-ink-color: "#c3c7cc"
+  input-placeholder-color: "#c3c7cc"
+  input-disabled-fill-color: "#4f545b"
+  input-disabled-ink-color: "rgba(255,255,255,0.45)"
+  input-idle-line-color: "rgba(255,255,255,0.30)"
+  input-hover-line-color: "rgba(255,255,255,0.55)"
+  input-disabled-line-color: "rgba(255,255,255,0.12)"
+  input-dropdown-icon-color: "#c3c7cc"
+
   mdc-dialog-scrim-color: "rgba(0,0,0,0.6)"
   mdc-dialog-heading-ink-color: "#ffffff"
   mdc-dialog-content-ink-color: "#c3c7cc"
