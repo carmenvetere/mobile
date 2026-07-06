@@ -51,7 +51,7 @@ styles: |
     text-align: left !important;
   }
   .bubble-sub-button {
-    background: ${state === 'on' ? 'var(--ha-card-background)': 'var(--ha-card-background)'} !important;
+    background: var(--ha-card-background) !important;
     border-radius: 999px !important;
     border: none !important;
     font-size: 16px !important;
