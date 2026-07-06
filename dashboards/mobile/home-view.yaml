@@ -7,6 +7,7 @@ type: custom:grid-layout
 cards:
   # Sticky bottom nav. active=home highlights the Home tab.
   - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: home}]
+  - !include /config/dashboards/modules/mobile-more-sheet.yaml
   - type: custom:button-card
     styles:
       card:
@@ -121,7 +122,7 @@ cards:
                         [[[ var a = states['alarm_control_panel.alarmo'];
                             var s = a ? a.state : 'disarmed';
                             return s === 'disarmed' ? '#9aa0a8'
-                              : (s === 'triggered' ? '#E0695B' : '#E0A75E'); ]]]
+                              : (s === 'triggered' ? 'var(--error-color)' : 'var(--amber-color)'); ]]]
             # --- Overnight Guests -> Settings (hidden when off) ---
             guests:
               card:
@@ -169,7 +170,7 @@ cards:
                   icon:
                     - width: 26px
                     - height: 26px
-                    - color: '#E0A75E'
+                    - color: 'var(--amber-color)'
             # --- Temperature -> Weather (only this opens weather) ---
             temp:
               card:
@@ -201,7 +202,7 @@ cards:
               - transition: none
               - padding: 6px 6px 2px
             grid:
-              - grid-template-areas: '"n notif alarm guests dinner temp"'
+              - grid-template-areas: '"n guests dinner notif alarm temp"'
               - grid-template-columns: 1fr auto auto auto auto auto
               - grid-template-rows: auto
               - align-items: center
@@ -297,22 +298,6 @@ cards:
       menu:
         card:
           type: vertical-stack
-          card_mod: 
-            style: |
-              ha-card {
-                padding-left: 0px;
-                margin-left: 0px;
-                }
-          # type: custom:stack-in-card
-          # mode: vertical
-          # card_mod:
-          #   style: |
-          #     ha-card {
-          #       background: transparent !important;
-          #       border-radius: 0px;
-          #       box-shadow: none;
-          #       padding: 3px 12px 4px;
-          #       }
           cards:
             - type: vertical-stack
               cards:
@@ -384,7 +369,7 @@ cards:
                   styles: |
                     ${(() => {
                       const s = hass.states['sensor.lights_on_count']?.state;
-                      const c = (s && s !== 'All Off') ? '#E2C168' : 'var(--secondary-text-color)';
+                      const c = (s && s !== 'All Off') ? 'var(--gold-color)' : 'var(--secondary-text-color)';
                       return `
                         .bubble-sub-button-1.bubble-sub-button-1,
                         .bubble-sub-button-1.bubble-sub-button-1 ha-icon,
@@ -406,7 +391,7 @@ cards:
                       state_background: false
                       tap_action:
                         action: navigate
-                        navigation_path: /mobile-dash/security-view
+                        navigation_path: /mobile-dash/security
                     - icon: mdi:chevron-right
                       state_background: false
                       tap_action:
@@ -421,8 +406,8 @@ cards:
                   styles: |
                     ${(() => {
                       const s = hass.states['alarm_control_panel.alarmo']?.state;
-                      const c = s === 'triggered' ? '#E0695B'
-                              : (s || '').startsWith('armed') ? '#8BA680'
+                      const c = s === 'triggered' ? 'var(--error-color)'
+                              : (s || '').startsWith('armed') ? 'var(--sage-color)'
                               : 'var(--secondary-text-color)';
                       return `
                         .bubble-sub-button-1.bubble-sub-button-1,
@@ -541,7 +526,7 @@ cards:
                   styles: |
                     ${(() => {
                       const v = Number(hass.states['sensor.bayberry_charge']?.state);
-                      const c = v <= 10 ? '#E0695B' : v <= 25 ? '#E0A75E' : 'var(--secondary-text-color)';
+                      const c = v <= 10 ? 'var(--error-color)' : v <= 25 ? 'var(--amber-color)' : 'var(--secondary-text-color)';
                       return `
                         .bubble-sub-button-1.bubble-sub-button-1,
                         .bubble-sub-button-1.bubble-sub-button-1 ha-icon,
@@ -615,8 +600,9 @@ cards:
                       action: navigate
                       navigation_path: /mobile-dash/weather
                   sub_button:
-                    - entity: sensor.bayberry_tempest_temperature
+                    - entity: sensor.menu_weather_status
                       show_state: true
+                      show_icon: false
                       state_background: false
                       tap_action:
                         action: navigate
@@ -668,16 +654,20 @@ cards:
                     navigation_path: /mobile-dash/settings
                   modules:
                     - mobile_lights_scenes
-#Notifications Pop-up
-  - type: vertical-stack
+#Notifications Pop-up (standalone format)
+  - type: custom:bubble-card
+    card_type: pop-up
+    name: Notifications
+    icon: mdi:bell-badge
+    hash: "#notifications"
+    theme: Dune Mist
+    show_header: false
+    styles: |
+      .bubble-pop-up {
+        overflow-y: auto !important;
+        max-height: 92vh !important;
+      }
     cards:
-      - type: custom:bubble-card
-        card_type: pop-up
-        name: Notifications
-        icon: mdi:bell-badge
-        hash: "#notifications"
-        theme: Dune Mist
-        show_header: false
       # Gate the card so it is only instantiated once the Notification Center
       # integration is installed (sensor.notification_center has a numeric
       # state). Without this, HA tries to build custom:notification-center-card

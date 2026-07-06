@@ -2,6 +2,7 @@ type: custom:apexcharts-card
 header:
   show: true
   show_states: true
+  colorize_states: true
 graph_span: 12month
 span:
   end: month
@@ -51,3 +52,10 @@ apex_config:
         fontSize: 16px
   yaxis:
     show: true
+    labels:
+      style:
+        fontSize: 14px
+      formatter: |
+        EVAL:function(value) {
+          return Math.round(value).toLocaleString();
+        }

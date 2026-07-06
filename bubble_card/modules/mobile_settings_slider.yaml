@@ -1,0 +1,79 @@
+mobile_settings_slider:
+  name: Mobile Settings Slider
+  version: '1.1'
+  creator: ''
+  supported:
+    - button
+    - climate
+    - cover
+    - horizontal-buttons-stack
+    - media-player
+    - pop-up
+    - select
+    - separator
+    - sub-buttons
+  description: 'Slate-fill slider styling for settings input_number rows (matches lights/shades sliders).'
+  code: |-
+      ha-card {
+        --bubble-main-background-color: var(--background-color-2) !important;
+        --bubble-accent-color: var(--slate-color) !important;
+        border-radius: 15px !important;
+        margin: 2px 5px 2px 5px !important;
+      }
+
+      .bubble-button-card-container {
+        border-radius: 15px !important;
+        margin: 2px 5px 2px 5px !important;
+        background-color: var(--background-color-2) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+      }
+
+      .bubble-button-background {
+        opacity: 0 !important;
+      }
+
+      .bubble-range-slider {
+        background: var(--background-color-2) !important;
+        border-radius: 15px !important;
+        opacity: 1 !important;
+      }
+
+      .bubble-range-fill {
+        background: var(--slate-color) !important;
+        border-radius: 15px !important;
+        opacity: 1 !important;
+      }
+
+      .bubble-range-value {
+        font-size: 0px !important;
+      }
+
+      .bubble-name {
+        font-size: 16px !important;
+        text-align: left !important;
+        color: var(--primary-background-color) !important;
+      }
+
+      .bubble-state {
+        font-size: 14px !important;
+        text-align: left !important;
+        color: var(--primary-background-color) !important;
+      }
+
+      .bubble-icon-container {
+        background: transparent !important;
+      }
+
+      .bubble-icon {
+        opacity: 1 !important;
+        color: var(--primary-background-color) !important;
+      }
+
+      .bubble-sub-button {
+        font-size: 14px !important;
+        font-weight: bold;
+        margin-right: 10px;
+        background: transparent !important;
+        color: var(--primary-text-color) !important;
+      }
+  editor: ''

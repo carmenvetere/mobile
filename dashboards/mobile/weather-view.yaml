@@ -6,6 +6,7 @@ type: custom:grid-layout
 cards:
   # Sticky bottom nav
   - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: more}]
+  - !include /config/dashboards/modules/mobile-more-sheet.yaml
   - type: custom:button-card
     styles:
       card:
@@ -117,6 +118,7 @@ cards:
                   background: var(--background-color-2);
                   padding-top: 3px !important;
                   padding-bottom: 3px !important;
+                  margin-bottom: 12px !important;
                   }
             title-card:
               type: custom:bubble-card
@@ -178,26 +180,46 @@ cards:
                     }
       7day:
         card:
-          type: weather-forecast
-          entity: weather.bayberry
-          forecast_type: daily
-          show_current: true
-          show_forecast: true
-          name: 78 Bayberry Ave
-          card_mod:
-            style: |
-              ha-card {
-                background: var(--card-background-color) !important;
-                --ha-card-background: var(--card-background-color);
-                border-radius: 18px !important;
-                box-shadow: none !important;
-                padding: 6px 10px 10px;
-              }
-              /* Left-align the current condition + name (default is centered) */
-              .content { align-items: flex-start !important; }
-              .info { text-align: left !important; }
-              .name-state { text-align: left !important; align-items: flex-start !important; }
-              .name-state .state, .name-state .name { text-align: left !important; }
+          type: vertical-stack
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Forecast
+              icon: mdi:calendar-week
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                font-size: 20px !important;  /* title */
+                font-weight: bold !important;
+                }
+                .bubble-line {
+                background: var(--primary-text-color);
+                opacity: 0.1;
+                }
+                .card-content {
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                }
+            - type: weather-forecast
+              entity: weather.bayberry
+              forecast_type: daily
+              show_current: true
+              show_forecast: true
+              name: 78 Bayberry Ave
+              card_mod:
+                style: |
+                  ha-card {
+                    background: var(--card-background-color) !important;
+                    --ha-card-background: var(--card-background-color);
+                    border-radius: 18px !important;
+                    box-shadow: none !important;
+                    padding: 6px 10px 10px;
+                  }
+                  /* Left-align the current condition + name (default is centered) */
+                  .content { align-items: flex-start !important; }
+                  .info { text-align: left !important; }
+                  .name-state { text-align: left !important; align-items: flex-start !important; }
+                  .name-state .state, .name-state .name { text-align: left !important; }
       weather:
         card:
           type: custom:stack-in-card

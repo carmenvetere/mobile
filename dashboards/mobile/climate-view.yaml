@@ -7,6 +7,7 @@ type: custom:grid-layout
 cards:
   # Sticky bottom nav
   - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: climate}]
+  - !include /config/dashboards/modules/mobile-more-sheet.yaml
   - type: custom:button-card
     styles:
       card:
@@ -42,7 +43,8 @@ cards:
             action: none
           label: |
             [[[
-              var t = entity ? Math.round(Number(entity.state)) : null;
+              var e = states['sensor.climate_zones_avg_temp'];
+              var t = (e && e.state !== 'unknown' && e.state !== 'unavailable') ? Math.round(Number(e.state)) : null;
               return '4 zones · avg ' + (t != null && !isNaN(t) ? t : '–') + '°';
             ]]]
           styles:

@@ -6,6 +6,7 @@ type: custom:grid-layout
 cards:
 # Sticky bottom nav
 - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: more}]
+- !include /config/dashboards/modules/mobile-more-sheet.yaml
 - type: custom:button-card
   styles:
     card:
@@ -274,17 +275,6 @@ cards:
           double_tap_action:
             action: none
           styles: |-
-            ha-card {
-              border-radius: 25px !important;
-              box-shadow: ${
-                (() => {
-                  var h = hass.states['water_heater.omnilogic_pool_heater'];
-                  return (h && h.state !== 'off' && h.state !== 'unavailable' && h.state !== 'unknown')
-                    ? 'inset 0 0 0 1px rgba(255,122,61,0.45), 0 0 26px -8px rgba(255,122,61,0.55)'
-                    : 'inset 0 0 0 1px rgba(255,255,255,0.05)';
-                })()
-              } !important;
-            }
             .bubble-name { font-size: 16px !important; }
             .bubble-range-value { font-size: 16px !important; font-weight: bold; }
             .bubble-sub-button { font-size: 14px !important; font-weight: bold; }

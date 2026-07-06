@@ -24,6 +24,7 @@ styles:
     - margin-top: 5px
     - transition: none
     - cursor: pointer
+    - box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
   grid:
     - grid-template-areas: '"ic n{% if temp_sensor is defined %} temp hum{% endif %} st sw"'
     - grid-template-columns: auto 1fr{% if temp_sensor is defined %} auto auto{% endif %} auto auto
@@ -36,8 +37,7 @@ styles:
     - height: 22px
   icon:
     - width: 18px
-    - color: |
-        [[[ return (states['{{ toggle_entity }}'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
+    - color: var(--primary-text-color)
   name:
     - grid-area: n
     - justify-self: start
@@ -50,7 +50,7 @@ styles:
     - font-size: 14px
     - font-weight: 600
     - color: |
-        [[[ return (states['{{ toggle_entity }}'] || {}).state === 'on' ? 'var(--slate-bright)' : '#9aa0a8'; ]]]
+        [[[ return (states['{{ toggle_entity }}'] || {}).state === 'on' ? 'var(--slate-bright)' : 'var(--secondary-text-color)'; ]]]
   custom_fields:
     sw:
       - grid-area: sw
@@ -59,21 +59,17 @@ styles:
     temp:
       - grid-area: temp
       - justify-self: end
-      - font-size: 12px
+      - font-size: 14px
       - font-weight: 600
-      - color: var(--secondary-text-color)
-      - background: rgba(255,255,255,0.06)
-      - border-radius: 8px
-      - padding: 2px 7px
+      - color: var(--primary-text-color)
+      - padding: 2px 4px
     hum:
       - grid-area: hum
       - justify-self: end
-      - font-size: 12px
+      - font-size: 14px
       - font-weight: 600
-      - color: var(--secondary-text-color)
-      - background: rgba(255,255,255,0.06)
-      - border-radius: 8px
-      - padding: 2px 7px
+      - color: var(--primary-text-color)
+      - padding: 2px 4px
 {% endif %}
 custom_fields:
   sw: |
