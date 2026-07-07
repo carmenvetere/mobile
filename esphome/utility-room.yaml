@@ -13,11 +13,11 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: "REDACTED"
+    key: !secret api_key_utility_room
 
 ota:
   - platform: esphome
-    password: "REDACTED"
+    password: !secret ota_password_utility_room
 
 wifi:
   ssid: !secret wifi_ssid
@@ -27,7 +27,7 @@ wifi:
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Utility-Room Fallback Hotspot"
-    password: "REDACTED"
+    password: !secret ap_password_utility_room
 
 captive_portal:
     
