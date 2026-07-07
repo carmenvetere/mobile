@@ -13,11 +13,11 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: "T2wSCiugZ3NVGDlY788MJDk+HAiECOnO6/WPOhiQGZY="
+    key: !secret api_key_bedroom_bluetooth
 
 ota:
   - platform: esphome
-    password: "a5981b9dd9140251fc001be443406e4c"
+    password: !secret ota_password_bedroom_bluetooth
 
 wifi:
   ssid: !secret wifi_ssid
@@ -35,7 +35,7 @@ bluetooth_proxy:
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Bedroom-Bluetooth"
-    password: "pRnSim0fl8Q0"
+    password: !secret ap_password_bedroom_bluetooth
 
 captive_portal:
     

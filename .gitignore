@@ -20,12 +20,16 @@ secrets.yaml
 home-assistant.log*
 .HA_VERSION
 
-# Folders to exclude
+# Folders to exclude.
+# NOTE: ignore rules only affect files git is not already tracking. If
+# something listed here shows up tracked, it was committed before the rule
+# existed — untrack it with `git rm --cached <path>`.
+# Intentionally TRACKED (so not listed): esphome/ and blueprints/ hold
+# sanitized configs (device secrets live in git-ignored esphome/secrets.yaml);
+# config/www/ holds media referenced by automations.
 /www/
 /custom_components/
-/blueprints/
-/config/
-/esphome/
+/config/llmvision/
 /image/
 /llmvision/
 /lovelace/

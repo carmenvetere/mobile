@@ -13,11 +13,11 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: "PY5lBNGo+zK4D61VPXabEzq+Dbveh7NKGcDzZltEl1w="
+    key: !secret api_key_primary_bedroom_fan
 
 ota:
   - platform: esphome
-    password: "072d025e1bbcbde73149e4dffdf30d7d"
+    password: !secret ota_password_primary_bedroom_fan
 
 wifi:
   ssid: !secret wifi_ssid
@@ -26,7 +26,7 @@ wifi:
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Primary-Bedroom-Fan"
-    password: "T66kcjqMsGyL"
+    password: !secret ap_password_primary_bedroom_fan
 
 captive_portal:
  
