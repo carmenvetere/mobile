@@ -429,51 +429,52 @@ cards:
       .bubble-sub-button.bubble-sub-button ha-icon,
       .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
       {% endif %}
-  - type: custom:bubble-card
-    card_type: button
-    button_type: name
-    name: Vacuum
-    icon: mdi:robot-vacuum
-    card_layout: normal
-    tap_action:
-      action: navigate
-      navigation_path: /mobile-dash/vacuum
-    button_action:
-      tap_action:
-        action: navigate
-        navigation_path: /mobile-dash/vacuum
-    sub_button:
-      - entity: vacuum.roborock_s8
-        show_state: true
-        show_icon: false
-        state_background: false
-        tap_action:
-          action: navigate
-          navigation_path: /mobile-dash/vacuum
-      - icon: {{ "mdi:check" if current == "vacuum" else "mdi:chevron-right" }}
-        state_background: false
-        tap_action:
-          action: navigate
-          navigation_path: /mobile-dash/vacuum
-    modules:
-      - mobile_lights_scenes
-    styles: |
-      /* nav row */
-      {% if compact %}
-      ha-card { margin: 1px 5px !important; }
-      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
-      {% endif %}
-      {% if current == "vacuum" %}
-      .bubble-button-card-container.bubble-button-card-container,
-      .bubble-button-background.bubble-button-background {
-        background-color: var(--slate-color) !important;
-      }
-      .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
-      .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
-      .bubble-sub-button.bubble-sub-button,
-      .bubble-sub-button.bubble-sub-button ha-icon,
-      .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
-      {% endif %}
+  # Vacuum row disabled until the Vacuum view is updated (#146 follow-up).
+  # - type: custom:bubble-card
+  #   card_type: button
+  #   button_type: name
+  #   name: Vacuum
+  #   icon: mdi:robot-vacuum
+  #   card_layout: normal
+  #   tap_action:
+  #     action: navigate
+  #     navigation_path: /mobile-dash/vacuum
+  #   button_action:
+  #     tap_action:
+  #       action: navigate
+  #       navigation_path: /mobile-dash/vacuum
+  #   sub_button:
+  #     - entity: vacuum.roborock_s8
+  #       show_state: true
+  #       show_icon: false
+  #       state_background: false
+  #       tap_action:
+  #         action: navigate
+  #         navigation_path: /mobile-dash/vacuum
+  #     - icon: {{ "mdi:check" if current == "vacuum" else "mdi:chevron-right" }}
+  #       state_background: false
+  #       tap_action:
+  #         action: navigate
+  #         navigation_path: /mobile-dash/vacuum
+  #   modules:
+  #     - mobile_lights_scenes
+  #   styles: |
+  #     /* nav row */
+  #     {% if compact %}
+  #     ha-card { margin: 1px 5px !important; }
+  #     .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
+  #     {% endif %}
+  #     {% if current == "vacuum" %}
+  #     .bubble-button-card-container.bubble-button-card-container,
+  #     .bubble-button-background.bubble-button-background {
+  #       background-color: var(--slate-color) !important;
+  #     }
+  #     .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
+  #     .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
+  #     .bubble-sub-button.bubble-sub-button,
+  #     .bubble-sub-button.bubble-sub-button ha-icon,
+  #     .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
+  #     {% endif %}
   - type: custom:bubble-card
     card_type: button
     button_type: name
