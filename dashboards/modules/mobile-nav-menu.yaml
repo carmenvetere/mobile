@@ -12,6 +12,9 @@
 # ============================================================================
 type: vertical-stack
 cards:
+{% if current != "home" %}
+  # Home row is only rendered on sub-views (in the nav sheet); the Home
+  # screen's inline menu has no use for a link to itself.
   - type: custom:bubble-card
     card_type: button
     button_type: name
@@ -26,22 +29,14 @@ cards:
         action: navigate
         navigation_path: /mobile-dash/mobile-home
     sub_button:
-      - icon: {{ "mdi:check" if current == "home" else "mdi:chevron-right" }}
+      - icon: mdi:chevron-right
         state_background: false
         tap_action:
           action: navigate
           navigation_path: /mobile-dash/mobile-home
     modules:
       - mobile_lights_scenes
-    styles: |
-      /* nav row */
-      {% if current == "home" %}
-      .bubble-button-card-container.bubble-button-card-container {
-        background: rgba(142,177,191,0.16) !important;
-        border: 1px solid var(--slate-color) !important;
-      }
-      .bubble-sub-button-1.bubble-sub-button-1 ha-icon { color: var(--slate-bright) !important; }
-      {% endif %}
+{% endif %}
   - type: custom:bubble-card
     card_type: button
     button_type: name

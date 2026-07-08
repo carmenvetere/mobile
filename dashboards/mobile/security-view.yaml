@@ -69,7 +69,7 @@ cards:
               - transition: none
               - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: '"b i n n m" "b i s l m"'
+              - grid-template-areas: '"back i n n menu" "back i s l menu"'
               - grid-template-columns: 40px 40px auto 1fr 40px
               - grid-template-rows: auto auto
               - align-items: center
@@ -109,11 +109,11 @@ cards:
                   ]]]
             custom_fields:
               back:
-                - grid-area: b
+                - grid-area: back
                 - align-self: center
                 - justify-self: start
               menu:
-                - grid-area: m
+                - grid-area: menu
                 - align-self: center
                 - justify-self: end
           custom_fields:
