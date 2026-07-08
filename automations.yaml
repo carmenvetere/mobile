@@ -2023,7 +2023,7 @@
   - action: alarm_control_panel.alarm_disarm
     metadata: {}
     data:
-      code: 'REDACTED'
+      code: !secret alarm_code
     target:
       entity_id:
       - alarm_control_panel.alarmo
@@ -2090,7 +2090,7 @@
   - action: alarm_control_panel.alarm_disarm
     metadata: {}
     data:
-      code: 'REDACTED'
+      code: !secret alarm_code
     target:
       entity_id: alarm_control_panel.alarmo
   mode: single
