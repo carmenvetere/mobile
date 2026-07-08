@@ -27,6 +27,11 @@ styles: |
     to   { transform: translateY(0);     opacity: 1; }
   }
   .bubble-pop-up {
+    /* The nav rows sit in a vertical-stack, whose default 4px top/bottom
+       card margins account for most of the row spacing (8px); the rows'
+       own compact margins add 2px more. 1px here = ~4px total gap. */
+    --vertical-stack-card-margin: 1px 0;
+    --stack-card-margin: 1px 0;
     --bubble-pop-up-background-color: #3a3e44 !important;
     --bubble-pop-up-main-background-color: #3a3e44 !important;
     --bubble-pop-up-border-radius: 22px !important;
