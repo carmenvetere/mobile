@@ -4,14 +4,13 @@ theme: Dune Mist
 path: security
 type: custom:grid-layout
 cards:
-  # Sticky bottom nav
-  - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: security}]
-  - !include /config/dashboards/modules/mobile-more-sheet.yaml
+  # Hamburger nav sheet (standalone pop-up; keep as its own top-level card)
+  - !include [/config/dashboards/modules/mobile-nav-sheet.yaml, {current: security}]
   - type: custom:button-card
     styles:
       card:
         - border-radius: 15px
-        - padding-bottom: 90px
+        - padding-bottom: 24px
         - padding-left: 5px
         - padding-top: 2px
         - height: auto
@@ -70,20 +69,18 @@ cards:
               - transition: none
               - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: '"i n n" "i s l"'
-              - grid-template-columns: 54px auto 1fr
+              - grid-template-areas: '"b i n n m" "b i s l m"'
+              - grid-template-columns: 40px 40px auto 1fr 40px
               - grid-template-rows: auto auto
               - align-items: center
               - column-gap: 8px
             img_cell:
               - grid-area: i
-              - width: 48px
-              - height: 48px
-              - border-radius: 13px
-              - background-color: "rgba(142,177,191,0.18)"
+              - width: 40px
+              - height: 40px
             icon:
               - width: 24px
-              - color: var(--slate-bright)
+              - color: var(--primary-text-color)
             name:
               - grid-area: n
               - justify-self: start
@@ -112,7 +109,18 @@ cards:
                   ]]]
             custom_fields:
               back:
-                - grid-area: back
+                - grid-area: b
+                - align-self: center
+                - justify-self: start
+              menu:
+                - grid-area: m
+                - align-self: center
+                - justify-self: end
+          custom_fields:
+            back:
+              card: !include /config/dashboards/modules/mobile-header-back.yaml
+            menu:
+              card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
           state:
             - value: disarmed
               styles:
@@ -121,7 +129,7 @@ cards:
             - value: triggered
               styles:
                 state:
-                  - color: var(--error-color)   
+                  - color: var(--error-color)
       alarm:
         card:
           type: custom:button-card

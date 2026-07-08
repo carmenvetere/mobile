@@ -5,14 +5,13 @@ theme: Dune Mist
 path: climate-main
 type: custom:grid-layout
 cards:
-  # Sticky bottom nav
-  - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: climate}]
-  - !include /config/dashboards/modules/mobile-more-sheet.yaml
+  # Hamburger nav sheet (standalone pop-up; keep as its own top-level card)
+  - !include [/config/dashboards/modules/mobile-nav-sheet.yaml, {current: climate}]
   - type: custom:button-card
     styles:
       card:
         - border-radius: 15px
-        - padding: 2px 10px 90px 5px
+        - padding: 2px 10px 24px 5px
         - height: auto
         - box-sizing: border-box
         - max-width: 98%
@@ -54,20 +53,18 @@ cards:
               - transition: none
               - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: "\"i n\" \"i l\""
-              - grid-template-columns: 54px 1fr
+              - grid-template-areas: "\"b i n m\" \"b i l m\""
+              - grid-template-columns: 40px 40px 1fr 40px
               - grid-template-rows: auto auto
               - align-items: center
               - column-gap: 8px
             img_cell:
               - grid-area: i
-              - width: 48px
-              - height: 48px
-              - border-radius: 13px
-              - background-color: rgba(142,177,191,0.18)
+              - width: 40px
+              - height: 40px
             icon:
               - width: 24px
-              - color: var(--slate-bright)
+              - color: var(--primary-text-color)
             name:
               - grid-area: "n"
               - justify-self: start
@@ -79,6 +76,20 @@ cards:
               - justify-self: start
               - font-size: 14px
               - color: var(--secondary-text-color)
+            custom_fields:
+              back:
+                - grid-area: b
+                - align-self: center
+                - justify-self: start
+              menu:
+                - grid-area: m
+                - align-self: center
+                - justify-self: end
+          custom_fields:
+            back:
+              card: !include /config/dashboards/modules/mobile-header-back.yaml
+            menu:
+              card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
       first:
         card:
           type: custom:expander-card

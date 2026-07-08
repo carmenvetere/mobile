@@ -1,0 +1,50 @@
+# lovelace_gen
+# ============================================================================
+#  Mobile Dash · Hamburger nav sheet (#nav-menu) · standalone Bubble pop-up
+#  Card overlay with a scrim; opened by the header hamburger button
+#  (mobile-header-hamburger.yaml). Header row: compass icon + "Menu" title +
+#  close (X). The destination list is the shared mobile-nav-menu.yaml.
+#  Var: current -> key of the view this sheet is embedded in, used to
+#  highlight the active destination.
+#  Include once per view as its own TOP-LEVEL card (never wrapped inside
+#  another card - the pop-up styles its host subtree):
+#    - !include [/config/dashboards/modules/mobile-nav-sheet.yaml, {current: lights}]
+# ============================================================================
+type: custom:bubble-card
+card_type: pop-up
+hash: "#nav-menu"
+button_type: name
+name: Menu
+icon: mdi:compass
+show_header: true
+close_on_click: true
+scrolling_effect: false
+styles: |
+  .bubble-pop-up {
+    --bubble-pop-up-background-color: #3a3e44 !important;
+    --bubble-pop-up-main-background-color: #3a3e44 !important;
+    --bubble-pop-up-border-radius: 22px !important;
+    --bubble-pop-up-content-border-radius: 22px !important;
+    box-shadow: 0 -16px 44px rgba(0,0,0,0.55) !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 88vh !important;
+    margin-top: 0 !important;
+    overflow-y: auto !important;
+  }
+  .bubble-icon-container {
+    background: transparent !important;
+  }
+  .bubble-icon {
+    color: var(--primary-text-color) !important;
+  }
+  .bubble-name {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: var(--primary-text-color) !important;
+  }
+cards:
+  - !include
+      - /config/dashboards/modules/mobile-nav-menu.yaml
+      - current: {{ current }}
