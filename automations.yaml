@@ -1,6 +1,9 @@
 - id: '1719944318488'
   alias: 800am Bedroom Hallway Shades Weekdays
-  description: ''
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
+    owns these covers (this legacy automation double-commanded them and fought
+    the adaptive 30-min repositioning).'
+  initial_state: false
   triggers:
   - at: 08:00:00
     trigger: time
@@ -123,7 +126,10 @@
   mode: single
 - id: '1720361385868'
   alias: 900am Bedroom Shades Open Weekends
-  description: ''
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
+    owns these covers (this legacy automation double-commanded them and fought
+    the adaptive 30-min repositioning).'
+  initial_state: false
   triggers:
   - at: 09:00:00
     trigger: time
@@ -406,7 +412,10 @@
   mode: single
 - id: '1720885648555'
   alias: 7:30 AM First Floor Shading (Weekdays)
-  description: ''
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
+    owns these covers (this legacy automation double-commanded them and fought
+    the adaptive 30-min repositioning).'
+  initial_state: false
   triggers:
   - at: 07:30:00
     platform: time
@@ -450,7 +459,10 @@
   mode: single
 - id: '1720886238193'
   alias: 8:00 AM First Floor Shades Weekends
-  description: ''
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
+    owns these covers (this legacy automation double-commanded them and fought
+    the adaptive 30-min repositioning).'
+  initial_state: false
   triggers:
   - at: 08:00:00
     platform: time
@@ -491,7 +503,10 @@
   mode: single
 - id: '1720886464526'
   alias: 1:00 PM West Facing Shades
-  description: ''
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
+    owns these covers (this legacy automation double-commanded them and fought
+    the adaptive 30-min repositioning).'
+  initial_state: false
   triggers:
   - at: '13:00:00'
     platform: time
@@ -542,7 +557,10 @@
   mode: single
 - id: '1720886619614'
   alias: 3:00 PM Living Room Side Shades
-  description: ''
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
+    owns these covers (this legacy automation double-commanded them and fought
+    the adaptive 30-min repositioning).'
+  initial_state: false
   triggers:
   - at: '15:00:00'
     platform: time
@@ -637,7 +655,11 @@
   mode: single
 - id: '1727728973670'
   alias: Daily Restart
-  description: ''
+  description: 'Disabled: kept for reference. Setpoint helpers no longer use
+    initial:, so restarts are not needed to keep them in sync, and routine
+    restarts cost a full startup daily. Re-enable only if HA demonstrably
+    degrades over time (check memory/recorder growth first).'
+  initial_state: false
   triggers:
   - at: 03:15:00
     trigger: time
@@ -2280,6 +2302,7 @@
     - binary_sensor.pool_cover
     from:
     to:
+    for: '00:00:30'
   conditions: []
   actions:
   - action: llmvision.data_analyzer
@@ -2353,7 +2376,7 @@
   alias: Rain Check
   description: ''
   triggers:
-  - minutes: /15
+  - minutes: /30
     trigger: time_pattern
   conditions: []
   actions:
@@ -4343,7 +4366,10 @@
   mode: restart
 - id: '1759005370529'
   alias: 8AM Back Guest Bedroom Shades Weekdays
-  description: ''
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
+    owns these covers (this legacy automation double-commanded them and fought
+    the adaptive 30-min repositioning).'
+  initial_state: false
   triggers:
   - at: 08:00:00
     trigger: time
@@ -4366,7 +4392,10 @@
   mode: restart
 - id: '1759005430175'
   alias: 9AM Back Guest Bedroom Shades Weekends
-  description: ''
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
+    owns these covers (this legacy automation double-commanded them and fought
+    the adaptive 30-min repositioning).'
+  initial_state: false
   triggers:
   - at: 09:00:00
     trigger: time
@@ -4871,7 +4900,10 @@
   mode: single
 - id: '1762979130880'
   alias: 8:00 AM Front Guest Bedroom Shades Weekdays
-  description: ''
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
+    owns these covers (this legacy automation double-commanded them and fought
+    the adaptive 30-min repositioning).'
+  initial_state: false
   triggers:
   - at: 08:00:00
     trigger: time
@@ -4938,7 +4970,10 @@
   mode: restart
 - id: '1762979742769'
   alias: 9:00 AM Front Guest Bedroom Shades Weekends
-  description: ''
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
+    owns these covers (this legacy automation double-commanded them and fought
+    the adaptive 30-min repositioning).'
+  initial_state: false
   triggers:
   - at: 09:00:00
     trigger: time
@@ -5202,22 +5237,6 @@
       - input_boolean.vacuum_basement_hallway
     action: input_boolean.turn_on
     data: {}
-- id: '1768049125325'
-  alias: Vacuum - All Basement Rooms Selected
-  description: ''
-  triggers:
-  - entity_id: input_boolean.vacuum_basement_all
-    to: 'on'
-    trigger: state
-  actions:
-  - target:
-      entity_id:
-      - input_boolean.vacuum_gym
-      - input_boolean.vacuum_basement_hallway
-      - input_boolean.vacuum_media_room
-      - input_boolean.vacuum_mudroom
-      - input_boolean.vacuum_basement_bath
-    action: input_boolean.turn_on
 - id: '1768049204364'
   alias: Vacuum - All Basement Rooms Deselected
   description: ''

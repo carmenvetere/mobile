@@ -873,7 +873,7 @@
         {%- if 'cooling' in acts -%}
           {{ (1100 - 500 * e**(-t/5)) | round(0) }}
         {%- elif 'heating' in acts -%}
-          {%- if states('sensor.bayberry_tempest_temperature') | float(50)
+          {%- if states('sensor.tempest_temperature_5min') | float(50)
                 < states('input_number.hvac_gas_switchover_temperature') | float(35) -%}
             250
           {%- else -%}
@@ -900,7 +900,7 @@
         {%- if 'cooling' in acts -%}
           {{ (1100 - 500 * e**(-t/5)) | round(0) }}
         {%- elif 'heating' in acts -%}
-          {%- if states('sensor.bayberry_tempest_temperature') | float(50)
+          {%- if states('sensor.tempest_temperature_5min') | float(50)
                 < states('input_number.hvac_gas_switchover_temperature') | float(35) -%}
             250
           {%- else -%}
@@ -1009,9 +1009,16 @@
 
 # ---------------------------------------------------------------------------
 # Average of the 4 climate zone current temps for the Mobile Dash v2 Climate
-# header subhead ("4 zones · avg N°").
+# header subhead ("4 zones · avg N°"). Trigger-based on a 5-min tick: the
+# output is a whole-degree average for a header label, so re-rendering on
+# every thermostat temperature fluctuation was wasted work.
 # ---------------------------------------------------------------------------
-- sensor:
+- trigger:
+    - platform: time_pattern
+      minutes: "/5"
+    - platform: homeassistant
+      event: start
+  sensor:
     - name: Climate Zones Avg Temp
       unique_id: climate_zones_avg_temp
       unit_of_measurement: "°"
@@ -1068,7 +1075,7 @@
     - name: Menu Weather Status
       unique_id: menu_weather_status
       state: >
-        {% set t = states('sensor.bayberry_tempest_temperature') %}
+        {% set t = states('sensor.tempest_temperature_5min') %}
         {% if t is number or (t is string and t | is_number) %}{{ t | round(0) | int }}°{% endif %}
     - name: Menu Settings Status
       unique_id: menu_settings_status
