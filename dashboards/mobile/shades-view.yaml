@@ -57,7 +57,7 @@ cards:
               - padding: 4px 2px 6px
             grid:
               - grid-template-areas: "\"back i n n closeall menu\" \"back i l s closeall menu\""
-              - grid-template-columns: 40px 40px auto 1fr auto 40px
+              - grid-template-columns: 24px 40px auto 1fr auto 40px
               - grid-template-rows: auto auto
               - align-items: center
               - column-gap: 8px
@@ -90,6 +90,7 @@ cards:
                 - grid-area: back
                 - align-self: center
                 - justify-self: start
+                - margin-left: -8px
               menu:
                 - grid-area: menu
                 - align-self: center

@@ -4,11 +4,14 @@
 #  Single source of truth for the dashboard's destinations. Consumed by:
 #    - home-view.yaml (inline "Menu" section)
 #    - mobile-nav-sheet.yaml (hamburger pop-up on every other view)
-#  Var: current -> home | lights | climate | shades | security | energy |
-#                  weather | pool | music | vacuum | settings
-#  The row matching `current` is highlighted (slate border/tint) and shows a
-#  check mark instead of the chevron. Row styling matches the original
-#  Home-screen menu rows (mobile_lights_scenes bubble module).
+#  Vars:
+#    current -> home | lights | climate | shades | security | energy |
+#               weather | pool | music | vacuum | settings
+#    compact -> true tightens the row margins (used by the pop-up sheet)
+#  The row matching `current` is highlighted (slate background, dark text,
+#  matching the scene-button "on" state) and shows a check mark instead of
+#  the chevron. The Home row only renders on sub-views. Row styling matches
+#  the original Home-screen menu rows (mobile_lights_scenes bubble module).
 # ============================================================================
 type: vertical-stack
 cards:
@@ -36,6 +39,12 @@ cards:
           navigation_path: /mobile-dash/mobile-home
     modules:
       - mobile_lights_scenes
+    styles: |
+      /* nav row */
+      {% if compact %}
+      ha-card { margin: 1px 5px !important; }
+      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
+      {% endif %}
 {% endif %}
   - type: custom:bubble-card
     card_type: button
@@ -66,12 +75,9 @@ cards:
       - mobile_lights_scenes
     styles: |
       /* nav row */
-      {% if current == "lights" %}
-      .bubble-button-card-container.bubble-button-card-container {
-        background: rgba(142,177,191,0.16) !important;
-        border: 1px solid var(--slate-color) !important;
-      }
-      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; }
+      {% if compact %}
+      ha-card { margin: 1px 5px !important; }
+      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
       {% endif %}
       ${(() => {
         const s = hass.states['sensor.lights_on_count']?.state;
@@ -82,6 +88,17 @@ cards:
           .bubble-sub-button-1.bubble-sub-button-1 ha-state-icon { color: ${c} !important; }
         `;
       })()}
+      {% if current == "lights" %}
+      .bubble-button-card-container.bubble-button-card-container,
+      .bubble-button-background.bubble-button-background {
+        background-color: var(--slate-color) !important;
+      }
+      .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
+      .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
+      .bubble-sub-button.bubble-sub-button,
+      .bubble-sub-button.bubble-sub-button ha-icon,
+      .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
+      {% endif %}
   - type: custom:bubble-card
     card_type: button
     button_type: name
@@ -111,12 +128,20 @@ cards:
       - mobile_lights_scenes
     styles: |
       /* nav row */
+      {% if compact %}
+      ha-card { margin: 1px 5px !important; }
+      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
+      {% endif %}
       {% if current == "climate" %}
-      .bubble-button-card-container.bubble-button-card-container {
-        background: rgba(142,177,191,0.16) !important;
-        border: 1px solid var(--slate-color) !important;
+      .bubble-button-card-container.bubble-button-card-container,
+      .bubble-button-background.bubble-button-background {
+        background-color: var(--slate-color) !important;
       }
-      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; }
+      .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
+      .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
+      .bubble-sub-button.bubble-sub-button,
+      .bubble-sub-button.bubble-sub-button ha-icon,
+      .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
       {% endif %}
   - type: custom:bubble-card
     card_type: button
@@ -147,12 +172,20 @@ cards:
       - mobile_lights_scenes
     styles: |
       /* nav row */
+      {% if compact %}
+      ha-card { margin: 1px 5px !important; }
+      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
+      {% endif %}
       {% if current == "shades" %}
-      .bubble-button-card-container.bubble-button-card-container {
-        background: rgba(142,177,191,0.16) !important;
-        border: 1px solid var(--slate-color) !important;
+      .bubble-button-card-container.bubble-button-card-container,
+      .bubble-button-background.bubble-button-background {
+        background-color: var(--slate-color) !important;
       }
-      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; }
+      .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
+      .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
+      .bubble-sub-button.bubble-sub-button,
+      .bubble-sub-button.bubble-sub-button ha-icon,
+      .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
       {% endif %}
   - type: custom:bubble-card
     card_type: button
@@ -183,12 +216,9 @@ cards:
       - mobile_lights_scenes
     styles: |
       /* nav row */
-      {% if current == "security" %}
-      .bubble-button-card-container.bubble-button-card-container {
-        background: rgba(142,177,191,0.16) !important;
-        border: 1px solid var(--slate-color) !important;
-      }
-      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; }
+      {% if compact %}
+      ha-card { margin: 1px 5px !important; }
+      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
       {% endif %}
       ${(() => {
         const s = hass.states['alarm_control_panel.alarmo']?.state;
@@ -201,6 +231,17 @@ cards:
           .bubble-sub-button-1.bubble-sub-button-1 ha-state-icon { color: ${c} !important; }
         `;
       })()}
+      {% if current == "security" %}
+      .bubble-button-card-container.bubble-button-card-container,
+      .bubble-button-background.bubble-button-background {
+        background-color: var(--slate-color) !important;
+      }
+      .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
+      .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
+      .bubble-sub-button.bubble-sub-button,
+      .bubble-sub-button.bubble-sub-button ha-icon,
+      .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
+      {% endif %}
   - type: custom:bubble-card
     card_type: button
     button_type: name
@@ -230,12 +271,9 @@ cards:
       - mobile_lights_scenes
     styles: |
       /* nav row */
-      {% if current == "energy" %}
-      .bubble-button-card-container.bubble-button-card-container {
-        background: rgba(142,177,191,0.16) !important;
-        border: 1px solid var(--slate-color) !important;
-      }
-      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; }
+      {% if compact %}
+      ha-card { margin: 1px 5px !important; }
+      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
       {% endif %}
       ${(() => {
         const v = Number(hass.states['sensor.bayberry_charge']?.state);
@@ -246,6 +284,17 @@ cards:
           .bubble-sub-button-1.bubble-sub-button-1 ha-state-icon { color: ${c} !important; }
         `;
       })()}
+      {% if current == "energy" %}
+      .bubble-button-card-container.bubble-button-card-container,
+      .bubble-button-background.bubble-button-background {
+        background-color: var(--slate-color) !important;
+      }
+      .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
+      .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
+      .bubble-sub-button.bubble-sub-button,
+      .bubble-sub-button.bubble-sub-button ha-icon,
+      .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
+      {% endif %}
   - type: custom:bubble-card
     card_type: button
     button_type: name
@@ -276,12 +325,20 @@ cards:
       - mobile_lights_scenes
     styles: |
       /* nav row */
+      {% if compact %}
+      ha-card { margin: 1px 5px !important; }
+      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
+      {% endif %}
       {% if current == "weather" %}
-      .bubble-button-card-container.bubble-button-card-container {
-        background: rgba(142,177,191,0.16) !important;
-        border: 1px solid var(--slate-color) !important;
+      .bubble-button-card-container.bubble-button-card-container,
+      .bubble-button-background.bubble-button-background {
+        background-color: var(--slate-color) !important;
       }
-      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; }
+      .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
+      .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
+      .bubble-sub-button.bubble-sub-button,
+      .bubble-sub-button.bubble-sub-button ha-icon,
+      .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
       {% endif %}
   - type: custom:bubble-card
     card_type: button
@@ -313,12 +370,20 @@ cards:
       - mobile_lights_scenes
     styles: |
       /* nav row */
+      {% if compact %}
+      ha-card { margin: 1px 5px !important; }
+      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
+      {% endif %}
       {% if current == "pool" %}
-      .bubble-button-card-container.bubble-button-card-container {
-        background: rgba(142,177,191,0.16) !important;
-        border: 1px solid var(--slate-color) !important;
+      .bubble-button-card-container.bubble-button-card-container,
+      .bubble-button-background.bubble-button-background {
+        background-color: var(--slate-color) !important;
       }
-      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; }
+      .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
+      .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
+      .bubble-sub-button.bubble-sub-button,
+      .bubble-sub-button.bubble-sub-button ha-icon,
+      .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
       {% endif %}
   - type: custom:bubble-card
     card_type: button
@@ -349,12 +414,20 @@ cards:
       - mobile_lights_scenes
     styles: |
       /* nav row */
+      {% if compact %}
+      ha-card { margin: 1px 5px !important; }
+      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
+      {% endif %}
       {% if current == "music" %}
-      .bubble-button-card-container.bubble-button-card-container {
-        background: rgba(142,177,191,0.16) !important;
-        border: 1px solid var(--slate-color) !important;
+      .bubble-button-card-container.bubble-button-card-container,
+      .bubble-button-background.bubble-button-background {
+        background-color: var(--slate-color) !important;
       }
-      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; }
+      .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
+      .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
+      .bubble-sub-button.bubble-sub-button,
+      .bubble-sub-button.bubble-sub-button ha-icon,
+      .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
       {% endif %}
   - type: custom:bubble-card
     card_type: button
@@ -386,12 +459,20 @@ cards:
       - mobile_lights_scenes
     styles: |
       /* nav row */
+      {% if compact %}
+      ha-card { margin: 1px 5px !important; }
+      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
+      {% endif %}
       {% if current == "vacuum" %}
-      .bubble-button-card-container.bubble-button-card-container {
-        background: rgba(142,177,191,0.16) !important;
-        border: 1px solid var(--slate-color) !important;
+      .bubble-button-card-container.bubble-button-card-container,
+      .bubble-button-background.bubble-button-background {
+        background-color: var(--slate-color) !important;
       }
-      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; }
+      .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
+      .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
+      .bubble-sub-button.bubble-sub-button,
+      .bubble-sub-button.bubble-sub-button ha-icon,
+      .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
       {% endif %}
   - type: custom:bubble-card
     card_type: button
@@ -423,10 +504,18 @@ cards:
       - mobile_lights_scenes
     styles: |
       /* nav row */
+      {% if compact %}
+      ha-card { margin: 1px 5px !important; }
+      .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
+      {% endif %}
       {% if current == "settings" %}
-      .bubble-button-card-container.bubble-button-card-container {
-        background: rgba(142,177,191,0.16) !important;
-        border: 1px solid var(--slate-color) !important;
+      .bubble-button-card-container.bubble-button-card-container,
+      .bubble-button-background.bubble-button-background {
+        background-color: var(--slate-color) !important;
       }
-      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; }
+      .bubble-name.bubble-name { color: var(--primary-background-color) !important; }
+      .bubble-icon.bubble-icon { color: var(--primary-background-color) !important; }
+      .bubble-sub-button.bubble-sub-button,
+      .bubble-sub-button.bubble-sub-button ha-icon,
+      .bubble-sub-button.bubble-sub-button ha-state-icon { color: var(--primary-background-color) !important; }
       {% endif %}

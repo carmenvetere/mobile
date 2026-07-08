@@ -44,7 +44,7 @@ cards:
             grid:
               - grid-template-areas: |
                   "back name gap menu"
-              - grid-template-columns: 40px 150px 1fr 40px
+              - grid-template-columns: 24px 150px 1fr 40px
               - grid-template-rows: 60px
               - column-gap: 0px
             main:
@@ -53,6 +53,7 @@ cards:
                 - grid-area: back
                 - align-self: center
                 - justify-self: start
+                - margin-left: -8px
               menu:
                 - grid-area: menu
                 - align-self: center
