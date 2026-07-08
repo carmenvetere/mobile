@@ -43,15 +43,12 @@ input_number:
     step: 1
     mode: box
   # --- Climate overhaul Phase 2: zone schedule setpoints -------------------
-  # Single source of truth for the four zone schedules. Values were extracted
-  # from the pre-refactor automation literals on 2026-07-03 (zero drift).
-  # NOTE: `initial:` resets these to the values below on every HA restart
-  # (there is a daily restart automation). Dashboard tweaks are therefore
-  # temporary by design; to make dashboard changes persistent, delete the
-  # `initial:` lines after the first successful boot.
+  # Single source of truth for the four zone schedules. No `initial:` lines
+  # on purpose: values restore from the last state on restart, so dashboard
+  # setpoint changes persist. (The temporary bootstrap `initial:` values were
+  # removed once the helpers existed, per the original migration plan.)
   lr_cool_day:
     name: LR Cool Day
-    initial: 72
     min: 55
     max: 85
     step: 0.5
@@ -60,7 +57,6 @@ input_number:
     icon: mdi:snowflake
   lr_cool_night:
     name: LR Cool Night
-    initial: 74
     min: 55
     max: 85
     step: 0.5
@@ -69,7 +65,6 @@ input_number:
     icon: mdi:snowflake
   lr_cool_night_fa:
     name: LR Cool Night (Fresh Air)
-    initial: 73.5
     min: 55
     max: 85
     step: 0.5
@@ -78,7 +73,6 @@ input_number:
     icon: mdi:snowflake
   lr_heat_day:
     name: LR Heat Day
-    initial: 68
     min: 55
     max: 85
     step: 0.5
@@ -87,7 +81,6 @@ input_number:
     icon: mdi:fire
   lr_heat_night:
     name: LR Heat Night
-    initial: 66
     min: 55
     max: 85
     step: 0.5
@@ -96,7 +89,6 @@ input_number:
     icon: mdi:fire
   bsmt_cool_day:
     name: Basement Cool Day
-    initial: 72
     min: 55
     max: 85
     step: 0.5
@@ -105,7 +97,6 @@ input_number:
     icon: mdi:snowflake
   bsmt_cool_night:
     name: Basement Cool Night
-    initial: 74
     min: 55
     max: 85
     step: 0.5
@@ -114,7 +105,6 @@ input_number:
     icon: mdi:snowflake
   bsmt_cool_night_fa:
     name: Basement Cool Night (Fresh Air)
-    initial: 73.5
     min: 55
     max: 85
     step: 0.5
@@ -123,7 +113,6 @@ input_number:
     icon: mdi:snowflake
   bsmt_heat_workday:
     name: Basement Heat Workday
-    initial: 69
     min: 55
     max: 85
     step: 0.5
@@ -132,7 +121,6 @@ input_number:
     icon: mdi:fire
   bsmt_heat_evening:
     name: Basement Heat Evening
-    initial: 68
     min: 55
     max: 85
     step: 0.5
@@ -141,7 +129,6 @@ input_number:
     icon: mdi:fire
   bsmt_heat_night:
     name: Basement Heat Night
-    initial: 66
     min: 55
     max: 85
     step: 0.5
@@ -150,7 +137,6 @@ input_number:
     icon: mdi:fire
   br_heat_morning:
     name: Bedroom Heat Morning
-    initial: 68
     min: 55
     max: 85
     step: 0.5
@@ -159,7 +145,6 @@ input_number:
     icon: mdi:fire
   br_heat_day_weekday:
     name: Bedroom Heat Day (Weekday)
-    initial: 66
     min: 55
     max: 85
     step: 0.5
@@ -168,7 +153,6 @@ input_number:
     icon: mdi:fire
   br_heat_day_weekend:
     name: Bedroom Heat Day (Weekend)
-    initial: 68
     min: 55
     max: 85
     step: 0.5
@@ -177,7 +161,6 @@ input_number:
     icon: mdi:fire
   br_heat_night:
     name: Bedroom Heat Night
-    initial: 65
     min: 55
     max: 85
     step: 0.5
@@ -186,7 +169,6 @@ input_number:
     icon: mdi:fire
   br_cool_morning:
     name: Bedroom Cool Morning
-    initial: 72
     min: 55
     max: 85
     step: 0.5
@@ -195,7 +177,6 @@ input_number:
     icon: mdi:snowflake
   br_cool_day:
     name: Bedroom Cool Day
-    initial: 73.5
     min: 55
     max: 85
     step: 0.5
@@ -204,7 +185,6 @@ input_number:
     icon: mdi:snowflake
   br_cool_night:
     name: Bedroom Cool Night
-    initial: 68
     min: 55
     max: 85
     step: 0.5
@@ -213,7 +193,6 @@ input_number:
     icon: mdi:snowflake
   office_heat_occupied:
     name: Office Heat Occupied
-    initial: 68
     min: 55
     max: 85
     step: 0.5
@@ -222,7 +201,6 @@ input_number:
     icon: mdi:fire
   office_heat_unoccupied:
     name: Office Heat Unoccupied
-    initial: 65
     min: 55
     max: 85
     step: 0.5
@@ -231,7 +209,6 @@ input_number:
     icon: mdi:fire
   office_cool_occupied:
     name: Office Cool Occupied
-    initial: 72
     min: 55
     max: 85
     step: 0.5
@@ -240,7 +217,6 @@ input_number:
     icon: mdi:snowflake
   office_cool_unoccupied:
     name: Office Cool Unoccupied
-    initial: 73.5
     min: 55
     max: 85
     step: 0.5
@@ -249,7 +225,6 @@ input_number:
     icon: mdi:snowflake
   office_cool_guest_night:
     name: Office Cool Guest Night
-    initial: 68
     min: 55
     max: 85
     step: 0.5
@@ -259,7 +234,6 @@ input_number:
   # --- Climate overhaul Phase 3: ventilation thresholds --------------------
   co2_vent_ceiling:
     name: CO2 Vent Ceiling
-    initial: 850
     min: 500
     max: 1500
     step: 10
@@ -268,7 +242,6 @@ input_number:
     icon: mdi:molecule-co2
   co2_vent_recover:
     name: CO2 Vent Recover
-    initial: 700
     min: 400
     max: 1200
     step: 10
@@ -277,7 +250,6 @@ input_number:
     icon: mdi:molecule-co2
   vent_min_outdoor:
     name: Ventilation Min Outdoor Temp
-    initial: 32
     min: 0
     max: 60
     step: 1
@@ -286,7 +258,6 @@ input_number:
     icon: mdi:thermometer-low
   vent_max_outdoor:
     name: Ventilation Max Outdoor Temp
-    initial: 80
     min: 60
     max: 100
     step: 1
@@ -295,7 +266,6 @@ input_number:
     icon: mdi:thermometer-high
   freecool_differential:
     name: Free Cooling Differential
-    initial: 5
     min: 1
     max: 15
     step: 0.5
@@ -304,7 +274,6 @@ input_number:
     icon: mdi:thermometer-chevron-down
   minvent_floor_minutes:
     name: Minimum Ventilation Floor (per 24 h)
-    initial: 30
     min: 0
     max: 240
     step: 5
@@ -314,7 +283,6 @@ input_number:
   # --- Climate overhaul Phase 4: away-mode setpoints -----------------------
   away_heat_setpoint:
     name: Away Heat Setpoint
-    initial: 62
     min: 55
     max: 85
     step: 0.5
@@ -323,7 +291,6 @@ input_number:
     icon: mdi:home-export-outline
   away_cool_setpoint:
     name: Away Cool Setpoint
-    initial: 78
     min: 55
     max: 85
     step: 0.5
@@ -483,7 +450,7 @@ utility_meter:
 recorder:
   db_url: !secret recorder_db_url
   purge_keep_days: 30
-  commit_interval: 30          # NEW: batch DB writes every 10s instead of every 1s
+  commit_interval: 30          # batch DB writes every 30s instead of every 1s
   auto_purge: true
   auto_repack: true
   exclude:
@@ -511,6 +478,10 @@ recorder:
       - sensor.first_floor_air_quality_monitor*
     
     entities:
+      # Intermediate per-minute HVAC power estimates; only their integrated
+      # energy totals (sensor.upper/lower_hvac_energy) need history.
+      - sensor.upper_hvac_estimated_power
+      - sensor.lower_hvac_estimated_power
       - sensor.date
       - sensor.time
       - sensor.last_boot
@@ -592,15 +563,9 @@ lovelace:
       type: module
     - url: /hacsfiles/llmvision-card/llmvision-card.js 
       type: module
-    - url: /hacsfiles/custom-sonos-card/custom-sonos-card.js
-      type: module
-    - url: /hacsfiles/simple-swipe-card/simple-swipe-card.js
-      type: module
     - url: /hacsfiles/apexcharts-card/apexcharts-card.js
       type: module
-    - url: /hacsfiles/weather-radar-card/weather-radar-card.js 
-      type: module 
-    - url: /hacsfiles/energy-sankey/energy-sankey.js 
+    - url: /hacsfiles/energy-sankey/energy-sankey.js
       type: module
     - url: /hacsfiles/config-template-card/config-template-card.js
       type: module
