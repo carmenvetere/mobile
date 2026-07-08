@@ -6926,8 +6926,10 @@
     the adaptive tick skips any room whose close set is already closed (position <=5%)
     — never reopens shades closed by hand. Pauses: dinner_party skips First Floor;
     guest_mode skips both guest rooms. Primary Bedroom north shade (bedroom_back)
-    closes at evening only Nov-Mar. Adaptive targets per-facade covers; close and
-    privacy check use the room group where one exists.'
+    closes at evening Nov-Mar; other months it opens to 100% at the evening close
+    for sunset viewing (skipped if the room was closed by hand — privacy respected).
+    Adaptive targets per-facade covers; close and privacy check use the room group
+    where one exists.'
   triggers:
   - at: 07:30:00
     id: morning_early
@@ -7193,10 +7195,32 @@
                 [1, 2, 3, 11, 12] }}'
               verify_list: '{{ close_targets + ([winter_cover] if winter_close else
                 []) }}'
+              room_hand_closed: '{% set ns = namespace(all_closed=true) %}{% for
+                e in repeat.item.privacy %}{% set pos = state_attr(e, ''current_position'')
+                %}{% if pos is not none %}{% if pos | int(0) > 5 %}{% set ns.all_closed
+                = false %}{% endif %}{% elif not is_state(e, ''closed'') %}{% set
+                ns.all_closed = false %}{% endif %}{% endfor %}{{ ns.all_closed }}'
+              sunset_open: '{{ winter_cover != '''' and not winter_close and not
+                (room_hand_closed | bool(false)) }}'
           - if:
             - condition: template
               value_template: '{{ not paused }}'
             then:
+            - if:
+              - condition: template
+                value_template: '{{ sunset_open }}'
+              then:
+              - action: cover.set_cover_position
+                target:
+                  entity_id: '{{ winter_cover }}'
+                data:
+                  position: 100
+              - action: system_log.write
+                data:
+                  message: 'Shade Scheduler ({{ trigger.id }}) {{ room_name }}: opened
+                    {{ winter_cover }} to 100% for sunset viewing (non-winter evening
+                    rule)'
+                  level: info
             - repeat:
                 sequence:
                 - action: cover.close_cover
