@@ -9,6 +9,10 @@
 #   thermostat_name  - display name
 #
 # Optional vars:
+#   fan_entity       - climate.* entity for the fan-mode sub-button, when fan
+#                      control lives on a different integration than setpoint
+#                      control (e.g. bedroom: HomeKit setpoints, Lyric fan).
+#                      Defaults to climate_entity.
 #   rows             - bubble-card rows height (default 2.406)
 type: custom:bubble-card
 card_type: climate
@@ -32,7 +36,7 @@ sub_button:
     show_attribute: false
     sub_button_type: select
     state_background: false
-  - entity: {{ climate_entity }}
+  - entity: {{ fan_entity | default(climate_entity) }}
     select_attribute: fan_modes
     show_attribute: true
     attribute: fan_mode

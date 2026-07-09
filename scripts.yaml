@@ -70,7 +70,7 @@ power_outage_cooling:
       hvac_mode: cool
     action: climate.set_temperature
     target:
-      entity_id: climate.master_bedroom_thermostat
+      entity_id: climate.bedroom_thermostat
   - action: automation.turn_off
     target:
       entity_id:
@@ -90,7 +90,7 @@ power_outage_heating:
       temperature: 64
     action: climate.set_temperature
     target:
-      entity_id: climate.master_bedroom_thermostat
+      entity_id: climate.bedroom_thermostat
   - action: climate.set_temperature
     metadata: {}
     data:

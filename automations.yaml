@@ -1380,7 +1380,7 @@
         - climate.living_room_thermostat_homekit
         - climate.basement_thermostat_homekit
         - climate.office_thermostat_homekit
-        - climate.master_bedroom_thermostat
+        - climate.bedroom_thermostat
     else:
     - action: climate.set_temperature
       data:
@@ -1391,7 +1391,7 @@
         - climate.living_room_thermostat_homekit
         - climate.basement_thermostat_homekit
         - climate.office_thermostat_homekit
-        - climate.master_bedroom_thermostat
+        - climate.bedroom_thermostat
   - action: automation.turn_off
     data:
       stop_actions: true
@@ -2906,7 +2906,7 @@
     - conditions:
       - condition: state
         state: cool
-        entity_id: climate.master_bedroom_thermostat
+        entity_id: climate.bedroom_thermostat
       sequence:
       - action: input_select.select_option
         continue_on_error: true
@@ -2920,11 +2920,11 @@
         data:
           hvac_mode: 'off'
         target:
-          entity_id: climate.master_bedroom_thermostat
+          entity_id: climate.bedroom_thermostat
     - conditions:
       - condition: state
         state: 'off'
-        entity_id: climate.bedroom_thermostat_homekit
+        entity_id: climate.bedroom_thermostat
       sequence:
       - action: input_select.select_option
         continue_on_error: true
@@ -2942,7 +2942,7 @@
     - conditions:
       - condition: state
         state: heat
-        entity_id: climate.bedroom_thermostat_homekit
+        entity_id: climate.bedroom_thermostat
       sequence:
       - action: input_select.select_option
         continue_on_error: true
@@ -2956,7 +2956,7 @@
         data:
           temperature: 64
         target:
-          entity_id: climate.bedroom_thermostat_homekit
+          entity_id: climate.bedroom_thermostat
       - action: switch.turn_on
         continue_on_error: true
         metadata: {}

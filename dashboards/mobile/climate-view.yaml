@@ -447,7 +447,10 @@ cards:
               cards:
                 - !include
                     - /config/dashboards/modules/mobile-climate-row.yaml
-                    - climate_entity: climate.master_bedroom_thermostat
+                    # Setpoint/mode control must be local (HomeKit); only fan
+                    # mode is controllable via the cloud (Lyric) entity.
+                    - climate_entity: climate.bedroom_thermostat
+                      fan_entity: climate.master_bedroom_thermostat
                       thermostat_name: Bedroom Thermostat
                       module_name: mobile_climate
                 - !include
