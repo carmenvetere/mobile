@@ -7,6 +7,12 @@ cards:
   # Hamburger nav sheet (standalone pop-up; keep as its own top-level card)
   - !include [/config/dashboards/modules/mobile-nav-sheet.yaml, {current: energy}]
   - type: custom:button-card
+    # The view is a CSS grid; without min-width: 0 this card refuses to
+    # shrink below the power-flow chart's intrinsic width and slides its
+    # right edge (header + hamburger) off narrow screens.
+    card_mod:
+      style: |
+        :host { min-width: 0 !important; }
     styles:
       card:
         - border-radius: 15px
@@ -20,7 +26,9 @@ cards:
         - box-sizing: border-box
         - background: var(--primary-background-color)
         - box-shadow: none
-        - max-width: 100%
+        # vw clamp is parent-independent, unlike the old max-width: 96%
+        - max-width: calc(100vw - 10px)
+        - overflow-x: clip
       grid:
         - grid-template-areas: |
             "header"
