@@ -2964,26 +2964,26 @@
         target:
           entity_id:
           - switch.master_bedroom_thermostat_master_bedroom_emergency_heat
-  - type: turn_on
+  # Load shed (device_id blocks resolved to entity_ids 2026-07-09, #144):
+  # pause irrigation, then cut the pool filter, dryer, and washer.
+  - action: switch.turn_on
     continue_on_error: true
-    device_id: 6deb26f710d6c93c434f81d60d9dbce4
-    entity_id: 5c5d2d4196d7ca596161aa52687ea2ed
-    domain: switch
-  - type: turn_off
+    target:
+      entity_id: switch.rachio_c3e715_standby
+  - action: switch.turn_off
     continue_on_error: true
-    device_id: 0aabb641babaa0fbd27317cd2ff3780f
-    entity_id: 2ccf8bc5bed6534259e75602736f3aea
-    domain: switch
-  - type: turn_off
+    target:
+      entity_id: switch.omnilogic_pool_filter_pump
+  - action: switch.turn_off
     continue_on_error: true
-    device_id: df745980e44b9ab45abdd0bb5521d2b6
-    entity_id: c86dd61216d3d9aa11d5c5ed4af191de
-    domain: switch
-  - device_id: 0e62e753be199a9e47734917a23e2b32
-    domain: button
-    entity_id: 236ff9fb5e67f55d3b438407aa375fa5
-    type: press
+    target:
+      entity_id: switch.dryer_power
+  # Was a device button press on the washer; per the 2026-07-09 device
+  # audit the intended action is powering the washer off.
+  - action: switch.turn_off
     continue_on_error: true
+    target:
+      entity_id: switch.front_load_washer_power
   mode: restart
 - id: '1749498392865'
   alias: Office Thermostat Schedule V2
@@ -3408,10 +3408,11 @@
           entity_id:
           - switch.basement_thermostat_basement_emergency_heat
         enabled: false
-  - type: turn_off
-    device_id: 6deb26f710d6c93c434f81d60d9dbce4
-    entity_id: 5c5d2d4196d7ca596161aa52687ea2ed
-    domain: switch
+  # Rachio out of standby on power return; left disabled on purpose
+  # (resolved from device_id 2026-07-09, #144).
+  - action: switch.turn_off
+    target:
+      entity_id: switch.rachio_c3e715_standby
     enabled: false
   - if:
     - condition: time
