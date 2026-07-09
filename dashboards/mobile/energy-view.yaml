@@ -17,15 +17,18 @@ cards:
 #        - margin: -8px
         - height: auto
 #        - width: 398px
+        - box-sizing: border-box
         - background: var(--primary-background-color)
         - box-shadow: none
-        - max-width: 96%
+        - max-width: 100%
       grid:
         - grid-template-areas: |
             "header"
             "power_flow"
             "solar_forecast"
-        - grid-template-columns: auto
+        # minmax(0,1fr) stops the wide charts from stretching the column
+        # (and the header/hamburger with it) past the viewport.
+        - grid-template-columns: minmax(0, 1fr)
         - grid-template-rows: 60px auto auto
         - row-gap: 5px
         - align-items: start
