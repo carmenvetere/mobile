@@ -27,7 +27,7 @@ mobile_lights:
         .bubble-sub-button { 
           font-size: 16px !important;
           font-weight: bold; 
-          color: ${state === 'on' ? 'var(--primary-text-color)' : 'var(--primary-text-color)'} !important;
+          color: var(--primary-text-color) !important;
           }
         
         .bubble-state {
@@ -54,7 +54,7 @@ mobile_lights:
           }
 
         .bubble-range-slider {
-          background: ${state === 'on' ? 'var(--background-color-3)' : 'var(--background-color-3)'} !important;
+          background: var(--background-color-3) !important;
           border-radius: 15px !important;
           }
           

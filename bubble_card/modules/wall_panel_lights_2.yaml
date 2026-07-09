@@ -33,7 +33,7 @@ wall_panel_lights_2:
         .bubble-name {
           font-size: 22px !important;
           text-align: left !important;
-          color: ${state === 'on' ? 'var(--primary-text-color)' : 'var(--primary-text-color)'} !important;
+          color: var(--primary-text-color) !important;
           line-height: 1.1;
           padding-left: 10px;
             }
@@ -71,7 +71,7 @@ wall_panel_lights_2:
           
         .bubble-icon {
           opacity: 1 !important;
-          color: ${state === 'on' ? 'var(--primary-text-color)' : 'var(--primary-text-color)'} !important;
+          color: var(--primary-text-color) !important;
           --mdc-icon-size: 36px !important;
           }
 
