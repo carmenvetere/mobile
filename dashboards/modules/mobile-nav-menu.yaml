@@ -14,6 +14,19 @@
 #  the original Home-screen menu rows (mobile_lights_scenes bubble module).
 # ============================================================================
 type: vertical-stack
+{% if compact %}
+# The stack's default 4px top/bottom card margins are hardcoded in this HA
+# version (it ignores --vertical-stack-card-margin), so card-mod injects the
+# override straight into the stack's shadow root.
+card_mod:
+  style:
+    .: |
+      #root > * {
+        margin: 1px 0 !important;
+      }
+      #root > *:first-child { margin-top: 0 !important; }
+      #root > *:last-child { margin-bottom: 0 !important; }
+{% endif %}
 cards:
 {% if current != "home" %}
   # Home row is only rendered on sub-views (in the nav sheet); the Home
