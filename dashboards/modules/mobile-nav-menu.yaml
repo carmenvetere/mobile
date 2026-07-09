@@ -20,9 +20,9 @@ type: vertical-stack
 # override straight into the stack's shadow root.
 card_mod:
   style: |
-    ha-card {
-      margin-bottom:5px !important;
-      }
+    #root {
+      gap: 4px !important;
+    }
 {% endif %}
 cards:
 {% if current != "home" %}
