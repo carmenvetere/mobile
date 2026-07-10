@@ -7,12 +7,13 @@ mobile_climate:
       ha-card {
         position: relative !important;
         min-height: 110px !important;
-        background: var(--background-color-2) !important;
+        background: var(--background-color) !important;
         border: none !important;
         border-radius: 15px !important;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
         padding: 0px 0px !important;
-        --bubble-climate-main-background-color: var(--background-color-2) !important;
+        --bubble-main-background-color: var(--background-color) !important;
+        --bubble-climate-main-background-color: var(--background-color) !important;
         --bubble-climate-border-radius: 15px !important;
         --bubble-climate-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
       }
@@ -130,8 +131,10 @@ mobile_climate:
         z-index: 2 !important;
       }
 
+      /* Card surface is now --background-color (matches --ha-card-background),
+         so pin the mode/fan pills one rung darker to keep them recessed. */
       .bubble-sub-button {
-        background: var(--ha-card-background) !important;
+        background: var(--primary-background-color) !important;
         border: 1px solid rgba(255,255,255,0.04) !important;
         border-radius: 999px !important;
         color: #f2f3f5 !important;

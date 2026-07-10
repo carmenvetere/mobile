@@ -5,14 +5,13 @@ theme: Dune Mist
 path: climate-main
 type: custom:grid-layout
 cards:
-  # Sticky bottom nav
-  - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: climate}]
-  - !include /config/dashboards/modules/mobile-more-sheet.yaml
+  # Hamburger nav sheet (standalone pop-up; keep as its own top-level card)
+  - !include [/config/dashboards/modules/mobile-nav-sheet.yaml, {current: climate}]
   - type: custom:button-card
     styles:
       card:
         - border-radius: 15px
-        - padding: 2px 10px 90px 5px
+        - padding: 2px 10px 24px 5px
         - height: auto
         - box-sizing: border-box
         - max-width: 98%
@@ -54,20 +53,18 @@ cards:
               - transition: none
               - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: "\"i n\" \"i l\""
-              - grid-template-columns: 54px 1fr
+              - grid-template-areas: "\"back i n menu\" \"back i l menu\""
+              - grid-template-columns: 24px 40px 1fr 40px
               - grid-template-rows: auto auto
               - align-items: center
               - column-gap: 8px
             img_cell:
               - grid-area: i
-              - width: 48px
-              - height: 48px
-              - border-radius: 13px
-              - background-color: rgba(142,177,191,0.18)
+              - width: 40px
+              - height: 40px
             icon:
               - width: 24px
-              - color: var(--slate-bright)
+              - color: var(--primary-text-color)
             name:
               - grid-area: "n"
               - justify-self: start
@@ -79,87 +76,84 @@ cards:
               - justify-self: start
               - font-size: 14px
               - color: var(--secondary-text-color)
+            custom_fields:
+              back:
+                - grid-area: back
+                - align-self: center
+                - justify-self: start
+                - margin-left: -8px
+              menu:
+                - grid-area: menu
+                - align-self: center
+                - justify-self: end
+          custom_fields:
+            back:
+              card: !include /config/dashboards/modules/mobile-header-back.yaml
+            menu:
+              card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
       first:
         card:
-          type: custom:expander-card
-          expanded: true
-          title-card-clickable: true
-          card_mod:
-            style: |
-              ha-card {
-                background: var(--background-color) !important;
-                border: 1px solid rgba(255,255,255,0.06) !important;
-                border-radius: 22px !important;
-                padding: 8px 14px 10px !important;
-                box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset !important;
-                max-width: 100% !important;
-                min-width: 0 !important;
-                box-sizing: border-box !important;
-                overflow: hidden !important;
-              }
-          title-card:
-            type: custom:bubble-card
-            card_type: separator
-            name: First Floor
-            icon: mdi:home-floor-1
-            rows: 0.75
-            sub_button:
-              - entity: sensor.living_room_thermostat_current_temperature
-                show_state: true
-                show_icon: true
-                show_background: false
-              - entity: sensor.living_room_thermostat_current_humidity
-                show_state: true
-                show_background: false
-                show_icon: true
-              - entity: sensor.first_floor_co2_5min
-                show_state: true
-                show_background: false
-                show_icon: true
-              - entity: sensor.first_floor_pm2_5_5min
-                show_state: true
-                show_background: false
-                show_icon: true
-            styles: |
-              ha-card {
-                max-width: 100% !important;
-                width: 100% !important;
-                box-sizing: border-box !important;
-                overflow: hidden !important;
-              }
-              .bubble-name {
-                font-size: 16px !important;
-                font-weight: 700 !important;
-                letter-spacing: 0.1px !important;
-                color: var(--primary-text-color) !important;
-              }
-              .bubble-sub-button {
-                font-size: 16px !important;
-                font-weight: 600 !important;
-                color: var(--primary-text-color) !important;
-                background: transparent !important;
-                border: none !important;
-              }
-              .bubble-line {
-                background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
-                opacity: 1 !important;
-                height: 1px !important;
-              }
-              .card-content {
-                padding: 4px 6px 10px !important;
-                max-width: 100% !important;
-                box-sizing: border-box !important;
-              }
-              @media (max-width: 600px) {
-                .bubble-sub-button-4 { display: none !important; }
-              }
-              @media (max-width: 500px) {
-                .bubble-sub-button-2 { display: none !important; }
-              }
-              @media (max-width: 420px) {
-                .bubble-sub-button-3 { display: none !important; }
-              }
+          type: vertical-stack
           cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: First Floor
+              icon: mdi:home-floor-1
+              rows: 0.75
+              sub_button:
+                - entity: sensor.living_room_thermostat_current_temperature
+                  show_state: true
+                  show_icon: true
+                  show_background: false
+                - entity: sensor.living_room_thermostat_current_humidity
+                  show_state: true
+                  show_background: false
+                  show_icon: true
+                - entity: sensor.first_floor_co2_5min
+                  show_state: true
+                  show_background: false
+                  show_icon: true
+                - entity: sensor.first_floor_pm2_5_5min
+                  show_state: true
+                  show_background: false
+                  show_icon: true
+              styles: |
+                ha-card {
+                  max-width: 100% !important;
+                  width: 100% !important;
+                  box-sizing: border-box !important;
+                  overflow: hidden !important;
+                }
+                .bubble-name {
+                  font-size: 20px !important;
+                  font-weight: bold !important;
+                  color: var(--primary-text-color) !important;
+                }
+                .bubble-sub-button {
+                  font-size: 16px !important;
+                  font-weight: 600 !important;
+                  color: var(--primary-text-color) !important;
+                  background: transparent !important;
+                  border: none !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color) !important;
+                  opacity: 0.1 !important;
+                }
+                .card-content {
+                  padding: 4px 6px 10px !important;
+                  max-width: 100% !important;
+                  box-sizing: border-box !important;
+                }
+                @media (max-width: 600px) {
+                  .bubble-sub-button-4 { display: none !important; }
+                }
+                @media (max-width: 500px) {
+                  .bubble-sub-button-2 { display: none !important; }
+                }
+                @media (max-width: 420px) {
+                  .bubble-sub-button-3 { display: none !important; }
+                }
             - type: vertical-stack
               cards:
                 - !include
@@ -168,75 +162,66 @@ cards:
                       thermostat_name: Living Room Thermostat
                       rows: 2.5
                       module_name: mobile_climate
+                - !include
+                    - /config/dashboards/modules/mobile-climate-toggle.yaml
+                    - toggle_entity: switch.powder_room_powder_room_exhaust_fan
+                      row_name: Powder Room Exhaust Fan
+                      row_icon: mdi:fan
       basement:
         card:
-          type: custom:expander-card
-          expanded: true
-          title-card-clickable: true
-          card_mod:
-            style: |
-              ha-card {
-                background: var(--background-color) !important;
-                border: 1px solid rgba(255,255,255,0.06) !important;
-                border-radius: 22px !important;
-                padding: 8px 14px 10px !important;
-                box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset !important;
-              }
-          title-card:
-            type: custom:bubble-card
-            card_type: separator
-            name: Basement
-            icon: mdi:home-floor-b
-            rows: 0.75
-            sub_button:
-              - entity: sensor.basement_thermostat_homekit_current_temperature
-                show_state: true
-                show_icon: true
-                show_background: false
-              - entity: sensor.basement_thermostat_homekit_current_humidity
-                show_state: true
-                show_background: false
-                show_icon: true
-            styles: |
-              ha-card {
-                max-width: 100% !important;
-                width: 100% !important;
-                box-sizing: border-box !important;
-                overflow: hidden !important;
-              }
-              .bubble-name {
-                font-size: 16px !important;
-                font-weight: 700 !important;
-                letter-spacing: 0.1px !important;
-                color: var(--primary-text-color) !important;
-              }
-              .bubble-sub-button {
-                font-size: 16px !important;
-                font-weight: 600 !important;
-                color: var(--primary-text-color) !important;
-                background: transparent !important;
-                border: none !important;
-              }
-              .bubble-line {
-                background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
-                opacity: 1 !important;
-                height: 1px !important;
-              }
-              .card-content {
-                padding: 4px 6px 10px !important;
-                max-width: 100% !important;
-                box-sizing: border-box !important;
-              }
-              @media (max-width: 600px) {
-                .bubble-sub-button-4 { display: none !important; }
-              }
-              @media (max-width: 500px) {
-                .bubble-sub-button-2 { display: none !important; }
-              }
-              @media (max-width: 420px) {
-                .bubble-sub-button-3 { display: none !important; }
-              }
+          type: vertical-stack
           cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Basement
+              icon: mdi:home-floor-b
+              rows: 0.75
+              sub_button:
+                - entity: sensor.basement_thermostat_homekit_current_temperature
+                  show_state: true
+                  show_icon: true
+                  show_background: false
+                - entity: sensor.basement_thermostat_homekit_current_humidity
+                  show_state: true
+                  show_background: false
+                  show_icon: true
+              styles: |
+                ha-card {
+                  max-width: 100% !important;
+                  width: 100% !important;
+                  box-sizing: border-box !important;
+                  overflow: hidden !important;
+                }
+                .bubble-name {
+                  font-size: 20px !important;
+                  font-weight: bold !important;
+                  color: var(--primary-text-color) !important;
+                }
+                .bubble-sub-button {
+                  font-size: 16px !important;
+                  font-weight: 600 !important;
+                  color: var(--primary-text-color) !important;
+                  background: transparent !important;
+                  border: none !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color) !important;
+                  opacity: 0.1 !important;
+                }
+                .card-content {
+                  padding: 4px 6px 10px !important;
+                  max-width: 100% !important;
+                  box-sizing: border-box !important;
+                }
+                @media (max-width: 600px) {
+                  .bubble-sub-button-4 { display: none !important; }
+                }
+                @media (max-width: 500px) {
+                  .bubble-sub-button-2 { display: none !important; }
+                }
+                @media (max-width: 420px) {
+                  .bubble-sub-button-3 { display: none !important; }
+                }
             - type: vertical-stack
               cards:
                 - !include
@@ -263,69 +248,55 @@ cards:
                       row_icon: mdi:fan
       office:
         card:
-          type: custom:expander-card
-          expanded: true
-          title-card-clickable: true
-          card_mod:
-            style: |
-              ha-card {
-                background: var(--background-color) !important;
-                border: 1px solid rgba(255,255,255,0.06) !important;
-                border-radius: 22px !important;
-                padding: 8px 14px 10px !important;
-                box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset !important;
-              }
-          title-card:
-            type: custom:bubble-card
-            card_type: separator
-            name: Office and Bedrooms
-            icon: mdi:home-floor-2
-            rows: 0.75
-            sub_button:
-              - entity: sensor.office_thermostat_homekit_current_temperature
-                show_state: true
-                show_icon: true
-                show_background: false
-            styles: |
-              ha-card {
-                max-width: 100% !important;
-                width: 100% !important;
-                box-sizing: border-box !important;
-                overflow: hidden !important;
-              }
-              .bubble-name {
-                font-size: 16px !important;
-                font-weight: 700 !important;
-                letter-spacing: 0.1px !important;
-                color: var(--primary-text-color) !important;
-              }
-              .bubble-sub-button {
-                font-size: 16px !important;
-                font-weight: 600 !important;
-                color: var(--primary-text-color) !important;
-                background: transparent !important;
-                border: none !important;
-              }
-              .bubble-line {
-                background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
-                opacity: 1 !important;
-                height: 1px !important;
-              }
-              .card-content {
-                padding: 4px 6px 10px !important;
-                max-width: 100% !important;
-                box-sizing: border-box !important;
-              }
-              @media (max-width: 600px) {
-                .bubble-sub-button-4 { display: none !important; }
-              }
-              @media (max-width: 500px) {
-                .bubble-sub-button-2 { display: none !important; }
-              }
-              @media (max-width: 420px) {
-                .bubble-sub-button-3 { display: none !important; }
-              }
+          type: vertical-stack
           cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Office and Bedrooms
+              icon: mdi:home-floor-2
+              rows: 0.75
+              sub_button:
+                - entity: sensor.office_thermostat_homekit_current_temperature
+                  show_state: true
+                  show_icon: true
+                  show_background: false
+              styles: |
+                ha-card {
+                  max-width: 100% !important;
+                  width: 100% !important;
+                  box-sizing: border-box !important;
+                  overflow: hidden !important;
+                }
+                .bubble-name {
+                  font-size: 20px !important;
+                  font-weight: bold !important;
+                  color: var(--primary-text-color) !important;
+                }
+                .bubble-sub-button {
+                  font-size: 16px !important;
+                  font-weight: 600 !important;
+                  color: var(--primary-text-color) !important;
+                  background: transparent !important;
+                  border: none !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color) !important;
+                  opacity: 0.1 !important;
+                }
+                .card-content {
+                  padding: 4px 6px 10px !important;
+                  max-width: 100% !important;
+                  box-sizing: border-box !important;
+                }
+                @media (max-width: 600px) {
+                  .bubble-sub-button-4 { display: none !important; }
+                }
+                @media (max-width: 500px) {
+                  .bubble-sub-button-2 { display: none !important; }
+                }
+                @media (max-width: 420px) {
+                  .bubble-sub-button-3 { display: none !important; }
+                }
             - type: vertical-stack
               cards:
                 - !include
@@ -356,86 +327,75 @@ cards:
                       humidity_sensor: sensor.office_thermostat_homekit_current_humidity
       primbed:
         card:
-          type: custom:expander-card
-          expanded: true
-          title-card-clickable: true
-          card_mod:
-            style: |
-              ha-card {
-                background: var(--background-color) !important;
-                border: 1px solid rgba(255,255,255,0.06) !important;
-                border-radius: 22px !important;
-                padding: 8px 14px 10px !important;
-                box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset !important;
-              }
-          title-card:
-            type: custom:bubble-card
-            card_type: separator
-            name: Primary Bed
-            icon: mdi:bed
-            rows: 0.75
-            sub_button:
-              - entity: sensor.bedroom_thermostat_current_temperature
-                show_state: true
-                show_icon: true
-                show_background: false
-              - entity: sensor.bedroom_thermostat_current_humidity
-                show_state: true
-                show_background: false
-                show_icon: true
-              - entity: sensor.bedroom_co2_5min
-                show_state: true
-                show_background: false
-                show_icon: true
-              - entity: sensor.bedroom_pm2_5_5min
-                show_state: true
-                show_background: false
-                show_icon: true
-            styles: |
-              ha-card {
-                max-width: 100% !important;
-                width: 100% !important;
-                box-sizing: border-box !important;
-                overflow: hidden !important;
-              }
-              .bubble-name {
-                font-size: 16px !important;
-                font-weight: 700 !important;
-                letter-spacing: 0.1px !important;
-                color: var(--primary-text-color) !important;
-              }
-              .bubble-sub-button {
-                font-size: 16px !important;
-                font-weight: 600 !important;
-                color: var(--primary-text-color) !important;
-                background: transparent !important;
-                border: none !important;
-              }
-              .bubble-line {
-                background: linear-gradient(to right, rgba(255,255,255,0.12), transparent 90%) !important;
-                opacity: 1 !important;
-                height: 1px !important;
-              }
-              .card-content {
-                padding: 4px 6px 10px !important;
-                max-width: 100% !important;
-                box-sizing: border-box !important;
-              }
-              @media (max-width: 600px) {
-                .bubble-sub-button-4 { display: none !important; }
-              }
-              @media (max-width: 500px) {
-                .bubble-sub-button-2 { display: none !important; }
-              }
-              @media (max-width: 420px) {
-                .bubble-sub-button-3 { display: none !important; }
-              }
+          type: vertical-stack
           cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Primary Bed
+              icon: mdi:bed
+              rows: 0.75
+              sub_button:
+                - entity: sensor.bedroom_thermostat_current_temperature
+                  show_state: true
+                  show_icon: true
+                  show_background: false
+                - entity: sensor.bedroom_thermostat_current_humidity
+                  show_state: true
+                  show_background: false
+                  show_icon: true
+                - entity: sensor.bedroom_co2_5min
+                  show_state: true
+                  show_background: false
+                  show_icon: true
+                - entity: sensor.bedroom_pm2_5_5min
+                  show_state: true
+                  show_background: false
+                  show_icon: true
+              styles: |
+                ha-card {
+                  max-width: 100% !important;
+                  width: 100% !important;
+                  box-sizing: border-box !important;
+                  overflow: hidden !important;
+                }
+                .bubble-name {
+                  font-size: 20px !important;
+                  font-weight: bold !important;
+                  color: var(--primary-text-color) !important;
+                }
+                .bubble-sub-button {
+                  font-size: 16px !important;
+                  font-weight: 600 !important;
+                  color: var(--primary-text-color) !important;
+                  background: transparent !important;
+                  border: none !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color) !important;
+                  opacity: 0.1 !important;
+                }
+                .card-content {
+                  padding: 4px 6px 10px !important;
+                  max-width: 100% !important;
+                  box-sizing: border-box !important;
+                }
+                @media (max-width: 600px) {
+                  .bubble-sub-button-4 { display: none !important; }
+                }
+                @media (max-width: 500px) {
+                  .bubble-sub-button-2 { display: none !important; }
+                }
+                @media (max-width: 420px) {
+                  .bubble-sub-button-3 { display: none !important; }
+                }
             - type: vertical-stack
               cards:
                 - !include
                     - /config/dashboards/modules/mobile-climate-row.yaml
-                    - climate_entity: climate.master_bedroom_thermostat
+                    # Setpoint/mode control must be local (HomeKit); only fan
+                    # mode is controllable via the cloud (Lyric) entity.
+                    - climate_entity: climate.bedroom_thermostat
+                      fan_entity: climate.master_bedroom_thermostat
                       thermostat_name: Bedroom Thermostat
                       module_name: mobile_climate
                 - !include

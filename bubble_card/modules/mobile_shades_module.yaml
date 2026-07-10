@@ -34,7 +34,7 @@ mobile_shades_module:
         .bubble-sub-button { 
           font-size: 14px !important;
           font-weight: bold; 
-          color: ${state === 'open' ? 'var(--primary-text-color)' : 'var(--primary-text-color)'} !important;
+          color: var(--primary-text-color) !important;
           }
         
         .bubble-state {

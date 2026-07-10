@@ -4,14 +4,13 @@ theme: Dune Mist
 path: settings
 type: custom:grid-layout
 cards:
-# Sticky bottom nav
-- !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: more}]
-- !include /config/dashboards/modules/mobile-more-sheet.yaml
+# Hamburger nav sheet (standalone pop-up; keep as its own top-level card)
+- !include [/config/dashboards/modules/mobile-nav-sheet.yaml, {current: settings}]
 - type: custom:button-card
   styles:
     card:
     - border-radius: 15px
-    - padding-bottom: 90px
+    - padding-bottom: 24px
     - padding-left: 5px
     - padding-right: 10px
     - padding-top: 2px
@@ -46,20 +45,18 @@ cards:
           - transition: none
           - padding: 4px 2px 6px
           grid:
-          - grid-template-areas: '"i n" "i l"'
-          - grid-template-columns: 54px 1fr
+          - grid-template-areas: '"back i n menu" "back i l menu"'
+          - grid-template-columns: 24px 40px 1fr 40px
           - grid-template-rows: auto auto
           - align-items: center
           - column-gap: 8px
           img_cell:
           - grid-area: i
-          - width: 48px
-          - height: 48px
-          - border-radius: 13px
-          - background-color: rgba(142,177,191,0.18)
+          - width: 40px
+          - height: 40px
           icon:
           - width: 24px
-          - color: var(--slate-bright)
+          - color: var(--primary-text-color)
           name:
           - grid-area: n
           - justify-self: start
@@ -71,6 +68,21 @@ cards:
           - justify-self: start
           - font-size: 14px
           - color: var(--secondary-text-color)
+          custom_fields:
+            back:
+            - grid-area: back
+            - align-self: center
+            - justify-self: start
+            - margin-left: -8px
+            menu:
+            - grid-area: menu
+            - align-self: center
+            - justify-self: end
+        custom_fields:
+          back:
+            card: !include /config/dashboards/modules/mobile-header-back.yaml
+          menu:
+            card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
     main:
       card:
         type: vertical-stack
@@ -91,6 +103,7 @@ cards:
             style: |
               :host { display: block; background: var(--card-background-color);
                 border: 1px solid rgba(255,255,255,0.06); border-radius: 15px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
                 overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
           cards:
           - type: custom:button-card
@@ -379,6 +392,7 @@ cards:
             style: |
               :host { display: block; background: var(--card-background-color);
                 border: 1px solid rgba(255,255,255,0.06); border-radius: 15px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
                 overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
           cards:
           - type: custom:button-card
@@ -705,6 +719,7 @@ cards:
             style: |
               :host { display: block; background: var(--card-background-color);
                 border: 1px solid rgba(255,255,255,0.06); border-radius: 15px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
                 overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
           cards:
           - type: custom:button-card
@@ -972,7 +987,7 @@ cards:
             icon: mdi:cellphone
             tap_action:
               action: none
-            state_display: v2.1.0
+            state_display: v2.1.1
             styles:
               card:
               - background: transparent !important
@@ -1004,6 +1019,18 @@ cards:
           cards:
             - type: markdown
               content: |
+                **v2.1.1** — 2026-07-09
+
+                - Navigation: retired the bottom tab bar for a hamburger menu — a drop-down nav sheet from the top of every view (compass + Menu header) listing all destinations with live status and highlighting the current one; back button on every sub-view; Home keeps its inline menu
+                - Settings: Quick Toggles, Sections and Values boxes now carry the standard card shadow for depth consistent with the rest of the dashboard
+                - Energy: 24-hour power-flow chart fixed — the HVAC lines now plot, and the Home line shows "other" usage (whole-home minus HVAC) so HVAC draw isn't double-counted
+                - HVAC power: estimated-power model refit from peak-summer data — the cooling plateau now scales with outdoor temperature (≈700 W mild → 1,400 W hot) instead of a flat 1,100 W, correcting ~30–50% over-counting on mild/overnight runs
+                - Bedroom climate: thermostat control consolidated onto the local (HomeKit) entity for setpoints/mode with the cloud entity kept only for fan and presets — fixes dormant branches in the away/outage logic
+                - Climate view: section expanders removed (each is now a flat separator + rows), cards a shade darker, and separator titles/dividers matched to the Lights view; added a Powder Room Exhaust Fan toggle to the First Floor section
+                - Ventilation: the powder room exhaust fan now joins free cooling as the first-floor counterpart to the basement bathroom fan — each exhaust fan runs while its zone wants cooling and the adjacent room isn't playing media (off instantly on playback, back after a 2-min quiet debounce), with a 20-minute auto-off after a manual press
+                - Reliability: power-outage load-shed actions now target named entities (pool filter, dryer, washer, irrigation standby) instead of opaque device references
+                - Cleanup: removed orphaned dashboard modules and repaired dormant CSS in the notification cards
+
                 **v2.1.0** — 2026-07-06
 
                 - Home: status icons reordered (guests · party · notifications · alarm · temp); equal section margins

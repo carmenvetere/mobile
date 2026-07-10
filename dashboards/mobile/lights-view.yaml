@@ -5,14 +5,13 @@ theme: Dune Mist
 path: lights-main
 type: custom:grid-layout
 cards:
-  # Sticky bottom nav
-  - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: lights}]
-  - !include /config/dashboards/modules/mobile-more-sheet.yaml
+  # Hamburger nav sheet (standalone pop-up; keep as its own top-level card)
+  - !include [/config/dashboards/modules/mobile-nav-sheet.yaml, {current: lights}]
   - type: custom:button-card
     styles:
       card:
         - border-radius: 15px
-        - padding-bottom: 90px
+        - padding-bottom: 24px
         - padding-left: 5px
         - padding-right: 10px
         - padding-top: 2px
@@ -57,20 +56,18 @@ cards:
               - transition: none
               - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: '"i n n" "i l s"'
-              - grid-template-columns: 54px auto 1fr
+              - grid-template-areas: '"back i n n menu" "back i l s menu"'
+              - grid-template-columns: 24px 40px auto 1fr 40px
               - grid-template-rows: auto auto
               - align-items: center
               - column-gap: 8px
             img_cell:
               - grid-area: i
-              - width: 48px
-              - height: 48px
-              - border-radius: 13px
-              - background-color: "rgba(226,193,104,0.18)"
+              - width: 40px
+              - height: 40px
             icon:
               - width: 24px
-              - color: var(--gold-color)
+              - color: var(--primary-text-color)
             name:
               - grid-area: n
               - justify-self: start
@@ -88,6 +85,21 @@ cards:
               - justify-self: start
               - font-size: 14px
               - color: var(--secondary-text-color)
+            custom_fields:
+              back:
+                - grid-area: back
+                - align-self: center
+                - justify-self: start
+                - margin-left: -8px
+              menu:
+                - grid-area: menu
+                - align-self: center
+                - justify-self: end
+          custom_fields:
+            back:
+              card: !include /config/dashboards/modules/mobile-header-back.yaml
+            menu:
+              card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
       main:
         card:
           type: vertical-stack

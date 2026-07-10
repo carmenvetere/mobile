@@ -4,14 +4,13 @@ theme: Dune Mist
 path: shades-main
 type: custom:grid-layout
 cards:
-  # Sticky bottom nav
-  - !include [/config/dashboards/modules/mobile-bottom-nav.yaml, {active: more}]
-  - !include /config/dashboards/modules/mobile-more-sheet.yaml
+  # Hamburger nav sheet (standalone pop-up; keep as its own top-level card)
+  - !include [/config/dashboards/modules/mobile-nav-sheet.yaml, {current: shades}]
   - type: custom:button-card
     styles:
       card:
         - border-radius: 15px
-        - padding-bottom: 90px
+        - padding-bottom: 24px
         - padding-left: 5px
         - padding-right: 10px
         - padding-top: 2px
@@ -57,20 +56,18 @@ cards:
               - transition: none
               - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: "\"i n n closeall\" \"i l s closeall\""
-              - grid-template-columns: 54px auto 1fr auto
+              - grid-template-areas: "\"back i n n closeall menu\" \"back i l s closeall menu\""
+              - grid-template-columns: 24px 40px auto 1fr auto 40px
               - grid-template-rows: auto auto
               - align-items: center
               - column-gap: 8px
             img_cell:
               - grid-area: i
-              - width: 48px
-              - height: 48px
-              - border-radius: 13px
-              - background-color: rgba(142,177,191,0.18)
+              - width: 40px
+              - height: 40px
             icon:
               - width: 24px
-              - color: var(--slate-bright)
+              - color: var(--primary-text-color)
             name:
               - grid-area: "n"
               - justify-self: start
@@ -89,11 +86,24 @@ cards:
               - font-size: 14px
               - color: var(--secondary-text-color)
             custom_fields:
+              back:
+                - grid-area: back
+                - align-self: center
+                - justify-self: start
+                - margin-left: -8px
+              menu:
+                - grid-area: menu
+                - align-self: center
+                - justify-self: end
               closeall:
                 - grid-area: closeall
                 - justify-self: end
                 - min-width: max-content
           custom_fields:
+            back:
+              card: !include /config/dashboards/modules/mobile-header-back.yaml
+            menu:
+              card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
             closeall:
               card:
                 type: custom:button-card

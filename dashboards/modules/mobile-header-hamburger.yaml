@@ -1,0 +1,29 @@
+# ============================================================================
+#  Mobile Dash · Header hamburger button · 40x40, no background, no border
+#  Sits in the TOP-RIGHT corner of every sub-view header (all views except
+#  Home) and toggles the #nav-menu sheet (mobile-nav-sheet.yaml). Consumed as
+#  a header custom_fields card:
+#    custom_fields:
+#      menu:
+#        card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
+# ============================================================================
+type: custom:button-card
+icon: mdi:menu
+show_name: false
+tap_action:
+  action: navigate
+  navigation_path: "#nav-menu"
+styles:
+  card:
+    - width: 40px
+    - height: 40px
+    - background: transparent !important
+    - --ha-card-background: transparent
+    - border: none
+    - border-radius: 999px
+    - box-shadow: none
+    - transition: none
+    - padding: 0
+  icon:
+    - width: 26px
+    - color: var(--primary-text-color)

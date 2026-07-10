@@ -320,6 +320,26 @@
           {{ [total - well - ev - hvac_up - hvac_low, 0] | max | round(2) }}
         {% endif %}
 
+# ---------------------------------------------------------------------------
+# Home "other" power for the 24 h power-flow chart (#152): whole-home load
+# minus the chart's other consumption series (upper/lower HVAC), so the Home
+# line no longer double-displays the HVAC draw. Power-side counterpart of
+# sensor.home_other_usage (energy). Re-renders on every load/HVAC change.
+- sensor:
+    - name: "Home Other Power"
+      unique_id: home_other_power
+      unit_of_measurement: "kW"
+      device_class: power
+      state_class: measurement
+      icon: mdi:home-lightning-bolt
+      availability: >
+        {{ states('sensor.load_power_5min') not in ['unknown', 'unavailable'] }}
+      state: >
+        {% set load = states('sensor.load_power_5min') | float(0) %}
+        {% set up = states('sensor.upper_hvac_estimated_power') | float(0) %}
+        {% set low = states('sensor.lower_hvac_estimated_power') | float(0) %}
+        {{ [load - (up + low) / 1000, 0] | max | round(2) }}
+
 - sensor:
     - name: "Living Room Favorites"
       unique_id: living_room_favorites
@@ -820,21 +840,27 @@
         minutely: "{{ trigger.event.data.minutely }}"
 # ═══════════════════════════════════════════════════════════════════
 # HVAC estimated power sensors
-# Model: P(t) = P_max - (P_max - P_start) * e^(-t/tau), t = minutes since compressor start.
+# MODEL: P(t) = P_max(T) - (P_max(T) - P_start) * e^(-t/tau), t = min since compressor start.
+#   P_start = 600 W, tau = 5 min (both confirmed across many July cold starts).
+#   P_max is OUTDOOR-TEMPERATURE-DEPENDENT (T = sensor.bayberry_tempest_temperature, degF):
+#       P_max(T) = clamp( 1100 + 45*(T-82),  700 W floor,  1400 W cap )
+#     -> ~700 W at <=73F, ~830 W at 76F, 1100 W at 82F, 1400 W (capped) at >=89F.
+#   Fan-only: 120 W. Gas backup (below input_number.hvac_gas_switchover_temperature): 250 W.
+#   Upper and lower are the same equipment, so both use the identical curve (per Carmen).
 #
-# REFIT 2026-06-14 from warm-weather AC runs (Powerwall load step vs thermostat history):
-#   Upper (Bedroom/Master Bedroom/Office): 600 W -> 1100 W, tau 5 min   (was 480->1030, tau 26)
-#   Lower (Living Room/Basement):          600 W -> 1100 W, tau 5 min   (was 300->550, tau 22)
-#   Fan-only: 120 W. Gas backup (below input_number.hvac_gas_switchover_temperature): 250 W blower.
+# HISTORY:
+#  - 2026-06-14 refit fixed the original tau=26min (far too slow -> ~30-40% undercount) to 5min,
+#    and raised the flat plateau to 1100 W. Fit from upper-unit cycles only, all <=79F.
+#  - 2026-07-09 validation on ~10 days of peak-summer data: P_start=600 and tau=5 both hold up.
+#    A clean LOWER-unit cycle was finally isolated (82F, ~1130 W) and matches the upper unit's
+#    curve, confirming the shared-curve assumption. The flat 1100 W plateau was the weak point:
+#    real plateau scales with outdoor temp (~680-730 W at 68-73F, ~800 W at 76F, ~1100 W at 82F),
+#    so flat 1100 over-counted mild/overnight runs ~30-50%. Replaced with the P_max(T) ramp above.
 #
-# Upper and lower are the same equipment, so both use the identical curve (per Carmen).
-#
-# WHY: original tau=26 min ramp was far too slow. Real compressors reach plateau in ~5 min,
-# but cooling cycles here only last ~13-16 min, so the old model ended every cycle still at
-# ~700 W when the unit was actually drawing 850-1100 W -- under-counting cooling energy by
-# ~30-40%. Fit is from 9 clean warm upper-unit cycles (all <=79F); the lower unit's own runs
-# all overlapped the pool pump and couldn't be isolated, so it inherits the upper-unit fit.
-# P_max is a warm-weather asymptote (runs a bit higher on truly hot days, ~+12 W/F above ~68F).
+# CAVEATS: the 68-82F slope is measured; the >82F branch (up to the 1400 W cap) is an extrapolation
+# -- a large unmetered 2-5 kW afternoon load (EV charger or pool heat pump?) masks the AC signal on
+# the hottest afternoons, so true 90F+ plateau (est. ~1250-1450 W) is unconfirmed. Metering that
+# load would allow a proper hot-end calibration. Energy counters only accrue from creation forward.
 # Requires: input_number.hvac_gas_switchover_temperature (already created via UI).
 # ═══════════════════════════════════════════════════════════════════
 - binary_sensor:
@@ -870,14 +896,16 @@
                         state_attr('climate.office_thermostat','fan_mode')] -%}
         {%- set t = ((now() - states[comp].last_changed).total_seconds() / 60)
                     if (states[comp] is not none and is_state(comp,'on')) else 0 -%}
+        {%- set toa = states('sensor.bayberry_tempest_temperature') | float(78) -%}
+        {%- set pmax = [1400, [700, 1100 + 45 * (toa - 82)] | max] | min -%}
         {%- if 'cooling' in acts -%}
-          {{ (1100 - 500 * e**(-t/5)) | round(0) }}
+          {{ (pmax - (pmax - 600) * e**(-t/5)) | round(0) }}
         {%- elif 'heating' in acts -%}
-          {%- if states('sensor.tempest_temperature_5min') | float(50)
+          {%- if states('sensor.bayberry_tempest_temperature') | float(50)
                 < states('input_number.hvac_gas_switchover_temperature') | float(35) -%}
             250
           {%- else -%}
-            {{ (1100 - 500 * e**(-t/5)) | round(0) }}
+            {{ (pmax - (pmax - 600) * e**(-t/5)) | round(0) }}
           {%- endif -%}
         {%- elif 'fan' in acts or 'on' in fans -%}
           120
@@ -897,14 +925,16 @@
                         state_attr('climate.basement_thermostat','fan_mode')] -%}
         {%- set t = ((now() - states[comp].last_changed).total_seconds() / 60)
                     if (states[comp] is not none and is_state(comp,'on')) else 0 -%}
+        {%- set toa = states('sensor.bayberry_tempest_temperature') | float(78) -%}
+        {%- set pmax = [1400, [700, 1100 + 45 * (toa - 82)] | max] | min -%}
         {%- if 'cooling' in acts -%}
-          {{ (1100 - 500 * e**(-t/5)) | round(0) }}
+          {{ (pmax - (pmax - 600) * e**(-t/5)) | round(0) }}
         {%- elif 'heating' in acts -%}
-          {%- if states('sensor.tempest_temperature_5min') | float(50)
+          {%- if states('sensor.bayberry_tempest_temperature') | float(50)
                 < states('input_number.hvac_gas_switchover_temperature') | float(35) -%}
             250
           {%- else -%}
-            {{ (1100 - 500 * e**(-t/5)) | round(0) }}
+            {{ (pmax - (pmax - 600) * e**(-t/5)) | round(0) }}
           {%- endif -%}
         {%- elif 'fan' in acts or 'on' in fans -%}
           120
