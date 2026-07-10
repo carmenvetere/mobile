@@ -348,9 +348,19 @@ cards:
     name: Nightlight
     icon: mdi:lightbulb-night
     visibility:
-      - condition: time
-        after: "22:00:00"
-        before: "05:00:00"
+      - condition: or
+        conditions:
+          - condition: and
+            conditions:
+              - condition: numeric_state
+                entity: sensor.sun_solar_elevation
+                below: 15
+              - condition: time
+                after: "18:00:00"
+                before: "22:00:00"
+          - condition: time
+            after: "22:00:00"
+            before: "05:00:00"
     button_action:
       tap_action:
         action: perform-action
