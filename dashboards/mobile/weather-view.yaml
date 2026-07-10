@@ -311,11 +311,17 @@ cards:
                         background: var(--ha-card-background);
                         border-radius: 18px;
                       }
-                - graph: line
-                  type: sensor
+                - type: gauge
                   entity: sensor.bayberry_tempest_precipitation
-                  detail: 1
-                  name: Precipitation
+                  name: Rain Gauge
+                  unit: in
+                  needle: true
+                  min: 0
+                  max: 1
+                  severity:
+                    green: 0
+                    yellow: 0.1
+                    red: 0.3
                   card_mod:
                     style: |
                       ha-card {
