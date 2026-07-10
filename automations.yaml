@@ -5700,12 +5700,24 @@
     intake air is OK (vent_min_outdoor < outdoor < vent_max_outdoor, dew < 65F,
     no rain), open damper + run living-room blower to dilute. No bathroom fan, so
     quiet at all hours. Latches via input_boolean.co2_vent_active, clears below
-    co2_vent_recover. PATH B (free cooling): 20:00-22:00 pre-cool damper+blowers
-    only; 22:00-08:00 adds basement bathroom fan. Cools each zone toward its
-    input_number floor while outdoor is at least freecool_differential below the
-    zone and dew/rain OK. Basement fan ownership via
-    input_boolean.economizer_owns_basement_fan so the 45-min manual timer never
-    fights it. PATH C (minimum ventilation, no time-of-day window): when the
+    co2_vent_recover. PATH B (free cooling, 20:00-08:00): damper + zone blowers
+    cool each zone toward its input_number floor while outdoor is at least
+    freecool_differential below the zone and dew/rain OK. The two exhaust fans
+    are zone-gated AND noise-gated: the basement bathroom fan runs when the
+    basement (z2) wants cooling and media_player.media_room is not playing; the
+    first-floor powder room exhaust fan (switch.powder_room_powder_room_exhaust_fan,
+    110 cfm) runs when the first floor (z1) wants cooling and
+    media_player.living_room is not playing. So an exhaust fan is available any
+    time within free cooling that the adjacent room is not watching media, rather
+    than only overnight. A fan turns OFF immediately when its room starts playing
+    (to: playing trigger) but only becomes available again after 2 min of
+    continuous quiet (debounce via last_changed + a template "for: 2 min"
+    trigger), so a brief pause does not cycle the fan. Each exhaust fan has an
+    ownership flag
+    (input_boolean.economizer_owns_basement_fan / economizer_owns_powder_fan) so
+    a manual/external start is never fought and the economizer only turns off a
+    fan it started. Paths A and C stay quiet (damper + blowers, no exhaust fan).
+    PATH C (minimum ventilation, no time-of-day window): when the
     damper has run less than minvent_floor_minutes in the trailing 24 h
     (sensor.fresh_air_damper_on_24_h) and intake conditions are OK, opens damper
     + living-room blower only (quiet) until the floor is met - stateless and
@@ -5792,6 +5804,24 @@
     entity_id: sensor.fresh_air_damper_on_24_h
     above: 0.5
     id: minvent_met
+  - trigger: state
+    entity_id: media_player.media_room
+    to: playing
+    id: media_room_play
+  - trigger: template
+    value_template: "{{ not is_state('media_player.media_room', 'playing') }}"
+    for:
+      minutes: 2
+    id: media_room_quiet
+  - trigger: state
+    entity_id: media_player.living_room
+    to: playing
+    id: living_room_play
+  - trigger: template
+    value_template: "{{ not is_state('media_player.living_room', 'playing') }}"
+    for:
+      minutes: 2
+    id: living_room_quiet
   actions:
   - variables:
       co2_first: '{{ states(''sensor.first_floor_co2_5min'') | float(400) }}'
@@ -5830,7 +5860,14 @@
         }}'
       minvent_want: '{{ dry_ok and outdoor > out_min and outdoor < out_max and runtime_24h_min
         < minvent_floor }}'
-      run_basement_fan: '{{ freecool_demand and overnight_fan and z2_cool_ok }}'
+      media_room_quiet: '{{ not is_state(''media_player.media_room'', ''playing'')
+        and (now() - states.media_player.media_room.last_changed).total_seconds()
+        >= 120 }}'
+      living_room_quiet: '{{ not is_state(''media_player.living_room'', ''playing'')
+        and (now() - states.media_player.living_room.last_changed).total_seconds()
+        >= 120 }}'
+      run_basement_fan: '{{ freecool_demand and z2_cool_ok and media_room_quiet }}'
+      run_powder_fan: '{{ freecool_demand and z1_cool_ok and living_room_quiet }}'
       z1_blower_on: '{{ co2_want or freecool_demand or minvent_want }}'
       z2_blower_on: '{{ freecool_demand and z2_cool_ok }}'
       damper_open: '{{ co2_want or freecool_demand or minvent_want }}'
@@ -5838,7 +5875,7 @@
         ''on'') }}'
       fresh_air_available: '{{ dry_ok and ((not fa_currently and outdoor < warmest_indoor
         - 4) or (fa_currently and outdoor < warmest_indoor - 1)) }}'
-  - alias: Basement fan (Path B overnight) with ownership
+  - alias: Basement fan (Path B, media-gated) with ownership
     if:
     - condition: template
       value_template: '{{ run_basement_fan }}'
@@ -5876,6 +5913,44 @@
       - action: input_boolean.turn_off
         target:
           entity_id: input_boolean.economizer_owns_basement_fan
+  - alias: Powder room fan (Path B, media-gated, first floor) with ownership
+    if:
+    - condition: template
+      value_template: '{{ run_powder_fan }}'
+    then:
+    - if:
+      - condition: state
+        entity_id: input_boolean.economizer_owns_powder_fan
+        state: 'off'
+      then:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.economizer_owns_powder_fan
+    - if:
+      - condition: state
+        entity_id: switch.powder_room_powder_room_exhaust_fan
+        state: 'off'
+      then:
+      - action: switch.turn_on
+        target:
+          entity_id: switch.powder_room_powder_room_exhaust_fan
+    else:
+    - if:
+      - condition: state
+        entity_id: input_boolean.economizer_owns_powder_fan
+        state: 'on'
+      then:
+      - if:
+        - condition: state
+          entity_id: switch.powder_room_powder_room_exhaust_fan
+          state: 'on'
+        then:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.powder_room_powder_room_exhaust_fan
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.economizer_owns_powder_fan
   - alias: CO2 flush active flag
     if:
     - condition: template
@@ -6010,8 +6085,9 @@
         }}F dew={{ dew }}F dry_ok={{ dry_ok }} intake_ok={{ co2_intake_ok }} | Z1={{
         z1 }}/{{ z1_min }} Z2={{ z2 }}/{{ z2_min }} | trig={{ trigger.id | default(''manual'')
         }} -> co2_want={{ co2_want }} freecool={{ freecool_demand }} minvent={{ minvent_want
-        }} runtime24h={{ runtime_24h_min }}min bfan={{ run_basement_fan }} damper={{
-        damper_open }} z1b={{ z1_blower_on }} z2b={{ z2_blower_on }}'
+        }} runtime24h={{ runtime_24h_min }}min bfan={{ run_basement_fan }} pfan={{
+        run_powder_fan }} mroomq={{ media_room_quiet }} lroomq={{ living_room_quiet
+        }} damper={{ damper_open }} z1b={{ z1_blower_on }} z2b={{ z2_blower_on }}'
       level: info
   mode: restart
 - id: '1777031732859'
@@ -7608,3 +7684,45 @@
       target:
         entity_id: automation.bedroom_hvac_schedule
   mode: single
+- id: '1783000000004'
+  alias: Powder Room Exhaust Fan Turns Off after 20 min
+  description: '20-min auto-off timer for the powder room exhaust fan after a manual/external
+    press (wall switch, Lutron app, guest use). Skips when input_boolean.economizer_owns_powder_fan
+    is on - that flag means the Fresh Air Ventilation economizer started the fan for
+    free cooling and will turn it off itself. Re-checks the flag and fan state after
+    the delay so it never fights the economizer: if the economizer adopted the fan
+    during the 20 min (claimed ownership), the timer leaves it running. mode: restart
+    so a new press restarts the 20-min window.'
+  triggers:
+  - platform: state
+    entity_id:
+    - switch.powder_room_powder_room_exhaust_fan
+    from:
+    - 'off'
+    to:
+    - 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  conditions:
+  - condition: state
+    entity_id: input_boolean.economizer_owns_powder_fan
+    state: 'off'
+  actions:
+  - delay:
+      hours: 0
+      minutes: 20
+      seconds: 0
+  - if:
+    - condition: state
+      entity_id: switch.powder_room_powder_room_exhaust_fan
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.economizer_owns_powder_fan
+      state: 'off'
+    then:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.powder_room_powder_room_exhaust_fan
+  mode: restart
