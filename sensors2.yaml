@@ -819,22 +819,53 @@
       attributes:
         minutely: "{{ trigger.event.data.minutely }}"
 # ═══════════════════════════════════════════════════════════════════
-# HVAC estimated power sensors
-# Model: P(t) = P_max - (P_max - P_start) * e^(-t/tau), t = minutes since compressor start.
+# HVAC estimated power & cumulative energy sensors
 #
-# REFIT 2026-06-14 from warm-weather AC runs (Powerwall load step vs thermostat history):
-#   Upper (Bedroom/Master Bedroom/Office): 600 W -> 1100 W, tau 5 min   (was 480->1030, tau 26)
-#   Lower (Living Room/Basement):          600 W -> 1100 W, tau 5 min   (was 300->550, tau 22)
-#   Fan-only: 120 W. Gas backup (below input_number.hvac_gas_switchover_temperature): 250 W blower.
+# MODEL: P(t) = P_max(T) - (P_max(T) - P_start) * e^(-t/tau), t = min since compressor start.
+#   P_start = 600 W, tau = 5 min (both confirmed across many July cold starts).
+#   P_max is now OUTDOOR-TEMPERATURE-DEPENDENT (T = sensor.bayberry_tempest_temperature, degF).
+#   Piecewise: steeper below 82F (measured), flatter + saturating above (compressor near capacity):
+#       slope   = 45 W/degF if T <= 82 else 30 W/degF
+#       P_max(T) = clamp( 1100 + slope*(T-82),  700 W floor,  1250 W cap )
+#     -> ~700 W at <=73F, ~830 W at 76F, 1100 W at 82F, ~1190 W at 85F, 1250 W (capped) at >=89F.
+#   HEATING (heat pump, outdoor T >= switchover): draw RISES as it gets colder (opposite of cooling):
+#       P_max_heat(T) = clamp( 2590 - 41*T,  750 floor,  1550 cap )
+#     -> ~750 W at >=45F, ~1030 W at 38F, ~1200 W at 34F, ~1360 W at 30F, ~1550 W (capped) at <=26F.
+#   Gas backup (outdoor T < input_number.hvac_gas_switchover_temperature = 20F): 250 W blower.
+#   Fan-only: 120 W.  Upper and lower are the same equipment, so both use the identical curve.
 #
-# Upper and lower are the same equipment, so both use the identical curve (per Carmen).
+# HISTORY:
+#  - 2026-06-14 refit fixed the original tau=26min (far too slow -> ~30-40% undercount) to 5min,
+#    and raised the flat plateau to 1100 W. Fit from upper-unit cycles only, all <=79F.
+#  - 2026-07-09 validation on ~10 days of peak-summer data: P_start=600 and tau=5 both hold up.
+#    A clean LOWER-unit cycle was finally isolated (82F, ~1130 W) and matches the upper unit's
+#    curve, confirming the shared-curve assumption. The flat 1100 W plateau was the weak point:
+#    real plateau scales with outdoor temp (~680-730 W at 68-73F, ~800 W at 76F, ~1100 W at 82F),
+#    so flat 1100 over-counted mild/overnight runs ~30-50%. Replaced with the P_max(T) ramp above.
+#  - 2026-07-09 hot-end calibration: the confounding 2-5 kW hot-afternoon load is the POOL HEAT PUMP
+#    (water_heater.omnilogic_pool_heater; unmetered for power, on/off via
+#    binary_sensor.pool_omnilogic_pool_heat_pump_heater_equipment_status). Manual signature-reading
+#    of clean single-unit windows up to ~91F showed the hot end is FLATTER than first assumed:
+#    slope ~30 W/degF above 82F and saturating ~1250 W by ~89F (NOT 45 W/degF to a 1400 cap).
+#    Slope/cap lowered accordingly. Now validated ~68-92F.
+#  - 2026-07-09 heating-branch validation from winter long-term statistics (Nov 2025-Feb 2026):
+#    confirmed the house is genuinely DUAL-FUEL. Deep-cold nights (10-18F, below the 20F switchover)
+#    drew only ~0.3-0.5 kW combined (blower only -> gas backup, 250 W/handler is right; the feared
+#    electric-strip case is absent). Mild days (~42-44F, heat pump live) drew ~0.8-1.5 kW/handler.
+#    Switchover is 20F (per Carmen), not the 35F default originally assumed. The heat-pump heating
+#    branch previously REUSED the cooling curve (floored 700 W) and under-counted heating ~1/3-1/2.
+#  - 2026-07-09 FULL-winter heating fit: mined all of Dec2025-Feb2026 hourly stats (~1770 samples;
+#    ~290 overnight hours in the 20-36F band, near-100% duty). Overnight upper-envelope method (house
+#    baseline ~0.45 kW, both handlers running, EV excluded) gives per-handler plateau: ~1550 W at
+#    20-24F, ~1530 at 26F, ~1360 at 30F, ~1200 at 34F, ~1030 at 38F. Draw rises ~41 W/degF colder,
+#    capping ~1550 W (hit by ~26F). Fit: P_max_heat(T)=clamp(2590-41*T, 750, 1550), validated 20-47F.
+#    This replaced the provisional 2420-30*T/1500 which ran ~150-250 W high through the 20-35F band.
 #
-# WHY: original tau=26 min ramp was far too slow. Real compressors reach plateau in ~5 min,
-# but cooling cycles here only last ~13-16 min, so the old model ended every cycle still at
-# ~700 W when the unit was actually drawing 850-1100 W -- under-counting cooling energy by
-# ~30-40%. Fit is from 9 clean warm upper-unit cycles (all <=79F); the lower unit's own runs
-# all overlapped the pool pump and couldn't be isolated, so it inherits the upper-unit fit.
-# P_max is a warm-weather asymptote (runs a bit higher on truly hot days, ~+12 W/F above ~68F).
+# CAVEATS: cooling cool/mid (68-82F) well measured; cooling >82F is +/-150-200 W (next hot spell tightens).
+# HEATING: the 20-36F band is now solid (hundreds of near-100%-duty overnight hours). The 38-47F warm end
+# is a LOWER bound (hourly-mean smoothing + sub-100% duty depress it), so true mild-day draw may be a few
+# hundred W higher there -- refine next winter (estimate sensors live now, pool off = cleaner meter).
+# No data below 10F. Energy counters only accrue from creation forward.
 # Requires: input_number.hvac_gas_switchover_temperature (already created via UI).
 # ═══════════════════════════════════════════════════════════════════
 - binary_sensor:
@@ -870,14 +901,18 @@
                         state_attr('climate.office_thermostat','fan_mode')] -%}
         {%- set t = ((now() - states[comp].last_changed).total_seconds() / 60)
                     if (states[comp] is not none and is_state(comp,'on')) else 0 -%}
+        {%- set toa = states('sensor.bayberry_tempest_temperature') | float(78) -%}
+        {%- set slope = 45 if toa <= 82 else 30 -%}
+        {%- set pmax = [1250, [700, 1100 + slope * (toa - 82)] | max] | min -%}
         {%- if 'cooling' in acts -%}
-          {{ (1100 - 500 * e**(-t/5)) | round(0) }}
+          {{ (pmax - (pmax - 600) * e**(-t/5)) | round(0) }}
         {%- elif 'heating' in acts -%}
           {%- if states('sensor.bayberry_tempest_temperature') | float(50)
-                < states('input_number.hvac_gas_switchover_temperature') | float(35) -%}
+                < states('input_number.hvac_gas_switchover_temperature') | float(20) -%}
             250
           {%- else -%}
-            {{ (1100 - 500 * e**(-t/5)) | round(0) }}
+            {%- set pmh = [1550, [750, 2590 - 41 * toa] | max] | min -%}
+            {{ (pmh - (pmh - 600) * e**(-t/5)) | round(0) }}
           {%- endif -%}
         {%- elif 'fan' in acts or 'on' in fans -%}
           120
@@ -897,14 +932,18 @@
                         state_attr('climate.basement_thermostat','fan_mode')] -%}
         {%- set t = ((now() - states[comp].last_changed).total_seconds() / 60)
                     if (states[comp] is not none and is_state(comp,'on')) else 0 -%}
+        {%- set toa = states('sensor.bayberry_tempest_temperature') | float(78) -%}
+        {%- set slope = 45 if toa <= 82 else 30 -%}
+        {%- set pmax = [1250, [700, 1100 + slope * (toa - 82)] | max] | min -%}
         {%- if 'cooling' in acts -%}
-          {{ (1100 - 500 * e**(-t/5)) | round(0) }}
+          {{ (pmax - (pmax - 600) * e**(-t/5)) | round(0) }}
         {%- elif 'heating' in acts -%}
           {%- if states('sensor.bayberry_tempest_temperature') | float(50)
-                < states('input_number.hvac_gas_switchover_temperature') | float(35) -%}
+                < states('input_number.hvac_gas_switchover_temperature') | float(20) -%}
             250
           {%- else -%}
-            {{ (1100 - 500 * e**(-t/5)) | round(0) }}
+            {%- set pmh = [1550, [750, 2590 - 41 * toa] | max] | min -%}
+            {{ (pmh - (pmh - 600) * e**(-t/5)) | round(0) }}
           {%- endif -%}
         {%- elif 'fan' in acts or 'on' in fans -%}
           120
