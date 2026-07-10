@@ -5709,8 +5709,11 @@
     110 cfm) runs when the first floor (z1) wants cooling and
     media_player.living_room is not playing. So an exhaust fan is available any
     time within free cooling that the adjacent room is not watching media, rather
-    than only overnight. State triggers on both media players re-evaluate
-    promptly when playback starts/stops. Each exhaust fan has an ownership flag
+    than only overnight. A fan turns OFF immediately when its room starts playing
+    (to: playing trigger) but only becomes available again after 2 min of
+    continuous quiet (debounce via last_changed + a template "for: 2 min"
+    trigger), so a brief pause does not cycle the fan. Each exhaust fan has an
+    ownership flag
     (input_boolean.economizer_owns_basement_fan / economizer_owns_powder_fan) so
     a manual/external start is never fought and the economizer only turns off a
     fan it started. Paths A and C stay quiet (damper + blowers, no exhaust fan).
@@ -5805,18 +5808,20 @@
     entity_id: media_player.media_room
     to: playing
     id: media_room_play
-  - trigger: state
-    entity_id: media_player.media_room
-    from: playing
-    id: media_room_stop
+  - trigger: template
+    value_template: "{{ not is_state('media_player.media_room', 'playing') }}"
+    for:
+      minutes: 2
+    id: media_room_quiet
   - trigger: state
     entity_id: media_player.living_room
     to: playing
     id: living_room_play
-  - trigger: state
-    entity_id: media_player.living_room
-    from: playing
-    id: living_room_stop
+  - trigger: template
+    value_template: "{{ not is_state('media_player.living_room', 'playing') }}"
+    for:
+      minutes: 2
+    id: living_room_quiet
   actions:
   - variables:
       co2_first: '{{ states(''sensor.first_floor_co2_5min'') | float(400) }}'
@@ -5856,9 +5861,11 @@
       minvent_want: '{{ dry_ok and outdoor > out_min and outdoor < out_max and runtime_24h_min
         < minvent_floor }}'
       media_room_quiet: '{{ not is_state(''media_player.media_room'', ''playing'')
-        }}'
+        and (now() - states.media_player.media_room.last_changed).total_seconds()
+        >= 120 }}'
       living_room_quiet: '{{ not is_state(''media_player.living_room'', ''playing'')
-        }}'
+        and (now() - states.media_player.living_room.last_changed).total_seconds()
+        >= 120 }}'
       run_basement_fan: '{{ freecool_demand and z2_cool_ok and media_room_quiet }}'
       run_powder_fan: '{{ freecool_demand and z1_cool_ok and living_room_quiet }}'
       z1_blower_on: '{{ co2_want or freecool_demand or minvent_want }}'
@@ -7677,3 +7684,45 @@
       target:
         entity_id: automation.bedroom_hvac_schedule
   mode: single
+- id: '1783000000004'
+  alias: Powder Room Exhaust Fan Turns Off after 20 min
+  description: '20-min auto-off timer for the powder room exhaust fan after a manual/external
+    press (wall switch, Lutron app, guest use). Skips when input_boolean.economizer_owns_powder_fan
+    is on - that flag means the Fresh Air Ventilation economizer started the fan for
+    free cooling and will turn it off itself. Re-checks the flag and fan state after
+    the delay so it never fights the economizer: if the economizer adopted the fan
+    during the 20 min (claimed ownership), the timer leaves it running. mode: restart
+    so a new press restarts the 20-min window.'
+  triggers:
+  - platform: state
+    entity_id:
+    - switch.powder_room_powder_room_exhaust_fan
+    from:
+    - 'off'
+    to:
+    - 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  conditions:
+  - condition: state
+    entity_id: input_boolean.economizer_owns_powder_fan
+    state: 'off'
+  actions:
+  - delay:
+      hours: 0
+      minutes: 20
+      seconds: 0
+  - if:
+    - condition: state
+      entity_id: switch.powder_room_powder_room_exhaust_fan
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.economizer_owns_powder_fan
+      state: 'off'
+    then:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.powder_room_powder_room_exhaust_fan
+  mode: restart
