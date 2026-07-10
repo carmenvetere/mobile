@@ -742,3 +742,13 @@ sensor:
     round: 3
     unit_prefix: k
     unit_time: h
+  # Pool filter pump cumulative energy, integrated from the OmniLogic
+  # filter pump power sensor (W). Feeds the 7-day usage history chart (#165).
+  - platform: integration
+    name: "Pool Pump Energy"
+    unique_id: pool_pump_energy
+    source: sensor.omnilogic_pool_filter_pump_power
+    method: left
+    round: 3
+    unit_prefix: k
+    unit_time: h
