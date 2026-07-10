@@ -347,6 +347,16 @@ input_boolean:
   climate_hold_bedroom:
     name: Climate Hold - Bedroom
     icon: mdi:pause-octagon
+  # --- Climate overhaul v2.1.1: powder room exhaust fan ownership ----------
+  # First-floor analog of the UI-created economizer_owns_basement_fan. Set when
+  # the Fresh Air Ventilation economizer starts the powder room exhaust fan for
+  # overnight free cooling, so a manual/external start is never fought and the
+  # economizer only turns off a fan it started. Defined here (its siblings are
+  # UI helpers); if you prefer consistency, recreate it as a UI helper and drop
+  # this block. No `initial:` so ownership survives restarts.
+  economizer_owns_powder_fan:
+    name: Economizer Owns Powder Room Fan
+    icon: mdi:fan-alert
 
 input_select:
   sonos_speaker_select:
