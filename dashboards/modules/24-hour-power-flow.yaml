@@ -63,9 +63,9 @@ series:
     opacity: .8
     show:
       in_header: false
-  # Recorded 5-min copies; the raw estimated-power sensors are
-  # recorder-excluded and have no history to plot (#152).
-  - entity: sensor.upper_hvac_power_5min
+  # HVAC estimated power (W -> kW). These sensors are recorded (un-excluded
+  # in #152) so they have 24 h history to plot.
+  - entity: sensor.upper_hvac_estimated_power
     name: Upper HVAC
     type: line
     stroke_width: 2
@@ -73,7 +73,7 @@ series:
     transform: "return x / 1000;"
     show:
       in_header: false
-  - entity: sensor.lower_hvac_power_5min
+  - entity: sensor.lower_hvac_estimated_power
     name: Lower HVAC
     type: line
     stroke_width: 2

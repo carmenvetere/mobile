@@ -478,10 +478,9 @@ recorder:
       - sensor.first_floor_air_quality_monitor*
     
     entities:
-      # Intermediate per-minute HVAC power estimates; only their integrated
-      # energy totals (sensor.upper/lower_hvac_energy) need history.
-      - sensor.upper_hvac_estimated_power
-      - sensor.lower_hvac_estimated_power
+      # NOTE: the HVAC estimated-power sensors are intentionally NOT excluded:
+      # the 24 h power-flow chart plots them, which needs recorder history.
+      # They are low-cardinality template sensors, so the DB cost is trivial.
       - sensor.date
       - sensor.time
       - sensor.last_boot
@@ -671,24 +670,6 @@ sensor:
   - platform: filter
     name: "Solar Power (5min)"
     entity_id: sensor.bayberry_solar_power
-    filters:
-      - filter: time_throttle
-        window_size: "00:05"
-  # Recorded 5-min copies of the HVAC power estimates for the 24 h power-flow
-  # chart. The raw per-minute sensors are recorder-excluded (only their energy
-  # integrals need full history), which left the chart's HVAC series with no
-  # data to plot (#152).
-  - platform: filter
-    name: "Upper HVAC Power (5min)"
-    unique_id: upper_hvac_power_5min
-    entity_id: sensor.upper_hvac_estimated_power
-    filters:
-      - filter: time_throttle
-        window_size: "00:05"
-  - platform: filter
-    name: "Lower HVAC Power (5min)"
-    unique_id: lower_hvac_power_5min
-    entity_id: sensor.lower_hvac_estimated_power
     filters:
       - filter: time_throttle
         window_size: "00:05"
