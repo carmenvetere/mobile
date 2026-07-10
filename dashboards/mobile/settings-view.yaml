@@ -951,6 +951,64 @@ cards:
                     if (months <= 6) return 'var(--gold-color)';
                     return 'var(--error-color)';
                   ]]]
+          - type: custom:button-card
+            entity: input_datetime.dryer_vent_last_cleaned
+            name: Dryer Vent Cleaned
+            icon: mdi:tumble-dryer
+            show_state: true
+            tap_action:
+              action: more-info
+            state_display: |
+              [[[
+                var e = states['input_datetime.dryer_vent_last_cleaned'];
+                if (!e || e.state === 'unknown' || e.state === 'unavailable') return '—';
+                return e.state.split(' ')[0];
+              ]]]
+            styles:
+              card:
+              - background: transparent !important
+              - box-shadow: none
+              - border-radius: 0
+              - border-top: 1px solid rgba(255,255,255,0.06)
+              - padding: 13px 4px
+              - transition: none
+              grid:
+              - grid-template-areas: '"i n v"'
+              - grid-template-columns: 44px 1fr auto
+              - grid-template-rows: 1fr
+              - align-items: center
+              - column-gap: 11px
+              img_cell:
+              - grid-area: i
+              - width: 38px
+              - height: 38px
+              - border-radius: 11px
+              - background-color: rgba(142,177,191,0.18)
+              icon:
+              - width: 20px
+              - color: "var(--slate-bright)"
+              name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 16px
+              - font-weight: 600
+              - color: var(--primary-text-color)
+              state:
+              - grid-area: v
+              - justify-self: end
+              - font-size: 15px
+              - font-weight: 700
+              - color: |
+                  [[[
+                    var e = states['input_datetime.dryer_vent_last_cleaned'];
+                    if (!e || e.state === 'unknown' || e.state === 'unavailable') return 'var(--secondary-text-color)';
+                    var d = new Date(e.state.replace(' ', 'T'));
+                    if (isNaN(d.getTime())) return 'var(--secondary-text-color)';
+                    var months = (Date.now() - d.getTime()) / (1000 * 60 * 60 * 24 * 30.44);
+                    if (months < 11) return 'var(--sage-color)';
+                    if (months <= 12) return 'var(--gold-color)';
+                    return 'var(--error-color)';
+                  ]]]
         - type: custom:bubble-card
           card_type: separator
           name: Release Notes

@@ -316,6 +316,16 @@ reset_hot_water_last_flushed_date:
   alias: Reset Hot Water Last Flushed Date
   description: ''
   icon: mdi:water-boiler-alert
+reset_dryer_vent_last_cleaned_date:
+  sequence:
+  - target:
+      entity_id: input_datetime.dryer_vent_last_cleaned
+    data:
+      datetime: '{{ now().strftime(''%Y-%m-%d %H:%M:%S'') }}'
+    action: input_datetime.set_datetime
+  alias: Reset Dryer Vent Last Cleaned Date
+  description: ''
+  icon: mdi:tumble-dryer
 '1750692869441':
   alias: Clean Selected Basement Rooms
   mode: single

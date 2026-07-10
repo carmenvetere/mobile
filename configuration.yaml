@@ -33,6 +33,11 @@ input_datetime:
     name: Last Pool Vacuum
     has_date: true
     has_time: true
+  dryer_vent_last_cleaned:
+    name: Dryer Vent Last Cleaned
+    has_date: true
+    has_time: true
+    initial: "2024-10-31 00:00:00"
 
 input_number:
   sonos_favorites_index:
