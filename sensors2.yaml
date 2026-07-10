@@ -320,6 +320,27 @@
           {{ [total - well - ev - hvac_up - hvac_low, 0] | max | round(2) }}
         {% endif %}
 
+# ---------------------------------------------------------------------------
+# Home "other" power for the 24 h power-flow chart (#152): whole-home load
+# minus the chart's other consumption series (upper/lower HVAC), so the Home
+# line no longer double-displays the HVAC draw. Power-side counterpart of
+# sensor.home_other_usage (energy). Built from the recorded 5-min sensors so
+# it updates at the chart's cadence.
+- sensor:
+    - name: "Home Other Power"
+      unique_id: home_other_power
+      unit_of_measurement: "kW"
+      device_class: power
+      state_class: measurement
+      icon: mdi:home-lightning-bolt
+      availability: >
+        {{ states('sensor.load_power_5min') not in ['unknown', 'unavailable'] }}
+      state: >
+        {% set load = states('sensor.load_power_5min') | float(0) %}
+        {% set up = states('sensor.upper_hvac_power_5min') | float(0) %}
+        {% set low = states('sensor.lower_hvac_power_5min') | float(0) %}
+        {{ [load - (up + low) / 1000, 0] | max | round(2) }}
+
 - sensor:
     - name: "Living Room Favorites"
       unique_id: living_room_favorites

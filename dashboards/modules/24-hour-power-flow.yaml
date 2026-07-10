@@ -53,15 +53,19 @@ series:
     color: var(--gold-color)
     show:
       in_header: false
-  - entity: sensor.load_power_5min
-    name: Home
+  # Home line = whole-home load minus the HVAC series below, so HVAC draw
+  # isn't double-displayed (sensor.home_other_power, #152).
+  - entity: sensor.home_other_power
+    name: Home (Other)
     type: line
     stroke_width: 2
     color: var(--sage-color)
     opacity: .8
     show:
       in_header: false
-  - entity: sensor.upper_hvac_estimated_power
+  # Recorded 5-min copies; the raw estimated-power sensors are
+  # recorder-excluded and have no history to plot (#152).
+  - entity: sensor.upper_hvac_power_5min
     name: Upper HVAC
     type: line
     stroke_width: 2
@@ -69,7 +73,7 @@ series:
     transform: "return x / 1000;"
     show:
       in_header: false
-  - entity: sensor.lower_hvac_estimated_power
+  - entity: sensor.lower_hvac_power_5min
     name: Lower HVAC
     type: line
     stroke_width: 2

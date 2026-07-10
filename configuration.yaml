@@ -674,6 +674,24 @@ sensor:
     filters:
       - filter: time_throttle
         window_size: "00:05"
+  # Recorded 5-min copies of the HVAC power estimates for the 24 h power-flow
+  # chart. The raw per-minute sensors are recorder-excluded (only their energy
+  # integrals need full history), which left the chart's HVAC series with no
+  # data to plot (#152).
+  - platform: filter
+    name: "Upper HVAC Power (5min)"
+    unique_id: upper_hvac_power_5min
+    entity_id: sensor.upper_hvac_estimated_power
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
+  - platform: filter
+    name: "Lower HVAC Power (5min)"
+    unique_id: lower_hvac_power_5min
+    entity_id: sensor.lower_hvac_estimated_power
+    filters:
+      - filter: time_throttle
+        window_size: "00:05"
   - platform: filter
     name: "Tempest Humidity (5min)"
     unique_id: tempest_humidity_5min
