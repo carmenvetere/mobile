@@ -318,11 +318,17 @@ cards:
                   max_level: 2
                   hourly_rate_entity: sensor.bayberry_tempest_precipitation
                   fill_drop_colour: "#8EB1BF"
+                  border_colour: "#8EB1BF"
                   card_mod:
                     style: |
                       ha-card {
                         background: var(--ha-card-background);
                         border-radius: 18px;
+                        height: 150px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        overflow: hidden;
                       }
                 - graph: line
                   type: sensor
