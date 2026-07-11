@@ -324,11 +324,13 @@ cards:
                       ha-card {
                         background: var(--ha-card-background);
                         border-radius: 18px;
-                        height: 150px;
                         display: flex;
                         flex-direction: column;
                         justify-content: center;
-                        overflow: hidden;
+                      }
+                      svg {
+                        height: 120px !important;
+                        width: 120px !important;
                       }
                 - graph: line
                   type: sensor
