@@ -320,18 +320,32 @@ cards:
                   fill_drop_colour: "#8EB1BF"
                   border_colour: "#8EB1BF"
                   card_mod:
-                    style: |
-                      ha-card {
-                        background: var(--ha-card-background);
-                        border-radius: 18px;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                      }
-                      svg {
-                        height: 120px !important;
-                        width: 120px !important;
-                      }
+                    style:
+                      ha-card$: |
+                        .card-header {
+                          text-align: left !important;
+                          font-size: 16px !important;
+                          font-weight: 400 !important;
+                          color: var(--secondary-text-color) !important;
+                          line-height: normal !important;
+                          letter-spacing: 0 !important;
+                          padding: 14px 16px 0 16px !important;
+                        }
+                      .: |
+                        ha-card {
+                          background: var(--ha-card-background);
+                          border-radius: 18px;
+                          height: 270px;
+                          box-sizing: border-box;
+                        }
+                        ha-card > div {
+                          height: calc(100% - 44px);
+                          align-items: center;
+                        }
+                        svg {
+                          height: 120px !important;
+                          width: 120px !important;
+                        }
                 - graph: line
                   type: sensor
                   entity: sensor.tempest_illuminance_5min
