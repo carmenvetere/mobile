@@ -311,17 +311,13 @@ cards:
                         background: var(--ha-card-background);
                         border-radius: 18px;
                       }
-                - type: gauge
-                  entity: sensor.bayberry_tempest_precipitation
-                  name: Rain Gauge
-                  unit: in
-                  needle: true
-                  min: 0
-                  max: 1
-                  severity:
-                    green: 0
-                    yellow: 0.1
-                    red: 0.3
+                - type: custom:rain-gauge-card
+                  entity: sensor.daily_rain
+                  name: Rainfall
+                  is_imperial: true
+                  max_level: 2
+                  hourly_rate_entity: sensor.bayberry_tempest_precipitation
+                  fill_drop_colour: "#8EB1BF"
                   card_mod:
                     style: |
                       ha-card {

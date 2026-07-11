@@ -461,6 +461,11 @@ utility_meter:
   daily_ev_charger:
     source: sensor.wall_charger_energy
     cycle: daily
+  # Rain today: meters the Tempest precipitation accumulation (state_class
+  # total, inches) into a local-midnight daily bucket for the rain gauge (#155).
+  daily_rain:
+    source: sensor.bayberry_tempest_precipitation
+    cycle: daily
 
 recorder:
   db_url: !secret recorder_db_url
@@ -578,6 +583,8 @@ lovelace:
     - url: /hacsfiles/llmvision-card/llmvision-card.js 
       type: module
     - url: /hacsfiles/apexcharts-card/apexcharts-card.js
+      type: module
+    - url: /hacsfiles/rain-gauge-card/rain-gauge-card.js
       type: module
     - url: /hacsfiles/energy-sankey/energy-sankey.js
       type: module
