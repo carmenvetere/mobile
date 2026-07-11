@@ -317,15 +317,15 @@ cards:
                   is_imperial: true
                   max_level: 2
                   hourly_rate_entity: sensor.bayberry_tempest_precipitation
-                  fill_drop_colour: "#8EB1BF"
-                  border_colour: "#8EB1BF"
+                  fill_drop_colour: var(--slate-color)
+                  border_colour: var(--slate-color)
                   card_mod:
                     style:
                       ha-card$: |
                         .card-header {
                           text-align: left !important;
                           font-size: 16px !important;
-                          font-weight: 400 !important;
+                          font-weight: 800 !important;
                           color: var(--secondary-text-color) !important;
                           line-height: normal !important;
                           letter-spacing: 0 !important;
