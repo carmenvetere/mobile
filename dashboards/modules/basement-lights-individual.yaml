@@ -45,12 +45,9 @@
         - {{ module_name }} 
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.gym_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.media_room_table_lamp
@@ -75,12 +72,9 @@
         - {{ module_name }} 
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.media_room_table_lamp
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.laundry_room_main_lights
@@ -105,12 +99,9 @@
         - {{ module_name }} 
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.laundry_room_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.basement_hallway_main_lights
@@ -135,12 +126,9 @@
         - {{ module_name }} 
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.basement_hallway_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.media_room_main_lights
@@ -165,12 +153,9 @@
         - {{ module_name }} 
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.media_room_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.stairs_main_lights
@@ -195,12 +180,9 @@
         - {{ module_name }} 
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.stairs_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.stairs_spot_lights
@@ -225,9 +207,6 @@
         - {{ module_name }} 
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.stairs_spot_lights 
+          action: toggle
+      tap_action:
+        action: toggle 

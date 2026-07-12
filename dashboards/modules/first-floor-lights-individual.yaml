@@ -45,12 +45,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.living_room_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.living_room_floor_lamps
@@ -75,12 +72,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.living_room_floor_lamps
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.kitchen_main_lights
@@ -105,12 +99,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.kitchen_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.kitchen_outer_wall
@@ -135,12 +126,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.kitchen_outer_wall
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.kitchen_island_pendants
@@ -165,12 +153,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.kitchen_island_pendants
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.kitchen_window_seat_sconce
@@ -195,12 +180,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.kitchen_window_seat_sconce
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.dining_room_main_lights
@@ -225,12 +207,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.dining_room_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.dining_room_table_lamps
@@ -255,12 +234,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.dining_room_table_lamps
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.dining_room_accent_lights
@@ -285,9 +261,6 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.dining_room_accent_lights
+          action: toggle
+      tap_action:
+        action: toggle
