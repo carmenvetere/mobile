@@ -326,6 +326,24 @@ reset_dryer_vent_last_cleaned_date:
   alias: Reset Dryer Vent Last Cleaned Date
   description: ''
   icon: mdi:tumble-dryer
+toggle_outdoor_scene:
+  alias: Toggle Outdoor Scene
+  description: 'Outdoor scene button toggle: off if currently on, else on (#168)'
+  icon: mdi:coach-lamp
+  sequence:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.scene_outdoor_on
+        state: 'on'
+      sequence:
+      - action: scene.turn_on
+        target:
+          entity_id: scene.outdoor_off
+    default:
+    - action: scene.turn_on
+      target:
+        entity_id: scene.outdoor_on
 '1750692869441':
   alias: Clean Selected Basement Rooms
   mode: single
