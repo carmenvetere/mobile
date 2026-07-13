@@ -328,14 +328,20 @@ reset_dryer_vent_last_cleaned_date:
   icon: mdi:tumble-dryer
 toggle_outdoor_scene:
   alias: Toggle Outdoor Scene
-  description: 'Outdoor scene button toggle: off if currently on, else on (#168)'
+  description: 'Outdoor scene button toggle: off if any outdoor light/switch is on, else on (#168)'
   icon: mdi:coach-lamp
+  mode: restart
   sequence:
   - choose:
     - conditions:
-      - condition: state
-        entity_id: binary_sensor.scene_outdoor_on
-        state: 'on'
+      - condition: template
+        value_template: >
+          {{ expand('light.patio_back_porch_lights', 'light.driveway_sconces',
+                    'light.front_porch_overhead_light', 'switch.driveway_zone_1_2',
+                    'switch.driveway_zone_2_2', 'switch.driveway_zone_3_2',
+                    'switch.transformer_zone_1', 'switch.transformer_zone_2',
+                    'switch.transformer_zone_3')
+             | selectattr('state', 'eq', 'on') | list | count > 0 }}
       sequence:
       - action: scene.turn_on
         target:
