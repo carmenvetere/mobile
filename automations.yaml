@@ -7734,15 +7734,28 @@
   - action: notify.mobile_app_carmens_iphone
     data:
       title: Washing Machine
-      message: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) }}"
+      message: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) | title }}"
       data:
         tag: washer_cycle
         live_update: true
+        # Run state (e.g. Washing / Rinsing / Spinning) shown as the body above.
+        subtitle: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) | title }}"
         critical_text: "{{ states('sensor.washer_cycle_progress') | int(0) }}%"
+        # washer_cycle_progress is percent COMPLETE (0 -> 100), so the bar fills
+        # as the cycle finishes / remaining time hits zero.
         progress: "{{ states('sensor.washer_cycle_progress') | int(0) }}"
         progress_max: 100
         chronometer: true
-        when: "{{ state_attr('sensor.washer_cycle_progress', 'total_seconds') | int(0) }}"
+        # Count down to the actual finish: now + remaining time, as a Unix
+        # timestamp. (Was total_seconds, a duration read as epoch 1970.)
+        when: >-
+          {% set r = states('sensor.front_load_washer_remaining_time') %}
+          {% if ':' in r %}
+            {% set p = r.split(':') %}
+            {{ (as_timestamp(now()) + p[0] | int * 3600 + p[1] | int * 60 + p[2] | int) | int }}
+          {% else %}
+            {{ as_timestamp(now()) | int }}
+          {% endif %}
         when_relative: true
         notification_icon: mdi:washing-machine
         notification_icon_color: "#2196F3"
