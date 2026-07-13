@@ -2044,7 +2044,7 @@
   - action: alarm_control_panel.alarm_disarm
     metadata: {}
     data:
-      code: !secret alarm_code
+      code: "{{ states('input_text.alarm_code') }}"
     target:
       entity_id:
       - alarm_control_panel.alarmo
@@ -2111,7 +2111,7 @@
   - action: alarm_control_panel.alarm_disarm
     metadata: {}
     data:
-      code: !secret alarm_code
+      code: "{{ states('input_text.alarm_code') }}"
     target:
       entity_id: alarm_control_panel.alarmo
   mode: single
