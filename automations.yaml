@@ -6132,10 +6132,8 @@
   - platform: state
     entity_id:
     - switch.basement_bathroom_exhaust_fan
-    from:
-    - 'off'
-    to:
-    - 'on'
+    from: 'off'
+    to: 'on'
     for:
       hours: 0
       minutes: 0
@@ -6634,10 +6632,8 @@
   - platform: state
     entity_id:
     - switch.primary_bathroom_exhaust_fan
-    from:
-    - 'off'
-    to:
-    - 'on'
+    from: 'off'
+    to: 'on'
     for:
       hours: 0
       minutes: 0
@@ -6827,14 +6823,12 @@
   - trigger: state
     entity_id:
     - binary_sensor.omnilogic_pool_heat_pump_status
-    from:
-    - 'off'
+    from: 'off'
     for:
       hours: 0
       minutes: 0
       seconds: 30
-    to:
-    - 'on'
+    to: 'on'
   conditions: []
   actions:
   - action: number.set_value
@@ -6851,14 +6845,12 @@
   - trigger: state
     entity_id:
     - binary_sensor.omnilogic_pool_heat_pump_status
-    from:
-    - 'on'
+    from: 'on'
     for:
       hours: 0
       minutes: 0
       seconds: 30
-    to:
-    - 'off'
+    to: 'off'
   conditions: []
   actions:
   - action: number.set_value
@@ -7696,10 +7688,8 @@
   - platform: state
     entity_id:
     - switch.powder_room_powder_room_exhaust_fan
-    from:
-    - 'off'
-    to:
-    - 'on'
+    from: 'off'
+    to: 'on'
     for:
       hours: 0
       minutes: 0
