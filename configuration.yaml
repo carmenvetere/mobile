@@ -509,6 +509,8 @@ recorder:
       - sensor.first_floor_air_quality_monitor*
     
     entities:
+      # Alarm disarm code helper — keep the code out of the recorder history/DB.
+      - input_text.alarm_code
       # NOTE: the HVAC estimated-power sensors are intentionally NOT excluded:
       # the 24 h power-flow chart plots them, which needs recorder history.
       # They are low-cardinality template sensors, so the DB cost is trivial.
