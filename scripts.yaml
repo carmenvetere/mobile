@@ -336,12 +336,12 @@ toggle_outdoor_scene:
     - conditions:
       - condition: template
         value_template: >
-          {{ expand('light.patio_back_porch_lights', 'light.driveway_sconces',
-                    'light.front_porch_overhead_light', 'switch.driveway_zone_1_2',
-                    'switch.driveway_zone_2_2', 'switch.driveway_zone_3_2',
-                    'switch.transformer_zone_1', 'switch.transformer_zone_2',
-                    'switch.transformer_zone_3')
-             | selectattr('state', 'eq', 'on') | list | count > 0 }}
+          {{ ['light.patio_back_porch_lights', 'light.driveway_sconces',
+              'light.front_porch_overhead_light', 'switch.driveway_zone_1_2',
+              'switch.driveway_zone_2_2', 'switch.driveway_zone_3_2',
+              'switch.transformer_zone_1', 'switch.transformer_zone_2',
+              'switch.transformer_zone_3']
+             | select('is_state', 'on') | list | count > 0 }}
       sequence:
       - action: scene.turn_on
         target:
