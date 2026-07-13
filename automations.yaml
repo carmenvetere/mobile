@@ -7715,3 +7715,34 @@
       target:
         entity_id: switch.powder_room_powder_room_exhaust_fan
   mode: restart
+- id: washer_live_activity_update
+  alias: Washing Machine Live Activity — Update
+  description: ''
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.washer_cycle_progress
+    - sensor.front_load_washer_run_state
+    - sensor.front_load_washer_remaining_time
+  conditions:
+  - condition: template
+    value_template: >
+      {{ states('sensor.washer_cycle_progress') not in ['unavailable','unknown','']
+         and (states('sensor.washer_cycle_progress') | int(100)) < 100 }}
+  actions:
+  - action: notify.mobile_app_carmens_iphone
+    data:
+      title: Washing Machine
+      message: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) }}"
+      data:
+        tag: washer_cycle
+        live_update: true
+        critical_text: "{{ states('sensor.washer_cycle_progress') | int(0) }}%"
+        progress: "{{ states('sensor.washer_cycle_progress') | int(0) }}"
+        progress_max: 100
+        chronometer: true
+        when: "{{ state_attr('sensor.washer_cycle_progress', 'total_seconds') | int(0) }}"
+        when_relative: true
+        notification_icon: mdi:washing-machine
+        notification_icon_color: "#2196F3"
