@@ -328,28 +328,62 @@ reset_dryer_vent_last_cleaned_date:
   icon: mdi:tumble-dryer
 toggle_outdoor_scene:
   alias: Toggle Outdoor Scene
-  description: 'Outdoor scene button toggle: off if any outdoor light/switch is on, else on (#168)'
+  description: >
+    Outdoor scene button toggle. Off if any outdoor light/switch is on, else on.
+    Retries stragglers because the HubSpace driveway switches sometimes drop the
+    scene's command (#168).
   icon: mdi:coach-lamp
   mode: restart
+  variables:
+    outdoor_entities:
+      - light.patio_back_porch_lights
+      - light.driveway_sconces
+      - light.front_porch_overhead_light
+      - switch.driveway_zone_1_2
+      - switch.driveway_zone_2_2
+      - switch.driveway_zone_3_2
+      - switch.transformer_zone_1
+      - switch.transformer_zone_2
+      - switch.transformer_zone_3
+      - switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet
   sequence:
   - choose:
     - conditions:
       - condition: template
-        value_template: >
-          {{ ['light.patio_back_porch_lights', 'light.driveway_sconces',
-              'light.front_porch_overhead_light', 'switch.driveway_zone_1_2',
-              'switch.driveway_zone_2_2', 'switch.driveway_zone_3_2',
-              'switch.transformer_zone_1', 'switch.transformer_zone_2',
-              'switch.transformer_zone_3']
-             | select('is_state', 'on') | list | count > 0 }}
+        value_template: "{{ outdoor_entities | select('is_state', 'on') | list | count > 0 }}"
       sequence:
       - action: scene.turn_on
         target:
           entity_id: scene.outdoor_off
+      # HubSpace/cloud switches sometimes ignore the scene; re-issue turn_off
+      # to whatever is still on, a few times with a short delay.
+      - repeat:
+          count: 4
+          sequence:
+          - delay: "00:00:03"
+          - if:
+            - condition: template
+              value_template: "{{ outdoor_entities | select('is_state', 'on') | list | count > 0 }}"
+            then:
+            - action: homeassistant.turn_off
+              target:
+                entity_id: "{{ outdoor_entities | select('is_state', 'on') | list }}"
     default:
     - action: scene.turn_on
       target:
         entity_id: scene.outdoor_on
+      # Same retry for the on direction, for any straggler that didn't come on.
+    - repeat:
+        count: 4
+        sequence:
+        - delay: "00:00:03"
+        - if:
+          - condition: template
+            value_template: "{{ outdoor_entities | reject('is_state', 'on') | list | count > 0 }}"
+          then:
+          - action: homeassistant.turn_on
+            target:
+              entity_id: "{{ outdoor_entities | reject('is_state', 'on') | list }}"
 '1750692869441':
   alias: Clean Selected Basement Rooms
   mode: single
