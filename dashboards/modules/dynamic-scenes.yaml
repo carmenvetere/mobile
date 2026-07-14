@@ -448,19 +448,62 @@ cards:
     scrolling_effect: false
     modules:
     - {{ module_name }}
-#Outdoor Scene - All Displays All Times
+#Outdoor On Scene - shown when outdoor is off
   - type: custom:bubble-card
     card_type: button
     entity: binary_sensor.scene_outdoor_on
     name: Outdoor
     icon: mdi:coach-lamp
+    visibility:
+      - condition: template
+        value_template: >
+          {{ ['light.patio_back_porch_lights', 'light.driveway_sconces',
+              'light.front_porch_overhead_light', 'switch.driveway_zone_1_2',
+              'switch.driveway_zone_2_2', 'switch.driveway_zone_3_2',
+              'switch.transformer_zone_1', 'switch.transformer_zone_2',
+              'switch.transformer_zone_3']
+             | select('is_state', 'on') | list | count == 0 }}
     button_action:
       tap_action:
         action: perform-action
-        perform_action: script.toggle_outdoor_scene
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.outdoor_on
     tap_action:
       action: perform-action
-      perform_action: script.toggle_outdoor_scene
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.outdoor_on
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+#Outdoor Off Scene - shown when outdoor is on
+  - type: custom:bubble-card
+    card_type: button
+    entity: binary_sensor.scene_outdoor_on
+    name: Outdoor Off
+    icon: mdi:coach-lamp
+    visibility:
+      - condition: template
+        value_template: >
+          {{ ['light.patio_back_porch_lights', 'light.driveway_sconces',
+              'light.front_porch_overhead_light', 'switch.driveway_zone_1_2',
+              'switch.driveway_zone_2_2', 'switch.driveway_zone_3_2',
+              'switch.transformer_zone_1', 'switch.transformer_zone_2',
+              'switch.transformer_zone_3']
+             | select('is_state', 'on') | list | count > 0 }}
+    button_action:
+      tap_action:
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.outdoor_off
+    tap_action:
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.outdoor_off
     card_layout: large
     scrolling_effect: false
     modules:
