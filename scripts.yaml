@@ -326,6 +326,70 @@ reset_dryer_vent_last_cleaned_date:
   alias: Reset Dryer Vent Last Cleaned Date
   description: ''
   icon: mdi:tumble-dryer
+push_live_activity:
+  alias: Push Live Activity
+  description: >-
+    Reusable iOS Live Activity delivery (#179). Fans out one mobile_app notify
+    per recipient by audience (both|carmen|brian), injecting tag + live_update
+    into the payload dict. Per-activity automations call this instead of
+    repeating notify blocks.
+  mode: parallel
+  max: 25
+  icon: mdi:cellphone-message
+  fields:
+    tag:
+      description: Unique activity tag; same tag updates the card in place.
+    title:
+      description: Static Live Activity title.
+    message:
+      description: Body line (may change between updates).
+    payload:
+      description: Extra notify data keys (progress, chronometer, when, icons, ...).
+    audience:
+      description: both | carmen | brian (default both).
+  variables:
+    audience: "{{ audience | default('both') }}"
+    payload: "{{ payload | default({}) }}"
+    recipients: >-
+      {{ ['notify.mobile_app_carmens_iphone'] if audience == 'carmen'
+         else ['notify.mobile_app_brians_iphone_15_pro'] if audience == 'brian'
+         else ['notify.mobile_app_carmens_iphone', 'notify.mobile_app_brians_iphone_15_pro'] }}
+  sequence:
+  - repeat:
+      for_each: "{{ recipients }}"
+      sequence:
+      - action: "{{ repeat.item }}"
+        data:
+          title: "{{ title }}"
+          message: "{{ message }}"
+          data: "{{ payload | combine({'tag': tag, 'live_update': true}) }}"
+clear_live_activity:
+  alias: Clear Live Activity
+  description: >-
+    Clears an iOS Live Activity by tag for the chosen audience (#179).
+  mode: parallel
+  max: 25
+  icon: mdi:cellphone-remove
+  fields:
+    tag:
+      description: Activity tag to clear.
+    audience:
+      description: both | carmen | brian (default both).
+  variables:
+    audience: "{{ audience | default('both') }}"
+    recipients: >-
+      {{ ['notify.mobile_app_carmens_iphone'] if audience == 'carmen'
+         else ['notify.mobile_app_brians_iphone_15_pro'] if audience == 'brian'
+         else ['notify.mobile_app_carmens_iphone', 'notify.mobile_app_brians_iphone_15_pro'] }}
+  sequence:
+  - repeat:
+      for_each: "{{ recipients }}"
+      sequence:
+      - action: "{{ repeat.item }}"
+        data:
+          message: clear_notification
+          data:
+            tag: "{{ tag }}"
 '1750692869441':
   alias: Clean Selected Basement Rooms
   mode: single

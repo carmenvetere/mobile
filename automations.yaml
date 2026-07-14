@@ -6693,29 +6693,6 @@
       entity_id: switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet
     action: switch.turn_on
   mode: single
-- id: '1777851014172'
-  alias: Washing Machine Live Activity
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - sensor.front_load_washer
-    attribute: run_state
-  - trigger: state
-    entity_id:
-    - sensor.front_load_washer_remaining_time
-  conditions: []
-  actions:
-  - action: rest_command.update_live_activity
-    response_variable: aivi_response
-    data:
-      slug: washing_machine
-      payload: "{% set running = is_state(\"sensor.front_load_washer\", \"on\") %}
-        {\n  \"state\": \"{{ 'ONGOING' if running else 'IDLE' }}\",\n  \"content\":
-        {\n    \"template\": \"generic\",\n    \"state\": \"{{ states('sensor.front_load_washer_run_state')
-        }}\",\n    \"remaining_time\": {{ states('sensor.front_load_washer_remaining_time')
-        }},\n    \"icon\": \"washer\"\n  }\n}"
-  mode: single
 - id: '1778025144757'
   alias: Bedroom Air Quality
   description: 'When bedroom CO2 (5-min avg) exceeds 800 ppm, send a persistent
@@ -7731,13 +7708,13 @@
       {{ states('sensor.washer_cycle_progress') not in ['unavailable','unknown','']
          and (states('sensor.washer_cycle_progress') | int(100)) < 100 }}
   actions:
-  - action: notify.mobile_app_carmens_iphone
+  - action: script.push_live_activity
     data:
+      tag: washer_cycle
       title: Washing Machine
       message: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) | title }}"
-      data:
-        tag: washer_cycle
-        live_update: true
+      audience: both
+      payload:
         # Run state (e.g. Washing / Rinsing / Spinning) shown as the body above.
         subtitle: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) | title }}"
         critical_text: "{{ states('sensor.washer_cycle_progress') | int(0) }}%"
@@ -7759,3 +7736,33 @@
         when_relative: true
         notification_icon: mdi:washing-machine
         notification_icon_color: "#2196F3"
+- id: washer_live_activity_complete
+  alias: Washing Machine Live Activity — Complete
+  description: >-
+    On wash completion, replace the card with a green "done" state, hold ~10 min
+    (the move-the-laundry reminder), then clear (#179). Hold duration is an open
+    question in #178 — adjust the delay if immediate-clear is preferred.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.front_load_washer_run_completed
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: script.push_live_activity
+    data:
+      tag: washer_cycle
+      title: Washing Machine
+      message: Done — clothes are ready
+      audience: both
+      payload:
+        critical_text: Complete
+        chronometer: false
+        notification_icon: mdi:washing-machine
+        notification_icon_color: "#4CAF50"
+  - delay: '00:10:00'
+  - action: script.clear_live_activity
+    data:
+      tag: washer_cycle
+      audience: both
