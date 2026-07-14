@@ -7766,3 +7766,75 @@
     data:
       tag: washer_cycle
       audience: both
+- id: dryer_live_activity_update
+  alias: Dryer Live Activity — Update
+  description: >-
+    Dryer iOS Live Activity, mirroring the washer (#180). Uses the existing
+    sensor.dryer_cycle_progress helper for the bar and sensor.dryer_remaining_time
+    (H:MM:SS) for the countdown.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.dryer
+    - sensor.dryer_cycle_progress
+    - sensor.dryer_remaining_time
+  conditions:
+  - condition: template
+    value_template: >
+      {{ states('sensor.dryer') not in ['off','unavailable','unknown']
+         and states('sensor.dryer_cycle_progress') not in ['unavailable','unknown','']
+         and (states('sensor.dryer_cycle_progress') | int(100)) < 100 }}
+  actions:
+  - action: script.push_live_activity
+    data:
+      tag: dryer_cycle
+      title: Dryer
+      message: "{{ states('sensor.dryer') | default('Drying', true) | title }}"
+      audience: both
+      payload:
+        subtitle: "{{ states('sensor.dryer') | default('Drying', true) | title }}"
+        critical_text: "{{ states('sensor.dryer_cycle_progress') | int(0) }}%"
+        progress: "{{ states('sensor.dryer_cycle_progress') | int(0) }}"
+        progress_max: 100
+        chronometer: true
+        when: >-
+          {% set r = states('sensor.dryer_remaining_time') %}
+          {% if ':' in r %}
+            {% set p = r.split(':') %}
+            {{ (as_timestamp(now()) + p[0] | int * 3600 + p[1] | int * 60 + p[2] | int) | int }}
+          {% else %}
+            {{ as_timestamp(now()) | int }}
+          {% endif %}
+        when_relative: true
+        notification_icon: mdi:tumble-dryer
+        notification_icon_color: "#FF9800"
+- id: dryer_live_activity_complete
+  alias: Dryer Live Activity — Complete
+  description: >-
+    Green done-card on dryer completion, ~10 min hold, then clear (#180).
+    Hold duration is an open question in #178.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.dryer_recently_completed
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: script.push_live_activity
+    data:
+      tag: dryer_cycle
+      title: Dryer
+      message: Done — clothes are ready
+      audience: both
+      payload:
+        critical_text: Complete
+        chronometer: false
+        notification_icon: mdi:tumble-dryer
+        notification_icon_color: "#4CAF50"
+  - delay: '00:10:00'
+  - action: script.clear_live_activity
+    data:
+      tag: dryer_cycle
+      audience: both
