@@ -7761,7 +7761,7 @@
         chronometer: false
         notification_icon: mdi:washing-machine
         notification_icon_color: "#4CAF50"
-  - delay: '00:10:00'
+  - delay: '01:00:00'
   - action: script.clear_live_activity
     data:
       tag: washer_cycle
@@ -7833,7 +7833,7 @@
         chronometer: false
         notification_icon: mdi:tumble-dryer
         notification_icon_color: "#4CAF50"
-  - delay: '00:10:00'
+  - delay: '01:00:00'
   - action: script.clear_live_activity
     data:
       tag: dryer_cycle
@@ -7903,3 +7903,67 @@
     data:
       tag: power_outage
       audience: both
+- id: sprinkler_live_activity
+  alias: Sprinklers Live Activity
+  description: >-
+    Per-zone sprinkler iOS Live Activity (#183). Count-up elapsed timer (Rachio
+    exposes no remaining/duration). Display-only — pause control skipped for now.
+    On any zone switch change: if a zone is on, show it (card replaced as zones
+    advance); when none are on, clear after a short debounce.
+  mode: restart
+  variables:
+    zone_switches:
+    - switch.vegetable_beds
+    - switch.kimberly_road_180s
+    - switch.pool_180s
+    - switch.pool_90s
+    - switch.kimberly_road_drip
+    - switch.front_180s
+    - switch.front_and_side_90s
+    - switch.driveway_shrubs
+    - switch.zone_11
+    - switch.pool_shrubs
+    - switch.firepit_shrubs
+    - switch.retaining_wall_drip
+    active_zone: "{{ zone_switches | select('is_state', 'on') | list | first | default('', true) }}"
+  triggers:
+  - trigger: state
+    entity_id:
+    - switch.vegetable_beds
+    - switch.kimberly_road_180s
+    - switch.pool_180s
+    - switch.pool_90s
+    - switch.kimberly_road_drip
+    - switch.front_180s
+    - switch.front_and_side_90s
+    - switch.driveway_shrubs
+    - switch.zone_11
+    - switch.pool_shrubs
+    - switch.firepit_shrubs
+    - switch.retaining_wall_drip
+  conditions: []
+  actions:
+  - choose:
+    - conditions: "{{ active_zone != '' }}"
+      sequence:
+      - action: script.push_live_activity
+        data:
+          tag: sprinkler_zone
+          title: Sprinklers
+          message: "{{ state_attr(active_zone, 'friendly_name') | default('Zone', true) }} running"
+          audience: both
+          payload:
+            chronometer: true
+            when: "{{ as_timestamp(states[active_zone].last_changed) | int }}"
+            when_relative: false
+            notification_icon: mdi:sprinkler-variant
+            notification_icon_color: "#00BCD4"
+    default:
+    # Debounce zone-to-zone handoff before clearing.
+    - delay: '00:00:08'
+    - condition: template
+      value_template: "{{ zone_switches | select('is_state', 'on') | list | count == 0 }}"
+    - action: script.clear_live_activity
+      data:
+        tag: sprinkler_zone
+        audience: both
