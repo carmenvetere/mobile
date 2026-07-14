@@ -457,14 +457,10 @@ cards:
     button_action:
       tap_action:
         action: perform-action
-        perform_action: script.turn_on
-        target:
-          entity_id: script.toggle_outdoor_scene
+        perform_action: script.toggle_outdoor_scene
     tap_action:
       action: perform-action
-      perform_action: script.turn_on
-      target:
-        entity_id: script.toggle_outdoor_scene
+      perform_action: script.toggle_outdoor_scene
     card_layout: large
     scrolling_effect: false
     modules:
