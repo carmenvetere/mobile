@@ -7838,3 +7838,68 @@
     data:
       tag: dryer_cycle
       audience: both
+- id: outage_live_activity_update
+  alias: Power Outage Live Activity — Update
+  description: >-
+    Outage iOS Live Activity, shown only while off-grid (#182). Counts up from
+    the outage start; battery % drives the bar. Uses sensor.bayberry_charge for
+    % (the precise sensor.bayberry_percentage_charged is not referenced in this
+    config — swap it in if it exists). Only ADDS a Live Activity; existing
+    power_outage_v2 / powerwall_* automations are untouched.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.bayberry_grid_status
+    to: 'off'
+  - trigger: state
+    entity_id:
+    - sensor.bayberry_charge
+    - sensor.bayberry_load_power
+  conditions:
+  - condition: state
+    entity_id: binary_sensor.bayberry_grid_status
+    state: 'off'
+  actions:
+  - action: script.push_live_activity
+    data:
+      tag: power_outage
+      title: Power Outage
+      message: "On battery · {{ states('sensor.bayberry_load_power') }} kW load · {{ states('sensor.powerwall_discharge_time') }}"
+      audience: both
+      payload:
+        critical_text: "{{ states('sensor.bayberry_charge') | int(0) }}%"
+        progress: "{{ states('sensor.bayberry_charge') | int(0) }}"
+        progress_max: 100
+        chronometer: true
+        when: "{{ as_timestamp(states.binary_sensor.bayberry_grid_status.last_changed) | int }}"
+        when_relative: false
+        notification_icon: mdi:home-battery
+        notification_icon_color: "#F44336"
+- id: outage_live_activity_restored
+  alias: Power Outage Live Activity — Restored
+  description: >-
+    On grid return, replace the outage card with a green "Power restored" state,
+    hold ~5 min, then clear (#182).
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.bayberry_grid_status
+    to: 'on'
+  conditions: []
+  actions:
+  - action: script.push_live_activity
+    data:
+      tag: power_outage
+      title: Power Restored
+      message: "Grid is back · battery {{ states('sensor.bayberry_charge') | int(0) }}%"
+      audience: both
+      payload:
+        critical_text: Restored
+        chronometer: false
+        notification_icon: mdi:transmission-tower
+        notification_icon_color: "#4CAF50"
+  - delay: '00:05:00'
+  - action: script.clear_live_activity
+    data:
+      tag: power_outage
+      audience: both
