@@ -874,6 +874,16 @@
 # Requires: input_number.hvac_gas_switchover_temperature (already created via UI).
 # ═══════════════════════════════════════════════════════════════════
 - binary_sensor:
+    - name: "Outdoor Lights On"
+      unique_id: outdoor_lights_on
+      device_class: light
+      state: >-
+        {{ ['light.patio_back_porch_lights', 'light.driveway_sconces',
+            'light.front_porch_overhead_light', 'switch.driveway_zone_1_2',
+            'switch.driveway_zone_2_2', 'switch.driveway_zone_3_2',
+            'switch.transformer_zone_1', 'switch.transformer_zone_2',
+            'switch.transformer_zone_3']
+           | select('is_state', 'on') | list | count > 0 }}
     - name: "Upper HVAC Compressor Running"
       unique_id: upper_hvac_compressor_running
       device_class: running

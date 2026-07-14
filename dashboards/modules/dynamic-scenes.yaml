@@ -455,8 +455,9 @@ cards:
     name: Outdoor
     icon: mdi:coach-lamp
     visibility:
-      - condition: template
-        value_template: "{% raw %}{{ ['light.patio_back_porch_lights', 'light.driveway_sconces', 'light.front_porch_overhead_light', 'switch.driveway_zone_1_2', 'switch.driveway_zone_2_2', 'switch.driveway_zone_3_2', 'switch.transformer_zone_1', 'switch.transformer_zone_2', 'switch.transformer_zone_3'] | select('is_state', 'on') | list | count == 0 }}{% endraw %}"
+      - condition: state
+        entity: binary_sensor.outdoor_lights_on
+        state: "off"
     button_action:
       tap_action:
         action: perform-action
@@ -479,8 +480,9 @@ cards:
     name: Outdoor Off
     icon: mdi:coach-lamp
     visibility:
-      - condition: template
-        value_template: "{% raw %}{{ ['light.patio_back_porch_lights', 'light.driveway_sconces', 'light.front_porch_overhead_light', 'switch.driveway_zone_1_2', 'switch.driveway_zone_2_2', 'switch.driveway_zone_3_2', 'switch.transformer_zone_1', 'switch.transformer_zone_2', 'switch.transformer_zone_3'] | select('is_state', 'on') | list | count > 0 }}{% endraw %}"
+      - condition: state
+        entity: binary_sensor.outdoor_lights_on
+        state: "on"
     button_action:
       tap_action:
         action: perform-action
