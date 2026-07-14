@@ -7967,3 +7967,65 @@
       data:
         tag: sprinkler_zone
         audience: both
+- id: car_charging_live_activity
+  alias: Car Charging Live Activity
+  description: >-
+    One shared car_charging Live Activity (#181). The wall charger is shared by
+    both cars, so: Rivian = binary_sensor.r1t_charging_status on (uses Rivian
+    telemetry — kW, SOC bar, countdown). BMW = wall charger drawing power AND
+    Rivian NOT charging (wall-charger kW + elapsed, no vehicle telemetry). They
+    are mutually exclusive; clears when neither is charging.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.r1t_charging_status
+    - sensor.wall_charger_power
+    - sensor.wall_charger_charging_status
+    - sensor.r1t_charging_speed
+    - sensor.r1t_battery_state_of_charge
+    - sensor.r1t_charging_time_remaining
+  conditions: []
+  actions:
+  - choose:
+    - conditions: "{{ is_state('binary_sensor.r1t_charging_status', 'on') }}"
+      sequence:
+      - action: script.push_live_activity
+        data:
+          tag: car_charging
+          title: Rivian R1T
+          message: "Charging · {{ states('sensor.r1t_charging_speed') }} kW"
+          audience: both
+          payload:
+            critical_text: "{{ states('sensor.r1t_battery_state_of_charge') }}%"
+            progress: "{{ states('sensor.r1t_battery_state_of_charge') | int }}"
+            progress_max: "{{ states('sensor.r1t_battery_state_of_charge_limit') | int(100) }}"
+            chronometer: true
+            # now + remaining (minutes -> seconds) as an absolute future ts -> counts down
+            when: "{{ (as_timestamp(now()) + (states('sensor.r1t_charging_time_remaining') | int(0) * 60)) | int }}"
+            when_relative: true
+            notification_icon: mdi:car-electric
+            notification_icon_color: "#FFC107"
+    - conditions: >
+        {{ states('sensor.wall_charger_power') | float(0) > 0.5
+           and is_state('binary_sensor.r1t_charging_status', 'off') }}
+      sequence:
+      - action: script.push_live_activity
+        data:
+          tag: car_charging
+          title: BMW
+          message: "Charging · {{ states('sensor.wall_charger_power') }} kW"
+          audience: both
+          payload:
+            critical_text: Charging
+            chronometer: true
+            # wall-charger session start -> counts up (no BMW telemetry)
+            when: "{{ as_timestamp(states.sensor.wall_charger_charging_status.last_changed) | int }}"
+            when_relative: false
+            notification_icon: mdi:car-electric
+            notification_icon_color: "#1C69D4"
+    default:
+    - action: script.clear_live_activity
+      data:
+        tag: car_charging
+        audience: both
