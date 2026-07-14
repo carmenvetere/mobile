@@ -7852,9 +7852,7 @@
     entity_id: binary_sensor.bayberry_grid_status
     to: 'off'
   - trigger: state
-    entity_id:
-    - sensor.bayberry_charge
-    - sensor.bayberry_load_power
+    entity_id: sensor.bayberry_charge
   conditions:
   - condition: state
     entity_id: binary_sensor.bayberry_grid_status

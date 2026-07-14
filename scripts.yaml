@@ -347,9 +347,14 @@ push_live_activity:
       description: Extra notify data keys (progress, chronometer, when, icons, ...).
     audience:
       description: both | carmen | brian (default both).
+    interruption:
+      description: >-
+        iOS interruption level. passive (default) = silent update, no sound or
+        vibration; pass active / time-sensitive to alert (e.g. start/complete).
   variables:
     audience: "{{ audience | default('both') }}"
     payload: "{{ payload | default({}) }}"
+    interruption: "{{ interruption | default('passive') }}"
     recipients: >-
       {{ ['notify.mobile_app_carmens_iphone'] if audience == 'carmen'
          else ['notify.mobile_app_brians_iphone_15_pro'] if audience == 'brian'
@@ -362,7 +367,7 @@ push_live_activity:
         data:
           title: "{{ title }}"
           message: "{{ message }}"
-          data: "{{ payload | combine({'tag': tag, 'live_update': true}) }}"
+          data: "{{ payload | combine({'tag': tag, 'live_update': true, 'push': {'interruption-level': interruption}}) }}"
 clear_live_activity:
   alias: Clear Live Activity
   description: >-
