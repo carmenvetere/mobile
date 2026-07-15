@@ -7705,7 +7705,8 @@
   conditions:
   - condition: template
     value_template: >
-      {{ states('sensor.washer_cycle_progress') not in ['unavailable','unknown','']
+      {{ is_state('sensor.front_load_washer', 'on')
+         and states('sensor.washer_cycle_progress') not in ['unavailable','unknown','']
          and (states('sensor.washer_cycle_progress') | int(100)) < 100 }}
   actions:
   - action: script.push_live_activity
