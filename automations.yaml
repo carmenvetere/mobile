@@ -53,38 +53,6 @@
         - cover.hallway_2
         - cover.hallway_1
   mode: restart
-- id: '1720184822088'
-  alias: Washer Complete
-  description: ''
-  triggers:
-  - entity_id:
-    - binary_sensor.front_load_washer_run_completed
-    from: 'off'
-    to: 'on'
-    trigger: state
-  conditions: []
-  actions:
-  - action: notify.notify
-    data:
-      message: The washer is complete
-      title: Washer
-  mode: single
-- id: '1720187775524'
-  alias: Dryer Complete
-  description: ''
-  triggers:
-  - type: turned_on
-    device_id: df745980e44b9ab45abdd0bb5521d2b6
-    entity_id: 4cabf5444ed78bb1d2952a3f86de953f
-    domain: binary_sensor
-    trigger: device
-  conditions: []
-  actions:
-  - action: notify.notify
-    data:
-      message: The dryer is complete.
-      title: Dryer
-  mode: single
 - id: '1720287131671'
   alias: Outdoor Motion after 11pm, before sunrise
   description: ''
