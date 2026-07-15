@@ -7725,13 +7725,14 @@
         chronometer: true
         # Count down to the actual finish: now + remaining time, as a Unix
         # timestamp. (Was total_seconds, a duration read as epoch 1970.)
+        # Seconds remaining (when_relative: true -> counts down). NOT now()+rem.
         when: >-
           {% set r = states('sensor.front_load_washer_remaining_time') %}
           {% if ':' in r %}
             {% set p = r.split(':') %}
-            {{ (as_timestamp(now()) + p[0] | int * 3600 + p[1] | int * 60 + p[2] | int) | int }}
+            {{ p[0] | int * 3600 + p[1] | int * 60 + p[2] | int }}
           {% else %}
-            {{ as_timestamp(now()) | int }}
+            0
           {% endif %}
         when_relative: true
         notification_icon: mdi:washing-machine
@@ -7798,13 +7799,14 @@
         progress: "{{ states('sensor.dryer_cycle_progress') | int(0) }}"
         progress_max: 100
         chronometer: true
+        # Seconds remaining (when_relative: true -> counts down). NOT now()+rem.
         when: >-
           {% set r = states('sensor.dryer_remaining_time') %}
           {% if ':' in r %}
             {% set p = r.split(':') %}
-            {{ (as_timestamp(now()) + p[0] | int * 3600 + p[1] | int * 60 + p[2] | int) | int }}
+            {{ p[0] | int * 3600 + p[1] | int * 60 + p[2] | int }}
           {% else %}
-            {{ as_timestamp(now()) | int }}
+            0
           {% endif %}
         when_relative: true
         notification_icon: mdi:tumble-dryer
@@ -7999,8 +8001,8 @@
             progress: "{{ states('sensor.r1t_battery_state_of_charge') | int }}"
             progress_max: "{{ states('sensor.r1t_battery_state_of_charge_limit') | int(100) }}"
             chronometer: true
-            # now + remaining (minutes -> seconds) as an absolute future ts -> counts down
-            when: "{{ (as_timestamp(now()) + (states('sensor.r1t_charging_time_remaining') | int(0) * 60)) | int }}"
+            # remaining minutes -> seconds from now (when_relative: true) -> counts down
+            when: "{{ states('sensor.r1t_charging_time_remaining') | int(0) * 60 }}"
             when_relative: true
             notification_icon: mdi:car-electric
             notification_icon_color: "#FFC107"
