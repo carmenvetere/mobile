@@ -1081,6 +1081,7 @@ cards:
 
                 - iOS Live Activities: a five-activity suite on the Lock Screen / Dynamic Island for both phones — Washer, Dryer, Car charging (Rivian telemetry; BMW inferred from the shared wall charger), Power Outage (battery % while off-grid), and Sprinklers (per-zone). Built on one reusable delivery script with a unique tag per activity, live countdowns/progress bars, and self-clearing "complete" cards
                 - Energy: Pool Pump usage added to the 7-day energy history chart (new integrated kWh sensor)
+                - Climate: Honeywell Lyric utility Demand Response support (custom Lyric integration) — new sensors for an active DR event and a same-day scheduled event (which flips on early, when the utility publishes the event), giving automations a runway to pre-cool, defer loads, and notify ahead of a peak event
                 - Settings: Dryer Vent Cleaning tracker — date helper, reset script and a color-coded row, mirroring the water-heater flush
                 - Weather: precipitation graph replaced with a rain-gauge card fed by a daily-rainfall meter
                 - Scenes: Nightlight now surfaces in the evening (not just overnight); new weekday "Working" button that routes per user (Brian → Basement Work, Carmen → new Office Work scene)
