@@ -285,6 +285,39 @@ input_number:
     unit_of_measurement: min
     mode: box
     icon: mdi:fan-clock
+  # --- Climate overhaul v2.1.1: Path C wider band + CO2-flush dew ceiling ---
+  # `initial:` values are for first boot only; strip them later like the other
+  # helpers if you want dashboard edits to persist across restarts.
+  minvent_min_outdoor:
+    name: Min-Vent Min Outdoor Temp
+    initial: 25
+    min: 0
+    max: 40
+    step: 1
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:thermometer-low
+  minvent_max_outdoor:
+    name: Min-Vent Max Outdoor Temp
+    initial: 80
+    min: 60
+    max: 95
+    step: 1
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:thermometer-high
+  # CO2 air-quality flush is allowed to run at a HIGHER dew point than normal
+  # ventilation (which locks out at 65F) — diluting CO2 takes priority over the
+  # humidity it imports, up to this ceiling. Rain still always closes.
+  co2_dew_max:
+    name: CO2 Flush Dew Point Ceiling
+    initial: 72
+    min: 60
+    max: 78
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:water-percent-alert
   # --- Climate overhaul Phase 4: away-mode setpoints -----------------------
   away_heat_setpoint:
     name: Away Heat Setpoint
@@ -362,6 +395,15 @@ input_boolean:
   economizer_owns_powder_fan:
     name: Economizer Owns Powder Room Fan
     icon: mdi:fan-alert
+  # --- Climate overhaul v2.1.1: Path C (min-vent) active flag --------------
+  # Set by the Fresh Air Ventilation economizer while a minimum-ventilation
+  # (Path C) cycle wants the damper open. The Safety Shutoff reads it to defer
+  # its >73F temp close up to 80F for min-vent (climate control compensates),
+  # the same exemption CO2 flushes get. No `initial:` so it defaults off and
+  # restores state.
+  minvent_active:
+    name: Min-Vent Active
+    icon: mdi:fan-clock
 
 input_select:
   sonos_speaker_select:

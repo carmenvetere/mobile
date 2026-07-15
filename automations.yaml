@@ -5626,12 +5626,15 @@
 - id: '1777026025997'
   alias: Exhaust Fan Economizer - Safety Shutoff
   description: 'Closes the fresh-air damper when outdoor conditions are unsafe for
-    ventilation: sustained rain (>0.01in/5min) or dew point >65F ALWAYS close. High
-    outdoor temp (>73F/5min) closes too, EXCEPT when a deliberate CO2 air-quality
-    flush is active (input_boolean.co2_vent_active on) and outdoor is still <=80F
-    — that flush is allowed up to 80F by the Fresh Air Ventilation automation, so
-    the backstop defers to it. Bathroom fans turned off only if HA started them (context
-    check). No ownership helpers needed.'
+    ventilation. Rain (>0.01in/5min) ALWAYS closes. Dew point closes at >65F,
+    EXCEPT during a CO2 air-quality flush (input_boolean.co2_vent_active on), which
+    is allowed up to input_number.co2_dew_max (72F default) - diluting CO2 takes
+    priority over the humidity it imports, up to that ceiling. High outdoor temp
+    (>73F/5min) closes too, EXCEPT when a CO2 flush OR a minimum-ventilation Path C
+    cycle (input_boolean.minvent_active on) is running and outdoor is still <=80F
+    (80F is the hard backstop ceiling regardless of the helper) - climate control
+    compensates for that warm intake. Bathroom fans turned off only if HA started
+    them (context check).'
   triggers:
   - trigger: numeric_state
     entity_id: sensor.bayberry_tempest_precipitation
@@ -5644,6 +5647,11 @@
     for: 00:02:00
     id: dew
   - trigger: numeric_state
+    entity_id: sensor.bayberry_tempest_dew_point
+    above: input_number.co2_dew_max
+    for: 00:02:00
+    id: dew_cap
+  - trigger: numeric_state
     entity_id: sensor.bayberry_tempest_temperature
     above: 73
     for: 00:05:00
@@ -5652,8 +5660,16 @@
   actions:
   - if:
     - condition: template
-      value_template: '{{ trigger.id in [''rain'',''dew''] or not is_state(''input_boolean.co2_vent_active'',''on'')
-        or (states(''sensor.bayberry_tempest_temperature'') | float(99)) > 80 }}'
+      value_template: >-
+        {{ trigger.id == 'rain'
+           or (trigger.id in ['dew', 'dew_cap']
+               and (not is_state('input_boolean.co2_vent_active', 'on')
+                    or (states('sensor.bayberry_tempest_dew_point') | float(99))
+                       > (states('input_number.co2_dew_max') | float(72))))
+           or (trigger.id == 'temp'
+               and (not (is_state('input_boolean.co2_vent_active', 'on')
+                         or is_state('input_boolean.minvent_active', 'on'))
+                    or (states('sensor.bayberry_tempest_temperature') | float(99)) > 80)) }}
     then:
     - action: switch.turn_off
       target:
@@ -5688,18 +5704,25 @@
     else:
     - action: system_log.write
       data:
-        message: 'Economizer Safety Shutoff: temp backstop DEFERRED - CO2 flush active
-          and outdoor <=80F. Damper left open.'
+        message: 'Economizer Safety Shutoff: close DEFERRED (trigger={{ trigger.id
+          }}). CO2 flush={{ is_state(''input_boolean.co2_vent_active'', ''on'') }}
+          (dew ceiling {{ states(''input_number.co2_dew_max'') }}F), min-vent={{ is_state(''input_boolean.minvent_active'',
+          ''on'') }} (temp ceiling 80F). Damper left open.'
         level: info
   mode: single
 - id: '1777026130089'
   alias: Fresh Air Ventilation
   description: 'Three-path basement+first-floor ventilation. PATH A (CO2 air
     quality, any hour, year-round): when first-floor CO2 > co2_vent_ceiling and
-    intake air is OK (vent_min_outdoor < outdoor < vent_max_outdoor, dew < 65F,
-    no rain), open damper + run living-room blower to dilute. No bathroom fan, so
-    quiet at all hours. Latches via input_boolean.co2_vent_active, clears below
-    co2_vent_recover. PATH B (free cooling, 20:00-08:00): damper + zone blowers
+    intake air is OK (vent_min_outdoor < outdoor < vent_max_outdoor, no rain, and
+    dew < co2_dew_max), open damper + run living-room blower to dilute. NOTE the
+    CO2 dew limit is co2_dew_max (72F default), HIGHER than the 65F used by free
+    cooling / min-vent: diluting CO2 takes priority over the humidity it imports,
+    so a CO2 flush is allowed to run on a muggy night that would lock out normal
+    ventilation (the Safety Shutoff defers its dew close to the same ceiling).
+    Rain still always blocks. No bathroom fan, so quiet at all hours. Latches via
+    input_boolean.co2_vent_active, clears below co2_vent_recover. PATH B (free
+    cooling, 20:00-08:00): damper + zone blowers
     cool each zone toward its input_number floor while outdoor is at least
     freecool_differential below the zone and dew/rain OK. The two exhaust fans
     are zone-gated AND noise-gated: the basement bathroom fan runs when the
@@ -5718,13 +5741,16 @@
     fan it started. Paths A and C stay quiet (damper + blowers, no exhaust fan).
     PATH C (minimum ventilation, no time-of-day window): when the
     damper has run less than minvent_floor_minutes in the trailing 24 h
-    (sensor.fresh_air_damper_on_24_h) and intake conditions are OK, opens damper
-    + living-room blower only (quiet) until the floor is met - stateless and
-    self-limiting, no timers or latches. Path C does NOT set co2_vent_active, so
-    the Safety Shutoff 73F backstop correctly closes a Path C vent on hot
-    afternoons; it simply resumes in cooler hours. All thresholds live in
+    (sensor.fresh_air_damper_on_24_h) and intake conditions are OK (dew < 65F, no
+    rain, minvent_min_outdoor < outdoor < minvent_max_outdoor - 25F..80F default,
+    wider than the other paths), opens damper + living-room blower only (quiet)
+    until the floor is met - stateless and self-limiting, no timers or latches.
+    Path C sets input_boolean.minvent_active so the Safety Shutoff defers its 73F
+    temp close up to 80F for min-vent (climate control compensates for the warm
+    intake), the same exemption CO2 flushes get. All thresholds live in
     input_number helpers (co2_vent_ceiling/co2_vent_recover/vent_min_outdoor/
-    vent_max_outdoor/freecool_differential/minvent_floor_minutes). Blower
+    vent_max_outdoor/freecool_differential/minvent_floor_minutes/minvent_min_outdoor/
+    minvent_max_outdoor/co2_dew_max). Blower
     fan_mode writes claim/release input_select.living_room_fan_owner and
     input_select.basement_fan_owner as "economizer" (highest priority; releases
     to none only when it is the owner). Heat lockout 80F intentionally exceeds
@@ -5762,6 +5788,11 @@
     below: 65
     for: 00:10:00
     id: dew_low
+  - trigger: numeric_state
+    entity_id: sensor.bayberry_tempest_dew_point
+    above: input_number.co2_dew_max
+    for: 00:02:00
+    id: dew_cap_high
   - trigger: numeric_state
     entity_id: sensor.bayberry_tempest_precipitation
     above: 0.01
@@ -5840,10 +5871,14 @@
       co2_recover: '{{ states(''input_number.co2_vent_recover'') | float(700) }}'
       out_min: '{{ states(''input_number.vent_min_outdoor'') | float(32) }}'
       out_max: '{{ states(''input_number.vent_max_outdoor'') | float(80) }}'
+      co2_dew_max: '{{ states(''input_number.co2_dew_max'') | float(72) }}'
+      minvent_min: '{{ states(''input_number.minvent_min_outdoor'') | float(25) }}'
+      minvent_max: '{{ states(''input_number.minvent_max_outdoor'') | float(80) }}'
       diff: '{{ states(''input_number.freecool_differential'') | float(5) }}'
       flush_active: '{{ is_state(''input_boolean.co2_vent_active'', ''on'') }}'
       dry_ok: '{{ dew < 65 and precip < 0.01 }}'
-      co2_intake_ok: '{{ dry_ok and outdoor > out_min and outdoor < out_max }}'
+      co2_dry_ok: '{{ dew < co2_dew_max and precip < 0.01 }}'
+      co2_intake_ok: '{{ co2_dry_ok and outdoor > out_min and outdoor < out_max }}'
       co2_want: '{{ co2_intake_ok and ((not flush_active and co2_first > co2_ceiling)
         or (flush_active and co2_first > co2_recover)) }}'
       evening_precool: '{{ now().hour >= 20 and now().hour < 22 }}'
@@ -5857,8 +5892,8 @@
         * 60 }}'
       minvent_floor: '{{ states(''input_number.minvent_floor_minutes'') | float(30)
         }}'
-      minvent_want: '{{ dry_ok and outdoor > out_min and outdoor < out_max and runtime_24h_min
-        < minvent_floor }}'
+      minvent_want: '{{ dry_ok and outdoor > minvent_min and outdoor < minvent_max
+        and runtime_24h_min < minvent_floor }}'
       media_room_quiet: '{{ not is_state(''media_player.media_room'', ''playing'')
         and (now() - states.media_player.media_room.last_changed).total_seconds()
         >= 120 }}'
@@ -5962,6 +5997,18 @@
     - action: input_boolean.turn_off
       target:
         entity_id: input_boolean.co2_vent_active
+  - alias: Min-vent active flag
+    if:
+    - condition: template
+      value_template: '{{ minvent_want }}'
+    then:
+    - action: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.minvent_active
+    else:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.minvent_active
   - alias: Damper follows any path
     if:
     - condition: template
@@ -6081,12 +6128,13 @@
   - action: system_log.write
     data:
       message: 'Fresh Air Ventilation: CO2_1F={{ co2_first }}ppm outdoor={{ outdoor
-        }}F dew={{ dew }}F dry_ok={{ dry_ok }} intake_ok={{ co2_intake_ok }} | Z1={{
-        z1 }}/{{ z1_min }} Z2={{ z2 }}/{{ z2_min }} | trig={{ trigger.id | default(''manual'')
-        }} -> co2_want={{ co2_want }} freecool={{ freecool_demand }} minvent={{ minvent_want
-        }} runtime24h={{ runtime_24h_min }}min bfan={{ run_basement_fan }} pfan={{
-        run_powder_fan }} mroomq={{ media_room_quiet }} lroomq={{ living_room_quiet
-        }} damper={{ damper_open }} z1b={{ z1_blower_on }} z2b={{ z2_blower_on }}'
+        }}F dew={{ dew }}F dry_ok={{ dry_ok }} co2_dry_ok={{ co2_dry_ok }} intake_ok={{
+        co2_intake_ok }} | Z1={{ z1 }}/{{ z1_min }} Z2={{ z2 }}/{{ z2_min }} | trig={{
+        trigger.id | default(''manual'') }} -> co2_want={{ co2_want }} freecool={{
+        freecool_demand }} minvent={{ minvent_want }} runtime24h={{ runtime_24h_min
+        }}min bfan={{ run_basement_fan }} pfan={{ run_powder_fan }} mroomq={{ media_room_quiet
+        }} lroomq={{ living_room_quiet }} damper={{ damper_open }} z1b={{ z1_blower_on
+        }} z2b={{ z2_blower_on }}'
       level: info
   mode: restart
 - id: '1777031732859'
