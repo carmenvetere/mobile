@@ -1045,7 +1045,7 @@ cards:
             icon: mdi:cellphone
             tap_action:
               action: none
-            state_display: v2.1.1
+            state_display: v2.2.0
             styles:
               card:
               - background: transparent !important
@@ -1077,6 +1077,17 @@ cards:
           cards:
             - type: markdown
               content: |
+                **v2.2.0** — 2026-07-15
+
+                - iOS Live Activities: a five-activity suite on the Lock Screen / Dynamic Island for both phones — Washer, Dryer, Car charging (Rivian telemetry; BMW inferred from the shared wall charger), Power Outage (battery % while off-grid), and Sprinklers (per-zone). Built on one reusable delivery script with a unique tag per activity, live countdowns/progress bars, and self-clearing "complete" cards
+                - Energy: Pool Pump usage added to the 7-day energy history chart (new integrated kWh sensor)
+                - Settings: Dryer Vent Cleaning tracker — date helper, reset script and a color-coded row, mirroring the water-heater flush
+                - Weather: precipitation graph replaced with a rain-gauge card fed by a daily-rainfall meter
+                - Scenes: Nightlight now surfaces in the evening (not just overnight); new weekday "Working" button that routes per user (Brian → Basement Work, Carmen → new Office Work scene)
+                - Lights: tap a light to toggle it on/off (hold opens more-info) instead of opening more-info on tap
+                - Scenes: Outdoor button is now a single state-aware toggle (turns on when off, off when on)
+                - Cleanup: removed dead dashboard modules and the legacy rest_command washer Live Activity so the native path is the only one
+
                 **v2.1.1** — 2026-07-09
 
                 - Navigation: retired the bottom tab bar for a hamburger menu — a drop-down nav sheet from the top of every view (compass + Menu header) listing all destinations with live status and highlighting the current one; back button on every sub-view; Home keeps its inline menu
