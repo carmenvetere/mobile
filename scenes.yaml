@@ -2346,3 +2346,18 @@
       entity_only: true
     switch.driveway_zone_1_2:
       entity_only: true
+- id: '1767360000000'
+  name: Office Work
+  entities:
+    light.office_main_lights:
+      state: 'on'
+      brightness: 64
+    light.eve_light_strip_a5a4:
+      state: 'on'
+      brightness: 255
+  icon: mdi:desk-lamp
+  metadata:
+    light.office_main_lights:
+      entity_only: true
+    light.eve_light_strip_a5a4:
+      entity_only: true

@@ -53,38 +53,6 @@
         - cover.hallway_2
         - cover.hallway_1
   mode: restart
-- id: '1720184822088'
-  alias: Washer Complete
-  description: ''
-  triggers:
-  - entity_id:
-    - binary_sensor.front_load_washer_run_completed
-    from: 'off'
-    to: 'on'
-    trigger: state
-  conditions: []
-  actions:
-  - action: notify.notify
-    data:
-      message: The washer is complete
-      title: Washer
-  mode: single
-- id: '1720187775524'
-  alias: Dryer Complete
-  description: ''
-  triggers:
-  - type: turned_on
-    device_id: df745980e44b9ab45abdd0bb5521d2b6
-    entity_id: 4cabf5444ed78bb1d2952a3f86de953f
-    domain: binary_sensor
-    trigger: device
-  conditions: []
-  actions:
-  - action: notify.notify
-    data:
-      message: The dryer is complete.
-      title: Dryer
-  mode: single
 - id: '1720287131671'
   alias: Outdoor Motion after 11pm, before sunrise
   description: ''
@@ -579,7 +547,6 @@
       data: {}
       action: cover.close_cover
   mode: single
-  initial_state: false
 - id: '1720886736206'
   alias: 10:30 AM East Facing Shades
   description: ''
@@ -2045,7 +2012,7 @@
   - action: alarm_control_panel.alarm_disarm
     metadata: {}
     data:
-      code: !secret alarm_code
+      code: "{{ states('input_text.alarm_code') }}"
     target:
       entity_id:
       - alarm_control_panel.alarmo
@@ -2112,7 +2079,7 @@
   - action: alarm_control_panel.alarm_disarm
     metadata: {}
     data:
-      code: !secret alarm_code
+      code: "{{ states('input_text.alarm_code') }}"
     target:
       entity_id: alarm_control_panel.alarmo
   mode: single
@@ -5627,12 +5594,15 @@
 - id: '1777026025997'
   alias: Exhaust Fan Economizer - Safety Shutoff
   description: 'Closes the fresh-air damper when outdoor conditions are unsafe for
-    ventilation: sustained rain (>0.01in/5min) or dew point >65F ALWAYS close. High
-    outdoor temp (>73F/5min) closes too, EXCEPT when a deliberate CO2 air-quality
-    flush is active (input_boolean.co2_vent_active on) and outdoor is still <=80F
-    — that flush is allowed up to 80F by the Fresh Air Ventilation automation, so
-    the backstop defers to it. Bathroom fans turned off only if HA started them (context
-    check). No ownership helpers needed.'
+    ventilation. Rain (>0.01in/5min) ALWAYS closes. Dew point closes at >65F,
+    EXCEPT during a CO2 air-quality flush (input_boolean.co2_vent_active on), which
+    is allowed up to input_number.co2_dew_max (72F default) - diluting CO2 takes
+    priority over the humidity it imports, up to that ceiling. High outdoor temp
+    (>73F/5min) closes too, EXCEPT when a CO2 flush OR a minimum-ventilation Path C
+    cycle (input_boolean.minvent_active on) is running and outdoor is still <=80F
+    (80F is the hard backstop ceiling regardless of the helper) - climate control
+    compensates for that warm intake. Bathroom fans turned off only if HA started
+    them (context check).'
   triggers:
   - trigger: numeric_state
     entity_id: sensor.bayberry_tempest_precipitation
@@ -5645,6 +5615,11 @@
     for: 00:02:00
     id: dew
   - trigger: numeric_state
+    entity_id: sensor.bayberry_tempest_dew_point
+    above: input_number.co2_dew_max
+    for: 00:02:00
+    id: dew_cap
+  - trigger: numeric_state
     entity_id: sensor.bayberry_tempest_temperature
     above: 73
     for: 00:05:00
@@ -5653,8 +5628,16 @@
   actions:
   - if:
     - condition: template
-      value_template: '{{ trigger.id in [''rain'',''dew''] or not is_state(''input_boolean.co2_vent_active'',''on'')
-        or (states(''sensor.bayberry_tempest_temperature'') | float(99)) > 80 }}'
+      value_template: >-
+        {{ trigger.id == 'rain'
+           or (trigger.id in ['dew', 'dew_cap']
+               and (not is_state('input_boolean.co2_vent_active', 'on')
+                    or (states('sensor.bayberry_tempest_dew_point') | float(99))
+                       > (states('input_number.co2_dew_max') | float(72))))
+           or (trigger.id == 'temp'
+               and (not (is_state('input_boolean.co2_vent_active', 'on')
+                         or is_state('input_boolean.minvent_active', 'on'))
+                    or (states('sensor.bayberry_tempest_temperature') | float(99)) > 80)) }}
     then:
     - action: switch.turn_off
       target:
@@ -5689,18 +5672,25 @@
     else:
     - action: system_log.write
       data:
-        message: 'Economizer Safety Shutoff: temp backstop DEFERRED - CO2 flush active
-          and outdoor <=80F. Damper left open.'
+        message: 'Economizer Safety Shutoff: close DEFERRED (trigger={{ trigger.id
+          }}). CO2 flush={{ is_state(''input_boolean.co2_vent_active'', ''on'') }}
+          (dew ceiling {{ states(''input_number.co2_dew_max'') }}F), min-vent={{ is_state(''input_boolean.minvent_active'',
+          ''on'') }} (temp ceiling 80F). Damper left open.'
         level: info
   mode: single
 - id: '1777026130089'
   alias: Fresh Air Ventilation
   description: 'Three-path basement+first-floor ventilation. PATH A (CO2 air
     quality, any hour, year-round): when first-floor CO2 > co2_vent_ceiling and
-    intake air is OK (vent_min_outdoor < outdoor < vent_max_outdoor, dew < 65F,
-    no rain), open damper + run living-room blower to dilute. No bathroom fan, so
-    quiet at all hours. Latches via input_boolean.co2_vent_active, clears below
-    co2_vent_recover. PATH B (free cooling, 20:00-08:00): damper + zone blowers
+    intake air is OK (vent_min_outdoor < outdoor < vent_max_outdoor, no rain, and
+    dew < co2_dew_max), open damper + run living-room blower to dilute. NOTE the
+    CO2 dew limit is co2_dew_max (72F default), HIGHER than the 65F used by free
+    cooling / min-vent: diluting CO2 takes priority over the humidity it imports,
+    so a CO2 flush is allowed to run on a muggy night that would lock out normal
+    ventilation (the Safety Shutoff defers its dew close to the same ceiling).
+    Rain still always blocks. No bathroom fan, so quiet at all hours. Latches via
+    input_boolean.co2_vent_active, clears below co2_vent_recover. PATH B (free
+    cooling, 20:00-08:00): damper + zone blowers
     cool each zone toward its input_number floor while outdoor is at least
     freecool_differential below the zone and dew/rain OK. The two exhaust fans
     are zone-gated AND noise-gated: the basement bathroom fan runs when the
@@ -5719,13 +5709,16 @@
     fan it started. Paths A and C stay quiet (damper + blowers, no exhaust fan).
     PATH C (minimum ventilation, no time-of-day window): when the
     damper has run less than minvent_floor_minutes in the trailing 24 h
-    (sensor.fresh_air_damper_on_24_h) and intake conditions are OK, opens damper
-    + living-room blower only (quiet) until the floor is met - stateless and
-    self-limiting, no timers or latches. Path C does NOT set co2_vent_active, so
-    the Safety Shutoff 73F backstop correctly closes a Path C vent on hot
-    afternoons; it simply resumes in cooler hours. All thresholds live in
+    (sensor.fresh_air_damper_on_24_h) and intake conditions are OK (dew < 65F, no
+    rain, minvent_min_outdoor < outdoor < minvent_max_outdoor - 25F..80F default,
+    wider than the other paths), opens damper + living-room blower only (quiet)
+    until the floor is met - stateless and self-limiting, no timers or latches.
+    Path C sets input_boolean.minvent_active so the Safety Shutoff defers its 73F
+    temp close up to 80F for min-vent (climate control compensates for the warm
+    intake), the same exemption CO2 flushes get. All thresholds live in
     input_number helpers (co2_vent_ceiling/co2_vent_recover/vent_min_outdoor/
-    vent_max_outdoor/freecool_differential/minvent_floor_minutes). Blower
+    vent_max_outdoor/freecool_differential/minvent_floor_minutes/minvent_min_outdoor/
+    minvent_max_outdoor/co2_dew_max). Blower
     fan_mode writes claim/release input_select.living_room_fan_owner and
     input_select.basement_fan_owner as "economizer" (highest priority; releases
     to none only when it is the owner). Heat lockout 80F intentionally exceeds
@@ -5763,6 +5756,11 @@
     below: 65
     for: 00:10:00
     id: dew_low
+  - trigger: numeric_state
+    entity_id: sensor.bayberry_tempest_dew_point
+    above: input_number.co2_dew_max
+    for: 00:02:00
+    id: dew_cap_high
   - trigger: numeric_state
     entity_id: sensor.bayberry_tempest_precipitation
     above: 0.01
@@ -5841,10 +5839,14 @@
       co2_recover: '{{ states(''input_number.co2_vent_recover'') | float(700) }}'
       out_min: '{{ states(''input_number.vent_min_outdoor'') | float(32) }}'
       out_max: '{{ states(''input_number.vent_max_outdoor'') | float(80) }}'
+      co2_dew_max: '{{ states(''input_number.co2_dew_max'') | float(72) }}'
+      minvent_min: '{{ states(''input_number.minvent_min_outdoor'') | float(25) }}'
+      minvent_max: '{{ states(''input_number.minvent_max_outdoor'') | float(80) }}'
       diff: '{{ states(''input_number.freecool_differential'') | float(5) }}'
       flush_active: '{{ is_state(''input_boolean.co2_vent_active'', ''on'') }}'
       dry_ok: '{{ dew < 65 and precip < 0.01 }}'
-      co2_intake_ok: '{{ dry_ok and outdoor > out_min and outdoor < out_max }}'
+      co2_dry_ok: '{{ dew < co2_dew_max and precip < 0.01 }}'
+      co2_intake_ok: '{{ co2_dry_ok and outdoor > out_min and outdoor < out_max }}'
       co2_want: '{{ co2_intake_ok and ((not flush_active and co2_first > co2_ceiling)
         or (flush_active and co2_first > co2_recover)) }}'
       evening_precool: '{{ now().hour >= 20 and now().hour < 22 }}'
@@ -5858,8 +5860,8 @@
         * 60 }}'
       minvent_floor: '{{ states(''input_number.minvent_floor_minutes'') | float(30)
         }}'
-      minvent_want: '{{ dry_ok and outdoor > out_min and outdoor < out_max and runtime_24h_min
-        < minvent_floor }}'
+      minvent_want: '{{ dry_ok and outdoor > minvent_min and outdoor < minvent_max
+        and runtime_24h_min < minvent_floor }}'
       media_room_quiet: '{{ not is_state(''media_player.media_room'', ''playing'')
         and (now() - states.media_player.media_room.last_changed).total_seconds()
         >= 120 }}'
@@ -5963,6 +5965,18 @@
     - action: input_boolean.turn_off
       target:
         entity_id: input_boolean.co2_vent_active
+  - alias: Min-vent active flag
+    if:
+    - condition: template
+      value_template: '{{ minvent_want }}'
+    then:
+    - action: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.minvent_active
+    else:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.minvent_active
   - alias: Damper follows any path
     if:
     - condition: template
@@ -6082,12 +6096,13 @@
   - action: system_log.write
     data:
       message: 'Fresh Air Ventilation: CO2_1F={{ co2_first }}ppm outdoor={{ outdoor
-        }}F dew={{ dew }}F dry_ok={{ dry_ok }} intake_ok={{ co2_intake_ok }} | Z1={{
-        z1 }}/{{ z1_min }} Z2={{ z2 }}/{{ z2_min }} | trig={{ trigger.id | default(''manual'')
-        }} -> co2_want={{ co2_want }} freecool={{ freecool_demand }} minvent={{ minvent_want
-        }} runtime24h={{ runtime_24h_min }}min bfan={{ run_basement_fan }} pfan={{
-        run_powder_fan }} mroomq={{ media_room_quiet }} lroomq={{ living_room_quiet
-        }} damper={{ damper_open }} z1b={{ z1_blower_on }} z2b={{ z2_blower_on }}'
+        }}F dew={{ dew }}F dry_ok={{ dry_ok }} co2_dry_ok={{ co2_dry_ok }} intake_ok={{
+        co2_intake_ok }} | Z1={{ z1 }}/{{ z1_min }} Z2={{ z2 }}/{{ z2_min }} | trig={{
+        trigger.id | default(''manual'') }} -> co2_want={{ co2_want }} freecool={{
+        freecool_demand }} minvent={{ minvent_want }} runtime24h={{ runtime_24h_min
+        }}min bfan={{ run_basement_fan }} pfan={{ run_powder_fan }} mroomq={{ media_room_quiet
+        }} lroomq={{ living_room_quiet }} damper={{ damper_open }} z1b={{ z1_blower_on
+        }} z2b={{ z2_blower_on }}'
       level: info
   mode: restart
 - id: '1777031732859'
@@ -6133,10 +6148,8 @@
   - platform: state
     entity_id:
     - switch.basement_bathroom_exhaust_fan
-    from:
-    - 'off'
-    to:
-    - 'on'
+    from: 'off'
+    to: 'on'
     for:
       hours: 0
       minutes: 0
@@ -6635,10 +6648,8 @@
   - platform: state
     entity_id:
     - switch.primary_bathroom_exhaust_fan
-    from:
-    - 'off'
-    to:
-    - 'on'
+    from: 'off'
+    to: 'on'
     for:
       hours: 0
       minutes: 0
@@ -6697,29 +6708,6 @@
     target:
       entity_id: switch.smart_switch_2302084653898257090148e1e9b9ccaa_outlet
     action: switch.turn_on
-  mode: single
-- id: '1777851014172'
-  alias: Washing Machine Live Activity
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - sensor.front_load_washer
-    attribute: run_state
-  - trigger: state
-    entity_id:
-    - sensor.front_load_washer_remaining_time
-  conditions: []
-  actions:
-  - action: rest_command.update_live_activity
-    response_variable: aivi_response
-    data:
-      slug: washing_machine
-      payload: "{% set running = is_state(\"sensor.front_load_washer\", \"on\") %}
-        {\n  \"state\": \"{{ 'ONGOING' if running else 'IDLE' }}\",\n  \"content\":
-        {\n    \"template\": \"generic\",\n    \"state\": \"{{ states('sensor.front_load_washer_run_state')
-        }}\",\n    \"remaining_time\": {{ states('sensor.front_load_washer_remaining_time')
-        }},\n    \"icon\": \"washer\"\n  }\n}"
   mode: single
 - id: '1778025144757'
   alias: Bedroom Air Quality
@@ -6828,14 +6816,12 @@
   - trigger: state
     entity_id:
     - binary_sensor.omnilogic_pool_heat_pump_status
-    from:
-    - 'off'
+    from: 'off'
     for:
       hours: 0
       minutes: 0
       seconds: 30
-    to:
-    - 'on'
+    to: 'on'
   conditions: []
   actions:
   - action: number.set_value
@@ -6852,14 +6838,12 @@
   - trigger: state
     entity_id:
     - binary_sensor.omnilogic_pool_heat_pump_status
-    from:
-    - 'on'
+    from: 'on'
     for:
       hours: 0
       minutes: 0
       seconds: 30
-    to:
-    - 'off'
+    to: 'off'
   conditions: []
   actions:
   - action: number.set_value
@@ -7697,10 +7681,8 @@
   - platform: state
     entity_id:
     - switch.powder_room_powder_room_exhaust_fan
-    from:
-    - 'off'
-    to:
-    - 'on'
+    from: 'off'
+    to: 'on'
     for:
       hours: 0
       minutes: 0
@@ -7726,3 +7708,356 @@
       target:
         entity_id: switch.powder_room_powder_room_exhaust_fan
   mode: restart
+- id: washer_live_activity_update
+  alias: Washing Machine Live Activity — Update
+  description: ''
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.washer_cycle_progress
+    - sensor.front_load_washer_run_state
+    - sensor.front_load_washer_remaining_time
+  conditions:
+  - condition: template
+    value_template: >
+      {{ is_state('sensor.front_load_washer', 'on')
+         and states('sensor.washer_cycle_progress') not in ['unavailable','unknown','']
+         and (states('sensor.washer_cycle_progress') | int(100)) < 100 }}
+  actions:
+  - action: script.push_live_activity
+    data:
+      tag: washer_cycle
+      title: Washing Machine
+      message: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) | title }}"
+      audience: both
+      payload:
+        # Run state (e.g. Washing / Rinsing / Spinning) shown as the body above.
+        subtitle: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) | title }}"
+        critical_text: "{{ states('sensor.washer_cycle_progress') | int(0) }}%"
+        # washer_cycle_progress is percent COMPLETE (0 -> 100), so the bar fills
+        # as the cycle finishes / remaining time hits zero.
+        progress: "{{ states('sensor.washer_cycle_progress') | int(0) }}"
+        progress_max: 100
+        chronometer: true
+        # Count down to the actual finish: now + remaining time, as a Unix
+        # timestamp. (Was total_seconds, a duration read as epoch 1970.)
+        # Seconds remaining (when_relative: true -> counts down). NOT now()+rem.
+        when: >-
+          {% set r = states('sensor.front_load_washer_remaining_time') %}
+          {% if ':' in r %}
+            {% set p = r.split(':') %}
+            {{ p[0] | int * 3600 + p[1] | int * 60 + p[2] | int }}
+          {% else %}
+            0
+          {% endif %}
+        when_relative: true
+        notification_icon: mdi:washing-machine
+        notification_icon_color: "#2196F3"
+- id: washer_live_activity_complete
+  alias: Washing Machine Live Activity — Complete
+  description: >-
+    On wash completion, replace the card with a green "done" state, hold ~10 min
+    (the move-the-laundry reminder), then clear (#179). Hold duration is an open
+    question in #178 — adjust the delay if immediate-clear is preferred.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.front_load_washer_run_completed
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: script.push_live_activity
+    data:
+      tag: washer_cycle
+      title: Washing Machine
+      message: Clothes are ready
+      audience: both
+      payload:
+        critical_text: Complete
+        chronometer: false
+        notification_icon: mdi:washing-machine
+        notification_icon_color: "#4CAF50"
+  - delay: '01:00:00'
+  - action: script.clear_live_activity
+    data:
+      tag: washer_cycle
+      audience: both
+- id: dryer_live_activity_update
+  alias: Dryer Live Activity — Update
+  description: >-
+    Dryer iOS Live Activity, mirroring the washer (#180). Uses the existing
+    sensor.dryer_cycle_progress helper for the bar and sensor.dryer_remaining_time
+    (H:MM:SS) for the countdown.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.dryer
+    - sensor.dryer_cycle_progress
+    - sensor.dryer_remaining_time
+  conditions:
+  - condition: template
+    value_template: >
+      {{ states('sensor.dryer') not in ['off','unavailable','unknown']
+         and states('sensor.dryer_cycle_progress') not in ['unavailable','unknown','']
+         and (states('sensor.dryer_cycle_progress') | int(100)) < 100 }}
+  actions:
+  - action: script.push_live_activity
+    data:
+      tag: dryer_cycle
+      title: Dryer
+      message: "{{ states('sensor.dryer') | default('Drying', true) | title }}"
+      audience: both
+      payload:
+        subtitle: "{{ states('sensor.dryer') | default('Drying', true) | title }}"
+        critical_text: "{{ states('sensor.dryer_cycle_progress') | int(0) }}%"
+        progress: "{{ states('sensor.dryer_cycle_progress') | int(0) }}"
+        progress_max: 100
+        chronometer: true
+        # Seconds remaining (when_relative: true -> counts down). NOT now()+rem.
+        when: >-
+          {% set r = states('sensor.dryer_remaining_time') %}
+          {% if ':' in r %}
+            {% set p = r.split(':') %}
+            {{ p[0] | int * 3600 + p[1] | int * 60 + p[2] | int }}
+          {% else %}
+            0
+          {% endif %}
+        when_relative: true
+        notification_icon: mdi:tumble-dryer
+        notification_icon_color: "#FF9800"
+- id: dryer_live_activity_complete
+  alias: Dryer Live Activity — Complete
+  description: >-
+    Green done-card on dryer completion, ~10 min hold, then clear (#180).
+    Hold duration is an open question in #178.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.dryer_recently_completed
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: script.push_live_activity
+    data:
+      tag: dryer_cycle
+      title: Dryer
+      message: Clothes are ready
+      audience: both
+      payload:
+        critical_text: Complete
+        chronometer: false
+        notification_icon: mdi:tumble-dryer
+        notification_icon_color: "#4CAF50"
+  - delay: '01:00:00'
+  - action: script.clear_live_activity
+    data:
+      tag: dryer_cycle
+      audience: both
+- id: outage_live_activity_update
+  alias: Power Outage Live Activity — Update
+  description: >-
+    Outage iOS Live Activity, shown only while off-grid (#182). Counts up from
+    the outage start; battery % drives the bar. Uses sensor.bayberry_charge for
+    % (the precise sensor.bayberry_percentage_charged is not referenced in this
+    config — swap it in if it exists). Only ADDS a Live Activity; existing
+    power_outage_v2 / powerwall_* automations are untouched.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.bayberry_grid_status
+    to: 'off'
+  - trigger: state
+    entity_id: sensor.bayberry_charge
+  conditions:
+  - condition: state
+    entity_id: binary_sensor.bayberry_grid_status
+    state: 'off'
+  actions:
+  - action: script.push_live_activity
+    data:
+      tag: power_outage
+      title: Power Outage
+      message: "On battery · {{ states('sensor.bayberry_load_power') }} kW load · {{ states('sensor.powerwall_discharge_time') }}"
+      audience: both
+      payload:
+        critical_text: "{{ states('sensor.bayberry_charge') | int(0) }}%"
+        progress: "{{ states('sensor.bayberry_charge') | int(0) }}"
+        progress_max: 100
+        chronometer: true
+        when: "{{ as_timestamp(states.binary_sensor.bayberry_grid_status.last_changed) | int }}"
+        when_relative: false
+        notification_icon: mdi:home-battery
+        notification_icon_color: "#F44336"
+- id: outage_live_activity_restored
+  alias: Power Outage Live Activity — Restored
+  description: >-
+    On grid return, replace the outage card with a green "Power restored" state,
+    hold ~5 min, then clear (#182).
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.bayberry_grid_status
+    to: 'on'
+  conditions: []
+  actions:
+  - action: script.push_live_activity
+    data:
+      tag: power_outage
+      title: Power Restored
+      message: "Grid is back · battery {{ states('sensor.bayberry_charge') | int(0) }}%"
+      audience: both
+      payload:
+        critical_text: Restored
+        chronometer: false
+        notification_icon: mdi:transmission-tower
+        notification_icon_color: "#4CAF50"
+  - delay: '00:05:00'
+  - action: script.clear_live_activity
+    data:
+      tag: power_outage
+      audience: both
+- id: sprinkler_live_activity
+  alias: Sprinklers Live Activity
+  description: >-
+    Per-zone sprinkler iOS Live Activity (#183). Count-up elapsed timer (Rachio
+    exposes no remaining/duration). Display-only — pause control skipped for now.
+    On any zone switch change: if a zone is on, show it (card replaced as zones
+    advance); when none are on, clear after a short debounce.
+  mode: restart
+  variables:
+    zone_switches:
+    - switch.vegetable_beds
+    - switch.kimberly_road_180s
+    - switch.pool_180s
+    - switch.pool_90s
+    - switch.kimberly_road_drip
+    - switch.front_180s
+    - switch.front_and_side_90s
+    - switch.driveway_shrubs
+    - switch.zone_11
+    - switch.pool_shrubs
+    - switch.firepit_shrubs
+    - switch.retaining_wall_drip
+    # Clean zone labels (Rachio switch friendly_names aren't display-ready;
+    # matches the hardcoded map in dashboards/nspanel/sprinklers-view.yaml).
+    zone_names:
+      switch.vegetable_beds: Vegetable Beds
+      switch.kimberly_road_180s: Kimberly Road 180s
+      switch.pool_180s: Pool 180s
+      switch.pool_90s: Pool 90s
+      switch.kimberly_road_drip: Kimberly Road Drip
+      switch.front_180s: Front 180s
+      switch.front_and_side_90s: Front & Side 90s
+      switch.driveway_shrubs: Driveway Shrubs
+      switch.zone_11: Zone 11
+      switch.pool_shrubs: Pool Shrubs
+      switch.firepit_shrubs: Firepit Shrubs
+      switch.retaining_wall_drip: Retaining Wall Drip
+    active_zone: "{{ zone_switches | select('is_state', 'on') | list | first | default('', true) }}"
+  triggers:
+  - trigger: state
+    entity_id:
+    - switch.vegetable_beds
+    - switch.kimberly_road_180s
+    - switch.pool_180s
+    - switch.pool_90s
+    - switch.kimberly_road_drip
+    - switch.front_180s
+    - switch.front_and_side_90s
+    - switch.driveway_shrubs
+    - switch.zone_11
+    - switch.pool_shrubs
+    - switch.firepit_shrubs
+    - switch.retaining_wall_drip
+  conditions: []
+  actions:
+  - choose:
+    - conditions: "{{ active_zone != '' }}"
+      sequence:
+      - action: script.push_live_activity
+        data:
+          tag: sprinkler_zone
+          title: Sprinklers
+          message: "{{ zone_names.get(active_zone) | default(state_attr(active_zone, 'friendly_name'), true) | default('Zone', true) }} running"
+          audience: both
+          payload:
+            chronometer: true
+            when: "{{ as_timestamp(states[active_zone].last_changed) | int }}"
+            when_relative: false
+            notification_icon: mdi:sprinkler-variant
+            notification_icon_color: "#00BCD4"
+    default:
+    # Debounce zone-to-zone handoff before clearing.
+    - delay: '00:00:08'
+    - condition: template
+      value_template: "{{ zone_switches | select('is_state', 'on') | list | count == 0 }}"
+    - action: script.clear_live_activity
+      data:
+        tag: sprinkler_zone
+        audience: both
+- id: car_charging_live_activity
+  alias: Car Charging Live Activity
+  description: >-
+    One shared car_charging Live Activity (#181). The wall charger is shared by
+    both cars, so: Rivian = binary_sensor.r1t_charging_status on (uses Rivian
+    telemetry — kW, SOC bar, countdown). BMW = wall charger drawing power AND
+    Rivian NOT charging (wall-charger kW + elapsed, no vehicle telemetry). They
+    are mutually exclusive; clears when neither is charging.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.r1t_charging_status
+    - sensor.wall_charger_power
+    - sensor.wall_charger_charging_status
+    - sensor.r1t_charging_speed
+    - sensor.r1t_battery_state_of_charge
+    - sensor.r1t_charging_time_remaining
+  conditions: []
+  actions:
+  - choose:
+    - conditions: "{{ is_state('binary_sensor.r1t_charging_status', 'on') }}"
+      sequence:
+      - action: script.push_live_activity
+        data:
+          tag: car_charging
+          title: Rivian R1T
+          message: "Charging · {{ states('sensor.r1t_charging_speed') }} kW"
+          audience: both
+          payload:
+            critical_text: "{{ states('sensor.r1t_battery_state_of_charge') }}%"
+            progress: "{{ states('sensor.r1t_battery_state_of_charge') | int }}"
+            progress_max: "{{ states('sensor.r1t_battery_state_of_charge_limit') | int(100) }}"
+            chronometer: true
+            # remaining minutes -> seconds from now (when_relative: true) -> counts down
+            when: "{{ states('sensor.r1t_charging_time_remaining') | int(0) * 60 }}"
+            when_relative: true
+            notification_icon: mdi:car-electric
+            notification_icon_color: "#FFC107"
+    - conditions: >
+        {{ states('sensor.wall_charger_power') | float(0) > 0.5
+           and is_state('binary_sensor.r1t_charging_status', 'off') }}
+      sequence:
+      - action: script.push_live_activity
+        data:
+          tag: car_charging
+          title: BMW
+          message: "Charging · {{ states('sensor.wall_charger_power') }} kW"
+          audience: both
+          payload:
+            critical_text: Charging
+            chronometer: true
+            # wall-charger session start -> counts up (no BMW telemetry)
+            when: "{{ as_timestamp(states.sensor.wall_charger_charging_status.last_changed) | int }}"
+            when_relative: false
+            notification_icon: mdi:car-electric
+            notification_icon_color: "#1C69D4"
+    default:
+    - action: script.clear_live_activity
+      data:
+        tag: car_charging
+        audience: both

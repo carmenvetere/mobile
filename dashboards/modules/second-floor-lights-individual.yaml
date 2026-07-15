@@ -45,12 +45,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.upstairs_hallway_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.office_main_lights
@@ -75,12 +72,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.office_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.office_floor_lamp
@@ -105,12 +99,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.office_floor_lamp
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.eve_light_strip_a5a4
@@ -135,12 +126,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.eve_light_strip_a5a4
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.master_bedroom_main_lights
@@ -165,12 +153,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.master_bedroom_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.master_bedroom_closet_light
@@ -195,12 +180,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.master_bedroom_closet_light
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.master_bedroom_sconces
@@ -225,12 +207,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.master_bedroom_sconces
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: switch.bedroom_floor_lamp_switch
@@ -254,10 +233,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: switch.toggle
-          target:
-            entity_id: switch.bedroom_floor_lamp_switch
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.master_bathroom_main_lights
@@ -282,12 +260,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.master_bathroom_main_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.master_bathroom_vanity_lights
@@ -312,9 +287,6 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.master_bathroom_vanity_lights
+          action: toggle
+      tap_action:
+        action: toggle

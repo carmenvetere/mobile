@@ -33,6 +33,11 @@ input_datetime:
     name: Last Pool Vacuum
     has_date: true
     has_time: true
+  dryer_vent_last_cleaned:
+    name: Dryer Vent Last Cleaned
+    has_date: true
+    has_time: true
+    initial: "2024-10-31 00:00:00"
 
 input_number:
   sonos_favorites_index:
@@ -280,6 +285,39 @@ input_number:
     unit_of_measurement: min
     mode: box
     icon: mdi:fan-clock
+  # --- Climate overhaul v2.1.1: Path C wider band + CO2-flush dew ceiling ---
+  # `initial:` values are for first boot only; strip them later like the other
+  # helpers if you want dashboard edits to persist across restarts.
+  minvent_min_outdoor:
+    name: Min-Vent Min Outdoor Temp
+    initial: 25
+    min: 0
+    max: 40
+    step: 1
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:thermometer-low
+  minvent_max_outdoor:
+    name: Min-Vent Max Outdoor Temp
+    initial: 80
+    min: 60
+    max: 95
+    step: 1
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:thermometer-high
+  # CO2 air-quality flush is allowed to run at a HIGHER dew point than normal
+  # ventilation (which locks out at 65F) — diluting CO2 takes priority over the
+  # humidity it imports, up to this ceiling. Rain still always closes.
+  co2_dew_max:
+    name: CO2 Flush Dew Point Ceiling
+    initial: 72
+    min: 60
+    max: 78
+    step: 0.5
+    unit_of_measurement: °F
+    mode: box
+    icon: mdi:water-percent-alert
   # --- Climate overhaul Phase 4: away-mode setpoints -----------------------
   away_heat_setpoint:
     name: Away Heat Setpoint
@@ -357,6 +395,15 @@ input_boolean:
   economizer_owns_powder_fan:
     name: Economizer Owns Powder Room Fan
     icon: mdi:fan-alert
+  # --- Climate overhaul v2.1.1: Path C (min-vent) active flag --------------
+  # Set by the Fresh Air Ventilation economizer while a minimum-ventilation
+  # (Path C) cycle wants the damper open. The Safety Shutoff reads it to defer
+  # its >73F temp close up to 80F for min-vent (climate control compensates),
+  # the same exemption CO2 flushes get. No `initial:` so it defaults off and
+  # restores state.
+  minvent_active:
+    name: Min-Vent Active
+    icon: mdi:fan-clock
 
 input_select:
   sonos_speaker_select:
@@ -448,6 +495,17 @@ input_text:
     initial: ""
     max: 60
     icon: mdi:magnify
+  # Alarm disarm code for Alarmo, referenced by the Alarm automations via
+  # {{ states('input_text.alarm_code') }}. Kept as a helper (not !secret)
+  # because the UI automation editor cannot read !secret from automations.yaml
+  # and 500s on open. No `initial:` so the value you set persists across
+  # restarts and never lands in git. Set it once via the UI or
+  # input_text.set_value, then it restores automatically.
+  alarm_code:
+    name: Alarm Code
+    max: 12
+    mode: password
+    icon: mdi:shield-key
 
 utility_meter:
   daily_well_pump:
@@ -455,6 +513,11 @@ utility_meter:
     cycle: daily
   daily_ev_charger:
     source: sensor.wall_charger_energy
+    cycle: daily
+  # Rain today: meters the Tempest precipitation accumulation (state_class
+  # total, inches) into a local-midnight daily bucket for the rain gauge (#155).
+  daily_rain:
+    source: sensor.bayberry_tempest_precipitation
     cycle: daily
 
 recorder:
@@ -488,6 +551,8 @@ recorder:
       - sensor.first_floor_air_quality_monitor*
     
     entities:
+      # Alarm disarm code helper — keep the code out of the recorder history/DB.
+      - input_text.alarm_code
       # NOTE: the HVAC estimated-power sensors are intentionally NOT excluded:
       # the 24 h power-flow chart plots them, which needs recorder history.
       # They are low-cardinality template sensors, so the DB cost is trivial.
@@ -573,6 +638,8 @@ lovelace:
     - url: /hacsfiles/llmvision-card/llmvision-card.js 
       type: module
     - url: /hacsfiles/apexcharts-card/apexcharts-card.js
+      type: module
+    - url: /hacsfiles/rain-gauge-card/rain-gauge-card.js
       type: module
     - url: /hacsfiles/energy-sankey/energy-sankey.js
       type: module
@@ -738,6 +805,16 @@ sensor:
     name: "Lower HVAC Energy"
     unique_id: lower_hvac_energy
     source: sensor.lower_hvac_estimated_power
+    method: left
+    round: 3
+    unit_prefix: k
+    unit_time: h
+  # Pool filter pump cumulative energy, integrated from the OmniLogic
+  # filter pump power sensor (W). Feeds the 7-day usage history chart (#165).
+  - platform: integration
+    name: "Pool Pump Energy"
+    unique_id: pool_pump_energy
+    source: sensor.omnilogic_pool_filter_pump_power
     method: left
     round: 3
     unit_prefix: k

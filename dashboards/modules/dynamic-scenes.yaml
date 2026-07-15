@@ -51,6 +51,78 @@ cards:
     scrolling_effect: false
     modules:
     - {{ module_name }}
+# Working Scene - Mobile Weekdays, per-user routing (Brian -> Basement Work)
+{% if dashboard in ['mobile'] %}
+  - type: custom:bubble-card
+    card_type: button
+    entity: binary_sensor.scene_basement_work
+    name: Working
+    icon: mdi:desk-lamp
+    visibility:
+      - condition: time
+        after: "07:00:00"
+        before: "18:00:00"
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+      - condition: user
+        users:
+          - a89c1fd973714901b68dc8bfad34a871
+    button_action:
+      tap_action:
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.basement_work
+    tap_action:
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.basement_work
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+{% endif %}
+# Working Scene - Mobile Weekdays, per-user routing (Carmen -> Office Work)
+{% if dashboard in ['mobile'] %}
+  - type: custom:bubble-card
+    card_type: button
+    entity: binary_sensor.scene_office_work
+    name: Working
+    icon: mdi:desk-lamp
+    visibility:
+      - condition: time
+        after: "07:00:00"
+        before: "18:00:00"
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+      - condition: user
+        users:
+          - 92d2cff3517f4c9e85db7023f06c462a
+    button_action:
+      tap_action:
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.office_work
+    tap_action:
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.office_work
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+{% endif %}
 # Basement Working - Basement Wall Panel Day
 {% if dashboard == 'basement_wall_panel' %}
   - type: custom:bubble-card
@@ -348,9 +420,19 @@ cards:
     name: Nightlight
     icon: mdi:lightbulb-night
     visibility:
-      - condition: time
-        after: "22:00:00"
-        before: "05:00:00"
+      - condition: or
+        conditions:
+          - condition: and
+            conditions:
+              - condition: numeric_state
+                entity: sensor.sun_solar_elevation
+                below: 15
+              - condition: time
+                after: "18:00:00"
+                before: "22:00:00"
+          - condition: time
+            after: "22:00:00"
+            before: "05:00:00"
     button_action:
       tap_action:
         action: perform-action
@@ -366,18 +448,52 @@ cards:
     scrolling_effect: false
     modules:
     - {{ module_name }}
-#Outdoor Scene - All Displays All Times
+#Outdoor On Scene - shown when outdoor is off
   - type: custom:bubble-card
     card_type: button
     entity: binary_sensor.scene_outdoor_on
     name: Outdoor
     icon: mdi:coach-lamp
+    visibility:
+      - condition: state
+        entity: binary_sensor.outdoor_lights_on
+        state: "off"
     button_action:
-        tap_action:
-          action: perform-action
-          perform_action: scene.turn_on
-          target:
-            entity_id: scene.outdoor_on
+      tap_action:
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.outdoor_on
+    tap_action:
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.outdoor_on
+    card_layout: large
+    scrolling_effect: false
+    modules:
+    - {{ module_name }}
+#Outdoor Off Scene - shown when outdoor is on
+  - type: custom:bubble-card
+    card_type: button
+    entity: binary_sensor.scene_outdoor_on
+    name: Outdoor Off
+    icon: mdi:coach-lamp
+    visibility:
+      - condition: state
+        entity: binary_sensor.outdoor_lights_on
+        state: "on"
+    button_action:
+      tap_action:
+        action: perform-action
+        perform_action: scene.turn_on
+        target:
+          entity_id: scene.outdoor_off
+    tap_action:
+      action: perform-action
+      perform_action: scene.turn_on
+      target:
+        entity_id: scene.outdoor_off
     card_layout: large
     scrolling_effect: false
     modules:

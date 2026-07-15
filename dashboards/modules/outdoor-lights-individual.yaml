@@ -41,12 +41,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.front_porch_overhead_light
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: switch.transformer_zone_1
@@ -70,10 +67,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: switch.toggle
-          target:
-            entity_id: switch.transformer_zone_1
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: switch.transformer_zone_2
@@ -97,10 +93,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: switch.toggle
-          target:
-            entity_id: switch.transformer_zone_2
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.patio_back_porch_lights
@@ -121,12 +116,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.patio_back_porch_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: switch.transformer_zone_3
@@ -150,10 +142,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: switch.toggle
-          target:
-            entity_id: switch.transformer_zone_3
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.omnilogic_pool_color_lights
@@ -180,12 +171,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.omnilogic_pool_color_lights
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: light.driveway_sconces
@@ -206,12 +194,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: light.toggle
-          data:
-            brightness_pct: 25
-          target:
-            entity_id: light.driveway_sconces
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: switch.driveway_zone_2_2
@@ -235,10 +220,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: switch.toggle
-          target:
-            entity_id: switch.driveway_zone_2_2
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: switch.driveway_zone_1_2
@@ -262,10 +246,9 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: switch.toggle
-          target:
-            entity_id: switch.driveway_zone_1_2
+          action: toggle
+      tap_action:
+        action: toggle
     - type: custom:bubble-card
       card_type: button
       entity: switch.driveway_zone_3_2
@@ -289,7 +272,6 @@
         - {{ module_name }}
       button_action:
         tap_action:
-          action: perform-action
-          perform_action: switch.toggle
-          target:
-            entity_id: switch.driveway_zone_3_2
+          action: toggle
+      tap_action:
+        action: toggle

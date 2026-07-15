@@ -311,17 +311,41 @@ cards:
                         background: var(--ha-card-background);
                         border-radius: 18px;
                       }
-                - graph: line
-                  type: sensor
-                  entity: sensor.bayberry_tempest_precipitation
-                  detail: 1
-                  name: Precipitation
+                - type: custom:rain-gauge-card
+                  entity: sensor.daily_rain
+                  name: Rainfall
+                  is_imperial: true
+                  max_level: 2
+                  hourly_rate_entity: sensor.bayberry_tempest_precipitation
+                  fill_drop_colour: var(--slate-color)
+                  border_colour: var(--slate-color)
                   card_mod:
-                    style: |
-                      ha-card {
-                        background: var(--ha-card-background);
-                        border-radius: 18px;
-                      }
+                    style:
+                      ha-card$: |
+                        .card-header {
+                          text-align: left !important;
+                          font-size: 16px !important;
+                          font-weight: 500 !important;
+                          color: var(--secondary-text-color) !important;
+                          line-height: normal !important;
+                          letter-spacing: 0 !important;
+                          padding: 14px 16px 0 16px !important;
+                        }
+                      .: |
+                        ha-card {
+                          background: var(--ha-card-background);
+                          border-radius: 18px;
+                          height: 270px;
+                          box-sizing: border-box;
+                        }
+                        ha-card > div {
+                          height: calc(100% - 44px);
+                          align-items: center;
+                        }
+                        svg {
+                          height: 120px !important;
+                          width: 120px !important;
+                        }
                 - graph: line
                   type: sensor
                   entity: sensor.tempest_illuminance_5min
