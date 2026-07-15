@@ -7974,6 +7974,21 @@
     - switch.pool_shrubs
     - switch.firepit_shrubs
     - switch.retaining_wall_drip
+    # Clean zone labels (Rachio switch friendly_names aren't display-ready;
+    # matches the hardcoded map in dashboards/nspanel/sprinklers-view.yaml).
+    zone_names:
+      switch.vegetable_beds: Vegetable Beds
+      switch.kimberly_road_180s: Kimberly Road 180s
+      switch.pool_180s: Pool 180s
+      switch.pool_90s: Pool 90s
+      switch.kimberly_road_drip: Kimberly Road Drip
+      switch.front_180s: Front 180s
+      switch.front_and_side_90s: Front & Side 90s
+      switch.driveway_shrubs: Driveway Shrubs
+      switch.zone_11: Zone 11
+      switch.pool_shrubs: Pool Shrubs
+      switch.firepit_shrubs: Firepit Shrubs
+      switch.retaining_wall_drip: Retaining Wall Drip
     active_zone: "{{ zone_switches | select('is_state', 'on') | list | first | default('', true) }}"
   triggers:
   - trigger: state
@@ -7999,7 +8014,7 @@
         data:
           tag: sprinkler_zone
           title: Sprinklers
-          message: "{{ state_attr(active_zone, 'friendly_name') | default('Zone', true) }} running"
+          message: "{{ zone_names.get(active_zone) | default(state_attr(active_zone, 'friendly_name'), true) | default('Zone', true) }} running"
           audience: both
           payload:
             chronometer: true
