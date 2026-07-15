@@ -362,7 +362,13 @@ push_live_activity:
         data:
           title: "{{ title }}"
           message: "{{ message }}"
-          data: "{{ payload | combine({'tag': tag, 'live_update': true}) }}"
+          # Dark background + light text as defaults (a caller's payload can
+          # override); tag + live_update always win. These are documented iOS
+          # Live Activity fields.
+          data: >-
+            {{ {'background_color': '#14161A', 'text_color': '#FFFFFF'}
+               | combine(payload)
+               | combine({'tag': tag, 'live_update': true}) }}
 clear_live_activity:
   alias: Clear Live Activity
   description: >-
