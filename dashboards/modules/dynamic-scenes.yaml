@@ -196,12 +196,16 @@ cards:
     visibility:
       - condition: and
         conditions:
-          - condition: numeric_state
-            entity: sensor.sun_solar_elevation
-            below: 15
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
+          - condition: or
+            conditions:
+              - condition: numeric_state
+                entity: sensor.sun_solar_elevation
+                below: 15
+              - condition: time
+                after: "17:00:00"
     button_action:
       tap_action:
         action: perform-action
@@ -227,12 +231,16 @@ cards:
     visibility:
       - condition: and
         conditions:
-          - condition: numeric_state
-            entity: sensor.sun_solar_elevation
-            below: 15
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
+          - condition: or
+            conditions:
+              - condition: numeric_state
+                entity: sensor.sun_solar_elevation
+                below: 15
+              - condition: time
+                after: "17:00:00"
           - condition: state
             entity: input_boolean.dinner_party
             state: 'off'
@@ -262,12 +270,16 @@ cards:
     visibility:
       - condition: and
         conditions:
-          - condition: numeric_state
-            entity: sensor.sun_solar_elevation
-            below: 15
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
+          - condition: or
+            conditions:
+              - condition: numeric_state
+                entity: sensor.sun_solar_elevation
+                below: 15
+              - condition: time
+                after: "17:00:00"
           - condition: state
             entity: input_boolean.dinner_party
             state: 'on'
@@ -297,12 +309,16 @@ cards:
     visibility:
       - condition: and
         conditions:
-          - condition: numeric_state
-            entity: sensor.sun_solar_elevation
-            below: 15
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
+          - condition: or
+            conditions:
+              - condition: numeric_state
+                entity: sensor.sun_solar_elevation
+                below: 15
+              - condition: time
+                after: "17:00:00"
     button_action:
       tap_action:
         action: perform-action
@@ -329,12 +345,16 @@ cards:
     visibility:
       - condition: and
         conditions:
-          - condition: numeric_state
-            entity: sensor.sun_solar_elevation
-            below: 15
           - condition: time
             after: "12:00:00"
             before: "22:00:00"
+          - condition: or
+            conditions:
+              - condition: numeric_state
+                entity: sensor.sun_solar_elevation
+                below: 15
+              - condition: time
+                after: "17:00:00"
     button_action:
       tap_action:
         action: perform-action
@@ -363,12 +383,16 @@ cards:
         conditions:
           - condition: and
             conditions:
-              - condition: numeric_state
-                entity: sensor.sun_solar_elevation
-                below: 15
               - condition: time
                 after: "12:00:00"
                 before: "22:00:00"
+              - condition: or
+                conditions:
+                  - condition: numeric_state
+                    entity: sensor.sun_solar_elevation
+                    below: 15
+                  - condition: time
+                    after: "17:00:00"
           - condition: time
             after: "22:00:00"
             before: "05:00:00"

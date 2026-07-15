@@ -367,6 +367,16 @@ input_boolean:
   sonos_group_select_media_room:
     name: Group Media Room
     icon: mdi:television
+  # --- Basement Working scene: motion auto-off guard (#188) -----------------
+  # On while the basement Working scene is active. When on, the basement motion
+  # automation must NOT turn the lights off on no-motion (so sitting still at
+  # the desk doesn't kill the lights). Set on when scene.basement_work
+  # activates; cleared when another basement scene is chosen, the work lights
+  # are turned off, or a safety timeout elapses. No `initial:` so it survives
+  # HA restarts.
+  basement_work_mode:
+    name: Basement Work Mode
+    icon: mdi:desk-lamp
   # --- Climate overhaul Phase 1: zone holds --------------------------------
   # Hold on = the zone schedule must not write that zone. Set by the door-open
   # automations, Away Mode Turns On, and Power Outage V2; cleared only by the
