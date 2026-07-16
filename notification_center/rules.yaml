@@ -1,0 +1,1096 @@
+count: 22
+rules:
+  - actions_follow_priority: true
+    activity_timeout: ""
+    auto_clear: true
+    channels:
+      - mobile
+      - bell
+      - wall
+      - tts
+      - navigate
+    chronometer: false
+    clear_mode: dismiss
+    color: "#EA4D3D"
+    condition_template: ""
+    critical_text_template: "{{ states ('sensor.bayberry_chart') }}%"
+    dedup_tag: power_outage
+    deliver_as_digest: false
+    digest_group: ""
+    enabled: true
+    entity_id: binary_sensor.bayberry_grid_status
+    escalation_after: 0
+    icon: mdi:flash-alert
+    items_template: ""
+    live_activity: true
+    message_template: Your home is no longer connected to the grid
+    mobile_navigation_target: ""
+    name: Power Outage
+    navigation_target: /mobile-dash/energy
+    operator: "=="
+    presence_routing: all
+    priority: critical
+    progress_max_template: ""
+    progress_template: ""
+    quiet_hours_behavior: ignore
+    snooze: false
+    source_type: state
+    title_template: Power Outage!
+    tts_message: >-
+      Power outage! We're now running on battery backup. Take immediate action
+      to conserve power consumption. 
+    tts_targets: media_player.announcement_speakers
+    value: "off"
+    when_template: ""
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+      - mobile
+      - bell
+      - wall
+      - tts
+      - navigate
+    clear_mode: dismiss
+    color: "#EA4D3D"
+    condition_template: |-
+      {{ is_state('binary_sensor.bayberry_grid_status', 'off')
+         and states('sensor.bayberry_charge') | float(100) < 25 }}
+    dedup_tag: powerwall_charge_low
+    deliver_as_digest: false
+    digest_group: ""
+    enabled: true
+    entity_id: ""
+    escalation_after: 5
+    icon: mdi:battery-alert
+    items_template: ""
+    message_template: Take immediate steps to reduce power consumption.
+    name: Powerwall Charge Low
+    navigation_target: ""
+    operator: "=="
+    presence_routing: all
+    priority: critical
+    quiet_hours_behavior: ignore
+    snooze: false
+    source_type: template
+    title_template: Powerwall at 25%
+    tts_message: >-
+      Powerwall charge is at 25%. Take immediate steps to reduce power
+      consumption.
+    tts_targets: media_player.announcement_speakers
+    value: ""
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+      - bell
+      - wall
+      - navigate
+      - mobile
+    clear_mode: dismiss
+    color: "#EA4D3D"
+    condition_template: ""
+    dedup_tag: alarm_triggered
+    deliver_as_digest: false
+    digest_group: ""
+    enabled: true
+    entity_id: alarm_control_panel.bayberry_alarm_v2
+    escalation_after: 5
+    icon: mdi:shield-alert
+    items_template: ""
+    message_template: "The alarm is triggered! Cause: {{open_sensors}}."
+    name: Alarm Triggered
+    navigation_target: /mobile-dash/security
+    operator: "=="
+    presence_routing: all
+    priority: critical
+    quiet_hours_behavior: ignore
+    snooze: false
+    source_type: state
+    title_template: Alarm Triggered!
+    tts_message: ""
+    tts_targets: ""
+    value: triggered
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+      - mobile
+      - bell
+    clear_mode: dismiss
+    color: "#EF8C00"
+    condition_template: ""
+    dedup_tag: nws_weather_alert
+    deliver_as_digest: false
+    digest_group: ""
+    enabled: true
+    entity_id: sensor.nws_alerts_alerts
+    icon: mdi:weather-hurricane
+    items_template: ""
+    message_template: |-
+      {{ state_attr('sensor.nws_alerts_alerts', 'event')
+         or state_attr('sensor.nws_alerts_alerts', 'title')
+         or state_attr('sensor.nws_alerts_alerts', 'spoken_desc')
+         or 'Active weather alert in your area.' }}
+    name: Active Weather Alert
+    navigation_target: /mobile-dash/weather
+    operator: ">"
+    presence_routing: all
+    priority: warning
+    quiet_hours_behavior: downgrade
+    snooze: false
+    source_type: numeric
+    title_template: Active Weather Alert
+    tts_message: ""
+    tts_targets: ""
+    value: 0
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+      - mobile
+      - bell
+    clear_mode: dismiss
+    color: "#EF8C00"
+    condition_template: ""
+    dedup_tag: storm_watch_active
+    deliver_as_digest: false
+    digest_group: ""
+    enabled: true
+    entity_id: binary_sensor.bayberry_storm_watch_active
+    icon: mdi:weather-lightning-rainy
+    items_template: ""
+    message_template: Powerwall is charging to prepare for an outage.
+    name: Storm Watch Active
+    navigation_target: ""
+    operator: "=="
+    presence_routing: all
+    priority: warning
+    quiet_hours_behavior: downgrade
+    snooze: false
+    source_type: state
+    title_template: Storm Watch Active
+    tts_message: ""
+    tts_targets: ""
+    value: "on"
+  - channels:
+      - mobile
+      - bell
+      - wall
+    color: "#EF8C00"
+    dedup_tag: utility_room_temp_low
+    entity_id: sensor.utility_room_temp_sensor_temperature
+    icon: mdi:thermometer-alert
+    name: Utility Room Temperature Low
+    operator: <
+    presence_routing: away_only
+    priority: warning
+    quiet_hours_behavior: downgrade
+    source_type: numeric
+    value: 55
+  - channels:
+      - mobile
+      - bell
+      - wall
+    color: "#EF8C00"
+    dedup_tag: utility_room_temp_high
+    entity_id: sensor.utility_room_temp_sensor_temperature
+    icon: mdi:thermometer-alert
+    name: Utility Room Temperature High
+    operator: ">"
+    presence_routing: away_only
+    priority: warning
+    quiet_hours_behavior: downgrade
+    source_type: numeric
+    value: 80
+  - channels:
+      - mobile
+      - bell
+      - wall
+    color: "#EF8C00"
+    dedup_tag: attic_temp_low
+    entity_id: sensor.attic_temp_sensor_temperature
+    icon: mdi:thermometer-alert
+    name: Attic Temperature Low
+    operator: <
+    presence_routing: away_only
+    priority: warning
+    quiet_hours_behavior: downgrade
+    source_type: numeric
+    value: 55
+  - channels:
+      - mobile
+      - bell
+      - wall
+    color: "#EF8C00"
+    dedup_tag: attic_temp_high
+    entity_id: sensor.attic_temp_sensor_temperature
+    icon: mdi:thermometer-alert
+    name: Attic Temperature High
+    operator: ">"
+    presence_routing: away_only
+    priority: warning
+    quiet_hours_behavior: downgrade
+    source_type: numeric
+    value: 80
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+      - mobile
+      - bell
+    clear_mode: dismiss
+    color: "#F6CE46"
+    condition_template: ""
+    custom_actions:
+      - confirm: Close
+        entity: cover.garage_door_garage
+        icon: mdi:garage-closed
+        label: Close Garage
+        service: cover.close_cover
+        target:
+          entity_id: cover.garage_door_garage
+    dedup_tag: garage_door_open
+    deliver_as_digest: false
+    digest_group: ""
+    enabled: true
+    entity_id: cover.garage_door_garage
+    icon: mdi:garage-open
+    items_template: ""
+    message_template: ""
+    name: Garage Door Open
+    navigation_target: ""
+    operator: "=="
+    presence_routing: away_only
+    priority: warning
+    quiet_hours_behavior: downgrade
+    snooze: false
+    source_type: state
+    title_template: ""
+    tts_message: ""
+    tts_targets: ""
+    value: open
+  - channels:
+      - bell
+      - wall
+    color: "#F6CE46"
+    dedup_tag: vacuum_error
+    entity_id: sensor.roborock_s8_vacuum_error
+    icon: mdi:robot-vacuum-alert
+    name: Vacuum Error
+    operator: "!="
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: state
+    value: none
+  - channels:
+      - bell
+      - wall
+    color: "#F6CE46"
+    dedup_tag: low_hot_water
+    entity_id: sensor.smithy_hot_water_availability_2
+    icon: mdi:water-alert
+    name: Low Hot Water Availability
+    operator: <
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: numeric
+    value: 20
+  - channels:
+      - bell
+      - wall
+    color: "#F6CE46"
+    dedup_tag: vpp_active
+    entity_id: binary_sensor.bayberry_grid_services_active_2
+    icon: mdi:solar-power
+    name: Virtual Power Plant Active
+    operator: "=="
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: state
+    value: "on"
+  - channels:
+      - bell
+      - wall
+    color: "#F6CE46"
+    condition_template: |-
+      {{ is_state('sensor.bayberry_tempest_precipitation_type', 'rain')
+         and is_state('binary_sensor.pool_cover_pump', 'off') }}
+    dedup_tag: rain_pool_cover_pump
+    icon: mdi:weather-pouring
+    name: Rain - Put Out the Pool Cover Pump
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: template
+  - channels:
+      - bell
+      - wall
+    color: "#F6CE46"
+    dedup_tag: low_pool_water_level
+    entity_id: input_boolean.low_pool_water_level
+    icon: mdi:water-minus
+    name: Low Pool Water Level
+    operator: "=="
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: state
+    value: "on"
+  - channels:
+      - bell
+      - wall
+    color: "#F6CE46"
+    dedup_tag: pool_salt_low
+    entity_id: sensor.omnilogic_pool_chlorinator_average_salt_level
+    icon: mdi:alert
+    name: Pool Salt Level Low
+    operator: <
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: numeric
+    value: 2700
+  - channels:
+      - bell
+      - wall
+    color: "#F6CE46"
+    dedup_tag: washer_tub_clean
+    entity_id: sensor.front_load_washer_tub_clean_counter
+    icon: mdi:washing-machine-alert
+    name: Run Washer Clean Cycle
+    operator: ">"
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: numeric
+    value: 30
+  - channels:
+      - bell
+      - wall
+    color: "#F6CE46"
+    custom_actions:
+      - confirm: Did you just replace it and want to reset it?
+        icon: mdi:check
+        label: I replaced it
+        service: script.reset_upper_floors_filter_runtime
+    dedup_tag: attic_hvac_filter
+    entity_id: input_number.upper_floor_hvac_filter_hours
+    icon: mdi:air-filter
+    name: Attic HVAC Filter Replacement
+    operator: ">"
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: numeric
+    value: 2000
+  - channels:
+      - bell
+      - wall
+    color: "#F6CE46"
+    custom_actions:
+      - confirm: Did you just replace it and want to reset it?
+        icon: mdi:check
+        label: I replaced it
+        service: script.reset_lower_floors_filter_runtime
+    dedup_tag: basement_hvac_filter
+    entity_id: input_number.lower_floors_hvac_filter_hours
+    icon: mdi:air-filter
+    name: Basement HVAC Filter Replacement
+    operator: ">"
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: numeric
+    value: 2000
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+      - bell
+      - wall
+    clear_mode: dismiss
+    color: "#4ebcff"
+    condition_template: |-
+      {{ states('sensor.hours_since_last_vacuum') | float(0) > 48
+         and is_state('binary_sensor.pool_season', 'on') }}
+    custom_actions:
+      - confirm: Did you just vacuum the pool and want to reset?
+        icon: mdi:check
+        id: a3wbxli
+        label: Complete
+        service: script.reset_vacuum_timer
+    dedup_tag: pool_needs_vacuum
+    deliver_as_digest: false
+    digest_group: ""
+    enabled: true
+    entity_id: ""
+    icon: mdi:vacuum-outline
+    items_template: ""
+    message_template: ""
+    name: Pool Needs Vacuuming
+    navigation_target: ""
+    operator: "=="
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    snooze: false
+    source_type: template
+    title_template: ""
+    tts_message: ""
+    tts_targets: ""
+    value: ""
+  - actions_follow_priority: true
+    activity_timeout: ""
+    auto_clear: true
+    channels:
+      - bell
+      - wall
+      - mobile
+    chronometer: false
+    clear_mode: dismiss
+    color: "#4ebcff"
+    condition_template: ""
+    critical_text_template: ""
+    dedup_tag: washer_complete
+    deliver_as_digest: false
+    digest_group: ""
+    enabled: true
+    entity_id: binary_sensor.washer_recently_completed
+    icon: mdi:tumble-dryer-off
+    items_template: ""
+    live_activity: false
+    message_template: ""
+    mobile_navigation_target: ""
+    name: Washer Complete
+    navigation_target: ""
+    operator: "=="
+    presence_routing: all
+    priority: info
+    progress_max_template: ""
+    progress_template: ""
+    quiet_hours_behavior: suppress
+    snooze: false
+    source_type: state
+    title_template: ""
+    tts_message: ""
+    tts_targets: ""
+    value: "on"
+    when_template: ""
+  - channels:
+      - bell
+      - wall
+    color: "#F6CE46"
+    condition_template: >-
+      {% set batts = ['sensor.bedroom_back_1_battery', 'sensor.back_2_battery',
+      'sensor.back_3_battery', 'sensor.bedroom_back_4_battery_0',
+      'sensor.bedroom_back_5_battery_0', 'sensor.side_left_battery_2',
+      'sensor.side_right_battery_0', 'sensor.dining_room_front_left_battery_0',
+      'sensor.front_right_battery_0', 'sensor.bedroom_right_battery_0',
+      'sensor.hallway_1_battery', 'sensor.hallway_2_battery',
+      'sensor.bedroom_left_battery_0',
+      'sensor.living_room_side_left_1_battery_0',
+      'sensor.living_room_front_left_battery_0',
+      'sensor.living_room_side_left_2_battery_0',
+      'sensor.living_room_side_right_1_battery_0',
+      'sensor.living_room_side_right_2_battery_0',
+      'sensor.living_room_front_right_battery',
+      'sensor.back_guest_bedroom_side_battery',
+      'sensor.back_guest_bedroom_back_left_battery',
+      'sensor.back_guest_bedroom_back_right_battery',
+      'sensor.attic_temp_sensor_battery', 'sensor.front_door_battery',
+      'sensor.kitchen_french_doors_battery',
+      'sensor.living_room_french_doors_battery', 'sensor.mudroom_entry_battery',
+      'sensor.mudroom_garage_battery',
+      'sensor.utility_room_temp_sensor_battery'] %} {% set ns = namespace(c=0)
+      %} {% for b in batts %}{% if states(b) not in ['unknown', 'unavailable',
+      'none', ''] and states(b) | float(100) < 20 %}{% set ns.c = ns.c + 1 %}{%
+      endif %}{% endfor %} {{ ns.c > 0 }}
+    dedup_tag: low_batteries
+    deliver_as_digest: true
+    digest_group: batteries
+    icon: mdi:battery-alert
+    items_template: >-
+      {% set batts = ['sensor.bedroom_back_1_battery', 'sensor.back_2_battery',
+      'sensor.back_3_battery', 'sensor.bedroom_back_4_battery_0',
+      'sensor.bedroom_back_5_battery_0', 'sensor.side_left_battery_2',
+      'sensor.side_right_battery_0', 'sensor.dining_room_front_left_battery_0',
+      'sensor.front_right_battery_0', 'sensor.bedroom_right_battery_0',
+      'sensor.hallway_1_battery', 'sensor.hallway_2_battery',
+      'sensor.bedroom_left_battery_0',
+      'sensor.living_room_side_left_1_battery_0',
+      'sensor.living_room_front_left_battery_0',
+      'sensor.living_room_side_left_2_battery_0',
+      'sensor.living_room_side_right_1_battery_0',
+      'sensor.living_room_side_right_2_battery_0',
+      'sensor.living_room_front_right_battery',
+      'sensor.back_guest_bedroom_side_battery',
+      'sensor.back_guest_bedroom_back_left_battery',
+      'sensor.back_guest_bedroom_back_right_battery',
+      'sensor.attic_temp_sensor_battery', 'sensor.front_door_battery',
+      'sensor.kitchen_french_doors_battery',
+      'sensor.living_room_french_doors_battery', 'sensor.mudroom_entry_battery',
+      'sensor.mudroom_garage_battery',
+      'sensor.utility_room_temp_sensor_battery'] %} {% set ns =
+      namespace(items=[]) %} {% for b in batts %}{% set v = states(b) %}{% if v
+      not in ['unknown', 'unavailable', 'none', ''] and v | float(100) < 20 %}{%
+      set ns.items = ns.items + [{'name': state_attr(b, 'friendly_name') or b,
+      'detail': v ~ '%', 'icon': 'mdi:battery-alert', 'color': '#EA4D3D' if v |
+      float(100) < 10 else '#EF8C00'}] %}{% endif %}{% endfor %} {{ ns.items }}
+    message_template: >-
+      {% set batts = ['sensor.bedroom_back_1_battery', 'sensor.back_2_battery',
+      'sensor.back_3_battery', 'sensor.bedroom_back_4_battery_0',
+      'sensor.bedroom_back_5_battery_0', 'sensor.side_left_battery_2',
+      'sensor.side_right_battery_0', 'sensor.dining_room_front_left_battery_0',
+      'sensor.front_right_battery_0', 'sensor.bedroom_right_battery_0',
+      'sensor.hallway_1_battery', 'sensor.hallway_2_battery',
+      'sensor.bedroom_left_battery_0',
+      'sensor.living_room_side_left_1_battery_0',
+      'sensor.living_room_front_left_battery_0',
+      'sensor.living_room_side_left_2_battery_0',
+      'sensor.living_room_side_right_1_battery_0',
+      'sensor.living_room_side_right_2_battery_0',
+      'sensor.living_room_front_right_battery',
+      'sensor.back_guest_bedroom_side_battery',
+      'sensor.back_guest_bedroom_back_left_battery',
+      'sensor.back_guest_bedroom_back_right_battery',
+      'sensor.attic_temp_sensor_battery', 'sensor.front_door_battery',
+      'sensor.kitchen_french_doors_battery',
+      'sensor.living_room_french_doors_battery', 'sensor.mudroom_entry_battery',
+      'sensor.mudroom_garage_battery',
+      'sensor.utility_room_temp_sensor_battery'] %} {% set ns =
+      namespace(low=[]) %} {% for b in batts %}{% if states(b) not in
+      ['unknown', 'unavailable', 'none', ''] and states(b) | float(100) < 20
+      %}{% set ns.low = ns.low + [(state_attr(b, 'friendly_name') or b) ~ ' (' ~
+      states(b) ~ '%)'] %}{% endif %}{% endfor %} {{ ns.low | join(', ') }}
+    name: Low Batteries
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: batch
+    source_type: template
+yaml: |
+  - actions_follow_priority: true
+    activity_timeout: ''
+    auto_clear: true
+    channels:
+    - mobile
+    - bell
+    - wall
+    - tts
+    - navigate
+    chronometer: false
+    clear_mode: dismiss
+    color: '#EA4D3D'
+    condition_template: ''
+    critical_text_template: '{{ states (''sensor.bayberry_chart'') }}%'
+    dedup_tag: power_outage
+    deliver_as_digest: false
+    digest_group: ''
+    enabled: true
+    entity_id: binary_sensor.bayberry_grid_status
+    escalation_after: 0
+    icon: mdi:flash-alert
+    items_template: ''
+    live_activity: true
+    message_template: Your home is no longer connected to the grid
+    mobile_navigation_target: ''
+    name: Power Outage
+    navigation_target: /mobile-dash/energy
+    operator: ==
+    presence_routing: all
+    priority: critical
+    progress_max_template: ''
+    progress_template: ''
+    quiet_hours_behavior: ignore
+    snooze: false
+    source_type: state
+    title_template: Power Outage!
+    tts_message: 'Power outage! We''re now running on battery backup. Take immediate
+      action to conserve power consumption. '
+    tts_targets: media_player.announcement_speakers
+    value: 'off'
+    when_template: ''
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+    - mobile
+    - bell
+    - wall
+    - tts
+    - navigate
+    clear_mode: dismiss
+    color: '#EA4D3D'
+    condition_template: "{{ is_state('binary_sensor.bayberry_grid_status', 'off')\n
+      \  and states('sensor.bayberry_charge') | float(100) < 25 }}"
+    dedup_tag: powerwall_charge_low
+    deliver_as_digest: false
+    digest_group: ''
+    enabled: true
+    entity_id: ''
+    escalation_after: 5
+    icon: mdi:battery-alert
+    items_template: ''
+    message_template: Take immediate steps to reduce power consumption.
+    name: Powerwall Charge Low
+    navigation_target: ''
+    operator: ==
+    presence_routing: all
+    priority: critical
+    quiet_hours_behavior: ignore
+    snooze: false
+    source_type: template
+    title_template: Powerwall at 25%
+    tts_message: Powerwall charge is at 25%. Take immediate steps to reduce power consumption.
+    tts_targets: media_player.announcement_speakers
+    value: ''
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+    - bell
+    - wall
+    - navigate
+    - mobile
+    clear_mode: dismiss
+    color: '#EA4D3D'
+    condition_template: ''
+    dedup_tag: alarm_triggered
+    deliver_as_digest: false
+    digest_group: ''
+    enabled: true
+    entity_id: alarm_control_panel.bayberry_alarm_v2
+    escalation_after: 5
+    icon: mdi:shield-alert
+    items_template: ''
+    message_template: 'The alarm is triggered! Cause: {{open_sensors}}.'
+    name: Alarm Triggered
+    navigation_target: /mobile-dash/security
+    operator: ==
+    presence_routing: all
+    priority: critical
+    quiet_hours_behavior: ignore
+    snooze: false
+    source_type: state
+    title_template: Alarm Triggered!
+    tts_message: ''
+    tts_targets: ''
+    value: triggered
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+    - mobile
+    - bell
+    clear_mode: dismiss
+    color: '#EF8C00'
+    condition_template: ''
+    dedup_tag: nws_weather_alert
+    deliver_as_digest: false
+    digest_group: ''
+    enabled: true
+    entity_id: sensor.nws_alerts_alerts
+    icon: mdi:weather-hurricane
+    items_template: ''
+    message_template: "{{ state_attr('sensor.nws_alerts_alerts', 'event')\n   or state_attr('sensor.nws_alerts_alerts',
+      'title')\n   or state_attr('sensor.nws_alerts_alerts', 'spoken_desc')\n   or 'Active
+      weather alert in your area.' }}"
+    name: Active Weather Alert
+    navigation_target: /mobile-dash/weather
+    operator: '>'
+    presence_routing: all
+    priority: warning
+    quiet_hours_behavior: downgrade
+    snooze: false
+    source_type: numeric
+    title_template: Active Weather Alert
+    tts_message: ''
+    tts_targets: ''
+    value: 0
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+    - mobile
+    - bell
+    clear_mode: dismiss
+    color: '#EF8C00'
+    condition_template: ''
+    dedup_tag: storm_watch_active
+    deliver_as_digest: false
+    digest_group: ''
+    enabled: true
+    entity_id: binary_sensor.bayberry_storm_watch_active
+    icon: mdi:weather-lightning-rainy
+    items_template: ''
+    message_template: Powerwall is charging to prepare for an outage.
+    name: Storm Watch Active
+    navigation_target: ''
+    operator: ==
+    presence_routing: all
+    priority: warning
+    quiet_hours_behavior: downgrade
+    snooze: false
+    source_type: state
+    title_template: Storm Watch Active
+    tts_message: ''
+    tts_targets: ''
+    value: 'on'
+  - channels:
+    - mobile
+    - bell
+    - wall
+    color: '#EF8C00'
+    dedup_tag: utility_room_temp_low
+    entity_id: sensor.utility_room_temp_sensor_temperature
+    icon: mdi:thermometer-alert
+    name: Utility Room Temperature Low
+    operator: <
+    presence_routing: away_only
+    priority: warning
+    quiet_hours_behavior: downgrade
+    source_type: numeric
+    value: 55
+  - channels:
+    - mobile
+    - bell
+    - wall
+    color: '#EF8C00'
+    dedup_tag: utility_room_temp_high
+    entity_id: sensor.utility_room_temp_sensor_temperature
+    icon: mdi:thermometer-alert
+    name: Utility Room Temperature High
+    operator: '>'
+    presence_routing: away_only
+    priority: warning
+    quiet_hours_behavior: downgrade
+    source_type: numeric
+    value: 80
+  - channels:
+    - mobile
+    - bell
+    - wall
+    color: '#EF8C00'
+    dedup_tag: attic_temp_low
+    entity_id: sensor.attic_temp_sensor_temperature
+    icon: mdi:thermometer-alert
+    name: Attic Temperature Low
+    operator: <
+    presence_routing: away_only
+    priority: warning
+    quiet_hours_behavior: downgrade
+    source_type: numeric
+    value: 55
+  - channels:
+    - mobile
+    - bell
+    - wall
+    color: '#EF8C00'
+    dedup_tag: attic_temp_high
+    entity_id: sensor.attic_temp_sensor_temperature
+    icon: mdi:thermometer-alert
+    name: Attic Temperature High
+    operator: '>'
+    presence_routing: away_only
+    priority: warning
+    quiet_hours_behavior: downgrade
+    source_type: numeric
+    value: 80
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+    - mobile
+    - bell
+    clear_mode: dismiss
+    color: '#F6CE46'
+    condition_template: ''
+    custom_actions:
+    - confirm: Close
+      entity: cover.garage_door_garage
+      icon: mdi:garage-closed
+      label: Close Garage
+      service: cover.close_cover
+      target:
+        entity_id: cover.garage_door_garage
+    dedup_tag: garage_door_open
+    deliver_as_digest: false
+    digest_group: ''
+    enabled: true
+    entity_id: cover.garage_door_garage
+    icon: mdi:garage-open
+    items_template: ''
+    message_template: ''
+    name: Garage Door Open
+    navigation_target: ''
+    operator: ==
+    presence_routing: away_only
+    priority: warning
+    quiet_hours_behavior: downgrade
+    snooze: false
+    source_type: state
+    title_template: ''
+    tts_message: ''
+    tts_targets: ''
+    value: open
+  - channels:
+    - bell
+    - wall
+    color: '#F6CE46'
+    dedup_tag: vacuum_error
+    entity_id: sensor.roborock_s8_vacuum_error
+    icon: mdi:robot-vacuum-alert
+    name: Vacuum Error
+    operator: '!='
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: state
+    value: none
+  - channels:
+    - bell
+    - wall
+    color: '#F6CE46'
+    dedup_tag: low_hot_water
+    entity_id: sensor.smithy_hot_water_availability_2
+    icon: mdi:water-alert
+    name: Low Hot Water Availability
+    operator: <
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: numeric
+    value: 20
+  - channels:
+    - bell
+    - wall
+    color: '#F6CE46'
+    dedup_tag: vpp_active
+    entity_id: binary_sensor.bayberry_grid_services_active_2
+    icon: mdi:solar-power
+    name: Virtual Power Plant Active
+    operator: ==
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: state
+    value: 'on'
+  - channels:
+    - bell
+    - wall
+    color: '#F6CE46'
+    condition_template: "{{ is_state('sensor.bayberry_tempest_precipitation_type', 'rain')\n
+      \  and is_state('binary_sensor.pool_cover_pump', 'off') }}"
+    dedup_tag: rain_pool_cover_pump
+    icon: mdi:weather-pouring
+    name: Rain - Put Out the Pool Cover Pump
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: template
+  - channels:
+    - bell
+    - wall
+    color: '#F6CE46'
+    dedup_tag: low_pool_water_level
+    entity_id: input_boolean.low_pool_water_level
+    icon: mdi:water-minus
+    name: Low Pool Water Level
+    operator: ==
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: state
+    value: 'on'
+  - channels:
+    - bell
+    - wall
+    color: '#F6CE46'
+    dedup_tag: pool_salt_low
+    entity_id: sensor.omnilogic_pool_chlorinator_average_salt_level
+    icon: mdi:alert
+    name: Pool Salt Level Low
+    operator: <
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: numeric
+    value: 2700
+  - channels:
+    - bell
+    - wall
+    color: '#F6CE46'
+    dedup_tag: washer_tub_clean
+    entity_id: sensor.front_load_washer_tub_clean_counter
+    icon: mdi:washing-machine-alert
+    name: Run Washer Clean Cycle
+    operator: '>'
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: numeric
+    value: 30
+  - channels:
+    - bell
+    - wall
+    color: '#F6CE46'
+    custom_actions:
+    - confirm: Did you just replace it and want to reset it?
+      icon: mdi:check
+      label: I replaced it
+      service: script.reset_upper_floors_filter_runtime
+    dedup_tag: attic_hvac_filter
+    entity_id: input_number.upper_floor_hvac_filter_hours
+    icon: mdi:air-filter
+    name: Attic HVAC Filter Replacement
+    operator: '>'
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: numeric
+    value: 2000
+  - channels:
+    - bell
+    - wall
+    color: '#F6CE46'
+    custom_actions:
+    - confirm: Did you just replace it and want to reset it?
+      icon: mdi:check
+      label: I replaced it
+      service: script.reset_lower_floors_filter_runtime
+    dedup_tag: basement_hvac_filter
+    entity_id: input_number.lower_floors_hvac_filter_hours
+    icon: mdi:air-filter
+    name: Basement HVAC Filter Replacement
+    operator: '>'
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    source_type: numeric
+    value: 2000
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+    - bell
+    - wall
+    clear_mode: dismiss
+    color: '#4ebcff'
+    condition_template: "{{ states('sensor.hours_since_last_vacuum') | float(0) > 48\n
+      \  and is_state('binary_sensor.pool_season', 'on') }}"
+    custom_actions:
+    - confirm: Did you just vacuum the pool and want to reset?
+      icon: mdi:check
+      id: a3wbxli
+      label: Complete
+      service: script.reset_vacuum_timer
+    dedup_tag: pool_needs_vacuum
+    deliver_as_digest: false
+    digest_group: ''
+    enabled: true
+    entity_id: ''
+    icon: mdi:vacuum-outline
+    items_template: ''
+    message_template: ''
+    name: Pool Needs Vacuuming
+    navigation_target: ''
+    operator: ==
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    snooze: false
+    source_type: template
+    title_template: ''
+    tts_message: ''
+    tts_targets: ''
+    value: ''
+  - actions_follow_priority: true
+    activity_timeout: ''
+    auto_clear: true
+    channels:
+    - bell
+    - wall
+    - mobile
+    chronometer: false
+    clear_mode: dismiss
+    color: '#4ebcff'
+    condition_template: ''
+    critical_text_template: ''
+    dedup_tag: washer_complete
+    deliver_as_digest: false
+    digest_group: ''
+    enabled: true
+    entity_id: binary_sensor.washer_recently_completed
+    icon: mdi:tumble-dryer-off
+    items_template: ''
+    live_activity: false
+    message_template: ''
+    mobile_navigation_target: ''
+    name: Washer Complete
+    navigation_target: ''
+    operator: ==
+    presence_routing: all
+    priority: info
+    progress_max_template: ''
+    progress_template: ''
+    quiet_hours_behavior: suppress
+    snooze: false
+    source_type: state
+    title_template: ''
+    tts_message: ''
+    tts_targets: ''
+    value: 'on'
+    when_template: ''
+  - channels:
+    - bell
+    - wall
+    color: '#F6CE46'
+    condition_template: '{% set batts = [''sensor.bedroom_back_1_battery'', ''sensor.back_2_battery'',
+      ''sensor.back_3_battery'', ''sensor.bedroom_back_4_battery_0'', ''sensor.bedroom_back_5_battery_0'',
+      ''sensor.side_left_battery_2'', ''sensor.side_right_battery_0'', ''sensor.dining_room_front_left_battery_0'',
+      ''sensor.front_right_battery_0'', ''sensor.bedroom_right_battery_0'', ''sensor.hallway_1_battery'',
+      ''sensor.hallway_2_battery'', ''sensor.bedroom_left_battery_0'', ''sensor.living_room_side_left_1_battery_0'',
+      ''sensor.living_room_front_left_battery_0'', ''sensor.living_room_side_left_2_battery_0'',
+      ''sensor.living_room_side_right_1_battery_0'', ''sensor.living_room_side_right_2_battery_0'',
+      ''sensor.living_room_front_right_battery'', ''sensor.back_guest_bedroom_side_battery'',
+      ''sensor.back_guest_bedroom_back_left_battery'', ''sensor.back_guest_bedroom_back_right_battery'',
+      ''sensor.attic_temp_sensor_battery'', ''sensor.front_door_battery'', ''sensor.kitchen_french_doors_battery'',
+      ''sensor.living_room_french_doors_battery'', ''sensor.mudroom_entry_battery'',
+      ''sensor.mudroom_garage_battery'', ''sensor.utility_room_temp_sensor_battery'']
+      %} {% set ns = namespace(c=0) %} {% for b in batts %}{% if states(b) not in [''unknown'',
+      ''unavailable'', ''none'', ''''] and states(b) | float(100) < 20 %}{% set ns.c
+      = ns.c + 1 %}{% endif %}{% endfor %} {{ ns.c > 0 }}'
+    dedup_tag: low_batteries
+    deliver_as_digest: true
+    digest_group: batteries
+    icon: mdi:battery-alert
+    items_template: '{% set batts = [''sensor.bedroom_back_1_battery'', ''sensor.back_2_battery'',
+      ''sensor.back_3_battery'', ''sensor.bedroom_back_4_battery_0'', ''sensor.bedroom_back_5_battery_0'',
+      ''sensor.side_left_battery_2'', ''sensor.side_right_battery_0'', ''sensor.dining_room_front_left_battery_0'',
+      ''sensor.front_right_battery_0'', ''sensor.bedroom_right_battery_0'', ''sensor.hallway_1_battery'',
+      ''sensor.hallway_2_battery'', ''sensor.bedroom_left_battery_0'', ''sensor.living_room_side_left_1_battery_0'',
+      ''sensor.living_room_front_left_battery_0'', ''sensor.living_room_side_left_2_battery_0'',
+      ''sensor.living_room_side_right_1_battery_0'', ''sensor.living_room_side_right_2_battery_0'',
+      ''sensor.living_room_front_right_battery'', ''sensor.back_guest_bedroom_side_battery'',
+      ''sensor.back_guest_bedroom_back_left_battery'', ''sensor.back_guest_bedroom_back_right_battery'',
+      ''sensor.attic_temp_sensor_battery'', ''sensor.front_door_battery'', ''sensor.kitchen_french_doors_battery'',
+      ''sensor.living_room_french_doors_battery'', ''sensor.mudroom_entry_battery'',
+      ''sensor.mudroom_garage_battery'', ''sensor.utility_room_temp_sensor_battery'']
+      %} {% set ns = namespace(items=[]) %} {% for b in batts %}{% set v = states(b)
+      %}{% if v not in [''unknown'', ''unavailable'', ''none'', ''''] and v | float(100)
+      < 20 %}{% set ns.items = ns.items + [{''name'': state_attr(b, ''friendly_name'')
+      or b, ''detail'': v ~ ''%'', ''icon'': ''mdi:battery-alert'', ''color'': ''#EA4D3D''
+      if v | float(100) < 10 else ''#EF8C00''}] %}{% endif %}{% endfor %} {{ ns.items
+      }}'
+    message_template: '{% set batts = [''sensor.bedroom_back_1_battery'', ''sensor.back_2_battery'',
+      ''sensor.back_3_battery'', ''sensor.bedroom_back_4_battery_0'', ''sensor.bedroom_back_5_battery_0'',
+      ''sensor.side_left_battery_2'', ''sensor.side_right_battery_0'', ''sensor.dining_room_front_left_battery_0'',
+      ''sensor.front_right_battery_0'', ''sensor.bedroom_right_battery_0'', ''sensor.hallway_1_battery'',
+      ''sensor.hallway_2_battery'', ''sensor.bedroom_left_battery_0'', ''sensor.living_room_side_left_1_battery_0'',
+      ''sensor.living_room_front_left_battery_0'', ''sensor.living_room_side_left_2_battery_0'',
+      ''sensor.living_room_side_right_1_battery_0'', ''sensor.living_room_side_right_2_battery_0'',
+      ''sensor.living_room_front_right_battery'', ''sensor.back_guest_bedroom_side_battery'',
+      ''sensor.back_guest_bedroom_back_left_battery'', ''sensor.back_guest_bedroom_back_right_battery'',
+      ''sensor.attic_temp_sensor_battery'', ''sensor.front_door_battery'', ''sensor.kitchen_french_doors_battery'',
+      ''sensor.living_room_french_doors_battery'', ''sensor.mudroom_entry_battery'',
+      ''sensor.mudroom_garage_battery'', ''sensor.utility_room_temp_sensor_battery'']
+      %} {% set ns = namespace(low=[]) %} {% for b in batts %}{% if states(b) not in
+      [''unknown'', ''unavailable'', ''none'', ''''] and states(b) | float(100) < 20
+      %}{% set ns.low = ns.low + [(state_attr(b, ''friendly_name'') or b) ~ '' ('' ~
+      states(b) ~ ''%)''] %}{% endif %}{% endfor %} {{ ns.low | join('', '') }}'
+    name: Low Batteries
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: batch
+    source_type: template
