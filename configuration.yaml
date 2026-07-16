@@ -681,6 +681,9 @@ binary_sensor:
       - binary_sensor.living_room_french_doors
       - binary_sensor.kitchen_french_doors
 
+notification_center:
+  rules: !include notification_center/rules.yaml
+
 sensor:
   - platform: filter
     name: "Bedroom CO2 (5min)"
