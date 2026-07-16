@@ -1045,7 +1045,7 @@ cards:
             icon: mdi:cellphone
             tap_action:
               action: none
-            state_display: v2.2.0
+            state_display: v2.2.1
             styles:
               card:
               - background: transparent !important
@@ -1077,6 +1077,14 @@ cards:
           cards:
             - type: markdown
               content: |
+                **v2.2.1** — 2026-07-16
+
+                - Scenes: Evening scenes (First Floor / Basement Evening, Welcome, Entertaining, Movie) now surface by 5 PM in summer instead of waiting for the sun to drop low; winter behavior is unchanged
+                - Climate: fresh-air schedules no longer run the HVAC blower while the ventilation damper is closed — stops the nightly recirculation that wasted blower energy in marginal weather, and the blower now follows the damper within seconds
+                - Basement: the Working scene now suppresses the motion auto-off, so sitting still at the desk no longer turns the lights off; motion control resumes automatically when Working ends
+                - Climate: utility Demand Response now pre-closes the sun-facing shades ~2 hours before an event and follows the sun through it (reopening sides the sun has left), then hands back to the adaptive scheduler when it ends; a Notification Center alert covers the event window and cooling limit, and the zone schedules resync the moment the event clears (replacing the fixed 20:02 guess)
+                - Automations: every automation is now labeled and categorized, so the automations list is filterable by domain (climate, lighting, shades, security, pool, energy, vacuum, notifications, …)
+
                 **v2.2.0** — 2026-07-15
 
                 - iOS Live Activities: a five-activity suite on the Lock Screen / Dynamic Island for both phones — Washer, Dryer, Car charging (Rivian telemetry; BMW inferred from the shared wall charger), Power Outage (battery % while off-grid), and Sprinklers (per-zone). Built on one reusable delivery script with a unique tag per activity, live countdowns/progress bars, and self-clearing "complete" cards
