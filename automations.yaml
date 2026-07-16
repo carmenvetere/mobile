@@ -2976,8 +2976,12 @@
     at: '17:00:00'
   - trigger: time
     at: '21:00:00'
-  - trigger: time
-    at: '20:02:00'
+  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
+  # so zone setpoints return to schedule the moment the event actually clears.
+  - trigger: state
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    to: 'off'
   - trigger: homeassistant
     event: start
   conditions:
@@ -3101,8 +3105,12 @@
     at: '10:00:00'
   - trigger: time
     at: '19:30:00'
-  - trigger: time
-    at: '20:02:00'
+  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
+  # so zone setpoints return to schedule the moment the event actually clears.
+  - trigger: state
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    to: 'off'
   - trigger: homeassistant
     event: start
   conditions:
@@ -3695,8 +3703,12 @@
     at: '17:00:00'
   - trigger: time
     at: '21:00:00'
-  - trigger: time
-    at: '20:02:00'
+  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
+  # so zone setpoints return to schedule the moment the event actually clears.
+  - trigger: state
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    to: 'off'
   - trigger: homeassistant
     event: start
   - trigger: numeric_state
@@ -4598,8 +4610,12 @@
     at: '08:00:00'
   - trigger: time
     at: '20:00:00'
-  - trigger: time
-    at: '20:02:00'
+  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
+  # so zone setpoints return to schedule the moment the event actually clears.
+  - trigger: state
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    to: 'off'
   - trigger: homeassistant
     event: start
   - trigger: numeric_state
@@ -5271,6 +5287,53 @@
     target:
       entity_id: input_boolean.basement_work_mode
   mode: single
+- id: '1768500000003'
+  alias: Demand Response Notification
+  description: >-
+    #187: Surface a utility demand-response event in the Notification Center
+    (bell + notifications card) via persistent_notification. Created when the
+    canonical Living Room DR sensor goes active, dismissed when it clears. DR
+    times are naive ISO in UTC and are pinned to UTC before converting to local.
+  triggers:
+  - trigger: state
+    id: start
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    from: 'off'
+    to: 'on'
+  - trigger: state
+    id: end
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    from: 'on'
+    to: 'off'
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: start
+      sequence:
+      - action: persistent_notification.create
+        data:
+          notification_id: demand_response
+          title: Demand Response Active
+          message: >-
+            {% set act = 'binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active' %}
+            {% set s_raw = state_attr(act, 'start_time') %}
+            {% set e_raw = state_attr(act, 'end_time') %}
+            {% set cap = state_attr(act, 'cool_setpoint_limit_min') %}
+            {% set s = (s_raw ~ '+00:00') | as_datetime if s_raw else none %}
+            {% set e = (e_raw ~ '+00:00') | as_datetime if e_raw else none %}
+            Utility demand-response event{% if s and e %} {{ as_local(s).strftime('%-I:%M %p') }}–{{ as_local(e).strftime('%-I:%M %p') }}{% endif %}{% if cap %} · cooling limited to {{ cap }}°{% endif %}. Sun-facing shades are lowering to cut cooling load.
+    - conditions:
+      - condition: trigger
+        id: end
+      sequence:
+      - action: persistent_notification.dismiss
+        data:
+          notification_id: demand_response
+  mode: queued
 - id: '1767783680057'
   alias: Alarm Pending Chime
   description: ''
@@ -7231,6 +7294,12 @@
     before: '20:01:00'
   variables:
     closure_responsiveness: 20
+    # #187: during a utility demand-response window (2 h pre-event through end),
+    # any facade the sun is actively hitting is driven fully closed instead of
+    # to its adaptive target — cuts solar gain while cooling is capped. Facades
+    # the sun has left return to the normal adaptive formula (reopen), and when
+    # the event ends the next tick restores adaptive positions everywhere.
+    dr_override: '{{ is_state(''binary_sensor.demand_response_window'', ''on'') }}'
     rooms:
     - name: First Floor
       wave: early
@@ -7414,7 +7483,8 @@
                 sequence:
                 - variables:
                     effw: '{{ states(repeat.item.sensor) | float(0) }}'
-                    target: '{% if effw == 0 or indoor | float(70) <= comfort | float(70)
+                    target: '{% if dr_override and effw > 0 %}0{% elif effw == 0
+                      or indoor | float(70) <= comfort | float(70)
                       %}100{% else %}{% set excess = indoor | float(70) - comfort
                       | float(70) %}{% set closure = excess * effw / closure_responsiveness
                       %}{{ [[100 - closure, 0] | max, 100] | min | round(0) | int

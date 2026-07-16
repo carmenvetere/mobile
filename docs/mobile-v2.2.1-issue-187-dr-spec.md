@@ -1,125 +1,82 @@
-# Issue #187 — Lyric demand-response: shades + notifications (spec)
+# Issue #187 — Lyric demand-response: shades + notifications (as built)
 
-**Status:** DRAFT — awaiting approval before implementation (v2.2.1).
-Nothing in this doc is wired yet. Items marked **⚠ CONFIRM** need a value from
-the live registry (I can't read it from the repo) before the automations go in.
+**Status:** IMPLEMENTED in v2.2.1. This documents what shipped.
 
-## What the integration gives us
+## DR sensors (confirmed from the live registry)
 
-`ha-lyric-custom` now creates one **Demand Response** binary sensor per Lyric
-thermostat (`LyricDemandResponseSensor`). It is `on` while a utility DR event
-is in progress for that device.
+One `_active` + one `_scheduled_today` binary sensor per Lyric thermostat.
+**Canonical = Living Room** (per decision):
 
-- **Entity pattern:** `binary_sensor.<device>_dr_event_active`.
-  This repo has these thermostats, so the expected sensors are:
-  - `binary_sensor.living_room_thermostat_dr_event_active`
-  - `binary_sensor.basement_thermostat_dr_event_active`
-  - `binary_sensor.master_bedroom_thermostat_dr_event_active` (device is
-    `master_bedroom_thermostat`; also seen as `bedroom_thermostat`)
-  - `binary_sensor.office_thermostat_dr_event_active`
+- `binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active`
+- `binary_sensor.living_room_living_room_thermostat_living_room_dr_event_scheduled_today`
+- (also present: `basement_thermostat_basement_*`, `master_bedroom_thermostat_master_bedroom_*`,
+  `office_thermostat_office_*`)
 
-  **⚠ CONFIRM** exact entity_ids — names derive from *device* names, not the
-  `climate.*` entity_ids, so they may differ (e.g. `_2` suffixes, "master" vs
-  "primary"). All four fire for the same utility event in practice.
-- **Attributes** (all thermostats report the same event): `event_id`,
-  `start_time`, `end_time` (**naive ISO in UTC** — attach UTC, then convert to
-  local for display/compare), `cool_setpoint_limit_min`, `opt_outable`,
-  `active_sequence_number`, `current_phase_end_time`, `intervals`.
+Attributes used: `start_time`, `end_time`, `cool_setpoint_limit_min`.
+DR times are **naive ISO in UTC** — pinned to UTC (`~ '+00:00' | as_datetime`)
+before comparing to `now()` / converting with `as_local`.
 
-### Proposed "any DR active" helper
+## Part 1 — Shades (sun-aware, integrated into the whole-house scheduler)
 
-Rather than pick one canonical sensor, react to *any* thermostat reporting an
-active event. Add a template binary sensor (in `sensors2.yaml`):
+Behavior (per decision): **2 hours before** the event through its end, any
+**facade the sun is actively hitting** is driven **fully closed (position 0)**.
+Every 30 min it re-evaluates: a facade the sun has left returns to the normal
+adaptive formula (reopens); if the sun moves to a different side, that side
+closes. When the event ends, the next tick restores adaptive positions.
 
-```yaml
-- name: "Demand Response Active"
-  unique_id: demand_response_active
-  device_class: running
-  state: >
-    {{ states.binary_sensor
-       | selectattr('entity_id','search','_dr_event_active$')
-       | selectattr('state','eq','on') | list | count > 0 }}
-  attributes:
-    # Surface the canonical event window from the LR thermostat for display.
-    start_time: "{{ state_attr('binary_sensor.living_room_thermostat_dr_event_active','start_time') }}"
-    end_time: "{{ state_attr('binary_sensor.living_room_thermostat_dr_event_active','end_time') }}"
-    cool_setpoint_limit_min: "{{ state_attr('binary_sensor.living_room_thermostat_dr_event_active','cool_setpoint_limit_min') }}"
-```
+Implementation — **no separate automation** (a second automation would fight the
+scheduler every 30 min). Instead:
 
-The automations below then trigger on `binary_sensor.demand_response_active`
-`off→on` / `on→off`. (If you'd rather trigger on the LR sensor directly, that's
-a one-line change.)
+- New helper `binary_sensor.demand_response_window` (`sensors2.yaml`) — `on` from
+  `start_time − 2h` through the active event end (active OR pre-cool window).
+- `Shade Scheduler – Whole House` (`automations.yaml`) gains a `dr_override`
+  variable (= that sensor) and one clause in its per-facade `target` formula:
+  `{% if dr_override and effw > 0 %}0{% elif … normal adaptive … %}`.
+  - `effw` is the facade's `sensor.sun_hitting_<dir>` value (0 = sun not on that
+    facade), so "close the side the sun is on / reopen the side it left / follow
+    the sun to a new side" all fall straight out of the existing per-facade loop.
+  - Runs on the scheduler's existing **30-min adaptive tick** — matches the
+    "evaluate every 30 min" requirement (so pre-close begins within ≤30 min of
+    the 2-hour mark, and restore within ≤30 min of event end).
+  - Existing guards still apply: `dinner_party` skips First Floor; `guest_mode`
+    skips guest rooms; the after-17:00 manual-privacy lock still holds.
 
-## Part 1 — Shades
+Covers per facade come straight from the scheduler's room table
+(`sun_hitting_south` → front covers, `_east` → dining/right, `_west` → living /
+bedroom-left / guest sides, `_north` → back).
 
-**Goal:** when a DR event is active (utility peak; cooling capped), lower the
-sun-facing shades to cut solar gain / cooling load; restore on event end.
+## Part 2 — Notifications (Notification Center card)
 
-**Sun-facing set (default — ⚠ CONFIRM):** afternoon DR events (typically ~3–7 PM)
-load the **west / south-west** glass, so the default target set is:
+Per decision: surfaced on the **bell + notifications card** via the installed
+**Notification Center** integration, which renders HA `persistent_notification`
+entities (`/hacsfiles/notifications/notification-center-card.js`). **Not** a
+mobile push, and **not** the `notification_alert_counter` bell-counter.
 
-- `cover.living_room_side_shades`
-- `cover.bedroom_left`
-- `cover.first_floor_front`
-- `cover.back_guest_bedroom_side`
-- `cover.front_guest_bedroom_side`
+New automation **Demand Response Notification** (`id 1768500000003`):
 
-East-facing covers (`cover.dining_room_side`, `cover.bedroom_right`,
-`cover.hallway_1/2`) are **excluded** — they don't take afternoon sun.
+- **Start** (canonical LR `_active` `off→on`): `persistent_notification.create`
+  with `notification_id: demand_response`, message =
+  `Utility demand-response event 3:00 PM–7:00 PM · cooling limited to 78°. Sun-facing shades are lowering to cut cooling load.`
+  (times converted UTC→local, cooling limit from `cool_setpoint_limit_min`).
+- **End** (`on→off`): `persistent_notification.dismiss` (`notification_id: demand_response`),
+  which clears it from the bell + card.
 
-**DR start (`off→on`):** set the sun-facing covers to a low/closed position.
-Default **position: 15** (near-closed but not fully, to keep some daylight);
-guarded so we only act on covers currently *above* that position (don't fight a
-shade already lower), and skipped for any room whose Pico/manual override is
-active if such a flag exists.
+## Part 3 — 20:02 resync cleanup (folded in, per decision)
 
-**DR end (`on→off`):** **hand back to the schedules** rather than hardcoding
-open. Re-trigger the owning per-room `… – Schedule & Adaptive` automations (and
-`Shade Scheduler – Whole House`) so each cover returns to its scheduled baseline
-for the current time of day. No capture-and-restore needed because the
-whole-house scheduler is authoritative.
+The hardcoded `20:02` post-DR resync trigger was removed from all four zone
+schedules (`Office Thermostat Schedule V2`, `Bedroom HVAC Schedule`,
+`Basement HVAC Schedule`, `Living Room HVAC Schedule V3`) and replaced with a
+state trigger on the canonical LR `_active` sensor going **`off`** — so
+setpoints return to schedule the moment the event actually clears instead of at
+a fixed guess.
 
-**Guards:**
-- Only act inside the event window (trigger-driven, so inherently bounded).
-- Don't run if `input_boolean.guest_mode` is on for guest-room covers (matches
-  existing `1:00 PM West Facing Shades` behavior).
-- `mode: single` (or `restart`) — a second DR sensor flipping on shouldn't
-  re-command covers already positioned.
+## Assumptions to verify on the live instance
 
-## Part 2 — Notifications
-
-Audience default (**⚠ CONFIRM**): both phones —
-`notify.mobile_app_carmens_iphone` + `notify.mobile_app_brians_iphone_15_pro`
-(matches the `scripts.yaml` pattern). `notify.notify` also works if you want
-"all devices."
-
-- **DR start:** push, e.g.
-  `Utility demand-response event 3:00–7:00 PM · cooling limited to 78°`
-  (convert `start_time`/`end_time` from UTC to local; interpolate
-  `cool_setpoint_limit_min`).
-- **DR end:** `Demand-response event ended — climate back to normal.`
-- **Opt-out (optional — ⚠ CONFIRM):** if `opt_outable` is true, add an
-  actionable notification with an "Opt out" action. **Needs a Lyric opt-out
-  service** — confirm one exists in the integration's `services.yaml` before
-  wiring the action; otherwise ship notify-only.
-
-## Out of scope / follow-ups (track separately)
-
-- **Replace the hardcoded 20:02 resync** in the zone schedules
-  (`living_room_hvac_schedule_v3`, `basement_hvac_schedule`, office, bedroom)
-  with a trigger on the DR sensor going `off`. Cleaner than a fixed time, but
-  touches the schedule automations again — I'd do it as its own change after the
-  shade/notify work soaks. Not in this issue's default scope.
-- Live Activity for DR (elapsed / `current_phase_end_time` countdown) rides
-  the #178 Live Activities suite once shipped.
-
-## Open decisions for approval
-
-1. Trigger source: **any-active template sensor** (default) vs one canonical LR
-   sensor.
-2. Sun-facing cover set + closed **position** (default: the 5 west/SW covers,
-   position 15).
-3. Restore strategy: **hand back to schedules** (default) vs capture-and-restore.
-4. Notification audience (default: both iPhones) + whether to add the **opt-out
-   action** (depends on a Lyric opt-out service existing).
-5. Include the **20:02 → DR-off** schedule cleanup now, or defer.
+- `start_time` is readable from the `_active` sensor at event start and from the
+  `_scheduled_today` sensor during the pre-cool window (the window sensor reads
+  `_active` first, then falls back to `_scheduled_today`).
+- The Notification Center card renders `persistent_notification` entities (same
+  path as the existing `bedroom_co2_high` notification).
+- 30-min evaluation granularity is acceptable for pre-close start / restore (no
+  separate DR state trigger was added to the scheduler to keep it single-owner;
+  easy to add if you want sub-30-min response).
