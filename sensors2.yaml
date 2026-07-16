@@ -899,6 +899,26 @@
         {% set acts = [state_attr('climate.living_room_thermostat','hvac_action'),
                        state_attr('climate.basement_thermostat','hvac_action')] %}
         {{ 'cooling' in acts or 'heating' in acts }}
+    # #187: Demand-response shade window — on from 2 h before a Lyric utility DR
+    # event through its end. Drives the whole-house shade scheduler's DR
+    # pre-close override. Canonical = Living Room thermostat DR sensors. DR
+    # times are naive ISO in UTC, so start_time is pinned to UTC before compare.
+    - name: "Demand Response Window"
+      unique_id: demand_response_window
+      device_class: running
+      icon: mdi:transmission-tower
+      state: >-
+        {% set act = 'binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active' %}
+        {% set sch = 'binary_sensor.living_room_living_room_thermostat_living_room_dr_event_scheduled_today' %}
+        {% set start_raw = state_attr(act, 'start_time') or state_attr(sch, 'start_time') %}
+        {% set precool = false %}
+        {% if start_raw %}
+          {% set st = (start_raw ~ '+00:00') | as_datetime %}
+          {% if st is not none %}
+            {% set precool = now() >= (st - timedelta(hours=2)) and now() < st %}
+          {% endif %}
+        {% endif %}
+        {{ is_state(act, 'on') or precool }}
 
 - sensor:
     - name: "Upper HVAC Estimated Power"
