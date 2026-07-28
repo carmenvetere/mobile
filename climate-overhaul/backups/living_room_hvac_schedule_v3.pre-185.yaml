@@ -1,0 +1,341 @@
+- id: '1761995535400'
+  alias: Living Room HVAC Schedule V3
+  description: 'Living-room (first-floor) zone schedule. Day = 08:00-20:00, night
+    = 20:00-08:00; all setpoints come from the input_number.lr_* helpers (day cool
+    72 / night cool 74 / fresh-air night cool 73.5 / day heat 68 / night heat 66
+    defaults). Cooling season (heating_season off): when fresh air is available
+    and the zone is inside the comfort band, coasts with HVAC off + blower on to
+    circulate economizer air; above the band it returns to mechanical cooling.
+    Heating season: plain day/night heat. Writes mode+setpoint to the HomeKit
+    mirror and fan_mode to the native Lyric entity. Fan writes are owner-aware at
+    the lowest priority: they only touch the fan when input_select.living_room_fan_owner
+    is none/schedule, claim "schedule" when forcing the fan on and release to
+    "none" when returning it to auto. Skips entirely while
+    input_boolean.climate_hold_living_room is on (door open / away / power outage
+    - see Climate Hold Watchdog). Re-syncs on HA start (60 s settle), at 20:02
+    after the utility demand-response window, and when the zone runs above either
+    cool band edge for 5 min (prompt hand-back from fan-only to mechanical cool).'
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.basement_hvac_fresh_air_available
+  - trigger: time
+    at: '08:00:00'
+  - trigger: time
+    at: '20:00:00'
+  - trigger: time
+    at: '20:02:00'
+  - trigger: homeassistant
+    event: start
+  - trigger: numeric_state
+    entity_id:
+    - sensor.living_room_thermostat_current_humidity
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    above: 70
+  - trigger: numeric_state
+    entity_id:
+    - sensor.living_room_thermostat_current_temperature
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    above: input_number.lr_cool_day
+  - trigger: numeric_state
+    entity_id:
+    - sensor.living_room_thermostat_current_temperature
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    above: input_number.lr_cool_night
+  conditions:
+  - condition: state
+    entity_id: input_boolean.climate_hold_living_room
+    state: 'off'
+  actions:
+  - if:
+    - condition: template
+      value_template: '{{ trigger.platform == ''homeassistant'' }}'
+    then:
+    - delay:
+        hours: 0
+        minutes: 1
+        seconds: 0
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.heating_season
+        state: 'off'
+      sequence:
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.basement_hvac_fresh_air_available
+            state: 'on'
+          sequence:
+          - choose:
+            - conditions:
+              - condition: time
+                after: '20:00:00'
+                before: '08:00:00'
+              - condition: numeric_state
+                entity_id: sensor.living_room_thermostat_current_temperature
+                above: input_number.living_room_fresh_air_min_temp
+                below: input_number.lr_cool_night
+              sequence:
+              - action: climate.set_hvac_mode
+                data:
+                  hvac_mode: 'off'
+                target:
+                  entity_id: climate.living_room_thermostat_homekit
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: 'on'
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: schedule
+            - conditions:
+              - condition: time
+                after: '20:00:00'
+                before: '08:00:00'
+              - condition: numeric_state
+                entity_id: sensor.living_room_thermostat_current_temperature
+                above: input_number.lr_cool_night
+              sequence:
+              - action: climate.set_hvac_mode
+                data:
+                  hvac_mode: cool
+                target:
+                  entity_id: climate.living_room_thermostat_homekit
+              - action: climate.set_temperature
+                data:
+                  temperature: '{{ states(''input_number.lr_cool_night_fa'') | float(73.5)
+                    }}'
+                target:
+                  entity_id: climate.living_room_thermostat_homekit
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: none
+            - conditions:
+              - condition: time
+                after: '08:00:00'
+                before: '20:00:00'
+              - condition: numeric_state
+                entity_id: sensor.living_room_thermostat_current_temperature
+                above: input_number.living_room_fresh_air_min_temp
+                below: input_number.lr_cool_day
+              sequence:
+              - action: climate.set_hvac_mode
+                data:
+                  hvac_mode: 'off'
+                target:
+                  entity_id: climate.living_room_thermostat_homekit
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: 'on'
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: schedule
+            - conditions:
+              - condition: time
+                after: '08:00:00'
+                before: '20:00:00'
+              - condition: numeric_state
+                entity_id: sensor.living_room_thermostat_current_temperature
+                above: input_number.lr_cool_day
+              sequence:
+              - action: climate.set_hvac_mode
+                data:
+                  hvac_mode: cool
+                target:
+                  entity_id: climate.living_room_thermostat_homekit
+              - action: climate.set_temperature
+                data:
+                  temperature: '{{ states(''input_number.lr_cool_day'') | float(72)
+                    }}'
+                target:
+                  entity_id: climate.living_room_thermostat_homekit
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: none
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.basement_hvac_fresh_air_available
+            state: 'off'
+          sequence:
+          - choose:
+            - conditions:
+              - condition: time
+                after: '08:00:00'
+                before: '20:00:00'
+              sequence:
+              - action: climate.set_hvac_mode
+                data:
+                  hvac_mode: cool
+                target:
+                  entity_id: climate.living_room_thermostat_homekit
+              - action: climate.set_temperature
+                data:
+                  temperature: '{{ states(''input_number.lr_cool_day'') | float(72)
+                    }}'
+                target:
+                  entity_id: climate.living_room_thermostat_homekit
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: none
+            - conditions:
+              - condition: time
+                after: '20:00:00'
+                before: '08:00:00'
+              sequence:
+              - action: climate.set_hvac_mode
+                data:
+                  hvac_mode: cool
+                target:
+                  entity_id: climate.living_room_thermostat_homekit
+              - action: climate.set_temperature
+                data:
+                  temperature: '{{ states(''input_number.lr_cool_night'') | float(74)
+                    }}'
+                target:
+                  entity_id: climate.living_room_thermostat_homekit
+              - if:
+                - condition: template
+                  value_template: '{{ states(''input_select.living_room_fan_owner'')
+                    in [''none'', ''schedule''] }}'
+                then:
+                - action: climate.set_fan_mode
+                  data:
+                    fan_mode: auto
+                  target:
+                    entity_id: climate.living_room_thermostat
+                - action: input_select.select_option
+                  target:
+                    entity_id: input_select.living_room_fan_owner
+                  data:
+                    option: none
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.heating_season
+        state: 'on'
+      sequence:
+      - choose:
+        - conditions:
+          - condition: time
+            after: '08:00:00'
+            before: '20:00:00'
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: heat
+            target:
+              entity_id: climate.living_room_thermostat_homekit
+          - action: climate.set_temperature
+            data:
+              temperature: '{{ states(''input_number.lr_heat_day'') | float(68) }}'
+            target:
+              entity_id: climate.living_room_thermostat_homekit
+          - if:
+            - condition: template
+              value_template: '{{ states(''input_select.living_room_fan_owner'')
+                in [''none'', ''schedule''] }}'
+            then:
+            - action: climate.set_fan_mode
+              data:
+                fan_mode: auto
+              target:
+                entity_id: climate.living_room_thermostat
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.living_room_fan_owner
+              data:
+                option: none
+        - conditions:
+          - condition: time
+            after: '20:00:00'
+            before: '08:00:00'
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: heat
+            target:
+              entity_id: climate.living_room_thermostat_homekit
+          - action: climate.set_temperature
+            data:
+              temperature: '{{ states(''input_number.lr_heat_night'') | float(66)
+                }}'
+            target:
+              entity_id: climate.living_room_thermostat_homekit
+          - if:
+            - condition: template
+              value_template: '{{ states(''input_select.living_room_fan_owner'')
+                in [''none'', ''schedule''] }}'
+            then:
+            - action: climate.set_fan_mode
+              data:
+                fan_mode: auto
+              target:
+                entity_id: climate.living_room_thermostat
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.living_room_fan_owner
+              data:
+                option: none
+  mode: restart

@@ -2976,8 +2976,12 @@
     at: '17:00:00'
   - trigger: time
     at: '21:00:00'
-  - trigger: time
-    at: '20:02:00'
+  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
+  # so zone setpoints return to schedule the moment the event actually clears.
+  - trigger: state
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    to: 'off'
   - trigger: homeassistant
     event: start
   conditions:
@@ -3101,8 +3105,12 @@
     at: '10:00:00'
   - trigger: time
     at: '19:30:00'
-  - trigger: time
-    at: '20:02:00'
+  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
+  # so zone setpoints return to schedule the moment the event actually clears.
+  - trigger: state
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    to: 'off'
   - trigger: homeassistant
     event: start
   conditions:
@@ -3683,14 +3691,31 @@
   - trigger: state
     entity_id:
     - input_boolean.basement_hvac_fresh_air_available
+  # #185: follow the fresh-air damper so the blower turns on within seconds of
+  # the damper opening (5 F differential / CO2 flush) and back to auto when it
+  # closes, instead of recirculating in the 4-5 F dead band.
+  - trigger: state
+    entity_id:
+    - switch.utility_room_ventilation_damper
+  # Overnight-guest fixed-temp hold: re-run at night start and whenever the
+  # basement-guests toggle flips, so 70 F applies / releases promptly.
+  - trigger: time
+    at: '20:00:00'
+  - trigger: state
+    entity_id:
+    - input_boolean.basement_guests
   - trigger: time
     at: '08:00:00'
   - trigger: time
     at: '17:00:00'
   - trigger: time
     at: '21:00:00'
-  - trigger: time
-    at: '20:02:00'
+  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
+  # so zone setpoints return to schedule the moment the event actually clears.
+  - trigger: state
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    to: 'off'
   - trigger: homeassistant
     event: start
   - trigger: numeric_state
@@ -3737,6 +3762,42 @@
         state: 'off'
       sequence:
       - choose:
+        # Overnight guests: hold a fixed 70 F (mechanical cool) instead of
+        # coasting on fresh air, so the basement stays quiet and steady all
+        # night. Highest priority; only 20:00-08:00 so days run normally (#guest).
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.basement_guests
+            state: 'on'
+          - condition: time
+            after: '20:00:00'
+            before: '08:00:00'
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: cool
+            target:
+              entity_id: climate.basement_thermostat_homekit
+          - action: climate.set_temperature
+            data:
+              temperature: 70
+            target:
+              entity_id: climate.basement_thermostat_homekit
+          - if:
+            - condition: template
+              value_template: '{{ states(''input_select.basement_fan_owner'')
+                in [''none'', ''schedule''] }}'
+            then:
+            - action: climate.set_fan_mode
+              data:
+                fan_mode: auto
+              target:
+                entity_id: climate.basement_thermostat
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.basement_fan_owner
+              data:
+                option: none
         - conditions:
           - condition: state
             entity_id: input_boolean.basement_hvac_fresh_air_available
@@ -3757,21 +3818,46 @@
                   hvac_mode: 'off'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - if:
-                - condition: template
-                  value_template: '{{ states(''input_select.basement_fan_owner'')
-                    in [''none'', ''schedule''] }}'
-                then:
-                - action: climate.set_fan_mode
-                  data:
-                    fan_mode: 'on'
-                  target:
-                    entity_id: climate.basement_thermostat
-                - action: input_select.select_option
-                  target:
+              # #185: only force the blower on when the fresh-air damper is
+              # actually open; a closed damper means the blower just recirculates
+              # indoor air (no fresh air, no cooling, wasted watts).
+              - choose:
+                - conditions:
+                  - condition: state
+                    entity_id: switch.utility_room_ventilation_damper
+                    state: 'on'
+                  - condition: template
+                    value_template: '{{ states(''input_select.basement_fan_owner'')
+                      in [''none'', ''schedule''] }}'
+                  sequence:
+                  - action: climate.set_fan_mode
+                    data:
+                      fan_mode: 'on'
+                    target:
+                      entity_id: climate.basement_thermostat
+                  - action: input_select.select_option
+                    target:
+                      entity_id: input_select.basement_fan_owner
+                    data:
+                      option: schedule
+                - conditions:
+                  - condition: state
+                    entity_id: switch.utility_room_ventilation_damper
+                    state: 'off'
+                  - condition: state
                     entity_id: input_select.basement_fan_owner
-                  data:
-                    option: schedule
+                    state: schedule
+                  sequence:
+                  - action: climate.set_fan_mode
+                    data:
+                      fan_mode: auto
+                    target:
+                      entity_id: climate.basement_thermostat
+                  - action: input_select.select_option
+                    target:
+                      entity_id: input_select.basement_fan_owner
+                    data:
+                      option: none
             - conditions:
               - condition: time
                 after: '20:00:00'
@@ -3820,21 +3906,46 @@
                   hvac_mode: 'off'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              - if:
-                - condition: template
-                  value_template: '{{ states(''input_select.basement_fan_owner'')
-                    in [''none'', ''schedule''] }}'
-                then:
-                - action: climate.set_fan_mode
-                  data:
-                    fan_mode: 'on'
-                  target:
-                    entity_id: climate.basement_thermostat
-                - action: input_select.select_option
-                  target:
+              # #185: only force the blower on when the fresh-air damper is
+              # actually open; a closed damper means the blower just recirculates
+              # indoor air (no fresh air, no cooling, wasted watts).
+              - choose:
+                - conditions:
+                  - condition: state
+                    entity_id: switch.utility_room_ventilation_damper
+                    state: 'on'
+                  - condition: template
+                    value_template: '{{ states(''input_select.basement_fan_owner'')
+                      in [''none'', ''schedule''] }}'
+                  sequence:
+                  - action: climate.set_fan_mode
+                    data:
+                      fan_mode: 'on'
+                    target:
+                      entity_id: climate.basement_thermostat
+                  - action: input_select.select_option
+                    target:
+                      entity_id: input_select.basement_fan_owner
+                    data:
+                      option: schedule
+                - conditions:
+                  - condition: state
+                    entity_id: switch.utility_room_ventilation_damper
+                    state: 'off'
+                  - condition: state
                     entity_id: input_select.basement_fan_owner
-                  data:
-                    option: schedule
+                    state: schedule
+                  sequence:
+                  - action: climate.set_fan_mode
+                    data:
+                      fan_mode: auto
+                    target:
+                      entity_id: climate.basement_thermostat
+                  - action: input_select.select_option
+                    target:
+                      entity_id: input_select.basement_fan_owner
+                    data:
+                      option: none
             - conditions:
               - condition: time
                 after: '08:00:00'
@@ -4532,12 +4643,22 @@
   - trigger: state
     entity_id:
     - input_boolean.basement_hvac_fresh_air_available
+  # #185: follow the fresh-air damper so the blower turns on within seconds of
+  # the damper opening (5 F differential / CO2 flush) and back to auto when it
+  # closes, instead of recirculating in the 4-5 F dead band.
+  - trigger: state
+    entity_id:
+    - switch.utility_room_ventilation_damper
   - trigger: time
     at: '08:00:00'
   - trigger: time
     at: '20:00:00'
-  - trigger: time
-    at: '20:02:00'
+  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
+  # so zone setpoints return to schedule the moment the event actually clears.
+  - trigger: state
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    to: 'off'
   - trigger: homeassistant
     event: start
   - trigger: numeric_state
@@ -4604,21 +4725,46 @@
                   hvac_mode: 'off'
                 target:
                   entity_id: climate.living_room_thermostat_homekit
-              - if:
-                - condition: template
-                  value_template: '{{ states(''input_select.living_room_fan_owner'')
-                    in [''none'', ''schedule''] }}'
-                then:
-                - action: climate.set_fan_mode
-                  data:
-                    fan_mode: 'on'
-                  target:
-                    entity_id: climate.living_room_thermostat
-                - action: input_select.select_option
-                  target:
+              # #185: only force the blower on when the fresh-air damper is
+              # actually open; a closed damper means the blower just recirculates
+              # indoor air (no fresh air, no cooling, wasted watts).
+              - choose:
+                - conditions:
+                  - condition: state
+                    entity_id: switch.utility_room_ventilation_damper
+                    state: 'on'
+                  - condition: template
+                    value_template: '{{ states(''input_select.living_room_fan_owner'')
+                      in [''none'', ''schedule''] }}'
+                  sequence:
+                  - action: climate.set_fan_mode
+                    data:
+                      fan_mode: 'on'
+                    target:
+                      entity_id: climate.living_room_thermostat
+                  - action: input_select.select_option
+                    target:
+                      entity_id: input_select.living_room_fan_owner
+                    data:
+                      option: schedule
+                - conditions:
+                  - condition: state
+                    entity_id: switch.utility_room_ventilation_damper
+                    state: 'off'
+                  - condition: state
                     entity_id: input_select.living_room_fan_owner
-                  data:
-                    option: schedule
+                    state: schedule
+                  sequence:
+                  - action: climate.set_fan_mode
+                    data:
+                      fan_mode: auto
+                    target:
+                      entity_id: climate.living_room_thermostat
+                  - action: input_select.select_option
+                    target:
+                      entity_id: input_select.living_room_fan_owner
+                    data:
+                      option: none
             - conditions:
               - condition: time
                 after: '20:00:00'
@@ -4667,21 +4813,46 @@
                   hvac_mode: 'off'
                 target:
                   entity_id: climate.living_room_thermostat_homekit
-              - if:
-                - condition: template
-                  value_template: '{{ states(''input_select.living_room_fan_owner'')
-                    in [''none'', ''schedule''] }}'
-                then:
-                - action: climate.set_fan_mode
-                  data:
-                    fan_mode: 'on'
-                  target:
-                    entity_id: climate.living_room_thermostat
-                - action: input_select.select_option
-                  target:
+              # #185: only force the blower on when the fresh-air damper is
+              # actually open; a closed damper means the blower just recirculates
+              # indoor air (no fresh air, no cooling, wasted watts).
+              - choose:
+                - conditions:
+                  - condition: state
+                    entity_id: switch.utility_room_ventilation_damper
+                    state: 'on'
+                  - condition: template
+                    value_template: '{{ states(''input_select.living_room_fan_owner'')
+                      in [''none'', ''schedule''] }}'
+                  sequence:
+                  - action: climate.set_fan_mode
+                    data:
+                      fan_mode: 'on'
+                    target:
+                      entity_id: climate.living_room_thermostat
+                  - action: input_select.select_option
+                    target:
+                      entity_id: input_select.living_room_fan_owner
+                    data:
+                      option: schedule
+                - conditions:
+                  - condition: state
+                    entity_id: switch.utility_room_ventilation_damper
+                    state: 'off'
+                  - condition: state
                     entity_id: input_select.living_room_fan_owner
-                  data:
-                    option: schedule
+                    state: schedule
+                  sequence:
+                  - action: climate.set_fan_mode
+                    data:
+                      fan_mode: auto
+                    target:
+                      entity_id: climate.living_room_thermostat
+                  - action: input_select.select_option
+                    target:
+                      entity_id: input_select.living_room_fan_owner
+                    data:
+                      option: none
             - conditions:
               - condition: time
                 after: '08:00:00'
@@ -5042,6 +5213,11 @@
           entity_id: binary_sensor.family_room_sensor_family_room_motion
           state:
           - 'off'
+        # #188: suppress motion auto-off while the basement Working scene is
+        # active so sitting still at the desk doesn't kill the lights.
+        - condition: state
+          entity_id: input_boolean.basement_work_mode
+          state: 'off'
         then:
         - choose:
           - conditions:
@@ -5078,6 +5254,129 @@
             data:
               transition: 10
   mode: single
+- id: '1768500000001'
+  alias: Basement Work Mode - On
+  description: >-
+    #188: Latch basement_work_mode on when the basement Working scene activates,
+    so the Gym motion automation stops turning the lights off on no-motion.
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.scene_basement_work
+    to: 'on'
+  conditions:
+  - condition: state
+    entity_id: input_boolean.basement_work_mode
+    state: 'off'
+  actions:
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.basement_work_mode
+  mode: single
+- id: '1768500000002'
+  alias: Basement Work Mode - Off
+  description: >-
+    #188: Clear basement_work_mode when Working ends so motion control resumes.
+    "Ends" = another basement scene is selected, the core work lights are turned
+    off, or a 4-hour safety timeout elapses.
+  triggers:
+  - trigger: state
+    id: ended
+    entity_id:
+    - binary_sensor.scene_basement_evening
+    - binary_sensor.scene_basement_cleaning
+    - binary_sensor.scene_good_night
+    to: 'on'
+  - trigger: state
+    id: timeout
+    entity_id:
+    - input_boolean.basement_work_mode
+    to: 'on'
+    for:
+      hours: 4
+  - trigger: state
+    id: lights_off
+    entity_id:
+    - light.media_room_main_lights
+    - light.basement_hallway_main_lights
+    - light.gym_main_lights
+    to: 'off'
+  conditions:
+  - condition: state
+    entity_id: input_boolean.basement_work_mode
+    state: 'on'
+  - condition: or
+    conditions:
+    # Another scene chosen, or the safety timeout fired.
+    - condition: trigger
+      id:
+      - ended
+      - timeout
+    # A light turned off — only clear when ALL core work lights are off, so a
+    # single-light nudge mid-session doesn't drop work mode.
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: light.media_room_main_lights
+        state: 'off'
+      - condition: state
+        entity_id: light.basement_hallway_main_lights
+        state: 'off'
+      - condition: state
+        entity_id: light.gym_main_lights
+        state: 'off'
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.basement_work_mode
+  mode: single
+- id: '1768500000003'
+  alias: Demand Response Notification
+  description: >-
+    #187: Surface a utility demand-response event in the Notification Center
+    (bell + notifications card) via persistent_notification. Created when the
+    canonical Living Room DR sensor goes active, dismissed when it clears. DR
+    times are naive ISO in UTC and are pinned to UTC before converting to local.
+  triggers:
+  - trigger: state
+    id: start
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    from: 'off'
+    to: 'on'
+  - trigger: state
+    id: end
+    entity_id:
+    - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
+    from: 'on'
+    to: 'off'
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: start
+      sequence:
+      - action: persistent_notification.create
+        data:
+          notification_id: demand_response
+          title: Demand Response Active
+          message: >-
+            {% set act = 'binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active' %}
+            {% set s_raw = state_attr(act, 'start_time') %}
+            {% set e_raw = state_attr(act, 'end_time') %}
+            {% set cap = state_attr(act, 'cool_setpoint_limit_min') %}
+            {% set s = (s_raw ~ '+00:00') | as_datetime if s_raw else none %}
+            {% set e = (e_raw ~ '+00:00') | as_datetime if e_raw else none %}
+            Utility demand-response event{% if s and e %} {{ as_local(s).strftime('%-I:%M %p') }}–{{ as_local(e).strftime('%-I:%M %p') }}{% endif %}{% if cap %} · cooling limited to {{ cap }}°{% endif %}. Sun-facing shades are lowering to cut cooling load.
+    - conditions:
+      - condition: trigger
+        id: end
+      sequence:
+      - action: persistent_notification.dismiss
+        data:
+          notification_id: demand_response
+  mode: queued
 - id: '1767783680057'
   alias: Alarm Pending Chime
   description: ''
@@ -5727,6 +6026,12 @@
   - trigger: time_pattern
     hours: /1
     id: hourly
+  # Re-evaluate immediately when overnight-guest mode flips, so the basement
+  # free-cool blower / bathroom exhaust fan are released without waiting.
+  - trigger: state
+    entity_id:
+    - input_boolean.basement_guests
+    id: basement_guests
   - trigger: time
     at: '20:00:00'
     id: precool_start
@@ -5853,7 +6158,8 @@
       overnight_fan: '{{ now().hour >= 22 or now().hour < 8 }}'
       freecool_window: '{{ overnight_fan or evening_precool }}'
       z1_cool_ok: '{{ z1 > z1_min and outdoor < (z1 - diff) }}'
-      z2_cool_ok: '{{ z2 > z2_min and outdoor < (z2 - diff) }}'
+      z2_cool_ok: '{{ z2 > z2_min and outdoor < (z2 - diff) and not is_state(''input_boolean.basement_guests'',
+        ''on'') }}'
       freecool_demand: '{{ dry_ok and freecool_window and (z1_cool_ok or z2_cool_ok)
         }}'
       runtime_24h_min: '{{ states(''sensor.fresh_air_damper_on_24_h'') | float(0)
@@ -7038,6 +7344,12 @@
     before: '20:01:00'
   variables:
     closure_responsiveness: 20
+    # #187: during a utility demand-response window (2 h pre-event through end),
+    # any facade the sun is actively hitting is driven fully closed instead of
+    # to its adaptive target — cuts solar gain while cooling is capped. Facades
+    # the sun has left return to the normal adaptive formula (reopen), and when
+    # the event ends the next tick restores adaptive positions everywhere.
+    dr_override: '{{ is_state(''binary_sensor.demand_response_window'', ''on'') }}'
     rooms:
     - name: First Floor
       wave: early
@@ -7221,7 +7533,8 @@
                 sequence:
                 - variables:
                     effw: '{{ states(repeat.item.sensor) | float(0) }}'
-                    target: '{% if effw == 0 or indoor | float(70) <= comfort | float(70)
+                    target: '{% if dr_override and effw > 0 %}0{% elif effw == 0
+                      or indoor | float(70) <= comfort | float(70)
                       %}100{% else %}{% set excess = indoor | float(70) - comfort
                       | float(70) %}{% set closure = excess * effw / closure_responsiveness
                       %}{{ [[100 - closure, 0] | max, 100] | min | round(0) | int
@@ -7709,6 +8022,7 @@
         entity_id: switch.powder_room_powder_room_exhaust_fan
   mode: restart
 - id: washer_live_activity_update
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Washing Machine Live Activity — Update
   description: ''
   mode: restart
@@ -7755,6 +8069,7 @@
         notification_icon: mdi:washing-machine
         notification_icon_color: "#2196F3"
 - id: washer_live_activity_complete
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Washing Machine Live Activity — Complete
   description: >-
     On wash completion, replace the card with a green "done" state, hold ~10 min
@@ -7785,6 +8100,7 @@
       tag: washer_cycle
       audience: both
 - id: dryer_live_activity_update
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Dryer Live Activity — Update
   description: >-
     Dryer iOS Live Activity, mirroring the washer (#180). Uses the existing
@@ -7829,6 +8145,7 @@
         notification_icon: mdi:tumble-dryer
         notification_icon_color: "#FF9800"
 - id: dryer_live_activity_complete
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Dryer Live Activity — Complete
   description: >-
     Green done-card on dryer completion, ~10 min hold, then clear (#180).
@@ -7858,6 +8175,7 @@
       tag: dryer_cycle
       audience: both
 - id: outage_live_activity_update
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Power Outage Live Activity — Update
   description: >-
     Outage iOS Live Activity, shown only while off-grid (#182). Counts up from
@@ -7893,6 +8211,7 @@
         notification_icon: mdi:home-battery
         notification_icon_color: "#F44336"
 - id: outage_live_activity_restored
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Power Outage Live Activity — Restored
   description: >-
     On grid return, replace the outage card with a green "Power restored" state,
@@ -7921,6 +8240,7 @@
       tag: power_outage
       audience: both
 - id: sprinkler_live_activity
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Sprinklers Live Activity
   description: >-
     Per-zone sprinkler iOS Live Activity (#183). Count-up elapsed timer (Rachio
@@ -8000,6 +8320,7 @@
         tag: sprinkler_zone
         audience: both
 - id: car_charging_live_activity
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Car Charging Live Activity
   description: >-
     One shared car_charging Live Activity (#181). The wall charger is shared by
@@ -8061,3 +8382,87 @@
       data:
         tag: car_charging
         audience: both
+- id: washer_live_activity_update_v2
+  alias: Washing Machine Live Activity — Update (v2 test)
+  description: >-
+    Standalone washer iOS Live Activity (no shared push script) for v2.2.1
+    testing. Progress bar = % complete (sensor.washer_cycle_progress); live
+    countdown = time remaining (sensor.front_load_washer_remaining_time), pointed
+    at an absolute finish timestamp (now + remaining) so the iOS timer counts
+    down correctly. Delivers to both phones inline. Toggle on/off to test.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.washer_cycle_progress
+    - sensor.front_load_washer_run_state
+    - sensor.front_load_washer_remaining_time
+  conditions:
+  # Show only while a cycle is actually running and not yet finished.
+  - condition: template
+    value_template: >-
+      {% set p = states('sensor.washer_cycle_progress') %}
+      {{ p not in ['unavailable','unknown',''] and 0 <= (p | int(-1)) < 100
+         and states('sensor.front_load_washer_run_state')
+             not in ['unavailable','unknown','none','','off','finished'] }}
+  variables:
+    progress: "{{ states('sensor.washer_cycle_progress') | int(0) }}"
+    run_state: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) | title }}"
+    # Parse remaining time robustly: H:MM:SS, M:SS, or plain minutes.
+    remaining_seconds: >-
+      {% set r = states('sensor.front_load_washer_remaining_time') %}
+      {% if r not in ['unavailable','unknown','', none] and ':' in r %}
+        {% set p = r.split(':') | map('int') | list %}
+        {% if p | length == 3 %}{{ p[0]*3600 + p[1]*60 + p[2] }}
+        {% elif p | length == 2 %}{{ p[0]*60 + p[1] }}
+        {% else %}0{% endif %}
+      {% else %}{{ r | int(0) * 60 }}{% endif %}
+    # Absolute epoch the timer counts DOWN to (now + remaining). The iOS Live
+    # Activity `when` field is a Unix timestamp, not a duration.
+    finish_ts: "{{ (now().timestamp() + (remaining_seconds | int(0))) | int }}"
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      - notify.mobile_app_brians_iphone_15_pro
+      sequence:
+      - action: "{{ repeat.item }}"
+        data:
+          title: Washing Machine
+          message: "{{ run_state }}"
+          data:
+            tag: washer_cycle
+            live_update: true
+            background_color: '#14161A'
+            text_color: '#FFFFFF'
+            subtitle: "{{ run_state }}"
+            critical_text: "{{ progress }}%"
+            progress: "{{ progress }}"
+            progress_max: 100
+            chronometer: true
+            when: "{{ finish_ts }}"
+            when_relative: true
+            notification_icon: mdi:washing-machine
+            notification_icon_color: '#2196F3'
+- id: '1768500000004'
+  alias: Basement Guests - Clear on Guest Mode Off
+  description: >-
+    Safety: when Overnight Guests (guest_mode) turns off, also clear the
+    Guests-in-Basement flag so the overnight 70 F hold / fan suppression can't
+    linger after the guests have gone (the toggle is hidden while guest_mode is
+    off).
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.guest_mode
+    from: 'on'
+    to: 'off'
+  conditions:
+  - condition: state
+    entity_id: input_boolean.basement_guests
+    state: 'on'
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.basement_guests
+  mode: single
