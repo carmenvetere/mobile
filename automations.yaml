@@ -7972,6 +7972,7 @@
         entity_id: switch.powder_room_powder_room_exhaust_fan
   mode: restart
 - id: washer_live_activity_update
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Washing Machine Live Activity — Update
   description: ''
   mode: restart
@@ -8018,6 +8019,7 @@
         notification_icon: mdi:washing-machine
         notification_icon_color: "#2196F3"
 - id: washer_live_activity_complete
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Washing Machine Live Activity — Complete
   description: >-
     On wash completion, replace the card with a green "done" state, hold ~10 min
@@ -8048,6 +8050,7 @@
       tag: washer_cycle
       audience: both
 - id: dryer_live_activity_update
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Dryer Live Activity — Update
   description: >-
     Dryer iOS Live Activity, mirroring the washer (#180). Uses the existing
@@ -8092,6 +8095,7 @@
         notification_icon: mdi:tumble-dryer
         notification_icon_color: "#FF9800"
 - id: dryer_live_activity_complete
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Dryer Live Activity — Complete
   description: >-
     Green done-card on dryer completion, ~10 min hold, then clear (#180).
@@ -8121,6 +8125,7 @@
       tag: dryer_cycle
       audience: both
 - id: outage_live_activity_update
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Power Outage Live Activity — Update
   description: >-
     Outage iOS Live Activity, shown only while off-grid (#182). Counts up from
@@ -8156,6 +8161,7 @@
         notification_icon: mdi:home-battery
         notification_icon_color: "#F44336"
 - id: outage_live_activity_restored
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Power Outage Live Activity — Restored
   description: >-
     On grid return, replace the outage card with a green "Power restored" state,
@@ -8184,6 +8190,7 @@
       tag: power_outage
       audience: both
 - id: sprinkler_live_activity
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Sprinklers Live Activity
   description: >-
     Per-zone sprinkler iOS Live Activity (#183). Count-up elapsed timer (Rachio
@@ -8263,6 +8270,7 @@
         tag: sprinkler_zone
         audience: both
 - id: car_charging_live_activity
+  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
   alias: Car Charging Live Activity
   description: >-
     One shared car_charging Live Activity (#181). The wall charger is shared by
@@ -8324,3 +8332,65 @@
       data:
         tag: car_charging
         audience: both
+- id: washer_live_activity_update_v2
+  alias: Washing Machine Live Activity — Update (v2 test)
+  description: >-
+    Standalone washer iOS Live Activity (no shared push script) for v2.2.1
+    testing. Progress bar = % complete (sensor.washer_cycle_progress); live
+    countdown = time remaining (sensor.front_load_washer_remaining_time), pointed
+    at an absolute finish timestamp (now + remaining) so the iOS timer counts
+    down correctly. Delivers to both phones inline. Toggle on/off to test.
+  mode: restart
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.washer_cycle_progress
+    - sensor.front_load_washer_run_state
+    - sensor.front_load_washer_remaining_time
+  conditions:
+  # Show only while a cycle is actually running and not yet finished.
+  - condition: template
+    value_template: >-
+      {% set p = states('sensor.washer_cycle_progress') %}
+      {{ p not in ['unavailable','unknown',''] and 0 <= (p | int(-1)) < 100
+         and states('sensor.front_load_washer_run_state')
+             not in ['unavailable','unknown','none','','off','finished'] }}
+  variables:
+    progress: "{{ states('sensor.washer_cycle_progress') | int(0) }}"
+    run_state: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) | title }}"
+    # Parse remaining time robustly: H:MM:SS, M:SS, or plain minutes.
+    remaining_seconds: >-
+      {% set r = states('sensor.front_load_washer_remaining_time') %}
+      {% if r not in ['unavailable','unknown','', none] and ':' in r %}
+        {% set p = r.split(':') | map('int') | list %}
+        {% if p | length == 3 %}{{ p[0]*3600 + p[1]*60 + p[2] }}
+        {% elif p | length == 2 %}{{ p[0]*60 + p[1] }}
+        {% else %}0{% endif %}
+      {% else %}{{ r | int(0) * 60 }}{% endif %}
+    # Absolute epoch the timer counts DOWN to (now + remaining). The iOS Live
+    # Activity `when` field is a Unix timestamp, not a duration.
+    finish_ts: "{{ (now().timestamp() + (remaining_seconds | int(0))) | int }}"
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      - notify.mobile_app_brians_iphone_15_pro
+      sequence:
+      - action: "{{ repeat.item }}"
+        data:
+          title: Washing Machine
+          message: "{{ run_state }}"
+          data:
+            tag: washer_cycle
+            live_update: true
+            background_color: '#14161A'
+            text_color: '#FFFFFF'
+            subtitle: "{{ run_state }}"
+            critical_text: "{{ progress }}%"
+            progress: "{{ progress }}"
+            progress_max: 100
+            chronometer: true
+            when: "{{ finish_ts }}"
+            when_relative: true
+            notification_icon: mdi:washing-machine
+            notification_icon_color: '#2196F3'
