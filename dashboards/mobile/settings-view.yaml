@@ -1158,6 +1158,7 @@ cards:
                 - Basement: the Working scene now suppresses the motion auto-off, so sitting still at the desk no longer turns the lights off; motion control resumes automatically when Working ends
                 - Climate: utility Demand Response now pre-closes the sun-facing shades ~2 hours before an event and follows the sun through it (reopening sides the sun has left), then hands back to the adaptive scheduler when it ends; a Notification Center alert covers the event window and cooling limit, and the zone schedules resync the moment the event clears (replacing the fixed 20:02 guess)
                 - Automations: every automation is now labeled and categorized, so the automations list is filterable by domain (climate, lighting, shades, security, pool, energy, vacuum, notifications, …)
+                - Climate: new "Guests in Basement" toggle (under Quick Toggles when Overnight Guests is on) — overnight it holds the basement at a fixed 70°F and keeps it out of free-cooling (no basement bathroom exhaust fan or blower cycling) so guests sleep undisturbed, while CO2 flushing and the rest of the house's ventilation carry on; clears automatically when Overnight Guests turns off
 
                 **v2.2.0** — 2026-07-15
 
