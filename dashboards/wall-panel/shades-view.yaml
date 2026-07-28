@@ -1,0 +1,129 @@
+# Wall panel Shades - Whole House + First Floor groups. No sliders: the
+# icon carries state, the up/stop/down circles carry control.
+#
+# NOTE - the handoff also specifies a "Media Room Shades" group, but the
+# repo has no media-room / basement cover entity yet ("repo wins for entity
+# IDs"). When the media room shade is added to HA, drop in a
+# wall-panel-shade-card include for it under its own separator here.
+title: Shades
+icon: mdi:roller-shade
+theme: Dune Mist
+path: shades
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 0px
+        - box-shadow: none
+        - padding: 0px 34px 134px
+        - margin: 0
+        - height: auto
+        - background: var(--primary-background-color)
+      grid:
+        - grid-template-areas: |
+            "header"
+            "main"
+        - grid-template-columns: auto
+        - grid-template-rows: 110px auto
+        - row-gap: 4px
+        - align-items: start
+    custom_fields:
+      header:
+        card: !include /config/dashboards/modules/wall-panel-header.yaml
+      main:
+        card:
+          type: vertical-stack
+          cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Whole House
+              icon: mdi:home
+              rows: 0.75
+              sub_button:
+                - entity: sensor.shades_open_count
+                  show_state: true
+                  show_icon: false
+                  show_background: false
+              styles: |
+                .bubble-sub-button {
+                  color: var(--slate-bright) !important;
+                }
+              modules:
+                - wall_panel_separator
+            # Whole-house control: no single all-house cover group exists in
+            # HA, so the three buttons target every shade group directly
+            # (same list as the mobile Close All + the office group).
+            - type: custom:bubble-card
+              card_type: button
+              button_type: name
+              entity: cover.first_floor_all
+              name: All Shades
+              icon: >-
+                ${(() => {
+                  const n = Number(hass.states['sensor.shades_open_count']?.state);
+                  return (!isNaN(n) && n > 0) ? 'mdi:roller-shade' : 'mdi:roller-shade-closed';
+                })()}
+              show_state: false
+              scrolling_effect: false
+              card_layout: large
+              tap_action:
+                action: none
+              sub_button:
+                - entity: cover.first_floor_all
+                  icon: mdi:arrow-up
+                  show_state: false
+                  state_background: false
+                  show_background: false
+                  tap_action:
+                    action: perform-action
+                    perform_action: cover.open_cover
+                    target:
+                      entity_id: &all_shade_groups
+                        - cover.first_floor_all
+                        - cover.bedroom_side_shades
+                        - cover.bedroom_back
+                        - cover.office_shades
+                        - cover.front_guest_bedroom_shades
+                        - cover.back_guest_bedroom_shades
+                - entity: cover.first_floor_all
+                  icon: mdi:stop
+                  show_state: false
+                  state_background: false
+                  show_background: false
+                  tap_action:
+                    action: perform-action
+                    perform_action: cover.stop_cover
+                    target:
+                      entity_id: *all_shade_groups
+                - entity: cover.first_floor_all
+                  icon: mdi:arrow-down
+                  show_state: false
+                  state_background: false
+                  show_background: false
+                  tap_action:
+                    action: perform-action
+                    perform_action: cover.close_cover
+                    target:
+                      entity_id: *all_shade_groups
+              rows: 1
+              modules:
+                - wall_panel_shades
+            - type: custom:bubble-card
+              card_type: separator
+              name: First Floor Shades
+              icon: mdi:home-floor-1
+              rows: 0.75
+              modules:
+                - wall_panel_separator
+            - type: vertical-stack
+              cards: !include [/config/dashboards/modules/wall-panel-shade-card.yaml, {shade_entity: cover.first_floor_all, shade_name: All Shades}]
+            - type: vertical-stack
+              cards: !include [/config/dashboards/modules/wall-panel-shade-card.yaml, {shade_entity: cover.first_floor_front, shade_name: Front Shades}]
+            - type: vertical-stack
+              cards: !include [/config/dashboards/modules/wall-panel-shade-card.yaml, {shade_entity: cover.living_room_side_shades, shade_name: Living Room Side Shades}]
+            - type: vertical-stack
+              cards: !include [/config/dashboards/modules/wall-panel-shade-card.yaml, {shade_entity: cover.dining_room_side, shade_name: Dining Room Side Shades}]
+  - !include
+      - /config/dashboards/modules/wall-panel-nav-menu.yaml
+      - current: shades

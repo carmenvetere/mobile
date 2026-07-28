@@ -1,52 +1,46 @@
 wall_panel_scenes:
   name: Wall Panel Scenes
-  version: '1.0'
+  version: '2.0'
   creator: ''
   supported:
     - button
     - select
-  description: ''
+  description: >-
+    Scene tile for the basement wall panel 2-column grid. 106px min-height,
+    20px radius, 42px icon, 24px/600 label; accent fill while the scene's
+    binary_sensor is on.
   code: |2-
         .bubble-button-card-container {
-          border-radius: 30px !important;
-          margin: 2px 20px 2px 0px !important;
-          background-color: var(--background-color) !important;
-          box-shadow: ${ state === 'on'
-            ? '0 0 10px rgba(255, 255, 255, 0.6)'
-            : '0 6px 14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06)'
-            } !important;
-          min-height: 110px !important;
+          border-radius: 20px !important;
+          margin: 0 !important;
+          min-height: 106px !important;
           max-width: 100% !important;
+          background-color: ${state === 'on' ? 'var(--accent-color)' : 'var(--background-color-2)'} !important;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
           }
 
         .bubble-button-background {
-          background-color: ${state === 'on' ? 'var(--ha-card-background-2)' : 'var(--background-color)'} !important;
-          } 
+          opacity: 0 !important;
+          }
 
         .bubble-name {
-          font-size: 36px !important;
+          font-size: 24px !important;
+          font-weight: 600 !important;
           text-align: left !important;
-          color: ${state === 'on' ? 'var(--secondary-text-color)' : 'var(--text-color)'} !important;
-          line-height: 1.1;
-          padding-left: 10px;
+          color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
+          line-height: 1.15 !important;
+          white-space: normal !important;
+          padding-left: 6px;
             }
 
-        .bubble-sub-button { 
-          font-size: 36px !important;
-          line-height: 1.1;
-          font-weight: bold; 
-          background-color: transparent !important;
-          margin-right: 20px;
-          }
-       
         .bubble-icon {
           opacity: 1 !important;
-          color: ${state === 'on' ? 'var(--secondary-text-color)' : 'var(--text-color)'} !important;
-          --mdc-icon-size: 60px !important;
+          color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
+          --mdc-icon-size: 42px !important;
           }
 
         .bubble-icon-container {
           background-color: transparent !important;
-          margin-left: 20px !important;
+          margin-left: 14px !important;
           }
   editor: ''

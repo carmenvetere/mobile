@@ -1,0 +1,124 @@
+# Wall panel Alarmo segmented control - the wall-panel scale-up of the
+# mobile security-view segmented control (same entities and service calls;
+# handoff geometry: container radius 20 / padding 6 / gap 6, segments
+# radius 15 / padding 26px 0 / 22px 700).
+#
+# NOTE - keypad intentionally omitted: the repo's Alarmo config disarms via
+# a codeless alarm_control_panel.alarm_disarm call (see mobile
+# security-view.yaml), so the handoff's PIN keypad would be non-functional
+# theater. If a disarm code is ever enabled in Alarmo, replace the Disarmed
+# segment's tap with a keypad flow.
+type: custom:button-card
+show_icon: false
+show_name: false
+show_state: false
+tap_action:
+  action: none
+styles:
+  card:
+    - background: var(--background-color-2)
+    - border-radius: 20px
+    - box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25)
+    - padding: 6px
+    - margin: 0
+    - transition: none
+  grid:
+    - grid-template-areas: '"away home disarm"'
+    - grid-template-columns: 1fr 1fr 1fr
+    - column-gap: 6px
+    - align-items: stretch
+  custom_fields:
+    away:
+      - grid-area: away
+    home:
+      - grid-area: home
+    disarm:
+      - grid-area: disarm
+custom_fields:
+  away:
+    card:
+      type: custom:button-card
+      name: Armed Away
+      show_icon: false
+      tap_action:
+        action: call-service
+        service: alarm_control_panel.alarm_arm_away
+        target:
+          entity_id: alarm_control_panel.alarmo
+      styles:
+        card:
+          - background: |
+              [[[
+                var e = states['alarm_control_panel.alarmo'] || {};
+                var a = e.attributes || {};
+                if (e.state === 'armed_away') return 'var(--gold-color)';
+                if ((e.state === 'arming' || e.state === 'pending') &&
+                    (a.arm_mode === 'armed_away' || a.next_state === 'armed_away')) return 'rgba(226,193,104,0.45)';
+                return 'transparent';
+              ]]]
+          - border-radius: 15px
+          - padding: 26px 0
+          - box-shadow: none
+          - transition: none
+        name:
+          - font-size: 22px
+          - font-weight: 700
+          - color: var(--primary-text-color)
+  home:
+    card:
+      type: custom:button-card
+      name: Armed Home
+      show_icon: false
+      tap_action:
+        action: call-service
+        service: alarm_control_panel.alarm_arm_home
+        target:
+          entity_id: alarm_control_panel.alarmo
+      styles:
+        card:
+          - background: |
+              [[[
+                var e = states['alarm_control_panel.alarmo'] || {};
+                var a = e.attributes || {};
+                if (e.state === 'armed_home') return 'var(--gold-color)';
+                if ((e.state === 'arming' || e.state === 'pending') &&
+                    (a.arm_mode === 'armed_home' || a.next_state === 'armed_home')) return 'rgba(226,193,104,0.45)';
+                return 'transparent';
+              ]]]
+          - border-radius: 15px
+          - padding: 26px 0
+          - box-shadow: none
+          - transition: none
+        name:
+          - font-size: 22px
+          - font-weight: 700
+          - color: var(--primary-text-color)
+  disarm:
+    card:
+      type: custom:button-card
+      name: Disarmed
+      show_icon: false
+      tap_action:
+        action: call-service
+        service: alarm_control_panel.alarm_disarm
+        target:
+          entity_id: alarm_control_panel.alarmo
+      styles:
+        card:
+          - background: |
+              [[[
+                var e = states['alarm_control_panel.alarmo'] || {};
+                return e.state === 'disarmed' ? 'var(--sage-color)' : 'transparent';
+              ]]]
+          - border-radius: 15px
+          - padding: 26px 0
+          - box-shadow: none
+          - transition: none
+        name:
+          - font-size: 22px
+          - font-weight: 700
+          - color: |
+              [[[
+                var e = states['alarm_control_panel.alarmo'] || {};
+                return e.state === 'disarmed' ? 'var(--text-primary-color)' : 'var(--primary-text-color)';
+              ]]]

@@ -1,5 +1,18 @@
 # lovelace_gen
 type: vertical-stack
+{% if dashboard == 'basement_wall_panel' %}
+# Wall panel: scenes render as a 2-column grid (16px gap per the handoff).
+card_mod:
+  style: |
+    #root {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    #root > * {
+      margin: 0 !important;
+    }
+{% endif %}
 cards:
 # {% if dashboard == 'basement_wall_panel' %}
 #   - type: custom:bubble-card
@@ -131,6 +144,11 @@ cards:
     name: Working
     icon: mdi:desk-lamp
     visibility:
+      # Hidden while armed so the Home view's disarm section fits without
+      # overflow (per Carmen's direction in the wall-panel handoff).
+      - condition: state
+        entity: alarm_control_panel.alarmo
+        state: disarmed
       - condition: or
         conditions:
           - condition: time
@@ -163,6 +181,11 @@ cards:
     name: Cleaning
     icon: mdi:spray-bottle
     visibility:
+      # Hidden while armed so the Home view's disarm section fits without
+      # overflow (per Carmen's direction in the wall-panel handoff).
+      - condition: state
+        entity: alarm_control_panel.alarmo
+        state: disarmed
       - condition: or
         conditions:
           - condition: time

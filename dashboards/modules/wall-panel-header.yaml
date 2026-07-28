@@ -1,0 +1,204 @@
+# Wall panel shared header (110px band) - the wall-panel restyle of the
+# mobile home-view header: bigger clock, no back button, notification pill
+# and alarm shield both jump to the Alarm view (per the wall-panel handoff).
+# Consumed as a `header` custom_field card by every wall-panel view.
+type: custom:button-card
+# sensor.time re-renders the clock every minute (Time & Date integration).
+entity: sensor.time
+tap_action:
+  action: none
+show_icon: false
+show_name: true
+show_state: false
+show_label: false
+name: |
+  [[[ return new Date().toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' }); ]]]
+custom_fields:
+  # --- Overnight Guests (hidden when off) ---
+  guests:
+    card:
+      type: custom:button-card
+      entity: input_boolean.guest_mode
+      show_icon: true
+      show_name: false
+      show_state: false
+      icon: mdi:bed
+      tap_action: { action: none }
+      styles:
+        card:
+          - background: transparent !important
+          - --ha-card-background: transparent
+          - box-shadow: none
+          - transition: none
+          - padding: 4px
+          - display: |
+              [[[ var g = states['input_boolean.guest_mode'];
+                  return (g && g.state === 'on') ? 'flex' : 'none'; ]]]
+        icon:
+          - width: 34px
+          - height: 34px
+          - color: '#7295B2'
+  # --- Dinner Party (hidden when off) ---
+  dinner:
+    card:
+      type: custom:button-card
+      entity: input_boolean.dinner_party
+      show_icon: true
+      show_name: false
+      show_state: false
+      icon: mdi:party-popper
+      tap_action: { action: none }
+      styles:
+        card:
+          - background: transparent !important
+          - --ha-card-background: transparent
+          - box-shadow: none
+          - transition: none
+          - padding: 4px
+          - display: |
+              [[[ var d = states['input_boolean.dinner_party'];
+                  return (d && d.state === 'on') ? 'flex' : 'none'; ]]]
+        icon:
+          - width: 34px
+          - height: 34px
+          - color: 'var(--amber-color)'
+  # --- Notification pill (only shows when count > 0) -> Alarm view ---
+  notif:
+    card:
+      type: custom:button-card
+      entity: sensor.notification_center
+      show_icon: true
+      show_name: true
+      show_state: false
+      icon: |
+        [[[ var p = states['sensor.notification_center_priority'];
+            return (p && p.attributes.icon) || 'mdi:bell'; ]]]
+      name: |
+        [[[ var c = states['sensor.notification_center']; return c ? c.state : ''; ]]]
+      tap_action: { action: navigate, navigation_path: /wall-panel-dash/alarm }
+      styles:
+        card:
+          - display: |
+              [[[ var c = states['sensor.notification_center'];
+                  return (c && parseInt(c.state) > 0) ? 'flex' : 'none'; ]]]
+          - background: |
+              [[[ var p = states['sensor.notification_center_priority'];
+                  var c = (p && p.attributes.color) || '#7295B2';
+                  var h = c.replace('#','');
+                  var r = parseInt(h.substr(0,2),16), g = parseInt(h.substr(2,2),16), b = parseInt(h.substr(4,2),16);
+                  return 'rgba(' + r + ',' + g + ',' + b + ',0.18)'; ]]]
+          - --ha-card-background: transparent
+          - box-shadow: none
+          - transition: none
+          - border-radius: 999px
+          # 14/18 padding is what makes this a legal 83px target - don't shrink.
+          - padding: 14px 18px
+        grid:
+          - grid-template-areas: '"i n"'
+          - grid-template-columns: auto auto
+          - align-items: center
+          - column-gap: 7px
+        icon:
+          - width: 28px
+          - height: 28px
+          - color: |
+              [[[ var p = states['sensor.notification_center_priority'];
+                  return (p && p.attributes.color) || '#7295B2'; ]]]
+        name:
+          - font-size: 20px
+          - font-weight: 700
+          - color: |
+              [[[ var p = states['sensor.notification_center_priority'];
+                  return (p && p.attributes.color) || '#7295B2'; ]]]
+  # --- Alarm shield -> Alarm view ---
+  alarm:
+    card:
+      type: custom:button-card
+      entity: alarm_control_panel.alarmo
+      show_icon: true
+      show_name: false
+      show_state: false
+      icon: |
+        [[[ var a = states['alarm_control_panel.alarmo'];
+            var s = a ? a.state : 'disarmed';
+            return s === 'disarmed' ? 'mdi:shield-off-outline'
+              : (s === 'triggered' ? 'mdi:shield-alert' : 'mdi:shield-lock'); ]]]
+      tap_action: { action: navigate, navigation_path: /wall-panel-dash/alarm }
+      styles:
+        card:
+          - background: transparent !important
+          - --ha-card-background: transparent
+          - box-shadow: none
+          - transition: none
+          # Target expansion: 36px glyph + 24/12 padding => >83px tall target.
+          - padding: 24px 12px
+        icon:
+          - width: 36px
+          - height: 36px
+          - color: |
+              [[[ var a = states['alarm_control_panel.alarmo'];
+                  var s = a ? a.state : 'disarmed';
+                  return s === 'disarmed' ? '#9aa0a8'
+                    : (s === 'triggered' ? 'var(--error-color)' : 'var(--amber-color)'); ]]]
+  # --- Outdoor temperature (display only) ---
+  temp:
+    card:
+      type: custom:button-card
+      entity: sensor.bayberry_tempest_temperature
+      show_icon: false
+      show_name: false
+      show_state: true
+      tap_action: { action: none }
+      state_display: |
+        [[[ var t = states['sensor.bayberry_tempest_temperature'];
+            return (t && !isNaN(parseFloat(t.state))) ? Math.round(parseFloat(t.state)) + '°' : ''; ]]]
+      styles:
+        card:
+          - background: transparent !important
+          - --ha-card-background: transparent
+          - box-shadow: none
+          - transition: none
+          - padding: 0 2px
+        state:
+          - font-size: 38px
+          - font-weight: 700
+          - color: var(--primary-text-color)
+styles:
+  card:
+    - background: transparent !important
+    - --ha-card-background: transparent
+    - box-shadow: none
+    - transition: none
+    - padding: 0
+    - height: 110px
+  grid:
+    - grid-template-areas: '"n guests dinner notif alarm temp"'
+    - grid-template-columns: 1fr auto auto auto auto auto
+    - grid-template-rows: auto
+    - align-items: center
+    - column-gap: 10px
+  name:
+    - grid-area: n
+    - justify-self: start
+    - align-items: center
+    - font-size: 46px
+    - font-weight: 700
+    - letter-spacing: 0.01em
+    - color: var(--primary-text-color)
+  custom_fields:
+    guests:
+      - grid-area: guests
+      - align-self: center
+    dinner:
+      - grid-area: dinner
+      - align-self: center
+    notif:
+      - grid-area: notif
+      - align-self: center
+    alarm:
+      - grid-area: alarm
+      - align-self: center
+    temp:
+      - grid-area: temp
+      - align-self: center
+      - justify-self: end

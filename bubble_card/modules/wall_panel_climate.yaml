@@ -1,0 +1,149 @@
+wall_panel_climate:
+  name: Wall Panel Climate
+  version: '1.0'
+  creator: ''
+  supported:
+    - climate
+  description: >-
+    Basement wall panel thermostat card - the wall-panel scale-up of
+    mobile_climate. 200px card, 74px/700 setpoint, 84x84 +/- buttons
+    (radius 14), mode/fan pills 190x84 radius 999 on the page-background
+    token. Hidden +/- when mode is off.
+  code: |2-
+      ha-card {
+        position: relative !important;
+        min-height: 200px !important;
+        background: var(--background-color) !important;
+        border: none !important;
+        border-radius: 20px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+        padding: 0px 0px !important;
+        --bubble-main-background-color: var(--background-color) !important;
+        --bubble-climate-main-background-color: var(--background-color) !important;
+        --bubble-climate-border-radius: 20px !important;
+        --bubble-climate-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+      }
+
+      /* TEMP GROUP - pinned LEFT on the card, single flex row */
+      .bubble-temperature-container {
+        position: absolute !important;
+        left: 28px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        right: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        background: transparent !important;
+        border-radius: 20px !important;
+        padding: 8px 108px 8px 0 !important;
+        z-index: 2 !important;
+      }
+
+      /* Big set-temp number */
+      .bubble-temperature-display,
+      .bubble-climate-temp-display {
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        min-width: 0 !important;
+        font-size: 74px !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        font-variant-numeric: tabular-nums !important;
+        position: relative !important;
+        color: ${state === 'off' ? 'transparent' : 'var(--primary-text-color)'} !important;
+      }
+
+      /* Off-state overlay */
+      .bubble-climate-temp-display::after {
+        content: 'Off';
+        display: ${state === 'off' ? 'flex' : 'none'};
+        position: absolute;
+        inset: 0;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 74px;
+        font-weight: 700;
+        line-height: 1;
+        color: rgba(242,243,245,0.78);
+      }
+
+      /* + button - anchored just ABOVE the container's vertical center */
+      .bubble-climate-plus-button {
+        position: absolute !important;
+        right: 0px !important;
+        bottom: 50% !important;
+        top: auto !important;
+        margin-bottom: 6px !important;
+        display: ${state === 'off' ? 'none' : 'flex'} !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 84px !important;
+        height: 84px !important;
+        min-height: 84px !important;
+        border-radius: 14px !important;
+        background: rgba(255,255,255,0.16) !important;
+        color: #f2f3f5 !important;
+        cursor: pointer !important;
+      }
+
+      /* - button - anchored just BELOW the container's vertical center */
+      .bubble-climate-minus-button {
+        position: absolute !important;
+        right: 0px !important;
+        top: 50% !important;
+        bottom: auto !important;
+        margin-top: 6px !important;
+        display: ${state === 'off' ? 'none' : 'flex'} !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 84px !important;
+        height: 84px !important;
+        min-height: 84px !important;
+        border-radius: 14px !important;
+        background: rgba(255,255,255,0.16) !important;
+        color: #f2f3f5 !important;
+        cursor: pointer !important;
+      }
+
+      .bubble-climate-plus-button:hover,
+      .bubble-climate-minus-button:hover {
+        background: rgba(255,255,255,0.26) !important;
+      }
+      .bubble-climate-plus-button ha-icon,
+      .bubble-climate-minus-button ha-icon {
+        --mdc-icon-size: 36px !important;
+        color: #f2f3f5 !important;
+      }
+
+      /* SUB-BUTTONS (mode + fan pills) - pinned RIGHT, stacked vertically */
+      .bubble-sub-button-container {
+        position: absolute !important;
+        right: 28px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        left: auto !important;
+        flex-direction: column !important;
+        align-items: flex-end !important;
+        gap: 12px !important;
+        z-index: 2 !important;
+      }
+
+      .bubble-sub-button {
+        background: var(--primary-background-color) !important;
+        border: 1px solid rgba(255,255,255,0.04) !important;
+        border-radius: 999px !important;
+        color: #f2f3f5 !important;
+        font-size: 22px !important;
+        font-weight: 600 !important;
+        min-height: 84px !important;
+        min-width: 190px !important;
+      }
+      .bubble-sub-button ha-icon {
+        --mdc-icon-size: 24px !important;
+      }
+      .bubble-sub-button:hover {
+        background: rgba(255,255,255,0.22) !important;
+      }
+  editor: ''

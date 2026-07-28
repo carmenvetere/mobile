@@ -1,0 +1,362 @@
+# Wall panel Settings - Quick Toggles, Sections (deep-links into the
+# mobile dashboard's settings pop-ups), Maintenance read-outs, Release
+# Notes. Mirrors the mobile settings view at wall-panel scale.
+title: Settings
+icon: mdi:cog
+theme: Dune Mist
+path: settings
+type: custom:grid-layout
+cards:
+  - type: custom:button-card
+    styles:
+      card:
+        - border-radius: 0px
+        - box-shadow: none
+        - padding: 0px 34px 134px
+        - margin: 0
+        - height: auto
+        - background: var(--primary-background-color)
+      grid:
+        - grid-template-areas: |
+            "header"
+            "main"
+        - grid-template-columns: auto
+        - grid-template-rows: 110px auto
+        - row-gap: 4px
+        - align-items: start
+    custom_fields:
+      header:
+        card: !include /config/dashboards/modules/wall-panel-header.yaml
+      main:
+        card:
+          type: vertical-stack
+          cards:
+            # ---------------- Quick Toggles ----------------
+            - type: custom:bubble-card
+              card_type: separator
+              name: Quick Toggles
+              icon: mdi:toggle-switch-outline
+              rows: 0.75
+              modules:
+                - wall_panel_separator
+            - !include
+                - /config/dashboards/modules/wall-panel-toggle-row.yaml
+                - toggle_entity: input_boolean.guest_mode
+                  row_name: Overnight Guests
+                  row_icon: mdi:bed
+            - !include
+                - /config/dashboards/modules/wall-panel-toggle-row.yaml
+                - toggle_entity: input_boolean.cleaners_mode
+                  row_name: Cleaners Mode
+                  row_icon: mdi:spray-bottle
+            - !include
+                - /config/dashboards/modules/wall-panel-toggle-row.yaml
+                - toggle_entity: input_boolean.dinner_party
+                  row_name: Dinner Party
+                  row_icon: mdi:party-popper
+            - !include
+                - /config/dashboards/modules/wall-panel-toggle-row.yaml
+                - toggle_entity: switch.bayberry_off_grid_operation
+                  row_name: Go Off Grid
+                  row_icon: mdi:transmission-tower-off
+                  confirm_text: Are you sure you want to go off grid?
+                  on_color: rgba(224,105,91,0.65)
+            # ---------------- Sections ----------------
+            - type: custom:bubble-card
+              card_type: separator
+              name: Sections
+              icon: mdi:view-grid-outline
+              rows: 0.75
+              modules:
+                - wall_panel_separator
+            # Each row deep-links to its mobile-dashboard settings pop-up
+            # (per the handoff: "wire each to its mobile-dashboard subview").
+            - type: custom:button-card
+              name: Home Modes
+              icon: mdi:home-heart
+              show_icon: true
+              tap_action:
+                action: navigate
+                navigation_path: "/mobile-dash/settings#set-home-modes"
+              styles: &section_row_styles
+                card:
+                  - background: var(--background-color-2)
+                  - border-radius: 20px
+                  - padding: 26px 24px
+                  - margin-top: 12px
+                  - transition: none
+                  - cursor: pointer
+                  - box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+                grid:
+                  - grid-template-areas: '"i n chev"'
+                  - grid-template-columns: auto 1fr auto
+                  - align-items: center
+                  - column-gap: 14px
+                img_cell:
+                  - grid-area: i
+                  - width: 36px
+                  - height: 36px
+                icon:
+                  - width: 32px
+                  - color: var(--primary-text-color)
+                name:
+                  - grid-area: n
+                  - justify-self: start
+                  - font-size: 24px
+                  - font-weight: 600
+                  - color: var(--primary-text-color)
+                custom_fields:
+                  chev:
+                    - grid-area: chev
+                    - justify-self: end
+              custom_fields:
+                chev: &section_row_chev |
+                  [[[ return '<ha-icon icon="mdi:chevron-right" style="width:34px;height:34px;color:var(--secondary-text-color);"></ha-icon>'; ]]]
+            - type: custom:button-card
+              name: Climate
+              icon: mdi:thermostat
+              show_icon: true
+              tap_action:
+                action: navigate
+                navigation_path: "/mobile-dash/settings#set-climate"
+              styles: *section_row_styles
+              custom_fields:
+                chev: *section_row_chev
+            - type: custom:button-card
+              name: Alarm
+              icon: mdi:shield-home
+              show_icon: true
+              tap_action:
+                action: navigate
+                navigation_path: "/mobile-dash/settings#set-alarm"
+              styles: *section_row_styles
+              custom_fields:
+                chev: *section_row_chev
+            - type: custom:button-card
+              name: Motion & Lights
+              icon: mdi:motion-sensor
+              show_icon: true
+              tap_action:
+                action: navigate
+                navigation_path: "/mobile-dash/settings#set-motion-lights"
+              styles: *section_row_styles
+              custom_fields:
+                chev: *section_row_chev
+            - type: custom:button-card
+              name: Energy & Grid
+              icon: mdi:transmission-tower
+              show_icon: true
+              tap_action:
+                action: navigate
+                navigation_path: "/mobile-dash/settings#set-energy"
+              styles: *section_row_styles
+              custom_fields:
+                chev: *section_row_chev
+            - type: custom:button-card
+              name: Shades
+              icon: mdi:roller-shade
+              show_icon: true
+              tap_action:
+                action: navigate
+                navigation_path: "/mobile-dash/settings#set-shades"
+              styles: *section_row_styles
+              custom_fields:
+                chev: *section_row_chev
+            - type: custom:button-card
+              name: Vacuum
+              icon: mdi:robot-vacuum
+              show_icon: true
+              tap_action:
+                action: navigate
+                navigation_path: "/mobile-dash/settings#set-vacuum"
+              styles: *section_row_styles
+              custom_fields:
+                chev: *section_row_chev
+            # ---------------- Maintenance ----------------
+            - type: custom:bubble-card
+              card_type: separator
+              name: Maintenance
+              icon: mdi:gauge
+              rows: 0.75
+              modules:
+                - wall_panel_separator
+            - type: custom:button-card
+              entity: number.bayberry_backup_reserve
+              name: Powerwall Reserve
+              icon: mdi:battery-charging-high
+              show_state: true
+              tap_action:
+                action: more-info
+              state_display: |
+                [[[ var v = parseFloat((states['number.bayberry_backup_reserve'] || {}).state);
+                    return isNaN(v) ? '—' : Math.round(v) + '%'; ]]]
+              styles: &value_row_styles
+                card:
+                  - background: var(--background-color-2)
+                  - border-radius: 20px
+                  - padding: 24px
+                  - margin-top: 12px
+                  - transition: none
+                  - box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+                grid:
+                  - grid-template-areas: '"i n st"'
+                  - grid-template-columns: auto 1fr auto
+                  - align-items: center
+                  - column-gap: 14px
+                img_cell:
+                  - grid-area: i
+                  - width: 34px
+                  - height: 34px
+                icon:
+                  - width: 30px
+                  - color: var(--slate-bright)
+                name:
+                  - grid-area: n
+                  - justify-self: start
+                  - font-size: 24px
+                  - font-weight: 600
+                  - color: var(--primary-text-color)
+                state:
+                  - grid-area: st
+                  - justify-self: end
+                  - font-size: 22px
+                  - font-weight: 700
+                  - color: |
+                      [[[ var v = parseFloat((states['number.bayberry_backup_reserve'] || {}).state);
+                          if (isNaN(v)) return 'var(--secondary-text-color)';
+                          if (v < 20) return 'var(--error-color)';
+                          if (v <= 30) return 'var(--gold-color)';
+                          return 'var(--sage-color)'; ]]]
+            - type: custom:button-card
+              entity: input_number.upper_floor_hvac_filter_hours
+              name: Upper HVAC Filter
+              icon: mdi:air-filter
+              show_state: true
+              tap_action:
+                action: more-info
+              state_display: |
+                [[[ var v = parseFloat((states['input_number.upper_floor_hvac_filter_hours'] || {}).state);
+                    return isNaN(v) ? '—' : Math.round(v).toLocaleString('en-US') + ' h'; ]]]
+              styles:
+                <<: *value_row_styles
+                state:
+                  - grid-area: st
+                  - justify-self: end
+                  - font-size: 22px
+                  - font-weight: 700
+                  - color: |
+                      [[[ var v = parseFloat((states['input_number.upper_floor_hvac_filter_hours'] || {}).state);
+                          return (!isNaN(v) && v > 1500) ? 'var(--gold-color)' : 'var(--sage-color)'; ]]]
+            - type: custom:button-card
+              entity: input_number.lower_floors_hvac_filter_hours
+              name: Lower HVAC Filter
+              icon: mdi:air-filter
+              show_state: true
+              tap_action:
+                action: more-info
+              state_display: |
+                [[[ var v = parseFloat((states['input_number.lower_floors_hvac_filter_hours'] || {}).state);
+                    return isNaN(v) ? '—' : Math.round(v).toLocaleString('en-US') + ' h'; ]]]
+              styles:
+                <<: *value_row_styles
+                state:
+                  - grid-area: st
+                  - justify-self: end
+                  - font-size: 22px
+                  - font-weight: 700
+                  - color: |
+                      [[[ var v = parseFloat((states['input_number.lower_floors_hvac_filter_hours'] || {}).state);
+                          return (!isNaN(v) && v > 1500) ? 'var(--gold-color)' : 'var(--sage-color)'; ]]]
+            - type: custom:button-card
+              entity: input_datetime.water_heater_last_flushed
+              name: Water Heater Flushed
+              icon: mdi:water-boiler
+              show_state: true
+              tap_action:
+                action: more-info
+              state_display: |
+                [[[ var e = states['input_datetime.water_heater_last_flushed'];
+                    if (!e || !e.state) return '—';
+                    var d = Math.floor((Date.now() - new Date(e.state).getTime()) / 86400000);
+                    return isNaN(d) ? '—' : d + ' d'; ]]]
+              styles:
+                <<: *value_row_styles
+                state:
+                  - grid-area: st
+                  - justify-self: end
+                  - font-size: 22px
+                  - font-weight: 700
+                  - color: |
+                      [[[ var e = states['input_datetime.water_heater_last_flushed'];
+                          if (!e || !e.state) return 'var(--secondary-text-color)';
+                          var d = Math.floor((Date.now() - new Date(e.state).getTime()) / 86400000);
+                          return (!isNaN(d) && d > 180) ? 'var(--gold-color)' : 'var(--sage-color)'; ]]]
+            - type: custom:button-card
+              entity: input_datetime.dryer_vent_last_cleaned
+              name: Dryer Vent Cleaned
+              icon: mdi:tumble-dryer
+              show_state: true
+              tap_action:
+                action: more-info
+              state_display: |
+                [[[ var e = states['input_datetime.dryer_vent_last_cleaned'];
+                    if (!e || !e.state) return '—';
+                    var d = Math.floor((Date.now() - new Date(e.state).getTime()) / 86400000);
+                    return isNaN(d) ? '—' : d + ' d'; ]]]
+              styles:
+                <<: *value_row_styles
+                state:
+                  - grid-area: st
+                  - justify-self: end
+                  - font-size: 22px
+                  - font-weight: 700
+                  - color: |
+                      [[[ var e = states['input_datetime.dryer_vent_last_cleaned'];
+                          if (!e || !e.state) return 'var(--secondary-text-color)';
+                          var d = Math.floor((Date.now() - new Date(e.state).getTime()) / 86400000);
+                          return (!isNaN(d) && d > 180) ? 'var(--gold-color)' : 'var(--sage-color)'; ]]]
+            # ---------------- Release Notes ----------------
+            - type: custom:bubble-card
+              card_type: separator
+              name: Release Notes
+              icon: mdi:note-text-outline
+              rows: 0.75
+              modules:
+                - wall_panel_separator
+            - type: markdown
+              content: |
+                <ha-icon icon="mdi:tablet-dashboard"></ha-icon> **Wall Panel v0.1 · basement**
+
+                - Initial release: Home, Shades, Lights, Climate, Music, Settings and Alarm views
+                - Adaptive Home: Now Playing while disarmed, disarm control while armed
+                - Shared entity rosters with the mobile dashboard (scenes, lights, shades, climate)
+                - Sized for the Raspberry Pi Touch Display 2 (720×1280 portrait, 10 mm touch targets)
+              card_mod:
+                style: |
+                  ha-card {
+                    background: var(--background-color-2);
+                    border-radius: 20px;
+                    padding: 10px 12px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+                    margin-top: 12px;
+                  }
+                  ha-markdown {
+                    color: #e4e6e9;
+                    font-size: 20px;
+                    line-height: 1.4;
+                  }
+                  ha-markdown ha-icon {
+                    color: var(--slate-bright);
+                    --mdc-icon-size: 30px;
+                  }
+                  ha-markdown strong {
+                    color: var(--primary-text-color);
+                    font-size: 24px;
+                    font-weight: 700;
+                  }
+                  ha-markdown li::marker {
+                    color: var(--accent-color);
+                  }
+  - !include
+      - /config/dashboards/modules/wall-panel-nav-menu.yaml
+      - current: settings

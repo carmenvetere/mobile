@@ -645,6 +645,12 @@ lovelace:
       icon: mdi:tablet-dashboard
       show_in_sidebar: true
       filename: dashboards/nspanel/nspanel.yaml
+    wall-panel-dash:
+      mode: yaml
+      title: "Wall Panel - YAML"
+      icon: mdi:wall
+      show_in_sidebar: true
+      filename: dashboards/wall-panel/wall-panel.yaml
   resources: 
     - url: /hacsfiles/lovelace-layout-card/layout-card.js
       type: module
