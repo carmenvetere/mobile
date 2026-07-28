@@ -377,6 +377,17 @@ input_boolean:
   basement_work_mode:
     name: Basement Work Mode
     icon: mdi:desk-lamp
+  # --- Basement overnight guests -------------------------------------------
+  # On while guests are sleeping in the basement. Overnight (20:00-08:00) the
+  # Basement HVAC Schedule holds a fixed 70 F instead of coasting on fresh air,
+  # and the economizer keeps the basement out of free cooling (no basement
+  # blower coast, no basement bathroom exhaust fan). CO2 flush and the
+  # first-floor / powder-room ventilation are unaffected. Surfaced under Quick
+  # Toggles only while Overnight Guests (guest_mode) is on. No `initial:` so it
+  # survives restarts; cleared automatically when guest_mode turns off.
+  basement_guests:
+    name: Guests in Basement
+    icon: mdi:bed-king-outline
   # --- Climate overhaul Phase 1: zone holds --------------------------------
   # Hold on = the zone schedule must not write that zone. Set by the door-open
   # automations, Away Mode Turns On, and Power Outage V2; cleared only by the

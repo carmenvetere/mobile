@@ -3697,6 +3697,13 @@
   - trigger: state
     entity_id:
     - switch.utility_room_ventilation_damper
+  # Overnight-guest fixed-temp hold: re-run at night start and whenever the
+  # basement-guests toggle flips, so 70 F applies / releases promptly.
+  - trigger: time
+    at: '20:00:00'
+  - trigger: state
+    entity_id:
+    - input_boolean.basement_guests
   - trigger: time
     at: '08:00:00'
   - trigger: time
@@ -3755,6 +3762,42 @@
         state: 'off'
       sequence:
       - choose:
+        # Overnight guests: hold a fixed 70 F (mechanical cool) instead of
+        # coasting on fresh air, so the basement stays quiet and steady all
+        # night. Highest priority; only 20:00-08:00 so days run normally (#guest).
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.basement_guests
+            state: 'on'
+          - condition: time
+            after: '20:00:00'
+            before: '08:00:00'
+          sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: cool
+            target:
+              entity_id: climate.basement_thermostat_homekit
+          - action: climate.set_temperature
+            data:
+              temperature: 70
+            target:
+              entity_id: climate.basement_thermostat_homekit
+          - if:
+            - condition: template
+              value_template: '{{ states(''input_select.basement_fan_owner'')
+                in [''none'', ''schedule''] }}'
+            then:
+            - action: climate.set_fan_mode
+              data:
+                fan_mode: auto
+              target:
+                entity_id: climate.basement_thermostat
+            - action: input_select.select_option
+              target:
+                entity_id: input_select.basement_fan_owner
+              data:
+                option: none
         - conditions:
           - condition: state
             entity_id: input_boolean.basement_hvac_fresh_air_available
@@ -5983,6 +6026,12 @@
   - trigger: time_pattern
     hours: /1
     id: hourly
+  # Re-evaluate immediately when overnight-guest mode flips, so the basement
+  # free-cool blower / bathroom exhaust fan are released without waiting.
+  - trigger: state
+    entity_id:
+    - input_boolean.basement_guests
+    id: basement_guests
   - trigger: time
     at: '20:00:00'
     id: precool_start
@@ -6109,7 +6158,8 @@
       overnight_fan: '{{ now().hour >= 22 or now().hour < 8 }}'
       freecool_window: '{{ overnight_fan or evening_precool }}'
       z1_cool_ok: '{{ z1 > z1_min and outdoor < (z1 - diff) }}'
-      z2_cool_ok: '{{ z2 > z2_min and outdoor < (z2 - diff) }}'
+      z2_cool_ok: '{{ z2 > z2_min and outdoor < (z2 - diff) and not is_state(''input_boolean.basement_guests'',
+        ''on'') }}'
       freecool_demand: '{{ dry_ok and freecool_window and (z1_cool_ok or z2_cool_ok)
         }}'
       runtime_24h_min: '{{ states(''sensor.fresh_air_damper_on_24_h'') | float(0)
@@ -8394,3 +8444,25 @@
             when_relative: true
             notification_icon: mdi:washing-machine
             notification_icon_color: '#2196F3'
+- id: '1768500000004'
+  alias: Basement Guests - Clear on Guest Mode Off
+  description: >-
+    Safety: when Overnight Guests (guest_mode) turns off, also clear the
+    Guests-in-Basement flag so the overnight 70 F hold / fan suppression can't
+    linger after the guests have gone (the toggle is hidden while guest_mode is
+    off).
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.guest_mode
+    from: 'on'
+    to: 'off'
+  conditions:
+  - condition: state
+    entity_id: input_boolean.basement_guests
+    state: 'on'
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.basement_guests
+  mode: single
