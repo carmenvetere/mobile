@@ -1119,7 +1119,7 @@ cards:
             icon: mdi:cellphone
             tap_action:
               action: none
-            state_display: v2.2.1
+            state_display: v2.2.2
             styles:
               card:
               - background: transparent !important
@@ -1151,6 +1151,13 @@ cards:
           cards:
             - type: markdown
               content: |
+                **v2.2.2** — 2026-07-29
+
+                - Scenes: Nightlight updated — the stairs spot lights now stay off and the office desk shelf light (Eve strip) sits a touch dimmer; the Nightlight scene indicator was retuned to match, so the dashboard stops showing the scene as inactive while it's running
+                - iOS Live Activities: new standalone Washer and Dryer cards — each drives its own notification instead of the shared push script, and the countdown now targets an absolute finish time so the Lock Screen / Dynamic Island timer counts down correctly instead of drifting. Washer shows run state alongside % complete; Dryer is the matching card built on the dryer run-state, progress and remaining-time sensors
+                - Pool: the heater no longer bumps the filter pump to high speed the instant it fires — it waits until the heat pump has been running 2 minutes, giving the pump time to finish priming before the speed change
+                - Basement: with Overnight Guests and Guests in Basement both on, the basement motion lights automations switch off between 8 PM and 8 AM so a guest moving around downstairs doesn't trip the lights on; they're restored at 8 AM or as soon as either toggle clears, and a manual Gym Motion Lights toggle is never overridden
+
                 **v2.2.1** — 2026-07-16
 
                 - Scenes: Evening scenes (First Floor / Basement Evening, Welcome, Entertaining, Movie) now surface by 5 PM in summer instead of waiting for the sun to drop low; winter behavior is unchanged

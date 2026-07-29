@@ -8435,3 +8435,62 @@
       ['unavailable','unknown','', none] and ':' in c %}\n  {% set p = c.split(':')
       | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60 + p[2])
       | int }}\n{% else %}{{ now().timestamp() | int }}{% endif %}"
+- id: '1785407400000'
+  alias: Basement Guests - Suspend Motion Lights Overnight
+  description: 'Overnight guests sleeping in the basement: while Overnight Guests
+    (guest_mode) and Guests in Basement (basement_guests) are both on, switch the
+    basement motion-lights automations off between 20:00 and 08:00 so a guest moving
+    around downstairs no longer trips the lights on. Mirrors the overnight window
+    the Basement HVAC Schedule already uses for basement_guests. Restores them at
+    08:00, or as soon as either flag clears - but only if this automation was the
+    one that switched them off (input_boolean.basement_motion_suspended), so a manual
+    Settings toggle is never overridden. Also re-evaluates on HA restart.'
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.guest_mode
+    - input_boolean.basement_guests
+  - trigger: time
+    at: '20:00:00'
+  - trigger: time
+    at: 08:00:00
+  - trigger: homeassistant
+    event: start
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.basement_guests
+        state: 'on'
+      - condition: time
+        after: '20:00:00'
+        before: 08:00:00
+      sequence:
+      - action: automation.turn_off
+        target:
+          entity_id:
+          - automation.gym_motion_sensor
+          - automation.gym_motion_after_sunset
+        data:
+          stop_actions: true
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.basement_motion_suspended
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.basement_motion_suspended
+        state: 'on'
+      sequence:
+      - action: automation.turn_on
+        target:
+          entity_id:
+          - automation.gym_motion_sensor
+          - automation.gym_motion_after_sunset
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.basement_motion_suspended
+  mode: single
