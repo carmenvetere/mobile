@@ -897,36 +897,33 @@
     light.stairs_spot_lights:
       supported_color_modes:
       - brightness
-      color_mode: brightness
-      brightness: 25
+      color_mode:
+      brightness:
       device_id: '56'
       zone_id: '35'
       friendly_name: Stairs Spot Lights
       supported_features: 32
-      state: 'on'
+      state: 'off'
     light.eve_light_strip_a5a4:
       min_color_temp_kelvin: 2000
       max_color_temp_kelvin: 10000
-      min_mireds: 100
-      max_mireds: 500
       supported_color_modes:
       - color_temp
       - hs
       color_mode: hs
-      brightness: 12.75
+      brightness: 10.2
       color_temp_kelvin:
-      color_temp:
       hs_color:
-      - 27.1
-      - 42.4
+      - 27
+      - 42
       rgb_color:
       - 255
       - 196
-      - 147
+      - 148
       xy_color:
-      - 0.445
-      - 0.372
-      friendly_name: Eve Light Strip A5A4
+      - 0.444
+      - 0.371
+      friendly_name: Office Desk Shelf Light
       supported_features: 0
       state: 'on'
   icon: mdi:lightbulb-night-outline

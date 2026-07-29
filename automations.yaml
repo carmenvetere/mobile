@@ -1,8 +1,8 @@
 - id: '1719944318488'
   alias: 800am Bedroom Hallway Shades Weekdays
-  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
-    owns these covers (this legacy automation double-commanded them and fought
-    the adaptive 30-min repositioning).'
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which owns
+    these covers (this legacy automation double-commanded them and fought the adaptive
+    30-min repositioning).'
   initial_state: false
   triggers:
   - at: 08:00:00
@@ -94,9 +94,9 @@
   mode: single
 - id: '1720361385868'
   alias: 900am Bedroom Shades Open Weekends
-  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
-    owns these covers (this legacy automation double-commanded them and fought
-    the adaptive 30-min repositioning).'
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which owns
+    these covers (this legacy automation double-commanded them and fought the adaptive
+    30-min repositioning).'
   initial_state: false
   triggers:
   - at: 09:00:00
@@ -380,9 +380,9 @@
   mode: single
 - id: '1720885648555'
   alias: 7:30 AM First Floor Shading (Weekdays)
-  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
-    owns these covers (this legacy automation double-commanded them and fought
-    the adaptive 30-min repositioning).'
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which owns
+    these covers (this legacy automation double-commanded them and fought the adaptive
+    30-min repositioning).'
   initial_state: false
   triggers:
   - at: 07:30:00
@@ -427,9 +427,9 @@
   mode: single
 - id: '1720886238193'
   alias: 8:00 AM First Floor Shades Weekends
-  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
-    owns these covers (this legacy automation double-commanded them and fought
-    the adaptive 30-min repositioning).'
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which owns
+    these covers (this legacy automation double-commanded them and fought the adaptive
+    30-min repositioning).'
   initial_state: false
   triggers:
   - at: 08:00:00
@@ -471,9 +471,9 @@
   mode: single
 - id: '1720886464526'
   alias: 1:00 PM West Facing Shades
-  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
-    owns these covers (this legacy automation double-commanded them and fought
-    the adaptive 30-min repositioning).'
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which owns
+    these covers (this legacy automation double-commanded them and fought the adaptive
+    30-min repositioning).'
   initial_state: false
   triggers:
   - at: '13:00:00'
@@ -525,9 +525,9 @@
   mode: single
 - id: '1720886619614'
   alias: 3:00 PM Living Room Side Shades
-  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
-    owns these covers (this legacy automation double-commanded them and fought
-    the adaptive 30-min repositioning).'
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which owns
+    these covers (this legacy automation double-commanded them and fought the adaptive
+    30-min repositioning).'
   initial_state: false
   triggers:
   - at: '15:00:00'
@@ -622,10 +622,10 @@
   mode: single
 - id: '1727728973670'
   alias: Daily Restart
-  description: 'Disabled: kept for reference. Setpoint helpers no longer use
-    initial:, so restarts are not needed to keep them in sync, and routine
-    restarts cost a full startup daily. Re-enable only if HA demonstrably
-    degrades over time (check memory/recorder growth first).'
+  description: 'Disabled: kept for reference. Setpoint helpers no longer use initial:,
+    so restarts are not needed to keep them in sync, and routine restarts cost a full
+    startup daily. Re-enable only if HA demonstrably degrades over time (check memory/recorder
+    growth first).'
   initial_state: false
   triggers:
   - at: 03:15:00
@@ -1019,11 +1019,11 @@
   mode: single
 - id: '1733850402691'
   alias: Powerwall - 20%
-  description: 'Notifies when the Powerwall drops below 20% during a grid outage.
-    The discharge-time countdown is parsed with as_timedelta and simply omitted
-    when sensor.powerwall_discharge_time is unavailable or malformed (the old
-    double split('':'') parsing crashed the whole notification on bad input).
-    Includes heat-specific advice when the living room thermostat is heating.'
+  description: Notifies when the Powerwall drops below 20% during a grid outage. The
+    discharge-time countdown is parsed with as_timedelta and simply omitted when sensor.powerwall_discharge_time
+    is unavailable or malformed (the old double split(':') parsing crashed the whole
+    notification on bad input). Includes heat-specific advice when the living room
+    thermostat is heating.
   triggers:
   - trigger: numeric_state
     entity_id:
@@ -1041,10 +1041,10 @@
         %}Powerwall is at 20% charge. It will enter standby mode and stop providing
         power to the house when it reaches 10%.{% if td is not none %} It will be
         completely discharged in {{ td.days * 24 + td.seconds // 3600 }} hours and
-        {{ (td.seconds % 3600) // 60 }} minutes.{% endif %} Reduce energy usage
-        immediately. Consider turning off the breaker for the water heater{% if
-        states(''climate.living_room_thermostat'') == ''heat'' %} and turning off
-        the heat in unused parts of the house{% endif %}.'
+        {{ (td.seconds % 3600) // 60 }} minutes.{% endif %} Reduce energy usage immediately.
+        Consider turning off the breaker for the water heater{% if states(''climate.living_room_thermostat'')
+        == ''heat'' %} and turning off the heat in unused parts of the house{% endif
+        %}.'
   mode: single
 - id: '1733850740208'
   alias: Powerwall - 12%
@@ -1297,18 +1297,17 @@
       auto_mode: queued
 - id: '1734892746784'
   alias: Away Mode Turns On
-  description: 'Puts all four HVAC zones into away state: turns on the four
-    climate_hold_* booleans (the zone schedules skip while held - no schedules
-    are disabled anymore), sets Lyric preset PermanentHold on the four NATIVE
-    thermostat entities (presets live on the native integration, not the HomeKit
-    mirrors), and applies the season-aware away setpoint
-    (input_number.away_heat_setpoint when heating_season is on, else
-    input_number.away_cool_setpoint) to each zone''s usual setpoint target
-    (HomeKit mirror for LR/basement/office, native for the bedroom). Also
-    disables the evening lights automation (lights, not climate - restored by
-    Away Mode Turns Off). Away holds are cleared ONLY by Away Mode Turns Off;
-    the Climate Hold Watchdog will not clear a hold while away_mode is on. Hold
-    precedence: power_outage > away > door_open.'
+  description: 'Puts all four HVAC zones into away state: turns on the four climate_hold_*
+    booleans (the zone schedules skip while held - no schedules are disabled anymore),
+    sets Lyric preset PermanentHold on the four NATIVE thermostat entities (presets
+    live on the native integration, not the HomeKit mirrors), and applies the season-aware
+    away setpoint (input_number.away_heat_setpoint when heating_season is on, else
+    input_number.away_cool_setpoint) to each zone''s usual setpoint target (HomeKit
+    mirror for LR/basement/office, native for the bedroom). Also disables the evening
+    lights automation (lights, not climate - restored by Away Mode Turns Off). Away
+    holds are cleared ONLY by Away Mode Turns Off; the Climate Hold Watchdog will
+    not clear a hold while away_mode is on. Hold precedence: power_outage > away >
+    door_open.'
   triggers:
   - trigger: state
     entity_id:
@@ -1340,8 +1339,7 @@
     then:
     - action: climate.set_temperature
       data:
-        temperature: '{{ states(''input_number.away_heat_setpoint'') | float(62)
-          }}'
+        temperature: '{{ states(''input_number.away_heat_setpoint'') | float(62) }}'
       target:
         entity_id:
         - climate.living_room_thermostat_homekit
@@ -1351,8 +1349,7 @@
     else:
     - action: climate.set_temperature
       data:
-        temperature: '{{ states(''input_number.away_cool_setpoint'') | float(78)
-          }}'
+        temperature: '{{ states(''input_number.away_cool_setpoint'') | float(78) }}'
       target:
         entity_id:
         - climate.living_room_thermostat_homekit
@@ -1368,14 +1365,14 @@
   mode: single
 - id: '1734893403809'
   alias: Away Mode Turns Off
-  description: 'Restores the four HVAC zones from away state: sets Lyric preset
-    NoHold on the four NATIVE thermostat entities, clears each zone''s
-    climate_hold_* boolean ONLY if no other hold cause remains (per-zone: doors
-    closed where the zone has a door cause, grid up - precedence power_outage >
-    away > door_open), then triggers all four zone schedules WITHOUT
-    skip_condition so still-held zones stay paused and released zones snap to the
-    correct current-period setpoint. Also re-enables + triggers the evening
-    lights automation and takes the water heater out of away mode.'
+  description: 'Restores the four HVAC zones from away state: sets Lyric preset NoHold
+    on the four NATIVE thermostat entities, clears each zone''s climate_hold_* boolean
+    ONLY if no other hold cause remains (per-zone: doors closed where the zone has
+    a door cause, grid up - precedence power_outage > away > door_open), then triggers
+    all four zone schedules WITHOUT skip_condition so still-held zones stay paused
+    and released zones snap to the correct current-period setpoint. Also re-enables
+    + triggers the evening lights automation and takes the water heater out of away
+    mode.'
   triggers:
   - trigger: state
     entity_id:
@@ -1799,14 +1796,14 @@
   alias: First Floor Doors Left Open - Climate Off
   description: 'Pauses living-room climate when any first-floor exterior door (group
     binary_sensor.first_floor_exterior_doors) stays open more than 5 minutes: stores
-    the current HVAC mode in input_select.living_thermostat_last_hvac_mode (only
-    if no hold is already active, so an existing away/outage hold is never overwritten),
+    the current HVAC mode in input_select.living_thermostat_last_hvac_mode (only if
+    no hold is already active, so an existing away/outage hold is never overwritten),
     turns on input_boolean.climate_hold_living_room (which blocks the LR schedule
     via its hold condition), and sets the zone off on the HomeKit mirror. Sends one
-    reminder notification if the doors stay open 65 minutes. Restore is owned by
-    "First Floor Doors Closed - Restore Climate" and the Climate Hold Watchdog;
-    hold precedence power_outage > away > door_open is enforced at clear time. No
-    wait/timeout here by design - the old in-flight wait died on HA restarts.'
+    reminder notification if the doors stay open 65 minutes. Restore is owned by "First
+    Floor Doors Closed - Restore Climate" and the Climate Hold Watchdog; hold precedence
+    power_outage > away > door_open is enforced at clear time. No wait/timeout here
+    by design - the old in-flight wait died on HA restarts.'
   triggers:
   - trigger: state
     entity_id:
@@ -1886,8 +1883,8 @@
       - action: notify.notify
         data:
           title: Doors Still Open
-          message: First-floor doors open for 1 h; living-room climate is paused
-            until they close.
+          message: First-floor doors open for 1 h; living-room climate is paused until
+            they close.
   mode: single
 - id: '1739720362966'
   alias: Mudroom Door Left Open - Climate Off
@@ -1896,9 +1893,9 @@
     input_select.basement_thermostat_last_hvac_mode (only if no hold is already active),
     turns on input_boolean.climate_hold_basement (which blocks the basement schedule
     via its hold condition), and sets the zone off on the HomeKit mirror. Sends one
-    reminder notification if the door stays open 65 minutes. Restore is owned by
-    "Mudroom Door Closed - Restore Climate" and the Climate Hold Watchdog; hold
-    precedence power_outage > away > door_open is enforced at clear time.'
+    reminder notification if the door stays open 65 minutes. Restore is owned by "Mudroom
+    Door Closed - Restore Climate" and the Climate Hold Watchdog; hold precedence
+    power_outage > away > door_open is enforced at clear time.'
   triggers:
   - trigger: state
     entity_id:
@@ -2012,7 +2009,7 @@
   - action: alarm_control_panel.alarm_disarm
     metadata: {}
     data:
-      code: "{{ states('input_text.alarm_code') }}"
+      code: '{{ states(''input_text.alarm_code'') }}'
     target:
       entity_id:
       - alarm_control_panel.alarmo
@@ -2079,7 +2076,7 @@
   - action: alarm_control_panel.alarm_disarm
     metadata: {}
     data:
-      code: "{{ states('input_text.alarm_code') }}"
+      code: '{{ states(''input_text.alarm_code'') }}'
     target:
       entity_id: alarm_control_panel.alarmo
   mode: single
@@ -2269,7 +2266,7 @@
     - binary_sensor.pool_cover
     from:
     to:
-    for: '00:00:30'
+    for: 00:00:30
   conditions: []
   actions:
   - action: llmvision.data_analyzer
@@ -2588,18 +2585,17 @@
   mode: single
 - id: '1749486825499'
   alias: Power Outage V2
-  description: 'Grid down (Powerwall islanding): notifies, turns on the four
-    climate_hold_* booleans (the zone schedules skip while held - schedules are
-    no longer disabled/enabled), sets outage lighting scenes, announces on
-    speakers (07:00-22:00), then sheds HVAC per zone: captures the current mode
-    into the input_select.*_last_hvac_mode helpers (options Cool/Off/Heat -
-    Power Returns V2 compares against these exact strings), turns cooling zones
-    off, drops heating zones to 62F with emergency (resistance-free) heat
-    enabled. Outage holds are cleared ONLY by Power Returns V2 (or the Climate
-    Hold Watchdog once the grid is back); precedence power_outage > away >
-    door_open. The four tail device-action blocks (load-shed switches + button)
-    still use device_id targets - resolve them to entity_ids against the live
-    registry (Phase 5) before touching them.'
+  description: 'Grid down (Powerwall islanding): notifies, turns on the four climate_hold_*
+    booleans (the zone schedules skip while held - schedules are no longer disabled/enabled),
+    sets outage lighting scenes, announces on speakers (07:00-22:00), then sheds HVAC
+    per zone: captures the current mode into the input_select.*_last_hvac_mode helpers
+    (options Cool/Off/Heat - Power Returns V2 compares against these exact strings),
+    turns cooling zones off, drops heating zones to 62F with emergency (resistance-free)
+    heat enabled. Outage holds are cleared ONLY by Power Returns V2 (or the Climate
+    Hold Watchdog once the grid is back); precedence power_outage > away > door_open.
+    The four tail device-action blocks (load-shed switches + button) still use device_id
+    targets - resolve them to entity_ids against the live registry (Phase 5) before
+    touching them.'
   triggers:
   - trigger: state
     entity_id:
@@ -2931,8 +2927,6 @@
         target:
           entity_id:
           - switch.master_bedroom_thermostat_master_bedroom_emergency_heat
-  # Load shed (device_id blocks resolved to entity_ids 2026-07-09, #144):
-  # pause irrigation, then cut the pool filter, dryer, and washer.
   - action: switch.turn_on
     continue_on_error: true
     target:
@@ -2945,8 +2939,6 @@
     continue_on_error: true
     target:
       entity_id: switch.dryer_power
-  # Was a device button press on the washer; per the 2026-07-09 device
-  # audit the intended action is powering the washer off.
   - action: switch.turn_off
     continue_on_error: true
     target:
@@ -2954,30 +2946,26 @@
   mode: restart
 - id: '1749498392865'
   alias: Office Thermostat Schedule V2
-  description: 'Office / guest-room zone schedule. Periods: day 07:00-17:00,
-    evening 17:00-21:00, night 21:00-07:00. Occupied = guest_mode on during
-    day/evening, or guest_mode off on a weekday day (work-from-office hours).
-    Setpoints come from the input_number.office_* helpers: heat 68 occupied / 65
-    unoccupied; cool 72 occupied / 73.5 unoccupied / 68 on guest-mode nights
-    (defaults shown). Only acts when the thermostat is already in heat or cool
-    (dispatch on current mode; never changes mode); writes setpoints to the
-    HomeKit mirror. Lyric room-priority switches preserved from the pre-refactor
-    logic: guest_mode off = office priority only; guest_mode on = guest-room
-    priorities (office priority off), EXCEPT weekday day with guests when all
-    three priorities are on. No fan writes. Skips entirely while
-    input_boolean.climate_hold_office is on (away / power outage - see Climate
-    Hold Watchdog). Re-syncs on HA start (60 s settle) and at 20:02 after the
-    utility demand-response window. Grid-return re-sync is owned by Power Returns
-    V2, not this schedule.'
+  description: 'Office / guest-room zone schedule. Periods: day 07:00-17:00, evening
+    17:00-21:00, night 21:00-07:00. Occupied = guest_mode on during day/evening, or
+    guest_mode off on a weekday day (work-from-office hours). Setpoints come from
+    the input_number.office_* helpers: heat 68 occupied / 65 unoccupied; cool 72 occupied
+    / 73.5 unoccupied / 68 on guest-mode nights (defaults shown). Only acts when the
+    thermostat is already in heat or cool (dispatch on current mode; never changes
+    mode); writes setpoints to the HomeKit mirror. Lyric room-priority switches preserved
+    from the pre-refactor logic: guest_mode off = office priority only; guest_mode
+    on = guest-room priorities (office priority off), EXCEPT weekday day with guests
+    when all three priorities are on. No fan writes. Skips entirely while input_boolean.climate_hold_office
+    is on (away / power outage - see Climate Hold Watchdog). Re-syncs on HA start
+    (60 s settle) and at 20:02 after the utility demand-response window. Grid-return
+    re-sync is owned by Power Returns V2, not this schedule.'
   triggers:
   - trigger: time
-    at: '07:00:00'
+    at: 07:00:00
   - trigger: time
     at: '17:00:00'
   - trigger: time
     at: '21:00:00'
-  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
-  # so zone setpoints return to schedule the moment the event actually clears.
   - trigger: state
     entity_id:
     - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
@@ -3000,18 +2988,32 @@
   - variables:
       is_weekday: '{{ now().isoweekday() <= 5 }}'
       hr: '{{ now().hour + now().minute / 60 }}'
-      period: "{% if 7 <= hr < 17 %}day\n{% elif 17 <= hr < 21 %}evening\n{% else\
-        \ %}night\n{% endif %}"
+      period: '{% if 7 <= hr < 17 %}day
+
+        {% elif 17 <= hr < 21 %}evening
+
+        {% else %}night
+
+        {% endif %}'
       guest: '{{ is_state(''input_boolean.guest_mode'', ''on'') }}'
       occupied: '{{ (guest and period in [''day'', ''evening'']) or (not guest and
         is_weekday and period == ''day'') }}'
-      heat_target: "{% if occupied %}{{ states('input_number.office_heat_occupied')\
-        \ | float(68) }}\n{% else %}{{ states('input_number.office_heat_unoccupied')\
-        \ | float(65) }}\n{% endif %}"
-      cool_target: "{% if occupied %}{{ states('input_number.office_cool_occupied')\
-        \ | float(72) }}\n{% elif guest and period == 'night' %}{{ states('input_number.office_cool_guest_night')\
-        \ | float(68) }}\n{% else %}{{ states('input_number.office_cool_unoccupied')\
-        \ | float(73.5) }}\n{% endif %}"
+      heat_target: '{% if occupied %}{{ states(''input_number.office_heat_occupied'')
+        | float(68) }}
+
+        {% else %}{{ states(''input_number.office_heat_unoccupied'') | float(65) }}
+
+        {% endif %}'
+      cool_target: '{% if occupied %}{{ states(''input_number.office_cool_occupied'')
+        | float(72) }}
+
+        {% elif guest and period == ''night'' %}{{ states(''input_number.office_cool_guest_night'')
+        | float(68) }}
+
+        {% else %}{{ states(''input_number.office_cool_unoccupied'') | float(73.5)
+        }}
+
+        {% endif %}'
   - if:
     - condition: state
       entity_id: climate.office_thermostat_homekit
@@ -3083,30 +3085,27 @@
 - id: '1749500468903'
   alias: Bedroom HVAC Schedule
   description: 'Master bedroom zone schedule. Periods - weekday: morning 07:00-09:00,
-    day 09:00-19:30, night 19:30-07:00; weekend: morning 08:00-10:00, day
-    10:00-19:30, night 19:30-07:00 (07:00-08:00 weekend deliberately writes
-    nothing, matching the pre-refactor behavior). Setpoints come from the
-    input_number.br_* helpers (heat: morning 68 / weekday day 66 / weekend day 68
-    / night 65; cool: morning 72 / day 73.5 / night 68 defaults). Only acts when
-    the thermostat is already in heat or cool (dispatch on current mode; never
-    changes mode) and writes setpoints to climate.bedroom_thermostat. No fan
-    writes. Skips entirely while input_boolean.climate_hold_bedroom is on (away /
-    power outage - see Climate Hold Watchdog). Re-syncs on HA start (60 s settle)
+    day 09:00-19:30, night 19:30-07:00; weekend: morning 08:00-10:00, day 10:00-19:30,
+    night 19:30-07:00 (07:00-08:00 weekend deliberately writes nothing, matching the
+    pre-refactor behavior). Setpoints come from the input_number.br_* helpers (heat:
+    morning 68 / weekday day 66 / weekend day 68 / night 65; cool: morning 72 / day
+    73.5 / night 68 defaults). Only acts when the thermostat is already in heat or
+    cool (dispatch on current mode; never changes mode) and writes setpoints to climate.bedroom_thermostat.
+    No fan writes. Skips entirely while input_boolean.climate_hold_bedroom is on (away
+    / power outage - see Climate Hold Watchdog). Re-syncs on HA start (60 s settle)
     and at 20:02 after the utility demand-response window. Grid-return re-sync is
     owned by Power Returns V2, not this schedule.'
   triggers:
   - trigger: time
-    at: '07:00:00'
+    at: 07:00:00
   - trigger: time
-    at: '08:00:00'
+    at: 08:00:00
   - trigger: time
-    at: '09:00:00'
+    at: 09:00:00
   - trigger: time
     at: '10:00:00'
   - trigger: time
     at: '19:30:00'
-  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
-  # so zone setpoints return to schedule the moment the event actually clears.
   - trigger: state
     entity_id:
     - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
@@ -3129,19 +3128,31 @@
   - variables:
       is_weekday: '{{ now().isoweekday() <= 5 }}'
       hr: '{{ now().hour + now().minute / 60 }}'
-      period: "{% if is_weekday %}\n  {% if 7 <= hr < 9 %}morning\n  {% elif 9 <=\
-        \ hr < 19.5 %}day\n  {% else %}night\n  {% endif %}\n{% else %}\n  {% if\
-        \ 8 <= hr < 10 %}morning\n  {% elif 10 <= hr < 19.5 %}day\n  {% elif hr >=\
-        \ 19.5 or hr < 7 %}night\n  {% else %}none\n  {% endif %}\n{% endif %}"
-      heat_target: "{% if period == 'morning' %}{{ states('input_number.br_heat_morning')\
-        \ | float(68) }}\n{% elif period == 'day' and is_weekday %}{{ states('input_number.br_heat_day_weekday')\
-        \ | float(66) }}\n{% elif period == 'day' %}{{ states('input_number.br_heat_day_weekend')\
-        \ | float(68) }}\n{% else %}{{ states('input_number.br_heat_night') | float(65)\
-        \ }}\n{% endif %}"
-      cool_target: "{% if period == 'morning' %}{{ states('input_number.br_cool_morning')\
-        \ | float(72) }}\n{% elif period == 'day' %}{{ states('input_number.br_cool_day')\
-        \ | float(73.5) }}\n{% else %}{{ states('input_number.br_cool_night') |\
-        \ float(68) }}\n{% endif %}"
+      period: "{% if is_weekday %}\n  {% if 7 <= hr < 9 %}morning\n  {% elif 9 <=
+        hr < 19.5 %}day\n  {% else %}night\n  {% endif %}\n{% else %}\n  {% if 8 <=
+        hr < 10 %}morning\n  {% elif 10 <= hr < 19.5 %}day\n  {% elif hr >= 19.5 or
+        hr < 7 %}night\n  {% else %}none\n  {% endif %}\n{% endif %}"
+      heat_target: '{% if period == ''morning'' %}{{ states(''input_number.br_heat_morning'')
+        | float(68) }}
+
+        {% elif period == ''day'' and is_weekday %}{{ states(''input_number.br_heat_day_weekday'')
+        | float(66) }}
+
+        {% elif period == ''day'' %}{{ states(''input_number.br_heat_day_weekend'')
+        | float(68) }}
+
+        {% else %}{{ states(''input_number.br_heat_night'') | float(65) }}
+
+        {% endif %}'
+      cool_target: '{% if period == ''morning'' %}{{ states(''input_number.br_cool_morning'')
+        | float(72) }}
+
+        {% elif period == ''day'' %}{{ states(''input_number.br_cool_day'') | float(73.5)
+        }}
+
+        {% else %}{{ states(''input_number.br_cool_night'') | float(68) }}
+
+        {% endif %}'
   - choose:
     - conditions:
       - condition: template
@@ -3171,14 +3182,14 @@
 - id: '1749504893942'
   alias: Power Returns V2
   description: 'Grid back for 5 minutes: notifies, restores each zone''s HVAC mode
-    from the input_select.*_last_hvac_mode helpers captured by Power Outage V2
-    (comparing the exact option strings Cool/Off/Heat - previously two of three
-    branches compared lowercase and never matched), restores evening scenes when
-    appropriate, then clears each zone''s climate_hold_* boolean ONLY if no other
-    hold cause remains (per-zone: doors closed where the zone has a door cause,
-    away_mode off - precedence power_outage > away > door_open) and triggers that
-    zone''s schedule WITHOUT skip_condition so released zones snap to the correct
-    current-period setpoint while still-held zones stay paused.'
+    from the input_select.*_last_hvac_mode helpers captured by Power Outage V2 (comparing
+    the exact option strings Cool/Off/Heat - previously two of three branches compared
+    lowercase and never matched), restores evening scenes when appropriate, then clears
+    each zone''s climate_hold_* boolean ONLY if no other hold cause remains (per-zone:
+    doors closed where the zone has a door cause, away_mode off - precedence power_outage
+    > away > door_open) and triggers that zone''s schedule WITHOUT skip_condition
+    so released zones snap to the correct current-period setpoint while still-held
+    zones stay paused.'
   triggers:
   - trigger: state
     entity_id:
@@ -3383,8 +3394,6 @@
           entity_id:
           - switch.basement_thermostat_basement_emergency_heat
         enabled: false
-  # Rachio out of standby on power return; left disabled on purpose
-  # (resolved from device_id 2026-07-09, #144).
   - action: switch.turn_off
     target:
       entity_id: switch.rachio_c3e715_standby
@@ -3670,48 +3679,40 @@
       time_before_long_press: 2
 - id: '1750804925752'
   alias: Basement HVAC Schedule
-  description: 'Basement zone schedule. Cooling season (heating_season off), day
-    = 08:00-20:00 / night = 20:00-08:00: when fresh air is available and the zone
-    is inside the comfort band, coasts with HVAC off + blower on to circulate
-    economizer air; above the band it returns to mechanical cooling. Heating
-    season: weekday 08:00-17:00 runs emergency heat (switch on, 1 min settle,
-    setpoint) at the workday setpoint; weekday evening/night and weekends run
-    normal heat with emergency heat off (sequencing and 1-min delays preserved
-    deliberately - do not "optimize"). All setpoints come from the
-    input_number.bsmt_* helpers (day cool 72 / night cool 74 / fresh-air night
-    cool 73.5 / workday heat 69 / evening+weekend-day heat 68 / night heat 66
-    defaults). Writes mode+setpoint to the HomeKit mirror and fan_mode to the
-    native Lyric entity. Fan writes are owner-aware at the lowest priority
-    (input_select.basement_fan_owner: only touch when none/schedule, claim
-    schedule for fan-on, release to none for auto). Skips entirely while
-    input_boolean.climate_hold_basement is on (mudroom door / away / outage).
-    Re-syncs on HA start (60 s settle), at 20:02 post-demand-response, and when
-    the zone runs above either cool band edge for 5 min.'
+  description: 'Basement zone schedule. Cooling season (heating_season off), day =
+    08:00-20:00 / night = 20:00-08:00: when fresh air is available and the zone is
+    inside the comfort band, coasts with HVAC off + blower on to circulate economizer
+    air; above the band it returns to mechanical cooling. Heating season: weekday
+    08:00-17:00 runs emergency heat (switch on, 1 min settle, setpoint) at the workday
+    setpoint; weekday evening/night and weekends run normal heat with emergency heat
+    off (sequencing and 1-min delays preserved deliberately - do not "optimize").
+    All setpoints come from the input_number.bsmt_* helpers (day cool 72 / night cool
+    74 / fresh-air night cool 73.5 / workday heat 69 / evening+weekend-day heat 68
+    / night heat 66 defaults). Writes mode+setpoint to the HomeKit mirror and fan_mode
+    to the native Lyric entity. Fan writes are owner-aware at the lowest priority
+    (input_select.basement_fan_owner: only touch when none/schedule, claim schedule
+    for fan-on, release to none for auto). Skips entirely while input_boolean.climate_hold_basement
+    is on (mudroom door / away / outage). Re-syncs on HA start (60 s settle), at 20:02
+    post-demand-response, and when the zone runs above either cool band edge for 5
+    min.'
   triggers:
   - trigger: state
     entity_id:
     - input_boolean.basement_hvac_fresh_air_available
-  # #185: follow the fresh-air damper so the blower turns on within seconds of
-  # the damper opening (5 F differential / CO2 flush) and back to auto when it
-  # closes, instead of recirculating in the 4-5 F dead band.
   - trigger: state
     entity_id:
     - switch.utility_room_ventilation_damper
-  # Overnight-guest fixed-temp hold: re-run at night start and whenever the
-  # basement-guests toggle flips, so 70 F applies / releases promptly.
   - trigger: time
     at: '20:00:00'
   - trigger: state
     entity_id:
     - input_boolean.basement_guests
   - trigger: time
-    at: '08:00:00'
+    at: 08:00:00
   - trigger: time
     at: '17:00:00'
   - trigger: time
     at: '21:00:00'
-  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
-  # so zone setpoints return to schedule the moment the event actually clears.
   - trigger: state
     entity_id:
     - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
@@ -3762,16 +3763,13 @@
         state: 'off'
       sequence:
       - choose:
-        # Overnight guests: hold a fixed 70 F (mechanical cool) instead of
-        # coasting on fresh air, so the basement stays quiet and steady all
-        # night. Highest priority; only 20:00-08:00 so days run normally (#guest).
         - conditions:
           - condition: state
             entity_id: input_boolean.basement_guests
             state: 'on'
           - condition: time
             after: '20:00:00'
-            before: '08:00:00'
+            before: 08:00:00
           sequence:
           - action: climate.set_hvac_mode
             data:
@@ -3785,8 +3783,8 @@
               entity_id: climate.basement_thermostat_homekit
           - if:
             - condition: template
-              value_template: '{{ states(''input_select.basement_fan_owner'')
-                in [''none'', ''schedule''] }}'
+              value_template: '{{ states(''input_select.basement_fan_owner'') in [''none'',
+                ''schedule''] }}'
             then:
             - action: climate.set_fan_mode
               data:
@@ -3807,7 +3805,7 @@
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: '08:00:00'
+                before: 08:00:00
               - condition: numeric_state
                 entity_id: sensor.basement_thermostat_homekit_current_temperature
                 above: input_number.basement_fresh_air_minimum_temp
@@ -3818,9 +3816,6 @@
                   hvac_mode: 'off'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              # #185: only force the blower on when the fresh-air damper is
-              # actually open; a closed damper means the blower just recirculates
-              # indoor air (no fresh air, no cooling, wasted watts).
               - choose:
                 - conditions:
                   - condition: state
@@ -3861,7 +3856,7 @@
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: '08:00:00'
+                before: 08:00:00
               - condition: numeric_state
                 entity_id: sensor.basement_thermostat_homekit_current_temperature
                 above: input_number.bsmt_cool_night
@@ -3873,8 +3868,8 @@
                   entity_id: climate.basement_thermostat_homekit
               - action: climate.set_temperature
                 data:
-                  temperature: '{{ states(''input_number.bsmt_cool_night_fa'') |
-                    float(73.5) }}'
+                  temperature: '{{ states(''input_number.bsmt_cool_night_fa'') | float(73.5)
+                    }}'
                 target:
                   entity_id: climate.basement_thermostat_homekit
               - if:
@@ -3894,7 +3889,7 @@
                     option: none
             - conditions:
               - condition: time
-                after: '08:00:00'
+                after: 08:00:00
                 before: '20:00:00'
               - condition: numeric_state
                 entity_id: sensor.basement_thermostat_homekit_current_temperature
@@ -3906,9 +3901,6 @@
                   hvac_mode: 'off'
                 target:
                   entity_id: climate.basement_thermostat_homekit
-              # #185: only force the blower on when the fresh-air damper is
-              # actually open; a closed damper means the blower just recirculates
-              # indoor air (no fresh air, no cooling, wasted watts).
               - choose:
                 - conditions:
                   - condition: state
@@ -3948,7 +3940,7 @@
                       option: none
             - conditions:
               - condition: time
-                after: '08:00:00'
+                after: 08:00:00
                 before: '20:00:00'
               - condition: numeric_state
                 entity_id: sensor.basement_thermostat_homekit_current_temperature
@@ -3988,7 +3980,7 @@
           - choose:
             - conditions:
               - condition: time
-                after: '08:00:00'
+                after: 08:00:00
                 before: '20:00:00'
               sequence:
               - action: climate.set_hvac_mode
@@ -4020,7 +4012,7 @@
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: '08:00:00'
+                before: 08:00:00
               sequence:
               - action: climate.set_hvac_mode
                 data:
@@ -4066,7 +4058,7 @@
           - choose:
             - conditions:
               - condition: time
-                after: '08:00:00'
+                after: 08:00:00
                 before: '17:00:00'
               sequence:
               - action: switch.turn_on
@@ -4142,7 +4134,7 @@
             - conditions:
               - condition: time
                 after: '21:00:00'
-                before: '08:00:00'
+                before: 08:00:00
               sequence:
               - action: switch.turn_off
                 target:
@@ -4188,7 +4180,7 @@
           - choose:
             - conditions:
               - condition: time
-                after: '08:00:00'
+                after: 08:00:00
                 before: '20:00:00'
               sequence:
               - action: climate.set_hvac_mode
@@ -4224,7 +4216,7 @@
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: '08:00:00'
+                before: 08:00:00
               sequence:
               - action: climate.set_hvac_mode
                 data:
@@ -4445,9 +4437,9 @@
   mode: restart
 - id: '1759005370529'
   alias: 8AM Back Guest Bedroom Shades Weekdays
-  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
-    owns these covers (this legacy automation double-commanded them and fought
-    the adaptive 30-min repositioning).'
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which owns
+    these covers (this legacy automation double-commanded them and fought the adaptive
+    30-min repositioning).'
   initial_state: false
   triggers:
   - at: 08:00:00
@@ -4471,9 +4463,9 @@
   mode: restart
 - id: '1759005430175'
   alias: 9AM Back Guest Bedroom Shades Weekends
-  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
-    owns these covers (this legacy automation double-commanded them and fought
-    the adaptive 30-min repositioning).'
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which owns
+    these covers (this legacy automation double-commanded them and fought the adaptive
+    30-min repositioning).'
   initial_state: false
   triggers:
   - at: 09:00:00
@@ -4626,35 +4618,30 @@
   alias: Living Room HVAC Schedule V3
   description: 'Living-room (first-floor) zone schedule. Day = 08:00-20:00, night
     = 20:00-08:00; all setpoints come from the input_number.lr_* helpers (day cool
-    72 / night cool 74 / fresh-air night cool 73.5 / day heat 68 / night heat 66
-    defaults). Cooling season (heating_season off): when fresh air is available
-    and the zone is inside the comfort band, coasts with HVAC off + blower on to
-    circulate economizer air; above the band it returns to mechanical cooling.
-    Heating season: plain day/night heat. Writes mode+setpoint to the HomeKit
-    mirror and fan_mode to the native Lyric entity. Fan writes are owner-aware at
-    the lowest priority: they only touch the fan when input_select.living_room_fan_owner
-    is none/schedule, claim "schedule" when forcing the fan on and release to
-    "none" when returning it to auto. Skips entirely while
-    input_boolean.climate_hold_living_room is on (door open / away / power outage
-    - see Climate Hold Watchdog). Re-syncs on HA start (60 s settle), at 20:02
-    after the utility demand-response window, and when the zone runs above either
-    cool band edge for 5 min (prompt hand-back from fan-only to mechanical cool).'
+    72 / night cool 74 / fresh-air night cool 73.5 / day heat 68 / night heat 66 defaults).
+    Cooling season (heating_season off): when fresh air is available and the zone
+    is inside the comfort band, coasts with HVAC off + blower on to circulate economizer
+    air; above the band it returns to mechanical cooling. Heating season: plain day/night
+    heat. Writes mode+setpoint to the HomeKit mirror and fan_mode to the native Lyric
+    entity. Fan writes are owner-aware at the lowest priority: they only touch the
+    fan when input_select.living_room_fan_owner is none/schedule, claim "schedule"
+    when forcing the fan on and release to "none" when returning it to auto. Skips
+    entirely while input_boolean.climate_hold_living_room is on (door open / away
+    / power outage - see Climate Hold Watchdog). Re-syncs on HA start (60 s settle),
+    at 20:02 after the utility demand-response window, and when the zone runs above
+    either cool band edge for 5 min (prompt hand-back from fan-only to mechanical
+    cool).'
   triggers:
   - trigger: state
     entity_id:
     - input_boolean.basement_hvac_fresh_air_available
-  # #185: follow the fresh-air damper so the blower turns on within seconds of
-  # the damper opening (5 F differential / CO2 flush) and back to auto when it
-  # closes, instead of recirculating in the 4-5 F dead band.
   - trigger: state
     entity_id:
     - switch.utility_room_ventilation_damper
   - trigger: time
-    at: '08:00:00'
+    at: 08:00:00
   - trigger: time
     at: '20:00:00'
-  # #187: resync when the utility DR event ends (replaces the fixed 20:02 guess)
-  # so zone setpoints return to schedule the moment the event actually clears.
   - trigger: state
     entity_id:
     - binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active
@@ -4714,7 +4701,7 @@
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: '08:00:00'
+                before: 08:00:00
               - condition: numeric_state
                 entity_id: sensor.living_room_thermostat_current_temperature
                 above: input_number.living_room_fresh_air_min_temp
@@ -4725,9 +4712,6 @@
                   hvac_mode: 'off'
                 target:
                   entity_id: climate.living_room_thermostat_homekit
-              # #185: only force the blower on when the fresh-air damper is
-              # actually open; a closed damper means the blower just recirculates
-              # indoor air (no fresh air, no cooling, wasted watts).
               - choose:
                 - conditions:
                   - condition: state
@@ -4768,7 +4752,7 @@
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: '08:00:00'
+                before: 08:00:00
               - condition: numeric_state
                 entity_id: sensor.living_room_thermostat_current_temperature
                 above: input_number.lr_cool_night
@@ -4801,7 +4785,7 @@
                     option: none
             - conditions:
               - condition: time
-                after: '08:00:00'
+                after: 08:00:00
                 before: '20:00:00'
               - condition: numeric_state
                 entity_id: sensor.living_room_thermostat_current_temperature
@@ -4813,9 +4797,6 @@
                   hvac_mode: 'off'
                 target:
                   entity_id: climate.living_room_thermostat_homekit
-              # #185: only force the blower on when the fresh-air damper is
-              # actually open; a closed damper means the blower just recirculates
-              # indoor air (no fresh air, no cooling, wasted watts).
               - choose:
                 - conditions:
                   - condition: state
@@ -4855,7 +4836,7 @@
                       option: none
             - conditions:
               - condition: time
-                after: '08:00:00'
+                after: 08:00:00
                 before: '20:00:00'
               - condition: numeric_state
                 entity_id: sensor.living_room_thermostat_current_temperature
@@ -4895,7 +4876,7 @@
           - choose:
             - conditions:
               - condition: time
-                after: '08:00:00'
+                after: 08:00:00
                 before: '20:00:00'
               sequence:
               - action: climate.set_hvac_mode
@@ -4927,7 +4908,7 @@
             - conditions:
               - condition: time
                 after: '20:00:00'
-                before: '08:00:00'
+                before: 08:00:00
               sequence:
               - action: climate.set_hvac_mode
                 data:
@@ -4963,7 +4944,7 @@
       - choose:
         - conditions:
           - condition: time
-            after: '08:00:00'
+            after: 08:00:00
             before: '20:00:00'
           sequence:
           - action: climate.set_hvac_mode
@@ -4978,8 +4959,8 @@
               entity_id: climate.living_room_thermostat_homekit
           - if:
             - condition: template
-              value_template: '{{ states(''input_select.living_room_fan_owner'')
-                in [''none'', ''schedule''] }}'
+              value_template: '{{ states(''input_select.living_room_fan_owner'') in
+                [''none'', ''schedule''] }}'
             then:
             - action: climate.set_fan_mode
               data:
@@ -4994,7 +4975,7 @@
         - conditions:
           - condition: time
             after: '20:00:00'
-            before: '08:00:00'
+            before: 08:00:00
           sequence:
           - action: climate.set_hvac_mode
             data:
@@ -5009,8 +4990,8 @@
               entity_id: climate.living_room_thermostat_homekit
           - if:
             - condition: template
-              value_template: '{{ states(''input_select.living_room_fan_owner'')
-                in [''none'', ''schedule''] }}'
+              value_template: '{{ states(''input_select.living_room_fan_owner'') in
+                [''none'', ''schedule''] }}'
             then:
             - action: climate.set_fan_mode
               data:
@@ -5039,9 +5020,9 @@
   mode: single
 - id: '1762979130880'
   alias: 8:00 AM Front Guest Bedroom Shades Weekdays
-  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
-    owns these covers (this legacy automation double-commanded them and fought
-    the adaptive 30-min repositioning).'
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which owns
+    these covers (this legacy automation double-commanded them and fought the adaptive
+    30-min repositioning).'
   initial_state: false
   triggers:
   - at: 08:00:00
@@ -5109,9 +5090,9 @@
   mode: restart
 - id: '1762979742769'
   alias: 9:00 AM Front Guest Bedroom Shades Weekends
-  description: 'Disabled: superseded by Shade Scheduler - Whole House, which
-    owns these covers (this legacy automation double-commanded them and fought
-    the adaptive 30-min repositioning).'
+  description: 'Disabled: superseded by Shade Scheduler - Whole House, which owns
+    these covers (this legacy automation double-commanded them and fought the adaptive
+    30-min repositioning).'
   initial_state: false
   triggers:
   - at: 09:00:00
@@ -5213,8 +5194,6 @@
           entity_id: binary_sensor.family_room_sensor_family_room_motion
           state:
           - 'off'
-        # #188: suppress motion auto-off while the basement Working scene is
-        # active so sitting still at the desk doesn't kill the lights.
         - condition: state
           entity_id: input_boolean.basement_work_mode
           state: 'off'
@@ -5256,9 +5235,8 @@
   mode: single
 - id: '1768500000001'
   alias: Basement Work Mode - On
-  description: >-
-    #188: Latch basement_work_mode on when the basement Working scene activates,
-    so the Gym motion automation stops turning the lights off on no-motion.
+  description: '#188: Latch basement_work_mode on when the basement Working scene
+    activates, so the Gym motion automation stops turning the lights off on no-motion.'
   triggers:
   - trigger: state
     entity_id:
@@ -5275,10 +5253,9 @@
   mode: single
 - id: '1768500000002'
   alias: Basement Work Mode - Off
-  description: >-
-    #188: Clear basement_work_mode when Working ends so motion control resumes.
-    "Ends" = another basement scene is selected, the core work lights are turned
-    off, or a 4-hour safety timeout elapses.
+  description: '#188: Clear basement_work_mode when Working ends so motion control
+    resumes. "Ends" = another basement scene is selected, the core work lights are
+    turned off, or a 4-hour safety timeout elapses.'
   triggers:
   - trigger: state
     id: ended
@@ -5307,13 +5284,10 @@
     state: 'on'
   - condition: or
     conditions:
-    # Another scene chosen, or the safety timeout fired.
     - condition: trigger
       id:
       - ended
       - timeout
-    # A light turned off — only clear when ALL core work lights are off, so a
-    # single-light nudge mid-session doesn't drop work mode.
     - condition: and
       conditions:
       - condition: state
@@ -5332,11 +5306,10 @@
   mode: single
 - id: '1768500000003'
   alias: Demand Response Notification
-  description: >-
-    #187: Surface a utility demand-response event in the Notification Center
-    (bell + notifications card) via persistent_notification. Created when the
-    canonical Living Room DR sensor goes active, dismissed when it clears. DR
-    times are naive ISO in UTC and are pinned to UTC before converting to local.
+  description: '#187: Surface a utility demand-response event in the Notification
+    Center (bell + notifications card) via persistent_notification. Created when the
+    canonical Living Room DR sensor goes active, dismissed when it clears. DR times
+    are naive ISO in UTC and are pinned to UTC before converting to local.'
   triggers:
   - trigger: state
     id: start
@@ -5361,14 +5334,15 @@
         data:
           notification_id: demand_response
           title: Demand Response Active
-          message: >-
-            {% set act = 'binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active' %}
-            {% set s_raw = state_attr(act, 'start_time') %}
-            {% set e_raw = state_attr(act, 'end_time') %}
-            {% set cap = state_attr(act, 'cool_setpoint_limit_min') %}
-            {% set s = (s_raw ~ '+00:00') | as_datetime if s_raw else none %}
-            {% set e = (e_raw ~ '+00:00') | as_datetime if e_raw else none %}
-            Utility demand-response event{% if s and e %} {{ as_local(s).strftime('%-I:%M %p') }}–{{ as_local(e).strftime('%-I:%M %p') }}{% endif %}{% if cap %} · cooling limited to {{ cap }}°{% endif %}. Sun-facing shades are lowering to cut cooling load.
+          message: '{% set act = ''binary_sensor.living_room_living_room_thermostat_living_room_dr_event_active''
+            %} {% set s_raw = state_attr(act, ''start_time'') %} {% set e_raw = state_attr(act,
+            ''end_time'') %} {% set cap = state_attr(act, ''cool_setpoint_limit_min'')
+            %} {% set s = (s_raw ~ ''+00:00'') | as_datetime if s_raw else none %}
+            {% set e = (e_raw ~ ''+00:00'') | as_datetime if e_raw else none %} Utility
+            demand-response event{% if s and e %} {{ as_local(s).strftime(''%-I:%M
+            %p'') }}–{{ as_local(e).strftime(''%-I:%M %p'') }}{% endif %}{% if cap
+            %} · cooling limited to {{ cap }}°{% endif %}. Sun-facing shades are lowering
+            to cut cooling load.'
     - conditions:
       - condition: trigger
         id: end
@@ -5892,16 +5866,15 @@
   mode: single
 - id: '1777026025997'
   alias: Exhaust Fan Economizer - Safety Shutoff
-  description: 'Closes the fresh-air damper when outdoor conditions are unsafe for
-    ventilation. Rain (>0.01in/5min) ALWAYS closes. Dew point closes at >65F,
-    EXCEPT during a CO2 air-quality flush (input_boolean.co2_vent_active on), which
-    is allowed up to input_number.co2_dew_max (72F default) - diluting CO2 takes
-    priority over the humidity it imports, up to that ceiling. High outdoor temp
-    (>73F/5min) closes too, EXCEPT when a CO2 flush OR a minimum-ventilation Path C
-    cycle (input_boolean.minvent_active on) is running and outdoor is still <=80F
-    (80F is the hard backstop ceiling regardless of the helper) - climate control
-    compensates for that warm intake. Bathroom fans turned off only if HA started
-    them (context check).'
+  description: Closes the fresh-air damper when outdoor conditions are unsafe for
+    ventilation. Rain (>0.01in/5min) ALWAYS closes. Dew point closes at >65F, EXCEPT
+    during a CO2 air-quality flush (input_boolean.co2_vent_active on), which is allowed
+    up to input_number.co2_dew_max (72F default) - diluting CO2 takes priority over
+    the humidity it imports, up to that ceiling. High outdoor temp (>73F/5min) closes
+    too, EXCEPT when a CO2 flush OR a minimum-ventilation Path C cycle (input_boolean.minvent_active
+    on) is running and outdoor is still <=80F (80F is the hard backstop ceiling regardless
+    of the helper) - climate control compensates for that warm intake. Bathroom fans
+    turned off only if HA started them (context check).
   triggers:
   - trigger: numeric_state
     entity_id: sensor.bayberry_tempest_precipitation
@@ -5927,16 +5900,13 @@
   actions:
   - if:
     - condition: template
-      value_template: >-
-        {{ trigger.id == 'rain'
-           or (trigger.id in ['dew', 'dew_cap']
-               and (not is_state('input_boolean.co2_vent_active', 'on')
-                    or (states('sensor.bayberry_tempest_dew_point') | float(99))
-                       > (states('input_number.co2_dew_max') | float(72))))
-           or (trigger.id == 'temp'
-               and (not (is_state('input_boolean.co2_vent_active', 'on')
-                         or is_state('input_boolean.minvent_active', 'on'))
-                    or (states('sensor.bayberry_tempest_temperature') | float(99)) > 80)) }}
+      value_template: "{{ trigger.id == 'rain'\n   or (trigger.id in ['dew', 'dew_cap']\n
+        \      and (not is_state('input_boolean.co2_vent_active', 'on')\n            or
+        (states('sensor.bayberry_tempest_dew_point') | float(99))\n               >
+        (states('input_number.co2_dew_max') | float(72))))\n   or (trigger.id == 'temp'\n
+        \      and (not (is_state('input_boolean.co2_vent_active', 'on')\n                 or
+        is_state('input_boolean.minvent_active', 'on'))\n            or (states('sensor.bayberry_tempest_temperature')
+        | float(99)) > 80)) }}"
     then:
     - action: switch.turn_off
       target:
@@ -5979,55 +5949,46 @@
   mode: single
 - id: '1777026130089'
   alias: Fresh Air Ventilation
-  description: 'Three-path basement+first-floor ventilation. PATH A (CO2 air
-    quality, any hour, year-round): when first-floor CO2 > co2_vent_ceiling and
-    intake air is OK (vent_min_outdoor < outdoor < vent_max_outdoor, no rain, and
-    dew < co2_dew_max), open damper + run living-room blower to dilute. NOTE the
-    CO2 dew limit is co2_dew_max (72F default), HIGHER than the 65F used by free
-    cooling / min-vent: diluting CO2 takes priority over the humidity it imports,
-    so a CO2 flush is allowed to run on a muggy night that would lock out normal
-    ventilation (the Safety Shutoff defers its dew close to the same ceiling).
-    Rain still always blocks. No bathroom fan, so quiet at all hours. Latches via
-    input_boolean.co2_vent_active, clears below co2_vent_recover. PATH B (free
-    cooling, 20:00-08:00): damper + zone blowers
-    cool each zone toward its input_number floor while outdoor is at least
-    freecool_differential below the zone and dew/rain OK. The two exhaust fans
-    are zone-gated AND noise-gated: the basement bathroom fan runs when the
-    basement (z2) wants cooling and media_player.media_room is not playing; the
-    first-floor powder room exhaust fan (switch.powder_room_powder_room_exhaust_fan,
-    110 cfm) runs when the first floor (z1) wants cooling and
-    media_player.living_room is not playing. So an exhaust fan is available any
-    time within free cooling that the adjacent room is not watching media, rather
-    than only overnight. A fan turns OFF immediately when its room starts playing
-    (to: playing trigger) but only becomes available again after 2 min of
-    continuous quiet (debounce via last_changed + a template "for: 2 min"
-    trigger), so a brief pause does not cycle the fan. Each exhaust fan has an
-    ownership flag
-    (input_boolean.economizer_owns_basement_fan / economizer_owns_powder_fan) so
-    a manual/external start is never fought and the economizer only turns off a
-    fan it started. Paths A and C stay quiet (damper + blowers, no exhaust fan).
-    PATH C (minimum ventilation, no time-of-day window): when the
-    damper has run less than minvent_floor_minutes in the trailing 24 h
-    (sensor.fresh_air_damper_on_24_h) and intake conditions are OK (dew < 65F, no
-    rain, minvent_min_outdoor < outdoor < minvent_max_outdoor - 25F..80F default,
-    wider than the other paths), opens damper + living-room blower only (quiet)
-    until the floor is met - stateless and self-limiting, no timers or latches.
-    Path C sets input_boolean.minvent_active so the Safety Shutoff defers its 73F
-    temp close up to 80F for min-vent (climate control compensates for the warm
-    intake), the same exemption CO2 flushes get. All thresholds live in
-    input_number helpers (co2_vent_ceiling/co2_vent_recover/vent_min_outdoor/
-    vent_max_outdoor/freecool_differential/minvent_floor_minutes/minvent_min_outdoor/
-    minvent_max_outdoor/co2_dew_max). Blower
-    fan_mode writes claim/release input_select.living_room_fan_owner and
-    input_select.basement_fan_owner as "economizer" (highest priority; releases
-    to none only when it is the owner). Heat lockout 80F intentionally exceeds
-    the Safety Shutoff 73F backstop; Safety Shutoff is CO2-flush-aware.'
+  description: 'Three-path basement+first-floor ventilation. PATH A (CO2 air quality,
+    any hour, year-round): when first-floor CO2 > co2_vent_ceiling and intake air
+    is OK (vent_min_outdoor < outdoor < vent_max_outdoor, no rain, and dew < co2_dew_max),
+    open damper + run living-room blower to dilute. NOTE the CO2 dew limit is co2_dew_max
+    (72F default), HIGHER than the 65F used by free cooling / min-vent: diluting CO2
+    takes priority over the humidity it imports, so a CO2 flush is allowed to run
+    on a muggy night that would lock out normal ventilation (the Safety Shutoff defers
+    its dew close to the same ceiling). Rain still always blocks. No bathroom fan,
+    so quiet at all hours. Latches via input_boolean.co2_vent_active, clears below
+    co2_vent_recover. PATH B (free cooling, 20:00-08:00): damper + zone blowers cool
+    each zone toward its input_number floor while outdoor is at least freecool_differential
+    below the zone and dew/rain OK. The two exhaust fans are zone-gated AND noise-gated:
+    the basement bathroom fan runs when the basement (z2) wants cooling and media_player.media_room
+    is not playing; the first-floor powder room exhaust fan (switch.powder_room_powder_room_exhaust_fan,
+    110 cfm) runs when the first floor (z1) wants cooling and media_player.living_room
+    is not playing. So an exhaust fan is available any time within free cooling that
+    the adjacent room is not watching media, rather than only overnight. A fan turns
+    OFF immediately when its room starts playing (to: playing trigger) but only becomes
+    available again after 2 min of continuous quiet (debounce via last_changed + a
+    template "for: 2 min" trigger), so a brief pause does not cycle the fan. Each
+    exhaust fan has an ownership flag (input_boolean.economizer_owns_basement_fan
+    / economizer_owns_powder_fan) so a manual/external start is never fought and the
+    economizer only turns off a fan it started. Paths A and C stay quiet (damper +
+    blowers, no exhaust fan). PATH C (minimum ventilation, no time-of-day window):
+    when the damper has run less than minvent_floor_minutes in the trailing 24 h (sensor.fresh_air_damper_on_24_h)
+    and intake conditions are OK (dew < 65F, no rain, minvent_min_outdoor < outdoor
+    < minvent_max_outdoor - 25F..80F default, wider than the other paths), opens damper
+    + living-room blower only (quiet) until the floor is met - stateless and self-limiting,
+    no timers or latches. Path C sets input_boolean.minvent_active so the Safety Shutoff
+    defers its 73F temp close up to 80F for min-vent (climate control compensates
+    for the warm intake), the same exemption CO2 flushes get. All thresholds live
+    in input_number helpers (co2_vent_ceiling/co2_vent_recover/vent_min_outdoor/ vent_max_outdoor/freecool_differential/minvent_floor_minutes/minvent_min_outdoor/
+    minvent_max_outdoor/co2_dew_max). Blower fan_mode writes claim/release input_select.living_room_fan_owner
+    and input_select.basement_fan_owner as "economizer" (highest priority; releases
+    to none only when it is the owner). Heat lockout 80F intentionally exceeds the
+    Safety Shutoff 73F backstop; Safety Shutoff is CO2-flush-aware.'
   triggers:
   - trigger: time_pattern
     hours: /1
     id: hourly
-  # Re-evaluate immediately when overnight-guest mode flips, so the basement
-  # free-cool blower / bathroom exhaust fan are released without waiting.
   - trigger: state
     entity_id:
     - input_boolean.basement_guests
@@ -6112,7 +6073,7 @@
     to: playing
     id: media_room_play
   - trigger: template
-    value_template: "{{ not is_state('media_player.media_room', 'playing') }}"
+    value_template: '{{ not is_state(''media_player.media_room'', ''playing'') }}'
     for:
       minutes: 2
     id: media_room_quiet
@@ -6121,7 +6082,7 @@
     to: playing
     id: living_room_play
   - trigger: template
-    value_template: "{{ not is_state('media_player.living_room', 'playing') }}"
+    value_template: '{{ not is_state(''media_player.living_room'', ''playing'') }}'
     for:
       minutes: 2
     id: living_room_quiet
@@ -6831,12 +6792,11 @@
 - id: '1777372737730'
   alias: HVAC Fan - Living Room Air Filter
   description: 'Run Living Room HVAC fan on when First Floor PM2.5 spikes above 5
-    µg/m³; return to auto when it drops below 2. Owner-aware
-    (input_select.living_room_fan_owner, priority economizer > air_filter >
-    air_quality > schedule): claims "air_filter" unless the economizer currently
-    owns the fan (never yanks the fan out from under an active free-cool /
-    CO2 flush), and restores auto ONLY while it is still the owner, releasing to
-    none afterwards.'
+    µg/m³; return to auto when it drops below 2. Owner-aware (input_select.living_room_fan_owner,
+    priority economizer > air_filter > air_quality > schedule): claims "air_filter"
+    unless the economizer currently owns the fan (never yanks the fan out from under
+    an active free-cool / CO2 flush), and restores auto ONLY while it is still the
+    owner, releasing to none afterwards.'
   triggers:
   - platform: numeric_state
     entity_id: sensor.first_floor_air_quality_monitor_pm2_5
@@ -6887,13 +6847,12 @@
   mode: single
 - id: '1777372741480'
   alias: HVAC Fan - Bedroom Air Filter
-  description: 'Run Master Bedroom HVAC fan on when Bedroom PM2.5 spikes above 5
-    µg/m³; return to auto when it drops below 2. Owner-aware
-    (input_select.bedroom_fan_owner, priority economizer > air_filter >
-    air_quality > schedule): claims "air_filter" unless the economizer currently
-    owns the fan, and restores auto ONLY while it is still the owner, releasing
-    to none afterwards. The Bedroom Air Quality 22:00 quiet-hours force-to-auto
-    remains absolute and overrides this owner.'
+  description: 'Run Master Bedroom HVAC fan on when Bedroom PM2.5 spikes above 5 µg/m³;
+    return to auto when it drops below 2. Owner-aware (input_select.bedroom_fan_owner,
+    priority economizer > air_filter > air_quality > schedule): claims "air_filter"
+    unless the economizer currently owns the fan, and restores auto ONLY while it
+    is still the owner, releasing to none afterwards. The Bedroom Air Quality 22:00
+    quiet-hours force-to-auto remains absolute and overrides this owner.'
   triggers:
   - platform: numeric_state
     entity_id: sensor.bedroom_air_quality_pm2_5
@@ -7017,20 +6976,18 @@
   mode: single
 - id: '1778025144757'
   alias: Bedroom Air Quality
-  description: 'When bedroom CO2 (5-min avg) exceeds 800 ppm, send a persistent
-    notification suggesting a window. During daytime (7am-10pm), also turn on the
-    master bedroom HVAC blower to mix bedroom air with the rest of the house -
-    owner-aware via input_select.bedroom_fan_owner (priority economizer >
-    air_filter > air_quality > schedule): it claims "air_quality" only when
-    neither the economizer nor the air filter owns the fan, and on CO2 recovery
-    (< 600 ppm) restores auto ONLY while it is still the owner. EXCEPTION: at
-    10pm sharp the blower is forced back to auto and the owner reset to none
-    regardless of who owns it - quiet hours are absolute, no noisy circulation
-    overnight even if CO2 has not recovered or a filter run is active. During
-    quiet hours (10pm-7am) CO2 spikes only notify. The bathroom exhaust fan
-    running (driven by Fresh Air Ventilation when bedroom CO2 is high) helps
-    further by pulling fresh outdoor air through the damper. A bedroom window is
-    still the most direct fix.'
+  description: 'When bedroom CO2 (5-min avg) exceeds 800 ppm, send a persistent notification
+    suggesting a window. During daytime (7am-10pm), also turn on the master bedroom
+    HVAC blower to mix bedroom air with the rest of the house - owner-aware via input_select.bedroom_fan_owner
+    (priority economizer > air_filter > air_quality > schedule): it claims "air_quality"
+    only when neither the economizer nor the air filter owns the fan, and on CO2 recovery
+    (< 600 ppm) restores auto ONLY while it is still the owner. EXCEPTION: at 10pm
+    sharp the blower is forced back to auto and the owner reset to none regardless
+    of who owns it - quiet hours are absolute, no noisy circulation overnight even
+    if CO2 has not recovered or a filter run is active. During quiet hours (10pm-7am)
+    CO2 spikes only notify. The bathroom exhaust fan running (driven by Fresh Air
+    Ventilation when bedroom CO2 is high) helps further by pulling fresh outdoor air
+    through the damper. A bedroom window is still the most direct fix.'
   triggers:
   - platform: numeric_state
     entity_id: sensor.bedroom_co2_5min
@@ -7122,12 +7079,14 @@
   - trigger: state
     entity_id:
     - binary_sensor.omnilogic_pool_heat_pump_status
-    from: 'off'
+    from:
+    - 'off'
     for:
       hours: 0
-      minutes: 0
-      seconds: 30
-    to: 'on'
+      minutes: 2
+      seconds: 0
+    to:
+    - 'on'
   conditions: []
   actions:
   - action: number.set_value
@@ -7344,17 +7303,12 @@
     before: '20:01:00'
   variables:
     closure_responsiveness: 20
-    # #187: during a utility demand-response window (2 h pre-event through end),
-    # any facade the sun is actively hitting is driven fully closed instead of
-    # to its adaptive target — cuts solar gain while cooling is capped. Facades
-    # the sun has left return to the normal adaptive formula (reopen), and when
-    # the event ends the next tick restores adaptive positions everywhere.
     dr_override: '{{ is_state(''binary_sensor.demand_response_window'', ''on'') }}'
     rooms:
     - name: First Floor
       wave: early
-      open_wkday: '07:30'
-      open_wknd: '08:00'
+      open_wkday: 07:30
+      open_wknd: 08:00
       pause: input_boolean.dinner_party
       indoor: climate.living_room_thermostat_homekit
       comfort: 70
@@ -7378,8 +7332,8 @@
       winter_north: ''
     - name: Primary Bedroom
       wave: main
-      open_wkday: '08:00'
-      open_wknd: '09:00'
+      open_wkday: 08:00
+      open_wknd: 09:00
       pause: ''
       indoor: climate.master_bedroom_thermostat
       comfort: 68
@@ -7411,8 +7365,8 @@
       winter_north: cover.bedroom_back
     - name: Back Guest Bedroom
       wave: main
-      open_wkday: '08:00'
-      open_wknd: '09:00'
+      open_wkday: 08:00
+      open_wknd: 09:00
       pause: input_boolean.guest_mode
       indoor: sensor.guest_bedroom_sensor_temperature
       comfort: 68
@@ -7433,8 +7387,8 @@
       winter_north: ''
     - name: Front Guest Bedroom
       wave: main
-      open_wkday: '08:00'
-      open_wknd: '09:00'
+      open_wkday: 08:00
+      open_wknd: 09:00
       pause: input_boolean.guest_mode
       indoor: sensor.front_guest_bedroom_sensor_temperature
       comfort: 68
@@ -7455,8 +7409,8 @@
       winter_north: ''
     - name: Office
       wave: main
-      open_wkday: '08:00'
-      open_wknd: '09:00'
+      open_wkday: 08:00
+      open_wknd: 09:00
       pause: ''
       indoor: sensor.office_thermostat_homekit_current_temperature
       comfort: 72
@@ -7514,8 +7468,8 @@
                 }}'
               in_window: '{{ (not is_adaptive) or now().strftime(''%H:%M'') > open_time
                 }}'
-              privacy_locked: '{% set ns = namespace(all_closed=true) %}{% for e
-                in repeat.item.privacy %}{% set pos = state_attr(e, ''current_position'')
+              privacy_locked: '{% set ns = namespace(all_closed=true) %}{% for e in
+                repeat.item.privacy %}{% set pos = state_attr(e, ''current_position'')
                 %}{% if pos is not none %}{% if pos | int(0) > 5 %}{% set ns.all_closed
                 = false %}{% endif %}{% elif not is_state(e, ''closed'') %}{% set
                 ns.all_closed = false %}{% endif %}{% endfor %}{{ is_adaptive and
@@ -7533,12 +7487,12 @@
                 sequence:
                 - variables:
                     effw: '{{ states(repeat.item.sensor) | float(0) }}'
-                    target: '{% if dr_override and effw > 0 %}0{% elif effw == 0
-                      or indoor | float(70) <= comfort | float(70)
-                      %}100{% else %}{% set excess = indoor | float(70) - comfort
-                      | float(70) %}{% set closure = excess * effw / closure_responsiveness
-                      %}{{ [[100 - closure, 0] | max, 100] | min | round(0) | int
-                      }}{% endif %}'
+                    target: '{% if dr_override and effw > 0 %}0{% elif effw == 0 or
+                      indoor | float(70) <= comfort | float(70) %}100{% else %}{%
+                      set excess = indoor | float(70) - comfort | float(70) %}{% set
+                      closure = excess * effw / closure_responsiveness %}{{ [[100
+                      - closure, 0] | max, 100] | min | round(0) | int }}{% endif
+                      %}'
                 - action: cover.set_cover_position
                   target:
                     entity_id: '{{ repeat.item.covers }}'
@@ -7569,13 +7523,13 @@
                 [1, 2, 3, 11, 12] }}'
               verify_list: '{{ close_targets + ([winter_cover] if winter_close else
                 []) }}'
-              room_hand_closed: '{% set ns = namespace(all_closed=true) %}{% for
-                e in repeat.item.privacy %}{% set pos = state_attr(e, ''current_position'')
+              room_hand_closed: '{% set ns = namespace(all_closed=true) %}{% for e
+                in repeat.item.privacy %}{% set pos = state_attr(e, ''current_position'')
                 %}{% if pos is not none %}{% if pos | int(0) > 5 %}{% set ns.all_closed
                 = false %}{% endif %}{% elif not is_state(e, ''closed'') %}{% set
                 ns.all_closed = false %}{% endif %}{% endfor %}{{ ns.all_closed }}'
-              sunset_open: '{{ winter_cover != '''' and not winter_close and not
-                (room_hand_closed | bool(false)) }}'
+              sunset_open: '{{ winter_cover != '''' and not winter_close and not (room_hand_closed
+                | bool(false)) }}'
           - if:
             - condition: template
               value_template: '{{ not paused }}'
@@ -7633,14 +7587,13 @@
   max: 10
 - id: '1783000000001'
   alias: First Floor Doors Closed - Restore Climate
-  description: 'Restores living-room climate when ALL first-floor exterior doors
-    are closed (group binary_sensor.first_floor_exterior_doors returns to off - one
-    door closing while the other is open does NOT restore). Only acts while
-    input_boolean.climate_hold_living_room is on, and only when no higher-precedence
-    hold cause remains (away_mode off, grid up); precedence: power_outage > away >
-    door_open. Clears the hold, restores the mode stored in
-    input_select.living_thermostat_last_hvac_mode on the HomeKit mirror, then
-    triggers the LR schedule WITHOUT skip_condition for an immediate setpoint
+  description: 'Restores living-room climate when ALL first-floor exterior doors are
+    closed (group binary_sensor.first_floor_exterior_doors returns to off - one door
+    closing while the other is open does NOT restore). Only acts while input_boolean.climate_hold_living_room
+    is on, and only when no higher-precedence hold cause remains (away_mode off, grid
+    up); precedence: power_outage > away > door_open. Clears the hold, restores the
+    mode stored in input_select.living_thermostat_last_hvac_mode on the HomeKit mirror,
+    then triggers the LR schedule WITHOUT skip_condition for an immediate setpoint
     correction. The Climate Hold Watchdog is the backstop if this misses the close
     (e.g. HA down at the time).'
   triggers:
@@ -7703,12 +7656,12 @@
 - id: '1783000000002'
   alias: Mudroom Door Closed - Restore Climate
   description: 'Restores basement climate when the mudroom entry door closes. Only
-    acts while input_boolean.climate_hold_basement is on, and only when no
-    higher-precedence hold cause remains (away_mode off, grid up); precedence:
-    power_outage > away > door_open. Clears the hold, restores the mode stored in
-    input_select.basement_thermostat_last_hvac_mode on the HomeKit mirror, then
-    triggers the basement schedule WITHOUT skip_condition for an immediate setpoint
-    correction. The Climate Hold Watchdog is the backstop if this misses the close.'
+    acts while input_boolean.climate_hold_basement is on, and only when no higher-precedence
+    hold cause remains (away_mode off, grid up); precedence: power_outage > away >
+    door_open. Clears the hold, restores the mode stored in input_select.basement_thermostat_last_hvac_mode
+    on the HomeKit mirror, then triggers the basement schedule WITHOUT skip_condition
+    for an immediate setpoint correction. The Climate Hold Watchdog is the backstop
+    if this misses the close.'
   triggers:
   - trigger: state
     entity_id:
@@ -7768,17 +7721,17 @@
   mode: restart
 - id: '1783000000003'
   alias: Climate Hold Watchdog
-  description: 'Self-healing for orphaned climate holds (e.g. HA restarted while
-    a door/away/outage automation was mid-flight). Runs on HA start and every 30
-    minutes. Per zone: if the hold boolean is on but EVERY cause is absent (zone
-    door closed for at least 2 minutes where the zone has a door cause, away_mode
-    off, grid up), it clears the hold, restores the stored last HVAC mode (only if
-    the zone is currently off, so a stale stored mode never stomps a live one),
-    and triggers the zone schedule WITHOUT skip_condition. Hold precedence
-    power_outage > away > door_open is enforced by requiring ALL causes absent:
-    grid down = never clear; away on = only Away Mode Turns Off clears; door open
-    = only the door-closed automations clear. Door causes: living room = first
-    floor door group, basement = mudroom door, office/bedroom = none.'
+  description: 'Self-healing for orphaned climate holds (e.g. HA restarted while a
+    door/away/outage automation was mid-flight). Runs on HA start and every 30 minutes.
+    Per zone: if the hold boolean is on but EVERY cause is absent (zone door closed
+    for at least 2 minutes where the zone has a door cause, away_mode off, grid up),
+    it clears the hold, restores the stored last HVAC mode (only if the zone is currently
+    off, so a stale stored mode never stomps a live one), and triggers the zone schedule
+    WITHOUT skip_condition. Hold precedence power_outage > away > door_open is enforced
+    by requiring ALL causes absent: grid down = never clear; away on = only Away Mode
+    Turns Off clears; door open = only the door-closed automations clear. Door causes:
+    living room = first floor door group, basement = mudroom door, office/bedroom
+    = none.'
   triggers:
   - trigger: homeassistant
     event: start
@@ -8022,7 +7975,7 @@
         entity_id: switch.powder_room_powder_room_exhaust_fan
   mode: restart
 - id: washer_live_activity_update
-  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
+  initial_state: false
   alias: Washing Machine Live Activity — Update
   description: ''
   mode: restart
@@ -8034,47 +7987,36 @@
     - sensor.front_load_washer_remaining_time
   conditions:
   - condition: template
-    value_template: >
-      {{ is_state('sensor.front_load_washer', 'on')
-         and states('sensor.washer_cycle_progress') not in ['unavailable','unknown','']
-         and (states('sensor.washer_cycle_progress') | int(100)) < 100 }}
+    value_template: "{{ is_state('sensor.front_load_washer', 'on')\n   and states('sensor.washer_cycle_progress')
+      not in ['unavailable','unknown','']\n   and (states('sensor.washer_cycle_progress')
+      | int(100)) < 100 }}\n"
   actions:
   - action: script.push_live_activity
     data:
       tag: washer_cycle
       title: Washing Machine
-      message: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) | title }}"
+      message: '{{ states(''sensor.front_load_washer_run_state'') | default(''Running'',
+        true) | title }}'
       audience: both
       payload:
-        # Run state (e.g. Washing / Rinsing / Spinning) shown as the body above.
-        subtitle: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) | title }}"
-        critical_text: "{{ states('sensor.washer_cycle_progress') | int(0) }}%"
-        # washer_cycle_progress is percent COMPLETE (0 -> 100), so the bar fills
-        # as the cycle finishes / remaining time hits zero.
-        progress: "{{ states('sensor.washer_cycle_progress') | int(0) }}"
+        subtitle: '{{ states(''sensor.front_load_washer_run_state'') | default(''Running'',
+          true) | title }}'
+        critical_text: '{{ states(''sensor.washer_cycle_progress'') | int(0) }}%'
+        progress: '{{ states(''sensor.washer_cycle_progress'') | int(0) }}'
         progress_max: 100
         chronometer: true
-        # Count down to the actual finish: now + remaining time, as a Unix
-        # timestamp. (Was total_seconds, a duration read as epoch 1970.)
-        # Seconds remaining (when_relative: true -> counts down). NOT now()+rem.
-        when: >-
-          {% set r = states('sensor.front_load_washer_remaining_time') %}
-          {% if ':' in r %}
-            {% set p = r.split(':') %}
-            {{ p[0] | int * 3600 + p[1] | int * 60 + p[2] | int }}
-          {% else %}
-            0
-          {% endif %}
+        when: "{% set r = states('sensor.front_load_washer_remaining_time') %} {%
+          if ':' in r %}\n  {% set p = r.split(':') %}\n  {{ p[0] | int * 3600 + p[1]
+          | int * 60 + p[2] | int }}\n{% else %}\n  0\n{% endif %}"
         when_relative: true
         notification_icon: mdi:washing-machine
-        notification_icon_color: "#2196F3"
+        notification_icon_color: '#2196F3'
 - id: washer_live_activity_complete
-  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
+  initial_state: false
   alias: Washing Machine Live Activity — Complete
-  description: >-
-    On wash completion, replace the card with a green "done" state, hold ~10 min
-    (the move-the-laundry reminder), then clear (#179). Hold duration is an open
-    question in #178 — adjust the delay if immediate-clear is preferred.
+  description: 'On wash completion, replace the card with a green "done" state, hold
+    ~10 min (the move-the-laundry reminder), then clear (#179). Hold duration is an
+    open question in #178 — adjust the delay if immediate-clear is preferred.'
   mode: restart
   triggers:
   - trigger: state
@@ -8093,17 +8035,16 @@
         critical_text: Complete
         chronometer: false
         notification_icon: mdi:washing-machine
-        notification_icon_color: "#4CAF50"
-  - delay: '01:00:00'
+        notification_icon_color: '#4CAF50'
+  - delay: 01:00:00
   - action: script.clear_live_activity
     data:
       tag: washer_cycle
       audience: both
 - id: dryer_live_activity_update
-  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
+  initial_state: false
   alias: Dryer Live Activity — Update
-  description: >-
-    Dryer iOS Live Activity, mirroring the washer (#180). Uses the existing
+  description: Dryer iOS Live Activity, mirroring the washer (#180). Uses the existing
     sensor.dryer_cycle_progress helper for the bar and sensor.dryer_remaining_time
     (H:MM:SS) for the countdown.
   mode: restart
@@ -8115,41 +8056,34 @@
     - sensor.dryer_remaining_time
   conditions:
   - condition: template
-    value_template: >
-      {{ states('sensor.dryer') not in ['off','unavailable','unknown']
-         and states('sensor.dryer_cycle_progress') not in ['unavailable','unknown','']
-         and (states('sensor.dryer_cycle_progress') | int(100)) < 100 }}
+    value_template: "{{ states('sensor.dryer') not in ['off','unavailable','unknown']\n
+      \  and states('sensor.dryer_cycle_progress') not in ['unavailable','unknown','']\n
+      \  and (states('sensor.dryer_cycle_progress') | int(100)) < 100 }}\n"
   actions:
   - action: script.push_live_activity
     data:
       tag: dryer_cycle
       title: Dryer
-      message: "{{ states('sensor.dryer') | default('Drying', true) | title }}"
+      message: '{{ states(''sensor.dryer'') | default(''Drying'', true) | title }}'
       audience: both
       payload:
-        subtitle: "{{ states('sensor.dryer') | default('Drying', true) | title }}"
-        critical_text: "{{ states('sensor.dryer_cycle_progress') | int(0) }}%"
-        progress: "{{ states('sensor.dryer_cycle_progress') | int(0) }}"
+        subtitle: '{{ states(''sensor.dryer'') | default(''Drying'', true) | title
+          }}'
+        critical_text: '{{ states(''sensor.dryer_cycle_progress'') | int(0) }}%'
+        progress: '{{ states(''sensor.dryer_cycle_progress'') | int(0) }}'
         progress_max: 100
         chronometer: true
-        # Seconds remaining (when_relative: true -> counts down). NOT now()+rem.
-        when: >-
-          {% set r = states('sensor.dryer_remaining_time') %}
-          {% if ':' in r %}
-            {% set p = r.split(':') %}
-            {{ p[0] | int * 3600 + p[1] | int * 60 + p[2] | int }}
-          {% else %}
-            0
-          {% endif %}
+        when: "{% set r = states('sensor.dryer_remaining_time') %} {% if ':' in r
+          %}\n  {% set p = r.split(':') %}\n  {{ p[0] | int * 3600 + p[1] | int *
+          60 + p[2] | int }}\n{% else %}\n  0\n{% endif %}"
         when_relative: true
         notification_icon: mdi:tumble-dryer
-        notification_icon_color: "#FF9800"
+        notification_icon_color: '#FF9800'
 - id: dryer_live_activity_complete
-  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
+  initial_state: false
   alias: Dryer Live Activity — Complete
-  description: >-
-    Green done-card on dryer completion, ~10 min hold, then clear (#180).
-    Hold duration is an open question in #178.
+  description: 'Green done-card on dryer completion, ~10 min hold, then clear (#180).
+    Hold duration is an open question in #178.'
   mode: restart
   triggers:
   - trigger: state
@@ -8168,21 +8102,20 @@
         critical_text: Complete
         chronometer: false
         notification_icon: mdi:tumble-dryer
-        notification_icon_color: "#4CAF50"
-  - delay: '01:00:00'
+        notification_icon_color: '#4CAF50'
+  - delay: 01:00:00
   - action: script.clear_live_activity
     data:
       tag: dryer_cycle
       audience: both
 - id: outage_live_activity_update
-  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
+  initial_state: false
   alias: Power Outage Live Activity — Update
-  description: >-
-    Outage iOS Live Activity, shown only while off-grid (#182). Counts up from
-    the outage start; battery % drives the bar. Uses sensor.bayberry_charge for
-    % (the precise sensor.bayberry_percentage_charged is not referenced in this
-    config — swap it in if it exists). Only ADDS a Live Activity; existing
-    power_outage_v2 / powerwall_* automations are untouched.
+  description: Outage iOS Live Activity, shown only while off-grid (#182). Counts
+    up from the outage start; battery % drives the bar. Uses sensor.bayberry_charge
+    for % (the precise sensor.bayberry_percentage_charged is not referenced in this
+    config — swap it in if it exists). Only ADDS a Live Activity; existing power_outage_v2
+    / powerwall_* automations are untouched.
   mode: restart
   triggers:
   - trigger: state
@@ -8199,23 +8132,24 @@
     data:
       tag: power_outage
       title: Power Outage
-      message: "On battery · {{ states('sensor.bayberry_load_power') }} kW load · {{ states('sensor.powerwall_discharge_time') }}"
+      message: On battery · {{ states('sensor.bayberry_load_power') }} kW load · {{
+        states('sensor.powerwall_discharge_time') }}
       audience: both
       payload:
-        critical_text: "{{ states('sensor.bayberry_charge') | int(0) }}%"
-        progress: "{{ states('sensor.bayberry_charge') | int(0) }}"
+        critical_text: '{{ states(''sensor.bayberry_charge'') | int(0) }}%'
+        progress: '{{ states(''sensor.bayberry_charge'') | int(0) }}'
         progress_max: 100
         chronometer: true
-        when: "{{ as_timestamp(states.binary_sensor.bayberry_grid_status.last_changed) | int }}"
+        when: '{{ as_timestamp(states.binary_sensor.bayberry_grid_status.last_changed)
+          | int }}'
         when_relative: false
         notification_icon: mdi:home-battery
-        notification_icon_color: "#F44336"
+        notification_icon_color: '#F44336'
 - id: outage_live_activity_restored
-  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
+  initial_state: false
   alias: Power Outage Live Activity — Restored
-  description: >-
-    On grid return, replace the outage card with a green "Power restored" state,
-    hold ~5 min, then clear (#182).
+  description: On grid return, replace the outage card with a green "Power restored"
+    state, hold ~5 min, then clear (#182).
   mode: restart
   triggers:
   - trigger: state
@@ -8227,26 +8161,26 @@
     data:
       tag: power_outage
       title: Power Restored
-      message: "Grid is back · battery {{ states('sensor.bayberry_charge') | int(0) }}%"
+      message: Grid is back · battery {{ states('sensor.bayberry_charge') | int(0)
+        }}%
       audience: both
       payload:
         critical_text: Restored
         chronometer: false
         notification_icon: mdi:transmission-tower
-        notification_icon_color: "#4CAF50"
-  - delay: '00:05:00'
+        notification_icon_color: '#4CAF50'
+  - delay: 00:05:00
   - action: script.clear_live_activity
     data:
       tag: power_outage
       audience: both
 - id: sprinkler_live_activity
-  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
+  initial_state: false
   alias: Sprinklers Live Activity
-  description: >-
-    Per-zone sprinkler iOS Live Activity (#183). Count-up elapsed timer (Rachio
-    exposes no remaining/duration). Display-only — pause control skipped for now.
-    On any zone switch change: if a zone is on, show it (card replaced as zones
-    advance); when none are on, clear after a short debounce.
+  description: 'Per-zone sprinkler iOS Live Activity (#183). Count-up elapsed timer
+    (Rachio exposes no remaining/duration). Display-only — pause control skipped for
+    now. On any zone switch change: if a zone is on, show it (card replaced as zones
+    advance); when none are on, clear after a short debounce.'
   mode: restart
   variables:
     zone_switches:
@@ -8262,8 +8196,6 @@
     - switch.pool_shrubs
     - switch.firepit_shrubs
     - switch.retaining_wall_drip
-    # Clean zone labels (Rachio switch friendly_names aren't display-ready;
-    # matches the hardcoded map in dashboards/nspanel/sprinklers-view.yaml).
     zone_names:
       switch.vegetable_beds: Vegetable Beds
       switch.kimberly_road_180s: Kimberly Road 180s
@@ -8277,7 +8209,8 @@
       switch.pool_shrubs: Pool Shrubs
       switch.firepit_shrubs: Firepit Shrubs
       switch.retaining_wall_drip: Retaining Wall Drip
-    active_zone: "{{ zone_switches | select('is_state', 'on') | list | first | default('', true) }}"
+    active_zone: '{{ zone_switches | select(''is_state'', ''on'') | list | first |
+      default('''', true) }}'
   triggers:
   - trigger: state
     entity_id:
@@ -8296,38 +8229,38 @@
   conditions: []
   actions:
   - choose:
-    - conditions: "{{ active_zone != '' }}"
+    - conditions: '{{ active_zone != '''' }}'
       sequence:
       - action: script.push_live_activity
         data:
           tag: sprinkler_zone
           title: Sprinklers
-          message: "{{ zone_names.get(active_zone) | default(state_attr(active_zone, 'friendly_name'), true) | default('Zone', true) }} running"
+          message: '{{ zone_names.get(active_zone) | default(state_attr(active_zone,
+            ''friendly_name''), true) | default(''Zone'', true) }} running'
           audience: both
           payload:
             chronometer: true
-            when: "{{ as_timestamp(states[active_zone].last_changed) | int }}"
+            when: '{{ as_timestamp(states[active_zone].last_changed) | int }}'
             when_relative: false
             notification_icon: mdi:sprinkler-variant
-            notification_icon_color: "#00BCD4"
+            notification_icon_color: '#00BCD4'
     default:
-    # Debounce zone-to-zone handoff before clearing.
-    - delay: '00:00:08'
+    - delay: 00:00:08
     - condition: template
-      value_template: "{{ zone_switches | select('is_state', 'on') | list | count == 0 }}"
+      value_template: '{{ zone_switches | select(''is_state'', ''on'') | list | count
+        == 0 }}'
     - action: script.clear_live_activity
       data:
         tag: sprinkler_zone
         audience: both
 - id: car_charging_live_activity
-  initial_state: false  # disabled for v2.2.1 Live Activity rework/testing (#178)
+  initial_state: false
   alias: Car Charging Live Activity
-  description: >-
-    One shared car_charging Live Activity (#181). The wall charger is shared by
-    both cars, so: Rivian = binary_sensor.r1t_charging_status on (uses Rivian
-    telemetry — kW, SOC bar, countdown). BMW = wall charger drawing power AND
-    Rivian NOT charging (wall-charger kW + elapsed, no vehicle telemetry). They
-    are mutually exclusive; clears when neither is charging.
+  description: 'One shared car_charging Live Activity (#181). The wall charger is
+    shared by both cars, so: Rivian = binary_sensor.r1t_charging_status on (uses Rivian
+    telemetry — kW, SOC bar, countdown). BMW = wall charger drawing power AND Rivian
+    NOT charging (wall-charger kW + elapsed, no vehicle telemetry). They are mutually
+    exclusive; clears when neither is charging.'
   mode: restart
   triggers:
   - trigger: state
@@ -8341,42 +8274,42 @@
   conditions: []
   actions:
   - choose:
-    - conditions: "{{ is_state('binary_sensor.r1t_charging_status', 'on') }}"
+    - conditions: '{{ is_state(''binary_sensor.r1t_charging_status'', ''on'') }}'
       sequence:
       - action: script.push_live_activity
         data:
           tag: car_charging
           title: Rivian R1T
-          message: "Charging · {{ states('sensor.r1t_charging_speed') }} kW"
+          message: Charging · {{ states('sensor.r1t_charging_speed') }} kW
           audience: both
           payload:
-            critical_text: "{{ states('sensor.r1t_battery_state_of_charge') }}%"
-            progress: "{{ states('sensor.r1t_battery_state_of_charge') | int }}"
-            progress_max: "{{ states('sensor.r1t_battery_state_of_charge_limit') | int(100) }}"
+            critical_text: '{{ states(''sensor.r1t_battery_state_of_charge'') }}%'
+            progress: '{{ states(''sensor.r1t_battery_state_of_charge'') | int }}'
+            progress_max: '{{ states(''sensor.r1t_battery_state_of_charge_limit'')
+              | int(100) }}'
             chronometer: true
-            # remaining minutes -> seconds from now (when_relative: true) -> counts down
-            when: "{{ states('sensor.r1t_charging_time_remaining') | int(0) * 60 }}"
+            when: '{{ states(''sensor.r1t_charging_time_remaining'') | int(0) * 60
+              }}'
             when_relative: true
             notification_icon: mdi:car-electric
-            notification_icon_color: "#FFC107"
-    - conditions: >
-        {{ states('sensor.wall_charger_power') | float(0) > 0.5
-           and is_state('binary_sensor.r1t_charging_status', 'off') }}
+            notification_icon_color: '#FFC107'
+    - conditions: "{{ states('sensor.wall_charger_power') | float(0) > 0.5\n   and
+        is_state('binary_sensor.r1t_charging_status', 'off') }}\n"
       sequence:
       - action: script.push_live_activity
         data:
           tag: car_charging
           title: BMW
-          message: "Charging · {{ states('sensor.wall_charger_power') }} kW"
+          message: Charging · {{ states('sensor.wall_charger_power') }} kW
           audience: both
           payload:
             critical_text: Charging
             chronometer: true
-            # wall-charger session start -> counts up (no BMW telemetry)
-            when: "{{ as_timestamp(states.sensor.wall_charger_charging_status.last_changed) | int }}"
+            when: '{{ as_timestamp(states.sensor.wall_charger_charging_status.last_changed)
+              | int }}'
             when_relative: false
             notification_icon: mdi:car-electric
-            notification_icon_color: "#1C69D4"
+            notification_icon_color: '#1C69D4'
     default:
     - action: script.clear_live_activity
       data:
@@ -8384,13 +8317,11 @@
         audience: both
 - id: washer_live_activity_update_v2
   alias: Washing Machine Live Activity — Update (v2 test)
-  description: >-
-    Standalone washer iOS Live Activity (no shared push script) for v2.2.1
-    testing. Progress bar = % complete (sensor.washer_cycle_progress); live
-    countdown = time remaining (sensor.front_load_washer_remaining_time), pointed
-    at an absolute finish timestamp (now + remaining) so the iOS timer counts
-    down correctly. Delivers to both phones inline. Toggle on/off to test.
-  mode: restart
+  description: Standalone washer iOS Live Activity (no shared push script) for v2.2.1
+    testing. Progress bar = % complete (sensor.washer_cycle_progress); live countdown
+    = time remaining (sensor.front_load_washer_remaining_time, hh:mm:ss), pointed
+    at an absolute finish timestamp (now + countdown) so the iOS timer counts down
+    correctly. Delivers to both phones inline. Toggle on/off to test.
   triggers:
   - trigger: state
     entity_id:
@@ -8398,59 +8329,47 @@
     - sensor.front_load_washer_run_state
     - sensor.front_load_washer_remaining_time
   conditions:
-  # Show only while a cycle is actually running and not yet finished.
   - condition: template
-    value_template: >-
-      {% set p = states('sensor.washer_cycle_progress') %}
-      {{ p not in ['unavailable','unknown',''] and 0 <= (p | int(-1)) < 100
-         and states('sensor.front_load_washer_run_state')
-             not in ['unavailable','unknown','none','','off','finished'] }}
-  variables:
-    progress: "{{ states('sensor.washer_cycle_progress') | int(0) }}"
-    run_state: "{{ states('sensor.front_load_washer_run_state') | default('Running', true) | title }}"
-    # Parse remaining time robustly: H:MM:SS, M:SS, or plain minutes.
-    remaining_seconds: >-
-      {% set r = states('sensor.front_load_washer_remaining_time') %}
-      {% if r not in ['unavailable','unknown','', none] and ':' in r %}
-        {% set p = r.split(':') | map('int') | list %}
-        {% if p | length == 3 %}{{ p[0]*3600 + p[1]*60 + p[2] }}
-        {% elif p | length == 2 %}{{ p[0]*60 + p[1] }}
-        {% else %}0{% endif %}
-      {% else %}{{ r | int(0) * 60 }}{% endif %}
-    # Absolute epoch the timer counts DOWN to (now + remaining). The iOS Live
-    # Activity `when` field is a Unix timestamp, not a duration.
-    finish_ts: "{{ (now().timestamp() + (remaining_seconds | int(0))) | int }}"
+    value_template: "{% set p = states('sensor.washer_cycle_progress') %} {{ p not
+      in ['unavailable','unknown',''] and 0 <= (p | int(-1)) < 100\n   and states('sensor.front_load_washer_run_state')\n
+      \      not in ['unavailable','unknown','none','','off','finished'] }}"
   actions:
   - repeat:
       for_each:
       - notify.mobile_app_carmens_iphone
-      - notify.mobile_app_brians_iphone_15_pro
       sequence:
-      - action: "{{ repeat.item }}"
+      - action: '{{ repeat.item }}'
         data:
           title: Washing Machine
-          message: "{{ run_state }}"
+          message: '{{ run_state }}'
           data:
             tag: washer_cycle
             live_update: true
             background_color: '#14161A'
             text_color: '#FFFFFF'
-            subtitle: "{{ run_state }}"
-            critical_text: "{{ progress }}%"
-            progress: "{{ progress }}"
+            message: '{{ run_state }}'
+            critical_text: '{{ run_state }} · {{ progress }}%'
+            progress: '{{ progress }}'
             progress_max: 100
             chronometer: true
-            when: "{{ finish_ts }}"
-            when_relative: true
+            when: '{{ finish_ts }}'
+            when_relative: false
             notification_icon: mdi:washing-machine
             notification_icon_color: '#2196F3'
+  mode: restart
+  variables:
+    progress: '{{ states(''sensor.washer_cycle_progress'') | int(0) }}'
+    run_state: '{{ states(''sensor.front_load_washer_run_state'') | default(''Running'',
+      true) | title }}'
+    finish_ts: "{% set c = states('sensor.front_load_washer_remaining_time') %} {%
+      if c not in ['unavailable','unknown','', none] and ':' in c %}\n  {% set p =
+      c.split(':') | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60
+      + p[2]) | int }}\n{% else %}{{ now().timestamp() | int }}{% endif %}"
 - id: '1768500000004'
   alias: Basement Guests - Clear on Guest Mode Off
-  description: >-
-    Safety: when Overnight Guests (guest_mode) turns off, also clear the
-    Guests-in-Basement flag so the overnight 70 F hold / fan suppression can't
-    linger after the guests have gone (the toggle is hidden while guest_mode is
-    off).
+  description: 'Safety: when Overnight Guests (guest_mode) turns off, also clear the
+    Guests-in-Basement flag so the overnight 70 F hold / fan suppression can''t linger
+    after the guests have gone (the toggle is hidden while guest_mode is off).'
   triggers:
   - trigger: state
     entity_id:
@@ -8466,3 +8385,53 @@
     target:
       entity_id: input_boolean.basement_guests
   mode: single
+- id: '1785319121026'
+  alias: Dryer Live Activity — Update (v2 test)
+  description: Standalone dryer iOS Live Activity (no shared push script). Progress
+    bar = % complete (sensor.dryer_cycle_progress); live countdown = time remaining
+    (sensor.dryer_remaining_time, h:mm:ss), pointed at an absolute finish timestamp
+    (now + remaining) so the iOS timer counts down correctly. Toggle on/off to test.
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.dryer_cycle_progress
+    - sensor.dryer_run_state
+    - sensor.dryer_remaining_time
+  conditions:
+  - condition: template
+    value_template: "{% set p = states('sensor.dryer_cycle_progress') %} {% set r
+      = states('sensor.dryer_run_state') | lower %} {{ p not in ['unavailable','unknown','']
+      and 0 <= (p | int(-1)) < 100\n   and r not in ['unavailable','unknown','none','','off','finished','-']
+      }}"
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          title: Dryer
+          message: '{{ run_state }}'
+          data:
+            tag: dryer_cycle
+            live_update: true
+            background_color: '#14161A'
+            text_color: '#FFFFFF'
+            subtitle: '{{ run_state }}'
+            critical_text: '{{ progress }}%'
+            progress: '{{ progress }}'
+            progress_max: 100
+            chronometer: true
+            when: '{{ finish_ts }}'
+            when_relative: false
+            notification_icon: mdi:tumble-dryer
+            notification_icon_color: '#FF9800'
+  mode: restart
+  variables:
+    progress: '{{ states(''sensor.dryer_cycle_progress'') | int(0) }}'
+    run_state: '{{ states(''sensor.dryer_run_state'') | default(''Drying'', true)
+      | title }}'
+    finish_ts: "{% set c = states('sensor.dryer_remaining_time') %} {% if c not in
+      ['unavailable','unknown','', none] and ':' in c %}\n  {% set p = c.split(':')
+      | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60 + p[2])
+      | int }}\n{% else %}{{ now().timestamp() | int }}{% endif %}"
