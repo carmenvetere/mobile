@@ -484,8 +484,8 @@
           is_state('light.living_room_floor_lamp_2', 'on') and state_attr('light.living_room_floor_lamp_2', 'brightness') | int(0) in range(66, 87),
           is_state('light.living_room_main_lights', 'off'),
           is_state('light.kitchen_window_seat_sconce', 'on') and state_attr('light.kitchen_window_seat_sconce', 'brightness') | int(0) in range(117, 138),
-          is_state('light.stairs_spot_lights', 'on') and state_attr('light.stairs_spot_lights', 'brightness') | int(0) in range(15, 36),
-          is_state('light.eve_light_strip_a5a4', 'on') and state_attr('light.eve_light_strip_a5a4', 'brightness') | int(0) in range(3, 23)
+          is_state('light.stairs_spot_lights', 'off'),
+          is_state('light.eve_light_strip_a5a4', 'on') and state_attr('light.eve_light_strip_a5a4', 'brightness') | int(0) in range(0, 21)
         ] %}
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:lightbulb-night-outline

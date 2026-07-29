@@ -388,6 +388,16 @@ input_boolean:
   basement_guests:
     name: Guests in Basement
     icon: mdi:bed-king-outline
+  # --- Basement overnight guests: motion-lights suspend latch ---------------
+  # On only while "Basement Guests - Suspend Motion Lights Overnight" has the
+  # basement motion automations switched off. The restore branch checks this
+  # latch so an 08:00 / flag-change run never re-enables a motion automation
+  # that Carmen turned off herself from the Settings "Gym Motion Lights" row.
+  # No `initial:` so the latch survives restarts and the automations still get
+  # restored after an HA restart mid-suspend.
+  basement_motion_suspended:
+    name: Basement Motion Lights Suspended
+    icon: mdi:motion-sensor-off
   # --- Climate overhaul Phase 1: zone holds --------------------------------
   # Hold on = the zone schedule must not write that zone. Set by the door-open
   # automations, Away Mode Turns On, and Power Outage V2; cleared only by the
