@@ -1119,7 +1119,7 @@ cards:
             icon: mdi:cellphone
             tap_action:
               action: none
-            state_display: v2.2.2
+            state_display: v2.2.3
             styles:
               card:
               - background: transparent !important
@@ -1151,6 +1151,13 @@ cards:
           cards:
             - type: markdown
               content: |
+                **v2.2.3** — 2026-08-01
+
+                - Basement: the guest motion-light guard now runs all day — with Overnight Guests and Guests in Basement both on, the basement motion lights automations stay off around the clock instead of only 8 PM–8 AM, so a guest napping, changing or working downstairs during the day no longer trips the lights on; still restored the moment either toggle clears, and a manual Gym Motion Lights toggle is still never overridden
+                - iOS Live Activities: the Washer and Dryer cards now actually finish — each cycle ends with a green "Complete · Clothes are ready" card at 100% with the countdown stopped, held 10 minutes as the move-the-laundry reminder, then cleared off the Lock Screen / Dynamic Island. Previously the card just froze on the last progress update and stayed pinned indefinitely
+                - iOS Live Activities: a cancelled or powered-off laundry cycle (which never reports "complete") now clears its card after 5 minutes idle instead of leaving a stale one behind, and a stale card left over from a Home Assistant restart is cleared on startup
+                - iOS Live Activities: the running Washer/Dryer card can no longer reappear after the complete card has been shown
+
                 **v2.2.2** — 2026-07-29
 
                 - Scenes: Nightlight updated — the stairs spot lights now stay off and the office desk shelf light (Eve strip) sits a touch dimmer; the Nightlight scene indicator was retuned to match, so the dashboard stops showing the scene as inactive while it's running
