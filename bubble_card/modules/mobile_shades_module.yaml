@@ -1,6 +1,6 @@
 mobile_shades_module:
   name: Mobile Shades Module
-  version: '1.7'
+  version: '1.8'
   creator: ''
   supported:
     - button
@@ -13,11 +13,13 @@ mobile_shades_module:
     - separator
     - sub-buttons
   description: >-
-    Mobile shade rows (v2.2.3): the card keeps the same dark grey surface in
-    every state - no slider fill, no state tint - and the up / stop / down
-    sub-buttons are the only controls. The icon is driven by shade position:
-    fully open = mdi:window-closed in slate, partially open = mdi:roller-shade
-    in slate, fully closed = mdi:roller-shade-closed in the primary text colour.
+    Mobile shade rows (v2.2.3): the card keeps the same dark grey surface and
+    the same primary-text-colour text in every state - fully open, partially
+    open and fully closed - with no slider fill and no state tint, and the
+    up / stop / down sub-buttons are the only controls. The icon is the one
+    thing that tracks position: fully open = mdi:window-closed in slate,
+    partially open = mdi:roller-shade in slate, fully closed =
+    mdi:roller-shade-closed in the primary text colour.
   code: |2-
         /* Position-driven icon. The icon variable is Bubble Card's handle on
            the icon element; the IIFE returns an empty string so nothing leaks
@@ -42,6 +44,33 @@ mobile_shades_module:
           border-radius: 15px !important;
           background-color: var(--background-color-2) !important;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+          /* Bubble Card tints button text when the entity reads as active.
+             Pin its text tokens so nothing flips as a shade opens. */
+          --bubble-button-text-color: var(--primary-text-color);
+          --bubble-button-name-color: var(--primary-text-color);
+          --bubble-button-state-color: var(--primary-text-color);
+          --bubble-sub-button-text-color: var(--primary-text-color);
+          --bubble-state-color: var(--primary-text-color);
+          --bubble-name-color: var(--primary-text-color);
+          color: var(--primary-text-color) !important;
+          }
+
+        /* Every text element on the row keeps the primary text colour in all
+           three states - fully open, partially open and fully closed. Listed
+           out rather than using a wildcard so the position-driven .bubble-icon
+           colour further down still wins on the icon itself. The battery
+           sub-button icon likewise keeps its own colour-coded rule, which
+           targets ha-icon directly. */
+        .bubble-name,
+        .bubble-state,
+        .bubble-sub-button,
+        .bubble-sub-button-name,
+        .bubble-sub-button-state,
+        .bubble-button-name-container,
+        .bubble-button-content,
+        .bubble-content-container,
+        .bubble-range-value {
+          color: var(--primary-text-color) !important;
           }
 
         /* Bubble Card's state-tinted layer stays fully transparent, so an open
