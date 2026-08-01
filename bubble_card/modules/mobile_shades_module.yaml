@@ -1,6 +1,6 @@
 mobile_shades_module:
   name: Mobile Shades Module
-  version: '1.6'
+  version: '1.7'
   creator: ''
   supported:
     - button
@@ -12,45 +12,70 @@ mobile_shades_module:
     - select
     - separator
     - sub-buttons
-  description: ''
+  description: >-
+    Mobile shade rows (v2.2.3): the card keeps the same dark grey surface in
+    every state - no slider fill, no state tint - and the up / stop / down
+    sub-buttons are the only controls. The icon is driven by shade position:
+    fully open = mdi:window-closed in slate, partially open = mdi:roller-shade
+    in slate, fully closed = mdi:roller-shade-closed in the primary text colour.
   code: |2-
+        /* Position-driven icon. The icon variable is Bubble Card's handle on
+           the icon element; the IIFE returns an empty string so nothing leaks
+           into the stylesheet. Covers with no current_position attribute fall
+           back to the state. */
+        ${(() => {
+          const p = hass.states[entity]?.attributes?.current_position;
+          const pos = (p === null || p === undefined)
+            ? (state === 'closed' ? 0 : 100)
+            : Number(p);
+          const want = pos <= 0 ? 'mdi:roller-shade-closed'
+            : pos >= 100 ? 'mdi:window-closed'
+            : 'mdi:roller-shade';
+          const el = (typeof icon !== 'undefined' && icon)
+            ? icon
+            : card.querySelector('.bubble-icon');
+          if (el && el.getAttribute('icon') !== want) el.setAttribute('icon', want);
+          return '';
+        })()}
+
         .bubble-button-card-container {
           border-radius: 15px !important;
           background-color: var(--background-color-2) !important;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
           }
 
+        /* Bubble Card's state-tinted layer stays fully transparent, so an open
+           shade never lightens the card. */
         .bubble-button-background {
           background-color: var(--background-color-2) !important;
           opacity: 0 !important;
-          } 
+          }
 
         .bubble-name {
           font-size: 16px !important;
           text-align: left !important;
-          color: ${state === 'open' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
+          color: var(--primary-text-color) !important;
             }
-       
-        .bubble-sub-button { 
+
+        .bubble-sub-button {
           font-size: 14px !important;
-          font-weight: bold; 
+          font-weight: bold;
           color: var(--primary-text-color) !important;
           }
-        
+
         .bubble-state {
           font-size: 14px !important;
           font-weight: bold !important;
           text-align: left !important;
-          color: ${state === 'open' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
+          color: var(--primary-text-color) !important;
             }
-        .bubble-sub-button-slider {
-          margin-left: 20px;
-          margin-right: 20px;
-          margin-bottom: 10px;      
-          }
 
+        /* Shade rows are arrow-driven (button_type: state), so no range control
+           should render. These rules only matter as a fallback - they keep any
+           stray slider fill the same grey as the card so the background can
+           never appear to change with state. */
         .bubble-range-fill {
-          background: ${state === 'open' ? 'var(--slate-color)' : 'var(--background-color-2)'} !important;
+          background: var(--background-color-2) !important;
           border-radius: 15px !important;
           opacity: 1 !important;
           }
@@ -64,10 +89,16 @@ mobile_shades_module:
           border-radius: 15px !important;
           opacity: 1 !important;
           }
-          
+
         .bubble-icon {
           opacity: 1 !important;
-          color: ${state === 'open' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'} !important;
+          color: ${(() => {
+            const p = hass.states[entity]?.attributes?.current_position;
+            const pos = (p === null || p === undefined)
+              ? (state === 'closed' ? 0 : 100)
+              : Number(p);
+            return pos <= 0 ? 'var(--primary-text-color)' : 'var(--slate-color)';
+          })()} !important;
           --mdc-icon-size: 36px !important;
           }
 

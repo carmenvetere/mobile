@@ -1157,6 +1157,9 @@ cards:
                 - iOS Live Activities: the Washer and Dryer cards now actually finish — each cycle ends with a green "Complete · Clothes are ready" card at 100% with the countdown stopped, held 10 minutes as the move-the-laundry reminder, then cleared off the Lock Screen / Dynamic Island. Previously the card just froze on the last progress update and stayed pinned indefinitely
                 - iOS Live Activities: a cancelled or powered-off laundry cycle (which never reports "complete") now clears its card after 5 minutes idle instead of leaving a stale one behind, and a stale card left over from a Home Assistant restart is cleared on startup
                 - iOS Live Activities: the running Washer/Dryer card can no longer reappear after the complete card has been shown
+                - Shades: the shade rows lost their slider — the up / stop / down arrows are now the only way to move a shade, so a stray swipe on the card can't send it to a random position; tapping the row opens its details instead of toggling it
+                - Shades: the card no longer lightens as a shade opens — every row keeps the same dark grey background in all states
+                - Shades: the row icon now tracks position instead of sitting static — fully open shows an empty window in slate, partly open a half-drawn shade in slate, and fully closed a drawn shade in white
 
                 **v2.2.2** — 2026-07-29
 
