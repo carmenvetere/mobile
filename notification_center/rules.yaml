@@ -1091,3 +1091,41 @@
     priority: info
     quiet_hours_behavior: batch
     source_type: template
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+      - bell
+      - wall
+    clear_mode: dismiss
+    color: "#F6CE46"
+    condition_template: |-
+      {% set ts = state_attr('input_datetime.dryer_vent_last_cleaned', 'timestamp') %}
+      {{ ts is not none
+         and (now().timestamp() - (ts | float(0))) / 86400 > 365 }}
+    custom_actions:
+      - confirm: Did you just clean the dryer vent and want to reset it?
+        icon: mdi:check
+        label: I cleaned it
+        service: script.reset_dryer_vent_last_cleaned_date
+    dedup_tag: dryer_vent_cleaning
+    deliver_as_digest: false
+    digest_group: ""
+    enabled: true
+    entity_id: ""
+    icon: mdi:tumble-dryer-alert
+    items_template: ""
+    message_template: |-
+      {% set ts = state_attr('input_datetime.dryer_vent_last_cleaned', 'timestamp') %}
+      {% if ts is none %}Dryer vent cleaning is overdue{% else %}Last cleaned {{ ((now().timestamp() - (ts | float(0))) / 2629746) | round(0) | int }} months ago — lint buildup is a fire risk{% endif %}
+    name: Dryer Vent Cleaning Due
+    navigation_target: /mobile-dash/settings
+    operator: "=="
+    presence_routing: all
+    priority: info
+    quiet_hours_behavior: suppress
+    snooze: false
+    source_type: template
+    title_template: ""
+    tts_message: ""
+    tts_targets: ""
+    value: ""

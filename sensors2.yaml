@@ -14,6 +14,7 @@
         - sensor.nws_alerts_alerts
         - sensor.front_load_washer_tub_clean_counter
         - sensor.months_since_last_hot_water_flush
+        - input_datetime.dryer_vent_last_cleaned
         - input_number.upper_floors_hvac_filter_hours
         - input_number.lower_floors_hvac_filter_hours
         - sensor.utility_room_temp_sensor_temperature
@@ -52,6 +53,11 @@
         - sensor.back_guest_bedroom_side_battery
         - sensor.back_guest_bedroom_back_left_battery
         - sensor.back_guest_bedroom_back_right_battery
+    # The dryer-vent rule is derived from a date, not from a state change, so
+    # nothing would re-trigger this sensor as the year elapses. Re-render
+    # hourly so time-based rules age in.
+    - platform: time_pattern
+      hours: "/1"
   sensor:
     - name: "Notification Alert Counter"
       unique_id: notification_alert_counter
@@ -72,6 +78,10 @@
           (states('sensor.nws_alerts_alerts') not in ['unknown','unavailable'] and states('sensor.nws_alerts_alerts')|int(0) > 0),
           states('sensor.front_load_washer_tub_clean_counter')|int(0) > 30,
           states('sensor.months_since_last_hot_water_flush')|float(0) > 5.9,
+          (state_attr('input_datetime.dryer_vent_last_cleaned','timestamp') is not none
+            and (now().timestamp()
+                 - state_attr('input_datetime.dryer_vent_last_cleaned','timestamp')|float(0))
+                / 86400 > 365),
           states('input_number.upper_floors_hvac_filter_hours')|int(0) > 2000,
           states('input_number.lower_floors_hvac_filter_hours')|int(0) > 2000,
           states('sensor.utility_room_temp_sensor_temperature')|float(99) < 55,
