@@ -1159,6 +1159,7 @@ cards:
                 - iOS Live Activities: the running Washer/Dryer card can no longer reappear after the complete card has been shown
                 - Shades: the shade rows lost their slider — the up / stop / down arrows are now the only way to move a shade, so a stray swipe on the card can't send it to a random position; tapping the row opens its details instead of toggling it
                 - Shades: the card no longer lightens as a shade opens — every row keeps the same dark grey background and the same white text whether the shade is fully open, partly open or closed
+                - Shades: the state line keeps showing how far a shade is open — "45% open" when partly open, Open or Closed at the ends — which the slider used to append and the arrow-only row would otherwise have dropped
                 - Shades: the row icon now tracks position instead of sitting static — fully open shows an empty window in slate, partly open a half-drawn shade in slate, and fully closed a drawn shade in white
 
                 **v2.2.2** — 2026-07-29
