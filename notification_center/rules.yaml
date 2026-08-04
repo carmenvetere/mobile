@@ -572,8 +572,8 @@
     color: "#F6CE46"
     condition_template: |-
       {% set ts = state_attr('input_datetime.dryer_vent_last_cleaned', 'timestamp') %}
-      {{ ts is not none
-         and (now().timestamp() - (ts | float(0))) / 86400 > 365 }}
+      {% set months = (now().timestamp() - (ts | float(0))) / 2629746 %}
+      {{ ts is not none and months > 12 and months <= 13 }}
     custom_actions:
       - confirm: Did you just clean the dryer vent and want to reset it?
         icon: mdi:check
@@ -598,6 +598,46 @@
     snooze: false
     source_type: template
     title_template: ""
+    tts_message: ""
+    tts_targets: ""
+    value: ""
+  - actions_follow_priority: true
+    auto_clear: true
+    channels:
+      - mobile
+      - bell
+      - wall
+      - navigate
+    clear_mode: dismiss
+    color: "#EA4D3D"
+    condition_template: |-
+      {% set ts = state_attr('input_datetime.dryer_vent_last_cleaned', 'timestamp') %}
+      {% set months = (now().timestamp() - (ts | float(0))) / 2629746 %}
+      {{ ts is not none and months > 13 }}
+    custom_actions:
+      - confirm: Did you just clean the dryer vent and want to reset it?
+        icon: mdi:check
+        label: I cleaned it
+        service: script.reset_dryer_vent_last_cleaned_date
+    dedup_tag: dryer_vent_cleaning_critical
+    deliver_as_digest: false
+    digest_group: ""
+    enabled: true
+    entity_id: ""
+    icon: mdi:tumble-dryer-alert
+    items_template: ""
+    message_template: |-
+      {% set ts = state_attr('input_datetime.dryer_vent_last_cleaned', 'timestamp') %}
+      {% if ts is none %}Dryer vent cleaning is badly overdue{% else %}Last cleaned {{ ((now().timestamp() - (ts | float(0))) / 2629746) | round(0) | int }} months ago — more than a year overdue, and lint buildup is a fire risk{% endif %}
+    name: Dryer Vent Cleaning Overdue
+    navigation_target: /mobile-dash/settings
+    operator: "=="
+    presence_routing: all
+    priority: critical
+    quiet_hours_behavior: suppress
+    snooze: false
+    source_type: template
+    title_template: Dryer Vent Cleaning Overdue
     tts_message: ""
     tts_targets: ""
     value: ""
