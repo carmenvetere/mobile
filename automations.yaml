@@ -8337,9 +8337,6 @@
     value_template: "{% set p = states('sensor.washer_cycle_progress') %} {{ p not
       in ['unavailable','unknown',''] and 0 <= (p | int(-1)) < 100\n   and states('sensor.front_load_washer_run_state')\n
       \      not in ['unavailable','unknown','none','','off','finished'] }}"
-  - condition: state
-    entity_id: binary_sensor.washer_recently_completed
-    state: 'off'
   actions:
   - repeat:
       for_each:
@@ -8399,24 +8396,25 @@
     (sensor.dryer_remaining_time, h:mm:ss), pointed at an absolute finish timestamp
     (now + remaining) so the iOS timer counts down correctly. This automation only
     ever shows a RUNNING card - the card is ended by "Dryer Live Activity - Complete
-    (v2)" (green Complete card, held, then cleared) or by "- Clear Stale Card (v2)"
-    if the cycle is cancelled. The dryer_recently_completed guard below stops this
-    automation from resurrecting the running card once either of those has taken over.'
+    (v2)", which now fires on progress reaching 100 as well as on the completion
+    sensor. v2.2.3 fix: this ran off sensor.dryer_run_state, which does not exist -
+    every other consumer of the dryer (the v1 automation, the cycle-progress template,
+    the chips card) uses sensor.dryer. states() on a missing entity returns "unknown",
+    which the condition excluded, so the condition was never true and the dryer card
+    never appeared at all. The gate is now sensor.dryer (on/off, same entity the v1
+    automation used); dryer_run_state is still read for the label text only, falling
+    back to "Drying" when it is missing.'
   triggers:
   - trigger: state
     entity_id:
     - sensor.dryer_cycle_progress
-    - sensor.dryer_run_state
+    - sensor.dryer
     - sensor.dryer_remaining_time
   conditions:
   - condition: template
-    value_template: "{% set p = states('sensor.dryer_cycle_progress') %} {% set r
-      = states('sensor.dryer_run_state') | lower %} {{ p not in ['unavailable','unknown','']
-      and 0 <= (p | int(-1)) < 100\n   and r not in ['unavailable','unknown','none','','off','finished','-']
-      }}"
-  - condition: state
-    entity_id: binary_sensor.dryer_recently_completed
-    state: 'off'
+    value_template: "{% set p = states('sensor.dryer_cycle_progress') %} {{ states('sensor.dryer')
+      not in ['off','unavailable','unknown','-','']\n   and p not in ['unavailable','unknown','']\n
+      \  and 0 <= (p | int(-1)) < 100 }}"
   actions:
   - repeat:
       for_each:
@@ -8443,8 +8441,8 @@
   mode: restart
   variables:
     progress: '{{ states(''sensor.dryer_cycle_progress'') | int(0) }}'
-    run_state: '{{ states(''sensor.dryer_run_state'') | default(''Drying'', true)
-      | title }}'
+    run_state: "{% set r = states('sensor.dryer_run_state') %} {{ r | title if r not
+      in ['unknown','unavailable','none','-',''] else 'Drying' }}"
     finish_ts: "{% set c = states('sensor.dryer_remaining_time') %} {% if c not in
       ['unavailable','unknown','', none] and ':' in c %}\n  {% set p = c.split(':')
       | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60 + p[2])
@@ -8510,14 +8508,25 @@
     Island indefinitely. This replaces it with a terminal green "Complete" card -
     progress pinned at 100%, chronometer off, live_update false so iOS stops treating
     it as a live activity - holds it 10 minutes as the move-the-laundry reminder,
-    then clears the tag. Fires off binary_sensor.washer_recently_completed (the same
-    signal the Notification Center Washer Complete rule uses), so a washer powered
-    off without running can never produce a spurious "Clothes are ready" card.'
+    then clears the tag. v2.2.3 fix: this fired only on binary_sensor.washer_recently_completed,
+    which in practice did not arrive when the cycle ended, so nothing superseded the
+    running card - and because that last card carried a chronometer pointed at a finish
+    timestamp now in the past, iOS counted UP from it instead of showing Complete.
+    Progress reaching 100 is now a trigger in its own right. That is a safe completion
+    signal: the cycle-progress template only returns 100 while the appliance is still
+    on (it returns 0 once it is off), so a washer powered off without running still
+    cannot produce a spurious "Clothes are ready" card.'
   triggers:
   - trigger: state
     entity_id: binary_sensor.washer_recently_completed
     from: 'off'
     to: 'on'
+  - trigger: numeric_state
+    entity_id: sensor.washer_cycle_progress
+    above: 99
+  - trigger: state
+    entity_id: sensor.front_load_washer_run_state
+    to: finished
   conditions: []
   actions:
   - repeat:
@@ -8556,18 +8565,16 @@
   description: 'Safety net for the standalone washer Live Activity (v2.2.3): a cancelled
     or powered-off cycle never sets binary_sensor.washer_recently_completed, so the
     Complete (v2) automation never runs and the running card would hang around forever.
-    When the run state has been idle for 5 minutes and no completion is in play, just
-    clear the tag - no card is pushed, so this is a no-op when there was nothing on
-    screen. Also runs on HA restart, which is the other way a card can outlive its
-    cycle (the pending 10-minute hold in Complete (v2) is lost across a restart).'
+    When the washer has been off for 5 minutes and no completion is in play, just clear
+    the tag - no card is pushed, so this is a no-op when there was nothing on screen.
+    Also runs on HA restart, which is the other way a card can outlive its cycle (the
+    pending 10-minute hold in Complete (v2) is lost across a restart). v2.2.3: keyed
+    off sensor.front_load_washer (on/off, the entity the v1 automation used) rather
+    than guessing at the run_state vocabulary.'
   triggers:
   - trigger: state
-    entity_id: sensor.front_load_washer_run_state
-    to:
-    - none
-    - 'off'
-    - unknown
-    - unavailable
+    entity_id: sensor.front_load_washer
+    to: 'off'
     for: '00:05:00'
   - trigger: homeassistant
     event: start
@@ -8578,15 +8585,8 @@
   - condition: not
     conditions:
     - condition: state
-      entity_id: sensor.front_load_washer_run_state
-      state:
-      - run
-      - running
-      - rinse
-      - spin
-      - wash
-      - pause
-      - paused
+      entity_id: sensor.front_load_washer
+      state: 'on'
   actions:
   - repeat:
       for_each:
@@ -8606,14 +8606,20 @@
     card pinned to the Lock Screen / Dynamic Island indefinitely. This replaces it
     with a terminal green "Complete" card - progress pinned at 100%, chronometer off,
     live_update false so iOS stops treating it as a live activity - holds it 10 minutes
-    as the move-the-laundry reminder, then clears the tag. Fires off binary_sensor.dryer_recently_completed
-    so a dryer powered off without running can never produce a spurious "Clothes are
-    ready" card.'
+    as the move-the-laundry reminder, then clears the tag. v2.2.3: progress reaching
+    100 is a trigger alongside binary_sensor.dryer_recently_completed, matching the
+    washer fix - relying on the completion sensor alone left the running card counting
+    up from a finish time already in the past. The cycle-progress template only returns
+    100 while the dryer is still on (0 once it is off), so a dryer powered off without
+    running still cannot produce a spurious "Clothes are ready" card.'
   triggers:
   - trigger: state
     entity_id: binary_sensor.dryer_recently_completed
     from: 'off'
     to: 'on'
+  - trigger: numeric_state
+    entity_id: sensor.dryer_cycle_progress
+    above: 99
   conditions: []
   actions:
   - repeat:
@@ -8652,18 +8658,16 @@
   description: 'Safety net for the standalone dryer Live Activity (v2.2.3): a cancelled
     or powered-off cycle never sets binary_sensor.dryer_recently_completed, so the
     Complete (v2) automation never runs and the running card would hang around forever.
-    When the run state has been idle for 5 minutes and no completion is in play, just
-    clear the tag - no card is pushed, so this is a no-op when there was nothing on
-    screen. Also runs on HA restart, which is the other way a card can outlive its
-    cycle (the pending 10-minute hold in Complete (v2) is lost across a restart).'
+    When the dryer has been off for 5 minutes and no completion is in play, just clear
+    the tag - no card is pushed, so this is a no-op when there was nothing on screen.
+    Also runs on HA restart, which is the other way a card can outlive its cycle (the
+    pending 10-minute hold in Complete (v2) is lost across a restart). v2.2.3: keyed
+    off sensor.dryer (on/off) rather than the nonexistent sensor.dryer_run_state, which
+    would never have fired this trigger either.'
   triggers:
   - trigger: state
-    entity_id: sensor.dryer_run_state
-    to:
-    - none
-    - 'off'
-    - unknown
-    - unavailable
+    entity_id: sensor.dryer
+    to: 'off'
     for: '00:05:00'
   - trigger: homeassistant
     event: start
@@ -8674,14 +8678,8 @@
   - condition: not
     conditions:
     - condition: state
-      entity_id: sensor.dryer_run_state
-      state:
-      - run
-      - running
-      - drying
-      - cooling
-      - pause
-      - paused
+      entity_id: sensor.dryer
+      state: 'on'
   actions:
   - repeat:
       for_each:
