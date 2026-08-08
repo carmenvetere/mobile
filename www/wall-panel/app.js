@@ -3,20 +3,20 @@
 // everything through the injected `panel` object — no view touches `hass`
 // directly except through panel.st()/panel.call().
 import { reactive, computed, watch } from './vendor/vue.esm-browser.prod.js';
-import { CONFIG } from './config.js?v=1';
-import { Header } from './components/header.js?v=1';
-import { FooterNav } from './components/footer-nav.js?v=1';
-import { OutageBanner } from './components/outage-banner.js?v=1';
-import { HomeView } from './views/home.js?v=1';
-import { ShadesView } from './views/shades.js?v=1';
-import { LightsView } from './views/lights.js?v=1';
-import { ClimateView } from './views/climate.js?v=1';
-import { MusicView } from './views/music.js?v=1';
-import { SettingsView } from './views/settings.js?v=1';
-import { AlarmView } from './views/alarm.js?v=1';
-import { Screensaver } from './overlays/screensaver.js?v=1';
-import { NotificationCenter } from './overlays/notifications.js?v=1';
-import { SpeakerGrouping } from './overlays/speaker-grouping.js?v=1';
+import { CONFIG } from './config.js?v=2';
+import { Header } from './components/header.js?v=2';
+import { FooterNav } from './components/footer-nav.js?v=2';
+import { OutageBanner } from './components/outage-banner.js?v=2';
+import { HomeView } from './views/home.js?v=2';
+import { ShadesView } from './views/shades.js?v=2';
+import { LightsView } from './views/lights.js?v=2';
+import { ClimateView } from './views/climate.js?v=2';
+import { MusicView } from './views/music.js?v=2';
+import { SettingsView } from './views/settings.js?v=2';
+import { AlarmView } from './views/alarm.js?v=2';
+import { Screensaver } from './overlays/screensaver.js?v=2';
+import { NotificationCenter } from './overlays/notifications.js?v=2';
+import { SpeakerGrouping } from './overlays/speaker-grouping.js?v=2';
 
 const VIEWS = {
   home: HomeView,
@@ -38,8 +38,10 @@ export function createPanel(store) {
     code: '',
     codeError: false,
     armingLeft: 0,
+    armingTotal: 0,
+    armFailure: null,   // { reason, sensors: [names] } — cleared on the next arm attempt or state change
     activeRoom: CONFIG.sonos.primary,
-    ss: { active: false, viewBefore: 'home', enteredAt: 0 },
+    ss: { active: false, enteredAt: 0 },
     lastTouch: Date.now(),
     now: Date.now(),         // 30 s clock tick
   });
@@ -104,9 +106,60 @@ export function createPanel(store) {
   const alarmState = () => hass()?.states?.[CONFIG.alarm.entity]?.state || 'unknown';
   const armed = () => !['disarmed', 'unknown', 'unavailable'].includes(alarmState());
 
+  // Friendly names for a list/dict of sensor entity_ids (Alarmo reports
+  // blockers as an `open_sensors` dict or an event `sensors` array).
+  const sensorNames = (raw) => {
+    const ids = Array.isArray(raw) ? raw : raw && typeof raw === 'object' ? Object.keys(raw) : [];
+    return ids.map((id) => hass()?.states?.[id]?.attributes?.friendly_name || id);
+  };
+
+  // Blockers Alarmo is reporting right now, straight off the entity — this
+  // is what makes the panel say "can't arm" BEFORE you try.
+  const openSensors = computed(() => sensorNames(attr(CONFIG.alarm.entity, 'open_sensors')));
+  const canArm = computed(() => {
+    const s = alarmState();
+    if (s === 'unavailable' || s === 'unknown') return false;
+    return openSensors.value.length === 0;
+  });
+  // One line explaining why arming is unavailable, or '' when it is fine.
+  const armBlockedReason = computed(() => {
+    const s = alarmState();
+    if (s === 'unavailable' || s === 'unknown') return 'Alarm unavailable — Alarmo is not responding';
+    const open = openSensors.value;
+    if (open.length) return 'Can’t arm — ' + open.join(', ') + (open.length === 1 ? ' is open' : ' are open');
+    return '';
+  });
+
+  const REASON_TEXT = {
+    open_sensors: 'sensors are open',
+    invalid_code: 'the code was not accepted',
+    not_allowed: 'that is not allowed right now',
+  };
+  // Alarmo fires alarmo_failed_to_arm when a command is refused; the state
+  // never leaves disarmed, so without this the tap looks like it did nothing.
+  const onFailedToArm = (ev) => {
+    const d = ev?.data || {};
+    const names = sensorNames(d.sensors);
+    ui.armFailure = {
+      reason: d.reason || 'unknown',
+      text: names.length
+        ? 'Can’t arm — ' + names.join(', ') + (names.length === 1 ? ' is open' : ' are open')
+        : 'Can’t arm — ' + (REASON_TEXT[d.reason] || 'Alarmo refused the command'),
+    };
+  };
+  let unsubFailed = null;
+  const subscribeAlarmEvents = () => {
+    const conn = hass()?.connection;
+    if (!conn?.subscribeEvents || unsubFailed) return;
+    Promise.resolve(conn.subscribeEvents(onFailedToArm, 'alarmo_failed_to_arm'))
+      .then((unsub) => { unsubFailed = unsub; })
+      .catch(() => {});
+  };
+
   const arm = (target) => {
     if (alarmState() === target) return;
     ui.pendingDisarm = false;
+    ui.armFailure = null;
     const service = target === 'armed_away' ? 'alarm_arm_away' : 'alarm_arm_home';
     call('alarm_control_panel', service, { entity_id: CONFIG.alarm.entity });
   };
@@ -164,12 +217,19 @@ export function createPanel(store) {
     if (s === lastAlarm) return;
     lastAlarm = s;
     clearInterval(armTicker);
+    subscribeAlarmEvents();
     if (s === 'arming' || s === 'pending') {
       const delay = parseInt(attr(CONFIG.alarm.entity, 'delay'), 10);
-      ui.armingLeft = Number.isInteger(delay) && delay > 0 ? delay : CONFIG.alarm.exitDelaySeconds;
+      const total = Number.isInteger(delay) && delay > 0 ? delay : CONFIG.alarm.exitDelaySeconds;
+      ui.armingTotal = total;
+      ui.armingLeft = total;
+      ui.armFailure = null;
       armTicker = setInterval(() => { if (ui.armingLeft > 0) ui.armingLeft -= 1; }, 1000);
     } else {
       ui.armingLeft = 0;
+      ui.armingTotal = 0;
+      // Reaching an armed state means the last failure is stale.
+      if (s !== 'disarmed') ui.armFailure = null;
       if (s === 'disarmed') ui.pendingDisarm = false;
     }
   };
@@ -350,20 +410,19 @@ export function createPanel(store) {
 
   const enterScreensaver = () => {
     if (ui.ss.active) return;
-    ui.ss.viewBefore = ui.view;
     ui.ss.enteredAt = Date.now();
     ui.ss.active = true;
     closeMenus();
     setBacklight(CONFIG.display.dimPct);
   };
   let deepIdle = false;
+  // Waking ALWAYS lands on Home — whoever walks up to the panel next is not
+  // necessarily whoever left it on the Climate view.
   const wake = () => {
     if (!ui.ss.active) return;
-    // Total idle = time on the screensaver + the idle that triggered it
-    // (lastTouch is already reset by the waking touch itself).
-    const idleFor = (Date.now() - ui.ss.enteredAt) / 1000 + CONFIG.display.idleAfterSeconds;
     ui.ss.active = false;
-    ui.view = idleFor >= CONFIG.display.deepIdleAfterSeconds ? 'home' : ui.ss.viewBefore;
+    ui.view = 'home';
+    closeMenus();
     deepIdle = false;
     setBacklight(100);
   };
@@ -397,6 +456,7 @@ export function createPanel(store) {
     clearTimeout(sceneTimer);
     clearTimeout(codeTimer);
     stopAlarmWatch();
+    if (unsubFailed) { unsubFailed(); unsubFailed = null; }
     for (const t of Object.values(optTimers)) clearTimeout(t);
   };
 
@@ -406,6 +466,7 @@ export function createPanel(store) {
     CONFIG, ui, st, state, attr, num, call, go, closeMenus,
     alarmState, armed, arm, tapDisarm, keyTap,
     alarmStateText, alarmStateColor, alarmShieldIcon,
+    canArm, armBlockedReason, openSensors,
     outage, powerwallPct,
     tapScene, sceneRoster, homeScenes,
     lightIsOn, lightPct, lightsOnCount, setLightPct, toggleLight,

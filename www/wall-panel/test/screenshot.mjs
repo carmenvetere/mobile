@@ -48,27 +48,47 @@ await nav(6); await shot('settings');
 // 2. alarm via the header shield
 await pg.click('.wp-shield'); await shot('alarm-disarmed');
 
-// 3. armed: home shows the disarm keypad and sheds two scenes
+// 3. arming: exit-delay countdown + progress bar
+await set('alarm_control_panel.alarmo', 'arming', { arm_mode: 'armed_away', delay: 60 });
+await shot('alarm-arming');
+
+// 4. refused command: Alarmo's failed-to-arm event names the open sensors
+await set('alarm_control_panel.alarmo', 'disarmed', { arm_mode: null, open_sensors: null });
+await pg.evaluate(() => window.__test.fireEvent('alarmo_failed_to_arm', {
+  reason: 'open_sensors', sensors: ['binary_sensor.front_door', 'binary_sensor.mudroom_garage_door'],
+}));
+await shot('alarm-failed');
+
+// 5. standing blocker: open_sensors on the entity, before anyone taps arm
+await set('alarm_control_panel.alarmo', 'disarmed', { open_sensors: { 'binary_sensor.front_door': 'on' } });
+await shot('alarm-blocked');
+await set('alarm_control_panel.alarmo', 'disarmed', { open_sensors: null });
+
+// 6. armed: home shows the disarm keypad and sheds two scenes
 await set('alarm_control_panel.alarmo', 'armed_home', { arm_mode: 'armed_home' });
 await shot('alarm-armed');
 await nav(1); await shot('home-armed');
 await set('alarm_control_panel.alarmo', 'disarmed', {});
 
-// 4. outage: banner on home + two scenes shed
+// 6b. outage: banner on home + two scenes shed
 await set('binary_sensor.bayberry_grid_status', 'off');
 await shot('home-outage');
 
-// 5. overlays
+// 7. overlays
 await pg.click('.wp-notif-ind'); await shot('overlay-notifications');
 await pg.click('.wp-overlay.notif', { position: { x: 10, y: 10 } }); // scrim closes
 await pg.click('.wp-speaker-label'); await shot('overlay-speakers');
 await pg.click('.wp-overlay.speakers', { position: { x: 10, y: 10 } });
 
-// 6. screensaver — music mode (still playing), then clock mode + outage alert
+// 8. screensaver — music mode (still playing), then clock mode + outage alert
 await nav(6);
 await pg.click('.wp-settings-row.tappable'); await shot('screensaver-music');
-await pg.click('.wp-ss'); // wake
+await pg.click('.wp-ss'); // wake — must land on Home, not the view we left
+await shot('wake-lands-home');
+const woke = await pg.evaluate(() => !!document.querySelector('.wp-footer .wp-nav-item:first-child')?.classList.contains('active'));
+if (!woke) errors.push('wake did not return to Home');
 await set('media_player.media_room', 'paused', {});
+await nav(6);
 await pg.click('.wp-settings-row.tappable'); await shot('screensaver-clock');
 await pg.click('.wp-ss');
 await set('binary_sensor.bayberry_grid_status', 'on');

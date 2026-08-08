@@ -385,6 +385,50 @@ html, body { height: 100%; margin: 0; background: var(--ss-base); }
   background: var(--card); border-radius: 20px; padding: 6px;
 }
 .wp-segment { border-radius: 15px; padding: 26px 0; text-align: center; font-size: 22px; font-weight: 700; cursor: pointer; }
+/* Arming is blocked (open sensors / Alarmo unavailable) — the segment reads
+   as unavailable; the reason is spelled out by .wp-alarm-failure above it. */
+.wp-segment.blocked { opacity: 0.4; }
+
+/* Arming countdown + "why it won't arm" notice (Alarm view and the Home
+   view's armed section, which uses the .compact variant). */
+.wp-alarm-countdown {
+  background: rgba(224, 167, 94, 0.16);
+  border: 1px solid rgba(224, 167, 94, 0.55);
+  border-radius: 20px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  color: var(--amber);
+}
+.wp-alarm-countdown.compact { padding: 14px 20px; margin: 0 0 14px; }
+.wp-alarm-countdown-head { display: flex; align-items: center; gap: 14px; }
+.wp-alarm-countdown-head .mdi { font-size: 32px; }
+.wp-alarm-countdown.compact .wp-alarm-countdown-head .mdi { font-size: 28px; }
+.wp-alarm-countdown-label { flex: 1; font-size: 24px; font-weight: 700; }
+.wp-alarm-countdown.compact .wp-alarm-countdown-label { font-size: 21px; }
+.wp-alarm-countdown-secs { font-size: 32px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 76px; text-align: right; }
+.wp-alarm-countdown.compact .wp-alarm-countdown-secs { font-size: 26px; min-width: 62px; }
+.wp-alarm-countdown-bar {
+  height: 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.14);
+  overflow: hidden; margin-top: 14px;
+}
+.wp-alarm-countdown.compact .wp-alarm-countdown-bar { height: 10px; margin-top: 10px; }
+/* Shrinks as the exit delay runs out — no transition: it steps once a second. */
+.wp-alarm-countdown-bar > div { height: 100%; background: var(--amber); }
+
+.wp-alarm-failure {
+  display: flex; align-items: center; gap: 16px;
+  background: rgba(224, 105, 91, 0.16);
+  border: 1px solid rgba(224, 105, 91, 0.55);
+  border-radius: 20px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  color: var(--err);
+}
+.wp-alarm-failure.compact { padding: 14px 20px; margin: 0 0 14px; }
+.wp-alarm-failure .mdi { font-size: 34px; flex-shrink: 0; }
+.wp-alarm-failure.compact .mdi { font-size: 28px; }
+.wp-alarm-failure-text { font-size: 22px; font-weight: 700; line-height: 1.25; text-wrap: pretty; }
+.wp-alarm-failure.compact .wp-alarm-failure-text { font-size: 19px; }
 
 /* ===== Overlays ===== */
 .wp-overlay { position: absolute; inset: 0; background: var(--scrim); }

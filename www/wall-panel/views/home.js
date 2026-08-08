@@ -2,11 +2,11 @@
 // disarm keypad and the outage banner), then a lower half that fills the
 // remaining frame: Now Playing while disarmed, the disarm keypad while
 // armed or arming.
-import { SectionHeader } from '../components/section-header.js?v=1';
-import { Keypad, CodeDots } from './alarm.js?v=1';
+import { SectionHeader } from '../components/section-header.js?v=2';
+import { Keypad, CodeDots, AlarmNotice } from './alarm.js?v=2';
 
 export const HomeView = {
-  components: { SectionHeader, Keypad, CodeDots },
+  components: { SectionHeader, Keypad, CodeDots, AlarmNotice },
   inject: ['panel'],
   computed: {
     volumePct() { return this.panel.sonosVolumePct; },
@@ -80,6 +80,7 @@ export const HomeView = {
       <div v-else class="wp-home-lower">
         <SectionHeader :icon="panel.alarmShieldIcon" :title="panel.alarmStateText" later
                        :style="{ color: panel.alarmStateColor }"/>
+        <AlarmNotice compact/>
         <CodeDots home/>
         <Keypad/>
       </div>

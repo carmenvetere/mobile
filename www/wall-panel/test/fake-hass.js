@@ -29,6 +29,9 @@ export const states = Object.fromEntries([
 
   // alarm
   mk('alarm_control_panel.alarmo', 'disarmed', {}),
+  // blockers Alarmo can report via open_sensors (names come from here)
+  mk('binary_sensor.front_door', 'off', { friendly_name: 'Front Door' }),
+  mk('binary_sensor.mudroom_garage_door', 'off', { friendly_name: 'Garage Entry' }),
 
   // basement lights
   mk('light.gym_main_lights', 'on', { brightness: 178 }),
@@ -104,8 +107,22 @@ export const states = Object.fromEntries([
 ]);
 
 export function makeFakeHass(onChange) {
+  // Fake event bus so the panel's alarmo_failed_to_arm subscription works
+  // offline; window.__test.fireEvent drives it from the screenshot script.
+  const listeners = {};
   const hass = {
     states,
+    connection: {
+      subscribeEvents(cb, type) {
+        (listeners[type] = listeners[type] || []).push(cb);
+        return Promise.resolve(() => {
+          listeners[type] = (listeners[type] || []).filter((c) => c !== cb);
+        });
+      },
+    },
+    fireEvent(type, data) {
+      for (const cb of listeners[type] || []) cb({ data });
+    },
     callWS: async () => ({}),
     callService(domain, service, data) {
       console.log('[TEST] callService', domain, service, JSON.stringify(data));

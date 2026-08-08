@@ -31,6 +31,7 @@ window.__test = {
     states[id] = { ...s, state: state ?? s.state, attributes: { ...s.attributes, ...(attributes || {}) } };
     push();
   },
+  fireEvent(type, data) { el.hass.fireEvent(type, data); },
   states,
 };
 window.__READY = true;
