@@ -12,12 +12,10 @@ export const states = Object.fromEntries([
   mk('input_boolean.guest_mode', 'on'),
   mk('input_boolean.dinner_party', 'off'),
   mk('input_boolean.cleaners_mode', 'off'),
-  mk('sensor.notification_center', '2', {
-    items: [
-      { id: 'garage', icon: 'mdi:garage-open-variant', color: '#E0A75E', title: 'Garage door open', detail: 'Open for 42 minutes' },
-      { id: 'filter', icon: 'mdi:air-filter', color: '#8EB1BF', title: 'Media Room filter due', detail: 'Replace within 5 days' },
-    ],
-  }),
+  // Only the count lives on the sensor — the list comes from HA's
+  // persistent-notification feed (see notifications below).
+  mk('sensor.notification_center', '2'),
+  mk('sensor.notification_center_priority', 'warning', { icon: 'mdi:bell', color: '#7295B2' }),
 
   // power
   mk('binary_sensor.bayberry_grid_status', 'on'), // on = grid up
@@ -110,10 +108,28 @@ export const states = Object.fromEntries([
   mk('input_datetime.dryer_vent_last_cleaned', new Date(Date.now() - 210 * 86400000).toISOString()),
 ]);
 
+// HA persistent notifications — what the Notification Center renders. Keyed
+// by notification_id, exactly as persistent_notification/subscribe sends them.
+export const notifications = {
+  garage_door: {
+    notification_id: 'garage_door',
+    title: 'Garage door open',
+    message: 'Open for 42 minutes',
+    created_at: '2026-08-08T10:04:00.000Z',
+  },
+  media_room_filter: {
+    notification_id: 'media_room_filter',
+    title: 'Media Room filter due',
+    message: 'Replace within 5 days',
+    created_at: '2026-08-08T08:12:00.000Z',
+  },
+};
+
 export function makeFakeHass(onChange) {
-  // Fake event bus so the panel's alarmo_failed_to_arm subscription works
-  // offline; window.__test.fireEvent drives it from the screenshot script.
+  // Fake event bus + message subscriptions so the panel's alarmo_failed_to_arm
+  // and persistent_notification feeds work offline; window.__test drives them.
   const listeners = {};
+  const notifSubs = [];
   const hass = {
     states,
     connection: {
@@ -121,6 +137,15 @@ export function makeFakeHass(onChange) {
         (listeners[type] = listeners[type] || []).push(cb);
         return Promise.resolve(() => {
           listeners[type] = (listeners[type] || []).filter((c) => c !== cb);
+        });
+      },
+      subscribeMessage(cb, msg) {
+        if (msg?.type !== 'persistent_notification/subscribe') return Promise.resolve(() => {});
+        notifSubs.push(cb);
+        cb({ type: 'current', notifications: { ...notifications } });
+        return Promise.resolve(() => {
+          const i = notifSubs.indexOf(cb);
+          if (i >= 0) notifSubs.splice(i, 1);
         });
       },
     },
@@ -159,6 +184,10 @@ export function makeFakeHass(onChange) {
           const next = [...new Set([...current, ...(data.group_members || [])])];
           for (const m of next) patch(m, null, { group_members: next });
         }
+      }
+      if (domain === 'persistent_notification' && service === 'dismiss') {
+        delete notifications[data.notification_id];
+        for (const cb of notifSubs) cb({ type: 'current', notifications: { ...notifications } });
       }
       onChange();
       return Promise.resolve();

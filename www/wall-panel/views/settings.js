@@ -2,8 +2,8 @@
 // Release Notes. The Sections rows mirror the mobile settings groups but
 // are inert until the panel grows its own sub-views (the mobile pop-ups
 // can't open inside the panel).
-import { SectionHeader } from '../components/section-header.js?v=4';
-import { ToggleRow } from '../components/toggle-row.js?v=4';
+import { SectionHeader } from '../components/section-header.js?v=5';
+import { ToggleRow } from '../components/toggle-row.js?v=5';
 
 export const SettingsView = {
   components: { SectionHeader, ToggleRow },

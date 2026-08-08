@@ -273,15 +273,13 @@ export const CONFIG = {
   },
 
   notifications: {
+    // Count + priority tint for the header bell. The LIST itself is not in
+    // hass.states: the Notification Center integration renders HA
+    // persistent notifications, so the panel subscribes to
+    // persistent_notification/subscribe (the same feed HA's own drawer
+    // uses) and dismisses via persistent_notification.dismiss.
     countSensor: 'sensor.notification_center',
-    // The Notification Center integration's item list is read from the
-    // count sensor's attributes; the first of these keys that holds an
-    // array wins. Adjust once the integration's attribute shape is pinned.
-    itemAttrCandidates: ['items', 'notifications', 'active'],
-    // Optional services for dismissing items. Left null, the per-row
-    // dismiss and Clear all buttons are hidden (read-only center).
-    dismissService: null, // e.g. { domain: 'notification_center', service: 'dismiss', idField: 'id' }
-    clearAllService: null, // e.g. { domain: 'notification_center', service: 'clear_all' }
+    prioritySensor: 'sensor.notification_center_priority',
   },
 
   display: {

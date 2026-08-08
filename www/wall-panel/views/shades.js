@@ -1,7 +1,7 @@
 // Shades: no sliders, no fill bar — the 50px icon and its color carry
 // state, the three 84px circles carry control. Partial open is slate (any
 // amount of open reads as open) and labeled "Open · N%", per review.
-import { SectionHeader } from '../components/section-header.js?v=4';
+import { SectionHeader } from '../components/section-header.js?v=5';
 
 const ShadeCard = {
   inject: ['panel'],

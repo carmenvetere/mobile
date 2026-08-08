@@ -2,8 +2,8 @@
 // sweep, 50° gap at the bottom), 100px ± circles, and upward-opening
 // Mode / Fan dropdown selects — dropdowns, not cycling buttons (review
 // decision). Toggle rows below on the climate surface token.
-import { SectionHeader } from '../components/section-header.js?v=4';
-import { ToggleRow } from '../components/toggle-row.js?v=4';
+import { SectionHeader } from '../components/section-header.js?v=5';
+import { ToggleRow } from '../components/toggle-row.js?v=5';
 
 const MODES = [
   { value: 'heat', label: 'Heat', icon: 'mdi-fire', color: 'var(--amber)' },

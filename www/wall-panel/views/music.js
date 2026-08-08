@@ -1,6 +1,6 @@
-// Music — full-screen Sonos. Room chips solo a room; the art panel shows
-// the active player's media; favorites start on the current group.
-import { SectionHeader } from '../components/section-header.js?v=4';
+// Music — full-screen Sonos. Room chips switch which player the panel shows
+// and controls (grouping lives in the Speaker Grouping sheet).
+import { SectionHeader } from '../components/section-header.js?v=5';
 
 export const MusicView = {
   components: { SectionHeader },
@@ -16,8 +16,22 @@ export const MusicView = {
     },
     volumePct() { return this.panel.sonosVolumePct; },
   },
+  watch: {
+    // The row scrolls, so the selected room can start off-screen (the panel
+    // follows whatever is playing, which may be the eighth chip).
+    'panel.activeRoom': { handler() { this.$nextTick(() => this.revealActiveChip()); }, immediate: true },
+  },
+  mounted() { this.revealActiveChip(); },
   methods: {
-    chipActive(r) { return this.panel.groupMembers.includes(r.entity); },
+    revealActiveChip() {
+      const el = this.$el?.querySelector?.('.wp-room-chip.active');
+      el?.scrollIntoView({ block: 'nearest', inline: 'center' });
+    },
+    // The chip you're listening to is filled; rooms that are playing but
+    // not selected get a dot, so you can see where sound is coming from.
+    chipActive(r) { return r.entity === this.panel.activeRoom; },
+    chipPlaying(r) { return this.panel.roomIsPlaying(r.entity) && !this.chipActive(r); },
+    chipGrouped(r) { return this.panel.groupMembers.includes(r.entity) && !this.chipActive(r); },
     volDrag(e) {
       const rect = e.currentTarget.getBoundingClientRect();
       const panel = this.panel;
@@ -39,7 +53,11 @@ export const MusicView = {
     <div class="wp-music">
       <div class="wp-room-chips wp-hscroll">
         <div v-for="r in cfg.rooms" :key="r.entity" class="wp-room-chip"
-             :class="{ active: chipActive(r) }" @click="panel.soloRoom(r.entity)">{{ r.name }}</div>
+             :data-room="r.entity"
+             :class="{ active: chipActive(r), grouped: chipGrouped(r) }"
+             @click="panel.pinRoom(r.entity)">
+          <span v-if="chipPlaying(r)" class="wp-room-chip-dot"></span>{{ r.name }}
+        </div>
       </div>
       <div class="wp-music-body">
         <div class="wp-art-panel" :style="artStyle">

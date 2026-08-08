@@ -2,7 +2,7 @@
 // brightness (6px threshold). The row content renders twice — a white
 // layer and a dark layer clipped to the brightness fill — so contrast is
 // per-pixel correct even mid-drag (the two-layer trick from the handoff).
-import { SectionHeader } from '../components/section-header.js?v=4';
+import { SectionHeader } from '../components/section-header.js?v=5';
 
 const LightRow = {
   inject: ['panel'],

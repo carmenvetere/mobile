@@ -89,11 +89,32 @@ await set('alarm_control_panel.alarmo', 'disarmed', {});
 await set('binary_sensor.bayberry_grid_status', 'off');
 await shot('home-outage');
 
-// 7. overlays
+// 7. overlays — the notification list comes from the persistent-notification
+// feed, not from the sensor's attributes
 await pg.click('.wp-notif-ind'); await shot('overlay-notifications');
+const notifRows = await pg.locator('.wp-notif-row').count();
+if (notifRows !== 2) errors.push(`notification center showed ${notifRows} rows, expected 2`);
 await pg.click('.wp-overlay.notif', { position: { x: 10, y: 10 } }); // scrim closes
 await pg.click('.wp-speaker-label'); await shot('overlay-speakers');
 await pg.click('.wp-overlay.speakers', { position: { x: 10, y: 10 } });
+
+// 7b. Sonos follows the house: pool playing while the media room is paused
+await set('media_player.media_room', 'paused');
+await set('media_player.gym', 'paused');
+await set('media_player.mud_room', 'paused');
+await set('media_player.pool', 'playing', { media_title: 'Golden Hour', media_artist: 'JVKE' });
+await shot('home-follows-pool');
+const follows = await pg.textContent('.wp-speaker-label div');
+if (!/Pool/.test(follows)) errors.push(`Now Playing showed "${follows}", expected the playing room (Pool)`);
+await nav(5); await shot('music-follows-pool');
+// pinning a room from a chip overrides the follow
+await pg.click('.wp-room-chips .wp-room-chip:first-child'); await shot('music-pinned-media-room');
+await pg.click('.wp-room-chips .wp-room-chip:first-child'); // unpin
+await set('media_player.pool', 'idle');
+await set('media_player.media_room', 'playing');
+await set('media_player.gym', 'playing');
+await set('media_player.mud_room', 'playing');
+await nav(1);
 
 // 8. screensaver — music mode (still playing), then clock mode + outage alert
 await nav(6);

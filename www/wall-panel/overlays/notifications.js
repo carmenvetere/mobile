@@ -6,22 +6,11 @@ export const NotificationCenter = {
   inject: ['panel'],
   computed: {
     items() { return this.panel.notifItems; },
-    cfg() { return this.panel.CONFIG.notifications; },
-    canDismiss() { return !!this.cfg.dismissService; },
-    canClear() { return !!this.cfg.clearAllService; },
   },
   methods: {
     close() { this.panel.ui.overlays.notifications = false; },
-    dismiss(n) {
-      const svc = this.cfg.dismissService;
-      if (!svc) return;
-      this.panel.call(svc.domain, svc.service, { [svc.idField || 'id']: n.id });
-    },
-    clearAll() {
-      const svc = this.cfg.clearAllService;
-      if (!svc) return;
-      this.panel.call(svc.domain, svc.service, {});
-    },
+    dismiss(n) { this.panel.dismissNotification(n); },
+    clearAll() { this.panel.clearAllNotifications(); },
   },
   template: `
     <div class="wp-overlay notif" @click="close">
@@ -38,7 +27,7 @@ export const NotificationCenter = {
               <div class="wp-notif-title">{{ n.title }}</div>
               <div v-if="n.detail" class="wp-notif-detail">{{ n.detail }}</div>
             </div>
-            <div v-if="canDismiss" class="wp-notif-dismiss" @click.stop="dismiss(n)">
+            <div class="wp-notif-dismiss" @click.stop="dismiss(n)">
               <span class="mdi mdi-close"></span>
             </div>
           </div>
@@ -47,7 +36,7 @@ export const NotificationCenter = {
           <span class="mdi mdi-bell-off-outline"></span>
           <div>All clear</div>
         </div>
-        <div v-if="items.length && canClear" class="wp-notif-clear" @click="clearAll">
+        <div v-if="items.length" class="wp-notif-clear" @click="clearAll">
           <span class="mdi mdi-check-all"></span>
           Clear all
         </div>
