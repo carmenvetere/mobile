@@ -53,16 +53,25 @@ await set('alarm_control_panel.alarmo', 'arming', { arm_mode: 'armed_away', dela
 await shot('alarm-arming');
 
 // 4. refused command: Alarmo's failed-to-arm event names the open sensors
-await set('alarm_control_panel.alarmo', 'disarmed', { arm_mode: null, open_sensors: null });
+await set('alarm_control_panel.alarmo', 'disarmed', { arm_mode: null });
 await pg.evaluate(() => window.__test.fireEvent('alarmo_failed_to_arm', {
   reason: 'open_sensors', sensors: ['binary_sensor.front_door', 'binary_sensor.mudroom_garage_door'],
 }));
 await shot('alarm-failed');
 
-// 5. standing blocker: open_sensors on the entity, before anyone taps arm
-await set('alarm_control_panel.alarmo', 'disarmed', { open_sensors: { 'binary_sensor.front_door': 'on' } });
-await shot('alarm-blocked');
-await set('alarm_control_panel.alarmo', 'disarmed', { open_sensors: null });
+// 5. open-door heads-up, read live from the door sensors (one door, then two)
+await pg.reload(); await pg.waitForFunction('window.__READY === true'); await pg.waitForTimeout(600);
+await pg.click('.wp-shield');
+await set('binary_sensor.kitchen_french_doors', 'on');
+await shot('alarm-door-open');
+await set('binary_sensor.front_door', 'on');
+await shot('alarm-doors-open');
+await set('binary_sensor.kitchen_french_doors', 'off');
+await set('binary_sensor.front_door', 'off');
+
+// 5b. Alarmo itself unavailable — the one case that dims the segments
+await set('alarm_control_panel.alarmo', 'unavailable');
+await shot('alarm-unavailable');
 
 // 6. armed: home shows the disarm keypad and sheds two scenes
 await set('alarm_control_panel.alarmo', 'armed_home', { arm_mode: 'armed_home' });

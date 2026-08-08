@@ -3,20 +3,20 @@
 // everything through the injected `panel` object — no view touches `hass`
 // directly except through panel.st()/panel.call().
 import { reactive, computed, watch } from './vendor/vue.esm-browser.prod.js';
-import { CONFIG } from './config.js?v=2';
-import { Header } from './components/header.js?v=2';
-import { FooterNav } from './components/footer-nav.js?v=2';
-import { OutageBanner } from './components/outage-banner.js?v=2';
-import { HomeView } from './views/home.js?v=2';
-import { ShadesView } from './views/shades.js?v=2';
-import { LightsView } from './views/lights.js?v=2';
-import { ClimateView } from './views/climate.js?v=2';
-import { MusicView } from './views/music.js?v=2';
-import { SettingsView } from './views/settings.js?v=2';
-import { AlarmView } from './views/alarm.js?v=2';
-import { Screensaver } from './overlays/screensaver.js?v=2';
-import { NotificationCenter } from './overlays/notifications.js?v=2';
-import { SpeakerGrouping } from './overlays/speaker-grouping.js?v=2';
+import { CONFIG } from './config.js?v=3';
+import { Header } from './components/header.js?v=3';
+import { FooterNav } from './components/footer-nav.js?v=3';
+import { OutageBanner } from './components/outage-banner.js?v=3';
+import { HomeView } from './views/home.js?v=3';
+import { ShadesView } from './views/shades.js?v=3';
+import { LightsView } from './views/lights.js?v=3';
+import { ClimateView } from './views/climate.js?v=3';
+import { MusicView } from './views/music.js?v=3';
+import { SettingsView } from './views/settings.js?v=3';
+import { AlarmView } from './views/alarm.js?v=3';
+import { Screensaver } from './overlays/screensaver.js?v=3';
+import { NotificationCenter } from './overlays/notifications.js?v=3';
+import { SpeakerGrouping } from './overlays/speaker-grouping.js?v=3';
 
 const VIEWS = {
   home: HomeView,
@@ -113,40 +113,82 @@ export function createPanel(store) {
     return ids.map((id) => hass()?.states?.[id]?.attributes?.friendly_name || id);
   };
 
-  // Blockers Alarmo is reporting right now, straight off the entity — this
-  // is what makes the panel say "can't arm" BEFORE you try.
-  const openSensors = computed(() => sensorNames(attr(CONFIG.alarm.entity, 'open_sensors')));
-  const canArm = computed(() => {
-    const s = alarmState();
-    if (s === 'unavailable' || s === 'unknown') return false;
-    return openSensors.value.length === 0;
+  // Join names the way a person would say them: "A", "A and B",
+  // "A, B and C".
+  const listNames = (names) => {
+    if (names.length <= 1) return names[0] || '';
+    return names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1];
+  };
+  // Agreement helper: several doors are plural, and so is a single door
+  // whose own name is ("Kitchen French Doors are open", not "is open").
+  const agree = (names) => {
+    const plural = names.length > 1 || /s$/i.test(names[0] || '');
+    return { plural, is: plural ? 'are' : 'is', it: plural ? 'them' : 'it', itIs: plural ? 'they are' : 'it is' };
+  };
+  const isOpen = (id) => ['on', 'open'].includes(state(id));
+
+  // Doors that are open right now, read from the door sensors themselves.
+  // NOT from Alarmo's `open_sensors` attribute: that is a record of the
+  // LAST failed arm or trigger and lingers afterwards, so using it as a
+  // live list makes the panel claim doors are blocking when they aren't.
+  const openDoors = computed(() => CONFIG.alarm.doorSensors
+    .filter((d) => isOpen(d.entity))
+    .map((d) => attr(d.entity, 'friendly_name') || d.name));
+
+  // A heads-up, not a verdict: whether an open door actually blocks arming
+  // depends on the mode (a door in the Home-mode bypass list won't), so
+  // this states what is open and what it might mean, and never disables
+  // the arm buttons.
+  const doorNotice = computed(() => {
+    if (alarmState() !== 'disarmed') return null;
+    const open = openDoors.value;
+    if (!open.length) return null;
+    const g = agree(open);
+    return {
+      tone: 'warn',
+      icon: 'mdi-door-open',
+      title: listNames(open) + ' ' + g.is + ' open',
+      detail: 'Arming away may fail until ' + g.itIs + ' closed.',
+    };
   });
-  // One line explaining why arming is unavailable, or '' when it is fine.
-  const armBlockedReason = computed(() => {
+
+  const unavailableNotice = computed(() => {
     const s = alarmState();
-    if (s === 'unavailable' || s === 'unknown') return 'Alarm unavailable — Alarmo is not responding';
-    const open = openSensors.value;
-    if (open.length) return 'Can’t arm — ' + open.join(', ') + (open.length === 1 ? ' is open' : ' are open');
-    return '';
+    if (s !== 'unavailable' && s !== 'unknown') return null;
+    return { tone: 'fault', icon: 'mdi-shield-off', title: 'Alarm unavailable', detail: 'Alarmo isn’t responding.' };
   });
 
   const REASON_TEXT = {
-    open_sensors: 'sensors are open',
-    invalid_code: 'the code was not accepted',
-    not_allowed: 'that is not allowed right now',
+    invalid_code: 'The code wasn’t accepted.',
+    not_allowed: 'Alarmo wouldn’t accept that command right now.',
   };
   // Alarmo fires alarmo_failed_to_arm when a command is refused; the state
-  // never leaves disarmed, so without this the tap looks like it did nothing.
+  // never leaves disarmed, so without this the tap looks like it did
+  // nothing. Here `sensors` IS authoritative — it is the set that actually
+  // blocked this specific attempt.
+  let failureTimer = null;
   const onFailedToArm = (ev) => {
     const d = ev?.data || {};
     const names = sensorNames(d.sensors);
+    const g = agree(names);
     ui.armFailure = {
-      reason: d.reason || 'unknown',
-      text: names.length
-        ? 'Can’t arm — ' + names.join(', ') + (names.length === 1 ? ' is open' : ' are open')
-        : 'Can’t arm — ' + (REASON_TEXT[d.reason] || 'Alarmo refused the command'),
+      icon: 'mdi-shield-alert-outline',
+      title: 'Arming stopped',
+      detail: names.length
+        ? listNames(names) + ' ' + g.is + ' open — close ' + g.it + ' and try again.'
+        : REASON_TEXT[d.reason] || 'Alarmo refused the command.',
     };
+    clearTimeout(failureTimer);
+    failureTimer = setTimeout(() => { ui.armFailure = null; }, CONFIG.alarm.failureNoticeSeconds * 1000);
   };
+
+  // What the Alarm view shows under the state line, most specific first.
+  const alarmNotice = computed(() => {
+    if (unavailableNotice.value) return unavailableNotice.value;
+    if (ui.armFailure) return { tone: 'warn', ...ui.armFailure };
+    return doorNotice.value;
+  });
+
   let unsubFailed = null;
   const subscribeAlarmEvents = () => {
     const conn = hass()?.connection;
@@ -456,6 +498,7 @@ export function createPanel(store) {
     clearTimeout(sceneTimer);
     clearTimeout(codeTimer);
     stopAlarmWatch();
+    clearTimeout(failureTimer);
     if (unsubFailed) { unsubFailed(); unsubFailed = null; }
     for (const t of Object.values(optTimers)) clearTimeout(t);
   };
@@ -466,7 +509,7 @@ export function createPanel(store) {
     CONFIG, ui, st, state, attr, num, call, go, closeMenus,
     alarmState, armed, arm, tapDisarm, keyTap,
     alarmStateText, alarmStateColor, alarmShieldIcon,
-    canArm, armBlockedReason, openSensors,
+    alarmNotice, openDoors,
     outage, powerwallPct,
     tapScene, sceneRoster, homeScenes,
     lightIsOn, lightPct, lightsOnCount, setLightPct, toggleLight,

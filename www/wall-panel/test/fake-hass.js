@@ -29,9 +29,13 @@ export const states = Object.fromEntries([
 
   // alarm
   mk('alarm_control_panel.alarmo', 'disarmed', {}),
-  // blockers Alarmo can report via open_sensors (names come from here)
+  // doors the panel names when one is open before arming
   mk('binary_sensor.front_door', 'off', { friendly_name: 'Front Door' }),
+  mk('binary_sensor.kitchen_french_doors', 'off', { friendly_name: 'Kitchen French Doors' }),
+  mk('binary_sensor.living_room_french_doors', 'off', { friendly_name: 'Living Room French Doors' }),
+  mk('binary_sensor.mudroom_entry_door', 'off', { friendly_name: 'Mudroom Door' }),
   mk('binary_sensor.mudroom_garage_door', 'off', { friendly_name: 'Garage Entry' }),
+  mk('cover.garage_door_garage', 'closed', { friendly_name: 'Garage Door' }),
 
   // basement lights
   mk('light.gym_main_lights', 'on', { brightness: 178 }),

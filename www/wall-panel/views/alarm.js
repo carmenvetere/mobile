@@ -40,8 +40,9 @@ export const Keypad = {
     </div>`,
 };
 
-// Countdown + "why it won't arm" banner, shared by the Alarm view and the
-// Home view's armed section.
+// Countdown while arming, otherwise the current alarm notice (an open-door
+// heads-up, a refused-arm explanation, or an unavailable Alarmo). Shared by
+// the Alarm view and the Home view's armed section.
 export const AlarmNotice = {
   inject: ['panel'],
   props: { compact: { type: Boolean, default: false } },
@@ -56,14 +57,10 @@ export const AlarmNotice = {
       if (!total) return 0;
       return Math.max(0, Math.min(100, (this.left / total) * 100));
     },
-    // A refused command (event) outranks the standing blocked reason, since
-    // it is what the person just tried to do.
-    failureText() {
-      return this.panel.ui.armFailure?.text || this.panel.armBlockedReason || '';
-    },
+    notice() { return this.panel.alarmNotice; },
   },
   template: `
-    <div v-if="arming" class="wp-alarm-countdown" :class="{ compact }">
+    <div v-if="arming" class="wp-alarm-notice warn countdown" :class="{ compact }">
       <div class="wp-alarm-countdown-head">
         <span class="mdi mdi-timer-outline"></span>
         <div class="wp-alarm-countdown-label">Arming — leave now</div>
@@ -71,9 +68,12 @@ export const AlarmNotice = {
       </div>
       <div class="wp-alarm-countdown-bar"><div :style="{ width: progressPct + '%' }"></div></div>
     </div>
-    <div v-else-if="failureText" class="wp-alarm-failure" :class="{ compact }">
-      <span class="mdi mdi-alert-circle-outline"></span>
-      <div class="wp-alarm-failure-text">{{ failureText }}</div>
+    <div v-else-if="notice" class="wp-alarm-notice" :class="[notice.tone, { compact }]">
+      <span class="mdi" :class="notice.icon"></span>
+      <div class="wp-alarm-notice-text">
+        <div class="wp-alarm-notice-title">{{ notice.title }}</div>
+        <div class="wp-alarm-notice-detail">{{ notice.detail }}</div>
+      </div>
     </div>`,
 };
 
@@ -89,9 +89,10 @@ export const AlarmView = {
       const seg = (name, key, activeBg, activeFg, tap) => {
         const active = s === key;
         const arming = (s === 'arming' || s === 'pending') && pendingTarget === key;
-        // Arm segments read as unavailable while Alarmo is blocked; the
-        // reason is spelled out in the notice above.
-        const blocked = key !== 'disarmed' && !active && !p.canArm;
+        // Segments are never disabled by an open door: whether one blocks
+        // arming is Alarmo's call and depends on the mode. Only a genuinely
+        // unavailable entity dims them.
+        const blocked = s === 'unavailable' || s === 'unknown';
         return {
           name,
           key,

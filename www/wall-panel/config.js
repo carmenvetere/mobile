@@ -219,6 +219,20 @@ export const CONFIG = {
     // attribute; the live countdown always prefers the entity's value.
     exitDelaySeconds: 60,
     codeLength: 4,
+    // Doors the panel names when one is open before arming. Same roster the
+    // mobile security view uses. This is read live from the sensors, NOT
+    // from Alarmo's `open_sensors` attribute (that one lingers after a
+    // failed arm and would make the panel report stale blockers).
+    doorSensors: [
+      { entity: 'binary_sensor.front_door', name: 'Front Door' },
+      { entity: 'binary_sensor.kitchen_french_doors', name: 'Kitchen French Doors' },
+      { entity: 'binary_sensor.living_room_french_doors', name: 'Living Room French Doors' },
+      { entity: 'binary_sensor.mudroom_entry_door', name: 'Mudroom Door' },
+      { entity: 'binary_sensor.mudroom_garage_door', name: 'Garage Entry' },
+      { entity: 'cover.garage_door_garage', name: 'Garage Door' },
+    ],
+    // How long a refused-arm notice stays on screen before clearing.
+    failureNoticeSeconds: 20,
   },
 
   settings: {
