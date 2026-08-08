@@ -7074,7 +7074,11 @@
   mode: restart
 - id: '1780678371300'
   alias: 'Pool: Raise Pump Speed When Heating'
-  description: ''
+  description: 'When the heat pump has been running 2 minutes (pump-priming delay,
+    v2.2.2), raise the filter pump so the heater gets adequate flow. v2.2.3: the
+    OmniLogic pump-speed number is now expressed as a percentage rather than RPM,
+    so the setpoint changed 2470 (RPM) -> 70 (%); same physical speed on the 3450
+    RPM pump.'
   triggers:
   - trigger: state
     entity_id:
@@ -7094,11 +7098,14 @@
     target:
       entity_id: number.omnilogic_pool_filter_pump_speed
     data:
-      value: '2470'
+      value: '70'
   mode: single
 - id: '1780678610791'
   alias: 'Pool: Lower Pump Speed When Heating Complete'
-  description: ''
+  description: 'When the heat pump has been off 30 seconds, drop the filter pump back
+    to its circulation speed. v2.2.3: the OmniLogic pump-speed number is now expressed
+    as a percentage rather than RPM, so the setpoint changed 2000 (RPM) -> 58 (%);
+    same physical speed on the 3450 RPM pump.'
   triggers:
   - trigger: state
     entity_id:
@@ -7116,7 +7123,7 @@
     target:
       entity_id: number.omnilogic_pool_filter_pump_speed
     data:
-      value: '2000'
+      value: '58'
   mode: single
 - id: '1782073941879'
   alias: Office Shades – Schedule & Adaptive
