@@ -1,32 +1,21 @@
 wall_panel_separator:
   name: Wall Panel Separator
-  version: '2.0'
+  version: '1.0'
   creator: ''
-  description: >-
-    Section header for the basement wall panel (720x1280 portrait).
-    26px icon, 28px/700 title, 2px rule, 20px/700 optional value chip.
+  description: ''
   code: |2-
           .bubble-name {
-            font-size: 28px !important;  /* title */
-            font-weight: 700 !important;
-            color: var(--primary-text-color) !important;
+            font-size: 24px !important;  /* title */
+            font-weight: bold !important;
           }
-          .bubble-icon {
-            --mdc-icon-size: 26px !important;
-            color: var(--primary-text-color) !important;
-            opacity: 1 !important;
-          }
-          .bubble-sub-button
+          .bubble-sub-button 
           {
             font-size: 20px !important;
             font-weight: 700 !important;
-            background: transparent !important;
           }
           .bubble-line {
             background: var(--primary-text-color);
             opacity: 0.1;
-            height: 2px !important;
-            border-radius: 1px;
           }
           .card-content {
             padding-top: 5px !important;

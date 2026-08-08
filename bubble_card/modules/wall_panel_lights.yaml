@@ -1,71 +1,54 @@
 wall_panel_lights:
   name: Wall Panel Lights
-  version: '2.0'
+  version: '1.0'
   creator: ''
-  description: >-
-    Full-width light row for the basement wall panel. 96px row, 20px radius,
-    surface background-color-3, accent brightness fill, 42px icon, 24px/600
-    name, 22px/700 state. Tap toggles; horizontal drag sets brightness
-    (Bubble slider). Ink flips dark when the accent fill is wide enough
-    (>45% brightness) so text stays legible over the fill.
+  description: ''
   code: |2-
         .bubble-button-card-container {
-          border-radius: 20px !important;
-          margin: 0 !important;
-          min-height: 96px !important;
-          max-width: 100% !important;
-          background-color: var(--background-color-3) !important;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
-          touch-action: pan-y !important;
+          border-radius: 30px !important;
+          margin: 2px 20px 2px 10px !important;
+          background-color: var(--background-color) !important;
+          box-shadow: ${ state === 'on'
+            ? '0 8px 18px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08)'
+            : '0 6px 14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06)'
+            } !important;
+          min-height: 140px !important;
+          max-width: 600px !important;
           }
 
         .bubble-button-background {
-          border-radius: 20px !important;
-          opacity: 0 !important;
-          }
+          background-color: ${state === 'on' ? 'var(--ha-card-background)' : 'var(--background-color)'} !important;
+          } 
 
         .bubble-name {
-          font-size: 24px !important;
-          font-weight: 600 !important;
+          font-size: 30px !important;
           text-align: left !important;
-          color: ${(() => {
-            try {
-              const id = typeof entity === 'string' ? entity : entity?.entity_id;
-              const b = hass.states[id]?.attributes?.brightness;
-              const on = state === 'on';
-              return on && (b === undefined || b > 115)
-                ? 'var(--primary-background-color)' : 'var(--primary-text-color)';
-            } catch (e) { return state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'; }
-          })()} !important;
-          line-height: 1.15 !important;
+          margin-top: 30px;
+          color: ${state === 'on' ? 'var(--secondary-text-color)' : 'var(--text-color)'} !important;
+          line-height: 1.1;
           padding-left: 10px;
             }
-
-        .bubble-sub-button {
+       
+        .bubble-sub-button { 
           font-size: 22px !important;
-          font-weight: 700 !important;
-          background: transparent !important;
-          color: var(--primary-text-color) !important;
+          font-weight: bold; 
+          margin-top: 27px;
+          color: ${state === 'on' ? 'var(--secondary-text-color)' : 'var(--text-color)'} !important;
           }
-
+        
         .bubble-state {
-          font-size: 22px !important;
-          font-weight: 700 !important;
+          font-size: 20px !important;
+          font-weight: bold !important;
           text-align: left !important;
             }
-
         .bubble-sub-button-slider {
           margin-left: 20px;
           margin-right: 20px;
-          margin-bottom: 10px;
-          opacity: 1 !important;
-          border-radius: 20px !important;
+          margin-bottom: 10px;      
           }
 
         .bubble-range-fill {
-          background: ${state === 'on' ? 'var(--accent-color)' : 'var(--background-color-3)'} !important;
-          border-radius: 20px !important;
-          opacity: 1 !important;
+          background: ${state === 'on' ? 'var(--ha-card-background-2)' : 'var(--background-color)'} !important;
           }
 
         .bubble-range-value {
@@ -73,26 +56,18 @@ wall_panel_lights:
           }
 
         .bubble-range-slider {
-          background: var(--background-color-3) !important;
-          border-radius: 20px !important;
+          background: var(--background-color) !important;
           }
-
+          
         .bubble-icon {
           opacity: 1 !important;
-          color: ${(() => {
-            try {
-              const id = typeof entity === 'string' ? entity : entity?.entity_id;
-              const b = hass.states[id]?.attributes?.brightness;
-              const on = state === 'on';
-              return on && (b === undefined || b > 115)
-                ? 'var(--primary-background-color)' : 'var(--primary-text-color)';
-            } catch (e) { return state === 'on' ? 'var(--primary-background-color)' : 'var(--primary-text-color)'; }
-          })()} !important;
-          --mdc-icon-size: 42px !important;
+          color: ${state === 'on' ? 'var(--secondary-text-color)' : 'var(--text-color)'} !important;
+          --mdc-icon-size: 36px !important;
           }
 
         .bubble-icon-container {
           background-color: transparent !important;
           margin-left: 20px !important;
+          margin-top: 30px;
           }
   editor: ''

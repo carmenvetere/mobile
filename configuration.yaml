@@ -630,6 +630,20 @@ lovelace_gen:
 
 wall_panel_sonos:
 
+# Basement wall panel - Vue 3 kiosk app served from www/wall-panel/ (see the
+# wall-panel design handoff). Two operational gotchas: a NEW panel_custom
+# entry needs a full HA restart (YAML reload is not enough), and the ?v=
+# query on module_url must be bumped on every deploy or the Pi's browser
+# cache will serve week-old code.
+panel_custom:
+  - name: wall-panel
+    url_path: wall-panel
+    sidebar_title: Wall Panel
+    sidebar_icon: mdi:tablet-dashboard
+    module_url: /local/wall-panel/panel.js?v=1
+    embed_iframe: true
+    require_admin: false
+
 lovelace:
   resource_mode: yaml
   dashboards:
@@ -645,13 +659,7 @@ lovelace:
       icon: mdi:tablet-dashboard
       show_in_sidebar: true
       filename: dashboards/nspanel/nspanel.yaml
-    wall-panel-dash:
-      mode: yaml
-      title: "Wall Panel - YAML"
-      icon: mdi:wall
-      show_in_sidebar: true
-      filename: dashboards/wall-panel/wall-panel.yaml
-  resources: 
+  resources:
     - url: /hacsfiles/lovelace-layout-card/layout-card.js
       type: module
     - url: /hacsfiles/kiosk-mode/kiosk-mode.js

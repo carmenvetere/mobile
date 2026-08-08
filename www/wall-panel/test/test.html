@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=720, initial-scale=1">
+<title>wall-panel — offline test harness</title>
+<!-- Same link ids the element would inject, so it skips its /local/ URLs
+     (which only resolve inside Home Assistant). -->
+<link id="wall-panel-mdi" rel="stylesheet" href="../vendor/mdi/css/materialdesignicons.min.css">
+<link id="wall-panel-css" rel="stylesheet" href="../style.css">
+</head>
+<body style="margin:0;background:#1b1d20">
+<script type="module">
+// Offline harness: mounts the panel with a FAKE hass object so every view,
+// overlay and screensaver mode is reachable without a Home Assistant
+// instance. Serve the repo root with any static server, e.g.
+//   npx serve www  →  /wall-panel/test/test.html
+import '../wall-panel.js';
+import { states, makeFakeHass } from './fake-hass.js';
+
+const el = document.createElement('wall-panel');
+document.body.appendChild(el);
+
+const push = () => { el.hass = { ...el.hass, states: { ...states } }; };
+el.hass = makeFakeHass(push);
+
+// Scenario driver for the screenshot script (and manual poking).
+window.__test = {
+  set(id, state, attributes) {
+    const s = states[id] || { entity_id: id, state: '', attributes: {} };
+    states[id] = { ...s, state: state ?? s.state, attributes: { ...s.attributes, ...(attributes || {}) } };
+    push();
+  },
+  states,
+};
+window.__READY = true;
+</script>
+</body>
+</html>

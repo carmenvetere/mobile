@@ -1,86 +1,72 @@
 wall_panel_shades:
   name: Wall Panel Shades
-  version: '2.0'
+  version: '1.0'
   creator: ''
-  supported:
-    - button
-    - cover
-    - sub-buttons
-  description: >-
-    Shade card for the basement wall panel. 132px card, 20px radius, no
-    slider - the 50px state icon carries state, three 84px circular
-    sub-buttons (up / stop / down) carry control. Icon and state text color
-    by position: open >= 98% accent, partial gold, closed secondary.
+  description: ''
   code: |2-
         .bubble-button-card-container {
-          border-radius: 20px !important;
-          margin: 0 !important;
-          min-height: 132px !important;
-          max-width: 100% !important;
-          background-color: var(--background-color-2) !important;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+          border-radius: 30px !important;
+          margin: 2px 20px 2px 10px !important;
+          background-color: var(--background-color) !important;
+          box-shadow: ${ state === 'on'
+            ? '0 8px 18px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08)'
+            : '0 6px 14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06)'
+            } !important;
+          min-height: 80px !important;
+          max-width: 600px !important;
           }
 
         .bubble-button-background {
-          opacity: 0 !important;
-          }
+          background-color: var(--background-color) !important;
+          } 
 
         .bubble-name {
-          font-size: 24px !important;
-          font-weight: 600 !important;
+          font-size: 22px !important;
           text-align: left !important;
           color: var(--primary-text-color) !important;
-          line-height: 1.15 !important;
+          line-height: 1.1;
+          padding-left: 10px;
             }
-
+       
+        .bubble-sub-button { 
+          font-size: 18px !important;
+          font-weight: bold; 
+          color: ${state === 'open' ? 'var(--primary-text-color)' : 'var(--primary--text-color)'} !important;
+          }
+        
         .bubble-state {
-          font-size: 19px !important;
-          font-weight: 700 !important;
+          font-size: 20px !important;
+          font-weight: bold !important;
           text-align: left !important;
-          color: ${(() => {
-            try {
-              const id = typeof entity === 'string' ? entity : entity?.entity_id;
-              const p = hass.states[id]?.attributes?.current_position;
-              if (p === undefined) return state === 'open' ? 'var(--accent-color)' : 'var(--secondary-text-color)';
-              if (p >= 98) return 'var(--accent-color)';
-              if (p > 0) return 'var(--gold-color)';
-              return 'var(--secondary-text-color)';
-            } catch (e) { return 'var(--secondary-text-color)'; }
-          })()} !important;
             }
-
-        .bubble-sub-button {
-          width: 84px !important;
-          height: 84px !important;
-          min-width: 84px !important;
-          border-radius: 50% !important;
-          background-color: rgba(0, 0, 0, 0.10) !important;
-          margin-left: 14px !important;
-          color: var(--primary-text-color) !important;
+        .bubble-sub-button-slider {
+          margin-left: 20px;
+          margin-right: 20px;
+          margin-bottom: 10px;      
           }
 
-        .bubble-sub-button ha-icon {
-          --mdc-icon-size: 36px !important;
-          color: var(--primary-text-color) !important;
+        .bubble-range-fill {
+          background: ${state === 'open' ? 'var(--accent-color)' : 'var(--background-color)'} !important;
+          opacity: 1 !important;
           }
 
+        .bubble-range-value {
+          font-size: 0px !important;
+          }
+
+        .bubble-range-slider {
+          background: var(--background-color) !important;
+          opacity: 1 !important;
+          }
+          
         .bubble-icon {
           opacity: 1 !important;
-          --mdc-icon-size: 50px !important;
-          color: ${(() => {
-            try {
-              const id = typeof entity === 'string' ? entity : entity?.entity_id;
-              const p = hass.states[id]?.attributes?.current_position;
-              if (p === undefined) return state === 'open' ? 'var(--accent-color)' : 'var(--secondary-text-color)';
-              if (p >= 98) return 'var(--accent-color)';
-              if (p > 0) return 'var(--gold-color)';
-              return 'var(--secondary-text-color)';
-            } catch (e) { return 'var(--secondary-text-color)'; }
-          })()} !important;
+          color: var(--primary-text-color) !important;
+          --mdc-icon-size: 36px !important;
           }
 
         .bubble-icon-container {
           background-color: transparent !important;
-          margin-left: 16px !important;
+          margin-left: 20px !important;
           }
   editor: ''
