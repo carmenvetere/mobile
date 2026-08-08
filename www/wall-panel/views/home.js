@@ -2,8 +2,8 @@
 // disarm keypad and the outage banner), then a lower half that fills the
 // remaining frame: Now Playing while disarmed, the disarm keypad while
 // armed or arming.
-import { SectionHeader } from '../components/section-header.js?v=3';
-import { Keypad, CodeDots, AlarmNotice } from './alarm.js?v=3';
+import { SectionHeader } from '../components/section-header.js?v=4';
+import { Keypad, CodeDots, AlarmNotice } from './alarm.js?v=4';
 
 export const HomeView = {
   components: { SectionHeader, Keypad, CodeDots, AlarmNotice },

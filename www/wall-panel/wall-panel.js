@@ -5,7 +5,7 @@
 // thousands of entities. Inside the iframe there is no <ha-icon>, which is
 // why the MDI webfont is bundled and icons are plain <span class="mdi">.
 import { createApp, shallowReactive } from './vendor/vue.esm-browser.prod.js';
-import { App } from './app.js?v=3';
+import { App } from './app.js?v=4';
 
 class WallPanel extends HTMLElement {
   constructor() {
@@ -36,7 +36,7 @@ class WallPanel extends HTMLElement {
 
     for (const [id, href] of [
       ['wall-panel-mdi', '/local/wall-panel/vendor/mdi/css/materialdesignicons.min.css'],
-      ['wall-panel-css', '/local/wall-panel/style.css?v=3'],
+      ['wall-panel-css', '/local/wall-panel/style.css?v=4'],
     ]) {
       if (!document.getElementById(id)) {
         const link = document.createElement('link');

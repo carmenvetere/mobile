@@ -1,6 +1,6 @@
 // Music — full-screen Sonos. Room chips solo a room; the art panel shows
 // the active player's media; favorites start on the current group.
-import { SectionHeader } from '../components/section-header.js?v=3';
+import { SectionHeader } from '../components/section-header.js?v=4';
 
 export const MusicView = {
   components: { SectionHeader },

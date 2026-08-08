@@ -3,20 +3,20 @@
 // everything through the injected `panel` object — no view touches `hass`
 // directly except through panel.st()/panel.call().
 import { reactive, computed, watch } from './vendor/vue.esm-browser.prod.js';
-import { CONFIG } from './config.js?v=3';
-import { Header } from './components/header.js?v=3';
-import { FooterNav } from './components/footer-nav.js?v=3';
-import { OutageBanner } from './components/outage-banner.js?v=3';
-import { HomeView } from './views/home.js?v=3';
-import { ShadesView } from './views/shades.js?v=3';
-import { LightsView } from './views/lights.js?v=3';
-import { ClimateView } from './views/climate.js?v=3';
-import { MusicView } from './views/music.js?v=3';
-import { SettingsView } from './views/settings.js?v=3';
-import { AlarmView } from './views/alarm.js?v=3';
-import { Screensaver } from './overlays/screensaver.js?v=3';
-import { NotificationCenter } from './overlays/notifications.js?v=3';
-import { SpeakerGrouping } from './overlays/speaker-grouping.js?v=3';
+import { CONFIG } from './config.js?v=4';
+import { Header } from './components/header.js?v=4';
+import { FooterNav } from './components/footer-nav.js?v=4';
+import { OutageBanner } from './components/outage-banner.js?v=4';
+import { HomeView } from './views/home.js?v=4';
+import { ShadesView } from './views/shades.js?v=4';
+import { LightsView } from './views/lights.js?v=4';
+import { ClimateView } from './views/climate.js?v=4';
+import { MusicView } from './views/music.js?v=4';
+import { SettingsView } from './views/settings.js?v=4';
+import { AlarmView } from './views/alarm.js?v=4';
+import { Screensaver } from './overlays/screensaver.js?v=4';
+import { NotificationCenter } from './overlays/notifications.js?v=4';
+import { SpeakerGrouping } from './overlays/speaker-grouping.js?v=4';
 
 const VIEWS = {
   home: HomeView,

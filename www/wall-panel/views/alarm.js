@@ -81,6 +81,11 @@ export const AlarmView = {
   components: { CodeDots, Keypad, AlarmNotice },
   inject: ['panel'],
   computed: {
+    // The segmented control already names the state, so the big state line
+    // is redundant for disarmed/armed. It stays for `triggered`, which the
+    // segments cannot express (arming is covered by the countdown card and
+    // an unavailable Alarmo by the fault notice).
+    showStateLine() { return this.panel.alarmState() === 'triggered'; },
     segments() {
       const p = this.panel;
       const s = p.alarmState();
@@ -113,7 +118,7 @@ export const AlarmView = {
   },
   template: `
     <div class="wp-alarm">
-      <div class="wp-alarm-state" :style="{ color: panel.alarmStateColor }">
+      <div v-if="showStateLine" class="wp-alarm-state" :style="{ color: panel.alarmStateColor }">
         <span class="mdi" :class="panel.alarmShieldIcon"></span>
         <div class="wp-alarm-state-text">{{ panel.alarmStateText }}</div>
       </div>

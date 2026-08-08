@@ -73,6 +73,12 @@ await set('binary_sensor.front_door', 'off');
 await set('alarm_control_panel.alarmo', 'unavailable');
 await shot('alarm-unavailable');
 
+// 5c. triggered — the one state the segments can't show, so the state line
+// comes back for it
+await set('alarm_control_panel.alarmo', 'triggered', { arm_mode: 'armed_away' });
+await shot('alarm-triggered');
+await set('alarm_control_panel.alarmo', 'disarmed', {});
+
 // 6. armed: home shows the disarm keypad and sheds two scenes
 await set('alarm_control_panel.alarmo', 'armed_home', { arm_mode: 'armed_home' });
 await shot('alarm-armed');

@@ -376,7 +376,9 @@ html, body { height: 100%; margin: 0; background: var(--ss-base); }
 .wp-release-text { font-size: 20px; line-height: 1.4; color: var(--text-card); text-wrap: pretty; }
 
 /* ===== Alarm ===== */
-.wp-alarm { display: flex; flex-direction: column; height: 100%; }
+/* padding-top replaces the state line's old top margin, so the first thing
+   in the view (usually the segmented control) isn't jammed under the header */
+.wp-alarm { display: flex; flex-direction: column; height: 100%; padding-top: 14px; }
 .wp-alarm-state { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 18px 0 22px; }
 .wp-alarm-state .mdi { font-size: 40px; }
 .wp-alarm-state-text { font-size: 32px; font-weight: 700; }
