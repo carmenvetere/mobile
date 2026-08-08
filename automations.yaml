@@ -8515,14 +8515,16 @@
     Island indefinitely. This replaces it with a terminal green "Complete" card -
     progress pinned at 100%, chronometer off, live_update false so iOS stops treating
     it as a live activity - holds it 10 minutes as the move-the-laundry reminder,
-    then clears the tag. v2.2.3 fix: this fired only on binary_sensor.washer_recently_completed,
-    which in practice did not arrive when the cycle ended, so nothing superseded the
-    running card - and because that last card carried a chronometer pointed at a finish
-    timestamp now in the past, iOS counted UP from it instead of showing Complete.
-    Progress reaching 100 is now a trigger in its own right. That is a safe completion
-    signal: the cycle-progress template only returns 100 while the appliance is still
-    on (it returns 0 once it is off), so a washer powered off without running still
-    cannot produce a spurious "Clothes are ready" card.'
+    then clears the tag. Primary completion signal (v2.2.3): the remaining-time countdown
+    itself bottoming out - a transition from a real sub-2.5-minute countdown to 0:00:00
+    (or to unavailable, for a washer that drops offline as it powers down). This is the
+    only end-of-cycle signal guaranteed to arrive: binary_sensor.washer_recently_completed
+    is not defined anywhere in this config (never observed firing), and the cycle-progress
+    template only reaches 100 if the washer still reports on when remaining time zeroes -
+    if the power state flips first, progress jumps from ~95 straight to 0 and never crosses
+    the 99 threshold. Those triggers are retained as harmless backups. The from-state guard
+    (0 < remaining <= 150 s) means a cancelled cycle or an offline blip with more than 2.5
+    minutes left does not fake a completion.'
   triggers:
   - trigger: state
     entity_id: binary_sensor.washer_recently_completed
@@ -8534,7 +8536,21 @@
   - trigger: state
     entity_id: sensor.front_load_washer_run_state
     to: finished
-  conditions: []
+  - trigger: state
+    id: countdown_done
+    entity_id: sensor.front_load_washer_remaining_time
+    to:
+    - '0:00:00'
+    - '-'
+    - unknown
+    - unavailable
+  conditions:
+  - condition: template
+    value_template: "{% if trigger.id != 'countdown_done' %} true {% else %}\n  {%
+      set f = trigger.from_state.state if trigger.from_state else '' %}\n  {% if ':'
+      in f and f != '0:00:00' %}\n    {% set p = f.split(':') | map('int') | list
+      %}\n    {% set secs = p[0]*3600 + p[1]*60 + p[2] %}\n    {{ 0 < secs <= 150
+      }}\n  {% else %} false {% endif %}\n{% endif %}"
   actions:
   - repeat:
       for_each:
@@ -8613,12 +8629,14 @@
     card pinned to the Lock Screen / Dynamic Island indefinitely. This replaces it
     with a terminal green "Complete" card - progress pinned at 100%, chronometer off,
     live_update false so iOS stops treating it as a live activity - holds it 10 minutes
-    as the move-the-laundry reminder, then clears the tag. v2.2.3: progress reaching
-    100 is a trigger alongside binary_sensor.dryer_recently_completed, matching the
-    washer fix - relying on the completion sensor alone left the running card counting
-    up from a finish time already in the past. The cycle-progress template only returns
-    100 while the dryer is still on (0 once it is off), so a dryer powered off without
-    running still cannot produce a spurious "Clothes are ready" card.'
+    as the move-the-laundry reminder, then clears the tag. Primary completion signal
+    (v2.2.3): the remaining-time countdown bottoming out - a transition from a real
+    sub-2.5-minute countdown to 0:00:00 (or to unavailable), mirroring the washer.
+    binary_sensor.dryer_recently_completed is not defined anywhere in this config and
+    the progress template only reaches 100 if sensor.dryer still reads on when the
+    countdown zeroes, so both older triggers are unreliable; they are retained as
+    harmless backups. The from-state guard (0 < remaining <= 150 s) means a cancelled
+    cycle or an offline blip with more than 2.5 minutes left does not fake a completion.'
   triggers:
   - trigger: state
     entity_id: binary_sensor.dryer_recently_completed
@@ -8627,7 +8645,21 @@
   - trigger: numeric_state
     entity_id: sensor.dryer_cycle_progress
     above: 99
-  conditions: []
+  - trigger: state
+    id: countdown_done
+    entity_id: sensor.dryer_remaining_time
+    to:
+    - '0:00:00'
+    - '-'
+    - unknown
+    - unavailable
+  conditions:
+  - condition: template
+    value_template: "{% if trigger.id != 'countdown_done' %} true {% else %}\n  {%
+      set f = trigger.from_state.state if trigger.from_state else '' %}\n  {% if ':'
+      in f and f != '0:00:00' %}\n    {% set p = f.split(':') | map('int') | list
+      %}\n    {% set secs = p[0]*3600 + p[1]*60 + p[2] %}\n    {{ 0 < secs <= 150
+      }}\n  {% else %} false {% endif %}\n{% endif %}"
   actions:
   - repeat:
       for_each:
