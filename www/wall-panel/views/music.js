@@ -1,6 +1,6 @@
 // Music — full-screen Sonos. Room chips switch which player the panel shows
 // and controls (grouping lives in the Speaker Grouping sheet).
-import { SectionHeader } from '../components/section-header.js?v=5';
+import { SectionHeader } from '../components/section-header.js?v=6';
 
 export const MusicView = {
   components: { SectionHeader },

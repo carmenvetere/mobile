@@ -9,17 +9,40 @@
 <link id="wall-panel-mdi" rel="stylesheet" href="../vendor/mdi/css/materialdesignicons.min.css">
 <link id="wall-panel-css" rel="stylesheet" href="../style.css">
 </head>
-<body style="margin:0;background:#1b1d20">
+<style>
+  /* Centre the fixed 720x1280 panel in whatever window you opened, and
+     shrink it to fit a shorter screen (a laptop is rarely 1280 tall).
+     Scaling is proportional, so the layout you see is the layout the Pi
+     gets. Add ?raw to the URL to disable it and see true pixels. */
+  body { margin: 0; background: #1b1d20; overflow: hidden; }
+  #fit { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #fit > wall-panel { transform-origin: center center; }
+</style>
+<body>
+<div id="fit"></div>
 <script type="module">
 // Offline harness: mounts the panel with a FAKE hass object so every view,
 // overlay and screensaver mode is reachable without a Home Assistant
-// instance. Serve the repo root with any static server, e.g.
+// instance. Serve www/ with any static server, e.g.
 //   npx serve www  →  /wall-panel/test/test.html
+// It is also served by HA itself at /local/wall-panel/test/test.html.
 import '../wall-panel.js';
 import { states, makeFakeHass } from './fake-hass.js';
 
 const el = document.createElement('wall-panel');
-document.body.appendChild(el);
+document.getElementById('fit').appendChild(el);
+
+// Scale to fit, never up past 1:1 — the screenshot suite runs at exactly
+// 720x1280, where this is a no-op.
+const PANEL_W = 720, PANEL_H = 1280;
+const raw = new URLSearchParams(location.search).has('raw');
+const fit = () => {
+  if (raw) return;
+  const scale = Math.min(innerWidth / PANEL_W, innerHeight / PANEL_H, 1);
+  el.style.transform = scale < 1 ? `scale(${scale})` : '';
+};
+addEventListener('resize', fit);
+fit();
 
 const push = () => { el.hass = { ...el.hass, states: { ...states } }; };
 el.hass = makeFakeHass(push);
