@@ -17,16 +17,15 @@
     }
 - type: custom:bubble-card
   card_type: button
-  button_type: slider
+  button_type: state
   entity: cover.living_room_front_left_cover
   name: Front Left
   icon: mdi:roller-shade
   show_state: true
   scrolling_effect: false
-  slider_live_update: true
   card_layout: large
   tap_action:
-    action: toggle
+    action: more-info
   sub_button:
     - entity: sensor.living_room_front_left_battery_0
       icon: mdi:battery
@@ -75,24 +74,19 @@
       min-width: 56px !important;
       justify-content: flex-end !important;
     }
-    ha-card {
-      --shade-card-bg: var(--background-color-3);
-      --shade-card-open-bg: var(--background-color-2);
-    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
   card_type: button
-  button_type: slider
+  button_type: state
   entity: cover.living_room_front_right
   name: Front Right
   icon: mdi:roller-shade
   show_state: true
   scrolling_effect: false
-  slider_live_update: true
   card_layout: large
   tap_action:
-    action: toggle
+    action: more-info
   sub_button:
     - entity: sensor.living_room_front_right_battery
       icon: mdi:battery
@@ -141,24 +135,19 @@
       min-width: 56px !important;
       justify-content: flex-end !important;
     }
-    ha-card {
-      --shade-card-bg: var(--background-color-3);
-      --shade-card-open-bg: var(--background-color-2);
-    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
   card_type: button
-  button_type: slider
+  button_type: state
   entity: cover.living_room_side_left_1_cover
   name: Side Left 1
   icon: mdi:roller-shade
   show_state: true
   scrolling_effect: false
-  slider_live_update: true
   card_layout: large
   tap_action:
-    action: toggle
+    action: more-info
   sub_button:
     - entity: sensor.living_room_side_left_1_battery_0
       icon: mdi:battery
@@ -207,24 +196,19 @@
       min-width: 56px !important;
       justify-content: flex-end !important;
     }
-    ha-card {
-      --shade-card-bg: var(--background-color-3);
-      --shade-card-open-bg: var(--background-color-2);
-    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
   card_type: button
-  button_type: slider
+  button_type: state
   entity: cover.living_room_side_left_2_cover_2
   name: Side Left 2
   icon: mdi:roller-shade
   show_state: true
   scrolling_effect: false
-  slider_live_update: true
   card_layout: large
   tap_action:
-    action: toggle
+    action: more-info
   sub_button:
     - entity: sensor.living_room_side_left_2_battery_0
       icon: mdi:battery
@@ -273,24 +257,19 @@
       min-width: 56px !important;
       justify-content: flex-end !important;
     }
-    ha-card {
-      --shade-card-bg: var(--background-color-3);
-      --shade-card-open-bg: var(--background-color-2);
-    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
   card_type: button
-  button_type: slider
+  button_type: state
   entity: cover.living_room_side_right_1_cover
   name: Side Right 1
   icon: mdi:roller-shade
   show_state: true
   scrolling_effect: false
-  slider_live_update: true
   card_layout: large
   tap_action:
-    action: toggle
+    action: more-info
   sub_button:
     - entity: sensor.living_room_side_right_1_battery_0
       icon: mdi:battery
@@ -339,24 +318,19 @@
       min-width: 56px !important;
       justify-content: flex-end !important;
     }
-    ha-card {
-      --shade-card-bg: var(--background-color-3);
-      --shade-card-open-bg: var(--background-color-2);
-    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
   card_type: button
-  button_type: slider
+  button_type: state
   entity: cover.living_room_side_right_2_cover
   name: Side Right 2
   icon: mdi:roller-shade
   show_state: true
   scrolling_effect: false
-  slider_live_update: true
   card_layout: large
   tap_action:
-    action: toggle
+    action: more-info
   sub_button:
     - entity: sensor.living_room_side_right_2_battery_0
       icon: mdi:battery
@@ -405,10 +379,6 @@
       min-width: 56px !important;
       justify-content: flex-end !important;
     }
-    ha-card {
-      --shade-card-bg: var(--background-color-3);
-      --shade-card-open-bg: var(--background-color-2);
-    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
@@ -430,16 +400,15 @@
     }
 - type: custom:bubble-card
   card_type: button
-  button_type: slider
+  button_type: state
   entity: cover.front_right_cover
   name: Front Right
   icon: mdi:roller-shade
   show_state: true
   scrolling_effect: false
-  slider_live_update: true
   card_layout: large
   tap_action:
-    action: toggle
+    action: more-info
   sub_button:
     - entity: sensor.front_right_battery_0
       icon: mdi:battery
@@ -488,24 +457,19 @@
       min-width: 56px !important;
       justify-content: flex-end !important;
     }
-    ha-card {
-      --shade-card-bg: var(--background-color-3);
-      --shade-card-open-bg: var(--background-color-2);
-    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
   card_type: button
-  button_type: slider
+  button_type: state
   entity: cover.front_left_cover
   name: Front Left
   icon: mdi:roller-shade
   show_state: true
   scrolling_effect: false
-  slider_live_update: true
   card_layout: large
   tap_action:
-    action: toggle
+    action: more-info
   sub_button:
     - entity: sensor.dining_room_front_left_battery_0
       icon: mdi:battery
@@ -554,24 +518,19 @@
       min-width: 56px !important;
       justify-content: flex-end !important;
     }
-    ha-card {
-      --shade-card-bg: var(--background-color-3);
-      --shade-card-open-bg: var(--background-color-2);
-    }
   modules:
   - mobile_shades_module  
 - type: custom:bubble-card
   card_type: button
-  button_type: slider
+  button_type: state
   entity: cover.side_right_cover
   name: Side Right
   icon: mdi:roller-shade
   show_state: true
   scrolling_effect: false
-  slider_live_update: true
   card_layout: large
   tap_action:
-    action: toggle
+    action: more-info
   sub_button:
     - entity: sensor.side_right_battery_0
       icon: mdi:battery
@@ -620,24 +579,19 @@
       min-width: 56px !important;
       justify-content: flex-end !important;
     }
-    ha-card {
-      --shade-card-bg: var(--background-color-3);
-      --shade-card-open-bg: var(--background-color-2);
-    }
   modules:
   - mobile_shades_module 
 - type: custom:bubble-card
   card_type: button
-  button_type: slider
+  button_type: state
   entity: cover.side_left_cover
   name: Side Left
   icon: mdi:roller-shade
   show_state: true
   scrolling_effect: false
-  slider_live_update: true
   card_layout: large
   tap_action:
-    action: toggle
+    action: more-info
   sub_button:
     - entity: sensor.side_left_battery_2
       icon: mdi:battery
@@ -685,10 +639,6 @@
     .bubble-sub-button-1 {
       min-width: 56px !important;
       justify-content: flex-end !important;
-    }
-    ha-card {
-      --shade-card-bg: var(--background-color-3);
-      --shade-card-open-bg: var(--background-color-2);
     }
   modules:
   - mobile_shades_module 

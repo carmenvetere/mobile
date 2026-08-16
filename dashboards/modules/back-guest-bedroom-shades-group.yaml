@@ -1,14 +1,13 @@
 - type: custom:bubble-card
   card_type: button
-  button_type: slider
+  button_type: state
   entity: cover.back_guest_bedroom_shades
   name: All Shades
   show_state: true
   scrolling_effect: false
-  slider_live_update: true
   card_layout: large
   tap_action:
-    action: toggle
+    action: more-info
   rows: 1
   sub_button:
     - entity: cover.back_guest_bedroom_shades

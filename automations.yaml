@@ -7084,7 +7084,11 @@
   mode: restart
 - id: '1780678371300'
   alias: 'Pool: Raise Pump Speed When Heating'
-  description: ''
+  description: 'When the heat pump has been running 2 minutes (pump-priming delay,
+    v2.2.2), raise the filter pump so the heater gets adequate flow. v2.2.3: the
+    OmniLogic pump-speed number is now expressed as a percentage rather than RPM,
+    so the setpoint changed 2470 (RPM) -> 70 (%); same physical speed on the 3450
+    RPM pump.'
   triggers:
   - trigger: state
     entity_id:
@@ -7104,11 +7108,14 @@
     target:
       entity_id: number.omnilogic_pool_filter_pump_speed
     data:
-      value: '2470'
+      value: '70'
   mode: single
 - id: '1780678610791'
   alias: 'Pool: Lower Pump Speed When Heating Complete'
-  description: ''
+  description: 'When the heat pump has been off 30 seconds, drop the filter pump back
+    to its circulation speed. v2.2.3: the OmniLogic pump-speed number is now expressed
+    as a percentage rather than RPM, so the setpoint changed 2000 (RPM) -> 58 (%);
+    same physical speed on the 3450 RPM pump.'
   triggers:
   - trigger: state
     entity_id:
@@ -7126,7 +7133,7 @@
     target:
       entity_id: number.omnilogic_pool_filter_pump_speed
     data:
-      value: '2000'
+      value: '58'
   mode: single
 - id: '1782073941879'
   alias: Office Shades – Schedule & Adaptive
@@ -8447,13 +8454,15 @@
         audience: both
 - id: washer_live_activity_update_v2
   alias: Washing Machine Live Activity — Update (v2)
-  description: 'Standalone washer iOS Live Activity (no shared push script). v2.4:
-    pushes ONLY on a run-state change (to: null state trigger, so attribute-only
-    updates are ignored) instead of every progress/remaining tick — the countdown
-    needs no push refresh because `when` is an absolute finish timestamp the iOS
-    timer counts down client-side; the progress bar refreshes at each run-state
-    transition. The completion card comes from the paired Complete (v2) automation.
-    Delivers to Carmen''s iPhone inline.'
+  description: 'Standalone washer iOS Live Activity (no shared push script). Delivers
+    to Carmen''s iPhone inline. This automation only ever shows a RUNNING card -
+    the card is ended by "Washing Machine Live Activity - Complete (v2)" (green
+    Complete card, held, then cleared) or by "- Clear Stale Card (v2)" if the cycle
+    is cancelled. v2.4: pushes ONLY on a run-state change (to: null state trigger,
+    so attribute-only updates are ignored) instead of every progress/remaining tick
+    — the countdown needs no push refresh because `when` is an absolute finish timestamp
+    the iOS timer counts down client-side; the progress bar refreshes at each run-state
+    transition.'
   triggers:
   - trigger: state
     entity_id:
@@ -8496,67 +8505,6 @@
       if c not in ['unavailable','unknown','', none] and ':' in c %}\n  {% set p =
       c.split(':') | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60
       + p[2]) | int }}\n{% else %}{{ now().timestamp() | int }}{% endif %}"
-- id: washer_live_activity_complete_v2
-  alias: Washing Machine Live Activity — Complete (v2)
-  description: 'v2.4: green "Complete" card when the washer finishes. The Update
-    (v2) automation''s running condition goes false at 100% / finished, so without
-    this the Live Activity froze at its last mid-cycle state and never showed complete
-    (the v1 Complete automations are disabled and used the retired shared push script).
-    Triggers on binary_sensor.washer_recently_completed (actively used by the Notification
-    Center). Holds the card until the recently-completed flag clears (laundry moved)
-    or 1 hour, whichever is first, then clears the Live Activity — unless a new
-    cycle is already running, in which case the Update automation owns the tag again
-    and the card is left alone. Delivers to Carmen''s iPhone inline.'
-  triggers:
-  - trigger: state
-    entity_id: binary_sensor.washer_recently_completed
-    from: 'off'
-    to: 'on'
-  conditions: []
-  actions:
-  - repeat:
-      for_each:
-      - notify.mobile_app_carmens_iphone
-      sequence:
-      - action: '{{ repeat.item }}'
-        data:
-          title: Washing Machine
-          message: Clothes are ready
-          data:
-            tag: washer_cycle
-            live_update: true
-            background_color: '#14161A'
-            text_color: '#FFFFFF'
-            message: Complete
-            critical_text: Complete · 100%
-            progress: 100
-            progress_max: 100
-            chronometer: false
-            notification_icon: mdi:washing-machine
-            notification_icon_color: '#4CAF50'
-  - wait_for_trigger:
-    - trigger: state
-      entity_id: binary_sensor.washer_recently_completed
-      from: 'on'
-      to: 'off'
-    timeout: 01:00:00
-    continue_on_timeout: true
-  - if:
-    - condition: template
-      value_template: '{{ states(''sensor.front_load_washer_run_state'') | lower
-        in [''unavailable'', ''unknown'', ''none'', '''', ''off'', ''finished'',
-        ''-''] }}'
-    then:
-    - repeat:
-        for_each:
-        - notify.mobile_app_carmens_iphone
-        sequence:
-        - action: '{{ repeat.item }}'
-          data:
-            message: clear_notification
-            data:
-              tag: washer_cycle
-  mode: restart
 - id: '1768500000004'
   alias: Basement Guests - Clear on Guest Mode Off
   description: 'Safety: when Overnight Guests (guest_mode) turns off, also clear the
@@ -8579,26 +8527,29 @@
   mode: single
 - id: '1785319121026'
   alias: Dryer Live Activity — Update (v2)
-  description: 'Standalone dryer iOS Live Activity (no shared push script). v2.4:
-    pushes on a 10-minute tick (progress bar refresh) plus dryer run-state transitions
-    (so the card appears the moment a cycle starts and updates at drying/cooling
-    changes) instead of every progress/remaining tick. The countdown needs no push
-    refresh because `when` is an absolute finish timestamp the iOS timer counts
-    down client-side. The completion card comes from the paired Complete (v2)
-    automation. Delivers to Carmen''s iPhone inline.'
+  description: 'Standalone dryer iOS Live Activity (no shared push script). This
+    automation only ever shows a RUNNING card - the card is ended by "Dryer Live
+    Activity - Complete (v2)" or by "- Clear Stale Card (v2)" if the cycle is cancelled.
+    v2.2.3 fix: the gate is sensor.dryer (on/off, same entity the v1 automation
+    used) - sensor.dryer_run_state does not exist in this config, so the original
+    condition was never true and the dryer card never appeared at all; dryer_run_state
+    is still read for the label text only, falling back to "Drying" when it is missing.
+    v2.4: pushes on a 10-minute tick (progress bar refresh) plus sensor.dryer on/off
+    transitions (so the card appears the moment a cycle starts) instead of every
+    progress/remaining tick - the countdown needs no push refresh because `when`
+    is an absolute finish timestamp the iOS timer counts down client-side.'
   triggers:
   - trigger: time_pattern
     minutes: /10
   - trigger: state
     entity_id:
-    - sensor.dryer_run_state
+    - sensor.dryer
     to: null
   conditions:
   - condition: template
-    value_template: "{% set p = states('sensor.dryer_cycle_progress') %} {% set r
-      = states('sensor.dryer_run_state') | lower %} {{ p not in ['unavailable','unknown','']
-      and 0 <= (p | int(-1)) < 100\n   and r not in ['unavailable','unknown','none','','off','finished','-']
-      }}"
+    value_template: "{% set p = states('sensor.dryer_cycle_progress') %} {{ states('sensor.dryer')
+      not in ['off','unavailable','unknown','-','']\n   and p not in ['unavailable','unknown','']\n
+      \  and 0 <= (p | int(-1)) < 100 }}"
   actions:
   - repeat:
       for_each:
@@ -8625,91 +8576,28 @@
   mode: restart
   variables:
     progress: '{{ states(''sensor.dryer_cycle_progress'') | int(0) }}'
-    run_state: '{{ states(''sensor.dryer_run_state'') | default(''Drying'', true)
-      | title }}'
+    run_state: "{% set r = states('sensor.dryer_run_state') %} {{ r | title if r not
+      in ['unknown','unavailable','none','-',''] else 'Drying' }}"
     finish_ts: "{% set c = states('sensor.dryer_remaining_time') %} {% if c not in
       ['unavailable','unknown','', none] and ':' in c %}\n  {% set p = c.split(':')
       | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60 + p[2])
       | int }}\n{% else %}{{ now().timestamp() | int }}{% endif %}"
-- id: dryer_live_activity_complete_v2
-  alias: Dryer Live Activity — Complete (v2)
-  description: 'v2.4: green "Complete" card when the dryer finishes. The Update (v2)
-    automation''s running condition goes false at 100% / finished, so without this
-    the Live Activity froze at its last mid-cycle state and never showed complete
-    (the v1 Complete automations are disabled and used the retired shared push script).
-    Triggers on binary_sensor.dryer_recently_completed (same signal the v1 automation
-    and the Notification Center use). Holds the card until the recently-completed
-    flag clears (laundry moved) or 1 hour, whichever is first, then clears the Live
-    Activity — unless a new cycle is already running, in which case the Update automation
-    owns the tag again and the card is left alone. Delivers to Carmen''s iPhone inline.'
-  triggers:
-  - trigger: state
-    entity_id: binary_sensor.dryer_recently_completed
-    from: 'off'
-    to: 'on'
-  conditions: []
-  actions:
-  - repeat:
-      for_each:
-      - notify.mobile_app_carmens_iphone
-      sequence:
-      - action: '{{ repeat.item }}'
-        data:
-          title: Dryer
-          message: Clothes are ready
-          data:
-            tag: dryer_cycle
-            live_update: true
-            background_color: '#14161A'
-            text_color: '#FFFFFF'
-            subtitle: Complete
-            critical_text: 100%
-            progress: 100
-            progress_max: 100
-            chronometer: false
-            notification_icon: mdi:tumble-dryer
-            notification_icon_color: '#4CAF50'
-  - wait_for_trigger:
-    - trigger: state
-      entity_id: binary_sensor.dryer_recently_completed
-      from: 'on'
-      to: 'off'
-    timeout: 01:00:00
-    continue_on_timeout: true
-  - if:
-    - condition: template
-      value_template: '{{ states(''sensor.dryer_run_state'') | lower in [''unavailable'',
-        ''unknown'', ''none'', '''', ''off'', ''finished'', ''-''] }}'
-    then:
-    - repeat:
-        for_each:
-        - notify.mobile_app_carmens_iphone
-        sequence:
-        - action: '{{ repeat.item }}'
-          data:
-            message: clear_notification
-            data:
-              tag: dryer_cycle
-  mode: restart
 - id: '1785407400000'
-  alias: Basement Guests - Suspend Motion Lights Overnight
-  description: 'Overnight guests sleeping in the basement: while Overnight Guests
-    (guest_mode) and Guests in Basement (basement_guests) are both on, switch the
-    basement motion-lights automations off between 20:00 and 08:00 so a guest moving
-    around downstairs no longer trips the lights on. Mirrors the overnight window
-    the Basement HVAC Schedule already uses for basement_guests. Restores them at
-    08:00, or as soon as either flag clears - but only if this automation was the
-    one that switched them off (input_boolean.basement_motion_suspended), so a manual
-    Settings toggle is never overridden. Also re-evaluates on HA restart.'
+  alias: Basement Guests - Suspend Motion Lights
+  description: 'Guests staying in the basement: while Overnight Guests (guest_mode)
+    and Guests in Basement (basement_guests) are both on, keep the basement motion-lights
+    automations switched off at all times of day so a guest moving around downstairs
+    never trips the lights on. (v2.2.3: was a 20:00-08:00 window, which still let
+    daytime motion fire while guests were napping, changing or working downstairs -
+    guests keep their own hours, so the suspension now runs around the clock.) Restored
+    as soon as either flag clears - but only if this automation was the one that switched
+    them off (input_boolean.basement_motion_suspended), so a manual Settings toggle
+    is never overridden. Also re-evaluates on HA restart.'
   triggers:
   - trigger: state
     entity_id:
     - input_boolean.guest_mode
     - input_boolean.basement_guests
-  - trigger: time
-    at: '20:00:00'
-  - trigger: time
-    at: 08:00:00
   - trigger: homeassistant
     event: start
   conditions: []
@@ -8722,9 +8610,6 @@
       - condition: state
         entity_id: input_boolean.basement_guests
         state: 'on'
-      - condition: time
-        after: '20:00:00'
-        before: 08:00:00
       sequence:
       - action: automation.turn_off
         target:
@@ -8749,4 +8634,227 @@
       - action: input_boolean.turn_off
         target:
           entity_id: input_boolean.basement_motion_suspended
+  mode: single
+- id: washer_live_activity_complete_v2
+  alias: Washing Machine Live Activity — Complete (v2)
+  description: 'Ends the standalone washer Live Activity (v2.2.3). The Update (v2)
+    automation only ever renders a running card and stops firing once the cycle is
+    done, which left the last "42% · Rinse" card pinned to the Lock Screen / Dynamic
+    Island indefinitely. This replaces it with a terminal green "Complete" card -
+    progress pinned at 100%, chronometer off, live_update false so iOS stops treating
+    it as a live activity - holds it 10 minutes as the move-the-laundry reminder,
+    then clears the tag. Primary completion signal (v2.2.3): the remaining-time countdown
+    itself bottoming out - a transition from a real sub-2.5-minute countdown to 0:00:00
+    (or to unavailable, for a washer that drops offline as it powers down). This is the
+    only end-of-cycle signal guaranteed to arrive: binary_sensor.washer_recently_completed
+    is not defined anywhere in this config (never observed firing), and the cycle-progress
+    template only reaches 100 if the washer still reports on when remaining time zeroes -
+    if the power state flips first, progress jumps from ~95 straight to 0 and never crosses
+    the 99 threshold. Those triggers are retained as harmless backups. The from-state guard
+    (0 < remaining <= 150 s) means a cancelled cycle or an offline blip with more than 2.5
+    minutes left does not fake a completion.'
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.washer_recently_completed
+    from: 'off'
+    to: 'on'
+  - trigger: numeric_state
+    entity_id: sensor.washer_cycle_progress
+    above: 99
+  - trigger: state
+    entity_id: sensor.front_load_washer_run_state
+    to: finished
+  - trigger: state
+    id: countdown_done
+    entity_id: sensor.front_load_washer_remaining_time
+    to:
+    - '0:00:00'
+    - '-'
+    - unknown
+    - unavailable
+  conditions:
+  - condition: template
+    value_template: "{% if trigger.id != 'countdown_done' %} true {% else %}\n  {%
+      set f = trigger.from_state.state if trigger.from_state else '' %}\n  {% if ':'
+      in f and f != '0:00:00' %}\n    {% set p = f.split(':') | map('int') | list
+      %}\n    {% set secs = p[0]*3600 + p[1]*60 + p[2] %}\n    {{ 0 < secs <= 150
+      }}\n  {% else %} false {% endif %}\n{% endif %}"
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          title: Washing Machine
+          message: Clothes are ready
+          data:
+            tag: washer_cycle
+            live_update: false
+            background_color: '#14161A'
+            text_color: '#FFFFFF'
+            subtitle: Complete
+            critical_text: Complete
+            progress: 100
+            progress_max: 100
+            chronometer: false
+            notification_icon: mdi:washing-machine
+            notification_icon_color: '#4CAF50'
+  - delay: 00:10:00
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          message: clear_notification
+          data:
+            tag: washer_cycle
+  mode: restart
+- id: washer_live_activity_clear_stale_v2
+  alias: Washing Machine Live Activity — Clear Stale Card (v2)
+  description: 'Safety net for the standalone washer Live Activity (v2.2.3): a cancelled
+    or powered-off cycle never sets binary_sensor.washer_recently_completed, so the
+    Complete (v2) automation never runs and the running card would hang around forever.
+    When the washer has been off for 5 minutes and no completion is in play, just clear
+    the tag - no card is pushed, so this is a no-op when there was nothing on screen.
+    Also runs on HA restart, which is the other way a card can outlive its cycle (the
+    pending 10-minute hold in Complete (v2) is lost across a restart). v2.2.3: keyed
+    off sensor.front_load_washer (on/off, the entity the v1 automation used) rather
+    than guessing at the run_state vocabulary.'
+  triggers:
+  - trigger: state
+    entity_id: sensor.front_load_washer
+    to: 'off'
+    for: '00:05:00'
+  - trigger: homeassistant
+    event: start
+  conditions:
+  - condition: state
+    entity_id: binary_sensor.washer_recently_completed
+    state: 'off'
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.front_load_washer
+      state: 'on'
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          message: clear_notification
+          data:
+            tag: washer_cycle
+  mode: single
+- id: dryer_live_activity_complete_v2
+  alias: Dryer Live Activity — Complete (v2)
+  description: 'Ends the standalone dryer Live Activity (v2.2.3) - the dryer counterpart
+    to the washer Complete (v2) automation. The Update (v2) automation only ever renders
+    a running card and stops firing once the cycle is done, leaving the last progress
+    card pinned to the Lock Screen / Dynamic Island indefinitely. This replaces it
+    with a terminal green "Complete" card - progress pinned at 100%, chronometer off,
+    live_update false so iOS stops treating it as a live activity - holds it 10 minutes
+    as the move-the-laundry reminder, then clears the tag. Primary completion signal
+    (v2.2.3): the remaining-time countdown bottoming out - a transition from a real
+    sub-2.5-minute countdown to 0:00:00 (or to unavailable), mirroring the washer.
+    binary_sensor.dryer_recently_completed is not defined anywhere in this config and
+    the progress template only reaches 100 if sensor.dryer still reads on when the
+    countdown zeroes, so both older triggers are unreliable; they are retained as
+    harmless backups. The from-state guard (0 < remaining <= 150 s) means a cancelled
+    cycle or an offline blip with more than 2.5 minutes left does not fake a completion.'
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.dryer_recently_completed
+    from: 'off'
+    to: 'on'
+  - trigger: numeric_state
+    entity_id: sensor.dryer_cycle_progress
+    above: 99
+  - trigger: state
+    id: countdown_done
+    entity_id: sensor.dryer_remaining_time
+    to:
+    - '0:00:00'
+    - '-'
+    - unknown
+    - unavailable
+  conditions:
+  - condition: template
+    value_template: "{% if trigger.id != 'countdown_done' %} true {% else %}\n  {%
+      set f = trigger.from_state.state if trigger.from_state else '' %}\n  {% if ':'
+      in f and f != '0:00:00' %}\n    {% set p = f.split(':') | map('int') | list
+      %}\n    {% set secs = p[0]*3600 + p[1]*60 + p[2] %}\n    {{ 0 < secs <= 150
+      }}\n  {% else %} false {% endif %}\n{% endif %}"
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          title: Dryer
+          message: Clothes are ready
+          data:
+            tag: dryer_cycle
+            live_update: false
+            background_color: '#14161A'
+            text_color: '#FFFFFF'
+            subtitle: Complete
+            critical_text: Complete
+            progress: 100
+            progress_max: 100
+            chronometer: false
+            notification_icon: mdi:tumble-dryer
+            notification_icon_color: '#4CAF50'
+  - delay: 00:10:00
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          message: clear_notification
+          data:
+            tag: dryer_cycle
+  mode: restart
+- id: dryer_live_activity_clear_stale_v2
+  alias: Dryer Live Activity — Clear Stale Card (v2)
+  description: 'Safety net for the standalone dryer Live Activity (v2.2.3): a cancelled
+    or powered-off cycle never sets binary_sensor.dryer_recently_completed, so the
+    Complete (v2) automation never runs and the running card would hang around forever.
+    When the dryer has been off for 5 minutes and no completion is in play, just clear
+    the tag - no card is pushed, so this is a no-op when there was nothing on screen.
+    Also runs on HA restart, which is the other way a card can outlive its cycle (the
+    pending 10-minute hold in Complete (v2) is lost across a restart). v2.2.3: keyed
+    off sensor.dryer (on/off) rather than the nonexistent sensor.dryer_run_state, which
+    would never have fired this trigger either.'
+  triggers:
+  - trigger: state
+    entity_id: sensor.dryer
+    to: 'off'
+    for: '00:05:00'
+  - trigger: homeassistant
+    event: start
+  conditions:
+  - condition: state
+    entity_id: binary_sensor.dryer_recently_completed
+    state: 'off'
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.dryer
+      state: 'on'
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          message: clear_notification
+          data:
+            tag: dryer_cycle
   mode: single
