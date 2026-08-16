@@ -4550,7 +4550,9 @@
   mode: single
 - id: '1761056817841'
   alias: Back Guest Bedroom Pico - Open Shades
-  description: ''
+  description: 'v2.4: also sets the room''s manual latch. This automation drives
+    the cover, so the resulting events carry a parent_id and the Manual Control Detector
+    deliberately ignores them — the latch is set here explicitly instead.'
   triggers:
   - device_id: ccf025a6c1393662446eb3b512b58c25
     domain: lutron_caseta
@@ -4564,10 +4566,15 @@
     data: {}
     target:
       entity_id: cover.back_guest_bedroom_shades
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.shades_manual_back_guest_bedroom
   mode: single
 - id: '1761056876972'
   alias: Back Guest Bedroom Pico - Close Shades
-  description: ''
+  description: 'v2.4: also sets the room''s manual latch. This automation drives
+    the cover, so the resulting events carry a parent_id and the Manual Control Detector
+    deliberately ignores them — the latch is set here explicitly instead.'
   triggers:
   - device_id: ccf025a6c1393662446eb3b512b58c25
     domain: lutron_caseta
@@ -4581,6 +4588,9 @@
     data: {}
     target:
       entity_id: cover.back_guest_bedroom_shades
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.shades_manual_back_guest_bedroom
   mode: single
 - id: '1761577930081'
   alias: Office Pico Remote
@@ -7255,7 +7265,11 @@
     closes at evening Nov-Mar; other months it opens to 100% at the evening close
     for sunset viewing (skipped if the room was closed by hand — privacy respected).
     Adaptive targets per-facade covers; close and privacy check use the room group
-    where one exists.'
+    where one exists. v2.4: each room also carries a manual latch (input_boolean.shades_manual_*,
+    set by the Manual Control Detector when shades are moved by hand) — a latched
+    room is skipped by morning open and adaptive ticks for the rest of the day, manual
+    wins over Demand Response (the room is skipped before dr_override is evaluated),
+    the evening close still runs, and the latch clears at 03:00.'
   triggers:
   - at: 07:30:00
     id: morning_early
@@ -7310,6 +7324,7 @@
       open_wkday: 07:30
       open_wknd: 08:00
       pause: input_boolean.dinner_party
+      manual: input_boolean.shades_manual_first_floor
       indoor: climate.living_room_thermostat_homekit
       comfort: 70
       facades:
@@ -7335,6 +7350,7 @@
       open_wkday: 08:00
       open_wknd: 09:00
       pause: ''
+      manual: input_boolean.shades_manual_primary_bedroom
       indoor: climate.master_bedroom_thermostat
       comfort: 68
       facades:
@@ -7368,6 +7384,7 @@
       open_wkday: 08:00
       open_wknd: 09:00
       pause: input_boolean.guest_mode
+      manual: input_boolean.shades_manual_back_guest_bedroom
       indoor: sensor.guest_bedroom_sensor_temperature
       comfort: 68
       facades:
@@ -7390,6 +7407,7 @@
       open_wkday: 08:00
       open_wknd: 09:00
       pause: input_boolean.guest_mode
+      manual: input_boolean.shades_manual_front_guest_bedroom
       indoor: sensor.front_guest_bedroom_sensor_temperature
       comfort: 68
       facades:
@@ -7412,6 +7430,7 @@
       open_wkday: 08:00
       open_wknd: 09:00
       pause: ''
+      manual: input_boolean.shades_manual_office
       indoor: sensor.office_thermostat_homekit_current_temperature
       comfort: 72
       facades:
@@ -7464,6 +7483,8 @@
               comfort: '{{ repeat.item.comfort | float(70) }}'
               paused: '{{ repeat.item.pause != '''' and is_state(repeat.item.pause,
                 ''on'') }}'
+              manual_locked: '{{ repeat.item.manual != '''' and is_state(repeat.item.manual,
+                ''on'') }}'
               open_time: '{{ repeat.item.open_wknd if now().weekday() >= 5 else repeat.item.open_wkday
                 }}'
               in_window: '{{ (not is_adaptive) or now().strftime(''%H:%M'') > open_time
@@ -7479,8 +7500,8 @@
                 %}{{ states(src) | float(70) }}{% endif %}'
           - if:
             - condition: template
-              value_template: '{{ not paused and in_window and not (privacy_locked
-                | bool(false)) }}'
+              value_template: '{{ not paused and not manual_locked and in_window
+                and not (privacy_locked | bool(false)) }}'
             then:
             - repeat:
                 for_each: '{{ facades }}'
@@ -7585,6 +7606,115 @@
                   level: warning
   mode: queued
   max: 10
+- id: '1784000000010'
+  alias: Shade Scheduler – Manual Control Detector
+  description: 'v2.4: latches a room out of adaptive shading for the rest of the day
+    when its shades are moved by hand. Watches the 16 facade covers the Shade Scheduler
+    itself commands (its rooms[].facades[].covers lists plus bedroom_back) for current_position
+    changes and sets the room''s input_boolean.shades_manual_* latch. Three filters:
+    magnitude (|delta| >= 5%, kills reporting jitter; group covers average their
+    members so one shade at full travel still clears it), scheduler-quiet (no running
+    instance of the scheduler and last_triggered more than 120s ago — Lutron/Matter
+    push travel updates asynchronously with a fresh context, so a scheduler-commanded
+    move is otherwise indistinguishable from a remote press), and context (user_id
+    set = app/dashboard/voice; user_id and parent_id both none = physical Serena
+    remote; parent_id set = another automation, ignored — the Back Guest Bedroom
+    Pico automations latch explicitly instead). The latch skips morning open and
+    adaptive ticks only; the evening close still runs. Manual wins over Demand Response.
+    Cleared at 03:00 by the Daily Reset, or by hand from the Shades view chip /
+    Settings pop-up. Same context idiom as the bathroom exhaust-fan automations.'
+  triggers:
+  - trigger: state
+    entity_id:
+    - cover.first_floor_front
+    - cover.dining_room_side
+    - cover.living_room_side_shades
+    - cover.bedroom_left
+    - cover.bedroom_right
+    - cover.hallway_1
+    - cover.hallway_2
+    - cover.bedroom_back
+    - cover.back_guest_bedroom_back_left
+    - cover.back_guest_bedroom_back_right
+    - cover.back_guest_bedroom_side
+    - cover.front_guest_bedroom_front_left
+    - cover.front_guest_bedroom_front_right
+    - cover.front_guest_bedroom_side
+    - cover.office_office_right
+    - cover.office_office_left
+    attribute: current_position
+  conditions:
+  - condition: time
+    after: '03:00:00'
+    before: '20:01:00'
+  - condition: template
+    value_template: '{% set p_from = trigger.from_state.attributes.current_position
+      if trigger.from_state else none %}{% set p_to = trigger.to_state.attributes.current_position
+      if trigger.to_state else none %}{{ p_from is not none and p_to is not none
+      and (p_to | int(0) - p_from | int(0)) | abs >= 5 }}'
+  - condition: template
+    value_template: '{% set a = ''automation.shade_scheduler_whole_house'' %}{% set
+      lt = state_attr(a, ''last_triggered'') %}{{ (state_attr(a, ''current'') | int(0))
+      == 0 and (lt is none or (now() - lt).total_seconds() > 120) }}'
+  - condition: template
+    value_template: '{{ trigger.to_state.context.user_id is not none or trigger.to_state.context.parent_id
+      is none }}'
+  actions:
+  - variables:
+      latch_map:
+        cover.first_floor_front: input_boolean.shades_manual_first_floor
+        cover.dining_room_side: input_boolean.shades_manual_first_floor
+        cover.living_room_side_shades: input_boolean.shades_manual_first_floor
+        cover.bedroom_left: input_boolean.shades_manual_primary_bedroom
+        cover.bedroom_right: input_boolean.shades_manual_primary_bedroom
+        cover.hallway_1: input_boolean.shades_manual_primary_bedroom
+        cover.hallway_2: input_boolean.shades_manual_primary_bedroom
+        cover.bedroom_back: input_boolean.shades_manual_primary_bedroom
+        cover.back_guest_bedroom_back_left: input_boolean.shades_manual_back_guest_bedroom
+        cover.back_guest_bedroom_back_right: input_boolean.shades_manual_back_guest_bedroom
+        cover.back_guest_bedroom_side: input_boolean.shades_manual_back_guest_bedroom
+        cover.front_guest_bedroom_front_left: input_boolean.shades_manual_front_guest_bedroom
+        cover.front_guest_bedroom_front_right: input_boolean.shades_manual_front_guest_bedroom
+        cover.front_guest_bedroom_side: input_boolean.shades_manual_front_guest_bedroom
+        cover.office_office_right: input_boolean.shades_manual_office
+        cover.office_office_left: input_boolean.shades_manual_office
+      latch: '{{ latch_map.get(trigger.entity_id, '''') }}'
+  - condition: template
+    value_template: '{{ latch != '''' and is_state(latch, ''off'') }}'
+  - action: input_boolean.turn_on
+    target:
+      entity_id: '{{ latch }}'
+  - action: system_log.write
+    data:
+      message: 'Shade Manual Detector: {{ trigger.entity_id }} moved {{ trigger.from_state.attributes.current_position
+        }}% -> {{ trigger.to_state.attributes.current_position }}% by hand ({{ ''app/user''
+        if trigger.to_state.context.user_id is not none else ''physical remote''
+        }}) — latched {{ latch }} until 03:00'
+      level: info
+  mode: queued
+  max: 25
+- id: '1784000000011'
+  alias: Shade Scheduler – Manual Control Daily Reset
+  description: 'v2.4: clears all five input_boolean.shades_manual_* latches at 03:00
+    so every room rejoins adaptive shading each morning. Runs at 03:00 rather than
+    at morning open so a room that was paused all day (dinner party / guest mode)
+    still resets, and it is a single idempotent turn_off instead of a per-room clear
+    inside the scheduler''s repeat loop. Nothing adaptive runs between 03:00 and
+    the first morning open, so the timing is equivalent.'
+  triggers:
+  - at: '03:00:00'
+    trigger: time
+  conditions: []
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id:
+      - input_boolean.shades_manual_first_floor
+      - input_boolean.shades_manual_primary_bedroom
+      - input_boolean.shades_manual_back_guest_bedroom
+      - input_boolean.shades_manual_front_guest_bedroom
+      - input_boolean.shades_manual_office
+  mode: single
 - id: '1783000000001'
   alias: First Floor Doors Closed - Restore Climate
   description: 'Restores living-room climate when ALL first-floor exterior doors are

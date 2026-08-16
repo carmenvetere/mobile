@@ -1,6 +1,6 @@
 # v2.4 — Adaptive Shades: Per-Room Manual Control Latch
 
-**Status:** proposal (no code changes yet)
+**Status:** implemented (decisions D1–D5 resolved; see §4)
 **Branch:** `v2.4`
 **Goal:** when a room's shades are moved by hand, mark that room as "manual",
 skip it on every subsequent adaptive tick that day, and reset automatically the
@@ -243,38 +243,29 @@ diff unreviewable.
 
 ---
 
-## 4. Decisions to confirm
+## 4. Decisions (confirmed 2026-08-16)
 
-**D1 — "at the next hour" = rest of day.** Read as: the flag takes effect from
-the next adaptive tick and holds until the next-day reset. The "auto reset the
-next day" requirement only makes sense under this reading — a 60-minute cooldown
-would expire on its own and need no reset. *If you actually want a 1-hour
-cooldown that then hands control back*, the latch becomes an
-`input_datetime` per room and the gate compares against `now()`; say so and the
-shape changes slightly. **Recommendation: rest of day.**
+**D1 — "at the next hour" = rest of day. CONFIRMED.** The latch takes effect
+from the next adaptive tick and holds until the 03:00 next-day reset.
 
-**D2 — Evening close still runs on a manual room.** The latch stops *adaptive*,
-which is what was asked. Sunset+30 / 8pm close still fires, so a manual room
-still ends up closed and secure overnight. The existing `room_hand_closed` check
-inside the close branch already prevents the non-winter `bedroom_back`
-sunset-open from reopening a hand-closed room. **Recommendation: keep the close.**
+**D2 — Evening close still runs on a manual room. CONFIRMED (default).** The
+latch stops *adaptive* only; sunset+30 / 8pm close still fires, so a manual
+room still ends up closed and secure overnight. The existing `room_hand_closed`
+check inside the close branch already prevents the non-winter `bedroom_back`
+sunset-open from reopening a hand-closed room.
 
-**D3 — Demand Response outranks manual.** `dr_override` closes sun-facing shades
-during a utility event. Because DR lives *inside* the adaptive branch, gating on
-`manual_locked` would silently make a manual room ignore DR. Two options: leave
-it (manual wins, room sits out the DR event) or hoist the DR branch above the
-manual gate (DR wins). **Recommendation: DR wins** — it is a metered-cost event
-and the room returns to manual as soon as it clears. Costs one extra condition.
+**D3 — Manual wins over Demand Response. CONFIRMED.** A manual room ignores a
+DR event entirely. This is also the simpler implementation: the `manual_locked`
+gate skips the room before `dr_override` is ever evaluated, so no change to the
+DR logic was needed. (The alternative — DR outranks manual — was declined.)
 
-**D4 — "Close All" latches every room.** The dashboard Close All button carries
-a `user_id`, so it will mark all five rooms manual. Correct in the evening,
-aggressive at 10:00. **Recommendation: accept it** (it is a deliberate
-whole-house action), with the fallback option of exempting a
-close-to-0 before 17:00 if it proves annoying in practice.
+**D4 — "Close All" latches every room. CONFIRMED.** The dashboard Close All
+button carries a `user_id`, so it marks all five rooms manual — accepted as a
+deliberate whole-house action. Fallback if it proves annoying in practice:
+exempt a close-to-0 before 17:00 in the detector.
 
-**D5 — Notify on latch?** A `persistent_notification` per latch would be noisy
-(5 rooms × several moves/day). **Recommendation: `system_log.write` only**, plus
-the dashboard chip, which is the visible signal.
+**D5 — No notification on latch (default).** `system_log.write` only, plus the
+dashboard chip, which is the visible signal.
 
 ---
 

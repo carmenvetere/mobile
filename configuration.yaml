@@ -435,6 +435,31 @@ input_boolean:
   minvent_active:
     name: Min-Vent Active
     icon: mdi:fan-clock
+  # --- Shades v2.4: per-room manual-control latches -------------------------
+  # On = the room's shades were moved by hand today (app/dashboard, physical
+  # Serena remote, or Pico), so the Shade Scheduler's morning-open and adaptive
+  # ticks must skip the room for the rest of the day. Manual wins over Demand
+  # Response by design (the room is skipped before dr_override is evaluated).
+  # The sunset+30/8pm evening close still runs. Set by "Shade Scheduler -
+  # Manual Control Detector" (and explicitly by the Back Guest Bedroom Pico
+  # automations); cleared by the 03:00 "Manual Control Daily Reset", or by
+  # hand from the Shades view chip / Settings pop-up to rejoin adaptive early.
+  # No `initial:` so a latch survives HA restarts.
+  shades_manual_first_floor:
+    name: Shades Manual - First Floor
+    icon: mdi:hand-back-right
+  shades_manual_primary_bedroom:
+    name: Shades Manual - Primary Bedroom
+    icon: mdi:hand-back-right
+  shades_manual_back_guest_bedroom:
+    name: Shades Manual - Back Guest Bedroom
+    icon: mdi:hand-back-right
+  shades_manual_front_guest_bedroom:
+    name: Shades Manual - Front Guest Bedroom
+    icon: mdi:hand-back-right
+  shades_manual_office:
+    name: Shades Manual - Office
+    icon: mdi:hand-back-right
 
 input_select:
   sonos_speaker_select:

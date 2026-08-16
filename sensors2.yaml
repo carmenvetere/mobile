@@ -1078,6 +1078,38 @@
           {{ covers | count }}
 
 # ---------------------------------------------------------------------------
+# Shades v2.4: rooms currently latched to manual control (shades moved by
+# hand today, adaptive skipping them until the 03:00 reset). state = count of
+# latched rooms; `rooms` attribute = comma-joined room names for the Shades
+# header subtitle and NSPanel.
+# ---------------------------------------------------------------------------
+- sensor:
+    - name: Shades Manual Rooms
+      unique_id: shades_manual_rooms
+      icon: >
+        {{ 'mdi:hand-back-right' if states('sensor.shades_manual_rooms') | int(0) > 0
+           else 'mdi:hand-back-right-off' }}
+      state: >
+        {% set latches = [
+          'input_boolean.shades_manual_first_floor',
+          'input_boolean.shades_manual_primary_bedroom',
+          'input_boolean.shades_manual_back_guest_bedroom',
+          'input_boolean.shades_manual_front_guest_bedroom',
+          'input_boolean.shades_manual_office'] %}
+        {{ latches | select('is_state','on') | list | count }}
+      attributes:
+        rooms: >
+          {% set pairs = [
+            ('input_boolean.shades_manual_first_floor','First Floor'),
+            ('input_boolean.shades_manual_primary_bedroom','Primary Bedroom'),
+            ('input_boolean.shades_manual_back_guest_bedroom','Back Guest Bedroom'),
+            ('input_boolean.shades_manual_front_guest_bedroom','Front Guest Bedroom'),
+            ('input_boolean.shades_manual_office','Office')] %}
+          {% set ns = namespace(names=[]) %}
+          {% for e, n in pairs %}{% if is_state(e, 'on') %}{% set ns.names = ns.names + [n] %}{% endif %}{% endfor %}
+          {{ ns.names | join(', ') }}
+
+# ---------------------------------------------------------------------------
 # Average of the 4 climate zone current temps for the Mobile Dash v2 Climate
 # header subhead ("4 zones · avg N°"). Trigger-based on a 5-min tick: the
 # output is a whole-degree average for a header label, so re-rendering on
