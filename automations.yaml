@@ -8446,18 +8446,19 @@
         tag: car_charging
         audience: both
 - id: washer_live_activity_update_v2
-  alias: Washing Machine Live Activity — Update (v2 test)
-  description: Standalone washer iOS Live Activity (no shared push script) for v2.2.1
-    testing. Progress bar = % complete (sensor.washer_cycle_progress); live countdown
-    = time remaining (sensor.front_load_washer_remaining_time, hh:mm:ss), pointed
-    at an absolute finish timestamp (now + countdown) so the iOS timer counts down
-    correctly. Delivers to both phones inline. Toggle on/off to test.
+  alias: Washing Machine Live Activity — Update (v2)
+  description: 'Standalone washer iOS Live Activity (no shared push script). v2.4:
+    pushes ONLY on a run-state change (to: null state trigger, so attribute-only
+    updates are ignored) instead of every progress/remaining tick — the countdown
+    needs no push refresh because `when` is an absolute finish timestamp the iOS
+    timer counts down client-side; the progress bar refreshes at each run-state
+    transition. The completion card comes from the paired Complete (v2) automation.
+    Delivers to Carmen''s iPhone inline.'
   triggers:
   - trigger: state
     entity_id:
-    - sensor.washer_cycle_progress
     - sensor.front_load_washer_run_state
-    - sensor.front_load_washer_remaining_time
+    to: null
   conditions:
   - condition: template
     value_template: "{% set p = states('sensor.washer_cycle_progress') %} {{ p not
@@ -8495,6 +8496,67 @@
       if c not in ['unavailable','unknown','', none] and ':' in c %}\n  {% set p =
       c.split(':') | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60
       + p[2]) | int }}\n{% else %}{{ now().timestamp() | int }}{% endif %}"
+- id: washer_live_activity_complete_v2
+  alias: Washing Machine Live Activity — Complete (v2)
+  description: 'v2.4: green "Complete" card when the washer finishes. The Update
+    (v2) automation''s running condition goes false at 100% / finished, so without
+    this the Live Activity froze at its last mid-cycle state and never showed complete
+    (the v1 Complete automations are disabled and used the retired shared push script).
+    Triggers on binary_sensor.washer_recently_completed (actively used by the Notification
+    Center). Holds the card until the recently-completed flag clears (laundry moved)
+    or 1 hour, whichever is first, then clears the Live Activity — unless a new
+    cycle is already running, in which case the Update automation owns the tag again
+    and the card is left alone. Delivers to Carmen''s iPhone inline.'
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.washer_recently_completed
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          title: Washing Machine
+          message: Clothes are ready
+          data:
+            tag: washer_cycle
+            live_update: true
+            background_color: '#14161A'
+            text_color: '#FFFFFF'
+            message: Complete
+            critical_text: Complete · 100%
+            progress: 100
+            progress_max: 100
+            chronometer: false
+            notification_icon: mdi:washing-machine
+            notification_icon_color: '#4CAF50'
+  - wait_for_trigger:
+    - trigger: state
+      entity_id: binary_sensor.washer_recently_completed
+      from: 'on'
+      to: 'off'
+    timeout: 01:00:00
+    continue_on_timeout: true
+  - if:
+    - condition: template
+      value_template: '{{ states(''sensor.front_load_washer_run_state'') | lower
+        in [''unavailable'', ''unknown'', ''none'', '''', ''off'', ''finished'',
+        ''-''] }}'
+    then:
+    - repeat:
+        for_each:
+        - notify.mobile_app_carmens_iphone
+        sequence:
+        - action: '{{ repeat.item }}'
+          data:
+            message: clear_notification
+            data:
+              tag: washer_cycle
+  mode: restart
 - id: '1768500000004'
   alias: Basement Guests - Clear on Guest Mode Off
   description: 'Safety: when Overnight Guests (guest_mode) turns off, also clear the
@@ -8516,17 +8578,21 @@
       entity_id: input_boolean.basement_guests
   mode: single
 - id: '1785319121026'
-  alias: Dryer Live Activity — Update (v2 test)
-  description: Standalone dryer iOS Live Activity (no shared push script). Progress
-    bar = % complete (sensor.dryer_cycle_progress); live countdown = time remaining
-    (sensor.dryer_remaining_time, h:mm:ss), pointed at an absolute finish timestamp
-    (now + remaining) so the iOS timer counts down correctly. Toggle on/off to test.
+  alias: Dryer Live Activity — Update (v2)
+  description: 'Standalone dryer iOS Live Activity (no shared push script). v2.4:
+    pushes on a 10-minute tick (progress bar refresh) plus dryer run-state transitions
+    (so the card appears the moment a cycle starts and updates at drying/cooling
+    changes) instead of every progress/remaining tick. The countdown needs no push
+    refresh because `when` is an absolute finish timestamp the iOS timer counts
+    down client-side. The completion card comes from the paired Complete (v2)
+    automation. Delivers to Carmen''s iPhone inline.'
   triggers:
+  - trigger: time_pattern
+    minutes: /10
   - trigger: state
     entity_id:
-    - sensor.dryer_cycle_progress
     - sensor.dryer_run_state
-    - sensor.dryer_remaining_time
+    to: null
   conditions:
   - condition: template
     value_template: "{% set p = states('sensor.dryer_cycle_progress') %} {% set r
@@ -8565,6 +8631,66 @@
       ['unavailable','unknown','', none] and ':' in c %}\n  {% set p = c.split(':')
       | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60 + p[2])
       | int }}\n{% else %}{{ now().timestamp() | int }}{% endif %}"
+- id: dryer_live_activity_complete_v2
+  alias: Dryer Live Activity — Complete (v2)
+  description: 'v2.4: green "Complete" card when the dryer finishes. The Update (v2)
+    automation''s running condition goes false at 100% / finished, so without this
+    the Live Activity froze at its last mid-cycle state and never showed complete
+    (the v1 Complete automations are disabled and used the retired shared push script).
+    Triggers on binary_sensor.dryer_recently_completed (same signal the v1 automation
+    and the Notification Center use). Holds the card until the recently-completed
+    flag clears (laundry moved) or 1 hour, whichever is first, then clears the Live
+    Activity — unless a new cycle is already running, in which case the Update automation
+    owns the tag again and the card is left alone. Delivers to Carmen''s iPhone inline.'
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.dryer_recently_completed
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          title: Dryer
+          message: Clothes are ready
+          data:
+            tag: dryer_cycle
+            live_update: true
+            background_color: '#14161A'
+            text_color: '#FFFFFF'
+            subtitle: Complete
+            critical_text: 100%
+            progress: 100
+            progress_max: 100
+            chronometer: false
+            notification_icon: mdi:tumble-dryer
+            notification_icon_color: '#4CAF50'
+  - wait_for_trigger:
+    - trigger: state
+      entity_id: binary_sensor.dryer_recently_completed
+      from: 'on'
+      to: 'off'
+    timeout: 01:00:00
+    continue_on_timeout: true
+  - if:
+    - condition: template
+      value_template: '{{ states(''sensor.dryer_run_state'') | lower in [''unavailable'',
+        ''unknown'', ''none'', '''', ''off'', ''finished'', ''-''] }}'
+    then:
+    - repeat:
+        for_each:
+        - notify.mobile_app_carmens_iphone
+        sequence:
+        - action: '{{ repeat.item }}'
+          data:
+            message: clear_notification
+            data:
+              tag: dryer_cycle
+  mode: restart
 - id: '1785407400000'
   alias: Basement Guests - Suspend Motion Lights Overnight
   description: 'Overnight guests sleeping in the basement: while Overnight Guests

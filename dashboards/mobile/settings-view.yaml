@@ -1156,6 +1156,8 @@ cards:
                 - Shades: moving a room's shades by hand now takes that room off adaptive control for the rest of the day — the scheduler skips it at every tick (and during Demand Response) while the evening close still runs; everything resets automatically at 3 AM
                 - Shades: hand moves are detected from the app, a physical Serena remote, or the Back Guest Bedroom Pico; a "Manual" chip appears on the room's header in the Shades view (tap it to hand the room back to adaptive), and the Shades header shows how many rooms are manual today
                 - Settings: the Shades pop-up gains per-room "Manual Today" toggles so a room can be taken off adaptive deliberately, before touching a shade
+                - Laundry Live Activities: washer and dryer cards now finish with a green "Complete" card when the cycle ends (they previously froze at the last mid-cycle state), held until the laundry is moved or an hour passes, then cleared
+                - Laundry Live Activities: far fewer pushes — the washer card now updates only when the run state changes and the dryer on a 10-minute tick plus run-state changes; the countdown timer is unaffected since iOS counts it down on-device
 
                 **v2.2.2** — 2026-07-29
 
