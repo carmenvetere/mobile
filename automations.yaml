@@ -8458,16 +8458,34 @@
     to Carmen''s iPhone inline. This automation only ever shows a RUNNING card -
     the card is ended by "Washing Machine Live Activity - Complete (v2)" (green
     Complete card, held, then cleared) or by "- Clear Stale Card (v2)" if the cycle
-    is cancelled. v2.4: pushes ONLY on a run-state change (to: null state trigger,
-    so attribute-only updates are ignored) instead of every progress/remaining tick
+    is cancelled. v2.4: pushes on a run-state change (to: null state trigger, so
+    attribute-only updates are ignored) instead of every progress/remaining tick
     — the countdown needs no push refresh because `when` is an absolute finish timestamp
-    the iOS timer counts down client-side; the progress bar refreshes at each run-state
-    transition.'
+    the iOS timer counts down client-side. One extra trigger fires when the remaining-time
+    sensor first publishes a real countdown (invalid -> valid, once per cycle): at
+    a run-state transition the estimate is often not out yet, and a card pushed then
+    must NOT carry a chronometer — the old fallback pointed `when` at now(), which
+    iOS renders as a timer counting UP, and with no per-tick refresh to correct it
+    the count-up stuck for the whole phase. has_countdown gates chronometer/when,
+    so a card without a real estimate simply shows no timer until the follow-up push.'
   triggers:
   - trigger: state
     entity_id:
     - sensor.front_load_washer_run_state
     to: null
+  - trigger: state
+    entity_id:
+    - sensor.front_load_washer_remaining_time
+    from:
+    - unknown
+    - unavailable
+    - '-'
+    - '0:00:00'
+    not_to:
+    - unknown
+    - unavailable
+    - '-'
+    - '0:00:00'
   conditions:
   - condition: template
     value_template: "{% set p = states('sensor.washer_cycle_progress') %} {{ p not
@@ -8491,8 +8509,8 @@
             critical_text: '{{ run_state }} · {{ progress }}%'
             progress: '{{ progress }}'
             progress_max: 100
-            chronometer: true
-            when: '{{ finish_ts }}'
+            chronometer: '{{ has_countdown }}'
+            when: '{{ finish_ts if has_countdown else 0 }}'
             when_relative: false
             notification_icon: mdi:washing-machine
             notification_icon_color: '#2196F3'
@@ -8501,6 +8519,9 @@
     progress: '{{ states(''sensor.washer_cycle_progress'') | int(0) }}'
     run_state: '{{ states(''sensor.front_load_washer_run_state'') | default(''Running'',
       true) | title }}'
+    has_countdown: '{% set c = states(''sensor.front_load_washer_remaining_time'')
+      %}{{ c not in [''unavailable'', ''unknown'', '''', ''-'', ''0:00:00''] and
+      '':'' in c }}'
     finish_ts: "{% set c = states('sensor.front_load_washer_remaining_time') %} {%
       if c not in ['unavailable','unknown','', none] and ':' in c %}\n  {% set p =
       c.split(':') | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60
@@ -8537,7 +8558,13 @@
     v2.4: pushes on a 10-minute tick (progress bar refresh) plus sensor.dryer on/off
     transitions (so the card appears the moment a cycle starts) instead of every
     progress/remaining tick - the countdown needs no push refresh because `when`
-    is an absolute finish timestamp the iOS timer counts down client-side.'
+    is an absolute finish timestamp the iOS timer counts down client-side. One extra
+    trigger fires when the remaining-time sensor first publishes a real countdown
+    (invalid -> valid, once per cycle): at cycle start the estimate is often not
+    out yet, and a card pushed then must NOT carry a chronometer — the old fallback
+    pointed `when` at now(), which iOS renders as a timer counting UP, stuck until
+    the next 10-min tick. has_countdown gates chronometer/when, so a card without
+    a real estimate simply shows no timer until the follow-up push.'
   triggers:
   - trigger: time_pattern
     minutes: /10
@@ -8545,6 +8572,19 @@
     entity_id:
     - sensor.dryer
     to: null
+  - trigger: state
+    entity_id:
+    - sensor.dryer_remaining_time
+    from:
+    - unknown
+    - unavailable
+    - '-'
+    - '0:00:00'
+    not_to:
+    - unknown
+    - unavailable
+    - '-'
+    - '0:00:00'
   conditions:
   - condition: template
     value_template: "{% set p = states('sensor.dryer_cycle_progress') %} {{ states('sensor.dryer')
@@ -8568,8 +8608,8 @@
             critical_text: '{{ progress }}%'
             progress: '{{ progress }}'
             progress_max: 100
-            chronometer: true
-            when: '{{ finish_ts }}'
+            chronometer: '{{ has_countdown }}'
+            when: '{{ finish_ts if has_countdown else 0 }}'
             when_relative: false
             notification_icon: mdi:tumble-dryer
             notification_icon_color: '#FF9800'
@@ -8578,6 +8618,9 @@
     progress: '{{ states(''sensor.dryer_cycle_progress'') | int(0) }}'
     run_state: "{% set r = states('sensor.dryer_run_state') %} {{ r | title if r not
       in ['unknown','unavailable','none','-',''] else 'Drying' }}"
+    has_countdown: '{% set c = states(''sensor.dryer_remaining_time'') %}{{ c not
+      in [''unavailable'', ''unknown'', '''', ''-'', ''0:00:00''] and '':'' in c
+      }}'
     finish_ts: "{% set c = states('sensor.dryer_remaining_time') %} {% if c not in
       ['unavailable','unknown','', none] and ':' in c %}\n  {% set p = c.split(':')
       | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60 + p[2])
