@@ -1158,6 +1158,7 @@ cards:
                 - Settings: the Shades pop-up gains per-room "Manual Today" toggles so a room can be taken off adaptive deliberately, before touching a shade
                 - Laundry Live Activities: far fewer pushes — the washer card now updates only when the run state changes and the dryer on a 10-minute tick plus start/stop transitions; the countdown timer is unaffected since iOS counts it down on-device, and the v2.2.3 completion fixes below are rolled in unchanged
                 - Laundry Live Activities: no more count-up timer — a card pushed before the appliance has published its time estimate now shows no timer at all (previously it aimed the timer at "now", which iOS counts upward from), and a follow-up push adds the real countdown the moment the estimate arrives
+                - Laundry: the SmartThinQ LGE Sensors integration reloads itself every morning at 5 AM, so the washer and dryer sensors start each day on a fresh cloud session instead of a possibly stale one
 
                 **v2.2.3** — 2026-08-01
 

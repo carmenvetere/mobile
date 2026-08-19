@@ -8901,3 +8901,27 @@
           data:
             tag: dryer_cycle
   mode: single
+- id: smartthinq_sensors_daily_reload
+  alias: SmartThinQ Sensors - Daily Reload (5 AM)
+  description: 'Reloads the SmartThinQ LGE Sensors integration every morning at
+    05:00 so the washer/dryer sensors (and their Live Activity cards) start the
+    day from a fresh cloud session instead of a possibly stale one. Targets the
+    config entry via its entities (sensor.front_load_washer + sensor.dryer -
+    entity_id, not device_id, survives a device re-add; one shared entry reloads
+    once, separate entries each reload). 05:00 sits before the wake routines and
+    no laundry cycle should be running; a reload only bounces the entities
+    briefly, and the Live Activity automations are safe against it - the Complete
+    (v2) countdown-bottom-out trigger requires a real sub-150s countdown
+    beforehand, and Clear Stale keys on a 5-minute off-hold, so a momentary
+    unavailable cannot fake a completion or clear a live card.'
+  triggers:
+  - trigger: time
+    at: '05:00:00'
+  conditions: []
+  actions:
+  - action: homeassistant.reload_config_entry
+    target:
+      entity_id:
+      - sensor.front_load_washer
+      - sensor.dryer
+  mode: single
