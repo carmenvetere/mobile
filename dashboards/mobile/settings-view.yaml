@@ -1151,16 +1151,17 @@ cards:
           cards:
             - type: markdown
               content: |
-                **v2.4.0** — 2026-08-16
+                **v2.4.0** — 2026-08-21
 
                 - Shades: moving a room's shades by hand now takes that room off adaptive control for the rest of the day — the scheduler skips it at every tick (and during Demand Response) while the evening close still runs; everything resets automatically at 3 AM
-                - Shades: hand moves are detected from the app, a physical Serena remote, or the Back Guest Bedroom Pico; a "Manual" chip appears on the room's header in the Shades view (tap it to hand the room back to adaptive), and the Shades header shows how many rooms are manual today
+                - Shades: hand moves are detected however you make them — the app, a physical Serena remote, or any of the Pico remotes (first floor, primary bedroom, both guest rooms). A "Manual" chip appears on the room's header in the Shades view (tap it to hand the room back to adaptive), and the Shades header shows how many rooms are manual today
                 - Settings: the Shades pop-up gains per-room "Manual Today" toggles so a room can be taken off adaptive deliberately, before touching a shade
                 - Laundry Live Activities: far fewer pushes — both cards now update on a 10-minute tick plus their own start/stop and run-state changes, instead of on every progress tick; the countdown timer is unaffected since iOS counts it down on-device, and the v2.2.3 completion fixes below are rolled in unchanged
                 - Laundry Live Activities: no more count-up timer — a card pushed before the appliance has published its time estimate now shows no timer at all (previously it aimed the timer at "now", which iOS counts upward from), and a follow-up push adds the real countdown the moment the estimate arrives
                 - Laundry: the SmartThinQ LGE Sensors integration reloads itself every morning at 5 AM, so the washer and dryer sensors start each day on a fresh cloud session instead of a possibly stale one
                 - Retired the NSPanel Pro dashboard — the ten nspanel view files, the sidebar entry and the two scripts only it used (keypad digit entry, scenes-screen All Off) are gone; the Dune Mist theme and the mobile dashboard are untouched
-                - Sprinklers: a water-drop chip now appears in the Home header while any zone is watering — tap it for a bottom sheet naming the running zone with Pause 10 min / Resume now / Stop watering, enough to let the dog out without touching the schedule; a pause shows a live countdown and Rachio resumes on its own when it expires
+                - Sprinklers: a water-drop chip now appears in the Home header while any zone is watering — tap it for a bottom sheet naming the running zone with Pause 10 min / Resume now / Stop watering, enough to let the dog out without touching the schedule. While paused the chip stays put as a pause icon so Resume is always one tap away, and Rachio resumes on its own when the ten minutes are up
+                - Notifications: the Dryer Vent Cleaning alert no longer comes back after a Home Assistant restart — the last-cleaned date was being reset to its original bootstrap value on every restart, which re-fired the red critical alert and its push even right after you'd tapped "I cleaned it"
 
                 **v2.2.3** — 2026-08-01
 
