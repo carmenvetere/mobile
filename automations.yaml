@@ -973,6 +973,9 @@
           - cover.first_floor_front
           - cover.living_room_side_shades
           - cover.dining_room_side
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.shades_manual_first_floor
       button_2_press:
       - action: scene.turn_on
         target:
@@ -987,6 +990,9 @@
           - cover.first_floor_front
           - cover.living_room_side_shades
           - cover.dining_room_side
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.shades_manual_first_floor
       button_3_press:
       - action: scene.turn_on
         target:
@@ -3637,6 +3643,9 @@
               - cover.bedroom_right
               - cover.hallway_2
               - cover.hallway_1
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.shades_manual_primary_bedroom
         - conditions:
           - condition: numeric_state
             entity_id: cover.bedroom_side_shades
@@ -3648,6 +3657,9 @@
             data: {}
             target:
               entity_id: cover.bedroom_back
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.shades_manual_primary_bedroom
       button_1_press:
       - choose:
         - conditions:
@@ -3661,6 +3673,9 @@
             data: {}
             target:
               entity_id: cover.bedroom_back
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.shades_manual_primary_bedroom
         - conditions:
           - condition: numeric_state
             entity_id: cover.bedroom_back
@@ -3676,6 +3691,9 @@
               - cover.bedroom_right
               - cover.hallway_2
               - cover.hallway_1
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.shades_manual_primary_bedroom
       time_before_long_press: 2
 - id: '1750804925752'
   alias: Basement HVAC Schedule
@@ -4550,7 +4568,9 @@
   mode: single
 - id: '1761056817841'
   alias: Back Guest Bedroom Pico - Open Shades
-  description: ''
+  description: 'v2.4: also sets the room''s manual latch. This automation drives
+    the cover, so the resulting events carry a parent_id and the Manual Control Detector
+    deliberately ignores them — the latch is set here explicitly instead.'
   triggers:
   - device_id: ccf025a6c1393662446eb3b512b58c25
     domain: lutron_caseta
@@ -4564,10 +4584,15 @@
     data: {}
     target:
       entity_id: cover.back_guest_bedroom_shades
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.shades_manual_back_guest_bedroom
   mode: single
 - id: '1761056876972'
   alias: Back Guest Bedroom Pico - Close Shades
-  description: ''
+  description: 'v2.4: also sets the room''s manual latch. This automation drives
+    the cover, so the resulting events carry a parent_id and the Manual Control Detector
+    deliberately ignores them — the latch is set here explicitly instead.'
   triggers:
   - device_id: ccf025a6c1393662446eb3b512b58c25
     domain: lutron_caseta
@@ -4581,6 +4606,9 @@
     data: {}
     target:
       entity_id: cover.back_guest_bedroom_shades
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.shades_manual_back_guest_bedroom
   mode: single
 - id: '1761577930081'
   alias: Office Pico Remote
@@ -6374,7 +6402,9 @@
   mode: restart
 - id: '1777031732859'
   alias: Front Guest Bedroom Pico - Open Shades
-  description: ''
+  description: 'v2.4: also sets the room''s manual latch. This automation drives
+    the cover, so the resulting events carry a parent_id and the Manual Control Detector
+    deliberately ignores them - the latch is set here explicitly instead.'
   triggers:
   - device_id: dbd00a673efa053d63fa6d9d979888dd
     domain: lutron_caseta
@@ -6387,10 +6417,15 @@
     data: {}
     target:
       entity_id: cover.front_guest_bedroom_shades
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.shades_manual_front_guest_bedroom
   mode: single
 - id: '1777031734880'
   alias: Front Guest Bedroom Pico - Close Shades
-  description: ''
+  description: 'v2.4: also sets the room''s manual latch. This automation drives
+    the cover, so the resulting events carry a parent_id and the Manual Control Detector
+    deliberately ignores them - the latch is set here explicitly instead.'
   triggers:
   - device_id: dbd00a673efa053d63fa6d9d979888dd
     domain: lutron_caseta
@@ -6403,6 +6438,9 @@
     data: {}
     target:
       entity_id: cover.front_guest_bedroom_shades
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.shades_manual_front_guest_bedroom
   mode: single
 - id: '1777225146361'
   alias: Basement Bathroom Exhaust Fan Turns Off after 45 min
@@ -7074,7 +7112,11 @@
   mode: restart
 - id: '1780678371300'
   alias: 'Pool: Raise Pump Speed When Heating'
-  description: ''
+  description: 'When the heat pump has been running 2 minutes (pump-priming delay,
+    v2.2.2), raise the filter pump so the heater gets adequate flow. v2.2.3: the
+    OmniLogic pump-speed number is now expressed as a percentage rather than RPM,
+    so the setpoint changed 2470 (RPM) -> 70 (%); same physical speed on the 3450
+    RPM pump.'
   triggers:
   - trigger: state
     entity_id:
@@ -7094,11 +7136,14 @@
     target:
       entity_id: number.omnilogic_pool_filter_pump_speed
     data:
-      value: '2470'
+      value: '70'
   mode: single
 - id: '1780678610791'
   alias: 'Pool: Lower Pump Speed When Heating Complete'
-  description: ''
+  description: 'When the heat pump has been off 30 seconds, drop the filter pump back
+    to its circulation speed. v2.2.3: the OmniLogic pump-speed number is now expressed
+    as a percentage rather than RPM, so the setpoint changed 2000 (RPM) -> 58 (%);
+    same physical speed on the 3450 RPM pump.'
   triggers:
   - trigger: state
     entity_id:
@@ -7116,7 +7161,7 @@
     target:
       entity_id: number.omnilogic_pool_filter_pump_speed
     data:
-      value: '2000'
+      value: '58'
   mode: single
 - id: '1782073941879'
   alias: Office Shades – Schedule & Adaptive
@@ -7255,7 +7300,11 @@
     closes at evening Nov-Mar; other months it opens to 100% at the evening close
     for sunset viewing (skipped if the room was closed by hand — privacy respected).
     Adaptive targets per-facade covers; close and privacy check use the room group
-    where one exists.'
+    where one exists. v2.4: each room also carries a manual latch (input_boolean.shades_manual_*,
+    set by the Manual Control Detector when shades are moved by hand) — a latched
+    room is skipped by morning open and adaptive ticks for the rest of the day, manual
+    wins over Demand Response (the room is skipped before dr_override is evaluated),
+    the evening close still runs, and the latch clears at 03:00.'
   triggers:
   - at: 07:30:00
     id: morning_early
@@ -7310,6 +7359,7 @@
       open_wkday: 07:30
       open_wknd: 08:00
       pause: input_boolean.dinner_party
+      manual: input_boolean.shades_manual_first_floor
       indoor: climate.living_room_thermostat_homekit
       comfort: 70
       facades:
@@ -7335,6 +7385,7 @@
       open_wkday: 08:00
       open_wknd: 09:00
       pause: ''
+      manual: input_boolean.shades_manual_primary_bedroom
       indoor: climate.master_bedroom_thermostat
       comfort: 68
       facades:
@@ -7368,6 +7419,7 @@
       open_wkday: 08:00
       open_wknd: 09:00
       pause: input_boolean.guest_mode
+      manual: input_boolean.shades_manual_back_guest_bedroom
       indoor: sensor.guest_bedroom_sensor_temperature
       comfort: 68
       facades:
@@ -7390,6 +7442,7 @@
       open_wkday: 08:00
       open_wknd: 09:00
       pause: input_boolean.guest_mode
+      manual: input_boolean.shades_manual_front_guest_bedroom
       indoor: sensor.front_guest_bedroom_sensor_temperature
       comfort: 68
       facades:
@@ -7412,6 +7465,7 @@
       open_wkday: 08:00
       open_wknd: 09:00
       pause: ''
+      manual: input_boolean.shades_manual_office
       indoor: sensor.office_thermostat_homekit_current_temperature
       comfort: 72
       facades:
@@ -7464,6 +7518,8 @@
               comfort: '{{ repeat.item.comfort | float(70) }}'
               paused: '{{ repeat.item.pause != '''' and is_state(repeat.item.pause,
                 ''on'') }}'
+              manual_locked: '{{ repeat.item.manual != '''' and is_state(repeat.item.manual,
+                ''on'') }}'
               open_time: '{{ repeat.item.open_wknd if now().weekday() >= 5 else repeat.item.open_wkday
                 }}'
               in_window: '{{ (not is_adaptive) or now().strftime(''%H:%M'') > open_time
@@ -7479,8 +7535,8 @@
                 %}{{ states(src) | float(70) }}{% endif %}'
           - if:
             - condition: template
-              value_template: '{{ not paused and in_window and not (privacy_locked
-                | bool(false)) }}'
+              value_template: '{{ not paused and not manual_locked and in_window
+                and not (privacy_locked | bool(false)) }}'
             then:
             - repeat:
                 for_each: '{{ facades }}'
@@ -7585,6 +7641,123 @@
                   level: warning
   mode: queued
   max: 10
+- id: '1784000000010'
+  alias: Shade Scheduler – Manual Control Detector
+  description: 'v2.4: latches a room out of adaptive shading for the rest of the day
+    when its shades are moved by hand. Watches the 16 facade covers the Shade Scheduler
+    itself commands (its rooms[].facades[].covers lists plus bedroom_back) for current_position
+    changes and sets the room''s input_boolean.shades_manual_* latch. Two filters:
+    (1) magnitude — the position delta must clear 5%/member-count (min 1%), because
+    a group cover reports the AVERAGE of its members: a flat 5% would need one shade
+    of a 5-member group to travel 25% before the group budged that far, so a real
+    hand-move went unlatched. Scaling by the member count (from the group''s own
+    entity_id attribute; non-group covers fall back to 5%) keeps jitter filtered
+    while catching a single-shade move. (2) provenance — user_id set means a human
+    in the app/dashboard/voice and is trusted immediately; user_id AND parent_id
+    both absent means a physical Serena remote, which is indistinguishable from the
+    async travel updates Lutron/Matter push during a scheduler-commanded move, so
+    that path alone also requires scheduler-quiet (no running scheduler instance and
+    last_triggered more than 120s ago). parent_id set = another automation, ignored
+    — the Pico automations latch explicitly instead. Note the quiet window applies
+    ONLY to the no-context path: gating app moves on it too would silently discard
+    a correction made in the two minutes after a tick, which is exactly when people
+    override an adaptive move. The latch skips morning open and adaptive ticks only;
+    the evening close still runs. Manual wins over Demand Response.
+    Cleared at 03:00 by the Daily Reset, or by hand from the Shades view chip /
+    Settings pop-up. Same context idiom as the bathroom exhaust-fan automations.'
+  triggers:
+  - trigger: state
+    entity_id:
+    - cover.first_floor_front
+    - cover.dining_room_side
+    - cover.living_room_side_shades
+    - cover.bedroom_left
+    - cover.bedroom_right
+    - cover.hallway_1
+    - cover.hallway_2
+    - cover.bedroom_back
+    - cover.back_guest_bedroom_back_left
+    - cover.back_guest_bedroom_back_right
+    - cover.back_guest_bedroom_side
+    - cover.front_guest_bedroom_front_left
+    - cover.front_guest_bedroom_front_right
+    - cover.front_guest_bedroom_side
+    - cover.office_office_right
+    - cover.office_office_left
+    attribute: current_position
+  conditions:
+  - condition: time
+    after: '03:00:00'
+    before: '20:01:00'
+  - condition: template
+    value_template: '{% set p_from = trigger.from_state.attributes.current_position
+      if trigger.from_state else none %}{% set p_to = trigger.to_state.attributes.current_position
+      if trigger.to_state else none %}{% set members = state_attr(trigger.entity_id,
+      ''entity_id'') %}{% set n = (members | count) if members else 1 %}{% set thresh
+      = [5 / n, 1] | max %}{{ p_from is not none and p_to is not none and (p_to |
+      float(0) - p_from | float(0)) | abs >= thresh }}'
+  - condition: template
+    value_template: '{% set a = ''automation.shade_scheduler_whole_house'' %}{% set
+      lt = state_attr(a, ''last_triggered'') %}{% set quiet = (state_attr(a, ''current'')
+      | int(0)) == 0 and (lt is none or (now() - lt).total_seconds() > 120) %}{{
+      trigger.to_state.context.user_id is not none or (trigger.to_state.context.parent_id
+      is none and quiet) }}'
+  actions:
+  - variables:
+      latch_map:
+        cover.first_floor_front: input_boolean.shades_manual_first_floor
+        cover.dining_room_side: input_boolean.shades_manual_first_floor
+        cover.living_room_side_shades: input_boolean.shades_manual_first_floor
+        cover.bedroom_left: input_boolean.shades_manual_primary_bedroom
+        cover.bedroom_right: input_boolean.shades_manual_primary_bedroom
+        cover.hallway_1: input_boolean.shades_manual_primary_bedroom
+        cover.hallway_2: input_boolean.shades_manual_primary_bedroom
+        cover.bedroom_back: input_boolean.shades_manual_primary_bedroom
+        cover.back_guest_bedroom_back_left: input_boolean.shades_manual_back_guest_bedroom
+        cover.back_guest_bedroom_back_right: input_boolean.shades_manual_back_guest_bedroom
+        cover.back_guest_bedroom_side: input_boolean.shades_manual_back_guest_bedroom
+        cover.front_guest_bedroom_front_left: input_boolean.shades_manual_front_guest_bedroom
+        cover.front_guest_bedroom_front_right: input_boolean.shades_manual_front_guest_bedroom
+        cover.front_guest_bedroom_side: input_boolean.shades_manual_front_guest_bedroom
+        cover.office_office_right: input_boolean.shades_manual_office
+        cover.office_office_left: input_boolean.shades_manual_office
+      latch: '{{ latch_map.get(trigger.entity_id, '''') }}'
+  - condition: template
+    value_template: '{{ latch != '''' and is_state(latch, ''off'') }}'
+  - action: input_boolean.turn_on
+    target:
+      entity_id: '{{ latch }}'
+  - action: system_log.write
+    data:
+      message: 'Shade Manual Detector: {{ trigger.entity_id }} moved {{ trigger.from_state.attributes.current_position
+        }}% -> {{ trigger.to_state.attributes.current_position }}% by hand ({{ ''app/user''
+        if trigger.to_state.context.user_id is not none else ''physical remote''
+        }}) — latched {{ latch }} until 03:00'
+      level: info
+  mode: queued
+  max: 25
+- id: '1784000000011'
+  alias: Shade Scheduler – Manual Control Daily Reset
+  description: 'v2.4: clears all five input_boolean.shades_manual_* latches at 03:00
+    so every room rejoins adaptive shading each morning. Runs at 03:00 rather than
+    at morning open so a room that was paused all day (dinner party / guest mode)
+    still resets, and it is a single idempotent turn_off instead of a per-room clear
+    inside the scheduler''s repeat loop. Nothing adaptive runs between 03:00 and
+    the first morning open, so the timing is equivalent.'
+  triggers:
+  - at: '03:00:00'
+    trigger: time
+  conditions: []
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id:
+      - input_boolean.shades_manual_first_floor
+      - input_boolean.shades_manual_primary_bedroom
+      - input_boolean.shades_manual_back_guest_bedroom
+      - input_boolean.shades_manual_front_guest_bedroom
+      - input_boolean.shades_manual_office
+  mode: single
 - id: '1783000000001'
   alias: First Floor Doors Closed - Restore Climate
   description: 'Restores living-room climate when ALL first-floor exterior doors are
@@ -8316,18 +8489,47 @@
         tag: car_charging
         audience: both
 - id: washer_live_activity_update_v2
-  alias: Washing Machine Live Activity — Update (v2 test)
-  description: Standalone washer iOS Live Activity (no shared push script) for v2.2.1
-    testing. Progress bar = % complete (sensor.washer_cycle_progress); live countdown
-    = time remaining (sensor.front_load_washer_remaining_time, hh:mm:ss), pointed
-    at an absolute finish timestamp (now + countdown) so the iOS timer counts down
-    correctly. Delivers to both phones inline. Toggle on/off to test.
+  alias: Washing Machine Live Activity — Update (v2)
+  description: 'Standalone washer iOS Live Activity (no shared push script). Delivers
+    to Carmen''s iPhone inline. This automation only ever shows a RUNNING card -
+    the card is ended by "Washing Machine Live Activity - Complete (v2)" (green
+    Complete card, held, then cleared) or by "- Clear Stale Card (v2)" if the cycle
+    is cancelled. v2.4: pushes on a run-state change (to: null state trigger, so
+    attribute-only updates are ignored) instead of every progress/remaining tick
+    — the countdown needs no push refresh because `when` is an absolute finish timestamp
+    the iOS timer counts down client-side. One extra trigger fires when the remaining-time
+    sensor first publishes a real countdown (invalid -> valid, once per cycle): at
+    a run-state transition the estimate is often not out yet, and a card pushed then
+    must NOT carry a chronometer — the old fallback pointed `when` at now(), which
+    iOS renders as a timer counting UP, and with no per-tick refresh to correct it
+    the count-up stuck for the whole phase. has_countdown gates chronometer/when,
+    so a card without a real estimate simply shows no timer until the follow-up push.
+    Post-review: a 10-minute tick was added to match the dryer. Run-state changes
+    alone left the progress bar frozen for a whole phase, and an LG auto-sensing
+    re-estimate mid-phase (e.g. +12 min at rinse) never reached the card — the
+    client-side countdown kept aiming at the stale finish_ts and stalled at 0:00
+    while the machine was still running. Six pushes an hour is still far below the
+    original per-tick cadence.'
   triggers:
+  - trigger: time_pattern
+    minutes: /10
   - trigger: state
     entity_id:
-    - sensor.washer_cycle_progress
     - sensor.front_load_washer_run_state
+    to: null
+  - trigger: state
+    entity_id:
     - sensor.front_load_washer_remaining_time
+    from:
+    - unknown
+    - unavailable
+    - '-'
+    - '0:00:00'
+    not_to:
+    - unknown
+    - unavailable
+    - '-'
+    - '0:00:00'
   conditions:
   - condition: template
     value_template: "{% set p = states('sensor.washer_cycle_progress') %} {{ p not
@@ -8351,8 +8553,8 @@
             critical_text: '{{ run_state }} · {{ progress }}%'
             progress: '{{ progress }}'
             progress_max: 100
-            chronometer: true
-            when: '{{ finish_ts }}'
+            chronometer: '{{ has_countdown }}'
+            when: '{{ finish_ts if has_countdown else 0 }}'
             when_relative: false
             notification_icon: mdi:washing-machine
             notification_icon_color: '#2196F3'
@@ -8361,6 +8563,9 @@
     progress: '{{ states(''sensor.washer_cycle_progress'') | int(0) }}'
     run_state: '{{ states(''sensor.front_load_washer_run_state'') | default(''Running'',
       true) | title }}'
+    has_countdown: '{% set c = states(''sensor.front_load_washer_remaining_time'')
+      %}{{ c not in [''unavailable'', ''unknown'', '''', ''-'', ''0:00:00''] and
+      '':'' in c }}'
     finish_ts: "{% set c = states('sensor.front_load_washer_remaining_time') %} {%
       if c not in ['unavailable','unknown','', none] and ':' in c %}\n  {% set p =
       c.split(':') | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60
@@ -8386,23 +8591,49 @@
       entity_id: input_boolean.basement_guests
   mode: single
 - id: '1785319121026'
-  alias: Dryer Live Activity — Update (v2 test)
-  description: Standalone dryer iOS Live Activity (no shared push script). Progress
-    bar = % complete (sensor.dryer_cycle_progress); live countdown = time remaining
-    (sensor.dryer_remaining_time, h:mm:ss), pointed at an absolute finish timestamp
-    (now + remaining) so the iOS timer counts down correctly. Toggle on/off to test.
+  alias: Dryer Live Activity — Update (v2)
+  description: 'Standalone dryer iOS Live Activity (no shared push script). This
+    automation only ever shows a RUNNING card - the card is ended by "Dryer Live
+    Activity - Complete (v2)" or by "- Clear Stale Card (v2)" if the cycle is cancelled.
+    v2.2.3 fix: the gate is sensor.dryer (on/off, same entity the v1 automation
+    used) - sensor.dryer_run_state does not exist in this config, so the original
+    condition was never true and the dryer card never appeared at all; dryer_run_state
+    is still read for the label text only, falling back to "Drying" when it is missing.
+    v2.4: pushes on a 10-minute tick (progress bar refresh) plus sensor.dryer on/off
+    transitions (so the card appears the moment a cycle starts) instead of every
+    progress/remaining tick - the countdown needs no push refresh because `when`
+    is an absolute finish timestamp the iOS timer counts down client-side. One extra
+    trigger fires when the remaining-time sensor first publishes a real countdown
+    (invalid -> valid, once per cycle): at cycle start the estimate is often not
+    out yet, and a card pushed then must NOT carry a chronometer — the old fallback
+    pointed `when` at now(), which iOS renders as a timer counting UP, stuck until
+    the next 10-min tick. has_countdown gates chronometer/when, so a card without
+    a real estimate simply shows no timer until the follow-up push.'
   triggers:
+  - trigger: time_pattern
+    minutes: /10
   - trigger: state
     entity_id:
-    - sensor.dryer_cycle_progress
-    - sensor.dryer_run_state
+    - sensor.dryer
+    to: null
+  - trigger: state
+    entity_id:
     - sensor.dryer_remaining_time
+    from:
+    - unknown
+    - unavailable
+    - '-'
+    - '0:00:00'
+    not_to:
+    - unknown
+    - unavailable
+    - '-'
+    - '0:00:00'
   conditions:
   - condition: template
-    value_template: "{% set p = states('sensor.dryer_cycle_progress') %} {% set r
-      = states('sensor.dryer_run_state') | lower %} {{ p not in ['unavailable','unknown','']
-      and 0 <= (p | int(-1)) < 100\n   and r not in ['unavailable','unknown','none','','off','finished','-']
-      }}"
+    value_template: "{% set p = states('sensor.dryer_cycle_progress') %} {{ states('sensor.dryer')
+      not in ['off','unavailable','unknown','-','']\n   and p not in ['unavailable','unknown','']\n
+      \  and 0 <= (p | int(-1)) < 100 }}"
   actions:
   - repeat:
       for_each:
@@ -8421,39 +8652,39 @@
             critical_text: '{{ progress }}%'
             progress: '{{ progress }}'
             progress_max: 100
-            chronometer: true
-            when: '{{ finish_ts }}'
+            chronometer: '{{ has_countdown }}'
+            when: '{{ finish_ts if has_countdown else 0 }}'
             when_relative: false
             notification_icon: mdi:tumble-dryer
             notification_icon_color: '#FF9800'
   mode: restart
   variables:
     progress: '{{ states(''sensor.dryer_cycle_progress'') | int(0) }}'
-    run_state: '{{ states(''sensor.dryer_run_state'') | default(''Drying'', true)
-      | title }}'
+    run_state: "{% set r = states('sensor.dryer_run_state') %} {{ r | title if r not
+      in ['unknown','unavailable','none','-',''] else 'Drying' }}"
+    has_countdown: '{% set c = states(''sensor.dryer_remaining_time'') %}{{ c not
+      in [''unavailable'', ''unknown'', '''', ''-'', ''0:00:00''] and '':'' in c
+      }}'
     finish_ts: "{% set c = states('sensor.dryer_remaining_time') %} {% if c not in
       ['unavailable','unknown','', none] and ':' in c %}\n  {% set p = c.split(':')
       | map('int') | list %}\n  {{ (now().timestamp() + p[0]*3600 + p[1]*60 + p[2])
       | int }}\n{% else %}{{ now().timestamp() | int }}{% endif %}"
 - id: '1785407400000'
-  alias: Basement Guests - Suspend Motion Lights Overnight
-  description: 'Overnight guests sleeping in the basement: while Overnight Guests
-    (guest_mode) and Guests in Basement (basement_guests) are both on, switch the
-    basement motion-lights automations off between 20:00 and 08:00 so a guest moving
-    around downstairs no longer trips the lights on. Mirrors the overnight window
-    the Basement HVAC Schedule already uses for basement_guests. Restores them at
-    08:00, or as soon as either flag clears - but only if this automation was the
-    one that switched them off (input_boolean.basement_motion_suspended), so a manual
-    Settings toggle is never overridden. Also re-evaluates on HA restart.'
+  alias: Basement Guests - Suspend Motion Lights
+  description: 'Guests staying in the basement: while Overnight Guests (guest_mode)
+    and Guests in Basement (basement_guests) are both on, keep the basement motion-lights
+    automations switched off at all times of day so a guest moving around downstairs
+    never trips the lights on. (v2.2.3: was a 20:00-08:00 window, which still let
+    daytime motion fire while guests were napping, changing or working downstairs -
+    guests keep their own hours, so the suspension now runs around the clock.) Restored
+    as soon as either flag clears - but only if this automation was the one that switched
+    them off (input_boolean.basement_motion_suspended), so a manual Settings toggle
+    is never overridden. Also re-evaluates on HA restart.'
   triggers:
   - trigger: state
     entity_id:
     - input_boolean.guest_mode
     - input_boolean.basement_guests
-  - trigger: time
-    at: '20:00:00'
-  - trigger: time
-    at: 08:00:00
   - trigger: homeassistant
     event: start
   conditions: []
@@ -8466,9 +8697,6 @@
       - condition: state
         entity_id: input_boolean.basement_guests
         state: 'on'
-      - condition: time
-        after: '20:00:00'
-        before: 08:00:00
       sequence:
       - action: automation.turn_off
         target:
@@ -8493,4 +8721,271 @@
       - action: input_boolean.turn_off
         target:
           entity_id: input_boolean.basement_motion_suspended
+  mode: single
+- id: washer_live_activity_complete_v2
+  alias: Washing Machine Live Activity — Complete (v2)
+  description: 'Ends the standalone washer Live Activity (v2.2.3). The Update (v2)
+    automation only ever renders a running card and stops firing once the cycle is
+    done, which left the last "42% · Rinse" card pinned to the Lock Screen / Dynamic
+    Island indefinitely. This replaces it with a terminal green "Complete" card -
+    progress pinned at 100%, chronometer off, live_update false so iOS stops treating
+    it as a live activity - holds it 10 minutes as the move-the-laundry reminder,
+    then clears the tag. Primary completion signal (v2.2.3): the remaining-time countdown
+    itself bottoming out - a transition from a real sub-2.5-minute countdown to 0:00:00
+    (or to unavailable, for a washer that drops offline as it powers down). This is the
+    only end-of-cycle signal guaranteed to arrive: binary_sensor.washer_recently_completed
+    is not defined anywhere in this config (never observed firing), and the cycle-progress
+    template only reaches 100 if the washer still reports on when remaining time zeroes -
+    if the power state flips first, progress jumps from ~95 straight to 0 and never crosses
+    the 99 threshold. Those triggers are retained as harmless backups. The from-state guard
+    (0 < remaining <= 150 s) means a cancelled cycle or an offline blip with more than 2.5
+    minutes left does not fake a completion.'
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.washer_recently_completed
+    from: 'off'
+    to: 'on'
+  - trigger: numeric_state
+    entity_id: sensor.washer_cycle_progress
+    above: 99
+  - trigger: state
+    entity_id: sensor.front_load_washer_run_state
+    to: finished
+  - trigger: state
+    id: countdown_done
+    entity_id: sensor.front_load_washer_remaining_time
+    to:
+    - '0:00:00'
+    - '-'
+    - unknown
+    - unavailable
+  conditions:
+  - condition: template
+    value_template: "{% if trigger.id != 'countdown_done' %} true {% else %}\n  {%
+      set f = trigger.from_state.state if trigger.from_state else '' %}\n  {% if ':'
+      in f and f != '0:00:00' %}\n    {% set p = f.split(':') | map('int') | list
+      %}\n    {% set secs = p[0]*3600 + p[1]*60 + p[2] %}\n    {{ 0 < secs <= 150
+      }}\n  {% else %} false {% endif %}\n{% endif %}"
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          title: Washing Machine
+          message: Clothes are ready
+          data:
+            tag: washer_cycle
+            live_update: false
+            background_color: '#14161A'
+            text_color: '#FFFFFF'
+            subtitle: Complete
+            critical_text: Complete
+            progress: 100
+            progress_max: 100
+            chronometer: false
+            notification_icon: mdi:washing-machine
+            notification_icon_color: '#4CAF50'
+  - delay: 00:10:00
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          message: clear_notification
+          data:
+            tag: washer_cycle
+  mode: restart
+- id: washer_live_activity_clear_stale_v2
+  alias: Washing Machine Live Activity — Clear Stale Card (v2)
+  description: 'Safety net for the standalone washer Live Activity (v2.2.3): a cancelled
+    or powered-off cycle never sets binary_sensor.washer_recently_completed, so the
+    Complete (v2) automation never runs and the running card would hang around forever.
+    When the washer has been off for 5 minutes and no completion is in play, just clear
+    the tag - no card is pushed, so this is a no-op when there was nothing on screen.
+    Also runs on HA restart, which is the other way a card can outlive its cycle (the
+    pending 10-minute hold in Complete (v2) is lost across a restart). v2.2.3: keyed
+    off sensor.front_load_washer (on/off, the entity the v1 automation used) rather
+    than guessing at the run_state vocabulary.'
+  triggers:
+  - trigger: state
+    entity_id: sensor.front_load_washer
+    to: 'off'
+    for: '00:05:00'
+  - trigger: homeassistant
+    event: start
+  conditions:
+  - condition: state
+    entity_id: binary_sensor.washer_recently_completed
+    state: 'off'
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.front_load_washer
+      state: 'on'
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          message: clear_notification
+          data:
+            tag: washer_cycle
+  mode: single
+- id: dryer_live_activity_complete_v2
+  alias: Dryer Live Activity — Complete (v2)
+  description: 'Ends the standalone dryer Live Activity (v2.2.3) - the dryer counterpart
+    to the washer Complete (v2) automation. The Update (v2) automation only ever renders
+    a running card and stops firing once the cycle is done, leaving the last progress
+    card pinned to the Lock Screen / Dynamic Island indefinitely. This replaces it
+    with a terminal green "Complete" card - progress pinned at 100%, chronometer off,
+    live_update false so iOS stops treating it as a live activity - holds it 10 minutes
+    as the move-the-laundry reminder, then clears the tag. Primary completion signal
+    (v2.2.3): the remaining-time countdown bottoming out - a transition from a real
+    sub-2.5-minute countdown to 0:00:00 (or to unavailable), mirroring the washer.
+    binary_sensor.dryer_recently_completed is not defined anywhere in this config and
+    the progress template only reaches 100 if sensor.dryer still reads on when the
+    countdown zeroes, so both older triggers are unreliable; they are retained as
+    harmless backups. The from-state guard (0 < remaining <= 150 s) means a cancelled
+    cycle or an offline blip with more than 2.5 minutes left does not fake a completion.'
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.dryer_recently_completed
+    from: 'off'
+    to: 'on'
+  - trigger: numeric_state
+    entity_id: sensor.dryer_cycle_progress
+    above: 99
+  - trigger: state
+    id: countdown_done
+    entity_id: sensor.dryer_remaining_time
+    to:
+    - '0:00:00'
+    - '-'
+    - unknown
+    - unavailable
+  conditions:
+  - condition: template
+    value_template: "{% if trigger.id != 'countdown_done' %} true {% else %}\n  {%
+      set f = trigger.from_state.state if trigger.from_state else '' %}\n  {% if ':'
+      in f and f != '0:00:00' %}\n    {% set p = f.split(':') | map('int') | list
+      %}\n    {% set secs = p[0]*3600 + p[1]*60 + p[2] %}\n    {{ 0 < secs <= 150
+      }}\n  {% else %} false {% endif %}\n{% endif %}"
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          title: Dryer
+          message: Clothes are ready
+          data:
+            tag: dryer_cycle
+            live_update: false
+            background_color: '#14161A'
+            text_color: '#FFFFFF'
+            subtitle: Complete
+            critical_text: Complete
+            progress: 100
+            progress_max: 100
+            chronometer: false
+            notification_icon: mdi:tumble-dryer
+            notification_icon_color: '#4CAF50'
+  - delay: 00:10:00
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          message: clear_notification
+          data:
+            tag: dryer_cycle
+  mode: restart
+- id: dryer_live_activity_clear_stale_v2
+  alias: Dryer Live Activity — Clear Stale Card (v2)
+  description: 'Safety net for the standalone dryer Live Activity (v2.2.3): a cancelled
+    or powered-off cycle never sets binary_sensor.dryer_recently_completed, so the
+    Complete (v2) automation never runs and the running card would hang around forever.
+    When the dryer has been off for 5 minutes and no completion is in play, just clear
+    the tag - no card is pushed, so this is a no-op when there was nothing on screen.
+    Also runs on HA restart, which is the other way a card can outlive its cycle (the
+    pending 10-minute hold in Complete (v2) is lost across a restart). v2.2.3: keyed
+    off sensor.dryer (on/off) rather than the nonexistent sensor.dryer_run_state, which
+    would never have fired this trigger either.'
+  triggers:
+  - trigger: state
+    entity_id: sensor.dryer
+    to: 'off'
+    for: '00:05:00'
+  - trigger: homeassistant
+    event: start
+  conditions:
+  - condition: state
+    entity_id: binary_sensor.dryer_recently_completed
+    state: 'off'
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.dryer
+      state: 'on'
+  actions:
+  - repeat:
+      for_each:
+      - notify.mobile_app_carmens_iphone
+      sequence:
+      - action: '{{ repeat.item }}'
+        data:
+          message: clear_notification
+          data:
+            tag: dryer_cycle
+  mode: single
+- id: smartthinq_sensors_daily_reload
+  alias: SmartThinQ Sensors - Daily Reload (5 AM)
+  description: 'Reloads the SmartThinQ LGE Sensors integration every morning at
+    05:00 so the washer/dryer sensors (and their Live Activity cards) start the
+    day from a fresh cloud session instead of a possibly stale one. Targets the
+    config entry via its entities (sensor.front_load_washer + sensor.dryer -
+    entity_id, not device_id, survives a device re-add; one shared entry reloads
+    once, separate entries each reload). 05:00 sits before the wake routines and
+    no laundry cycle should be running; a reload only bounces the entities
+    briefly, and the Live Activity automations are safe against it - the Complete
+    (v2) countdown-bottom-out trigger requires a real sub-150s countdown
+    beforehand, and Clear Stale keys on a 5-minute off-hold, so a momentary
+    unavailable cannot fake a completion or clear a live card.'
+  triggers:
+  - trigger: time
+    at: '05:00:00'
+  conditions: []
+  actions:
+  - action: homeassistant.reload_config_entry
+    target:
+      entity_id:
+      - sensor.front_load_washer
+      - sensor.dryer
+  mode: single
+- id: sprinkler_pause_timer_resume
+  alias: Sprinklers - Resume After Pause Timer
+  description: 'Safety net for the Sprinkler Pause pop-up (v2.4): when
+    timer.sprinkler_pause finishes, call rachio.resume_watering on the controller.
+    Rachio normally resumes the schedule by itself when the 10-minute pause
+    expires - this only covers a missed resume, and resuming an already-running
+    schedule is a no-op (continue_on_error for an appliance that is offline or
+    idle).'
+  triggers:
+  - trigger: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.sprinkler_pause
+  conditions: []
+  actions:
+  - action: rachio.resume_watering
+    continue_on_error: true
+    target:
+      entity_id: switch.rachio_c3e715_standby
   mode: single

@@ -1119,7 +1119,7 @@ cards:
             icon: mdi:cellphone
             tap_action:
               action: none
-            state_display: v2.2.2
+            state_display: v2.4.0
             styles:
               card:
               - background: transparent !important
@@ -1151,6 +1151,35 @@ cards:
           cards:
             - type: markdown
               content: |
+                **v2.4.0** — 2026-08-21
+
+                - Shades: moving a room's shades by hand now takes that room off adaptive control for the rest of the day — the scheduler skips it at every tick (and during Demand Response) while the evening close still runs; everything resets automatically at 3 AM
+                - Shades: hand moves are detected however you make them — the app, a physical Serena remote, or any of the Pico remotes (first floor, primary bedroom, both guest rooms). A "Manual" chip appears on the room's header in the Shades view (tap it to hand the room back to adaptive), and the Shades header shows how many rooms are manual today
+                - Settings: the Shades pop-up gains per-room "Manual Today" toggles so a room can be taken off adaptive deliberately, before touching a shade
+                - Laundry Live Activities: far fewer pushes — both cards now update on a 10-minute tick plus their own start/stop and run-state changes, instead of on every progress tick; the countdown timer is unaffected since iOS counts it down on-device, and the v2.2.3 completion fixes below are rolled in unchanged
+                - Laundry Live Activities: no more count-up timer — a card pushed before the appliance has published its time estimate now shows no timer at all (previously it aimed the timer at "now", which iOS counts upward from), and a follow-up push adds the real countdown the moment the estimate arrives
+                - Laundry: the SmartThinQ LGE Sensors integration reloads itself every morning at 5 AM, so the washer and dryer sensors start each day on a fresh cloud session instead of a possibly stale one
+                - Retired the NSPanel Pro dashboard — the ten nspanel view files, the sidebar entry and the two scripts only it used (keypad digit entry, scenes-screen All Off) are gone; the Dune Mist theme and the mobile dashboard are untouched
+                - Sprinklers: a water-drop chip now appears in the Home header while any zone is watering — tap it for a bottom sheet naming the running zone with Pause 10 min / Resume now / Stop watering, enough to let the dog out without touching the schedule. While paused the chip stays put as a pause icon so Resume is always one tap away, and Rachio resumes on its own when the ten minutes are up
+                - Notifications: the Dryer Vent Cleaning alert no longer comes back after a Home Assistant restart — the last-cleaned date was being reset to its original bootstrap value on every restart, which re-fired the red critical alert and its push even right after you'd tapped "I cleaned it"
+
+                **v2.2.3** — 2026-08-01
+
+                - Basement: the guest motion-light guard now runs all day — with Overnight Guests and Guests in Basement both on, the basement motion lights automations stay off around the clock instead of only 8 PM–8 AM, so a guest napping, changing or working downstairs during the day no longer trips the lights on; still restored the moment either toggle clears, and a manual Gym Motion Lights toggle is still never overridden
+                - iOS Live Activities: the Washer and Dryer cards now actually finish — each cycle ends with a green "Complete · Clothes are ready" card at 100% with the countdown stopped, held 10 minutes as the move-the-laundry reminder, then cleared off the Lock Screen / Dynamic Island. Previously the card just froze on the last progress update and stayed pinned indefinitely
+                - iOS Live Activities: a cancelled or powered-off laundry cycle (which never reports "complete") now clears its card after 5 minutes idle instead of leaving a stale one behind, and a stale card left over from a Home Assistant restart is cleared on startup
+                - iOS Live Activities: the Dryer card works again — it was gated on a dryer run-state sensor that doesn't exist, so the card never appeared at all; it now keys off the same dryer sensor everything else in the config uses
+                - iOS Live Activities: the Washer and Dryer "Clothes are ready" cards now land reliably at end of cycle — completion is detected from the appliance's own countdown reaching zero (the one signal that always arrives), instead of waiting on completion sensors that never fired; a cancelled cycle no longer risks a false "ready" card
+                - iOS Live Activities: a second load started right after the first now shows its own card instead of being suppressed
+                - Music: all Spotify playlist favorites now use clean spotify:playlist links instead of hand-built Sonos URIs — Home Assistant's Sonos share-link handler was already extracting the playlist ID and discarding the rest, so the old format only worked by accident; the two that were missing tile artwork also got it (radio stations unchanged)
+                - Pool: the heater's filter-pump speed changes now speak the pump's new language — the OmniLogic speed control switched from RPM to percent, so heating runs the filter at 70% (was 2470 RPM) and drops back to 58% (was 2000 RPM) when the heater finishes; same physical speeds as before
+                - AirPlay: trimmed the duplicate speakers out of the Mac's Sound menu — the AirConnect bridge no longer advertises Kitchen, Living Room, Pool, Media Room, The Frame 55, the Q60 or the unnamed Sonos Amp, since each of those either reaches AirPlay natively or was showing up as a raw IP address. Gym, Shop, Office, Mud Room, Primary Bathroom and Primary Bedroom still come through the bridge, which is the only way to reach them
+                - Notifications: new Dryer Vent Cleaning alert — a gold reminder once it's been more than a year since the vent was cleaned, which escalates itself to a red critical alert (and a phone push) if it goes past 13 months. Both tell you how many months it's been and carry an "I cleaned it" action that resets the tracker without leaving the notification; the vent counts once toward the bell badge either way
+                - Shades: the shade rows lost their slider — the up / stop / down arrows are now the only way to move a shade, so a stray swipe on the card can't send it to a random position; tapping the row opens its details instead of toggling it
+                - Shades: the card no longer lightens as a shade opens — every row keeps the same dark grey background and the same white text whether the shade is fully open, partly open or closed
+                - Shades: the state line keeps showing how far a shade is open — "45% open" when partly open, Open or Closed at the ends — which the slider used to append and the arrow-only row would otherwise have dropped
+                - Shades: the row icon now tracks position instead of sitting static — fully open shows an empty window in slate, partly open a half-drawn shade in slate, and fully closed a drawn shade in white
+
                 **v2.2.2** — 2026-07-29
 
                 - Scenes: Nightlight updated — the stairs spot lights now stay off and the office desk shelf light (Eve strip) sits a touch dimmer; the Nightlight scene indicator was retuned to match, so the dashboard stops showing the scene as inactive while it's running
@@ -3434,6 +3463,341 @@ cards:
       sw: |-
         [[[
           var on = (states['automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm'] || {}).state === 'on';
+          return '<div style="width:38px;height:22px;border-radius:999px;background:'
+            + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+            + ';position:relative;transition:background .2s ease;">'
+            + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+            + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+            + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+        ]]]
+  - type: custom:button-card
+    entity: input_boolean.shades_manual_first_floor
+    name: Manual Today – First Floor
+    show_state: true
+    show_label: false
+    show_icon: true
+    icon: mdi:hand-back-right
+    tap_action:
+      action: toggle
+    state_display: |
+      [[[ return (states['input_boolean.shades_manual_first_floor'] || {}).state === 'on' ? 'Manual' : 'Adaptive'; ]]]
+    styles:
+      card:
+      - background: transparent !important
+      - --ha-card-background: transparent
+      - box-shadow: none
+      - border-radius: 0
+      - border-top: 1px solid rgba(255,255,255,0.06)
+      - padding: 11px 2px
+      - transition: none
+      - cursor: pointer
+      grid:
+      - grid-template-areas: '"ic n st sw"'
+      - grid-template-columns: auto 1fr auto auto
+      - grid-template-rows: 1fr
+      - align-items: center
+      - column-gap: 10px
+      img_cell:
+      - grid-area: ic
+      - width: 22px
+      - height: 22px
+      icon:
+      - width: 18px
+      - color: var(--primary-text-color)
+      name:
+      - grid-area: n
+      - justify-self: start
+      - font-size: 16px
+      - font-weight: 600
+      - color: var(--primary-text-color)
+      - align-self: center
+      - line-height: 22px
+      state:
+      - grid-area: st
+      - justify-self: end
+      - font-size: 14px
+      - font-weight: 600
+      - color: |
+          [[[ return (states['input_boolean.shades_manual_first_floor'] || {}).state === 'on' ? 'var(--slate-bright)' : 'var(--secondary-text-color)'; ]]]
+      - align-self: center
+      - line-height: 22px
+      custom_fields:
+        sw:
+        - grid-area: sw
+        - justify-self: end
+        - align-self: center
+    custom_fields:
+      sw: |-
+        [[[
+          var on = (states['input_boolean.shades_manual_first_floor'] || {}).state === 'on';
+          return '<div style="width:38px;height:22px;border-radius:999px;background:'
+            + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+            + ';position:relative;transition:background .2s ease;">'
+            + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+            + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+            + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+        ]]]
+  - type: custom:button-card
+    entity: input_boolean.shades_manual_primary_bedroom
+    name: Manual Today – Primary Bedroom
+    show_state: true
+    show_label: false
+    show_icon: true
+    icon: mdi:hand-back-right
+    tap_action:
+      action: toggle
+    state_display: |
+      [[[ return (states['input_boolean.shades_manual_primary_bedroom'] || {}).state === 'on' ? 'Manual' : 'Adaptive'; ]]]
+    styles:
+      card:
+      - background: transparent !important
+      - --ha-card-background: transparent
+      - box-shadow: none
+      - border-radius: 0
+      - border-top: 1px solid rgba(255,255,255,0.06)
+      - padding: 11px 2px
+      - transition: none
+      - cursor: pointer
+      grid:
+      - grid-template-areas: '"ic n st sw"'
+      - grid-template-columns: auto 1fr auto auto
+      - grid-template-rows: 1fr
+      - align-items: center
+      - column-gap: 10px
+      img_cell:
+      - grid-area: ic
+      - width: 22px
+      - height: 22px
+      icon:
+      - width: 18px
+      - color: var(--primary-text-color)
+      name:
+      - grid-area: n
+      - justify-self: start
+      - font-size: 16px
+      - font-weight: 600
+      - color: var(--primary-text-color)
+      - align-self: center
+      - line-height: 22px
+      state:
+      - grid-area: st
+      - justify-self: end
+      - font-size: 14px
+      - font-weight: 600
+      - color: |
+          [[[ return (states['input_boolean.shades_manual_primary_bedroom'] || {}).state === 'on' ? 'var(--slate-bright)' : 'var(--secondary-text-color)'; ]]]
+      - align-self: center
+      - line-height: 22px
+      custom_fields:
+        sw:
+        - grid-area: sw
+        - justify-self: end
+        - align-self: center
+    custom_fields:
+      sw: |-
+        [[[
+          var on = (states['input_boolean.shades_manual_primary_bedroom'] || {}).state === 'on';
+          return '<div style="width:38px;height:22px;border-radius:999px;background:'
+            + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+            + ';position:relative;transition:background .2s ease;">'
+            + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+            + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+            + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+        ]]]
+  - type: custom:button-card
+    entity: input_boolean.shades_manual_office
+    name: Manual Today – Office
+    show_state: true
+    show_label: false
+    show_icon: true
+    icon: mdi:hand-back-right
+    tap_action:
+      action: toggle
+    state_display: |
+      [[[ return (states['input_boolean.shades_manual_office'] || {}).state === 'on' ? 'Manual' : 'Adaptive'; ]]]
+    styles:
+      card:
+      - background: transparent !important
+      - --ha-card-background: transparent
+      - box-shadow: none
+      - border-radius: 0
+      - border-top: 1px solid rgba(255,255,255,0.06)
+      - padding: 11px 2px
+      - transition: none
+      - cursor: pointer
+      grid:
+      - grid-template-areas: '"ic n st sw"'
+      - grid-template-columns: auto 1fr auto auto
+      - grid-template-rows: 1fr
+      - align-items: center
+      - column-gap: 10px
+      img_cell:
+      - grid-area: ic
+      - width: 22px
+      - height: 22px
+      icon:
+      - width: 18px
+      - color: var(--primary-text-color)
+      name:
+      - grid-area: n
+      - justify-self: start
+      - font-size: 16px
+      - font-weight: 600
+      - color: var(--primary-text-color)
+      - align-self: center
+      - line-height: 22px
+      state:
+      - grid-area: st
+      - justify-self: end
+      - font-size: 14px
+      - font-weight: 600
+      - color: |
+          [[[ return (states['input_boolean.shades_manual_office'] || {}).state === 'on' ? 'var(--slate-bright)' : 'var(--secondary-text-color)'; ]]]
+      - align-self: center
+      - line-height: 22px
+      custom_fields:
+        sw:
+        - grid-area: sw
+        - justify-self: end
+        - align-self: center
+    custom_fields:
+      sw: |-
+        [[[
+          var on = (states['input_boolean.shades_manual_office'] || {}).state === 'on';
+          return '<div style="width:38px;height:22px;border-radius:999px;background:'
+            + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+            + ';position:relative;transition:background .2s ease;">'
+            + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+            + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+            + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+        ]]]
+  - type: custom:button-card
+    entity: input_boolean.shades_manual_back_guest_bedroom
+    name: Manual Today – Back Guest Bedroom
+    show_state: true
+    show_label: false
+    show_icon: true
+    icon: mdi:hand-back-right
+    tap_action:
+      action: toggle
+    state_display: |
+      [[[ return (states['input_boolean.shades_manual_back_guest_bedroom'] || {}).state === 'on' ? 'Manual' : 'Adaptive'; ]]]
+    styles:
+      card:
+      - background: transparent !important
+      - --ha-card-background: transparent
+      - box-shadow: none
+      - border-radius: 0
+      - border-top: 1px solid rgba(255,255,255,0.06)
+      - padding: 11px 2px
+      - transition: none
+      - cursor: pointer
+      grid:
+      - grid-template-areas: '"ic n st sw"'
+      - grid-template-columns: auto 1fr auto auto
+      - grid-template-rows: 1fr
+      - align-items: center
+      - column-gap: 10px
+      img_cell:
+      - grid-area: ic
+      - width: 22px
+      - height: 22px
+      icon:
+      - width: 18px
+      - color: var(--primary-text-color)
+      name:
+      - grid-area: n
+      - justify-self: start
+      - font-size: 16px
+      - font-weight: 600
+      - color: var(--primary-text-color)
+      - align-self: center
+      - line-height: 22px
+      state:
+      - grid-area: st
+      - justify-self: end
+      - font-size: 14px
+      - font-weight: 600
+      - color: |
+          [[[ return (states['input_boolean.shades_manual_back_guest_bedroom'] || {}).state === 'on' ? 'var(--slate-bright)' : 'var(--secondary-text-color)'; ]]]
+      - align-self: center
+      - line-height: 22px
+      custom_fields:
+        sw:
+        - grid-area: sw
+        - justify-self: end
+        - align-self: center
+    custom_fields:
+      sw: |-
+        [[[
+          var on = (states['input_boolean.shades_manual_back_guest_bedroom'] || {}).state === 'on';
+          return '<div style="width:38px;height:22px;border-radius:999px;background:'
+            + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
+            + ';position:relative;transition:background .2s ease;">'
+            + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
+            + ';width:18px;height:18px;border-radius:50%;background:#fff;'
+            + 'box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:left .2s ease;"></div></div>';
+        ]]]
+  - type: custom:button-card
+    entity: input_boolean.shades_manual_front_guest_bedroom
+    name: Manual Today – Front Guest Bedroom
+    show_state: true
+    show_label: false
+    show_icon: true
+    icon: mdi:hand-back-right
+    tap_action:
+      action: toggle
+    state_display: |
+      [[[ return (states['input_boolean.shades_manual_front_guest_bedroom'] || {}).state === 'on' ? 'Manual' : 'Adaptive'; ]]]
+    styles:
+      card:
+      - background: transparent !important
+      - --ha-card-background: transparent
+      - box-shadow: none
+      - border-radius: 0
+      - border-top: 1px solid rgba(255,255,255,0.06)
+      - padding: 11px 2px
+      - transition: none
+      - cursor: pointer
+      grid:
+      - grid-template-areas: '"ic n st sw"'
+      - grid-template-columns: auto 1fr auto auto
+      - grid-template-rows: 1fr
+      - align-items: center
+      - column-gap: 10px
+      img_cell:
+      - grid-area: ic
+      - width: 22px
+      - height: 22px
+      icon:
+      - width: 18px
+      - color: var(--primary-text-color)
+      name:
+      - grid-area: n
+      - justify-self: start
+      - font-size: 16px
+      - font-weight: 600
+      - color: var(--primary-text-color)
+      - align-self: center
+      - line-height: 22px
+      state:
+      - grid-area: st
+      - justify-self: end
+      - font-size: 14px
+      - font-weight: 600
+      - color: |
+          [[[ return (states['input_boolean.shades_manual_front_guest_bedroom'] || {}).state === 'on' ? 'var(--slate-bright)' : 'var(--secondary-text-color)'; ]]]
+      - align-self: center
+      - line-height: 22px
+      custom_fields:
+        sw:
+        - grid-area: sw
+        - justify-self: end
+        - align-self: center
+    custom_fields:
+      sw: |-
+        [[[
+          var on = (states['input_boolean.shades_manual_front_guest_bedroom'] || {}).state === 'on';
           return '<div style="width:38px;height:22px;border-radius:999px;background:'
             + (on ? 'rgba(142,177,191,0.55)' : 'rgba(255,255,255,0.28)')
             + ';position:relative;transition:background .2s ease;">'

@@ -1,5 +1,5 @@
 # ============================================================================
-#  Dune Mist  ·  shared Home Assistant theme  (mobile + NSPanel Pro)
+#  Dune Mist  ·  shared Home Assistant theme  (mobile dashboard)
 #  Refreshed "Light Mist" palette — muted slate-grey surfaces, white text,
 #  slate / sage / gold accents. Installed under the key "Dark Dune" so every
 #  existing `theme: Dark Dune` view picks it up with no edits.
@@ -66,7 +66,8 @@ Dune Mist:
   state-binary_sensor-active-color: "#E0A75E"
   state-cover-active-color: "#8EB1BF"
 
-  # ---- app header + sidebar (kiosk hides these on mobile, NSPanel needs them)
+  # ---- app header + sidebar (kiosk hides these on mobile; styled for any
+  # ---- non-kiosk surface, e.g. the desktop browser)
   app-header-background-color: "#3a3e44"
   sidebar-background-color: "#3a3e44"
   sidebar-icon-color: "#c3c7cc"

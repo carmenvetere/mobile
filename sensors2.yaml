@@ -14,7 +14,8 @@
         - sensor.nws_alerts_alerts
         - sensor.front_load_washer_tub_clean_counter
         - sensor.months_since_last_hot_water_flush
-        - input_number.upper_floors_hvac_filter_hours
+        - input_datetime.dryer_vent_last_cleaned
+        - input_number.upper_floor_hvac_filter_hours
         - input_number.lower_floors_hvac_filter_hours
         - sensor.utility_room_temp_sensor_temperature
         - sensor.attic_temp_sensor_temperature
@@ -52,6 +53,11 @@
         - sensor.back_guest_bedroom_side_battery
         - sensor.back_guest_bedroom_back_left_battery
         - sensor.back_guest_bedroom_back_right_battery
+    # The dryer-vent rule is derived from a date, not from a state change, so
+    # nothing would re-trigger this sensor as the year elapses. Re-render
+    # hourly so time-based rules age in.
+    - platform: time_pattern
+      hours: "/1"
   sensor:
     - name: "Notification Alert Counter"
       unique_id: notification_alert_counter
@@ -72,7 +78,13 @@
           (states('sensor.nws_alerts_alerts') not in ['unknown','unavailable'] and states('sensor.nws_alerts_alerts')|int(0) > 0),
           states('sensor.front_load_washer_tub_clean_counter')|int(0) > 30,
           states('sensor.months_since_last_hot_water_flush')|float(0) > 5.9,
-          states('input_number.upper_floors_hvac_filter_hours')|int(0) > 2000,
+          {# dryer vent: same 12-month line the Notification Center rules use, so
+             the badge counts it once across both the info and critical windows #}
+          (state_attr('input_datetime.dryer_vent_last_cleaned','timestamp') is not none
+            and (now().timestamp()
+                 - state_attr('input_datetime.dryer_vent_last_cleaned','timestamp')|float(0))
+                / 2629746 > 12),
+          states('input_number.upper_floor_hvac_filter_hours')|int(0) > 2000,
           states('input_number.lower_floors_hvac_filter_hours')|int(0) > 2000,
           states('sensor.utility_room_temp_sensor_temperature')|float(99) < 55,
           states('sensor.utility_room_temp_sensor_temperature')|float(0)  > 80,
@@ -1076,6 +1088,38 @@
             'cover.back_guest_bedroom_back_right','cover.back_guest_bedroom_side',
             'cover.back_2','cover.back_3','cover.hallway_1','cover.hallway_2','cover.office_office_left','cover.office_office_right'] %}
           {{ covers | count }}
+
+# ---------------------------------------------------------------------------
+# Shades v2.4: rooms currently latched to manual control (shades moved by
+# hand today, adaptive skipping them until the 03:00 reset). state = count of
+# latched rooms; `rooms` attribute = comma-joined room names for the Shades
+# header subtitle.
+# ---------------------------------------------------------------------------
+- sensor:
+    - name: Shades Manual Rooms
+      unique_id: shades_manual_rooms
+      icon: >
+        {{ 'mdi:hand-back-right' if states('sensor.shades_manual_rooms') | int(0) > 0
+           else 'mdi:hand-back-right-off' }}
+      state: >
+        {% set latches = [
+          'input_boolean.shades_manual_first_floor',
+          'input_boolean.shades_manual_primary_bedroom',
+          'input_boolean.shades_manual_back_guest_bedroom',
+          'input_boolean.shades_manual_front_guest_bedroom',
+          'input_boolean.shades_manual_office'] %}
+        {{ latches | select('is_state','on') | list | count }}
+      attributes:
+        rooms: >
+          {% set pairs = [
+            ('input_boolean.shades_manual_first_floor','First Floor'),
+            ('input_boolean.shades_manual_primary_bedroom','Primary Bedroom'),
+            ('input_boolean.shades_manual_back_guest_bedroom','Back Guest Bedroom'),
+            ('input_boolean.shades_manual_front_guest_bedroom','Front Guest Bedroom'),
+            ('input_boolean.shades_manual_office','Office')] %}
+          {% set ns = namespace(names=[]) %}
+          {% for e, n in pairs %}{% if is_state(e, 'on') %}{% set ns.names = ns.names + [n] %}{% endif %}{% endfor %}
+          {{ ns.names | join(', ') }}
 
 # ---------------------------------------------------------------------------
 # Average of the 4 climate zone current temps for the Mobile Dash v2 Climate

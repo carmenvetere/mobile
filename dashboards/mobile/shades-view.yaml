@@ -45,7 +45,7 @@ cards:
           tap_action:
             action: none
           state_display: |
-            [[[ var e = states['sensor.shades_open_count']; return (e ? e.state : '0') + ' open'; ]]]
+            [[[ var e = states['sensor.shades_open_count']; var m = states['sensor.shades_manual_rooms']; var mm = m ? (parseInt(m.state) || 0) : 0; return (e ? e.state : '0') + ' open' + (mm > 0 ? ' · ' + mm + ' manual' : ''); ]]]
           label: |
             [[[ var e = states['sensor.shades_open_count']; return ((e && e.attributes.total) || '0') + ' shades ·'; ]]]
           styles:
@@ -176,7 +176,26 @@ cards:
                   name: First Floor
                   icon: mdi:sofa
                   rows: 0.75
+                  sub_button:
+                    - entity: input_boolean.shades_manual_first_floor
+                      name: Manual
+                      icon: mdi:hand-back-right
+                      show_name: true
+                      show_icon: true
+                      show_background: true
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_boolean.turn_off
+                        target:
+                          entity_id: input_boolean.shades_manual_first_floor
                   styles: |
+                    .bubble-sub-button-1 {
+                      display: ${hass.states['input_boolean.shades_manual_first_floor']?.state === 'on' ? 'flex' : 'none'} !important;
+                      background: var(--card-background-color) !important;
+                      color: var(--slate-bright) !important;
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                    }
                     .bubble-name {
                       font-size: 16px !important;  /* title */
                       font-weight: bold !important;
@@ -195,7 +214,26 @@ cards:
                   name: Primary Bedroom
                   icon: mdi:bed-king
                   rows: 0.75
+                  sub_button:
+                    - entity: input_boolean.shades_manual_primary_bedroom
+                      name: Manual
+                      icon: mdi:hand-back-right
+                      show_name: true
+                      show_icon: true
+                      show_background: true
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_boolean.turn_off
+                        target:
+                          entity_id: input_boolean.shades_manual_primary_bedroom
                   styles: |
+                    .bubble-sub-button-1 {
+                      display: ${hass.states['input_boolean.shades_manual_primary_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
+                      background: var(--card-background-color) !important;
+                      color: var(--slate-bright) !important;
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                    }
                     .bubble-name {
                       font-size: 16px !important;  /* title */
                       font-weight: bold !important;
@@ -214,7 +252,26 @@ cards:
                   name: Office
                   icon: mdi:desk-lamp
                   rows: 0.75
+                  sub_button:
+                    - entity: input_boolean.shades_manual_office
+                      name: Manual
+                      icon: mdi:hand-back-right
+                      show_name: true
+                      show_icon: true
+                      show_background: true
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_boolean.turn_off
+                        target:
+                          entity_id: input_boolean.shades_manual_office
                   styles: |
+                    .bubble-sub-button-1 {
+                      display: ${hass.states['input_boolean.shades_manual_office']?.state === 'on' ? 'flex' : 'none'} !important;
+                      background: var(--card-background-color) !important;
+                      color: var(--slate-bright) !important;
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                    }
                     .bubble-name {
                       font-size: 16px !important;  /* title */
                       font-weight: bold !important;
@@ -233,7 +290,26 @@ cards:
                   name: Back Guest Bedroom
                   icon: mdi:bed-king
                   rows: 0.75
+                  sub_button:
+                    - entity: input_boolean.shades_manual_back_guest_bedroom
+                      name: Manual
+                      icon: mdi:hand-back-right
+                      show_name: true
+                      show_icon: true
+                      show_background: true
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_boolean.turn_off
+                        target:
+                          entity_id: input_boolean.shades_manual_back_guest_bedroom
                   styles: |
+                    .bubble-sub-button-1 {
+                      display: ${hass.states['input_boolean.shades_manual_back_guest_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
+                      background: var(--card-background-color) !important;
+                      color: var(--slate-bright) !important;
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                    }
                     .bubble-name {
                       font-size: 16px !important;  /* title */
                       font-weight: bold !important;
@@ -252,7 +328,26 @@ cards:
                   name: Front Guest Bedroom
                   icon: mdi:bed-king
                   rows: 0.75
+                  sub_button:
+                    - entity: input_boolean.shades_manual_front_guest_bedroom
+                      name: Manual
+                      icon: mdi:hand-back-right
+                      show_name: true
+                      show_icon: true
+                      show_background: true
+                      tap_action:
+                        action: perform-action
+                        perform_action: input_boolean.turn_off
+                        target:
+                          entity_id: input_boolean.shades_manual_front_guest_bedroom
                   styles: |
+                    .bubble-sub-button-1 {
+                      display: ${hass.states['input_boolean.shades_manual_front_guest_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
+                      background: var(--card-background-color) !important;
+                      color: var(--slate-bright) !important;
+                      font-size: 13px !important;
+                      font-weight: 600 !important;
+                    }
                     .bubble-name {
                       font-size: 16px !important;  /* title */
                       font-weight: bold !important;

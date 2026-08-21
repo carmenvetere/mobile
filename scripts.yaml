@@ -528,81 +528,61 @@ alarm_keypad_disarm:
     data:
       value: ''
   description: ''
-nspanel_keypad_digit:
-  alias: NSPanel Keypad Digit
-  description: Appends a digit to the alarm code input. When the 4th digit lands it
-    auto-submits - disarming if armed, arming Away if disarmed - then clears the input.
-  mode: queued
-  max: 10
-  fields:
-    digit:
-      description: The digit pressed on the keypad (0-9)
-      example: '1'
-  sequence:
-  - variables:
-      current: "{{ states('input_text.alarm_code_input')\n   if states('input_text.alarm_code_input')
-        not in ['unknown', 'unavailable']\n   else '' }}"
-      code: '{{ (current ~ digit)[:4] }}'
-  - choose:
-    - conditions:
-      - condition: template
-        value_template: '{{ code | length >= 4 }}'
-      sequence:
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: alarm_control_panel.alarmo
-            state: disarmed
-          sequence:
-          - action: alarm_control_panel.alarm_arm_away
-            target:
-              entity_id: alarm_control_panel.alarmo
-            data:
-              code: '{{ code }}'
-        default:
-        - action: alarm_control_panel.alarm_disarm
-          target:
-            entity_id: alarm_control_panel.alarmo
-          data:
-            code: '{{ code }}'
-      - action: input_text.set_value
-        target:
-          entity_id: input_text.alarm_code_input
-        data:
-          value: ''
-    default:
-    - action: input_text.set_value
-      target:
-        entity_id: input_text.alarm_code_input
-      data:
-        value: '{{ code }}'
-nspanel_all_off:
-  alias: NSPanel All Off
-  description: All Off from the NSPanel scenes screen - runs the Good Night scene,
-    pauses every Sonos player, and closes all shade groups.
+sprinkler_pause_briefly:
+  alias: Sprinkler Pause Briefly
+  description: Pauses the running Rachio schedule for 10 minutes (enough to take
+    the dog out) and starts timer.sprinkler_pause so the dashboard can show the
+    Paused state and countdown. Rachio resumes on its own when the pause window
+    expires; "Sprinklers - Resume After Pause Timer" is the backstop. Targets the
+    controller entity (switch.rachio_c3e715_standby), same one the outage
+    automations use. Known limitation (accepted by design) - pause_watering
+    pauses the running SCHEDULE; a manual zone run started from a switch may not
+    resume by itself, which the pop-up's paused note calls out.
+  icon: mdi:pause
   mode: single
   sequence:
-  - action: scene.turn_on
+  - action: rachio.pause_watering
+    data:
+      duration: 10
     target:
-      entity_id: scene.good_night
-  - action: media_player.media_pause
+      entity_id: switch.rachio_c3e715_standby
+  - action: timer.start
+    data:
+      duration: "00:10:00"
+    target:
+      entity_id: timer.sprinkler_pause
+sprinkler_resume_now:
+  alias: Sprinkler Resume Now
+  description: Resumes the paused Rachio schedule immediately and cancels the
+    pause timer so the pop-up returns to Watering now.
+  icon: mdi:play
+  mode: single
+  sequence:
+  - action: rachio.resume_watering
+    target:
+      entity_id: switch.rachio_c3e715_standby
+  - action: timer.cancel
+    target:
+      entity_id: timer.sprinkler_pause
+sprinkler_stop_all:
+  alias: Sprinkler Stop All
+  description: Stops watering entirely - turns off all seven zone switches (the
+    individual zones, not the group, so a partially-running schedule is fully
+    stopped) and cancels the pause timer. The header chip disappears once the
+    zone group reports off.
+  icon: mdi:stop
+  mode: single
+  sequence:
+  - action: switch.turn_off
     target:
       entity_id:
-      - media_player.living_room
-      - media_player.kitchen
-      - media_player.office
-      - media_player.deck
-      - media_player.pool
-      - media_player.primary_bedroom
-      - media_player.primary_bathroom
-      - media_player.gym
-      - media_player.mud_room
-      - media_player.media_room
-  - action: cover.close_cover
+      - switch.front_180s
+      - switch.front_and_side_90s
+      - switch.pool_180s
+      - switch.pool_90s
+      - switch.pool_shrubs
+      - switch.firepit_shrubs
+      - switch.retaining_wall_drip
+  - action: timer.cancel
     target:
-      entity_id:
-      - cover.first_floor_all
-      - cover.bedroom_side_shades
-      - cover.bedroom_back
-      - cover.front_guest_bedroom_shades
-      - cover.back_guest_bedroom_shades
+      entity_id: timer.sprinkler_pause

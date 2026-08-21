@@ -1,0 +1,274 @@
+# ============================================================================
+#  Mobile Dash · Sprinkler Pause pop-up (#sprinkler-pause) · bottom sheet
+#  Opened by the Home-view header chip that appears while any Rachio zone is
+#  watering (switch.sprinkler_zones_any). Pause the run for ten minutes,
+#  resume early, or stop watering — without touching the schedule.
+#  Paused state + countdown come from timer.sprinkler_pause (Rachio exposes
+#  no "paused" entity). Include once as its own TOP-LEVEL card in
+#  home-view.yaml (never wrapped inside another card):
+#    - !include /config/dashboards/modules/sprinkler-pause-pop-up.yaml
+# ============================================================================
+type: custom:bubble-card
+card_type: pop-up
+hash: "#sprinkler-pause"
+button_type: name
+name: Sprinklers
+icon: mdi:water
+theme: Dune Mist
+show_header: true
+close_on_click: false
+background_update: true
+scrolling_effect: false
+styles: |
+  /* Bottom sheet: slide-up entrance; bubble's default pop-up position already
+     anchors to the bottom of the viewport. Chrome mirrors mobile-nav-sheet
+     with the corners/shadow inverted for a bottom drawer. */
+  @keyframes sprinkler-sheet-up {
+    from { transform: translateY(30px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  .bubble-pop-up {
+    --bubble-pop-up-background-color: #3a3e44 !important;
+    --bubble-pop-up-main-background-color: #3a3e44 !important;
+    --bubble-pop-up-border-radius: 22px 22px 0 0 !important;
+    --bubble-pop-up-content-border-radius: 22px 22px 0 0 !important;
+    --mdc-dialog-scrim-color: rgba(0,0,0,0.6) !important;
+    box-shadow: 0 -16px 44px rgba(0,0,0,0.55) !important;
+    animation: sprinkler-sheet-up 0.25s ease-out !important;
+    padding: 18px 20px 30px !important;
+  }
+  .bubble-icon-container {
+    background: transparent !important;
+  }
+  .bubble-icon {
+    color: var(--primary-text-color) !important;
+    --mdc-icon-size: 26px !important;
+  }
+  .bubble-name {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: var(--primary-text-color) !important;
+  }
+cards:
+  # ── Status card: Watering now / Paused + first running zone ──────────────
+  - type: custom:button-card
+    entity: switch.sprinkler_zones_any
+    show_icon: false
+    show_name: false
+    show_state: false
+    triggers_update:
+      - switch.front_180s
+      - switch.front_and_side_90s
+      - switch.pool_180s
+      - switch.pool_90s
+      - switch.pool_shrubs
+      - switch.firepit_shrubs
+      - switch.retaining_wall_drip
+      - timer.sprinkler_pause
+      - sensor.time
+    tap_action:
+      action: none
+    styles:
+      card:
+        - padding: 18px
+        - border-radius: 18px
+        - background: rgba(142,177,191,.10)
+        - border: 1px solid rgba(142,177,191,.3)
+        - box-shadow: none
+        - transition: none
+        - margin-bottom: 14px
+      grid:
+        - grid-template-areas: '"info"'
+        - grid-template-columns: 1fr
+    custom_fields:
+      info: |
+        [[[
+          const zones = [['switch.front_180s','Front 180s'],['switch.front_and_side_90s','Front & Side 90s'],
+            ['switch.pool_180s','Pool 180s'],['switch.pool_90s','Pool 90s'],['switch.pool_shrubs','Pool Shrubs'],
+            ['switch.firepit_shrubs','Firepit Shrubs'],['switch.retaining_wall_drip','Retaining Wall Drip']];
+          const on = zones.filter(z => states[z[0]] && states[z[0]].state === 'on');
+          const t = states['timer.sprinkler_pause'];
+          const paused = t && t.state === 'active';
+          /* While paused the zone switches are off (rachio stopped them), so
+             there is no running zone to name - say what will resume instead. */
+          const first = on.length ? on[0][1] : (paused ? 'Schedule paused' : 'No zone running');
+          /* Remaining pause time in whole minutes: the card re-renders on
+             sensor.time (per minute), so second-level precision would only
+             look broken. */
+          let remain = '';
+          if (paused && t.attributes.finishes_at) {
+            const mins = Math.max(0, Math.ceil((new Date(t.attributes.finishes_at) - new Date()) / 60000));
+            remain = `<div style="text-align:right;flex:none;">
+              <div style="font:900 24px Roboto;color:#ffffff;font-variant-numeric:tabular-nums;">${mins} min</div>
+              <div style="font:500 12px Roboto;color:var(--secondary-text-color);">left</div>
+            </div>`;
+          }
+          return `<div style="display:flex;align-items:center;gap:12px;width:100%;">
+            <div style="width:44px;height:44px;border-radius:13px;background:rgba(142,177,191,.2);display:flex;align-items:center;justify-content:center;flex:none;">
+              <ha-icon icon="mdi:sprinkler-variant" style="color:var(--slate-color);--mdc-icon-size:24px;"></ha-icon>
+            </div>
+            <div style="flex:1;min-width:0;text-align:left;">
+              <div style="font:700 18px Roboto;color:var(--slate-bright);">${paused ? 'Paused' : 'Watering now'}</div>
+              <div style="font:500 14px Roboto;color:var(--secondary-text-color);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${first}</div>
+            </div>
+            ${remain}
+          </div>`;
+        ]]]
+  # ── Primary action: Pause 10 min (timer idle) ────────────────────────────
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: timer.sprinkler_pause
+        state_not: active
+    card:
+      type: custom:button-card
+      entity: timer.sprinkler_pause
+      show_icon: true
+      show_name: true
+      show_state: false
+      icon: mdi:pause
+      name: Pause 10 min
+      tap_action:
+        action: perform-action
+        perform_action: script.sprinkler_pause_briefly
+      styles:
+        card:
+          - height: 56px
+          - border-radius: 15px
+          - background: var(--slate-color)
+          - box-shadow: 0 4px 12px rgba(0,0,0,.25)
+          - transition: none
+        grid:
+          - grid-template-areas: '"i n"'
+          - grid-template-columns: auto auto
+          - justify-content: center
+          - align-items: center
+          - column-gap: 8px
+        icon:
+          - width: 24px
+          - color: var(--text-primary-color)
+        name:
+          - font-size: 17px
+          - font-weight: 700
+          - color: var(--text-primary-color)
+  # ── Primary action: Resume now (timer active) ────────────────────────────
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: timer.sprinkler_pause
+        state: active
+    card:
+      type: custom:button-card
+      entity: timer.sprinkler_pause
+      show_icon: true
+      show_name: true
+      show_state: false
+      icon: mdi:play
+      name: Resume now
+      tap_action:
+        action: perform-action
+        perform_action: script.sprinkler_resume_now
+      styles:
+        card:
+          - height: 56px
+          - border-radius: 15px
+          - background: var(--slate-color)
+          - box-shadow: 0 4px 12px rgba(0,0,0,.25)
+          - transition: none
+        grid:
+          - grid-template-areas: '"i n"'
+          - grid-template-columns: auto auto
+          - justify-content: center
+          - align-items: center
+          - column-gap: 8px
+        icon:
+          - width: 24px
+          - color: var(--text-primary-color)
+        name:
+          - font-size: 17px
+          - font-weight: 700
+          - color: var(--text-primary-color)
+  # ── Paused note (timer active only) ──────────────────────────────────────
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: timer.sprinkler_pause
+        state: active
+    card:
+      type: custom:button-card
+      show_icon: false
+      show_name: false
+      show_state: false
+      tap_action:
+        action: none
+      styles:
+        card:
+          - background: transparent !important
+          - box-shadow: none
+          - transition: none
+          - margin: 12px 2px 0
+          - padding: 0
+      custom_fields:
+        note: |
+          [[[
+            return `<div style="display:flex;align-items:flex-start;gap:8px;text-align:left;">
+              <ha-icon icon="mdi:information-outline" style="color:var(--secondary-text-color);--mdc-icon-size:16px;flex:none;margin-top:1px;"></ha-icon>
+              <div style="font:500 13px Roboto;line-height:19px;color:var(--secondary-text-color);">
+                Rachio pauses the running schedule and resumes it on its own. If this
+                was a manual zone run and watering doesn't come back, tap Resume now.
+              </div>
+            </div>`;
+          ]]]
+  # ── Stop watering ────────────────────────────────────────────────────────
+  - type: custom:button-card
+    entity: switch.sprinkler_zones_any
+    show_icon: true
+    show_name: true
+    show_state: false
+    icon: mdi:stop
+    name: Stop watering
+    tap_action:
+      action: perform-action
+      perform_action: script.sprinkler_stop_all
+    styles:
+      card:
+        - height: 52px
+        - border-radius: 15px
+        - background: rgba(224,105,91,.14)
+        - border: 1px solid rgba(224,105,91,.4)
+        - box-shadow: none
+        - transition: none
+        - margin-top: 10px
+      grid:
+        - grid-template-areas: '"i n"'
+        - grid-template-columns: auto auto
+        - justify-content: center
+        - align-items: center
+        - column-gap: 8px
+      icon:
+        - width: 22px
+        - color: var(--error-color)
+      name:
+        - font-size: 16px
+        - font-weight: 700
+        - color: var(--error-color)
+  # ── Footnote ─────────────────────────────────────────────────────────────
+  - type: custom:button-card
+    show_icon: false
+    show_name: true
+    show_state: false
+    name: Your schedule isn't changed — only this run is delayed.
+    tap_action:
+      action: none
+    styles:
+      card:
+        - background: transparent !important
+        - box-shadow: none
+        - transition: none
+        - margin-top: 14px
+        - padding: 0
+      name:
+        - font-size: 12px
+        - font-weight: 500
+        - color: '#9aa0a8'
+        - justify-self: center

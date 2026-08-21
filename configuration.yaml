@@ -28,16 +28,48 @@ group:
       - device_tracker.brians_iphone_15_pro
       - device_tracker.carmens_iphone
 
+# --- Sprinkler Pause (v2.4): chip + pop-up on the mobile Home view ----------
+# switch.sprinkler_zones_any: any-on group of the seven Rachio zone switches
+# (all: false). Drives the header chip's visibility and the pop-up's status
+# card. Defined in YAML (not a UI helper) so it stays tracked in this repo.
+switch:
+  - platform: group
+    name: Sprinkler Zones Any
+    unique_id: sprinkler_zones_any
+    all: false
+    entities:
+      - switch.front_180s
+      - switch.front_and_side_90s
+      - switch.pool_180s
+      - switch.pool_90s
+      - switch.pool_shrubs
+      - switch.firepit_shrubs
+      - switch.retaining_wall_drip
+
+# timer.sprinkler_pause: the 10-minute pause window. Rachio exposes no
+# "paused" entity, so this timer is the UI's source of truth for the Paused
+# state and countdown; restore: true keeps it running across an HA restart.
+timer:
+  sprinkler_pause:
+    name: Sprinkler Pause
+    duration: "00:10:00"
+    restore: true
+
 input_datetime:
   last_pool_vacuum:
     name: Last Pool Vacuum
     has_date: true
     has_time: true
+  # No `initial:` on purpose: an input_datetime with initial: is re-applied on
+  # every HA restart, which would wipe the "I cleaned it" reset back to the
+  # bootstrap date and re-fire the >13-month critical dryer-vent alert (and its
+  # push) after each restart. The value restores from the last state instead.
+  # Bootstrap value was "2024-10-31 00:00:00" — set it by hand once if the
+  # helper ever comes up empty.
   dryer_vent_last_cleaned:
     name: Dryer Vent Last Cleaned
     has_date: true
     has_time: true
-    initial: "2024-10-31 00:00:00"
 
 input_number:
   sonos_favorites_index:
@@ -435,6 +467,31 @@ input_boolean:
   minvent_active:
     name: Min-Vent Active
     icon: mdi:fan-clock
+  # --- Shades v2.4: per-room manual-control latches -------------------------
+  # On = the room's shades were moved by hand today (app/dashboard, physical
+  # Serena remote, or Pico), so the Shade Scheduler's morning-open and adaptive
+  # ticks must skip the room for the rest of the day. Manual wins over Demand
+  # Response by design (the room is skipped before dr_override is evaluated).
+  # The sunset+30/8pm evening close still runs. Set by "Shade Scheduler -
+  # Manual Control Detector" (and explicitly by the Back Guest Bedroom Pico
+  # automations); cleared by the 03:00 "Manual Control Daily Reset", or by
+  # hand from the Shades view chip / Settings pop-up to rejoin adaptive early.
+  # No `initial:` so a latch survives HA restarts.
+  shades_manual_first_floor:
+    name: Shades Manual - First Floor
+    icon: mdi:hand-back-right
+  shades_manual_primary_bedroom:
+    name: Shades Manual - Primary Bedroom
+    icon: mdi:hand-back-right
+  shades_manual_back_guest_bedroom:
+    name: Shades Manual - Back Guest Bedroom
+    icon: mdi:hand-back-right
+  shades_manual_front_guest_bedroom:
+    name: Shades Manual - Front Guest Bedroom
+    icon: mdi:hand-back-right
+  shades_manual_office:
+    name: Shades Manual - Office
+    icon: mdi:hand-back-right
 
 input_select:
   sonos_speaker_select:
@@ -639,13 +696,7 @@ lovelace:
       icon: mdi:cellphone
       show_in_sidebar: true
       filename: dashboards/mobile/mobile.yaml
-    nspanel-dash:
-      mode: yaml
-      title: "NSPanel Pro - YAML"
-      icon: mdi:tablet-dashboard
-      show_in_sidebar: true
-      filename: dashboards/nspanel/nspanel.yaml
-  resources: 
+  resources:
     - url: /hacsfiles/lovelace-layout-card/layout-card.js
       type: module
     - url: /hacsfiles/kiosk-mode/kiosk-mode.js
