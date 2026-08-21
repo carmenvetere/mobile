@@ -664,13 +664,7 @@ lovelace:
       icon: mdi:cellphone
       show_in_sidebar: true
       filename: dashboards/mobile/mobile.yaml
-    nspanel-dash:
-      mode: yaml
-      title: "NSPanel Pro - YAML"
-      icon: mdi:tablet-dashboard
-      show_in_sidebar: true
-      filename: dashboards/nspanel/nspanel.yaml
-  resources: 
+  resources:
     - url: /hacsfiles/lovelace-layout-card/layout-card.js
       type: module
     - url: /hacsfiles/kiosk-mode/kiosk-mode.js

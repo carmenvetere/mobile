@@ -1093,7 +1093,7 @@
 # Shades v2.4: rooms currently latched to manual control (shades moved by
 # hand today, adaptive skipping them until the 03:00 reset). state = count of
 # latched rooms; `rooms` attribute = comma-joined room names for the Shades
-# header subtitle and NSPanel.
+# header subtitle.
 # ---------------------------------------------------------------------------
 - sensor:
     - name: Shades Manual Rooms

@@ -43,8 +43,8 @@ mobile_shades_module:
 
         /* Position in the state slot. button_type: slider used to append the
            percentage itself; button_type: state shows the bare entity state, so
-           write the label instead. Same wording the NSPanel shades view uses:
-           Closed / Open at the ends, "45% open" in between. Covers with no
+           write the label instead. Wording: Closed / Open at the ends,
+           "45% open" in between. Covers with no
            current_position fall back to the formatted entity state. */
         ${(() => {
           const el = card.querySelector('.bubble-state');
