@@ -8503,8 +8503,16 @@
     must NOT carry a chronometer — the old fallback pointed `when` at now(), which
     iOS renders as a timer counting UP, and with no per-tick refresh to correct it
     the count-up stuck for the whole phase. has_countdown gates chronometer/when,
-    so a card without a real estimate simply shows no timer until the follow-up push.'
+    so a card without a real estimate simply shows no timer until the follow-up push.
+    Post-review: a 10-minute tick was added to match the dryer. Run-state changes
+    alone left the progress bar frozen for a whole phase, and an LG auto-sensing
+    re-estimate mid-phase (e.g. +12 min at rinse) never reached the card — the
+    client-side countdown kept aiming at the stale finish_ts and stalled at 0:00
+    while the machine was still running. Six pushes an hour is still far below the
+    original per-tick cadence.'
   triggers:
+  - trigger: time_pattern
+    minutes: /10
   - trigger: state
     entity_id:
     - sensor.front_load_washer_run_state
