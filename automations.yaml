@@ -8925,3 +8925,23 @@
       - sensor.front_load_washer
       - sensor.dryer
   mode: single
+- id: sprinkler_pause_timer_resume
+  alias: Sprinklers - Resume After Pause Timer
+  description: 'Safety net for the Sprinkler Pause pop-up (v2.4): when
+    timer.sprinkler_pause finishes, call rachio.resume_watering on the controller.
+    Rachio normally resumes the schedule by itself when the 10-minute pause
+    expires - this only covers a missed resume, and resuming an already-running
+    schedule is a no-op (continue_on_error for an appliance that is offline or
+    idle).'
+  triggers:
+  - trigger: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.sprinkler_pause
+  conditions: []
+  actions:
+  - action: rachio.resume_watering
+    continue_on_error: true
+    target:
+      entity_id: switch.rachio_c3e715_standby
+  mode: single

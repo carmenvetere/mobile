@@ -28,6 +28,33 @@ group:
       - device_tracker.brians_iphone_15_pro
       - device_tracker.carmens_iphone
 
+# --- Sprinkler Pause (v2.4): chip + pop-up on the mobile Home view ----------
+# switch.sprinkler_zones_any: any-on group of the seven Rachio zone switches
+# (all: false). Drives the header chip's visibility and the pop-up's status
+# card. Defined in YAML (not a UI helper) so it stays tracked in this repo.
+switch:
+  - platform: group
+    name: Sprinkler Zones Any
+    unique_id: sprinkler_zones_any
+    all: false
+    entities:
+      - switch.front_180s
+      - switch.front_and_side_90s
+      - switch.pool_180s
+      - switch.pool_90s
+      - switch.pool_shrubs
+      - switch.firepit_shrubs
+      - switch.retaining_wall_drip
+
+# timer.sprinkler_pause: the 10-minute pause window. Rachio exposes no
+# "paused" entity, so this timer is the UI's source of truth for the Paused
+# state and countdown; restore: true keeps it running across an HA restart.
+timer:
+  sprinkler_pause:
+    name: Sprinkler Pause
+    duration: "00:10:00"
+    restore: true
+
 input_datetime:
   last_pool_vacuum:
     name: Last Pool Vacuum

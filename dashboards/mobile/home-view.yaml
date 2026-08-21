@@ -168,6 +168,30 @@ cards:
                     - width: 26px
                     - height: 26px
                     - color: 'var(--amber-color)'
+            # --- Sprinklers watering -> pause pop-up (hidden when idle) ---
+            sprinkler:
+              card:
+                type: custom:button-card
+                entity: switch.sprinkler_zones_any
+                show_icon: true
+                show_name: false
+                show_state: false
+                icon: mdi:water
+                tap_action: { action: navigate, navigation_path: "#sprinkler-pause" }
+                styles:
+                  card:
+                    - background: transparent !important
+                    - --ha-card-background: transparent
+                    - box-shadow: none
+                    - transition: none
+                    - padding: 4px
+                    - display: |
+                        [[[ var s = states['switch.sprinkler_zones_any'];
+                            return (s && s.state === 'on') ? 'flex' : 'none'; ]]]
+                  icon:
+                    - width: 26px
+                    - height: 26px
+                    - color: var(--slate-color)
             # --- Temperature -> Weather (only this opens weather) ---
             temp:
               card:
@@ -199,8 +223,8 @@ cards:
               - transition: none
               - padding: 6px 6px 2px
             grid:
-              - grid-template-areas: '"n guests dinner notif alarm temp"'
-              - grid-template-columns: 1fr auto auto auto auto auto
+              - grid-template-areas: '"n guests dinner notif alarm sprinkler temp"'
+              - grid-template-columns: 1fr auto auto auto auto auto auto
               - grid-template-rows: auto
               - align-items: center
               - column-gap: 8px
@@ -223,6 +247,9 @@ cards:
                 - align-self: center
               dinner:
                 - grid-area: dinner
+                - align-self: center
+              sprinkler:
+                - grid-area: sprinkler
                 - align-self: center
               temp:
                 - grid-area: temp
@@ -370,3 +397,5 @@ cards:
           type: custom:notification-center-card
           title: Notifications
           show_header: true
+#Sprinkler Pause Pop-up (standalone format)
+  - !include /config/dashboards/modules/sprinkler-pause-pop-up.yaml

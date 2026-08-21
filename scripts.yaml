@@ -528,3 +528,61 @@ alarm_keypad_disarm:
     data:
       value: ''
   description: ''
+sprinkler_pause_briefly:
+  alias: Sprinkler Pause Briefly
+  description: Pauses the running Rachio schedule for 10 minutes (enough to take
+    the dog out) and starts timer.sprinkler_pause so the dashboard can show the
+    Paused state and countdown. Rachio resumes on its own when the pause window
+    expires; "Sprinklers - Resume After Pause Timer" is the backstop. Targets the
+    controller entity (switch.rachio_c3e715_standby), same one the outage
+    automations use. Known limitation (accepted by design) - pause_watering
+    pauses the running SCHEDULE; a manual zone run started from a switch may not
+    resume by itself, which the pop-up's paused note calls out.
+  icon: mdi:pause
+  mode: single
+  sequence:
+  - action: rachio.pause_watering
+    data:
+      duration: 10
+    target:
+      entity_id: switch.rachio_c3e715_standby
+  - action: timer.start
+    data:
+      duration: "00:10:00"
+    target:
+      entity_id: timer.sprinkler_pause
+sprinkler_resume_now:
+  alias: Sprinkler Resume Now
+  description: Resumes the paused Rachio schedule immediately and cancels the
+    pause timer so the pop-up returns to Watering now.
+  icon: mdi:play
+  mode: single
+  sequence:
+  - action: rachio.resume_watering
+    target:
+      entity_id: switch.rachio_c3e715_standby
+  - action: timer.cancel
+    target:
+      entity_id: timer.sprinkler_pause
+sprinkler_stop_all:
+  alias: Sprinkler Stop All
+  description: Stops watering entirely - turns off all seven zone switches (the
+    individual zones, not the group, so a partially-running schedule is fully
+    stopped) and cancels the pause timer. The header chip disappears once the
+    zone group reports off.
+  icon: mdi:stop
+  mode: single
+  sequence:
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.front_180s
+      - switch.front_and_side_90s
+      - switch.pool_180s
+      - switch.pool_90s
+      - switch.pool_shrubs
+      - switch.firepit_shrubs
+      - switch.retaining_wall_drip
+  - action: timer.cancel
+    target:
+      entity_id: timer.sprinkler_pause
