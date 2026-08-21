@@ -169,14 +169,21 @@ cards:
                     - height: 26px
                     - color: 'var(--amber-color)'
             # --- Sprinklers watering -> pause pop-up (hidden when idle) ---
+            # Also shown while timer.sprinkler_pause is active: pausing stops the
+            # zones, so a zones-only test would hide the chip for the whole pause
+            # and strip the only route back to Resume now / the countdown.
             sprinkler:
               card:
                 type: custom:button-card
                 entity: switch.sprinkler_zones_any
+                triggers_update:
+                  - timer.sprinkler_pause
                 show_icon: true
                 show_name: false
                 show_state: false
-                icon: mdi:water
+                icon: |
+                  [[[ var t = states['timer.sprinkler_pause'];
+                      return (t && t.state === 'active') ? 'mdi:pause-circle' : 'mdi:water'; ]]]
                 tap_action: { action: navigate, navigation_path: "#sprinkler-pause" }
                 styles:
                   card:
@@ -187,7 +194,9 @@ cards:
                     - padding: 4px
                     - display: |
                         [[[ var s = states['switch.sprinkler_zones_any'];
-                            return (s && s.state === 'on') ? 'flex' : 'none'; ]]]
+                            var t = states['timer.sprinkler_pause'];
+                            var on = (s && s.state === 'on') || (t && t.state === 'active');
+                            return on ? 'flex' : 'none'; ]]]
                   icon:
                     - width: 26px
                     - height: 26px

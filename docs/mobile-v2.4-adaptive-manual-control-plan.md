@@ -306,8 +306,9 @@ Following the shape of `docs/climate-v2.1-verification-plan.md`.
 
 | Risk | Mitigation |
 |---|---|
-| Async position updates from Lutron/Matter latch a room against a scheduler-driven move | Running-instance check + 120 s tail (§2.1 filter 2); verification step 2 is the gate on shipping |
-| Group `current_position` is a member average, so a single shade in a 6-member group moves the group only ~17% | 5% threshold is well under that; if a room proves insensitive, switch that room to watching its physical covers from the `sensor.shades_open_count` list |
+| Async position updates from Lutron/Matter latch a room against a scheduler-driven move | Running-instance check + 120 s tail, applied **only** to the no-context (physical remote) path — an event carrying a `user_id` is a human in the app and latches regardless of timing, so a correction made in the two minutes after a tick is no longer discarded (post-review fix) |
+| Group `current_position` is a member average, so one shade in a multi-member group barely moves the group | Threshold scales as `max(5 / member_count, 1)` using the group's own `entity_id` attribute — one shade of a 5-member group moving 20 % clears it, while member jitter of 1–2 % does not; non-group covers keep the flat 5 % (post-review fix) |
+| A Pico automation moves shades without latching (its events carry `parent_id`, so the detector ignores them) | All six shade-moving Pico automations set the latch explicitly: Back/Front Guest open+close, the Master Bedroom blueprint's three cover branches, and the Living Room blueprint's two hold branches (post-review fix — only the Back Guest pair was covered initially) |
 | Latch stuck on after a missed 03:00 reset (HA down) | Reset is idempotent; add the same `turn_off` to the morning-open branch as a backstop if it ever bites |
 | Cover→room map in the detector drifts from the scheduler's `rooms` table | Map keys are exactly the scheduler's `facades[].covers` entries; cross-reference comment in both blocks, checked as part of any future room-table edit |
 | Manual room silently ignores a Demand Response event | D3 |

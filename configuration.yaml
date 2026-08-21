@@ -60,11 +60,16 @@ input_datetime:
     name: Last Pool Vacuum
     has_date: true
     has_time: true
+  # No `initial:` on purpose: an input_datetime with initial: is re-applied on
+  # every HA restart, which would wipe the "I cleaned it" reset back to the
+  # bootstrap date and re-fire the >13-month critical dryer-vent alert (and its
+  # push) after each restart. The value restores from the last state instead.
+  # Bootstrap value was "2024-10-31 00:00:00" — set it by hand once if the
+  # helper ever comes up empty.
   dryer_vent_last_cleaned:
     name: Dryer Vent Last Cleaned
     has_date: true
     has_time: true
-    initial: "2024-10-31 00:00:00"
 
 input_number:
   sonos_favorites_index:

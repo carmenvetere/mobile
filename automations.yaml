@@ -973,6 +973,9 @@
           - cover.first_floor_front
           - cover.living_room_side_shades
           - cover.dining_room_side
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.shades_manual_first_floor
       button_2_press:
       - action: scene.turn_on
         target:
@@ -987,6 +990,9 @@
           - cover.first_floor_front
           - cover.living_room_side_shades
           - cover.dining_room_side
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.shades_manual_first_floor
       button_3_press:
       - action: scene.turn_on
         target:
@@ -3637,6 +3643,9 @@
               - cover.bedroom_right
               - cover.hallway_2
               - cover.hallway_1
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.shades_manual_primary_bedroom
         - conditions:
           - condition: numeric_state
             entity_id: cover.bedroom_side_shades
@@ -3648,6 +3657,9 @@
             data: {}
             target:
               entity_id: cover.bedroom_back
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.shades_manual_primary_bedroom
       button_1_press:
       - choose:
         - conditions:
@@ -3661,6 +3673,9 @@
             data: {}
             target:
               entity_id: cover.bedroom_back
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.shades_manual_primary_bedroom
         - conditions:
           - condition: numeric_state
             entity_id: cover.bedroom_back
@@ -3676,6 +3691,9 @@
               - cover.bedroom_right
               - cover.hallway_2
               - cover.hallway_1
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.shades_manual_primary_bedroom
       time_before_long_press: 2
 - id: '1750804925752'
   alias: Basement HVAC Schedule
@@ -6384,7 +6402,9 @@
   mode: restart
 - id: '1777031732859'
   alias: Front Guest Bedroom Pico - Open Shades
-  description: ''
+  description: 'v2.4: also sets the room''s manual latch. This automation drives
+    the cover, so the resulting events carry a parent_id and the Manual Control Detector
+    deliberately ignores them - the latch is set here explicitly instead.'
   triggers:
   - device_id: dbd00a673efa053d63fa6d9d979888dd
     domain: lutron_caseta
@@ -6397,10 +6417,15 @@
     data: {}
     target:
       entity_id: cover.front_guest_bedroom_shades
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.shades_manual_front_guest_bedroom
   mode: single
 - id: '1777031734880'
   alias: Front Guest Bedroom Pico - Close Shades
-  description: ''
+  description: 'v2.4: also sets the room''s manual latch. This automation drives
+    the cover, so the resulting events carry a parent_id and the Manual Control Detector
+    deliberately ignores them - the latch is set here explicitly instead.'
   triggers:
   - device_id: dbd00a673efa053d63fa6d9d979888dd
     domain: lutron_caseta
@@ -6413,6 +6438,9 @@
     data: {}
     target:
       entity_id: cover.front_guest_bedroom_shades
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.shades_manual_front_guest_bedroom
   mode: single
 - id: '1777225146361'
   alias: Basement Bathroom Exhaust Fan Turns Off after 45 min
@@ -7618,16 +7646,23 @@
   description: 'v2.4: latches a room out of adaptive shading for the rest of the day
     when its shades are moved by hand. Watches the 16 facade covers the Shade Scheduler
     itself commands (its rooms[].facades[].covers lists plus bedroom_back) for current_position
-    changes and sets the room''s input_boolean.shades_manual_* latch. Three filters:
-    magnitude (|delta| >= 5%, kills reporting jitter; group covers average their
-    members so one shade at full travel still clears it), scheduler-quiet (no running
-    instance of the scheduler and last_triggered more than 120s ago — Lutron/Matter
-    push travel updates asynchronously with a fresh context, so a scheduler-commanded
-    move is otherwise indistinguishable from a remote press), and context (user_id
-    set = app/dashboard/voice; user_id and parent_id both none = physical Serena
-    remote; parent_id set = another automation, ignored — the Back Guest Bedroom
-    Pico automations latch explicitly instead). The latch skips morning open and
-    adaptive ticks only; the evening close still runs. Manual wins over Demand Response.
+    changes and sets the room''s input_boolean.shades_manual_* latch. Two filters:
+    (1) magnitude — the position delta must clear 5%/member-count (min 1%), because
+    a group cover reports the AVERAGE of its members: a flat 5% would need one shade
+    of a 5-member group to travel 25% before the group budged that far, so a real
+    hand-move went unlatched. Scaling by the member count (from the group''s own
+    entity_id attribute; non-group covers fall back to 5%) keeps jitter filtered
+    while catching a single-shade move. (2) provenance — user_id set means a human
+    in the app/dashboard/voice and is trusted immediately; user_id AND parent_id
+    both absent means a physical Serena remote, which is indistinguishable from the
+    async travel updates Lutron/Matter push during a scheduler-commanded move, so
+    that path alone also requires scheduler-quiet (no running scheduler instance and
+    last_triggered more than 120s ago). parent_id set = another automation, ignored
+    — the Pico automations latch explicitly instead. Note the quiet window applies
+    ONLY to the no-context path: gating app moves on it too would silently discard
+    a correction made in the two minutes after a tick, which is exactly when people
+    override an adaptive move. The latch skips morning open and adaptive ticks only;
+    the evening close still runs. Manual wins over Demand Response.
     Cleared at 03:00 by the Daily Reset, or by hand from the Shades view chip /
     Settings pop-up. Same context idiom as the bathroom exhaust-fan automations.'
   triggers:
@@ -7657,15 +7692,16 @@
   - condition: template
     value_template: '{% set p_from = trigger.from_state.attributes.current_position
       if trigger.from_state else none %}{% set p_to = trigger.to_state.attributes.current_position
-      if trigger.to_state else none %}{{ p_from is not none and p_to is not none
-      and (p_to | int(0) - p_from | int(0)) | abs >= 5 }}'
+      if trigger.to_state else none %}{% set members = state_attr(trigger.entity_id,
+      ''entity_id'') %}{% set n = (members | count) if members else 1 %}{% set thresh
+      = [5 / n, 1] | max %}{{ p_from is not none and p_to is not none and (p_to |
+      float(0) - p_from | float(0)) | abs >= thresh }}'
   - condition: template
     value_template: '{% set a = ''automation.shade_scheduler_whole_house'' %}{% set
-      lt = state_attr(a, ''last_triggered'') %}{{ (state_attr(a, ''current'') | int(0))
-      == 0 and (lt is none or (now() - lt).total_seconds() > 120) }}'
-  - condition: template
-    value_template: '{{ trigger.to_state.context.user_id is not none or trigger.to_state.context.parent_id
-      is none }}'
+      lt = state_attr(a, ''last_triggered'') %}{% set quiet = (state_attr(a, ''current'')
+      | int(0)) == 0 and (lt is none or (now() - lt).total_seconds() > 120) %}{{
+      trigger.to_state.context.user_id is not none or (trigger.to_state.context.parent_id
+      is none and quiet) }}'
   actions:
   - variables:
       latch_map:

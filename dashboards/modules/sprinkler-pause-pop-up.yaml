@@ -87,9 +87,11 @@ cards:
             ['switch.pool_180s','Pool 180s'],['switch.pool_90s','Pool 90s'],['switch.pool_shrubs','Pool Shrubs'],
             ['switch.firepit_shrubs','Firepit Shrubs'],['switch.retaining_wall_drip','Retaining Wall Drip']];
           const on = zones.filter(z => states[z[0]] && states[z[0]].state === 'on');
-          const first = on.length ? on[0][1] : 'No zone running';
           const t = states['timer.sprinkler_pause'];
           const paused = t && t.state === 'active';
+          /* While paused the zone switches are off (rachio stopped them), so
+             there is no running zone to name - say what will resume instead. */
+          const first = on.length ? on[0][1] : (paused ? 'Schedule paused' : 'No zone running');
           /* Remaining pause time in whole minutes: the card re-renders on
              sensor.time (per minute), so second-level precision would only
              look broken. */
