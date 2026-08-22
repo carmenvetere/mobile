@@ -1151,6 +1151,13 @@ cards:
           cards:
             - type: markdown
               content: |
+                **v2.4.1** — 2026-08-22
+
+                - iOS Live Activities: the green "Complete · Clothes are ready" card now actually replaces the Washer and Dryer cards on the Lock Screen / Dynamic Island — the completion push was flagged as a regular notification instead of a Live Activity update, so it arrived as a separate banner while the card itself stayed frozen on the last running state until it was cleared
+                - iOS Live Activities: stale laundry cards are finally cleaned up — the cancelled-cycle / restart safety net was gated on a completion sensor that doesn't exist, so it had never run even once; a cancelled or powered-off cycle's card now clears after 15 minutes idle, and leftover cards are cleared on Home Assistant restart as designed
+                - iOS Live Activities: the Washer card can no longer appear while the washer is idle — the running-card condition never checked the washer's own on/off sensor (the Dryer card always did), so the 10-minute refresh could push phantom cards on an idle machine and quietly burn through Apple's daily budget for starting new Live Activities
+                - iOS Live Activities: the idle-clear wait is 15 minutes (was 5) so a washer or dryer that powers itself off right at end of cycle can't have the cleanup cut the Complete card's 10-minute reminder short
+
                 **v2.4.0** — 2026-08-21
 
                 - Shades: moving a room's shades by hand now takes that room off adaptive control for the rest of the day — the scheduler skips it at every tick (and during Demand Response) while the evening close still runs; everything resets automatically at 3 AM
