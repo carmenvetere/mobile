@@ -973,9 +973,10 @@
           - cover.first_floor_front
           - cover.living_room_side_shades
           - cover.dining_room_side
-      - action: input_boolean.turn_on
-        target:
-          entity_id: input_boolean.shades_manual_first_floor
+      - action: script.shades_latch_manual
+        data:
+          latch: input_boolean.shades_manual_first_floor
+          pause: input_boolean.dinner_party
       button_2_press:
       - action: scene.turn_on
         target:
@@ -990,9 +991,10 @@
           - cover.first_floor_front
           - cover.living_room_side_shades
           - cover.dining_room_side
-      - action: input_boolean.turn_on
-        target:
-          entity_id: input_boolean.shades_manual_first_floor
+      - action: script.shades_latch_manual
+        data:
+          latch: input_boolean.shades_manual_first_floor
+          pause: input_boolean.dinner_party
       button_3_press:
       - action: scene.turn_on
         target:
@@ -3643,9 +3645,9 @@
               - cover.bedroom_right
               - cover.hallway_2
               - cover.hallway_1
-          - action: input_boolean.turn_on
-            target:
-              entity_id: input_boolean.shades_manual_primary_bedroom
+          - action: script.shades_latch_manual
+            data:
+              latch: input_boolean.shades_manual_primary_bedroom
         - conditions:
           - condition: numeric_state
             entity_id: cover.bedroom_side_shades
@@ -3657,9 +3659,9 @@
             data: {}
             target:
               entity_id: cover.bedroom_back
-          - action: input_boolean.turn_on
-            target:
-              entity_id: input_boolean.shades_manual_primary_bedroom
+          - action: script.shades_latch_manual
+            data:
+              latch: input_boolean.shades_manual_primary_bedroom
       button_1_press:
       - choose:
         - conditions:
@@ -3673,9 +3675,9 @@
             data: {}
             target:
               entity_id: cover.bedroom_back
-          - action: input_boolean.turn_on
-            target:
-              entity_id: input_boolean.shades_manual_primary_bedroom
+          - action: script.shades_latch_manual
+            data:
+              latch: input_boolean.shades_manual_primary_bedroom
         - conditions:
           - condition: numeric_state
             entity_id: cover.bedroom_back
@@ -3691,9 +3693,9 @@
               - cover.bedroom_right
               - cover.hallway_2
               - cover.hallway_1
-          - action: input_boolean.turn_on
-            target:
-              entity_id: input_boolean.shades_manual_primary_bedroom
+          - action: script.shades_latch_manual
+            data:
+              latch: input_boolean.shades_manual_primary_bedroom
       time_before_long_press: 2
 - id: '1750804925752'
   alias: Basement HVAC Schedule
@@ -4584,9 +4586,10 @@
     data: {}
     target:
       entity_id: cover.back_guest_bedroom_shades
-  - action: input_boolean.turn_on
-    target:
-      entity_id: input_boolean.shades_manual_back_guest_bedroom
+  - action: script.shades_latch_manual
+    data:
+      latch: input_boolean.shades_manual_back_guest_bedroom
+      pause: input_boolean.guest_mode
   mode: single
 - id: '1761056876972'
   alias: Back Guest Bedroom Pico - Close Shades
@@ -4606,9 +4609,10 @@
     data: {}
     target:
       entity_id: cover.back_guest_bedroom_shades
-  - action: input_boolean.turn_on
-    target:
-      entity_id: input_boolean.shades_manual_back_guest_bedroom
+  - action: script.shades_latch_manual
+    data:
+      latch: input_boolean.shades_manual_back_guest_bedroom
+      pause: input_boolean.guest_mode
   mode: single
 - id: '1761577930081'
   alias: Office Pico Remote
@@ -6417,9 +6421,10 @@
     data: {}
     target:
       entity_id: cover.front_guest_bedroom_shades
-  - action: input_boolean.turn_on
-    target:
-      entity_id: input_boolean.shades_manual_front_guest_bedroom
+  - action: script.shades_latch_manual
+    data:
+      latch: input_boolean.shades_manual_front_guest_bedroom
+      pause: input_boolean.guest_mode
   mode: single
 - id: '1777031734880'
   alias: Front Guest Bedroom Pico - Close Shades
@@ -6438,9 +6443,10 @@
     data: {}
     target:
       entity_id: cover.front_guest_bedroom_shades
-  - action: input_boolean.turn_on
-    target:
-      entity_id: input_boolean.shades_manual_front_guest_bedroom
+  - action: script.shades_latch_manual
+    data:
+      latch: input_boolean.shades_manual_front_guest_bedroom
+      pause: input_boolean.guest_mode
   mode: single
 - id: '1777225146361'
   alias: Basement Bathroom Exhaust Fan Turns Off after 45 min
@@ -7664,7 +7670,19 @@
     override an adaptive move. The latch skips morning open and adaptive ticks only;
     the evening close still runs. Manual wins over Demand Response.
     Cleared at 03:00 by the Daily Reset, or by hand from the Shades view chip /
-    Settings pop-up. Same context idiom as the bathroom exhaust-fan automations.'
+    Settings pop-up. Same context idiom as the bathroom exhaust-fan automations.
+    v2.4.1 — two fixes, both of which produced a latch that could do nothing but
+    suppress adaptive: (a) the window now starts at 07:29, matching the
+    scheduler''s own active window, rather than at 03:00. A shade moved by hand
+    between 03:00 and the morning open latched the room out of the very open it
+    was waiting for, so it never took an adaptive position all day and read as
+    the overnight reset having failed. (b) a room the scheduler is currently
+    pausing is no longer latched (pause_map): a paused room is skipped
+    end-to-end, so a guest moving a shade while Overnight Guests was on latched
+    a room adaptive was not managing anyway, and that latch outlived the pause —
+    the guest room then stayed out of adaptive after Overnight Guests was
+    switched off, until 03:00. The Pico automations enforce the same two rules
+    via script.shades_latch_manual.'
   triggers:
   - trigger: state
     entity_id:
@@ -7687,7 +7705,7 @@
     attribute: current_position
   conditions:
   - condition: time
-    after: '03:00:00'
+    after: '07:29:00'
     before: '20:01:00'
   - condition: template
     value_template: '{% set p_from = trigger.from_state.attributes.current_position
@@ -7721,9 +7739,15 @@
         cover.front_guest_bedroom_side: input_boolean.shades_manual_front_guest_bedroom
         cover.office_office_right: input_boolean.shades_manual_office
         cover.office_office_left: input_boolean.shades_manual_office
+      pause_map:
+        input_boolean.shades_manual_first_floor: input_boolean.dinner_party
+        input_boolean.shades_manual_back_guest_bedroom: input_boolean.guest_mode
+        input_boolean.shades_manual_front_guest_bedroom: input_boolean.guest_mode
       latch: '{{ latch_map.get(trigger.entity_id, '''') }}'
+      pause: '{{ pause_map.get(latch, '''') }}'
   - condition: template
-    value_template: '{{ latch != '''' and is_state(latch, ''off'') }}'
+    value_template: '{{ latch != '''' and is_state(latch, ''off'') and (pause == ''''
+      or not is_state(pause, ''on'')) }}'
   - action: input_boolean.turn_on
     target:
       entity_id: '{{ latch }}'
@@ -7743,11 +7767,30 @@
     at morning open so a room that was paused all day (dinner party / guest mode)
     still resets, and it is a single idempotent turn_off instead of a per-room clear
     inside the scheduler''s repeat loop. Nothing adaptive runs between 03:00 and
-    the first morning open, so the timing is equivalent.'
+    the first morning open, so the timing is equivalent. v2.4.1: a single time
+    trigger had no way to catch up on a firing it missed, and the latches
+    deliberately survive a restart, so if HA was down or restarting at 03:00 the
+    latches set the day before were never cleared and adaptive stayed dead for
+    the whole next day. A homeassistant start trigger now repeats the clear when
+    HA comes up in the 03:00-07:29 dead zone — after the reset it missed and
+    before the scheduler''s first morning open. The time condition applies only
+    to that trigger, so the 03:00 run still clears unconditionally and a latch
+    set during the day still survives a restart, as designed.'
   triggers:
   - at: '03:00:00'
+    id: daily
     trigger: time
-  conditions: []
+  - trigger: homeassistant
+    id: startup
+    event: start
+  conditions:
+  - condition: or
+    conditions:
+    - condition: trigger
+      id: daily
+    - condition: time
+      after: '03:00:00'
+      before: '07:29:00'
   actions:
   - action: input_boolean.turn_off
     target:

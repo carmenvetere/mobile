@@ -369,6 +369,49 @@ push_live_activity:
             {{ {'background_color': '#14161A', 'text_color': '#FFFFFF'}
                | combine(payload)
                | combine({'tag': tag, 'live_update': true}) }}
+shades_latch_manual:
+  alias: Shades - Latch Room to Manual
+  description: >-
+    v2.4.1: the one place a room's input_boolean.shades_manual_* latch gets
+    set by the Pico remotes. Those automations drive the covers themselves, so
+    their cover events carry a parent_id and the Manual Control Detector
+    deliberately ignores them - they latch explicitly, and before v2.4.1 they
+    did it unconditionally at any hour and in any room state.
+    A manual latch only means something while the Shade Scheduler is actually
+    managing the room, so it is refused in two cases:
+    (1) outside the scheduler's own active window (07:29-20:01). A press
+    before the morning open latched the room out of the very open it was
+    waiting for, so the shades never took an adaptive position all day and it
+    read as "the overnight reset didn't happen". After 20:01 the scheduler is
+    done for the day and the latch would only sit there until 03:00.
+    (2) while the room is paused (Overnight Guests for the guest rooms, Dinner
+    Party for the First Floor). A paused room is already skipped end-to-end,
+    so latching it does nothing at the time and leaves a latch that outlives
+    the pause - which is why a guest room stayed out of adaptive after
+    Overnight Guests was switched off.
+    A refused latch is a silent no-op: the condition ends this script only,
+    never the calling automation, so the shades still move.
+  mode: parallel
+  max: 10
+  icon: mdi:hand-back-right
+  fields:
+    latch:
+      description: The room's input_boolean.shades_manual_* entity.
+    pause:
+      description: >-
+        The room's pause helper in the scheduler's rooms table
+        (input_boolean.guest_mode / .dinner_party). Omit for a room with none.
+  variables:
+    pause: "{{ pause | default('') }}"
+  sequence:
+  - condition: time
+    after: '07:29:00'
+    before: '20:01:00'
+  - condition: template
+    value_template: "{{ pause == '' or not is_state(pause, 'on') }}"
+  - action: input_boolean.turn_on
+    target:
+      entity_id: "{{ latch }}"
 clear_live_activity:
   alias: Clear Live Activity
   description: >-
