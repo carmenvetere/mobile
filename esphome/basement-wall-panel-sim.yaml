@@ -31,7 +31,11 @@ esphome:
         - text_sensor.template.publish: { id: panel_wifi_sub, state: "Host build · no Wi-Fi" }
         - text_sensor.template.publish: { id: panel_fw_text, state: "ESPHome host · LVGL 9" }
 
+# Every ESPHome host build ships the same default MAC, and Home Assistant
+# identifies ESPHome devices by MAC. Give the simulator its own so it never
+# collides with another host build (an older panel prototype, for instance).
 host:
+  mac_address: "02:70:41:4E:45:4C"
 
 api:
   encryption:
