@@ -1,0 +1,44 @@
+# Swipe-down menu: 2×4 grid, 18px gap, 7 pages + Voice.
+obj:
+  id: menu
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - obj:
+        x: 40
+        y: 60
+        width: 640
+        height: 554
+        clickable: false
+        layout:
+          type: FLEX
+          flex_flow: ROW_WRAP
+          flex_align_main: SPACE_BETWEEN
+          flex_align_cross: START
+          pad_row: 18
+          pad_column: 18
+        widgets:
+          - !include { file: ../widgets/menu_item.yaml, vars: { n: 0, icon: "${i_shield}", name: "Alarm" } }
+          - !include { file: ../widgets/menu_item.yaml, vars: { n: 1, icon: "${i_lightning_bolt}", name: "Energy" } }
+          - !include { file: ../widgets/menu_item.yaml, vars: { n: 2, icon: "${i_palette}", name: "Scenes" } }
+          - !include { file: ../widgets/menu_item.yaml, vars: { n: 3, icon: "${i_blinds}", name: "Shades" } }
+          - !include { file: ../widgets/menu_item.yaml, vars: { n: 4, icon: "${i_music}", name: "Music" } }
+          - !include { file: ../widgets/menu_item.yaml, vars: { n: 5, icon: "${i_pool}", name: "Pool" } }
+          - !include { file: ../widgets/menu_item.yaml, vars: { n: 6, icon: "${i_cog}", name: "Settings" } }
+          - !include { file: ../widgets/menu_item.yaml, vars: { n: 7, icon: "${i_microphone}", name: "Voice" } }
+    - obj:
+        id: menu_footer
+        align: BOTTOM_MID
+        x: 0
+        y: 0
+        width: 720
+        height: 90
+        widgets:
+          - label:
+              align: TOP_MID
+              y: 16
+              text: "Swipe up or tap to close"
+              text_font: b400_14
+              text_color: ${c_text3}
+        on_click:
+          - script.execute: close_menu

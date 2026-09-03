@@ -1,0 +1,38 @@
+# Settings hub row: icon 25 slate · name 22/400 · value 17/500 text-3 · chevron.
+# vars: id, icon, name, sheet
+obj:
+  id: hub_row_${id}
+  width: 100%
+  flex_grow: 1
+  min_height: 48
+  styles: st_hairline_bottom
+  layout:
+    type: FLEX
+    flex_flow: ROW
+    flex_align_cross: CENTER
+    pad_column: 0
+  widgets:
+    - label:
+        id: hub_icon_${id}
+        width: 36
+        text: "${icon}"
+        text_font: mdi_25
+        text_color: ${c_slate}
+    - label:
+        flex_grow: 1
+        text: "${name}"
+        text_font: b400_22
+    - label:
+        id: hub_val_${id}
+        pad_right: 10
+        text: ""
+        text_font: b500_17
+        text_color: ${c_text3}
+    - label:
+        text: "${i_chevron_right}"
+        text_font: mdi_25
+        text_color: ${c_handle}
+  on_click:
+    - script.execute:
+        id: open_sheet
+        name: "${sheet}"

@@ -1,0 +1,40 @@
+obj:
+  id: sheet_shades
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - obj:
+        styles: st_sheet
+        widgets:
+          - obj:
+              x: 0
+              y: 0
+              width: 100%
+              height: 56
+              clickable: false
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              widgets:
+                - label: { id: sheet_shades_title, text: "Shades", text_font: b300_32 }
+                - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_sheet_shades } }
+          - obj:
+              id: sheet_shades_body
+              x: 0
+              y: 68
+              width: 100%
+              height: 516
+              scrollable: true
+              scroll_dir: VER
+              layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: START, flex_align_cross: START, pad_row: 0 }
+              widgets:
+                - !include { file: ../widgets/eyebrow.yaml, vars: { id: sh_eyebrow_sched, text: "SCHEDULES" } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: s_sched, name: "Scheduler – whole house", sub: "Adaptive positions", entity: automation.shade_scheduler_whole_house } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: s_sunset, name: "Close at sunset +30 / 8 PM", sub: "First floor", entity: automation.sunset_30_or_8_00_pm_close_shades } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: s_bed, name: "Bedroom – close at sunset", sub: "Sunset +30 / 8 PM", entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: s_bg, name: "Back guest – close at sunset", sub: "Sunset −30 / 8 PM", entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: s_fg, name: "Front guest – close at sunset", sub: "Sunset −30 / 8 PM", entity: automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm } }
+                - !include { file: ../widgets/eyebrow.yaml, vars: { id: sh_eyebrow_manual, text: "MANUAL TODAY" } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: s_m_ff, name: "First floor", sub: "Off adaptive until 3 AM", entity: input_boolean.shades_manual_first_floor } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: s_m_pb, name: "Primary bedroom", sub: "Off adaptive until 3 AM", entity: input_boolean.shades_manual_primary_bedroom } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: s_m_of, name: "Office", sub: "Off adaptive until 3 AM", entity: input_boolean.shades_manual_office } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: s_m_bg, name: "Back guest bedroom", sub: "Off adaptive until 3 AM", entity: input_boolean.shades_manual_back_guest_bedroom } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: s_m_fg, name: "Front guest bedroom", sub: "Off adaptive until 3 AM", entity: input_boolean.shades_manual_front_guest_bedroom } }

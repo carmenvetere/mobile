@@ -1,0 +1,51 @@
+# Per-speaker volume row. Filled by render_vols.
+# vars: n
+obj:
+  id: vol_row_${n}
+  width: 100%
+  height: 72
+  styles: st_hairline_bottom
+  layout:
+    type: FLEX
+    flex_flow: ROW
+    flex_align_cross: CENTER
+    pad_column: 14
+  widgets:
+    - obj:
+        clickable: false
+        width: 170
+        height: SIZE_CONTENT
+        layout:
+          type: FLEX
+          flex_flow: COLUMN
+          flex_align_cross: START
+          pad_row: 1
+        widgets:
+          - label:
+              id: vol_name_${n}
+              text: ""
+              text_font: b500_19
+          - label:
+              id: vol_sub_${n}
+              text: ""
+              text_font: b400_14
+              text_color: ${c_text3}
+    - slider:
+        id: vol_slider_${n}
+        width: 396
+        height: 14
+        min_value: 0
+        max_value: 100
+        ext_click_area: 21
+        on_release:
+          - script.execute:
+              id: vol_set
+              n: ${n}
+              v: !lambda "return (int) lv_slider_get_value(id(vol_slider_${n}));"
+    - label:
+        id: vol_pct_${n}
+        width: 56
+        text: ""
+        text_align: RIGHT
+        text_font: b600_20
+        text_color: ${c_slate}

@@ -1,0 +1,123 @@
+# Basement Wall Panel — pieces shared by the hardware build and the simulator.
+#
+# Both device files (basement-wall-panel.yaml, basement-wall-panel-sim.yaml)
+# pull this in via `packages:`. Device-specific things — display, touch, audio,
+# Wi-Fi, backlight — live in the device file and satisfy the small "contract"
+# below by defining these scripts: apply_brightness, apply_voice_volume,
+# apply_wake_word, voice_start, voice_stop.
+
+substitutions:
+  # Home Assistant base URL used to fetch album art (entity_picture is a
+  # relative path). Override in the device file if HA lives elsewhere.
+  ha_base_url: "http://homeassistant.local:8123"
+  # Open item #4 in the handoff: the mobile Settings view reads
+  # sensor.well_pump_energy while the 7-day history uses sensor.well_pump_energy2.
+  well_pump_energy_entity: sensor.well_pump_energy
+  # Open item #3: no super-chlorinate entity was found in the repo. Point this
+  # at the OmniLogic switch if the integration exposes one.
+  pool_super_chlorinate_entity: switch.omnilogic_pool_super_chlorinate
+
+logger:
+  level: INFO
+  logs:
+    lvgl: WARN
+    homeassistant.text_sensor: WARN
+    homeassistant.sensor: WARN
+    homeassistant.binary_sensor: WARN
+
+time:
+  - platform: homeassistant
+    id: ha_time
+    on_time_sync:
+      - script.execute: clock_tick
+    on_time:
+      - seconds: 0
+        then:
+          - script.execute: clock_tick
+
+http_request:
+  id: http_client
+  verify_ssl: false
+  timeout: 10s
+
+# Album art for the Music page (140px, hairline, 20px radius). The URL is set
+# at runtime from the focused player's entity_picture.
+online_image:
+  - id: album_art
+    url: "${ha_base_url}/static/icons/favicon.png"
+    type: RGB565
+    format: PNG
+    resize: 140x140
+    update_interval: never
+    on_download_finished:
+      - lambda: |-
+          panel::show(id(np_art_img), true);
+          panel::show(id(np_art_icon), false);
+    on_error:
+      - lambda: |-
+          panel::show(id(np_art_img), false);
+          panel::show(id(np_art_icon), true);
+
+# ---- Panel & Voice settings (exposed to HA too) -------------------------------
+number:
+  - platform: template
+    id: panel_brightness
+    name: "Brightness"
+    icon: mdi:brightness-6
+    unit_of_measurement: "%"
+    min_value: 10
+    max_value: 100
+    step: 10
+    initial_value: 80
+    optimistic: true
+    restore_value: true
+    entity_category: config
+    set_action:
+      - script.execute: apply_brightness
+    on_value:
+      - script.execute: render_panel
+  - platform: template
+    id: voice_volume
+    name: "Voice volume"
+    icon: mdi:volume-high
+    unit_of_measurement: "%"
+    min_value: 0
+    max_value: 100
+    step: 5
+    initial_value: 55
+    optimistic: true
+    restore_value: true
+    entity_category: config
+    set_action:
+      - script.execute: apply_voice_volume
+    on_value:
+      - script.execute: render_panel
+
+switch:
+  - platform: template
+    id: wake_word_enabled
+    name: "Wake word"
+    icon: mdi:ear-hearing
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    entity_category: config
+    on_turn_on:
+      - script.execute: apply_wake_word
+      - script.execute: render_panel
+    on_turn_off:
+      - script.execute: apply_wake_word
+      - script.execute: render_panel
+
+text_sensor:
+  - platform: template
+    id: panel_wifi_text
+    internal: true
+    on_value: [script.execute: render_panel]
+  - platform: template
+    id: panel_wifi_sub
+    internal: true
+    on_value: [script.execute: render_panel]
+  - platform: template
+    id: panel_fw_text
+    internal: true
+    on_value: [script.execute: render_panel]

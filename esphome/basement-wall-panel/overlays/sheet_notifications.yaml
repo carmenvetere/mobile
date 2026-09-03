@@ -1,0 +1,60 @@
+obj:
+  id: sheet_notifications
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - obj:
+        styles: st_sheet
+        widgets:
+          - obj:
+              x: 0
+              y: 0
+              width: 100%
+              height: 56
+              clickable: false
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              widgets:
+                - label: { id: sheet_notifications_title, text: "Notifications", text_font: b300_32 }
+                - obj:
+                    clickable: false
+                    width: SIZE_CONTENT
+                    height: 56
+                    layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, pad_column: 14 }
+                    widgets:
+                      - button:
+                          id: nf_clear_all
+                          width: SIZE_CONTENT
+                          height: 56
+                          radius: 28
+                          pad_left: 22
+                          pad_right: 22
+                          widgets:
+                            - label: { align: CENTER, text: "Clear all", text_font: b600_16, text_color: "${c_text2}" }
+                          on_click:
+                            - script.execute: notif_clear
+                      - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_sheet_notifications } }
+          - obj:
+              id: sheet_notifications_body
+              x: 0
+              y: 68
+              width: 100%
+              height: 516
+              scrollable: true
+              scroll_dir: VER
+              layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: START, flex_align_cross: START, pad_row: 0 }
+              widgets:
+                - obj:
+                    id: nf_empty
+                    width: 100%
+                    height: 300
+                    clickable: false
+                    layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: CENTER, flex_align_cross: CENTER, pad_row: 12 }
+                    widgets:
+                      - label: { text: "${i_bell_check_outline}", text_font: mdi_72, text_color: "${c_text4}" }
+                      - label: { text: "All caught up", text_font: b500_20, text_color: "${c_text4}" }
+                - !include { file: ../widgets/notif_row.yaml, vars: { n: 0 } }
+                - !include { file: ../widgets/notif_row.yaml, vars: { n: 1 } }
+                - !include { file: ../widgets/notif_row.yaml, vars: { n: 2 } }
+                - !include { file: ../widgets/notif_row.yaml, vars: { n: 3 } }
+                - !include { file: ../widgets/notif_row.yaml, vars: { n: 4 } }
+                - !include { file: ../widgets/notif_row.yaml, vars: { n: 5 } }

@@ -1,0 +1,76 @@
+# Speaker-group sheet row. Filled by render_group.
+# vars: n
+obj:
+  id: grp_row_${n}
+  width: 100%
+  height: 64
+  styles: st_hairline_bottom
+  pad_left: 4
+  pad_right: 4
+  layout:
+    type: FLEX
+    flex_flow: ROW
+    flex_align_cross: CENTER
+    pad_column: 14
+  widgets:
+    - label:
+        id: grp_icon_${n}
+        width: 30
+        text: ""
+        text_align: CENTER
+        text_font: mdi_26
+        text_color: ${c_text3}
+    - obj:
+        clickable: false
+        flex_grow: 1
+        height: SIZE_CONTENT
+        layout:
+          type: FLEX
+          flex_flow: COLUMN
+          flex_align_cross: START
+          pad_row: 1
+        widgets:
+          - label:
+              id: grp_name_${n}
+              text: ""
+              text_font: b500_19
+              text_color: ${c_text2}
+          - label:
+              id: grp_sub_${n}
+              text: ""
+              text_font: b400_14
+              text_color: ${c_text3}
+    - button:
+        id: grp_view_${n}
+        hidden: true
+        width: 96
+        height: 48
+        radius: 24
+        layout:
+          type: FLEX
+          flex_flow: ROW
+          flex_align_main: CENTER
+          flex_align_cross: CENTER
+          pad_column: 6
+        widgets:
+          - label:
+              text: "${i_play_box_outline}"
+              text_font: mdi_21
+              text_color: ${c_slate}
+          - label:
+              text: "View"
+              text_font: b600_15
+              text_color: ${c_slate}
+        on_click:
+          - script.execute:
+              id: group_focus
+              n: ${n}
+    - label:
+        id: grp_mark_${n}
+        text: "${i_circle_outline}"
+        text_font: mdi_24
+        text_color: ${c_text4}
+  on_click:
+    - script.execute:
+        id: group_toggle
+        n: ${n}

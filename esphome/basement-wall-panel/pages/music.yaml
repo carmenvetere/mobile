@@ -1,0 +1,161 @@
+# Page 5 · Music
+id: tile_music
+row: 0
+column: 4
+dir: HOR
+widgets:
+  - obj:
+      styles: st_page
+      widgets:
+        - label:
+            x: 32
+            y: 40
+            text: "Music"
+            text_font: b300_34
+        - button:
+            id: btn_library
+            x: 32
+            y: 96
+            styles: st_icon_btn
+            widgets:
+              - label: { align: CENTER, text: "${i_music_box_multiple}", text_font: mdi_28, text_color: "${c_slate}" }
+            on_click:
+              - script.execute: browse_root
+        - button:
+            id: btn_group
+            x: 628
+            y: 96
+            styles: st_icon_btn
+            widgets:
+              - label: { align: CENTER, text: "${i_speaker_multiple}", text_font: mdi_28, text_color: "${c_slate}" }
+            on_click:
+              - script.execute:
+                  id: open_sheet
+                  name: music_group
+        # now playing
+        - obj:
+            id: np_art
+            align: TOP_MID
+            x: 0
+            y: 180
+            width: 140
+            height: 140
+            radius: 20
+            clip_corner: true
+            border_width: 1
+            border_color: ${c_hairline}
+            bg_color: ${c_art_fallback}
+            bg_opa: COVER
+            clickable: false
+            widgets:
+              - label:
+                  id: np_art_icon
+                  align: CENTER
+                  text: "${i_album}"
+                  text_font: mdi_60
+                  text_color: ${c_text4}
+              - image:
+                  id: np_art_img
+                  align: CENTER
+                  src: album_art
+                  hidden: true
+        - label:
+            id: np_title
+            align: TOP_MID
+            x: 0
+            y: 334
+            width: 600
+            text: "Nothing playing"
+            text_align: CENTER
+            text_font: b500_28
+            long_mode: DOT
+        - label:
+            id: np_artist
+            align: TOP_MID
+            x: 0
+            y: 372
+            width: 600
+            text: ""
+            text_align: CENTER
+            text_font: b400_19
+            text_color: ${c_text2}
+            long_mode: DOT
+        - obj:
+            align: TOP_MID
+            x: 0
+            y: 402
+            width: SIZE_CONTENT
+            height: 28
+            clickable: false
+            layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, pad_column: 8 }
+            widgets:
+              - label: { id: np_spk_icon, text: "${i_sofa}", text_font: mdi_21, text_color: "${c_slate}" }
+              - label: { id: np_spk_name, text: "Media Room", text_font: b600_18, text_color: "${c_slate}" }
+        # transport
+        - obj:
+            align: TOP_MID
+            x: 0
+            y: 446
+            width: SIZE_CONTENT
+            height: 88
+            clickable: false
+            layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, pad_column: 36 }
+            widgets:
+              - button:
+                  width: 72
+                  height: 72
+                  radius: 36
+                  widgets:
+                    - label: { align: CENTER, text: "${i_skip_previous}", text_font: mdi_38, text_color: "${c_slate}" }
+                  on_click:
+                    - script.execute: { id: music_cmd, cmd: "media_previous_track" }
+              - button:
+                  id: btn_play
+                  width: 88
+                  height: 88
+                  radius: 44
+                  border_width: 2
+                  border_color: ${c_slate}
+                  widgets:
+                    - label: { id: np_play_icon, align: CENTER, text: "${i_play}", text_font: mdi_48, text_color: "${c_slate}" }
+                  on_click:
+                    - script.execute: { id: music_cmd, cmd: "media_play_pause" }
+              - button:
+                  width: 72
+                  height: 72
+                  radius: 36
+                  widgets:
+                    - label: { align: CENTER, text: "${i_skip_next}", text_font: mdi_38, text_color: "${c_slate}" }
+                  on_click:
+                    - script.execute: { id: music_cmd, cmd: "media_next_track" }
+        # group volume
+        - obj:
+            x: 32
+            y: 566
+            width: 656
+            height: 60
+            clickable: false
+            layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, pad_column: 14 }
+            widgets:
+              - label: { text: "${i_volume_medium}", text_font: mdi_28, text_color: "${c_text2}" }
+              - slider:
+                  id: np_volume
+                  width: 430
+                  height: 14
+                  min_value: 0
+                  max_value: 100
+                  value: 0
+                  ext_click_area: 21
+                  on_release:
+                    - script.execute:
+                        id: set_group_volume
+                        v: !lambda "return (int) lv_slider_get_value(id(np_volume));"
+              - label: { id: np_vol_pct, width: 56, text: "0%", text_align: RIGHT, text_font: b600_20, text_color: "${c_slate}" }
+              - button:
+                  styles: st_icon_btn
+                  widgets:
+                    - label: { align: CENTER, text: "${i_tune_vertical_variant}", text_font: mdi_28, text_color: "${c_slate}" }
+                  on_click:
+                    - script.execute:
+                        id: open_sheet
+                        name: music_volumes

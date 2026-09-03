@@ -1,0 +1,20 @@
+# Menu handle: 160×44 hit zone centred at the top with a 64×6 bar.
+obj:
+  id: handle
+  align: TOP_MID
+  x: 0
+  y: 0
+  width: 160
+  height: 44
+  widgets:
+    - obj:
+        clickable: false
+        align: TOP_MID
+        y: 12
+        width: 64
+        height: 6
+        radius: 3
+        bg_color: ${c_handle}
+        bg_opa: COVER
+  on_click:
+    - script.execute: toggle_menu

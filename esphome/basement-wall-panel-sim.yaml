@@ -1,0 +1,102 @@
+# Basement Wall Panel — desktop simulator (ESPHome `host` platform + SDL window).
+#
+# Runs the exact same LVGL UI, entity subscriptions and scripts as the panel,
+# in a 720×720 window on a Mac/Linux machine, talking to the real Home
+# Assistant over the native API. No hardware, no Wi-Fi, no audio: the voice
+# overlay plays a scripted demo and the Panel & Voice settings are stubs.
+#
+#   brew install sdl2            (macOS)      apt install libsdl2-dev (Linux)
+#   pip install esphome
+#   esphome run esphome/basement-wall-panel-sim.yaml
+#
+# Then add the simulator to HA: Settings → Devices → ESPHome → Add → host
+# <this machine's IP>, port 6053, key = api_key_basement_wall_panel.
+# See esphome/basement-wall-panel/README.md for the walkthrough.
+
+substitutions:
+  name: basement-wall-panel-sim
+  friendly_name: Basement Wall Panel (simulator)
+  ha_base_url: "http://homeassistant.local:8123"
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  includes:
+    - basement-wall-panel/panel_helpers.h
+  on_boot:
+    - priority: -100
+      then:
+        - script.execute: panel_init
+        - text_sensor.template.publish: { id: panel_wifi_text, state: "Simulator" }
+        - text_sensor.template.publish: { id: panel_wifi_sub, state: "Host build · no Wi-Fi" }
+        - text_sensor.template.publish: { id: panel_fw_text, state: "ESPHome host · LVGL 9" }
+
+host:
+
+api:
+  encryption:
+    key: !secret api_key_basement_wall_panel
+
+packages:
+  icons: !include basement-wall-panel/icons.yaml
+  fonts: !include basement-wall-panel/fonts.yaml
+  common: !include basement-wall-panel/common.yaml
+  entities: !include basement-wall-panel/entities.yaml
+  ui: !include basement-wall-panel/ui.yaml
+  logic: !include basement-wall-panel/logic.yaml
+
+display:
+  - platform: sdl
+    id: panel_display
+    dimensions:
+      width: 720
+      height: 720
+    auto_clear_enabled: false
+    update_interval: never
+
+touchscreen:
+  - platform: sdl
+    id: panel_touch
+    display: panel_display
+    on_touch:
+      - script.execute:
+          id: touch_down
+          x: !lambda "return touch.x;"
+          y: !lambda "return touch.y;"
+    on_update:
+      - lambda: |-
+          for (auto &t : touches) { id(g_tx1) = t.x; id(g_ty1) = t.y; }
+    on_release:
+      - script.execute: touch_up
+
+# ---- contract scripts: stubs + a scripted voice demo ----------------------------
+script:
+  - id: apply_brightness
+    then:
+      - logger.log:
+          format: "sim: brightness → %.0f%%"
+          args: ["id(panel_brightness).state"]
+  - id: apply_voice_volume
+    then:
+      - logger.log:
+          format: "sim: voice volume → %.0f%%"
+          args: ["id(voice_volume).state"]
+  - id: apply_wake_word
+    then:
+      - logger.log:
+          format: "sim: wake word %s"
+          args: ["id(wake_word_enabled).state ? \"on\" : \"off\""]
+  - id: voice_start
+    mode: restart
+    then:
+      - delay: 1200ms
+      - script.execute: { id: voice_show, transcript: "Set the pool heater to 90", response: "" }
+      - script.execute: { id: voice_set_phase, phase: 2 }
+      - delay: 1200ms
+      - script.execute: { id: voice_show, transcript: "", response: "Voice runs on the panel hardware — this is the simulator." }
+      - script.execute: { id: voice_set_phase, phase: 3 }
+      - delay: 3500ms
+      - script.execute: voice_close
+  - id: voice_stop
+    then:
+      - lambda: "id(voice_start).stop();"

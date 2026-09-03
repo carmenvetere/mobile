@@ -1,0 +1,51 @@
+# Library browse row (folder or leaf). Filled by render_browse.
+# vars: n, prefix, height, script
+obj:
+  id: ${prefix}_row_${n}
+  width: 100%
+  height: ${height}
+  hidden: true
+  styles: st_hairline_bottom
+  layout:
+    type: FLEX
+    flex_flow: ROW
+    flex_align_cross: CENTER
+    pad_column: 14
+  widgets:
+    - label:
+        id: ${prefix}_icon_${n}
+        width: 30
+        text: ""
+        text_align: CENTER
+        text_font: mdi_26
+        text_color: ${c_slate}
+    - obj:
+        clickable: false
+        flex_grow: 1
+        height: SIZE_CONTENT
+        layout:
+          type: FLEX
+          flex_flow: COLUMN
+          flex_align_cross: START
+          pad_row: 1
+        widgets:
+          - label:
+              id: ${prefix}_name_${n}
+              width: 100%
+              text: ""
+              text_font: b500_20
+              long_mode: DOT
+          - label:
+              id: ${prefix}_sub_${n}
+              text: ""
+              text_font: b400_14
+              text_color: ${c_text3}
+    - label:
+        id: ${prefix}_trail_${n}
+        text: "${i_play}"
+        text_font: mdi_24
+        text_color: ${c_slate}
+  on_click:
+    - script.execute:
+        id: ${script}
+        n: ${n}

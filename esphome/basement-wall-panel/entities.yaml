@@ -1,0 +1,359 @@
+# Basement Wall Panel — Home Assistant entity imports.
+#
+# Every value the panel shows is subscribed over the native API. Each import
+# calls the render script for the part of the UI it feeds; the render scripts
+# (logic.yaml) read the current state of every sensor they need, so updates are
+# idempotent and ordering does not matter.
+#
+# Compact "summary" sensors (weather, music, browse, notifications) are built
+# on the HA side by packages/basement_wall_panel.yaml so the panel subscribes
+# to a handful of strings instead of dozens of attributes.
+
+text_sensor:
+  # ---- status bar / weather ----
+  - platform: homeassistant
+    id: ts_weather_cond
+    entity_id: weather.bayberry
+    on_value: [script.execute: render_status]
+  - platform: homeassistant
+    id: ts_alarm
+    entity_id: alarm_control_panel.alarmo
+    on_value:
+      - script.execute: render_status
+      - script.execute: render_alarm
+  - platform: homeassistant
+    id: ts_wx_now
+    entity_id: sensor.basement_panel_weather
+    attribute: now
+    on_value: [script.execute: render_weather]
+  - platform: homeassistant
+    id: ts_wx_hours
+    entity_id: sensor.basement_panel_weather
+    attribute: hours
+    on_value: [script.execute: render_weather]
+  - platform: homeassistant
+    id: ts_wx_days
+    entity_id: sensor.basement_panel_weather
+    attribute: days
+    on_value: [script.execute: render_weather]
+  - platform: homeassistant
+    id: ts_notifs
+    entity_id: sensor.basement_panel_notifications
+    attribute: items
+    on_value: [script.execute: render_notifs]
+  # ---- alarm ----
+  - platform: homeassistant
+    id: ts_garage_door
+    entity_id: cover.garage_door_garage
+    on_value: [script.execute: render_alarm]
+  # ---- shades ----
+  - platform: homeassistant
+    id: ts_ff_state
+    entity_id: cover.first_floor_all
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: ts_wh_state
+    entity_id: cover.whole_house
+    on_value: [script.execute: render_shades]
+  # ---- music ----
+  - platform: homeassistant
+    id: ts_players
+    entity_id: sensor.basement_panel_music
+    attribute: players
+    on_value: [script.execute: render_music]
+  - platform: homeassistant
+    id: ts_browse_title
+    entity_id: sensor.basement_panel_music_browse
+    attribute: title
+  - platform: homeassistant
+    id: ts_browse_items
+    entity_id: sensor.basement_panel_music_browse
+    attribute: items
+    on_value: [script.execute: render_browse]
+  - platform: homeassistant
+    id: ts_recents
+    entity_id: sensor.basement_panel_music_recent
+    attribute: items
+    on_value: [script.execute: render_browse]
+  # ---- pool ----
+  - platform: homeassistant
+    id: ts_heater
+    entity_id: water_heater.omnilogic_pool_heater
+    on_value: [script.execute: render_pool]
+  # ---- maintenance ----
+  - platform: homeassistant
+    id: ts_wh_flushed
+    entity_id: input_datetime.water_heater_last_flushed
+    on_value: [script.execute: render_maint]
+  - platform: homeassistant
+    id: ts_dryer_cleaned
+    entity_id: input_datetime.dryer_vent_last_cleaned
+    on_value: [script.execute: render_maint]
+
+sensor:
+  # ---- status bar ----
+  - platform: homeassistant
+    id: s_outdoor_temp
+    entity_id: sensor.bayberry_tempest_temperature
+    on_value: [script.execute: render_status]
+  - platform: homeassistant
+    id: s_notif_count
+    entity_id: sensor.notification_alert_counter
+    on_value: [script.execute: render_status]
+  - platform: homeassistant
+    id: s_pw_charge
+    entity_id: sensor.bayberry_charge
+    on_value:
+      - script.execute: render_status
+      - script.execute: render_energy
+  # ---- energy ----
+  - platform: homeassistant
+    id: s_solar
+    entity_id: sensor.bayberry_solar_power
+    on_value: [script.execute: render_energy]
+  - platform: homeassistant
+    id: s_grid
+    entity_id: sensor.bayberry_site_power
+    on_value: [script.execute: render_energy]
+  - platform: homeassistant
+    id: s_load
+    entity_id: sensor.bayberry_load_power
+    on_value: [script.execute: render_energy]
+  - platform: homeassistant
+    id: s_battery
+    entity_id: sensor.bayberry_battery_power
+    on_value: [script.execute: render_energy]
+  - platform: homeassistant
+    id: s_reserve
+    entity_id: number.bayberry_backup_reserve
+    on_value:
+      - script.execute: render_energy
+      - script.execute: render_hub
+  # ---- scenes ----
+  - platform: homeassistant
+    id: s_sun_elevation
+    entity_id: sensor.sun_solar_elevation
+    on_value: [script.execute: render_scenes]
+  # ---- shades ----
+  - platform: homeassistant
+    id: s_ff_pos
+    entity_id: cover.first_floor_all
+    attribute: current_position
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: s_wh_pos
+    entity_id: cover.whole_house
+    attribute: current_position
+    on_value: [script.execute: render_shades]
+  # ---- pool ----
+  - platform: homeassistant
+    id: s_pool_setpoint
+    entity_id: input_number.pool_heater_setpoint
+    on_value: [script.execute: render_pool]
+  - platform: homeassistant
+    id: s_water_temp
+    entity_id: sensor.omnilogic_pool_watersensor
+    on_value: [script.execute: render_pool]
+  - platform: homeassistant
+    id: s_pump_speed
+    entity_id: number.omnilogic_pool_filter_pump_speed
+    on_value: [script.execute: render_pool]
+  - platform: homeassistant
+    id: s_salt
+    entity_id: sensor.omnilogic_pool_chlorinator_average_salt_level
+    on_value: [script.execute: render_pool]
+  - platform: homeassistant
+    id: s_chlor_pct
+    entity_id: number.omnilogic_pool_chlorinator_timed_percent
+    on_value: [script.execute: render_pool]
+  # ---- climate values ----
+  - platform: homeassistant
+    id: s_fa_lr
+    entity_id: input_number.living_room_fresh_air_min_temp
+    on_value: [script.execute: render_climate]
+  - platform: homeassistant
+    id: s_fa_bs
+    entity_id: input_number.basement_fresh_air_minimum_temp
+    on_value: [script.execute: render_climate]
+  - platform: homeassistant
+    id: s_co2_ceiling
+    entity_id: input_number.co2_vent_ceiling
+    on_value: [script.execute: render_climate]
+  - platform: homeassistant
+    id: s_co2_recover
+    entity_id: input_number.co2_vent_recover
+    on_value: [script.execute: render_climate]
+  - platform: homeassistant
+    id: s_vent_min
+    entity_id: input_number.vent_min_outdoor
+    on_value: [script.execute: render_climate]
+  - platform: homeassistant
+    id: s_vent_max
+    entity_id: input_number.vent_max_outdoor
+    on_value: [script.execute: render_climate]
+  - platform: homeassistant
+    id: s_freecool
+    entity_id: input_number.freecool_differential
+    on_value: [script.execute: render_climate]
+  - platform: homeassistant
+    id: s_minvent
+    entity_id: input_number.minvent_floor_minutes
+    on_value: [script.execute: render_climate]
+  - platform: homeassistant
+    id: s_away_heat
+    entity_id: input_number.away_heat_setpoint
+    on_value: [script.execute: render_climate]
+  - platform: homeassistant
+    id: s_away_cool
+    entity_id: input_number.away_cool_setpoint
+    on_value: [script.execute: render_climate]
+  # ---- energy today ----
+  - platform: homeassistant
+    id: s_e_well
+    entity_id: ${well_pump_energy_entity}
+    on_value: [script.execute: render_energy_sheet]
+  - platform: homeassistant
+    id: s_e_pool
+    entity_id: sensor.pool_pump_energy
+    on_value: [script.execute: render_energy_sheet]
+  - platform: homeassistant
+    id: s_e_ev
+    entity_id: sensor.wall_charger_energy
+    on_value: [script.execute: render_energy_sheet]
+  # ---- maintenance ----
+  - platform: homeassistant
+    id: s_upper_filter
+    entity_id: input_number.upper_floor_hvac_filter_hours
+    on_value: [script.execute: render_maint]
+  - platform: homeassistant
+    id: s_lower_filter
+    entity_id: input_number.lower_floors_hvac_filter_hours
+    on_value: [script.execute: render_maint]
+
+binary_sensor:
+  # ---- status / energy ----
+  - platform: homeassistant
+    id: bs_grid
+    entity_id: binary_sensor.bayberry_grid_status
+    on_state: [script.execute: render_status]
+  # ---- alarm sensors ----
+  - platform: homeassistant
+    id: bs_door_front
+    entity_id: binary_sensor.front_door
+    on_state: [script.execute: render_alarm]
+  - platform: homeassistant
+    id: bs_door_kitchen
+    entity_id: binary_sensor.kitchen_french_doors
+    on_state: [script.execute: render_alarm]
+  - platform: homeassistant
+    id: bs_door_living
+    entity_id: binary_sensor.living_room_french_doors
+    on_state: [script.execute: render_alarm]
+  - platform: homeassistant
+    id: bs_door_mudroom
+    entity_id: binary_sensor.mudroom_entry_door
+    on_state: [script.execute: render_alarm]
+  - platform: homeassistant
+    id: bs_door_garage_entry
+    entity_id: binary_sensor.mudroom_garage_door
+    on_state: [script.execute: render_alarm]
+  # ---- scenes ----
+  - platform: homeassistant
+    id: bs_sc_good_morning
+    entity_id: binary_sensor.scene_good_morning
+    on_state: [script.execute: render_scenes]
+  - platform: homeassistant
+    id: bs_sc_basement_work
+    entity_id: binary_sensor.scene_basement_work
+    on_state: [script.execute: render_scenes]
+  - platform: homeassistant
+    id: bs_sc_basement_cleaning
+    entity_id: binary_sensor.scene_basement_cleaning
+    on_state: [script.execute: render_scenes]
+  - platform: homeassistant
+    id: bs_sc_welcome
+    entity_id: binary_sensor.scene_welcome
+    on_state: [script.execute: render_scenes]
+  - platform: homeassistant
+    id: bs_sc_basement_evening
+    entity_id: binary_sensor.scene_basement_evening
+    on_state: [script.execute: render_scenes]
+  - platform: homeassistant
+    id: bs_sc_basement_entertaining
+    entity_id: binary_sensor.scene_basement_entertaining
+    on_state: [script.execute: render_scenes]
+  - platform: homeassistant
+    id: bs_sc_movie
+    entity_id: binary_sensor.scene_movie
+    on_state: [script.execute: render_scenes]
+  - platform: homeassistant
+    id: bs_sc_emergency
+    entity_id: binary_sensor.scene_emergency
+    on_state: [script.execute: render_scenes]
+  - platform: homeassistant
+    id: bs_sc_nightlight
+    entity_id: binary_sensor.scene_nightlight
+    on_state: [script.execute: render_scenes]
+  - platform: homeassistant
+    id: bs_sc_good_night
+    entity_id: binary_sensor.scene_good_night
+    on_state: [script.execute: render_scenes]
+  - platform: homeassistant
+    id: bs_outdoor_lights
+    entity_id: binary_sensor.outdoor_lights_on
+    on_state: [script.execute: render_scenes]
+  # ---- settings mode tiles ----
+  - platform: homeassistant
+    id: bs_guest
+    entity_id: input_boolean.guest_mode
+    on_state: [script.execute: render_hub]
+  - platform: homeassistant
+    id: bs_cleaners
+    entity_id: input_boolean.cleaners_mode
+    on_state: [script.execute: render_hub]
+  - platform: homeassistant
+    id: bs_dinner
+    entity_id: input_boolean.dinner_party
+    on_state:
+      - script.execute: render_hub
+      - script.execute: render_scenes
+  - platform: homeassistant
+    id: bs_offgrid
+    entity_id: switch.bayberry_off_grid_operation
+    on_state: [script.execute: render_hub]
+  # ---- pool ----
+  - platform: homeassistant
+    id: bs_pump
+    entity_id: switch.omnilogic_pool_filter_pump
+    on_state: [script.execute: render_pool]
+  # ---- toggle rows (switch id sw_<id> in the sheets) ----
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: chlor, entity: switch.omnilogic_pool_chlorinator } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: superchlor, entity: "${pool_super_chlorinate_entity}" } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: z_lr, entity: automation.living_room_hvac_schedule_v3 } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: z_bs, entity: automation.basement_hvac_schedule } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: z_of, entity: automation.office_thermostat_schedule_v2 } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: z_bd, entity: automation.bedroom_hvac_schedule } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: a_leave, entity: automation.alarm_arm_away_when_everyone_leaves } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: a_11pm, entity: automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: a_7am, entity: automation.alarm_disarm_at_7am_or_good_morning_scene_activate } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: a_arrive, entity: automation.alarm_disarm_upon_arriving_home } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: m_out, entity: automation.outdoor_motion_after_11pm_before_sunrise } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: m_bath, entity: automation.motion_bathroom_day } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: m_gym, entity: automation.gym_motion_sensor } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: l_eve, entity: automation.evening_lights_on_lux } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: l_morn, entity: automation.morning_lights_off_lux_over_5000_or_9am } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: l_night, entity: automation.11_00_pm_good_night } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: l_sunset, entity: automation.sunset_outdoor_off } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: l_mid, entity: automation.outdoor_off_at_11pm } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: l_spot, entity: automation.11_00pm_turn_off_landscape_spotlights_s_th } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: s_sched, entity: automation.shade_scheduler_whole_house } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: s_sunset, entity: automation.sunset_30_or_8_00_pm_close_shades } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: s_bed, entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: s_bg, entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: s_fg, entity: automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: s_m_ff, entity: input_boolean.shades_manual_first_floor } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: s_m_pb, entity: input_boolean.shades_manual_primary_bedroom } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: s_m_of, entity: input_boolean.shades_manual_office } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: s_m_bg, entity: input_boolean.shades_manual_back_guest_bedroom } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: s_m_fg, entity: input_boolean.shades_manual_front_guest_bedroom } }
+  - !include { file: widgets/ha_toggle.yaml, vars: { id: v_night, entity: automation.12_00am_roborock_s8_vacuum_basement } }

@@ -1,0 +1,153 @@
+# Page 6 · Pool (OmniLogic)
+id: tile_pool
+row: 0
+column: 5
+dir: HOR
+widgets:
+  - obj:
+      styles: st_page
+      widgets:
+        - label:
+            x: 32
+            y: 40
+            text: "Pool"
+            text_font: b300_34
+        - button:
+            x: 628
+            y: 100
+            styles: st_icon_btn
+            widgets:
+              - label: { align: CENTER, text: "${i_cog}", text_font: mdi_28, text_color: "${c_slate}" }
+            on_click:
+              - script.execute:
+                  id: open_sheet
+                  name: pool_settings
+        # heater dial: 270px ring, 270° sweep from 225°
+        - arc:
+            id: pool_arc
+            x: 225
+            y: 140
+            width: 270
+            height: 270
+            start_angle: 135
+            end_angle: 45
+            min_value: 70
+            max_value: 90
+            value: 80
+            adjustable: false
+            clickable: false
+            widgets:
+              - label: { align: CENTER, y: -66, text: "HEATER", styles: st_eyebrow }
+              - label: { id: pool_setpoint, align: CENTER, y: -16, text: "—", text_font: b300_60 }
+              - label: { id: pool_water, align: CENTER, y: 36, text: "Water —", text_font: b500_17, text_color: "${c_slate}" }
+              - obj:
+                  id: pool_heater_pill
+                  align: CENTER
+                  y: 78
+                  width: SIZE_CONTENT
+                  height: 44
+                  radius: 22
+                  bg_color: ${c_row_selected}
+                  bg_opa: COVER
+                  pad_left: 18
+                  pad_right: 20
+                  layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, pad_column: 8 }
+                  widgets:
+                    - label: { id: pool_heater_icon, text: "${i_power}", text_font: mdi_21, text_color: "${c_text2}" }
+                    - label: { id: pool_heater_lbl, text: "Off", text_font: b600_16, text_color: "${c_text2}" }
+                  on_click:
+                    - script.execute: pool_heater_toggle
+        - button:
+            x: 111
+            y: 231
+            width: 88
+            height: 88
+            radius: 44
+            widgets:
+              - label: { align: CENTER, text: "${i_minus}", text_font: mdi_38, text_color: "${c_slate}" }
+            on_click:
+              - script.execute: { id: pool_setpoint_step, delta: -1 }
+        - button:
+            x: 521
+            y: 231
+            width: 88
+            height: 88
+            radius: 44
+            widgets:
+              - label: { align: CENTER, text: "${i_plus}", text_font: mdi_38, text_color: "${c_slate}" }
+            on_click:
+              - script.execute: { id: pool_setpoint_step, delta: 1 }
+        # filter pump
+        - obj:
+            x: 32
+            y: 463
+            width: 656
+            height: 190
+            styles: st_hairline_top
+            clickable: false
+            widgets:
+              - label: { id: pump_icon, x: 0, y: 26, text: "${i_pump}", text_font: mdi_30, text_color: "${c_text4}" }
+              - label: { x: 46, y: 31, text: "Filter Pump", text_font: b500_19 }
+              - label: { id: pump_pct, x: 480, y: 28, width: 100, text: "Off", text_align: RIGHT, text_font: b600_24, text_color: "${c_slate}" }
+              - switch:
+                  id: pump_switch
+                  x: 588
+                  y: 24
+                  ext_click_area: 14
+                  on_click:
+                    - script.execute: pump_toggle
+              - slider:
+                  id: pump_slider
+                  x: 0
+                  y: 87
+                  width: 656
+                  height: 14
+                  min_value: 0
+                  max_value: 100
+                  value: 0
+                  ext_click_area: 19
+                  on_release:
+                    - script.execute:
+                        id: pump_speed
+                        pct: !lambda "return (int) lv_slider_get_value(id(pump_slider));"
+              - obj:
+                  x: 0
+                  y: 131
+                  width: 656
+                  height: 48
+                  clickable: false
+                  layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, pad_column: 12 }
+                  widgets:
+                    - button:
+                        id: chip_low
+                        width: 210
+                        height: 48
+                        radius: 14
+                        layout: { type: FLEX, flex_flow: ROW, flex_align_main: CENTER, flex_align_cross: CENTER, pad_column: 8 }
+                        widgets:
+                          - label: { id: chip_low_lbl, text: "Low", text_font: b600_16 }
+                          - label: { id: chip_low_pct, text: "35%", text_font: b400_14, text_color: "${c_text3}" }
+                        on_click:
+                          - script.execute: { id: pump_preset, which: "low" }
+                    - button:
+                        id: chip_med
+                        width: 210
+                        height: 48
+                        radius: 14
+                        layout: { type: FLEX, flex_flow: ROW, flex_align_main: CENTER, flex_align_cross: CENTER, pad_column: 8 }
+                        widgets:
+                          - label: { id: chip_med_lbl, text: "Med", text_font: b600_16 }
+                          - label: { id: chip_med_pct, text: "65%", text_font: b400_14, text_color: "${c_text3}" }
+                        on_click:
+                          - script.execute: { id: pump_preset, which: "medium" }
+                    - button:
+                        id: chip_high
+                        width: 210
+                        height: 48
+                        radius: 14
+                        layout: { type: FLEX, flex_flow: ROW, flex_align_main: CENTER, flex_align_cross: CENTER, pad_column: 8 }
+                        widgets:
+                          - label: { id: chip_high_lbl, text: "High", text_font: b600_16 }
+                          - label: { id: chip_high_pct, text: "100%", text_font: b400_14, text_color: "${c_text3}" }
+                        on_click:
+                          - script.execute: { id: pump_preset, which: "high" }

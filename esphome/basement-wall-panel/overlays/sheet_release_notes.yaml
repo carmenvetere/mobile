@@ -1,0 +1,43 @@
+obj:
+  id: sheet_release_notes
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - obj:
+        styles: st_sheet
+        widgets:
+          - obj:
+              x: 0
+              y: 0
+              width: 100%
+              height: 56
+              clickable: false
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              widgets:
+                - label: { id: sheet_release_notes_title, text: "Release notes", text_font: b300_32 }
+                - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_sheet_release_notes } }
+          - obj:
+              id: sheet_release_notes_body
+              x: 0
+              y: 68
+              width: 100%
+              height: 516
+              scrollable: true
+              scroll_dir: VER
+              layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: START, flex_align_cross: START, pad_row: 0 }
+              widgets:
+                - !include { file: ../widgets/note_ver.yaml, vars: { v: "v2.4.1", d: "Aug 22, 2026" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "iOS Live Activities: the green Complete card now actually replaces the Washer and Dryer cards instead of arriving as a separate banner" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "iOS Live Activities: stale laundry cards clear after 15 minutes idle and on Home Assistant restart" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "iOS Live Activities: the Washer card can no longer appear while the washer is idle" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "Shades: an early-morning hand move no longer takes a room off adaptive control for the whole day" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "Shades: guest rooms come back to adaptive when Overnight Guests is switched off" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "Shades: the 3 AM manual reset catches up on itself after a restart" } }
+                - !include { file: ../widgets/note_ver.yaml, vars: { v: "v2.4.0", d: "Aug 21, 2026" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "Shades: moving a room's shades by hand takes that room off adaptive control for the rest of the day; everything resets at 3 AM" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "Shades: hand moves are detected from the app, Serena remotes and all Pico remotes; a Manual chip appears on the room's header in the Shades view" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "Settings: per-room Manual Today toggles in the Shades pop-up" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "Laundry Live Activities: far fewer pushes — both cards update on a 10-minute tick plus their own start/stop changes" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "Retired the NSPanel Pro dashboard" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "Sprinklers: a header chip with Pause / Resume / Stop appears while a zone is watering" } }
+                - !include { file: ../widgets/note_row.yaml, vars: { text: "Notifications: the Dryer Vent Cleaning alert no longer comes back after a Home Assistant restart" } }

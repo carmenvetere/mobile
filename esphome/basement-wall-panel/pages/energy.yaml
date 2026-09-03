@@ -1,0 +1,110 @@
+# Page 2 · Energy (Powerwall / solar power flow)
+id: tile_energy
+row: 0
+column: 1
+dir: HOR
+widgets:
+  - obj:
+      styles: st_page
+      widgets:
+        - label:
+            x: 32
+            y: 40
+            text: "Energy"
+            text_font: b300_34
+        # power-flow diagram 656×430 at (32,104)
+        - obj:
+            x: 32
+            y: 104
+            width: 656
+            height: 430
+            clickable: false
+            widgets:
+              # connecting bars (drawn first so the circles sit on top)
+              - obj: { x: 325, y: 122, width: 6, height: 80, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
+              - obj: { x: 325, y: 230, width: 6, height: 80, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
+              - obj: { x: 96, y: 212, width: 204, height: 6, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
+              - obj: { x: 356, y: 212, width: 204, height: 6, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
+              - obj: { x: 314, y: 201, width: 28, height: 28, radius: 14, border_width: 1, border_color: "${c_hairline}", bg_color: "${c_bg}", bg_opa: COVER, clickable: false }
+              # Solar (top)
+              - label: { x: 0, y: 0, width: 656, text: "Solar", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
+              - obj:
+                  x: 280
+                  y: 26
+                  styles: st_circle_96
+                  bg_color: ${c_bg}
+                  bg_opa: COVER
+                  clickable: false
+                  widgets:
+                    - label: { align: TOP_MID, y: 16, text: "${i_solar_power_variant}", text_font: mdi_30, text_color: "${c_slate}" }
+                    - label: { id: en_solar, align: BOTTOM_MID, y: -16, text: "—", text_font: b600_17 }
+              # Grid (left)
+              - obj:
+                  x: 0
+                  y: 167
+                  styles: st_circle_96
+                  bg_color: ${c_bg}
+                  bg_opa: COVER
+                  clickable: false
+                  widgets:
+                    - label: { align: TOP_MID, y: 16, text: "${i_transmission_tower}", text_font: mdi_30, text_color: "${c_slate}" }
+                    - label: { id: en_grid, align: BOTTOM_MID, y: -16, text: "—", text_font: b600_17 }
+              - label: { x: 0, y: 270, width: 96, text: "Grid", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
+              # Home (right)
+              - obj:
+                  x: 560
+                  y: 167
+                  styles: st_circle_96
+                  bg_color: ${c_bg}
+                  bg_opa: COVER
+                  clickable: false
+                  widgets:
+                    - label: { align: TOP_MID, y: 16, text: "${i_home_lightning_bolt}", text_font: mdi_30, text_color: "${c_slate}" }
+                    - label: { id: en_home, align: BOTTOM_MID, y: -16, text: "—", text_font: b600_17 }
+              - label: { x: 560, y: 270, width: 96, text: "Home", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
+              # Battery (bottom)
+              - obj:
+                  x: 280
+                  y: 310
+                  styles: st_circle_96
+                  bg_color: ${c_bg}
+                  bg_opa: COVER
+                  clickable: false
+                  widgets:
+                    - label: { id: en_batt_icon, align: TOP_MID, y: 16, text: "${i_battery_charging_80}", text_font: mdi_30, text_color: "${c_slate}" }
+                    - label: { id: en_batt, align: BOTTOM_MID, y: -16, text: "—", text_font: b600_17 }
+              - label: { id: en_batt_lbl, x: 0, y: 410, width: 656, text: "Charging", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
+        # Powerwall reserve
+        - obj:
+            x: 32
+            y: 556
+            width: 656
+            height: 96
+            styles: st_hairline_top
+            widgets:
+              - label: { x: 0, y: 12, text: "Powerwall", text_font: b500_16 }
+              - label: { id: en_reserve_lbl, x: 84, y: 12, text: "· reserve 20%", text_font: b500_16, text_color: "${c_text3}" }
+              - label: { id: en_charge, align: TOP_RIGHT, x: 0, y: 8, text: "—", text_font: b600_22, text_color: "${c_slate}" }
+              - slider:
+                  id: en_slider
+                  x: 0
+                  y: 52
+                  width: 656
+                  height: 14
+                  min_value: 0
+                  max_value: 100
+                  value: 0
+                  ext_click_area: 17
+                  on_release:
+                    - script.execute:
+                        id: set_reserve
+                        v: !lambda "return (int) lv_slider_get_value(id(en_slider));"
+              - obj:
+                  id: en_reserve_marker
+                  x: 128
+                  y: 52
+                  width: 3
+                  height: 14
+                  bg_color: ${c_amber}
+                  bg_opa: COVER
+                  clickable: false

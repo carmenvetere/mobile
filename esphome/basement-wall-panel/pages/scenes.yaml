@@ -1,0 +1,50 @@
+# Page 3 · Scenes (home page, index 2)
+id: tile_scenes
+row: 0
+column: 2
+dir: HOR
+widgets:
+  - obj:
+      styles: st_page
+      widgets:
+        - obj:
+            x: 32
+            y: 36
+            width: 330
+            height: 64
+            clickable: false
+            layout:
+              type: FLEX
+              flex_flow: ROW
+              flex_align_cross: END
+              pad_column: 10
+            widgets:
+              - label:
+                  id: clock_time
+                  text: "--:--"
+                  text_font: b300_64
+              - label:
+                  id: clock_ampm
+                  pad_bottom: 10
+                  text: "-- · ---"
+                  text_font: b600_16
+                  text_letter_space: 2
+                  text_color: ${c_text3}
+        - obj:
+            x: 32
+            y: 110
+            width: 656
+            height: 540
+            clickable: false
+            layout:
+              type: FLEX
+              flex_flow: COLUMN
+              flex_align_main: START
+              flex_align_cross: START
+              pad_row: 0
+            widgets:
+              - !include { file: ../widgets/scene_row.yaml, vars: { n: 0 } }
+              - !include { file: ../widgets/scene_row.yaml, vars: { n: 1 } }
+              - !include { file: ../widgets/scene_row.yaml, vars: { n: 2 } }
+              - !include { file: ../widgets/scene_row.yaml, vars: { n: 3 } }
+              - !include { file: ../widgets/scene_row.yaml, vars: { n: 4 } }

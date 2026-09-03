@@ -904,3 +904,9 @@ sensor:
     round: 3
     unit_prefix: k
     unit_time: h
+
+# v2.6: Basement wall panel (ESPHome/LVGL) helper sensors, cover group and
+# scripts — see packages/basement_wall_panel.yaml and esphome/basement-wall-panel/.
+homeassistant:
+  packages:
+    basement_wall_panel: !include packages/basement_wall_panel.yaml

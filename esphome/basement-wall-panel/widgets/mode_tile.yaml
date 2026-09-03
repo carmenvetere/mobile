@@ -1,0 +1,28 @@
+# Settings mode tile (Guests / Cleaners / Dinner / Off Grid).
+# vars: id, icon, name
+button:
+  id: tile_${id}
+  width: 152
+  height: 80
+  radius: 16
+  layout:
+    type: FLEX
+    flex_flow: COLUMN
+    flex_align_main: CENTER
+    flex_align_cross: CENTER
+    pad_row: 6
+  widgets:
+    - label:
+        id: tile_icon_${id}
+        text: "${icon}"
+        text_font: mdi_28
+        text_color: ${c_slate}
+    - label:
+        id: tile_lbl_${id}
+        text: "${name}"
+        text_font: b600_15
+        text_color: ${c_text2}
+  on_click:
+    - script.execute:
+        id: mode_tap
+        which: "${id}"

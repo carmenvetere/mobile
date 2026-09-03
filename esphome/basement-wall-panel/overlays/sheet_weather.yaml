@@ -1,0 +1,62 @@
+# Weather sheet (weather.bayberry via sensor.basement_panel_weather)
+obj:
+  id: sheet_weather
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - obj:
+        styles: st_sheet
+        widgets:
+          - obj:
+              x: 0
+              y: 0
+              width: 100%
+              height: 64
+              clickable: false
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              widgets:
+                - obj:
+                    clickable: false
+                    width: SIZE_CONTENT
+                    height: SIZE_CONTENT
+                    layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, pad_column: 14 }
+                    widgets:
+                      - label: { id: wx_hdr_icon, text: "${i_weather_partly_cloudy}", text_font: mdi_52, text_color: "${c_slate}" }
+                      - obj:
+                          clickable: false
+                          width: SIZE_CONTENT
+                          height: SIZE_CONTENT
+                          layout: { type: FLEX, flex_flow: COLUMN, flex_align_cross: START, pad_row: 0 }
+                          widgets:
+                            - label: { id: wx_temp, text: "--°", text_font: b600_40 }
+                            - label: { id: wx_sub, text: "—", text_font: b400_16, text_color: "${c_text3}" }
+                - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_weather } }
+          - !include { file: ../widgets/eyebrow.yaml, vars: { id: wx_eyebrow_hours, text: "NEXT HOURS" } }
+          - obj:
+              x: 0
+              y: 116
+              width: 100%
+              height: 104
+              clickable: false
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              widgets:
+                - !include { file: ../widgets/wx_hour.yaml, vars: { n: 0 } }
+                - !include { file: ../widgets/wx_hour.yaml, vars: { n: 1 } }
+                - !include { file: ../widgets/wx_hour.yaml, vars: { n: 2 } }
+                - !include { file: ../widgets/wx_hour.yaml, vars: { n: 3 } }
+                - !include { file: ../widgets/wx_hour.yaml, vars: { n: 4 } }
+                - !include { file: ../widgets/wx_hour.yaml, vars: { n: 5 } }
+          - label: { x: 0, y: 236, text: "5-DAY", styles: st_eyebrow }
+          - obj:
+              x: 0
+              y: 262
+              width: 100%
+              height: 320
+              clickable: false
+              layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: START, flex_align_cross: START, pad_row: 0 }
+              widgets:
+                - !include { file: ../widgets/wx_day.yaml, vars: { n: 0 } }
+                - !include { file: ../widgets/wx_day.yaml, vars: { n: 1 } }
+                - !include { file: ../widgets/wx_day.yaml, vars: { n: 2 } }
+                - !include { file: ../widgets/wx_day.yaml, vars: { n: 3 } }
+                - !include { file: ../widgets/wx_day.yaml, vars: { n: 4 } }

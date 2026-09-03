@@ -1,0 +1,27 @@
+# Swipe-down menu item: icon 48 slate + name 26/400; current page = slate fill.
+# vars: n, icon, name
+button:
+  id: menu_item_${n}
+  width: 311
+  height: 125
+  radius: 20
+  pad_left: 32
+  layout:
+    type: FLEX
+    flex_flow: ROW
+    flex_align_cross: CENTER
+    pad_column: 18
+  widgets:
+    - label:
+        id: menu_icon_${n}
+        text: "${icon}"
+        text_font: mdi_48
+        text_color: ${c_slate}
+    - label:
+        id: menu_lbl_${n}
+        text: "${name}"
+        text_font: b400_26
+  on_click:
+    - script.execute:
+        id: menu_go
+        n: ${n}

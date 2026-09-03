@@ -1,0 +1,33 @@
+obj:
+  id: sheet_alarm
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - obj:
+        styles: st_sheet
+        widgets:
+          - obj:
+              x: 0
+              y: 0
+              width: 100%
+              height: 56
+              clickable: false
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              widgets:
+                - label: { id: sheet_alarm_title, text: "Alarm", text_font: b300_32 }
+                - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_sheet_alarm } }
+          - obj:
+              id: sheet_alarm_body
+              x: 0
+              y: 68
+              width: 100%
+              height: 516
+              scrollable: true
+              scroll_dir: VER
+              layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: START, flex_align_cross: START, pad_row: 0 }
+              widgets:
+                - !include { file: ../widgets/eyebrow.yaml, vars: { id: al_eyebrow, text: "AUTOMATIONS" } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: a_leave, name: "Arm Away when leaving", sub: "Everyone gone", entity: automation.alarm_arm_away_when_everyone_leaves } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: a_11pm, name: "Arm Home at 11 PM", sub: "Or on Good Night", entity: automation.alarm_arm_home_mode_if_someone_is_home_on_good_night_or_11pm } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: a_7am, name: "Disarm at 7 AM", sub: "Or on Good Morning", entity: automation.alarm_disarm_at_7am_or_good_morning_scene_activate } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: a_arrive, name: "Disarm when arriving", sub: "On arrival", entity: automation.alarm_disarm_upon_arriving_home } }

@@ -1,0 +1,13 @@
+# 56px round close button used in every sheet header.
+# vars: id
+button:
+  id: ${id}
+  styles: st_round_btn_56
+  widgets:
+    - label:
+        align: CENTER
+        text: "${i_close}"
+        text_font: mdi_28
+        text_color: ${c_text}
+  on_click:
+    - script.execute: close_sheets

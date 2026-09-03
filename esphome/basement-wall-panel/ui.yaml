@@ -1,0 +1,201 @@
+# Basement Wall Panel — LVGL screen tree.
+#
+# One 720×720 screen. The seven pages live in a horizontally-swiped tileview;
+# the status bar, menu handle and page dots float above it, and every overlay
+# (menu, voice, sheets, confirm dialog) is a hidden full-screen object that is
+# shown on demand. Widget ids referenced from logic.yaml are declared here or
+# in the included page/overlay/widget files.
+#
+# Layout constants (design handoff): page padding 40 top / 32 sides / 70
+# bottom; header row min 56px with 380px reserved on the right for the status
+# bar; status bar right 24 / top 40, 60 tall, 24 gap; handle 160×44 hit zone
+# with a 64×6 bar; page dots bottom 26, 8px dots, active 28 wide.
+
+lvgl:
+  displays:
+    - panel_display
+  touchscreens:
+    - panel_touch
+  log_level: WARN
+  default_font: b400_17
+  bg_color: ${c_bg}
+  buffer_size: 25%
+
+  # LVGL's default theme paints white boxes and blue buttons; flatten all of it.
+  theme:
+    obj:
+      bg_opa: TRANSP
+      border_width: 0
+      radius: 0
+      pad_all: 0
+      scrollbar_mode: "OFF"
+      scrollable: false
+    label:
+      text_color: ${c_text}
+    button:
+      bg_opa: TRANSP
+      border_width: 1
+      border_color: ${c_hairline}
+      radius: 18
+      shadow_width: 0
+      pad_all: 0
+      pressed:
+        bg_opa: 12%
+        bg_color: ${c_text}
+    slider:
+      bg_color: ${c_hairline}
+      bg_opa: COVER
+      radius: 7
+      height: 14
+      pad_all: 0
+      indicator:
+        bg_color: ${c_slate}
+        bg_opa: COVER
+        radius: 7
+      knob:
+        bg_opa: TRANSP
+        border_width: 0
+        pad_all: 0
+        shadow_width: 0
+    switch:
+      width: 68
+      height: 36
+      radius: 18
+      bg_color: ${c_handle}
+      bg_opa: COVER
+      border_width: 0
+      pad_all: 0
+      indicator:
+        bg_opa: TRANSP
+        radius: 18
+        checked:
+          bg_color: ${c_slate}
+          bg_opa: COVER
+      knob:
+        bg_color: ${c_text}
+        bg_opa: COVER
+        radius: 100
+        pad_all: -4
+        border_width: 0
+        shadow_width: 0
+    arc:
+      bg_opa: TRANSP
+      border_width: 0
+      pad_all: 0
+      arc_color: ${c_hairline}
+      arc_width: 6
+      arc_rounded: false
+      indicator:
+        arc_color: ${c_slate}
+        arc_width: 6
+        arc_rounded: false
+      knob:
+        bg_opa: TRANSP
+        border_width: 0
+        pad_all: 0
+
+  style_definitions:
+    - id: st_page          # a page's root container
+      width: 720
+      height: 720
+      bg_color: ${c_bg}
+      bg_opa: COVER
+    - id: st_overlay       # hidden full-screen layer (menu, voice, sheet backdrop)
+      width: 720
+      height: 720
+      bg_color: ${c_bg}
+      bg_opa: COVER
+    - id: st_sheet         # sheet body: bg #17191d, top radius 28 (bottom corners are off-screen)
+      width: 720
+      height: 652
+      x: 0
+      y: 96
+      bg_color: ${c_sheet}
+      bg_opa: COVER
+      radius: 28
+      border_width: 1
+      border_color: ${c_hairline}
+      border_side: TOP
+      pad_top: 24
+      pad_left: 28
+      pad_right: 28
+      pad_bottom: 26
+    - id: st_icon_btn      # standard 60×60 icon button, radius 18, hairline
+      width: 60
+      height: 60
+      radius: 18
+    - id: st_round_btn_56  # sheet close button
+      width: 56
+      height: 56
+      radius: 28
+    - id: st_hairline_top
+      border_width: 1
+      border_color: ${c_hairline}
+      border_side: TOP
+    - id: st_hairline_bottom
+      border_width: 1
+      border_color: ${c_hairline}
+      border_side: BOTTOM
+    - id: st_circle_96     # power-flow node
+      width: 96
+      height: 96
+      radius: 48
+      border_width: 1
+      border_color: ${c_hairline}
+    - id: st_chip          # status-bar chip
+      height: 60
+      width: SIZE_CONTENT
+      pad_left: 4
+      pad_right: 4
+    - id: st_eyebrow       # 13/700 +0.16em text-4
+      text_font: b700_13
+      text_color: ${c_text4}
+      text_letter_space: 2
+    - id: st_hidden
+      opa: TRANSP
+
+  widgets:
+    # ------------------------------------------------------------- pages
+    - tileview:
+        id: tv
+        width: 720
+        height: 720
+        scrollbar_mode: "OFF"
+        bg_color: ${c_bg}
+        bg_opa: COVER
+        tiles:
+          - !include pages/alarm.yaml
+          - !include pages/energy.yaml
+          - !include pages/scenes.yaml
+          - !include pages/shades.yaml
+          - !include pages/music.yaml
+          - !include pages/pool.yaml
+          - !include pages/settings.yaml
+        on_value:
+          - script.execute: on_tile_changed
+
+    # ------------------------------------------------------------- floating chrome
+    - !include overlays/status_bar.yaml
+    - !include overlays/handle.yaml
+    - !include overlays/dots.yaml
+
+    # ------------------------------------------------------------- overlays (hidden)
+    - !include overlays/menu.yaml
+    - !include overlays/voice.yaml
+    - !include overlays/sheet_weather.yaml
+    - !include overlays/sheet_notifications.yaml
+    - !include overlays/sheet_not_ready.yaml
+    - !include overlays/sheet_music_library.yaml
+    - !include overlays/sheet_music_group.yaml
+    - !include overlays/sheet_music_volumes.yaml
+    - !include overlays/sheet_pool_settings.yaml
+    - !include overlays/sheet_climate.yaml
+    - !include overlays/sheet_alarm.yaml
+    - !include overlays/sheet_motion.yaml
+    - !include overlays/sheet_energy.yaml
+    - !include overlays/sheet_shades.yaml
+    - !include overlays/sheet_vacuum.yaml
+    - !include overlays/sheet_panel.yaml
+    - !include overlays/sheet_maintenance.yaml
+    - !include overlays/sheet_release_notes.yaml
+    - !include overlays/confirm_offgrid.yaml

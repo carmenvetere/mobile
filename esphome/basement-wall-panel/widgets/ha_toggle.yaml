@@ -1,0 +1,8 @@
+# Home Assistant on/off import that drives a toggle_row switch.
+# vars: id, entity
+platform: homeassistant
+id: bs_${id}
+entity_id: ${entity}
+on_state:
+  - lambda: "panel::set_checked(id(sw_${id}), x);"
+  - script.execute: render_hub

@@ -1,0 +1,61 @@
+obj:
+  id: sheet_pool_settings
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - obj:
+        styles: st_sheet
+        widgets:
+          - obj:
+              x: 0
+              y: 0
+              width: 100%
+              height: 56
+              clickable: false
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              widgets:
+                - label: { id: sheet_pool_settings_title, text: "Pool settings", text_font: b300_32 }
+                - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_sheet_pool_settings } }
+          - obj:
+              id: sheet_pool_settings_body
+              x: 0
+              y: 68
+              width: 100%
+              height: 516
+              scrollable: true
+              scroll_dir: VER
+              layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: START, flex_align_cross: START, pad_row: 0 }
+              widgets:
+                - !include { file: ../widgets/eyebrow.yaml, vars: { id: pool_eyebrow_chem, text: "CHEMISTRY" } }
+                - !include { file: ../widgets/value_row.yaml, vars: { id: salt, name: "Salt", sub: "Chlorinator average" } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: chlor, name: "Chlorinator", sub: "Timed schedule", entity: switch.omnilogic_pool_chlorinator } }
+                - obj:
+                    id: row_chlor_pct
+                    width: 100%
+                    height: 72
+                    styles: st_hairline_bottom
+                    clickable: false
+                    layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, pad_column: 14 }
+                    widgets:
+                      - label: { text: "Chlorinator output", text_font: b500_19 }
+                      - obj:
+                          clickable: false
+                          width: SIZE_CONTENT
+                          height: 56
+                          layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, pad_column: 14 }
+                          widgets:
+                            - slider:
+                                id: chlor_slider
+                                width: 250
+                                height: 14
+                                min_value: 0
+                                max_value: 100
+                                ext_click_area: 21
+                                on_release:
+                                  - script.execute:
+                                      id: chlor_set
+                                      pct: !lambda "return (int) lv_slider_get_value(id(chlor_slider));"
+                            - label: { id: chlor_pct, width: 56, text: "—", text_align: RIGHT, text_font: b600_20, text_color: "${c_slate}" }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: superchlor, name: "Super Chlorinate", sub: "24-hour boost to 100%", entity: "${pool_super_chlorinate_entity}" } }
+                - !include { file: ../widgets/eyebrow.yaml, vars: { id: pool_eyebrow_water, text: "WATER" } }
+                - !include { file: ../widgets/value_row.yaml, vars: { id: watertemp, name: "Water temperature", sub: "OmniLogic sensor" } }

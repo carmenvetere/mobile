@@ -1,0 +1,39 @@
+obj:
+  id: sheet_motion
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - obj:
+        styles: st_sheet
+        widgets:
+          - obj:
+              x: 0
+              y: 0
+              width: 100%
+              height: 56
+              clickable: false
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              widgets:
+                - label: { id: sheet_motion_title, text: "Motion & Lights", text_font: b300_32 }
+                - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_sheet_motion } }
+          - obj:
+              id: sheet_motion_body
+              x: 0
+              y: 68
+              width: 100%
+              height: 516
+              scrollable: true
+              scroll_dir: VER
+              layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: START, flex_align_cross: START, pad_row: 0 }
+              widgets:
+                - !include { file: ../widgets/eyebrow.yaml, vars: { id: mo_eyebrow_motion, text: "MOTION" } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: m_out, name: "Outdoor 11 PM – sunrise", sub: "Motion lights", entity: automation.outdoor_motion_after_11pm_before_sunrise } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: m_bath, name: "Bathroom motion – day", sub: "Motion lights", entity: automation.motion_bathroom_day } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: m_gym, name: "Gym motion lights", sub: "Motion lights", entity: automation.gym_motion_sensor } }
+                - !include { file: ../widgets/eyebrow.yaml, vars: { id: mo_eyebrow_lights, text: "LIGHTS" } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: l_eve, name: "Evening lights on", sub: "By lux", entity: automation.evening_lights_on_lux } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: l_morn, name: "Morning lights off", sub: "Lux over 5000 or 9 AM", entity: automation.morning_lights_off_lux_over_5000_or_9am } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: l_night, name: "Good Night at 11 PM", sub: "Nightly", entity: automation.11_00_pm_good_night } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: l_sunset, name: "Outdoor off at sunset", sub: "Daily", entity: automation.sunset_outdoor_off } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: l_mid, name: "Outdoor off at 11 PM", sub: "Nightly", entity: automation.outdoor_off_at_11pm } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: l_spot, name: "Spotlights off 11 PM", sub: "Sun–Thu", entity: automation.11_00pm_turn_off_landscape_spotlights_s_th } }

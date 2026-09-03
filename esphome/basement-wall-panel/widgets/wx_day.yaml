@@ -1,0 +1,52 @@
+# Weather sheet 5-day row.
+# vars: n
+obj:
+  id: wxd_row_${n}
+  width: 100%
+  flex_grow: 1
+  min_height: 48
+  styles: st_hairline_bottom
+  layout:
+    type: FLEX
+    flex_flow: ROW
+    flex_align_cross: CENTER
+    pad_column: 0
+  widgets:
+    - label:
+        id: wxd_day_${n}
+        width: 64
+        text: "—"
+        text_font: b600_20
+    - label:
+        id: wxd_icon_${n}
+        width: 44
+        text: "${i_weather_partly_cloudy}"
+        text_font: mdi_30
+        text_color: ${c_slate}
+    - label:
+        id: wxd_desc_${n}
+        flex_grow: 1
+        text: ""
+        text_font: b400_16
+        text_color: ${c_text3}
+        long_mode: DOT
+    - label:
+        id: wxd_pop_${n}
+        width: 60
+        text: ""
+        text_align: RIGHT
+        text_font: b500_16
+        text_color: ${c_slate}
+    - label:
+        id: wxd_hi_${n}
+        width: 52
+        text: ""
+        text_align: RIGHT
+        text_font: b600_21
+    - label:
+        id: wxd_lo_${n}
+        width: 44
+        text: ""
+        text_align: RIGHT
+        text_font: b600_21
+        text_color: ${c_text3}

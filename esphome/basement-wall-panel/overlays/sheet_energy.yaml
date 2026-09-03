@@ -1,0 +1,34 @@
+obj:
+  id: sheet_energy
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - obj:
+        styles: st_sheet
+        widgets:
+          - obj:
+              x: 0
+              y: 0
+              width: 100%
+              height: 56
+              clickable: false
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              widgets:
+                - label: { id: sheet_energy_title, text: "Energy & Grid", text_font: b300_32 }
+                - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_sheet_energy } }
+          - obj:
+              id: sheet_energy_body
+              x: 0
+              y: 68
+              width: 100%
+              height: 516
+              scrollable: true
+              scroll_dir: VER
+              layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: START, flex_align_cross: START, pad_row: 0 }
+              widgets:
+                - !include { file: ../widgets/eyebrow.yaml, vars: { id: en_eyebrow_pw, text: "POWERWALL" } }
+                - !include { file: ../widgets/stepper_row.yaml, vars: { id: reserve, name: "Reserve", sub: "Backup floor", script: step_reserve } }
+                - !include { file: ../widgets/eyebrow.yaml, vars: { id: en_eyebrow_today, text: "ENERGY TODAY" } }
+                - !include { file: ../widgets/value_row.yaml, vars: { id: e_well, name: "Well pump", sub: "sensor.well_pump_energy" } }
+                - !include { file: ../widgets/value_row.yaml, vars: { id: e_pool, name: "Pool pump", sub: "sensor.pool_pump_energy" } }
+                - !include { file: ../widgets/value_row.yaml, vars: { id: e_ev, name: "EV charger", sub: "sensor.wall_charger_energy" } }

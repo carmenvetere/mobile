@@ -1,0 +1,127 @@
+# Status bar: weather chip → alarm chip → notification chip → mic. Replaced by a
+# single red pill when the alarm is triggered or the grid is down.
+obj:
+  id: status_bar
+  align: TOP_RIGHT
+  x: -24
+  y: 40
+  width: SIZE_CONTENT
+  height: 60
+  layout:
+    type: FLEX
+    flex_flow: ROW
+    flex_align_main: END
+    flex_align_cross: CENTER
+    pad_column: 24
+  widgets:
+    - obj:
+        id: chip_weather
+        styles: st_chip
+        layout:
+          type: FLEX
+          flex_flow: ROW
+          flex_align_cross: CENTER
+          pad_column: 8
+        widgets:
+          - label:
+              id: sb_wx_icon
+              text: "${i_weather_partly_cloudy}"
+              text_font: mdi_24
+              text_color: ${c_slate}
+          - label:
+              id: sb_wx_temp
+              text: "--°"
+              text_font: b500_20
+        on_click:
+          - script.execute:
+              id: open_sheet
+              name: weather
+    - obj:
+        id: chip_alarm
+        styles: st_chip
+        layout:
+          type: FLEX
+          flex_flow: ROW
+          flex_align_cross: CENTER
+          pad_column: 8
+        widgets:
+          - label:
+              id: sb_alarm_icon
+              text: "${i_shield_off_outline}"
+              text_font: mdi_24
+              text_color: ${c_sage}
+          - label:
+              id: sb_alarm_text
+              text: "Off"
+              text_font: b500_20
+              text_color: ${c_sage}
+        on_click:
+          - script.execute:
+              id: set_page
+              n: 0
+    - obj:
+        id: chip_notif
+        styles: st_chip
+        layout:
+          type: FLEX
+          flex_flow: ROW
+          flex_align_cross: CENTER
+          pad_column: 8
+        widgets:
+          - label:
+              id: sb_bell_icon
+              text: "${i_bell_outline}"
+              text_font: mdi_24
+              text_color: ${c_text3}
+          - label:
+              id: sb_bell_count
+              text: "0"
+              text_font: b500_20
+              text_color: ${c_text3}
+        on_click:
+          - script.execute:
+              id: open_sheet
+              name: notifications
+    - obj:
+        id: pill_critical
+        hidden: true
+        width: SIZE_CONTENT
+        height: 48
+        radius: 24
+        bg_color: ${c_red}
+        bg_opa: COVER
+        pad_left: 18
+        pad_right: 20
+        layout:
+          type: FLEX
+          flex_flow: ROW
+          flex_align_cross: CENTER
+          pad_column: 10
+        widgets:
+          - label:
+              id: sb_crit_icon
+              text: "${i_alarm_light}"
+              text_font: mdi_24
+              text_color: ${c_on_slate}
+          - label:
+              id: sb_crit_text
+              text: "Alarm Triggered!"
+              text_font: b600_19
+              text_color: ${c_on_slate}
+        on_click:
+          - script.execute: critical_tap
+    - button:
+        id: btn_mic
+        width: 56
+        height: 56
+        radius: 28
+        border_width: 2
+        border_color: ${c_slate}
+        widgets:
+          - label:
+              align: CENTER
+              text: "${i_microphone}"
+              text_font: mdi_28
+              text_color: ${c_slate}
+        on_click:
+          - script.execute: voice_open

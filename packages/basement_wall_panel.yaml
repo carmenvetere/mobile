@@ -1,0 +1,241 @@
+# Basement Wall Panel — Home Assistant side.
+#
+# The ESPHome panel (esphome/basement-wall-panel.yaml) subscribes to a few
+# compact "summary" sensors defined here instead of dozens of raw attributes,
+# and fires one event to browse the music library. Loaded from
+# configuration.yaml via `homeassistant: packages:`.
+#
+# Sensors:
+#   sensor.basement_panel_weather        now / hours / days strings
+#   sensor.basement_panel_music          one row per speaker
+#   sensor.basement_panel_music_browse   result of the last browse request
+#   sensor.basement_panel_music_recent   last 5 things played (playlists/stations)
+#   sensor.basement_panel_notifications  Notification Center items
+# Cover group:
+#   cover.whole_house                    the six covers the mobile Shades view closes
+# Scripts:
+#   script.basement_panel_notification_dismiss / _clear_all
+
+# ---- Whole House shade group (handoff open item #1) ----------------------------
+cover:
+  - platform: group
+    name: Whole House
+    unique_id: basement_panel_whole_house
+    entities:
+      - cover.first_floor_all
+      - cover.bedroom_side_shades
+      - cover.bedroom_back
+      - cover.front_guest_bedroom_shades
+      - cover.back_guest_bedroom_shades
+      - cover.office_shades
+
+template:
+  # ---- weather: current + next 6 hours + 5 days as compact strings ------------
+  - trigger:
+      - trigger: time_pattern
+        minutes: "/15"
+      - trigger: state
+        entity_id:
+          - weather.bayberry
+          - sensor.bayberry_tempest_temperature
+      - trigger: homeassistant
+        event: start
+    action:
+      - action: weather.get_forecasts
+        target:
+          entity_id: weather.bayberry
+        data:
+          type: hourly
+        response_variable: hourly
+      - action: weather.get_forecasts
+        target:
+          entity_id: weather.bayberry
+        data:
+          type: daily
+        response_variable: daily
+    sensor:
+      - name: Basement Panel Weather
+        unique_id: basement_panel_weather
+        icon: mdi:weather-partly-cloudy
+        state: "{{ states('sensor.bayberry_tempest_temperature') | float(0) | round(0) | int }}"
+        attributes:
+          now: >-
+            {% set d = daily['weather.bayberry'].forecast %}
+            {% set temp = states('sensor.bayberry_tempest_temperature') | float(0) %}
+            {% set feels = state_attr('weather.bayberry', 'apparent_temperature') %}
+            {{ temp | round(0) | int }}|{{ states('weather.bayberry') }}|{{ (feels if feels is not none else temp) | float(0) | round(0) | int }}|{{ (d[0].temperature | round(0) | int) if d else '' }}|{{ (d[0].templow | round(0) | int) if d and d[0].templow is defined else '' }}
+          hours: >-
+            {% set ns = namespace(out=[]) %}
+            {% for f in hourly['weather.bayberry'].forecast[:6] %}
+              {% set t = as_local(as_datetime(f.datetime)) %}
+              {% set lbl = 'Now' if loop.first else t.strftime('%-I %p') %}
+              {% set ns.out = ns.out + [lbl ~ '|' ~ (f.temperature | round(0) | int) ~ '|' ~ f.condition] %}
+            {% endfor %}
+            {{ ns.out | join(';') }}
+          days: >-
+            {% set ns = namespace(out=[]) %}
+            {% for f in daily['weather.bayberry'].forecast[:5] %}
+              {% set t = as_local(as_datetime(f.datetime)) %}
+              {% set lbl = 'Today' if loop.first else t.strftime('%a') %}
+              {% set pop = f.precipitation_probability if f.precipitation_probability is defined else 0 %}
+              {% set lo = f.templow if f.templow is defined else f.temperature %}
+              {% set ns.out = ns.out + [lbl ~ '|' ~ (f.temperature | round(0) | int) ~ '|' ~ (lo | round(0) | int) ~ '|' ~ (pop | round(0) | int) ~ '|' ~ f.condition] %}
+            {% endfor %}
+            {{ ns.out | join(';') }}
+
+  # ---- music: one row per speaker -------------------------------------------
+  #   id|state|volume%|title|artist · album|leader|members,csv|entity_picture
+  - trigger:
+      - trigger: state
+        entity_id:
+          - media_player.media_room
+          - media_player.pool
+          - media_player.mud_room
+          - media_player.gym
+          - media_player.living_room
+          - media_player.kitchen
+          - media_player.office
+          - media_player.deck
+      - trigger: homeassistant
+        event: start
+    sensor:
+      - name: Basement Panel Music
+        unique_id: basement_panel_music
+        icon: mdi:speaker-multiple
+        state: >-
+          {{ ['media_player.media_room', 'media_player.pool', 'media_player.mud_room', 'media_player.gym',
+              'media_player.living_room', 'media_player.kitchen', 'media_player.office', 'media_player.deck']
+             | map('states') | select('eq', 'playing') | list | count }}
+        attributes:
+          players: >-
+            {% set ns = namespace(out=[]) %}
+            {% for e in ['media_player.media_room', 'media_player.pool', 'media_player.mud_room', 'media_player.gym',
+                         'media_player.living_room', 'media_player.kitchen', 'media_player.office', 'media_player.deck'] %}
+              {% set s = states[e] %}
+              {% if s is not none %}
+                {% set a = s.attributes %}
+                {% set members = a.group_members if a.group_members is defined and a.group_members else [e] %}
+                {% set artist = (a.media_artist or '') ~ (' · ' ~ a.media_album_name if a.media_album_name is defined and a.media_album_name and a.media_artist else '') %}
+                {% set artist = artist if artist else (a.media_channel or a.media_playlist or '') %}
+                {% set row = e ~ '|' ~ s.state ~ '|' ~ ((a.volume_level | float(0)) * 100) | round(0) | int ~ '|'
+                   ~ (a.media_title or '') | string | replace('|', '/') | replace(';', ',') ~ '|'
+                   ~ artist | string | replace('|', '/') | replace(';', ',') ~ '|'
+                   ~ members[0] ~ '|' ~ members | join(',') ~ '|' ~ (a.entity_picture or '') %}
+                {% set ns.out = ns.out + [row] %}
+              {% endif %}
+            {% endfor %}
+            {{ ns.out | join(';') }}
+
+  # ---- music: library browsing on request -----------------------------------
+  # The panel fires esphome.basement_panel_browse {entity_id, media_content_id,
+  # media_content_type}; empty ids mean "root". Works with Sonos and Music
+  # Assistant alike since it goes through media_player.browse_media.
+  - trigger:
+      - trigger: event
+        event_type: esphome.basement_panel_browse
+    action:
+      - variables:
+          player: "{{ trigger.event.data.entity_id or 'media_player.media_room' }}"
+          cid: "{{ trigger.event.data.media_content_id or '' }}"
+          ctype: "{{ trigger.event.data.media_content_type or '' }}"
+      - action: media_player.browse_media
+        target:
+          entity_id: "{{ player }}"
+        data: >-
+          {% if cid %}{{ {'media_content_id': cid, 'media_content_type': ctype} }}{% else %}{{ {} }}{% endif %}
+        response_variable: result
+    sensor:
+      - name: Basement Panel Music Browse
+        unique_id: basement_panel_music_browse
+        icon: mdi:music-box-multiple
+        state: "{{ now().isoformat() }}"
+        attributes:
+          title: "{{ result.title | default('Library') }}"
+          items: >-
+            {% set ns = namespace(out=[]) %}
+            {% for c in (result.children | default([]))[:12] %}
+              {% set sub = (c.media_content_type | default('')) | replace('_', ' ') | title %}
+              {% set ns.out = ns.out + [
+                (c.title | string | replace('|', '/') | replace(';', ',')) ~ '|' ~ sub ~ '|' ~ (c.media_content_type | default('')) ~ '|'
+                ~ (c.media_content_id | string | replace('|', '%7C') | replace(';', '%3B')) ~ '|' ~ ('1' if c.can_expand else '0')] %}
+            {% endfor %}
+            {{ ns.out | join(';') }}
+
+  # ---- music: recently played (last 5 distinct items) ------------------------
+  - trigger:
+      - trigger: state
+        entity_id:
+          - media_player.media_room
+          - media_player.pool
+          - media_player.mud_room
+          - media_player.gym
+          - media_player.living_room
+          - media_player.kitchen
+          - media_player.office
+          - media_player.deck
+        attribute: media_content_id
+    condition:
+      - condition: template
+        value_template: "{{ trigger.to_state.attributes.media_content_id is defined and trigger.to_state.attributes.media_content_id }}"
+    sensor:
+      - name: Basement Panel Music Recent
+        unique_id: basement_panel_music_recent
+        icon: mdi:history
+        state: "{{ now().isoformat() }}"
+        attributes:
+          items: >-
+            {% set a = trigger.to_state.attributes %}
+            {% set name = a.media_playlist or a.media_channel or a.media_title or 'Unknown' %}
+            {% set ctype = a.media_content_type | default('music') %}
+            {% set cid = a.media_content_id | string | replace('|', '%7C') | replace(';', '%3B') %}
+            {% set row = (name | string | replace('|', '/') | replace(';', ',')) ~ '|' ~ (ctype | replace('_', ' ') | title) ~ '|' ~ ctype ~ '|' ~ cid ~ '|0' %}
+            {% set prev = this.attributes.items if this is defined and this.attributes.items is defined else '' %}
+            {% set ns = namespace(out=[row]) %}
+            {% for r in prev.split(';') if r and (r.split('|')[3] | default('')) != cid %}
+              {% set ns.out = ns.out + [r] %}
+            {% endfor %}
+            {{ ns.out[:5] | join(';') }}
+
+  # ---- notifications: Notification Center items -------------------------------
+  #   id|level|title|body|time;...
+  # VERIFY: the attribute/field names below (notifications, id, priority, title,
+  # message, timestamp) follow the Notification Center integration's sensor;
+  # adjust if the integration exposes them under different names.
+  - sensor:
+      - name: Basement Panel Notifications
+        unique_id: basement_panel_notifications
+        icon: mdi:bell-outline
+        state: "{{ states('sensor.notification_center') }}"
+        attributes:
+          items: >-
+            {% set items = state_attr('sensor.notification_center', 'notifications') or state_attr('sensor.notification_center', 'items') or [] %}
+            {% set ns = namespace(out=[]) %}
+            {% for n in items[:6] %}
+              {% set nid = n.id | default(n.notification_id | default(n.dedup_tag | default(loop.index))) %}
+              {% set level = n.priority | default(n.level | default('info')) %}
+              {% set ts = n.timestamp | default(n.created | default(n.time | default(''))) %}
+              {% set when = relative_time(as_datetime(ts)) ~ ' ago' if ts and as_datetime(ts) is not none else (ts | string) %}
+              {% set ns.out = ns.out + [
+                (nid | string) ~ '|' ~ level ~ '|' ~ (n.title | default('') | string | replace('|', '/') | replace(';', ',')) ~ '|'
+                ~ (n.message | default(n.body | default('')) | string | replace('|', '/') | replace(';', ',') | replace('\n', ' ')) ~ '|' ~ when] %}
+            {% endfor %}
+            {{ ns.out | join(';') }}
+
+script:
+  # VERIFY: the Notification Center integration's dismiss service name/fields.
+  basement_panel_notification_dismiss:
+    alias: "Basement panel: dismiss notification"
+    icon: mdi:bell-off-outline
+    fields:
+      notification_id:
+        description: Notification id from sensor.basement_panel_notifications
+        example: power_outage
+    sequence:
+      - action: notification_center.dismiss
+        data:
+          notification_id: "{{ notification_id }}"
+  basement_panel_notification_clear_all:
+    alias: "Basement panel: clear all notifications"
+    icon: mdi:bell-check-outline
+    sequence:
+      - action: notification_center.dismiss_all

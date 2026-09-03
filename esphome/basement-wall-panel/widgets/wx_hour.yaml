@@ -1,0 +1,31 @@
+# Weather sheet "next hours" cell.
+# vars: n
+obj:
+  id: wxh_cell_${n}
+  width: 100
+  height: 104
+  radius: 16
+  border_width: 1
+  border_color: ${c_hairline}
+  pad_top: 14
+  pad_bottom: 14
+  layout:
+    type: FLEX
+    flex_flow: COLUMN
+    flex_align_main: SPACE_BETWEEN
+    flex_align_cross: CENTER
+  widgets:
+    - label:
+        id: wxh_time_${n}
+        text: "—"
+        text_font: b500_15
+        text_color: ${c_text3}
+    - label:
+        id: wxh_icon_${n}
+        text: "${i_weather_partly_cloudy}"
+        text_font: mdi_30
+        text_color: ${c_slate}
+    - label:
+        id: wxh_temp_${n}
+        text: "—"
+        text_font: b600_21

@@ -1,0 +1,58 @@
+# Confirmation dialog before switching the Powerwall to off-grid operation.
+obj:
+  id: confirm_offgrid
+  hidden: true
+  width: 720
+  height: 720
+  bg_color: ${c_bg}
+  bg_opa: 70%
+  widgets:
+    - obj:
+        align: CENTER
+        width: 520
+        height: 260
+        radius: 28
+        bg_color: ${c_sheet}
+        bg_opa: COVER
+        border_width: 1
+        border_color: ${c_hairline}
+        pad_all: 28
+        widgets:
+          - label:
+              x: 0
+              y: 0
+              text: "Go off grid?"
+              text_font: b300_32
+          - label:
+              x: 0
+              y: 50
+              width: 464
+              text: "The house will run from the Powerwall only until you turn this back off."
+              text_font: b400_17
+              text_color: ${c_text2}
+              long_mode: WRAP
+          - button:
+              align: BOTTOM_LEFT
+              width: 220
+              height: 56
+              radius: 28
+              widgets:
+                - label: { align: CENTER, text: "Cancel", text_font: b600_18 }
+              on_click:
+                - lvgl.widget.hide: confirm_offgrid
+          - button:
+              align: BOTTOM_RIGHT
+              width: 220
+              height: 56
+              radius: 28
+              bg_color: ${c_slate}
+              bg_opa: COVER
+              border_color: ${c_slate}
+              widgets:
+                - label: { align: CENTER, text: "Go off grid", text_font: b600_18, text_color: "${c_on_slate}" }
+              on_click:
+                - lvgl.widget.hide: confirm_offgrid
+                - script.execute:
+                    id: ha_toggle
+                    entity: switch.bayberry_off_grid_operation
+                    turn_on: true

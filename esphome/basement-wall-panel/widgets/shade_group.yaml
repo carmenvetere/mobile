@@ -1,0 +1,106 @@
+# Shades page group: hairline top, header (name / state), open · stop · close.
+# vars: id, name, entity, y, opa
+obj:
+  id: sh_group_${id}
+  x: 32
+  y: ${y}
+  width: 656
+  height: 128
+  opa: ${opa}
+  styles: st_hairline_top
+  pad_top: 16
+  widgets:
+    - label:
+        id: sh_name_${id}
+        x: 0
+        y: 0
+        text: "${name}"
+        text_font: b500_20
+    - label:
+        id: sh_state_${id}
+        align: TOP_RIGHT
+        x: 0
+        y: 0
+        text: ""
+        text_font: b500_20
+        text_color: ${c_slate}
+    - obj:
+        id: sh_badge_${id}
+        hidden: true
+        align: TOP_RIGHT
+        x: 0
+        y: -2
+        width: SIZE_CONTENT
+        height: 26
+        radius: 10
+        bg_color: ${c_amber}
+        bg_opa: COVER
+        pad_left: 12
+        pad_right: 12
+        widgets:
+          - label:
+              align: CENTER
+              text: "COMING SOON"
+              text_font: b600_12
+              text_letter_space: 1
+              text_color: ${c_on_slate}
+    - obj:
+        x: 0
+        y: 40
+        width: 656
+        height: 60
+        clickable: false
+        layout:
+          type: FLEX
+          flex_flow: ROW
+          flex_align_main: SPACE_BETWEEN
+          flex_align_cross: CENTER
+        widgets:
+          - button:
+              id: sh_open_${id}
+              width: 209
+              height: 60
+              radius: 14
+              widgets:
+                - label:
+                    align: CENTER
+                    text: "${i_arrow_up}"
+                    text_font: mdi_30
+                    text_color: ${c_slate}
+              on_click:
+                - script.execute:
+                    id: shade_cmd
+                    entity: "${entity}"
+                    cmd: "open_cover"
+          - button:
+              id: sh_stop_${id}
+              width: 209
+              height: 60
+              radius: 14
+              widgets:
+                - label:
+                    align: CENTER
+                    text: "${i_stop}"
+                    text_font: mdi_30
+                    text_color: ${c_slate}
+              on_click:
+                - script.execute:
+                    id: shade_cmd
+                    entity: "${entity}"
+                    cmd: "stop_cover"
+          - button:
+              id: sh_close_${id}
+              width: 209
+              height: 60
+              radius: 14
+              widgets:
+                - label:
+                    align: CENTER
+                    text: "${i_arrow_down}"
+                    text_font: mdi_30
+                    text_color: ${c_slate}
+              on_click:
+                - script.execute:
+                    id: shade_cmd
+                    entity: "${entity}"
+                    cmd: "close_cover"

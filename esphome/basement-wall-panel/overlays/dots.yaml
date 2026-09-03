@@ -1,0 +1,22 @@
+# Page dots: bottom 26px, 8px dots, active dot 28 wide slate, gap 12.
+obj:
+  id: dots
+  align: BOTTOM_MID
+  x: 0
+  y: -26
+  width: SIZE_CONTENT
+  height: 8
+  clickable: false
+  layout:
+    type: FLEX
+    flex_flow: ROW
+    flex_align_cross: CENTER
+    pad_column: 12
+  widgets:
+    - obj: { id: dot_0, width: 8, height: 8, radius: 4, bg_color: "${c_hairline}", bg_opa: COVER, clickable: false }
+    - obj: { id: dot_1, width: 8, height: 8, radius: 4, bg_color: "${c_hairline}", bg_opa: COVER, clickable: false }
+    - obj: { id: dot_2, width: 28, height: 8, radius: 4, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
+    - obj: { id: dot_3, width: 8, height: 8, radius: 4, bg_color: "${c_hairline}", bg_opa: COVER, clickable: false }
+    - obj: { id: dot_4, width: 8, height: 8, radius: 4, bg_color: "${c_hairline}", bg_opa: COVER, clickable: false }
+    - obj: { id: dot_5, width: 8, height: 8, radius: 4, bg_color: "${c_hairline}", bg_opa: COVER, clickable: false }
+    - obj: { id: dot_6, width: 8, height: 8, radius: 4, bg_color: "${c_hairline}", bg_opa: COVER, clickable: false }

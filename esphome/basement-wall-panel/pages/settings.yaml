@@ -1,0 +1,42 @@
+# Page 7 · Settings (status hub)
+id: tile_settings
+row: 0
+column: 6
+dir: HOR
+widgets:
+  - obj:
+      styles: st_page
+      widgets:
+        - label:
+            x: 32
+            y: 40
+            text: "Settings"
+            text_font: b300_34
+        - obj:
+            x: 32
+            y: 104
+            width: 656
+            height: 80
+            clickable: false
+            layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, pad_column: 12 }
+            widgets:
+              - !include { file: ../widgets/mode_tile.yaml, vars: { id: guests, icon: "${i_bed}", name: "Guests" } }
+              - !include { file: ../widgets/mode_tile.yaml, vars: { id: cleaners, icon: "${i_broom}", name: "Cleaners" } }
+              - !include { file: ../widgets/mode_tile.yaml, vars: { id: dinner, icon: "${i_silverware_fork_knife}", name: "Dinner" } }
+              - !include { file: ../widgets/mode_tile.yaml, vars: { id: offgrid, icon: "${i_transmission_tower_off}", name: "Off Grid" } }
+        - obj:
+            x: 32
+            y: 200
+            width: 656
+            height: 450
+            clickable: false
+            layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: START, flex_align_cross: START, pad_row: 0 }
+            widgets:
+              - !include { file: ../widgets/settings_row.yaml, vars: { id: climate, icon: "${i_thermostat}", name: "Climate", sheet: climate } }
+              - !include { file: ../widgets/settings_row.yaml, vars: { id: alarm, icon: "${i_shield_home}", name: "Alarm", sheet: alarm } }
+              - !include { file: ../widgets/settings_row.yaml, vars: { id: motion, icon: "${i_motion_sensor}", name: "Motion & Lights", sheet: motion } }
+              - !include { file: ../widgets/settings_row.yaml, vars: { id: energy, icon: "${i_transmission_tower}", name: "Energy & Grid", sheet: energy } }
+              - !include { file: ../widgets/settings_row.yaml, vars: { id: shades, icon: "${i_blinds_horizontal}", name: "Shades", sheet: shades } }
+              - !include { file: ../widgets/settings_row.yaml, vars: { id: vacuum, icon: "${i_robot_vacuum}", name: "Vacuum", sheet: vacuum } }
+              - !include { file: ../widgets/settings_row.yaml, vars: { id: panel, icon: "${i_tablet_dashboard}", name: "Panel & Voice", sheet: panel } }
+              - !include { file: ../widgets/settings_row.yaml, vars: { id: maint, icon: "${i_wrench_clock}", name: "Maintenance", sheet: maintenance } }

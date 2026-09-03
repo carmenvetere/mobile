@@ -1,0 +1,72 @@
+# Voice overlay: pulsing mic ring, five level bars, transcript, response.
+obj:
+  id: voice
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - obj:
+        id: voice_ring
+        clickable: false
+        align: CENTER
+        x: 0
+        y: -160
+        width: 132
+        height: 132
+        radius: 66
+        border_width: 3
+        border_color: ${c_slate}
+        widgets:
+          - label:
+              align: CENTER
+              text: "${i_microphone}"
+              text_font: mdi_60
+              text_color: ${c_slate}
+    - obj:
+        id: voice_bars
+        clickable: false
+        align: CENTER
+        x: 0
+        y: -40
+        width: SIZE_CONTENT
+        height: 56
+        layout:
+          type: FLEX
+          flex_flow: ROW
+          flex_align_cross: CENTER
+          pad_column: 8
+        widgets:
+          - obj: { id: voice_bar_0, clickable: false, width: 10, height: 14, radius: 5, bg_color: "${c_slate}", bg_opa: COVER }
+          - obj: { id: voice_bar_1, clickable: false, width: 10, height: 34, radius: 5, bg_color: "${c_slate}", bg_opa: COVER }
+          - obj: { id: voice_bar_2, clickable: false, width: 10, height: 56, radius: 5, bg_color: "${c_slate}", bg_opa: COVER }
+          - obj: { id: voice_bar_3, clickable: false, width: 10, height: 34, radius: 5, bg_color: "${c_slate}", bg_opa: COVER }
+          - obj: { id: voice_bar_4, clickable: false, width: 10, height: 14, radius: 5, bg_color: "${c_slate}", bg_opa: COVER }
+    - label:
+        id: voice_transcript
+        align: CENTER
+        x: 0
+        y: 40
+        width: 620
+        text: "Listening…"
+        text_align: CENTER
+        text_font: b300_28
+        long_mode: WRAP
+    - label:
+        id: voice_response
+        align: CENTER
+        x: 0
+        y: 92
+        width: 620
+        text: ""
+        text_align: CENTER
+        text_font: b400_17
+        text_color: ${c_sage}
+        long_mode: WRAP
+    - label:
+        align: CENTER
+        x: 0
+        y: 140
+        text: "Tap anywhere to dismiss"
+        text_font: b400_15
+        text_color: ${c_text3}
+  on_click:
+    - script.execute: voice_close

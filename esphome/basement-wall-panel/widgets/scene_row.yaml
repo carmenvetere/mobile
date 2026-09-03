@@ -1,0 +1,73 @@
+# Scene row slot. Content is filled in by the render_scenes script.
+# vars: n
+obj:
+  id: sc_row_${n}
+  width: 100%
+  flex_grow: 1
+  min_height: 64
+  styles: st_hairline_bottom
+  layout:
+    type: FLEX
+    flex_flow: ROW
+    flex_align_cross: CENTER
+    pad_column: 0
+  widgets:
+    - label:
+        id: sc_icon_${n}
+        width: 32
+        text: ""
+        text_align: CENTER
+        text_font: mdi_26
+        text_color: ${c_slate}
+    - label:
+        id: sc_name_${n}
+        flex_grow: 1
+        pad_left: 14
+        text: ""
+        text_font: b400_30
+        long_mode: DOT
+    - label:
+        id: sc_name_active_${n}
+        hidden: true
+        flex_grow: 1
+        pad_left: 14
+        text: ""
+        text_font: b600_30
+        text_color: ${c_slate_bright}
+        long_mode: DOT
+    - label:
+        id: sc_on_${n}
+        hidden: true
+        pad_right: 12
+        text: "ON"
+        text_font: b700_13
+        text_letter_space: 2
+        text_color: ${c_slate}
+    - obj:
+        id: sc_glow_${n}
+        hidden: true
+        clickable: false
+        width: 22
+        height: 22
+        radius: 11
+        bg_color: ${c_slate}
+        bg_opa: 30%
+        widgets:
+          - obj:
+              align: CENTER
+              clickable: false
+              width: 10
+              height: 10
+              radius: 5
+              bg_color: ${c_slate}
+              bg_opa: COVER
+    - label:
+        id: sc_chev_${n}
+        pad_left: 8
+        text: "${i_chevron_right}"
+        text_font: mdi_24
+        text_color: ${c_handle}
+  on_click:
+    - script.execute:
+        id: scene_tap
+        slot: ${n}

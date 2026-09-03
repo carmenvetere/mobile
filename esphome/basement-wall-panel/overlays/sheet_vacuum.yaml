@@ -1,0 +1,30 @@
+obj:
+  id: sheet_vacuum
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - obj:
+        styles: st_sheet
+        widgets:
+          - obj:
+              x: 0
+              y: 0
+              width: 100%
+              height: 56
+              clickable: false
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              widgets:
+                - label: { id: sheet_vacuum_title, text: "Vacuum", text_font: b300_32 }
+                - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_sheet_vacuum } }
+          - obj:
+              id: sheet_vacuum_body
+              x: 0
+              y: 68
+              width: 100%
+              height: 516
+              scrollable: true
+              scroll_dir: VER
+              layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: START, flex_align_cross: START, pad_row: 0 }
+              widgets:
+                - !include { file: ../widgets/eyebrow.yaml, vars: { id: va_eyebrow, text: "SCHEDULE" } }
+                - !include { file: ../widgets/toggle_row.yaml, vars: { id: v_night, name: "Nightly basement vacuum", sub: "12:00 AM", entity: automation.12_00am_roborock_s8_vacuum_basement } }

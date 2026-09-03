@@ -1,0 +1,283 @@
+# Basement Wall Panel — Waveshare ESP32-P4-WIFI6-Touch-LCD-4C (4" 720×720,
+# GT911 touch, ES8311 codec + mic + speaker, ESP32-C6 Wi-Fi co-processor).
+#
+# Layout: this file is the hardware; everything the panel shows and does is in
+# basement-wall-panel/ (packages). Build with:
+#   esphome run esphome/basement-wall-panel.yaml
+#
+# ┌─ VERIFY BEFORE FIRST FLASH ────────────────────────────────────────────────┐
+# │ Pin numbers marked VERIFY follow the ESP32-P4 Function EV pinout that     │
+# │ Waveshare's P4 boards mirror; confirm them against the 4C wiki page      │
+# │ (https://www.waveshare.com/wiki/ESP32-P4-WIFI6-Touch-LCD-4C) before      │
+# │ flashing. Nothing else in this file is board-specific.                    │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+substitutions:
+  name: basement-wall-panel
+  friendly_name: Basement Wall Panel
+  ha_base_url: "http://homeassistant.local:8123"
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  includes:
+    - basement-wall-panel/panel_helpers.h
+  on_boot:
+    - priority: -100
+      then:
+        - script.execute: panel_init
+        - script.execute: apply_brightness
+        - script.execute: apply_wake_word
+
+esp32:
+  variant: esp32p4
+  board: esp32-p4_r3-evboard
+  flash_size: 16MB   # module has 32MB; 16MB keeps the stock OTA partition layout
+  cpu_frequency: 360MHz
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_ESP32P4_REV_MIN_300: y  # VERIFY: module revision on your unit
+
+psram:
+  mode: hex
+  speed: 200MHz
+
+# MIPI-DSI PHY supply (LDO channel 3 @ 2.5 V on every ESP32-P4 DSI board).
+esp_ldo:
+  - channel: 3
+    voltage: 2.5V
+
+# Wi-Fi via the on-board ESP32-C6 over SDIO. VERIFY pins.
+esp32_hosted:
+  variant: esp32c6
+  active_high: true
+  reset_pin: 54
+  cmd_pin: 19
+  clk_pin: 18
+  d0_pin: 14
+  d1_pin: 15
+  d2_pin: 16
+  d3_pin: 17
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  power_save_mode: NONE
+  ap:
+    ssid: "Basement-Panel Fallback Hotspot"
+    password: !secret ap_password_basement_wall_panel
+
+captive_portal:
+
+api:
+  encryption:
+    key: !secret api_key_basement_wall_panel
+
+ota:
+  - platform: esphome
+    password: !secret ota_password_basement_wall_panel
+
+packages:
+  icons: !include basement-wall-panel/icons.yaml
+  fonts: !include basement-wall-panel/fonts.yaml
+  common: !include basement-wall-panel/common.yaml
+  entities: !include basement-wall-panel/entities.yaml
+  ui: !include basement-wall-panel/ui.yaml
+  logic: !include basement-wall-panel/logic.yaml
+
+# ---- display + touch -----------------------------------------------------------
+i2c:
+  - id: bus_a
+    sda: 7      # VERIFY
+    scl: 8      # VERIFY
+    frequency: 400kHz
+
+display:
+  - platform: mipi_dsi
+    id: panel_display
+    model: WAVESHARE-ESP32-P4-WIFI6-TOUCH-LCD-4C
+    auto_clear_enabled: false
+    update_interval: never
+
+touchscreen:
+  - platform: gt911
+    id: panel_touch
+    i2c_id: bus_a
+    display: panel_display
+    interrupt_pin: 21   # VERIFY
+    on_touch:
+      - script.execute:
+          id: touch_down
+          x: !lambda "return touch.x;"
+          y: !lambda "return touch.y;"
+    on_update:
+      - lambda: |-
+          for (auto &t : touches) { id(g_tx1) = t.x; id(g_ty1) = t.y; }
+    on_release:
+      - script.execute: touch_up
+
+output:
+  - platform: ledc
+    id: backlight_pwm
+    pin: 26      # VERIFY: LCD backlight PWM
+    frequency: 2000Hz
+
+light:
+  - platform: monochromatic
+    id: backlight
+    name: "Backlight"
+    output: backlight_pwm
+    restore_mode: ALWAYS_ON
+    default_transition_length: 200ms
+    entity_category: config
+
+# ---- audio: ES8311 codec, on-board mic + speaker -------------------------------
+i2s_audio:
+  - id: i2s_bus
+    i2s_lrclk_pin: 10   # VERIFY
+    i2s_bclk_pin: 12    # VERIFY
+    i2s_mclk_pin: 13    # VERIFY
+
+audio_dac:
+  - platform: es8311
+    id: es8311_dac
+    i2c_id: bus_a
+    address: 0x18
+    use_mclk: true
+    use_microphone: true
+    sample_rate: 16000
+
+microphone:
+  - platform: i2s_audio
+    id: panel_mic
+    i2s_audio_id: i2s_bus
+    i2s_din_pin: 11     # VERIFY
+    adc_type: external
+    sample_rate: 16000
+    bits_per_sample: 16bit
+    channel: left
+
+speaker:
+  - platform: i2s_audio
+    id: panel_speaker
+    i2s_audio_id: i2s_bus
+    i2s_dout_pin: 9     # VERIFY
+    dac_type: external
+    audio_dac: es8311_dac
+    sample_rate: 16000
+    bits_per_sample: 16bit
+    channel: mono
+    buffer_duration: 100ms
+
+media_player:
+  - platform: speaker
+    id: panel_media
+    name: "Voice"
+    announcement_pipeline:
+      speaker: panel_speaker
+      format: FLAC
+      sample_rate: 16000
+      num_channels: 1
+    volume_initial: 0.55
+    volume_min: 0.0
+    volume_max: 1.0
+
+micro_wake_word:
+  id: mww
+  microphone: panel_mic
+  models:
+    - model: okay_nabu
+  on_wake_word_detected:
+    - voice_assistant.start:
+    - script.execute: voice_ui_open
+
+voice_assistant:
+  id: va
+  microphone: panel_mic
+  media_player: panel_media
+  micro_wake_word: mww
+  noise_suppression_level: 2
+  auto_gain: 31dBFS
+  volume_multiplier: 2.0
+  on_listening:
+    - script.execute: { id: voice_set_phase, phase: 1 }
+  on_stt_end:
+    - script.execute: { id: voice_show, transcript: !lambda "return x;", response: "" }
+    - script.execute: { id: voice_set_phase, phase: 2 }
+  on_tts_start:
+    - script.execute: { id: voice_show, transcript: "", response: !lambda "return x;" }
+    - script.execute: { id: voice_set_phase, phase: 3 }
+  on_end:
+    - script.execute: { id: voice_set_phase, phase: 0 }
+    - delay: 4s
+    - script.execute: voice_close
+  on_error:
+    - script.execute: { id: voice_show, transcript: "", response: !lambda "return \"Sorry — \" + message;" }
+    - script.execute: { id: voice_set_phase, phase: 0 }
+    - delay: 3s
+    - script.execute: voice_close
+  on_client_connected:
+    - script.execute: apply_wake_word
+  on_client_disconnected:
+    - script.execute: voice_close
+
+# ---- panel-side info for the Panel & Voice sheet -------------------------------
+sensor:
+  - platform: wifi_signal
+    id: wifi_dbm
+    update_interval: 30s
+    internal: true
+    on_value:
+      - text_sensor.template.publish:
+          id: panel_wifi_sub
+          state: !lambda "return panel::fmt_int(\"Connected · %d dBm\", (int) x);"
+  - platform: internal_temperature
+    name: "Panel temperature"
+    entity_category: diagnostic
+
+text_sensor:
+  - platform: wifi_info
+    ssid:
+      id: wifi_ssid_info
+      internal: true
+      on_value:
+        - text_sensor.template.publish:
+            id: panel_wifi_text
+            state: !lambda "return x;"
+  - platform: version
+    id: fw_version
+    internal: true
+    on_value:
+      - text_sensor.template.publish:
+          id: panel_fw_text
+          state: !lambda "return \"ESPHome \" + x;"
+
+# ---- contract scripts (see basement-wall-panel/common.yaml) ---------------------
+script:
+  - id: apply_brightness
+    then:
+      - light.turn_on:
+          id: backlight
+          brightness: !lambda "return id(panel_brightness).state / 100.0f;"
+  - id: apply_voice_volume
+    then:
+      - media_player.volume_set:
+          id: panel_media
+          volume: !lambda "return id(voice_volume).state / 100.0f;"
+  - id: apply_wake_word
+    then:
+      - if:
+          condition:
+            switch.is_on: wake_word_enabled
+          then:
+            - micro_wake_word.start:
+          else:
+            - micro_wake_word.stop:
+  - id: voice_start
+    then:
+      - voice_assistant.start:
+  - id: voice_stop
+    then:
+      - voice_assistant.stop:
+      - script.execute: apply_wake_word
