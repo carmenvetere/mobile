@@ -4,89 +4,219 @@
 # for, plus Material Design Icons cut to the glyphs the UI actually uses.
 # Naming: b<weight>_<px> for text, mdi_<px> for icons.
 #
+# Every entry is written out in full on purpose: ESPHome's YAML loader does
+# not combine `<<` merge keys with sibling keys, so anchors are only used for
+# the glyph lists (plain aliases, not merges).
+#
 # The MDI TTF is pulled from the MaterialDesign-Webfont repo at build time;
 # Barlow comes from Google Fonts. Both are cached by ESPHome after the first
 # build (.esphome/fonts).
 
 font:
-  # -------------------------------------------------------------- Barlow 300
-  - &barlow300
-    file: { type: gfonts, family: Barlow, weight: 300 }
+  # -------------------------------------------------------------- Barlow
+  - file: { type: gfonts, family: Barlow, weight: 300 }
     id: b300_64
     size: 64
     bpp: 4
     glyphs: &text_glyphs
       - " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
       - "°·—–‹›“”‘’…Ω"
-  - { <<: *barlow300, id: b300_60, size: 60 }
-  - { <<: *barlow300, id: b300_34, size: 34 }
-  - { <<: *barlow300, id: b300_32, size: 32 }
-  - { <<: *barlow300, id: b300_28, size: 28 }
-  # -------------------------------------------------------------- Barlow 400
-  - &barlow400
-    file: { type: gfonts, family: Barlow, weight: 400 }
+  - file: { type: gfonts, family: Barlow, weight: 300 }
+    id: b300_60
+    size: 60
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 300 }
+    id: b300_34
+    size: 34
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 300 }
+    id: b300_32
+    size: 32
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 300 }
+    id: b300_28
+    size: 28
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 400 }
     id: b400_30
     size: 30
     bpp: 4
     glyphs: *text_glyphs
-  - { <<: *barlow400, id: b400_26, size: 26 }
-  - { <<: *barlow400, id: b400_22, size: 22 }
-  - { <<: *barlow400, id: b400_20, size: 20 }
-  - { <<: *barlow400, id: b400_19, size: 19 }
-  - { <<: *barlow400, id: b400_17, size: 17 }
-  - { <<: *barlow400, id: b400_16, size: 16 }
-  - { <<: *barlow400, id: b400_15, size: 15 }
-  - { <<: *barlow400, id: b400_14, size: 14 }
-  # -------------------------------------------------------------- Barlow 500
-  - &barlow500
-    file: { type: gfonts, family: Barlow, weight: 500 }
+  - file: { type: gfonts, family: Barlow, weight: 400 }
+    id: b400_26
+    size: 26
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 400 }
+    id: b400_22
+    size: 22
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 400 }
+    id: b400_20
+    size: 20
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 400 }
+    id: b400_19
+    size: 19
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 400 }
+    id: b400_17
+    size: 17
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 400 }
+    id: b400_16
+    size: 16
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 400 }
+    id: b400_15
+    size: 15
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 400 }
+    id: b400_14
+    size: 14
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 500 }
     id: b500_28
     size: 28
     bpp: 4
     glyphs: *text_glyphs
-  - { <<: *barlow500, id: b500_24, size: 24 }
-  - { <<: *barlow500, id: b500_20, size: 20 }
-  - { <<: *barlow500, id: b500_19, size: 19 }
-  - { <<: *barlow500, id: b500_17, size: 17 }
-  - { <<: *barlow500, id: b500_16, size: 16 }
-  - { <<: *barlow500, id: b500_15, size: 15 }
-  - { <<: *barlow500, id: b500_14, size: 14 }
-  # -------------------------------------------------------------- Barlow 600
-  - &barlow600
-    file: { type: gfonts, family: Barlow, weight: 600 }
+  - file: { type: gfonts, family: Barlow, weight: 500 }
+    id: b500_24
+    size: 24
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 500 }
+    id: b500_20
+    size: 20
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 500 }
+    id: b500_19
+    size: 19
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 500 }
+    id: b500_17
+    size: 17
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 500 }
+    id: b500_16
+    size: 16
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 500 }
+    id: b500_15
+    size: 15
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 500 }
+    id: b500_14
+    size: 14
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
     id: b600_40
     size: 40
     bpp: 4
     glyphs: *text_glyphs
-  - { <<: *barlow600, id: b600_30, size: 30 }
-  - { <<: *barlow600, id: b600_26, size: 26 }
-  - { <<: *barlow600, id: b600_24, size: 24 }
-  - { <<: *barlow600, id: b600_22, size: 22 }
-  - { <<: *barlow600, id: b600_21, size: 21 }
-  - { <<: *barlow600, id: b600_20, size: 20 }
-  - { <<: *barlow600, id: b600_19, size: 19 }
-  - { <<: *barlow600, id: b600_18, size: 18 }
-  - { <<: *barlow600, id: b600_17, size: 17 }
-  - { <<: *barlow600, id: b600_16, size: 16 }
-  - { <<: *barlow600, id: b600_15, size: 15 }
-  - { <<: *barlow600, id: b600_14, size: 14 }
-  - { <<: *barlow600, id: b600_13, size: 13 }
-  - { <<: *barlow600, id: b600_12, size: 12 }
-  # -------------------------------------------------------------- Barlow 700
-  - &barlow700
-    file: { type: gfonts, family: Barlow, weight: 700 }
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_30
+    size: 30
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_26
+    size: 26
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_24
+    size: 24
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_22
+    size: 22
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_21
+    size: 21
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_20
+    size: 20
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_19
+    size: 19
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_18
+    size: 18
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_17
+    size: 17
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_16
+    size: 16
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_15
+    size: 15
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_14
+    size: 14
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_13
+    size: 13
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 600 }
+    id: b600_12
+    size: 12
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 700 }
     id: b700_13
     size: 13
     bpp: 4
     glyphs: *text_glyphs
-  - { <<: *barlow700, id: b700_12, size: 12 }
+  - file: { type: gfonts, family: Barlow, weight: 700 }
+    id: b700_12
+    size: 12
+    bpp: 4
+    glyphs: *text_glyphs
 
   # ------------------------------------------------------- Material Design Icons
   # Small/medium sizes carry the whole icon set used anywhere in the UI so that
   # any icon can be swapped into any slot; the large sizes only carry what the
   # design actually renders at that size.
-  - &mdi
-    file:
+  - file: &mdi_file
       type: web
       url: https://raw.githubusercontent.com/Templarian/MaterialDesign-Webfont/master/fonts/materialdesignicons-webfont.ttf
     id: mdi_24
@@ -101,28 +231,53 @@ font:
       - "${i_arrow_up}${i_arrow_down}${i_stop}${i_music_box_multiple}${i_speaker_multiple}${i_speaker_wireless}${i_album}${i_play}${i_pause}${i_skip_previous}${i_skip_next}${i_volume_medium}${i_tune_vertical_variant}"
       - "${i_sofa}${i_sofa_outline}${i_pool}${i_coat_rack}${i_dumbbell}${i_countertop}${i_desk}${i_table_chair}${i_circle_outline}${i_play_box_outline}${i_playlist_music}${i_radio}${i_account_music}${i_heart}${i_music_note}${i_folder_music}"
       - "${i_cog}${i_fire}${i_power}${i_minus}${i_plus}${i_pump}${i_bed}${i_broom}${i_silverware_fork_knife}${i_thermostat}${i_motion_sensor}${i_robot_vacuum}${i_tablet_dashboard}${i_wrench_clock}"
-  - { <<: *mdi, id: mdi_21, size: 21 }
-  - { <<: *mdi, id: mdi_25, size: 25 }
-  - { <<: *mdi, id: mdi_26, size: 26 }
-  - { <<: *mdi, id: mdi_28, size: 28 }
-  - { <<: *mdi, id: mdi_30, size: 30 }
-  - <<: *mdi
-    id: mdi_38
-    size: 38
-    glyphs: ["${i_skip_previous}${i_skip_next}${i_minus}${i_plus}"]
-  - <<: *mdi
-    id: mdi_48
-    size: 48
-    glyphs: ["${i_play}${i_pause}${i_shield}${i_lightning_bolt}${i_palette}${i_blinds}${i_music}${i_pool}${i_cog}${i_microphone}"]
-  - <<: *mdi
+  - file: *mdi_file
+    id: mdi_21
+    size: 21
+    bpp: 4
+    glyphs: *mdi_all
+  - file: *mdi_file
+    id: mdi_25
+    size: 25
+    bpp: 4
+    glyphs: *mdi_all
+  - file: *mdi_file
+    id: mdi_26
+    size: 26
+    bpp: 4
+    glyphs: *mdi_all
+  - file: *mdi_file
+    id: mdi_28
+    size: 28
+    bpp: 4
+    glyphs: *mdi_all
+  - file: *mdi_file
+    id: mdi_30
+    size: 30
+    bpp: 4
+    glyphs: *mdi_all
+  - file: *mdi_file
     id: mdi_52
     size: 52
+    bpp: 4
     glyphs: *mdi_all
-  - <<: *mdi
+  - file: *mdi_file
+    id: mdi_38
+    size: 38
+    bpp: 4
+    glyphs: ["${i_skip_previous}${i_skip_next}${i_minus}${i_plus}"]
+  - file: *mdi_file
+    id: mdi_48
+    size: 48
+    bpp: 4
+    glyphs: ["${i_play}${i_pause}${i_shield}${i_lightning_bolt}${i_palette}${i_blinds}${i_music}${i_pool}${i_cog}${i_microphone}"]
+  - file: *mdi_file
     id: mdi_60
     size: 60
+    bpp: 4
     glyphs: ["${i_album}${i_microphone}"]
-  - <<: *mdi
+  - file: *mdi_file
     id: mdi_72
     size: 72
+    bpp: 4
     glyphs: ["${i_bell_check_outline}"]

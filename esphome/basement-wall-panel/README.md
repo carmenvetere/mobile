@@ -34,6 +34,11 @@ SDL window and talks to your real Home Assistant over the native API, so every
 page, sheet, toggle and service call is the real thing. The only differences
 from the panel are the stubs listed under "What the simulator can't do".
 
+> **Run the simulator on your laptop, not in the ESPHome add-on.** The add-on's
+> container has no display and no SDL2, so it fails with "Unable to run
+> sdl2-config". The `/config/esphome` copy is only for flashing the real panel
+> later.
+
 ### 1. One-time setup on your Mac (or Linux box)
 
 ```bash
