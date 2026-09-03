@@ -56,6 +56,5 @@ obj:
                                       id: chlor_set
                                       pct: !lambda "return (int) lv_slider_get_value(id(chlor_slider));"
                             - label: { id: chlor_pct, width: 56, text: "—", text_align: RIGHT, text_font: b600_20, text_color: "${c_slate}" }
-                - !include { file: ../widgets/toggle_row.yaml, vars: { id: superchlor, name: "Super Chlorinate", sub: "24-hour boost to 100%", entity: "${pool_super_chlorinate_entity}" } }
                 - !include { file: ../widgets/eyebrow.yaml, vars: { id: pool_eyebrow_water, text: "WATER" } }
                 - !include { file: ../widgets/value_row.yaml, vars: { id: watertemp, name: "Water temperature", sub: "OmniLogic sensor" } }

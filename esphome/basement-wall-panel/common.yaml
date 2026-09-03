@@ -10,12 +10,18 @@ substitutions:
   # Home Assistant base URL used to fetch album art (entity_picture is a
   # relative path). Override in the device file if HA lives elsewhere.
   ha_base_url: "http://homeassistant.local:8123"
-  # Open item #4 in the handoff: the mobile Settings view reads
-  # sensor.well_pump_energy while the 7-day history uses sensor.well_pump_energy2.
-  well_pump_energy_entity: sensor.well_pump_energy
-  # Open item #3: no super-chlorinate entity was found in the repo. Point this
-  # at the OmniLogic switch if the integration exposes one.
-  pool_super_chlorinate_entity: switch.omnilogic_pool_super_chlorinate
+  # Daily well-pump kWh (the 7-day history's sensor; the mobile Settings view
+  # still shows sensor.well_pump_energy).
+  well_pump_energy_entity: sensor.well_pump_energy2
+  # Whole House shades: the six covers the mobile Shades view closes, sent as
+  # one multi-target service call (no cover group entity).
+  whole_house_covers: "cover.first_floor_all, cover.bedroom_side_shades, cover.bedroom_back, cover.front_guest_bedroom_shades, cover.back_guest_bedroom_shades, cover.office_shades"
+  # Music library browsing / playback target. Empty = use the Sonos player
+  # itself. Once the speakers are added to Music Assistant, set this to the
+  # suffix HA gave the MA players (usually "_2", e.g. media_player.media_room_2)
+  # so the Library sheet browses MA's library while transport, grouping and
+  # volume stay on the Sonos entities the rest of the dashboard uses.
+  music_library_suffix: ""
 
 logger:
   level: INFO

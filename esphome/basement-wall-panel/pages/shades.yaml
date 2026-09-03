@@ -14,4 +14,4 @@ widgets:
             text_font: b300_34
         - !include { file: ../widgets/shade_group.yaml, vars: { id: ff, name: "First Floor — All", entity: cover.first_floor_all, y: 104, opa: COVER } }
         - !include { file: ../widgets/shade_group.yaml, vars: { id: mr, name: "Media Room", entity: "", y: 262, opa: "62%" } }
-        - !include { file: ../widgets/shade_group.yaml, vars: { id: wh, name: "Whole House", entity: cover.whole_house, y: 420, opa: COVER } }
+        - !include { file: ../widgets/shade_group.yaml, vars: { id: wh, name: "Whole House", entity: "${whole_house_covers}", y: 420, opa: COVER } }

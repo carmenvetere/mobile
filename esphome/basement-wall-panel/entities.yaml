@@ -52,8 +52,28 @@ text_sensor:
     entity_id: cover.first_floor_all
     on_value: [script.execute: render_shades]
   - platform: homeassistant
-    id: ts_wh_state
-    entity_id: cover.whole_house
+    id: ts_cv_0
+    entity_id: cover.first_floor_all
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: ts_cv_1
+    entity_id: cover.bedroom_side_shades
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: ts_cv_2
+    entity_id: cover.bedroom_back
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: ts_cv_3
+    entity_id: cover.front_guest_bedroom_shades
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: ts_cv_4
+    entity_id: cover.back_guest_bedroom_shades
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: ts_cv_5
+    entity_id: cover.office_shades
     on_value: [script.execute: render_shades]
   # ---- music ----
   - platform: homeassistant
@@ -141,14 +161,40 @@ sensor:
     attribute: current_position
     on_value: [script.execute: render_shades]
   - platform: homeassistant
-    id: s_wh_pos
-    entity_id: cover.whole_house
+    id: s_cv_0
+    entity_id: cover.first_floor_all
+    attribute: current_position
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: s_cv_1
+    entity_id: cover.bedroom_side_shades
+    attribute: current_position
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: s_cv_2
+    entity_id: cover.bedroom_back
+    attribute: current_position
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: s_cv_3
+    entity_id: cover.front_guest_bedroom_shades
+    attribute: current_position
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: s_cv_4
+    entity_id: cover.back_guest_bedroom_shades
+    attribute: current_position
+    on_value: [script.execute: render_shades]
+  - platform: homeassistant
+    id: s_cv_5
+    entity_id: cover.office_shades
     attribute: current_position
     on_value: [script.execute: render_shades]
   # ---- pool ----
   - platform: homeassistant
     id: s_pool_setpoint
-    entity_id: input_number.pool_heater_setpoint
+    entity_id: water_heater.omnilogic_pool_heater
+    attribute: temperature
     on_value: [script.execute: render_pool]
   - platform: homeassistant
     id: s_water_temp
@@ -328,7 +374,6 @@ binary_sensor:
     on_state: [script.execute: render_pool]
   # ---- toggle rows (switch id sw_<id> in the sheets) ----
   - !include { file: widgets/ha_toggle.yaml, vars: { id: chlor, entity: switch.omnilogic_pool_chlorinator } }
-  - !include { file: widgets/ha_toggle.yaml, vars: { id: superchlor, entity: "${pool_super_chlorinate_entity}" } }
   - !include { file: widgets/ha_toggle.yaml, vars: { id: z_lr, entity: automation.living_room_hvac_schedule_v3 } }
   - !include { file: widgets/ha_toggle.yaml, vars: { id: z_bs, entity: automation.basement_hvac_schedule } }
   - !include { file: widgets/ha_toggle.yaml, vars: { id: z_of, entity: automation.office_thermostat_schedule_v2 } }

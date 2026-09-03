@@ -11,23 +11,8 @@
 #   sensor.basement_panel_music_browse   result of the last browse request
 #   sensor.basement_panel_music_recent   last 5 things played (playlists/stations)
 #   sensor.basement_panel_notifications  Notification Center items
-# Cover group:
-#   cover.whole_house                    the six covers the mobile Shades view closes
 # Scripts:
 #   script.basement_panel_notification_dismiss / _clear_all
-
-# ---- Whole House shade group (handoff open item #1) ----------------------------
-cover:
-  - platform: group
-    name: Whole House
-    unique_id: basement_panel_whole_house
-    entities:
-      - cover.first_floor_all
-      - cover.bedroom_side_shades
-      - cover.bedroom_back
-      - cover.front_guest_bedroom_shades
-      - cover.back_guest_bedroom_shades
-      - cover.office_shades
 
 template:
   # ---- weather: current + next 6 hours + 5 days as compact strings ------------

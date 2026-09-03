@@ -53,7 +53,7 @@ fetch album art).
 ### 2. Load the HA side and restart Home Assistant
 
 `configuration.yaml` now includes `packages/basement_wall_panel.yaml`, which
-adds the `cover.whole_house` group, the four summary sensors the panel reads
+adds the five summary sensors the panel reads
 (`sensor.basement_panel_weather`, `sensor.basement_panel_music`,
 `sensor.basement_panel_music_browse`, `sensor.basement_panel_music_recent`,
 `sensor.basement_panel_notifications`) and two notification scripts. Check the
@@ -98,9 +98,9 @@ it as a live control surface, not a mock.
 | Alarm: readiness row | Not-ready sheet with the six sensors (Open amber / Closed slate) |
 | Energy: tap the bar | sets `number.bayberry_backup_reserve` in 5 % steps; amber marker moves |
 | Scenes: tap a row | `scene.turn_on`; row lights up 1.6 s, then follows `binary_sensor.scene_*` |
-| Shades: ▲ ■ ▼ | `cover.*` on `cover.first_floor_all` / `cover.whole_house`; Media Room is disabled |
+| Shades: ▲ ■ ▼ | `cover.*` on `cover.first_floor_all`, or all six covers at once for Whole House; Media Room is disabled |
 | Music: transport, volume | on the focused group; library / speaker group / per-speaker volume sheets |
-| Pool: − / + | `input_number.pool_heater_setpoint` 70–90; pill toggles the heater |
+| Pool: − / + | `water_heater.set_temperature` 70–90 on the OmniLogic heater; pill toggles the heater |
 | Pool: pump toggle, slider, Low / Med / High | `switch`, `number` and the three OmniLogic speed buttons |
 | Settings: tiles | Guests / Cleaners / Dinner toggle immediately; Off Grid asks first |
 | Settings: rows | each opens its sheet; Maintenance → RESET calls the repo's reset scripts |
@@ -136,35 +136,57 @@ built-in ESPHome model, so no init sequence or timing is needed.
 
 * Colors, sizes, weights, radii, hit zones and spacing follow the handoff's
   design tokens; every icon is the MDI glyph named in the spec.
-* Scene visibility follows the repo rules in `dynamic-scenes.yaml`
-  (Morning/Day · Evening with Basement Evening ⇄ Entertaining on
-  `input_boolean.dinner_party` · Night), not the prototype's divergent sets.
+* Scene rows per period follow the prototype (Morning: Morning · Working ·
+  Cleaning · Outdoor · All Off; Day: same with the sunny icon; Evening: Welcome ·
+  Basement Evening · Entertaining · Movie · Outdoor · All Off; Night: Emergency ·
+  Basement Evening · Movie · Nightlight · Outdoor · All Off). The period is
+  picked with the repo's time and sun-elevation rules (night 22:00–05:00,
+  morning until noon, evening once the sun is below 15° or after 17:00).
 * Two things LVGL can't do exactly as the prototype: letter-spacing tighter
   than 0 (clock/setpoint tracking) and the 1.6 s CSS pulse (replaced by a
   150 ms tick that drives the same bar heights and ring opacity).
 
-## Open questions from the handoff (please confirm)
+## Decisions made on the handoff's open items
 
-1. **Whole House shades** — I created `cover.whole_house` as a cover group of
-   the six covers the mobile Shades view targets. OK, or would you rather the
-   panel multi-target them without a new entity?
-2. **Music provider** — the handoff says Music Assistant, but the repo is all
-   Sonos (custom Sonos cards, `script.apply_sonos_group`). The panel uses the
-   generic `media_player.*` services and `browse_media`, which work for both;
-   the "Recently played" list is derived from what the speakers actually
-   play. Is Music Assistant installed, or should this stay Sonos-native?
-3. **Super Chlorinate** — no OmniLogic entity in the repo. The row points at
-   `switch.omnilogic_pool_super_chlorinate` (substitution
-   `pool_super_chlorinate_entity`); change it or tell me to drop the row.
-4. **Well pump energy** — Settings shows `sensor.well_pump_energy`; the 7-day
-   history uses `sensor.well_pump_energy2`. Which is today's kWh?
-5. **Pool setpoint** — the ± buttons write `input_number.pool_heater_setpoint`
-   (so the existing automations follow). Should they also call
-   `water_heater.set_temperature` directly?
-6. **Notification Center** — the dismiss/clear scripts call
-   `notification_center.dismiss` / `dismiss_all` and read the
-   `notifications` attribute; the integration's real service and attribute
-   names need checking (they aren't in this repo).
-7. **Media Room shades** — stays "Coming soon" until there's an entity.
-8. **Voice hardware pins** — the ES8311/I²S GPIOs are the ESP32-P4 EV-board
-   defaults; confirm against the 4C wiki before flashing.
+1. **Whole House shades** — no new entity. The three buttons send one
+   multi-target call to the six covers (`whole_house_covers` substitution) and
+   the state line shows the min–max of their positions.
+2. **Music** — Sonos entities drive transport, grouping and volume so the
+   panel and the mobile dashboard agree. Library browsing and playback go to
+   the "library player", which is the same Sonos entity until you set
+   `music_library_suffix` (e.g. `"_2"`) to the Music Assistant players. See
+   "Music Assistant" below.
+3. **Super Chlorinate** — removed.
+4. **Well pump energy** — `sensor.well_pump_energy2`.
+5. **Pool setpoint** — ± calls `water_heater.set_temperature` on
+   `water_heater.omnilogic_pool_heater`; the dial reads the heater's own
+   `temperature` attribute back.
+6. **Scenes** — the prototype's sets per period (see Design fidelity notes).
+
+Still open: the Notification Center service/attribute names (marked VERIFY in
+`packages/basement_wall_panel.yaml`), Media Room shades (no entity yet), and
+the audio GPIOs on the hardware build.
+
+## Music Assistant
+
+Keep the Home Assistant Sonos integration; add the speakers to Music Assistant
+as well. MA's Sonos provider talks to the speakers directly, so the two
+coexist, and the panel splits the work:
+
+* **Sonos entities** (`media_player.media_room` …) — play/pause, next, volume,
+  join/unjoin, now-playing metadata. Everything the mobile dashboard,
+  `script.apply_sonos_group`, the announcement TTS targets and the automations
+  already depend on keeps working untouched.
+* **MA entities** (`media_player.media_room_2` … — HA appends `_2` because the
+  names collide) — only `browse_media` and `play_media` from the Library sheet,
+  which is where MA earns its keep: playlists, radio, albums, artists and
+  favorites across providers, exactly the tree in the design. Sonos'
+  own browse only exposes favorites and a local library.
+
+To switch the Library sheet over: add the players in MA, confirm the entity
+ids HA created, set `music_library_suffix: "_2"` in
+`basement-wall-panel/common.yaml`, and change the `media_player.*` list in the
+"recently played" trigger of `packages/basement_wall_panel.yaml` to the MA
+entities so recents carry MA content ids. Do not remove the Sonos integration:
+MA does not provide TTS announcement targets or the Sonos-specific attributes
+the existing dashboard cards read.

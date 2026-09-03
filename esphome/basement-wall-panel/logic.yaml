@@ -387,7 +387,9 @@ script:
   # ================================================================ scenes page
   # Scene codes: 0 Morning · 1 Working · 2 Cleaning · 3 Welcome · 4 Basement
   # Evening · 5 Entertaining · 6 Movie · 7 Emergency · 8 Nightlight · 9 Outdoor ·
-  # 10 All Off. Visibility mirrors dashboards/modules/dynamic-scenes.yaml.
+  # 10 All Off · 11 Morning (daytime icon). The sets per period follow the
+  # design prototype (Morning · Day · Evening · Night); the period itself is
+  # picked with the repo's time / sun-elevation rules.
   - id: render_scenes
     then:
       - lambda: |-
@@ -396,14 +398,14 @@ script:
           int mins = now.is_valid() ? now.hour * 60 + now.minute : 19 * 60;
           float el = id(s_sun_elevation).state;
           bool has_el = !std::isnan(el);
-          bool morning = (mins >= 300 && mins < 720) || (has_el && el > 10);
-          bool evening = (mins >= 720 && mins < 1320) && ((has_el && el < 15) || mins >= 17 * 60 || !has_el);
           bool night = mins >= 1320 || mins < 300;
+          bool morning = !night && mins < 720;
+          bool evening = !night && !morning && ((has_el && el < 15) || mins >= 17 * 60 || !has_el);
           std::vector<int> codes;
-          if (morning) codes = {0, 1, 2, 9, 10};
-          else if (evening) codes = {3, id(bs_dinner).state ? 5 : 4, 6, 9, 10};
-          else if (night) codes = {7, 8, 9, 10};
-          else codes = {3, 4, 6, 9, 10};
+          if (night) codes = {7, 4, 6, 8, 9, 10};
+          else if (morning) codes = {0, 1, 2, 9, 10};
+          else if (evening) codes = {3, 4, 5, 6, 9, 10};
+          else codes = {11, 1, 2, 9, 10};
           id(g_scene_codes) = codes;
           bool outdoor_on = id(bs_outdoor_lights).state;
           struct Def { const char *name; uint32_t icon; bool active; uint32_t icon_color; };
@@ -419,17 +421,18 @@ script:
               case 7: return {"Emergency", 0xF0FF6, id(bs_sc_emergency).state, RED};
               case 8: return {"Nightlight", 0xF1A4C, id(bs_sc_nightlight).state, SLATE};
               case 9: return {outdoor_on ? "Outdoor Off" : "Outdoor", 0xF1020, false, SLATE};
+              case 11: return {"Morning", 0xF0599, id(bs_sc_good_morning).state, SLATE};
               default: return {"All Off", 0xF0E4F, id(bs_sc_good_night).state, SLATE};
             }
           };
-          lv_obj_t *rows[5] = {id(sc_row_0), id(sc_row_1), id(sc_row_2), id(sc_row_3), id(sc_row_4)};
-          lv_obj_t *icons[5] = {id(sc_icon_0), id(sc_icon_1), id(sc_icon_2), id(sc_icon_3), id(sc_icon_4)};
-          lv_obj_t *names[5] = {id(sc_name_0), id(sc_name_1), id(sc_name_2), id(sc_name_3), id(sc_name_4)};
-          lv_obj_t *actives[5] = {id(sc_name_active_0), id(sc_name_active_1), id(sc_name_active_2), id(sc_name_active_3), id(sc_name_active_4)};
-          lv_obj_t *ons[5] = {id(sc_on_0), id(sc_on_1), id(sc_on_2), id(sc_on_3), id(sc_on_4)};
-          lv_obj_t *glows[5] = {id(sc_glow_0), id(sc_glow_1), id(sc_glow_2), id(sc_glow_3), id(sc_glow_4)};
-          lv_obj_t *chevs[5] = {id(sc_chev_0), id(sc_chev_1), id(sc_chev_2), id(sc_chev_3), id(sc_chev_4)};
-          for (int i = 0; i < 5; i++) {
+          lv_obj_t *rows[6] = {id(sc_row_0), id(sc_row_1), id(sc_row_2), id(sc_row_3), id(sc_row_4), id(sc_row_5)};
+          lv_obj_t *icons[6] = {id(sc_icon_0), id(sc_icon_1), id(sc_icon_2), id(sc_icon_3), id(sc_icon_4), id(sc_icon_5)};
+          lv_obj_t *names[6] = {id(sc_name_0), id(sc_name_1), id(sc_name_2), id(sc_name_3), id(sc_name_4), id(sc_name_5)};
+          lv_obj_t *actives[6] = {id(sc_name_active_0), id(sc_name_active_1), id(sc_name_active_2), id(sc_name_active_3), id(sc_name_active_4), id(sc_name_active_5)};
+          lv_obj_t *ons[6] = {id(sc_on_0), id(sc_on_1), id(sc_on_2), id(sc_on_3), id(sc_on_4), id(sc_on_5)};
+          lv_obj_t *glows[6] = {id(sc_glow_0), id(sc_glow_1), id(sc_glow_2), id(sc_glow_3), id(sc_glow_4), id(sc_glow_5)};
+          lv_obj_t *chevs[6] = {id(sc_chev_0), id(sc_chev_1), id(sc_chev_2), id(sc_chev_3), id(sc_chev_4), id(sc_chev_5)};
+          for (int i = 0; i < 6; i++) {
             bool vis = i < (int) codes.size();
             show(rows[i], vis);
             if (!vis) continue;
@@ -449,9 +452,9 @@ script:
     then:
       - lambda: |-
           if (slot >= (int) id(g_scene_codes).size()) return;
-          static const char *ENT[11] = {"scene.good_morning_2", "scene.basement_work", "scene.basement_cleaning", "scene.welcome",
+          static const char *ENT[12] = {"scene.good_morning_2", "scene.basement_work", "scene.basement_cleaning", "scene.welcome",
                                         "scene.basement_evening", "scene.basement_entertaining", "scene.movie", "scene.emergency",
-                                        "scene.nightlight", "scene.outdoor_on", "scene.good_night"};
+                                        "scene.nightlight", "scene.outdoor_on", "scene.good_night", "scene.good_morning_2"};
           int c = id(g_scene_codes)[slot];
           std::string ent = ENT[c];
           if (c == 9 && id(bs_outdoor_lights).state) ent = "scene.outdoor_off";
@@ -491,7 +494,22 @@ script:
             return "Open · " + std::to_string(p) + "%";
           };
           text(id(sh_state_ff), label(id(ts_ff_state).state, id(s_ff_pos).state));
-          text(id(sh_state_wh), label(id(ts_wh_state).state, id(s_wh_pos).state));
+          // Whole House = min/max over the six covers (no group entity)
+          std::string st[6] = {id(ts_cv_0).state, id(ts_cv_1).state, id(ts_cv_2).state, id(ts_cv_3).state, id(ts_cv_4).state, id(ts_cv_5).state};
+          float ps[6] = {id(s_cv_0).state, id(s_cv_1).state, id(s_cv_2).state, id(s_cv_3).state, id(s_cv_4).state, id(s_cv_5).state};
+          bool opening = false, closing = false, any = false; int lo = 100, hi = 0;
+          for (int i = 0; i < 6; i++) {
+            if (st[i] == "opening") opening = true;
+            if (st[i] == "closing") closing = true;
+            if (!valid(st[i])) continue;
+            int p = std::isnan(ps[i]) ? (st[i] == "closed" ? 0 : 100) : (int) lroundf(ps[i]);
+            any = true; if (p < lo) lo = p; if (p > hi) hi = p;
+          }
+          std::string wh = "—";
+          if (opening) wh = "Opening…";
+          else if (closing) wh = "Closing…";
+          else if (any) wh = hi <= 0 ? "Closed" : (lo == hi ? "Open · " + std::to_string(hi) + "%" : "Open · " + std::to_string(lo) + "–" + std::to_string(hi) + "%");
+          text(id(sh_state_wh), wh);
           text(id(sh_state_mr), "");
           show(id(sh_badge_mr), true);
 
@@ -747,7 +765,7 @@ script:
       - homeassistant.event:
           event: esphome.basement_panel_browse
           data:
-            entity_id: !lambda "return id(g_active);"
+            entity_id: !lambda "return id(g_active) + std::string(\"${music_library_suffix}\");"
             media_content_id: !lambda "return cid;"
             media_content_type: !lambda "return ctype;"
 
@@ -807,7 +825,7 @@ script:
       - homeassistant.action:
           action: media_player.play_media
           data:
-            entity_id: !lambda "return id(g_active);"
+            entity_id: !lambda "return id(g_active) + std::string(\"${music_library_suffix}\");"
             media_content_id: !lambda "return cid;"
             media_content_type: !lambda "return ctype;"
 
@@ -894,10 +912,10 @@ script:
       delta: int
     then:
       - homeassistant.action:
-          action: input_number.set_value
+          action: water_heater.set_temperature
           data:
-            entity_id: input_number.pool_heater_setpoint
-            value: !lambda |-
+            entity_id: water_heater.omnilogic_pool_heater
+            temperature: !lambda |-
               float sp = id(s_pool_setpoint).state;
               int v = (std::isnan(sp) ? 80 : (int) lroundf(sp)) + delta;
               if (v < 70) v = 70; if (v > 90) v = 90;
