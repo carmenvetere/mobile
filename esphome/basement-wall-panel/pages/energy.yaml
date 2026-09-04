@@ -17,7 +17,7 @@ widgets:
             x: 32
             y: 104
             width: 656
-            height: 430
+            height: 444
             clickable: false
             widgets:
               # connecting bars (drawn first so the circles sit on top)
@@ -82,8 +82,16 @@ widgets:
             height: 96
             styles: st_hairline_top
             widgets:
-              - label: { x: 0, y: 12, text: "Powerwall", text_font: b500_16 }
-              - label: { id: en_reserve_lbl, x: 84, y: 12, text: "· reserve 20%", text_font: b500_16, text_color: "${c_text3}" }
+              - obj:
+                  x: 0
+                  y: 12
+                  width: SIZE_CONTENT
+                  height: SIZE_CONTENT
+                  clickable: false
+                  layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 6 }
+                  widgets:
+                    - label: { text: "Powerwall", text_font: b500_16 }
+                    - label: { id: en_reserve_lbl, text: "· reserve 20%", text_font: b500_16, text_color: "${c_text3}" }
               - label: { id: en_charge, align: TOP_RIGHT, x: 0, y: 8, text: "—", text_font: b600_22, text_color: "${c_slate}" }
               - slider:
                   id: en_slider

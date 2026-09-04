@@ -12,7 +12,7 @@ obj:
               width: 100%
               height: 56
               clickable: false
-              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, flex_align_track: CENTER }
               widgets:
                 - label: { id: sheet_release_notes_title, text: "Release notes", text_font: b300_32 }
                 - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_sheet_release_notes } }

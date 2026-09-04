@@ -11,6 +11,7 @@ obj:
     type: FLEX
     flex_flow: ROW
     flex_align_cross: CENTER
+    flex_align_track: CENTER
     pad_column: 14
   widgets:
     - label:
@@ -43,7 +44,7 @@ obj:
     - button:
         id: grp_view_${n}
         hidden: true
-        width: 96
+        width: 116
         height: 48
         radius: 24
         layout:
@@ -51,6 +52,7 @@ obj:
           flex_flow: ROW
           flex_align_main: CENTER
           flex_align_cross: CENTER
+          flex_align_track: CENTER
           pad_column: 6
         widgets:
           - label:

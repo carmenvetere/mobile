@@ -18,7 +18,7 @@ widgets:
             width: 656
             height: 80
             clickable: false
-            layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, pad_column: 12 }
+            layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 12 }
             widgets:
               - !include { file: ../widgets/mode_tile.yaml, vars: { id: guests, icon: "${i_bed}", name: "Guests" } }
               - !include { file: ../widgets/mode_tile.yaml, vars: { id: cleaners, icon: "${i_broom}", name: "Cleaners" } }

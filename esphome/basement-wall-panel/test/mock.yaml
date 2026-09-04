@@ -1,0 +1,137 @@
+# Headless test harness: feeds the prototype's demo data into every import and
+# walks the UI, taking a screenshot of each page and sheet. Not for the panel.
+script:
+  - id: mock_data
+    then:
+      - lambda: |-
+          id(ts_weather_cond).publish_state("partlycloudy");
+          id(s_outdoor_temp).publish_state(72);
+          id(ts_alarm).publish_state("disarmed");
+          id(s_notif_count).publish_state(3);
+          id(bs_grid).publish_state(true);
+          id(s_pw_charge).publish_state(76);
+          id(s_solar).publish_state(4200); id(s_grid).publish_state(0); id(s_load).publish_state(1800); id(s_battery).publish_state(-2400);
+          id(s_reserve).publish_state(20);
+          id(s_sun_elevation).publish_state(30);
+          id(bs_door_front).publish_state(false); id(bs_door_kitchen).publish_state(false); id(bs_door_living).publish_state(false);
+          id(bs_door_mudroom).publish_state(false); id(bs_door_garage_entry).publish_state(false); id(ts_garage_door).publish_state("open");
+          id(bs_sc_good_morning).publish_state(false); id(bs_sc_basement_work).publish_state(false); id(bs_sc_basement_cleaning).publish_state(false);
+          id(bs_sc_welcome).publish_state(false); id(bs_sc_basement_evening).publish_state(true); id(bs_sc_basement_entertaining).publish_state(false);
+          id(bs_sc_movie).publish_state(false); id(bs_sc_emergency).publish_state(false); id(bs_sc_nightlight).publish_state(false);
+          id(bs_sc_good_night).publish_state(false); id(bs_outdoor_lights).publish_state(false); id(bs_dinner).publish_state(false);
+          id(ts_ff_state).publish_state("open"); id(s_ff_pos).publish_state(100);
+          const char *cv[6] = {"open","open","open","open","closed","open"};
+          id(ts_cv_0).publish_state(cv[0]); id(ts_cv_1).publish_state(cv[1]); id(ts_cv_2).publish_state(cv[2]); id(ts_cv_3).publish_state(cv[3]); id(ts_cv_4).publish_state(cv[4]); id(ts_cv_5).publish_state(cv[5]);
+          id(s_cv_0).publish_state(100); id(s_cv_1).publish_state(100); id(s_cv_2).publish_state(100); id(s_cv_3).publish_state(100); id(s_cv_4).publish_state(0); id(s_cv_5).publish_state(100);
+          id(ts_players).publish_state(
+            "media_player.media_room|playing|32|Ocean Floor|Bonobo · Fragments|media_player.media_room|media_player.media_room,media_player.pool|;"
+            "media_player.pool|playing|45|Ocean Floor|Bonobo · Fragments|media_player.media_room|media_player.media_room,media_player.pool|;"
+            "media_player.mud_room|idle|15||||media_player.mud_room|;media_player.gym|idle|20||||media_player.gym|;"
+            "media_player.living_room|playing|28|Kind of Blue|Miles Davis|media_player.living_room|media_player.living_room|;"
+            "media_player.kitchen|playing|24|Dinner Jazz|Music Assistant playlist|media_player.kitchen|media_player.kitchen|;"
+            "media_player.office|idle|18||||media_player.office|;media_player.deck|idle|30||||media_player.deck|");
+          id(ts_browse_title).publish_state("Library");
+          id(ts_browse_items).publish_state("Playlists|18|playlist|library://playlists|1;Stations|9|radio|library://radios|1;Albums|867|album|library://albums|1;Artists|1,204|artist|library://artists|1;Favorites|All providers|favorite|library://favorites|1");
+          id(ts_recents).publish_state("Pool Mix — 2026|Playlist|playlist|a|0;Radio Paradise|Station|radio|b|0;Dinner Jazz|Playlist|playlist|c|0;Deep Focus|Playlist|playlist|d|0;WNYC|Station|radio|e|0");
+          id(ts_heater).publish_state("heat_pump"); id(s_pool_setpoint).publish_state(88); id(s_water_temp).publish_state(84);
+          id(bs_pump).publish_state(true); id(s_pump_speed).publish_state(35); id(s_salt).publish_state(3200); id(s_chlor_pct).publish_state(60);
+          id(bs_chlor).publish_state(true);
+          id(s_fa_lr).publish_state(62); id(s_fa_bs).publish_state(60); id(s_co2_ceiling).publish_state(1100); id(s_co2_recover).publish_state(850);
+          id(s_vent_min).publish_state(45); id(s_vent_max).publish_state(78); id(s_freecool).publish_state(4); id(s_minvent).publish_state(90);
+          id(s_away_heat).publish_state(62); id(s_away_cool).publish_state(78);
+          id(s_e_well).publish_state(1.4); id(s_e_pool).publish_state(6.8); id(s_e_ev).publish_state(11.2);
+          id(s_upper_filter).publish_state(2140); id(s_lower_filter).publish_state(744);
+          id(ts_wh_flushed).publish_state("2026-03-14 10:00:00"); id(ts_dryer_cleaned).publish_state("2026-01-08 10:00:00");
+          id(ts_wx_now).publish_state("72|partlycloudy|74|79|61");
+          id(ts_wx_hours).publish_state("Now|72|partlycloudy;3 PM|76|partlycloudy;4 PM|78|sunny;5 PM|77|sunny;6 PM|73|cloudy;7 PM|69|rainy");
+          id(ts_wx_days).publish_state("Today|79|61|40|partlycloudy;Mon|74|58|80|pouring;Tue|71|55|20|windy;Wed|77|57|0|sunny;Thu|82|63|10|sunny");
+          id(ts_notifs).publish_state("filter|warn|Upper HVAC filter due|Changed 94 days ago — replace and reset in Settings.|Today, 8:02 AM;door|alert|Basement door left open|Open 22 minutes. Alarm cannot arm to Away.|18 minutes ago;grid|info|Peak rate window starts at 4 PM|Powerwall will hold reserve at 20% until 9 PM.|1 hour ago");
+          id(bs_guest).publish_state(true); id(bs_cleaners).publish_state(false); id(bs_offgrid).publish_state(false);
+          id(bs_z_lr).publish_state(true); id(bs_z_bs).publish_state(true); id(bs_z_of).publish_state(false); id(bs_z_bd).publish_state(true);
+          id(bs_a_leave).publish_state(true); id(bs_a_11pm).publish_state(true); id(bs_a_7am).publish_state(true); id(bs_a_arrive).publish_state(false);
+          id(bs_m_out).publish_state(true); id(bs_m_bath).publish_state(true); id(bs_m_gym).publish_state(true);
+          id(bs_l_eve).publish_state(true); id(bs_l_morn).publish_state(true); id(bs_l_night).publish_state(true); id(bs_l_sunset).publish_state(true); id(bs_l_mid).publish_state(true); id(bs_l_spot).publish_state(true);
+          id(bs_s_sched).publish_state(true); id(bs_s_sunset).publish_state(true); id(bs_s_bed).publish_state(true); id(bs_s_bg).publish_state(true); id(bs_s_fg).publish_state(true);
+          id(bs_s_m_ff).publish_state(false); id(bs_s_m_pb).publish_state(false); id(bs_s_m_of).publish_state(false); id(bs_s_m_bg).publish_state(false); id(bs_s_m_fg).publish_state(false);
+          id(bs_v_night).publish_state(true);
+          panel::text(id(clock_time), "5:48"); panel::text(id(clock_ampm), "AM · FRI");
+
+  - id: walk
+    then:
+      - delay: 1500ms
+      - script.execute: mock_data
+      - delay: 800ms
+      - lambda: "paneltest::snap(\"01-scenes\");"
+      - script.execute: { id: set_page, n: 0 }
+      - delay: 600ms
+      - lambda: "paneltest::snap(\"02-alarm\");"
+      - script.execute: { id: set_page, n: 1 }
+      - delay: 600ms
+      - lambda: "paneltest::snap(\"03-energy\");"
+      - script.execute: { id: set_page, n: 3 }
+      - delay: 600ms
+      - lambda: "paneltest::snap(\"04-shades\");"
+      - script.execute: { id: set_page, n: 4 }
+      - delay: 600ms
+      - lambda: "paneltest::snap(\"05-music\");"
+      - script.execute: { id: set_page, n: 5 }
+      - delay: 600ms
+      - lambda: "paneltest::snap(\"06-pool\");"
+      - script.execute: { id: set_page, n: 6 }
+      - delay: 600ms
+      - lambda: "paneltest::snap(\"07-settings\");"
+      - script.execute: open_menu
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"08-menu\");"
+      - script.execute: close_menu
+      - script.execute: voice_ui_open
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"09-voice\");"
+      - script.execute: voice_close
+      - script.execute: { id: open_sheet, name: weather }
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"10-weather\");"
+      - script.execute: close_sheets
+      - script.execute: { id: open_sheet, name: notifications }
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"11-notifications\");"
+      - script.execute: close_sheets
+      - script.execute: { id: open_sheet, name: music_library }
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"12-library\");"
+      - script.execute: close_sheets
+      - script.execute: { id: open_sheet, name: music_group }
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"14-group\");"
+      - script.execute: close_sheets
+      - script.execute: { id: open_sheet, name: music_volumes }
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"15-volumes\");"
+      - script.execute: close_sheets
+      - script.execute: { id: open_sheet, name: pool_settings }
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"16-pool-settings\");"
+      - script.execute: close_sheets
+      - script.execute: { id: open_sheet, name: maintenance }
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"17-maintenance\");"
+      - script.execute: close_sheets
+      - script.execute: { id: open_sheet, name: energy }
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"18-energy-grid\");"
+      - script.execute: close_sheets
+      - script.execute: { id: open_sheet, name: climate }
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"19-climate\");"
+      - script.execute: close_sheets
+      - script.execute: { id: open_sheet, name: release_notes }
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"20-release-notes\");"
+      - script.execute: close_sheets
+      - script.execute: { id: open_sheet, name: not_ready }
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"21-not-ready\");"
+      - script.execute: close_sheets
+      - lambda: "id(ts_alarm).publish_state(\"triggered\");"
+      - delay: 300ms
+      - lambda: "paneltest::snap(\"22-critical\"); fflush(stderr); exit(0);"

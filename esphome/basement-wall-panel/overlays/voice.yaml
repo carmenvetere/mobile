@@ -33,6 +33,7 @@ obj:
           type: FLEX
           flex_flow: ROW
           flex_align_cross: CENTER
+          flex_align_track: CENTER
           pad_column: 8
         widgets:
           - obj: { id: voice_bar_0, clickable: false, width: 10, height: 14, radius: 5, bg_color: "${c_slate}", bg_opa: COVER }

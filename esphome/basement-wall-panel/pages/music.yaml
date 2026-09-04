@@ -87,7 +87,7 @@ widgets:
             width: SIZE_CONTENT
             height: 28
             clickable: false
-            layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, pad_column: 8 }
+            layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 8 }
             widgets:
               - label: { id: np_spk_icon, text: "${i_sofa}", text_font: mdi_21, text_color: "${c_slate}" }
               - label: { id: np_spk_name, text: "Media Room", text_font: b600_18, text_color: "${c_slate}" }
@@ -99,7 +99,7 @@ widgets:
             width: SIZE_CONTENT
             height: 88
             clickable: false
-            layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, pad_column: 36 }
+            layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 36 }
             widgets:
               - button:
                   width: 72
@@ -135,7 +135,7 @@ widgets:
             width: 656
             height: 60
             clickable: false
-            layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, pad_column: 14 }
+            layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 14 }
             widgets:
               - label: { text: "${i_volume_medium}", text_font: mdi_28, text_color: "${c_text2}" }
               - slider:

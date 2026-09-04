@@ -124,6 +124,19 @@ the red pill.
 * **Brightness / voice volume / wake-word toggle** — logged, not applied.
 * **Wi-Fi row** — shows "Simulator".
 
+## Screenshots
+
+`screenshots/` holds a capture of every page and sheet, rendered by the
+headless test build (`basement-wall-panel-test.yaml`) with the prototype's
+demo data. That build is the simulator plus `basement-wall-panel/test/mock.yaml`:
+it feeds demo values into every import, walks the UI, writes a PPM per screen
+into `$SNAP_DIR`, and exits. Handy for checking a layout change without Home
+Assistant:
+
+```bash
+SNAP_DIR=/tmp/panel-shots esphome run esphome/basement-wall-panel-test.yaml
+```
+
 ## Building the real panel
 
 ```bash

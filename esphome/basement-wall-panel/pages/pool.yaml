@@ -51,7 +51,7 @@ widgets:
                   bg_opa: COVER
                   pad_left: 18
                   pad_right: 20
-                  layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, pad_column: 8 }
+                  layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 8 }
                   widgets:
                     - label: { id: pool_heater_icon, text: "${i_power}", text_font: mdi_21, text_color: "${c_text2}" }
                     - label: { id: pool_heater_lbl, text: "Off", text_font: b600_16, text_color: "${c_text2}" }
@@ -116,14 +116,14 @@ widgets:
                   width: 656
                   height: 48
                   clickable: false
-                  layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, pad_column: 12 }
+                  layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 12 }
                   widgets:
                     - button:
                         id: chip_low
                         width: 210
                         height: 48
                         radius: 14
-                        layout: { type: FLEX, flex_flow: ROW, flex_align_main: CENTER, flex_align_cross: CENTER, pad_column: 8 }
+                        layout: { type: FLEX, flex_flow: ROW, flex_align_main: CENTER, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 8 }
                         widgets:
                           - label: { id: chip_low_lbl, text: "Low", text_font: b600_16 }
                           - label: { id: chip_low_pct, text: "35%", text_font: b400_14, text_color: "${c_text3}" }
@@ -134,7 +134,7 @@ widgets:
                         width: 210
                         height: 48
                         radius: 14
-                        layout: { type: FLEX, flex_flow: ROW, flex_align_main: CENTER, flex_align_cross: CENTER, pad_column: 8 }
+                        layout: { type: FLEX, flex_flow: ROW, flex_align_main: CENTER, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 8 }
                         widgets:
                           - label: { id: chip_med_lbl, text: "Med", text_font: b600_16 }
                           - label: { id: chip_med_pct, text: "65%", text_font: b400_14, text_color: "${c_text3}" }
@@ -145,7 +145,7 @@ widgets:
                         width: 210
                         height: 48
                         radius: 14
-                        layout: { type: FLEX, flex_flow: ROW, flex_align_main: CENTER, flex_align_cross: CENTER, pad_column: 8 }
+                        layout: { type: FLEX, flex_flow: ROW, flex_align_main: CENTER, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 8 }
                         widgets:
                           - label: { id: chip_high_lbl, text: "High", text_font: b600_16 }
                           - label: { id: chip_high_pct, text: "100%", text_font: b400_14, text_color: "${c_text3}" }

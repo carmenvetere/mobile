@@ -1333,6 +1333,17 @@ script:
           lv_obj_add_state(id(sh_stop_mr), LV_STATE_DISABLED);
           lv_obj_add_state(id(sh_close_mr), LV_STATE_DISABLED);
           lv_tileview_set_tile_by_index(id(tv), 2, 0, LV_ANIM_OFF);
+          std::vector<lv_obj_t *> keep = {id(tv), id(sheet_notifications_body), id(sheet_not_ready_body), id(sheet_music_library_body),
+            id(sheet_music_group_body), id(sheet_music_volumes_body), id(sheet_pool_settings_body), id(sheet_climate_body), id(sheet_alarm_body),
+            id(sheet_motion_body), id(sheet_energy_body), id(sheet_shades_body), id(sheet_vacuum_body), id(sheet_panel_body),
+            id(sheet_maintenance_body), id(sheet_release_notes_body)};
+          panel::tidy(lv_screen_active(), keep);
+          // LVGL's default group focuses the first button it is handed, and
+          // that focus scrolls the screen to "reveal" it. Nothing here uses
+          // encoder/keypad navigation, so empty the group and undo any scroll.
+          if (lv_group_t *g = lv_group_get_default()) lv_group_remove_all_objs(g);
+          lv_anim_delete(lv_screen_active(), nullptr);
+          lv_obj_scroll_to(lv_screen_active(), 0, 0, LV_ANIM_OFF);
       - script.execute:
           id: render_dots
           p: 2

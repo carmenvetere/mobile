@@ -279,96 +279,118 @@ sensor:
 binary_sensor:
   # ---- status / energy ----
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_grid
     entity_id: binary_sensor.bayberry_grid_status
     on_state: [script.execute: render_status]
   # ---- alarm sensors ----
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_door_front
     entity_id: binary_sensor.front_door
     on_state: [script.execute: render_alarm]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_door_kitchen
     entity_id: binary_sensor.kitchen_french_doors
     on_state: [script.execute: render_alarm]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_door_living
     entity_id: binary_sensor.living_room_french_doors
     on_state: [script.execute: render_alarm]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_door_mudroom
     entity_id: binary_sensor.mudroom_entry_door
     on_state: [script.execute: render_alarm]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_door_garage_entry
     entity_id: binary_sensor.mudroom_garage_door
     on_state: [script.execute: render_alarm]
   # ---- scenes ----
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_sc_good_morning
     entity_id: binary_sensor.scene_good_morning
     on_state: [script.execute: render_scenes]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_sc_basement_work
     entity_id: binary_sensor.scene_basement_work
     on_state: [script.execute: render_scenes]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_sc_basement_cleaning
     entity_id: binary_sensor.scene_basement_cleaning
     on_state: [script.execute: render_scenes]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_sc_welcome
     entity_id: binary_sensor.scene_welcome
     on_state: [script.execute: render_scenes]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_sc_basement_evening
     entity_id: binary_sensor.scene_basement_evening
     on_state: [script.execute: render_scenes]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_sc_basement_entertaining
     entity_id: binary_sensor.scene_basement_entertaining
     on_state: [script.execute: render_scenes]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_sc_movie
     entity_id: binary_sensor.scene_movie
     on_state: [script.execute: render_scenes]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_sc_emergency
     entity_id: binary_sensor.scene_emergency
     on_state: [script.execute: render_scenes]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_sc_nightlight
     entity_id: binary_sensor.scene_nightlight
     on_state: [script.execute: render_scenes]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_sc_good_night
     entity_id: binary_sensor.scene_good_night
     on_state: [script.execute: render_scenes]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_outdoor_lights
     entity_id: binary_sensor.outdoor_lights_on
     on_state: [script.execute: render_scenes]
   # ---- settings mode tiles ----
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_guest
     entity_id: input_boolean.guest_mode
     on_state: [script.execute: render_hub]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_cleaners
     entity_id: input_boolean.cleaners_mode
     on_state: [script.execute: render_hub]
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_dinner
     entity_id: input_boolean.dinner_party
     on_state:
       - script.execute: render_hub
       - script.execute: render_scenes
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_offgrid
     entity_id: switch.bayberry_off_grid_operation
     on_state: [script.execute: render_hub]
   # ---- pool ----
   - platform: homeassistant
+    trigger_on_initial_state: true
     id: bs_pump
     entity_id: switch.omnilogic_pool_filter_pump
     on_state: [script.execute: render_pool]

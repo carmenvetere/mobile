@@ -127,10 +127,20 @@ inline std::string thousands(long v) {
   return (v < 0 ? "-" : "") + s;
 }
 // Watts -> "4.2 kW" (or "320 W" under 1 kW)
-inline std::string kw(float w) {
-  float a = fabsf(w);
-  if (a < 1000.0f) return fmt_int("%d W", (int) lroundf(a));
-  return fmt("%.1f kW", a / 1000.0f);
+inline std::string kw(float w) { return fmt("%.1f kW", fabsf(w) / 1000.0f); }
+// Turn off scrollbars everywhere and scrolling on everything except `keep`
+// (the tileview and the sheet bodies). scrollbar_mode/scrollable are object
+// properties, not styles, so the YAML theme cannot set them.
+inline void tidy(lv_obj_t *o, const std::vector<lv_obj_t *> &keep) {
+  lv_obj_set_scrollbar_mode(o, LV_SCROLLBAR_MODE_OFF);
+  bool k = false;
+  for (auto *x : keep) if (x == o) k = true;
+  if (!k) lv_obj_remove_flag(o, LV_OBJ_FLAG_SCROLLABLE);
+  // Buttons, switches and sliders default to SCROLL_ON_FOCUS; a focus event on
+  // one inside a hidden sheet would scroll the whole screen to "reveal" it.
+  lv_obj_remove_flag(o, LV_OBJ_FLAG_SCROLL_ON_FOCUS);
+  uint32_t n = lv_obj_get_child_count(o);
+  for (uint32_t i = 0; i < n; i++) tidy(lv_obj_get_child(o, i), keep);
 }
 inline std::string pct(float v) { return fmt_int("%d%%", (int) lroundf(v)); }
 inline std::string deg(float v) { return fmt_int("%d°", (int) lroundf(v)); }

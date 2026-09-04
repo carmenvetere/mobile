@@ -13,13 +13,13 @@ obj:
               width: 100%
               height: 64
               clickable: false
-              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, flex_align_track: CENTER }
               widgets:
                 - obj:
                     clickable: false
                     width: SIZE_CONTENT
                     height: SIZE_CONTENT
-                    layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, pad_column: 14 }
+                    layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 14 }
                     widgets:
                       - label: { id: wx_hdr_icon, text: "${i_weather_partly_cloudy}", text_font: mdi_52, text_color: "${c_slate}" }
                       - obj:
@@ -31,14 +31,14 @@ obj:
                             - label: { id: wx_temp, text: "--°", text_font: b600_40 }
                             - label: { id: wx_sub, text: "—", text_font: b400_16, text_color: "${c_text3}" }
                 - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_weather } }
-          - !include { file: ../widgets/eyebrow.yaml, vars: { id: wx_eyebrow_hours, text: "NEXT HOURS" } }
+          - label: { id: wx_eyebrow_hours, x: 0, y: 86, text: "NEXT HOURS", styles: st_eyebrow }
           - obj:
               x: 0
               y: 116
               width: 100%
               height: 104
               clickable: false
-              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, flex_align_track: CENTER }
               widgets:
                 - !include { file: ../widgets/wx_hour.yaml, vars: { n: 0 } }
                 - !include { file: ../widgets/wx_hour.yaml, vars: { n: 1 } }

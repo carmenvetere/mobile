@@ -26,18 +26,25 @@ template:
       - trigger: homeassistant
         event: start
     action:
+      # Either call may fail (integration still starting, or a forecast type the
+      # provider does not offer); the sensor must still publish with what it has.
       - action: weather.get_forecasts
         target:
           entity_id: weather.bayberry
         data:
           type: hourly
         response_variable: hourly
+        continue_on_error: true
       - action: weather.get_forecasts
         target:
           entity_id: weather.bayberry
         data:
           type: daily
         response_variable: daily
+        continue_on_error: true
+      - variables:
+          hourly_fc: "{{ hourly['weather.bayberry'].forecast if hourly is defined and hourly['weather.bayberry'] is defined else [] }}"
+          daily_fc: "{{ daily['weather.bayberry'].forecast if daily is defined and daily['weather.bayberry'] is defined else [] }}"
     sensor:
       - name: Basement Panel Weather
         unique_id: basement_panel_weather
@@ -45,13 +52,13 @@ template:
         state: "{{ states('sensor.bayberry_tempest_temperature') | float(0) | round(0) | int }}"
         attributes:
           now: >-
-            {% set d = daily['weather.bayberry'].forecast %}
+            {% set d = daily_fc %}
             {% set temp = states('sensor.bayberry_tempest_temperature') | float(0) %}
             {% set feels = state_attr('weather.bayberry', 'apparent_temperature') %}
             {{ temp | round(0) | int }}|{{ states('weather.bayberry') }}|{{ (feels if feels is not none else temp) | float(0) | round(0) | int }}|{{ (d[0].temperature | round(0) | int) if d else '' }}|{{ (d[0].templow | round(0) | int) if d and d[0].templow is defined else '' }}
           hours: >-
             {% set ns = namespace(out=[]) %}
-            {% for f in hourly['weather.bayberry'].forecast[:6] %}
+            {% for f in hourly_fc[:6] %}
               {% set t = as_local(as_datetime(f.datetime)) %}
               {% set lbl = 'Now' if loop.first else t.strftime('%-I %p') %}
               {% set ns.out = ns.out + [lbl ~ '|' ~ (f.temperature | round(0) | int) ~ '|' ~ f.condition] %}
@@ -59,7 +66,7 @@ template:
             {{ ns.out | join(';') }}
           days: >-
             {% set ns = namespace(out=[]) %}
-            {% for f in daily['weather.bayberry'].forecast[:5] %}
+            {% for f in daily_fc[:5] %}
               {% set t = as_local(as_datetime(f.datetime)) %}
               {% set lbl = 'Today' if loop.first else t.strftime('%a') %}
               {% set pop = f.precipitation_probability if f.precipitation_probability is defined else 0 %}

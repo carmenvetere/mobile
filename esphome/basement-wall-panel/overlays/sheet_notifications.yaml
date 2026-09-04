@@ -12,14 +12,14 @@ obj:
               width: 100%
               height: 56
               clickable: false
-              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER }
+              layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, flex_align_track: CENTER }
               widgets:
                 - label: { id: sheet_notifications_title, text: "Notifications", text_font: b300_32 }
                 - obj:
                     clickable: false
                     width: SIZE_CONTENT
                     height: 56
-                    layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, pad_column: 14 }
+                    layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 14 }
                     widgets:
                       - button:
                           id: nf_clear_all
@@ -48,7 +48,7 @@ obj:
                     width: 100%
                     height: 300
                     clickable: false
-                    layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: CENTER, flex_align_cross: CENTER, pad_row: 12 }
+                    layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: CENTER, flex_align_cross: CENTER, flex_align_track: CENTER, pad_row: 12 }
                     widgets:
                       - label: { text: "${i_bell_check_outline}", text_font: mdi_72, text_color: "${c_text4}" }
                       - label: { text: "All caught up", text_font: b500_20, text_color: "${c_text4}" }
