@@ -181,9 +181,14 @@ built-in ESPHome model, so no init sequence or timing is needed.
    `temperature` attribute back.
 6. **Scenes** — the prototype's sets per period (see Design fidelity notes).
 
-Still open: the Notification Center service/attribute names (marked VERIFY in
-`packages/basement_wall_panel.yaml`), Media Room shades (no entity yet), and
-the audio GPIOs on the hardware build.
+7. **Notifications** — wired to the Notification Center integration
+   (`carmenvetere/notifications`): rows come from `sensor.notification_center`'s
+   `alerts` list, the ✕ calls `notification_center.dismiss` with the alert's
+   tag and only shows for alerts whose rule allows dismissal, and Clear all
+   dismisses every dismissable alert.
+
+Still open: Media Room shades (no entity yet) and the audio GPIOs on the
+hardware build.
 
 ## Music Assistant
 

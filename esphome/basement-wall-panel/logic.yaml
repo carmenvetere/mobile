@@ -1183,6 +1183,8 @@ script:
           lv_obj_t *titles[6] = {id(nf_title_0), id(nf_title_1), id(nf_title_2), id(nf_title_3), id(nf_title_4), id(nf_title_5)};
           lv_obj_t *bodies[6] = {id(nf_body_0), id(nf_body_1), id(nf_body_2), id(nf_body_3), id(nf_body_4), id(nf_body_5)};
           lv_obj_t *times[6] = {id(nf_time_0), id(nf_time_1), id(nf_time_2), id(nf_time_3), id(nf_time_4), id(nf_time_5)};
+          lv_obj_t *dismiss[6] = {id(nf_dismiss_0), id(nf_dismiss_1), id(nf_dismiss_2), id(nf_dismiss_3), id(nf_dismiss_4), id(nf_dismiss_5)};
+          bool any_dismissable = false;
           for (int i = 0; i < 6; i++) {
             bool vis = i < (int) panel::state().notifs.size();
             show(rows[i], vis);
@@ -1195,9 +1197,11 @@ script:
             text_color(icons[i], col);
             text(titles[i], n.title); text_color(titles[i], alert ? RED : warn ? AMBER : TEXT);
             text(bodies[i], n.body); text(times[i], n.time);
+            show(dismiss[i], n.dismissable);
+            if (n.dismissable) any_dismissable = true;
           }
           show(id(nf_empty), panel::state().notifs.empty());
-          show(id(nf_clear_all), !panel::state().notifs.empty());
+          show(id(nf_clear_all), any_dismissable);
 
   - id: notif_dismiss
     parameters:
@@ -1210,7 +1214,7 @@ script:
             - homeassistant.action:
                 action: script.basement_panel_notification_dismiss
                 data:
-                  notification_id: !lambda "return panel::state().notifs[n].id;"
+                  tag: !lambda "return panel::state().notifs[n].id;"
 
   - id: notif_clear
     then:

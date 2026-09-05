@@ -188,11 +188,11 @@ template:
             {% endfor %}
             {{ ns.out[:5] | join(';') }}
 
-  # ---- notifications: Notification Center items -------------------------------
-  #   id|level|title|body|time;...
-  # VERIFY: the attribute/field names below (notifications, id, priority, title,
-  # message, timestamp) follow the Notification Center integration's sensor;
-  # adjust if the integration exposes them under different names.
+  # ---- notifications: Notification Center alerts --------------------------
+  #   tag|priority|title|message|age|dismissable;...
+  # Source: sensor.notification_center attribute `alerts` (the notifications
+  # integration's alert_list(): tag, title, message, priority
+  # critical/warning/info/digest, icon, color, created_at, age_min, actions).
   - sensor:
       - name: Basement Panel Notifications
         unique_id: basement_panel_notifications
@@ -200,34 +200,41 @@ template:
         state: "{{ states('sensor.notification_center') }}"
         attributes:
           items: >-
-            {% set items = state_attr('sensor.notification_center', 'notifications') or state_attr('sensor.notification_center', 'items') or [] %}
+            {% set alerts = state_attr('sensor.notification_center', 'alerts') or [] %}
             {% set ns = namespace(out=[]) %}
-            {% for n in items[:6] %}
-              {% set nid = n.id | default(n.notification_id | default(n.dedup_tag | default(loop.index))) %}
-              {% set level = n.priority | default(n.level | default('info')) %}
-              {% set ts = n.timestamp | default(n.created | default(n.time | default(''))) %}
-              {% set when = relative_time(as_datetime(ts)) ~ ' ago' if ts and as_datetime(ts) is not none else (ts | string) %}
+            {% for a in alerts[:6] %}
+              {% set age = a.age_min | default(0) | int %}
+              {% set when = 'Just now' if age < 1 else (age ~ ' min ago' if age < 60 else ((age // 60) ~ ' h ago' if age < 1440 else (age // 1440) ~ ' d ago')) %}
+              {% set can_dismiss = '1' if 'dismiss' in (a.actions | default([])) else '0' %}
               {% set ns.out = ns.out + [
-                (nid | string) ~ '|' ~ level ~ '|' ~ (n.title | default('') | string | replace('|', '/') | replace(';', ',')) ~ '|'
-                ~ (n.message | default(n.body | default('')) | string | replace('|', '/') | replace(';', ',') | replace('\n', ' ')) ~ '|' ~ when] %}
+                (a.tag | string | replace('|', '/') | replace(';', ',')) ~ '|' ~ (a.priority | default('info')) ~ '|'
+                ~ (a.title | default('') | string | replace('|', '/') | replace(';', ',')) ~ '|'
+                ~ (a.message | default('') | string | replace('|', '/') | replace(';', ',') | replace('\n', ' ')) ~ '|' ~ when ~ '|' ~ can_dismiss] %}
             {% endfor %}
             {{ ns.out | join(';') }}
 
 script:
-  # VERIFY: the Notification Center integration's dismiss service name/fields.
   basement_panel_notification_dismiss:
     alias: "Basement panel: dismiss notification"
     icon: mdi:bell-off-outline
     fields:
-      notification_id:
-        description: Notification id from sensor.basement_panel_notifications
+      tag:
+        description: Alert tag (from sensor.notification_center → alerts[].tag)
         example: power_outage
     sequence:
       - action: notification_center.dismiss
         data:
-          notification_id: "{{ notification_id }}"
+          tag: "{{ tag }}"
   basement_panel_notification_clear_all:
     alias: "Basement panel: clear all notifications"
     icon: mdi:bell-check-outline
     sequence:
-      - action: notification_center.dismiss_all
+      - repeat:
+          for_each: >-
+            {{ (state_attr('sensor.notification_center', 'alerts') or [])
+               | selectattr('actions', 'defined') | selectattr('actions', 'contains', 'dismiss')
+               | map(attribute='tag') | list }}
+          sequence:
+            - action: notification_center.dismiss
+              data:
+                tag: "{{ repeat.item }}"

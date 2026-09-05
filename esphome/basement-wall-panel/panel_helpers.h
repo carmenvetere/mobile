@@ -313,6 +313,7 @@ inline std::string browse_icon(const std::string &type) {
 // id|level|title|body|time;...
 struct Notif {
   std::string id, level, title, body, time;
+  bool dismissable{true};
 };
 inline std::vector<Notif> parse_notifs(const std::string &s) {
   std::vector<Notif> out;
@@ -326,6 +327,7 @@ inline std::vector<Notif> parse_notifs(const std::string &s) {
     n.title = field(f, 2);
     n.body = field(f, 3);
     n.time = field(f, 4);
+    n.dismissable = field(f, 5, "1") != "0";
     out.push_back(n);
   }
   return out;
