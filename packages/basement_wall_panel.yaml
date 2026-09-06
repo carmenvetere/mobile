@@ -136,22 +136,29 @@ template:
         data: >-
           {% if cid %}{{ {'media_content_id': cid, 'media_content_type': ctype} }}{% else %}{{ {} }}{% endif %}
         response_variable: result
+        continue_on_error: true
+      # Copy the response into plain variables: entity templates only see
+      # variables, not response_variable results directly.
+      - variables:
+          browse_title: "{{ result.title if result is defined and result.title is defined else 'Library' }}"
+          browse_items: >-
+            {% set children = result.children if result is defined and result.children is defined else [] %}
+            {% set ns = namespace(out=[]) %}
+            {% for c in children[:12] %}
+              {% set sub = (c.media_content_type | default('')) | replace('_', ' ') | title %}
+              {% set ns.out = ns.out + [
+                (c.title | default('') | string | replace('|', '/') | replace(';', ',')) ~ '|' ~ sub ~ '|' ~ (c.media_content_type | default('')) ~ '|'
+                ~ (c.media_content_id | default('') | string | replace('|', '%7C') | replace(';', '%3B')) ~ '|' ~ ('1' if c.can_expand | default(false) else '0')] %}
+            {% endfor %}
+            {{ ns.out | join(';') }}
     sensor:
       - name: Basement Panel Music Browse
         unique_id: basement_panel_music_browse
         icon: mdi:music-box-multiple
         state: "{{ now().isoformat() }}"
         attributes:
-          title: "{{ result.title | default('Library') }}"
-          items: >-
-            {% set ns = namespace(out=[]) %}
-            {% for c in (result.children | default([]))[:12] %}
-              {% set sub = (c.media_content_type | default('')) | replace('_', ' ') | title %}
-              {% set ns.out = ns.out + [
-                (c.title | string | replace('|', '/') | replace(';', ',')) ~ '|' ~ sub ~ '|' ~ (c.media_content_type | default('')) ~ '|'
-                ~ (c.media_content_id | string | replace('|', '%7C') | replace(';', '%3B')) ~ '|' ~ ('1' if c.can_expand else '0')] %}
-            {% endfor %}
-            {{ ns.out | join(';') }}
+          title: "{{ browse_title }}"
+          items: "{{ browse_items }}"
 
   # ---- music: recently played (last 5 distinct items) ------------------------
   - trigger:
