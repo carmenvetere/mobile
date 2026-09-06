@@ -16,7 +16,7 @@
 substitutions:
   name: basement-wall-panel-sim
   friendly_name: Basement Wall Panel (simulator)
-  ha_base_url: "http://homeassistant.local:8123"
+  ha_base_url: "http://192.169.10.120:8123"
 
 esphome:
   name: ${name}
