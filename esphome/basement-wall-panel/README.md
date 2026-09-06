@@ -160,10 +160,11 @@ every touch restarts the clock.
   "Okay Nabu" wake word and Home Assistant Assist.
 * **Brightness / voice volume / wake-word toggle** — logged, not applied.
 * **Wi-Fi row** — shows "Simulator".
-* **Album art on Intel/Apple-silicon hosts** — the JPEG library's desktop SIMD
-  paths swap red and blue, so the host builds set `-DNO_SIMD` to use the same
-  scalar decoder the ESP32-P4 uses. If art ever looks colour-inverted in the
-  simulator, that flag has been lost.
+* **Album art colours** — the JPEG library's desktop SIMD paths (Intel and
+  Apple silicon alike) hand back blue and red the other way round from the
+  scalar path the ESP32-P4 uses, so the host build swaps them back after each
+  download (`#ifdef USE_HOST` in `common.yaml`). The panel itself needs no
+  correction.
 
 ## Screenshots
 

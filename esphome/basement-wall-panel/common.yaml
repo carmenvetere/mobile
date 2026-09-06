@@ -70,6 +70,23 @@ online_image:
     resize: 250x250
     update_interval: never
     on_download_finished:
+      - lambda: |-
+          #ifdef USE_HOST
+          // JPEGDEC's desktop SIMD paths (SSE on x86_64, NEON on Apple silicon)
+          // hand back B,G,R,A where the scalar path the ESP32-P4 uses gives
+          // R,G,B,A, and ESPHome's decoder assumes the latter. Put red and
+          // blue back in the decoded RGB565 buffer. Simulator only; skipped
+          // when the server answered 304 and the buffer was left as it was.
+          if (!cached) {
+            auto *px = const_cast<uint8_t *>(id(album_art).get_data_start());
+            size_t n = (size_t) id(album_art).get_width() * id(album_art).get_height();
+            for (size_t i = 0; px && i < n; i++) {
+              uint16_t v = px[2 * i] | (px[2 * i + 1] << 8);
+              v = (v & 0x07E0) | ((v & 0xF800) >> 11) | ((v & 0x001F) << 11);
+              px[2 * i] = v & 0xFF; px[2 * i + 1] = v >> 8;
+            }
+          }
+          #endif
       - lvgl.image.update: { id: np_art_img, src: album_art }
       - lambda: |-
           panel::show(id(np_art_img), true);
