@@ -4,6 +4,8 @@
 // header-only and deliberately dependency-free (LVGL + the standard library).
 #pragma once
 
+#include <cctype>
+#include <cmath>
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
