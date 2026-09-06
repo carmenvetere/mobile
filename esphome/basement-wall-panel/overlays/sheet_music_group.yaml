@@ -14,7 +14,7 @@ obj:
               clickable: false
               layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, flex_align_track: CENTER }
               widgets:
-                - label: { id: sheet_music_group_title, text: "Speaker group", text_font: b300_32 }
+                - label: { id: sheet_music_group_title, text: "Speakers", text_font: b300_32 }
                 - !include { file: ../widgets/sheet_close.yaml, vars: { id: close_sheet_music_group } }
           - obj:
               id: sheet_music_group_body

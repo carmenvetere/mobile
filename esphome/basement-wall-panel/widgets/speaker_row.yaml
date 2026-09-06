@@ -1,4 +1,6 @@
-# Speaker-group sheet row. Filled by render_group.
+# Speakers sheet row. Filled by render_group.
+# Tap the row to make that speaker the one the Music page controls; the
+# round button on the right joins it to / removes it from that speaker's group.
 # vars: n
 obj:
   id: grp_row_${n}
@@ -41,38 +43,30 @@ obj:
               text: ""
               text_font: b400_14
               text_color: ${c_text3}
+    # shown on the row the page is controlling
+    - label:
+        id: grp_mark_${n}
+        text: "${i_check_circle}"
+        text_font: mdi_24
+        text_color: ${c_slate}
+    # join / leave the controlled speaker's group
     - button:
-        id: grp_view_${n}
-        hidden: true
-        width: 116
+        id: grp_join_${n}
+        width: 48
         height: 48
         radius: 24
-        layout:
-          type: FLEX
-          flex_flow: ROW
-          flex_align_main: CENTER
-          flex_align_cross: CENTER
-          flex_align_track: CENTER
-          pad_column: 6
         widgets:
           - label:
-              text: "${i_play_box_outline}"
-              text_font: mdi_21
-              text_color: ${c_slate}
-          - label:
-              text: "View"
-              text_font: b600_15
+              id: grp_join_icon_${n}
+              align: CENTER
+              text: "${i_plus}"
+              text_font: mdi_24
               text_color: ${c_slate}
         on_click:
           - script.execute:
-              id: group_focus
+              id: group_toggle
               n: ${n}
-    - label:
-        id: grp_mark_${n}
-        text: "${i_circle_outline}"
-        text_font: mdi_24
-        text_color: ${c_text4}
   on_click:
     - script.execute:
-        id: group_toggle
+        id: group_focus
         n: ${n}

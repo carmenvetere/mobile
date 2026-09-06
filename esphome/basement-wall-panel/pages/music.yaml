@@ -80,15 +80,22 @@ widgets:
                   text_font: b400_20
                   text_color: ${c_text2}
                   long_mode: DOT
+              # speaker chip: tap to pick which speaker the page controls
               - obj:
+                  id: np_spk_chip
                   width: SIZE_CONTENT
-                  height: 28
+                  height: 36
                   pad_top: 8
-                  clickable: false
+                  ext_click_area: 12
                   layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 8 }
                   widgets:
                     - label: { id: np_spk_icon, text: "${i_sofa}", text_font: mdi_21, text_color: "${c_slate}" }
                     - label: { id: np_spk_name, text: "Media Room", text_font: b600_18, text_color: "${c_slate}" }
+                    - label: { text: "${i_chevron_down}", text_font: mdi_21, text_color: "${c_slate}" }
+                  on_click:
+                    - script.execute:
+                        id: open_sheet
+                        name: music_group
         # transport: three equal 76px buttons, 22px gap
         - obj:
             align: TOP_MID

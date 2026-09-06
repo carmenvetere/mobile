@@ -599,9 +599,19 @@ script:
           panel::state().players = parse_players(id(ts_players).state);
           size_t n; auto *S = speakers(n);
           // active player: focused (if playing) → first playing in priority order → media room
+          // Which speaker the page controls: a speaker picked in the Speakers
+          // sheet sticks (paused or not) until another is picked, it drops off
+          // the list, or the idle return clears it. With no pick, follow what
+          // is playing: Media Room first, then the first playing speaker.
           std::string active;
-          const Player *fp = find_player(panel::state().players, id(g_focus));
-          if (fp && fp->playing()) active = id(g_focus);
+          if (!id(g_focus).empty()) {
+            if (find_player(panel::state().players, id(g_focus))) active = id(g_focus);
+            else id(g_focus) = "";
+          }
+          if (active.empty()) {
+            const Player *mr = find_player(panel::state().players, S[0].id);
+            if (mr && mr->playing()) active = S[0].id;
+          }
           if (active.empty()) for (size_t i = 0; i < n; i++) { const Player *p = find_player(panel::state().players, S[i].id); if (p && p->playing()) { active = S[i].id; break; } }
           if (active.empty()) active = S[0].id;
           id(g_active) = active;
@@ -718,22 +728,29 @@ script:
           lv_obj_t *icons[8] = {id(grp_icon_0), id(grp_icon_1), id(grp_icon_2), id(grp_icon_3), id(grp_icon_4), id(grp_icon_5), id(grp_icon_6), id(grp_icon_7)};
           lv_obj_t *names[8] = {id(grp_name_0), id(grp_name_1), id(grp_name_2), id(grp_name_3), id(grp_name_4), id(grp_name_5), id(grp_name_6), id(grp_name_7)};
           lv_obj_t *subs[8] = {id(grp_sub_0), id(grp_sub_1), id(grp_sub_2), id(grp_sub_3), id(grp_sub_4), id(grp_sub_5), id(grp_sub_6), id(grp_sub_7)};
-          lv_obj_t *views[8] = {id(grp_view_0), id(grp_view_1), id(grp_view_2), id(grp_view_3), id(grp_view_4), id(grp_view_5), id(grp_view_6), id(grp_view_7)};
           lv_obj_t *marks[8] = {id(grp_mark_0), id(grp_mark_1), id(grp_mark_2), id(grp_mark_3), id(grp_mark_4), id(grp_mark_5), id(grp_mark_6), id(grp_mark_7)};
+          lv_obj_t *joins[8] = {id(grp_join_0), id(grp_join_1), id(grp_join_2), id(grp_join_3), id(grp_join_4), id(grp_join_5), id(grp_join_6), id(grp_join_7)};
+          lv_obj_t *jicons[8] = {id(grp_join_icon_0), id(grp_join_icon_1), id(grp_join_icon_2), id(grp_join_icon_3), id(grp_join_icon_4), id(grp_join_icon_5), id(grp_join_icon_6), id(grp_join_icon_7)};
           for (size_t i = 0; i < 8 && i < n; i++) {
             std::string sid = S[i].id;
             const Player *p = find_player(panel::state().players, sid);
-            bool leader = sid == id(g_active);
+            bool current = sid == id(g_active);
             bool in_group = false; for (auto &m : id(g_grouped)) if (m == sid) in_group = true;
             bool playing = p && p->playing();
+            std::string st = !p ? "Unavailable" : playing ? "Playing" : p->state == "paused" ? "Paused" : "Idle";
+            if (p && p->members.size() > 1) {
+              if (!p->leader.empty() && p->leader != sid) st += " · with " + speaker_name(p->leader);
+              else st += " · leading " + std::to_string(p->members.size() - 1);
+            }
             text(icons[i], utf8(S[i].icon)); text(names[i], S[i].name);
-            text(subs[i], leader ? "Playing · group leader" : in_group ? "In group" : playing ? "Playing separately" : "Idle");
-            bg(rows[i], ROW_SELECTED, in_group ? LV_OPA_COVER : LV_OPA_TRANSP);
-            text_color(icons[i], in_group ? SLATE : TEXT3);
-            text_color(names[i], in_group ? TEXT : TEXT2);
-            text(marks[i], leader ? utf8(0xF071F) : in_group ? utf8(0xF05E0) : utf8(0xF0766));
-            text_color(marks[i], leader ? SLATE : in_group ? SAGE : TEXT4);
-            show(views[i], !leader && !in_group && playing);
+            text(subs[i], st);
+            bg(rows[i], ROW_SELECTED, current ? LV_OPA_COVER : LV_OPA_TRANSP);
+            text_color(icons[i], current || in_group ? SLATE : TEXT3);
+            text_color(names[i], current || in_group ? TEXT : TEXT2);
+            show(marks[i], current);
+            show(joins[i], !current && p);
+            text(jicons[i], in_group ? utf8(0xF0374) : utf8(0xF0415));
+            text_color(jicons[i], in_group ? AMBER : SLATE);
           }
 
   - id: group_toggle
@@ -779,6 +796,46 @@ script:
           if (n < (int) cnt) id(g_focus) = S[n].id;
       - script.execute: render_music
       - script.execute: close_sheets
+
+  # ================================================================ idle return
+  # The page the house state calls for, highest priority first:
+  #   alarm pending/triggered → Alarm · grid outage → Energy ·
+  #   a basement speaker playing → Music · otherwise Home.
+  # Only the idle timer (and the urgent alarm/grid transitions above) move the
+  # page on their own; music starting somewhere never interrupts what someone
+  # is doing on the panel. A manual speaker pick expires here too.
+  - id: go_default
+    then:
+      - lambda: |-
+          using namespace panel;
+          // a voice session in progress keeps the screen; voice_close re-checks
+          if (id(g_voice_phase) > 0 && !lv_obj_has_flag(id(voice), LV_OBJ_FLAG_HIDDEN)) return;
+          id(voice_close).execute();
+          id(g_focus) = "";
+          int page = 2;
+          std::string st = id(ts_alarm).has_state() ? id(ts_alarm).state : "";
+          if (st == "pending" || st == "triggered") page = 0;
+          else if (id(bs_grid).has_state() && !id(bs_grid).state) page = 1;
+          else {
+            for (auto &m : split("${idle_music_players}", ',')) {
+              const Player *p = find_player(panel::state().players, m);
+              if (p && p->playing()) { page = 4; break; }
+            }
+          }
+          ESP_LOGI("panel", "idle for %us: returning to page %d", (unsigned) (lv_display_get_inactive_time(nullptr) / 1000), page);
+          id(set_page).execute(page);
+          id(render_music).execute();
+
+  - id: step_idle_return
+    parameters:
+      delta: int
+    then:
+      - number.set:
+          id: idle_return
+          value: !lambda |-
+            float v = id(idle_return).state + delta * 30;
+            if (v < 30) v = 30; if (v > 600) v = 600;
+            return v;
 
   - id: render_vols
     then:
@@ -1277,6 +1334,8 @@ script:
       - lambda: |-
           using namespace panel;
           text(id(val_brightness), pct(id(panel_brightness).state));
+          { int sec = (int) lroundf(id(idle_return).state);
+            text(id(val_idle), sec % 60 == 0 ? std::to_string(sec / 60) + " min" : std::to_string(sec) + " s"); }
           text(id(val_voicevol), pct(id(voice_volume).state));
           set_checked(id(sw_wake), id(wake_word_enabled).state);
           text(id(val_wifi), id(panel_wifi_text).has_state() ? id(panel_wifi_text).state : "—");
@@ -1333,6 +1392,11 @@ script:
           id(g_overlay)--;
           id(g_voice_phase) = 0;
       - script.execute: voice_stop
+      - if:
+          condition:
+            lambda: "return lv_display_get_inactive_time(nullptr) >= (uint32_t) id(idle_return).state * 1000;"
+          then:
+            - script.execute: go_default
 
   # transcript / response text pushed in by the voice assistant triggers
   - id: voice_show

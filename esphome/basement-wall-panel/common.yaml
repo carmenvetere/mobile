@@ -22,6 +22,9 @@ substitutions:
   # so the Library sheet browses MA's library while transport, grouping and
   # volume stay on the Sonos entities the rest of the dashboard uses.
   music_library_suffix: ""
+  # Speakers whose playback makes Music the panel's idle default view. Music
+  # elsewhere in the house never pulls the basement panel to the Music page.
+  idle_music_players: "media_player.media_room,media_player.pool,media_player.gym,media_player.mud_room"
   # Cleaners-mode lock screen code. Prototype uses 1234; move it to
   # `!secret basement_panel_pin` once decided (handoff open item #7).
   cleaners_pin: "1234"
@@ -109,6 +112,20 @@ number:
     entity_category: config
     set_action:
       - script.execute: apply_brightness
+    on_value:
+      - script.execute: render_panel
+  - platform: template
+    id: idle_return
+    name: "Return to default after"
+    icon: mdi:timer-sand
+    unit_of_measurement: "s"
+    min_value: 30
+    max_value: 600
+    step: 30
+    initial_value: 120
+    optimistic: true
+    restore_value: true
+    entity_category: config
     on_value:
       - script.execute: render_panel
   - platform: template

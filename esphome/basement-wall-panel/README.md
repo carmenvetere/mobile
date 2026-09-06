@@ -115,7 +115,9 @@ it as a live control surface, not a mock.
 | Scenes: tap a row | `scene.turn_on`; row lights up 1.6 s, then follows `binary_sensor.scene_*` |
 | Shades: ▲ ■ ▼ | `cover.*` on `cover.first_floor_all`, or all six covers at once for Whole House; Media Room is disabled |
 | Shades: ADAPTIVE / MANUAL badge | follows the `input_boolean.shades_manual_*` helpers (Whole House is MANUAL if any group is); switch them in the Shades sheet |
-| Music: transport, volume | on the focused group; library / speaker group / per-speaker volume sheets |
+| Music: speaker chip (name + ⌄ under the title) | Speakers sheet: tap a row to make that speaker the one the page controls; it sticks through pause and stop until you pick another, it drops off the list, or the idle return clears it. With no pick the page follows Media Room, then whatever is playing |
+| Music: Speakers sheet + / − | joins a speaker to, or removes it from, the controlled speaker's group; the controlled speaker leads |
+| Music: transport, volume | on the controlled speaker's group; library / speaker / per-speaker volume sheets |
 | Music: album art | fetched from the playing entity's `entity_picture` (through HA's media proxy) as JPEG, retried as PNG if it isn't one; the disc icon shows when there is none |
 | Pool: − / + | `water_heater.set_temperature` 70–90 on the OmniLogic heater; pill toggles the heater |
 | Pool: pump toggle, slider, Low / Med / High | `switch`, `number` and the three OmniLogic speed buttons |
@@ -129,6 +131,26 @@ Developer Tools → States: set `alarm_control_panel.alarmo` to `triggered` or
 `pending`, `binary_sensor.bayberry_grid_status` to `off` (outage layout plus the
 red pill), `input_boolean.away_mode` to `on` (Vacation pill) or
 `input_boolean.cleaners_mode` to `on` (lock screen).
+
+### Idle return
+
+After the "Return to default" time in Panel & Voice (30–600 s, default 2 min,
+also exposed to HA as a number) with no touch, the panel closes any sheet, the
+Off Grid confirm and a finished voice overlay, forgets a manual speaker pick,
+and goes to the page the house state calls for, highest priority first:
+
+1. Alarm `pending` or `triggered` → **Alarm**
+2. Grid outage → **Energy**
+3. A basement speaker playing (`idle_music_players` in `common.yaml`: Media
+   Room, Pool, Gym, Mud Room) → **Music**
+4. Otherwise → **Home**
+
+Only the idle timer and the existing urgent transitions (alarm becoming
+pending/triggered, grid dropping) move the page by themselves; music starting
+somewhere never interrupts what someone is doing, it just changes where the
+panel goes when they walk away. When a higher condition clears the panel waits
+for the next idle tick rather than jumping. You can always navigate anywhere;
+every touch restarts the clock.
 
 ### What the simulator can't do
 

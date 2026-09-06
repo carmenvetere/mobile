@@ -28,6 +28,7 @@ obj:
               widgets:
                 - !include { file: ../widgets/eyebrow.yaml, vars: { id: pv_eyebrow_display, text: "DISPLAY" } }
                 - !include { file: ../widgets/stepper_row.yaml, vars: { id: brightness, name: "Brightness", sub: "Backlight", script: step_brightness } }
+                - !include { file: ../widgets/stepper_row.yaml, vars: { id: idle, name: "Return to default", sub: "After no touch", script: step_idle_return } }
                 - !include { file: ../widgets/eyebrow.yaml, vars: { id: pv_eyebrow_voice, text: "VOICE" } }
                 - obj:
                     id: row_wake

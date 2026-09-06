@@ -48,6 +48,7 @@ script:
           id(ts_notifs).publish_state("filter|warn|Upper HVAC filter due|Changed 94 days ago — replace and reset in Settings.|Today, 8:02 AM;door|alert|Basement door left open|Open 22 minutes. Alarm cannot arm to Away.|18 minutes ago;grid|info|Peak rate window starts at 4 PM|Powerwall will hold reserve at 20% until 9 PM.|1 hour ago");
           id(bs_guest).publish_state(true); id(bs_cleaners).publish_state(false); id(bs_offgrid).publish_state(false); id(bs_away).publish_state(false);
           id(s_alarm_delay).publish_state(30); id(s_pw_remaining).publish_state(10.3);
+          id(idle_return).publish_state(600);   // shortened at the end of the walk
           id(bs_z_lr).publish_state(true); id(bs_z_bs).publish_state(true); id(bs_z_of).publish_state(false); id(bs_z_bd).publish_state(true);
           id(bs_a_leave).publish_state(true); id(bs_a_11pm).publish_state(true); id(bs_a_7am).publish_state(true); id(bs_a_arrive).publish_state(false);
           id(bs_m_out).publish_state(true); id(bs_m_bath).publish_state(true); id(bs_m_gym).publish_state(true);
@@ -75,6 +76,15 @@ script:
       - script.execute: { id: set_page, n: 4 }
       - delay: 600ms
       - lambda: "paneltest::snap(\"05-music\");"
+      # pick the pool, then have it pause: the page must stay on the pool
+      - script.execute: { id: group_focus, n: 1 }
+      - lambda: |-
+          std::string s = id(ts_players).state;
+          size_t at = s.find("media_player.pool|playing|");
+          if (at != std::string::npos) s.replace(at, 26, "media_player.pool|paused|");
+          id(ts_players).publish_state(s);
+      - delay: 400ms
+      - lambda: "paneltest::snap(\"27-music-pool-paused\");"
       - script.execute: { id: set_page, n: 5 }
       - delay: 600ms
       - lambda: "paneltest::snap(\"06-pool\");"
@@ -146,4 +156,14 @@ script:
       - lambda: "paneltest::snap(\"26-alarm-pending\");"
       - lambda: "id(ts_alarm).publish_state(\"triggered\");"
       - delay: 600ms
-      - lambda: "paneltest::snap(\"22-critical\"); fflush(stderr); exit(0);"
+      - lambda: "paneltest::snap(\"22-critical\");"
+      # idle return: leave a sheet open on Settings, shorten the timeout, and
+      # wait for it to fire. Media Room is playing, so the default is Music.
+      - lambda: "id(ts_alarm).publish_state(\"disarmed\");"
+      - script.execute: { id: set_page, n: 6 }
+      - script.execute: { id: open_sheet, name: panel }
+      - lambda: "id(idle_return).publish_state(30);"
+      - delay: 20s
+      - lambda: |-
+          ESP_LOGI("mock", "tick %u ms, inactive %u ms, idle_return %.0f", (unsigned) lv_tick_get(), (unsigned) lv_display_get_inactive_time(nullptr), id(idle_return).state);
+          paneltest::snap("28-idle-default"); fflush(stderr); exit(0);

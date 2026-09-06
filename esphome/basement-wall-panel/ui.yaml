@@ -22,6 +22,13 @@ lvgl:
   bg_color: ${c_bg}
   buffer_size: 25%
 
+  # No touch for the "Return to default" setting: close whatever is open and
+  # go to the page the house state calls for (see go_default in logic.yaml).
+  on_idle:
+    - timeout: !lambda "return (uint32_t) id(idle_return).state * 1000;"
+      then:
+        - script.execute: go_default
+
   # LVGL's default theme paints white boxes and blue buttons; flatten all of it.
   theme:
     obj:
