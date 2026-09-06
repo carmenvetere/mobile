@@ -40,18 +40,19 @@ globals:
     type: std::vector<std::string>
   - id: g_art_url
     type: std::string
-  - id: g_tx0
+  - id: g_alarm_prev
+    type: std::string
+  - id: g_pending_left
     type: int
     initial_value: "0"
-  - id: g_ty0
-    type: int
-    initial_value: "0"
-  - id: g_tx1
-    type: int
-    initial_value: "0"
-  - id: g_ty1
-    type: int
-    initial_value: "0"
+  - id: g_grid_prev
+    type: bool
+    initial_value: "true"
+  - id: g_lock_code
+    type: std::string
+  - id: g_lock_flash
+    type: bool
+    initial_value: "false"
   - id: g_voice_phase
     type: int
     initial_value: "0"
@@ -61,15 +62,19 @@ globals:
 
 script:
   # ================================================================ navigation
-  - id: render_dots
+  # Tab order (Home Alarm Energy Shades Music Pool Settings) → page index.
+  - id: render_tabs
     parameters:
       p: int
     then:
       - lambda: |-
-          lv_obj_t *dots[7] = {id(dot_0), id(dot_1), id(dot_2), id(dot_3), id(dot_4), id(dot_5), id(dot_6)};
+          static const int PAGE_OF_TAB[7] = {2, 0, 1, 3, 4, 5, 6};
+          lv_obj_t *icons[7] = {id(tab_icon_0), id(tab_icon_1), id(tab_icon_2), id(tab_icon_3), id(tab_icon_4), id(tab_icon_5), id(tab_icon_6)};
+          lv_obj_t *inds[7] = {id(tab_ind_0), id(tab_ind_1), id(tab_ind_2), id(tab_ind_3), id(tab_ind_4), id(tab_ind_5), id(tab_ind_6)};
           for (int i = 0; i < 7; i++) {
-            lv_obj_set_width(dots[i], i == p ? 28 : 8);
-            panel::bg(dots[i], i == p ? panel::SLATE : panel::HAIRLINE);
+            bool on = PAGE_OF_TAB[i] == p;
+            panel::text_color(icons[i], on ? panel::SLATE : panel::TEXT4);
+            lv_obj_set_style_bg_opa(inds[i], on ? LV_OPA_COVER : LV_OPA_TRANSP, LV_PART_MAIN);
           }
 
   - id: on_tile_changed
@@ -78,7 +83,7 @@ script:
           lv_obj_t *t = lv_tileview_get_tile_active(id(tv));
           lv_obj_t *tiles[7] = {id(tile_alarm), id(tile_energy), id(tile_scenes), id(tile_shades), id(tile_music), id(tile_pool), id(tile_settings)};
           for (int i = 0; i < 7; i++) if (tiles[i] == t) id(g_page) = i;
-          id(render_dots).execute(id(g_page));
+          id(render_tabs).execute(id(g_page));
 
   - id: set_page
     parameters:
@@ -88,38 +93,7 @@ script:
       - lambda: |-
           id(g_page) = n;
           lv_tileview_set_tile_by_index(id(tv), n, 0, LV_ANIM_ON);
-          id(render_dots).execute(n);
-
-  - id: open_menu
-    then:
-      - lambda: |-
-          if (!lv_obj_has_flag(id(menu), LV_OBJ_FLAG_HIDDEN)) return;
-          lv_obj_t *items[8] = {id(menu_item_0), id(menu_item_1), id(menu_item_2), id(menu_item_3), id(menu_item_4), id(menu_item_5), id(menu_item_6), id(menu_item_7)};
-          lv_obj_t *icons[8] = {id(menu_icon_0), id(menu_icon_1), id(menu_icon_2), id(menu_icon_3), id(menu_icon_4), id(menu_icon_5), id(menu_icon_6), id(menu_icon_7)};
-          lv_obj_t *lbls[8] = {id(menu_lbl_0), id(menu_lbl_1), id(menu_lbl_2), id(menu_lbl_3), id(menu_lbl_4), id(menu_lbl_5), id(menu_lbl_6), id(menu_lbl_7)};
-          for (int i = 0; i < 8; i++) panel::pill(items[i], icons[i], lbls[i], i == id(g_page));
-          panel::show(id(menu), true);
-          id(g_overlay)++;
-
-  - id: close_menu
-    then:
-      - lambda: |-
-          if (lv_obj_has_flag(id(menu), LV_OBJ_FLAG_HIDDEN)) return;
-          panel::show(id(menu), false);
-          id(g_overlay)--;
-
-  - id: toggle_menu
-    then:
-      - lambda: |-
-          if (lv_obj_has_flag(id(menu), LV_OBJ_FLAG_HIDDEN)) id(open_menu).execute(); else id(close_menu).execute();
-
-  - id: menu_go
-    parameters:
-      n: int
-    then:
-      - lambda: |-
-          if (n == 7) { id(close_menu).execute(); id(voice_open).execute(); }
-          else id(set_page).execute(n);
+          id(render_tabs).execute(n);
 
   - id: open_sheet
     parameters:
@@ -169,34 +143,55 @@ script:
             id(g_overlay)--;
           }
           panel::show(id(confirm_offgrid), false);
-      - script.execute: close_menu
-
-  # Touch gestures (fed by the touchscreen triggers in the device config).
-  # Left/right page swipes are native to the tileview; here we only handle the
-  # swipe-down (menu open) and swipe-up (menu close).
-  - id: touch_down
-    parameters:
-      x: int
-      y: int
-    then:
-      - lambda: |-
-          id(g_tx0) = x; id(g_ty0) = y; id(g_tx1) = x; id(g_ty1) = y;
-
-  - id: touch_up
-    then:
-      - lambda: |-
-          int dx = id(g_tx1) - id(g_tx0), dy = id(g_ty1) - id(g_ty0);
-          bool menu_open = !lv_obj_has_flag(id(menu), LV_OBJ_FLAG_HIDDEN);
-          if (id(g_overlay) > 0) {
-            if (menu_open && dy < -60) id(close_menu).execute();
-            return;
-          }
-          if (dy > 70 && abs(dx) < 60) id(open_menu).execute();
 
   - id: critical_tap
     then:
       - lambda: |-
-          if (id(ts_alarm).state == "triggered") id(set_page).execute(0); else id(set_page).execute(1);
+          if (id(ts_alarm).state == "triggered" || id(ts_alarm).state == "pending") id(set_page).execute(0); else id(set_page).execute(1);
+
+  # Alarm state transitions: pending/triggered take over the panel.
+  - id: alarm_changed
+    then:
+      - lambda: |-
+          std::string st = id(ts_alarm).state;
+          bool urgent = st == "pending" || st == "triggered";
+          bool was_urgent = id(g_alarm_prev) == "pending" || id(g_alarm_prev) == "triggered";
+          if (urgent && !was_urgent) {
+            id(voice_close).execute();
+            id(set_page).execute(0);
+            float d = id(s_alarm_delay).state;
+            id(g_pending_left) = std::isnan(d) ? 30 : (int) lroundf(d);
+            if (st == "pending") id(pending_tick).execute();
+          }
+          if (!urgent) id(pending_tick).stop();
+          id(g_alarm_prev) = st;
+      - script.execute: render_status
+      - script.execute: render_alarm
+      - script.execute: render_lock
+
+  - id: pending_tick
+    mode: restart
+    then:
+      - while:
+          condition:
+            lambda: "return id(ts_alarm).state == \"pending\" && id(g_pending_left) > 0;"
+          then:
+            - delay: 1s
+            - lambda: "id(g_pending_left)--;"
+            - script.execute: render_alarm
+
+  # Grid transitions: an outage takes over the Energy page (alarm wins).
+  - id: grid_changed
+    then:
+      - lambda: |-
+          bool up = id(bs_grid).state;
+          if (!up && id(g_grid_prev)) {
+            std::string st = id(ts_alarm).state;
+            if (st != "pending" && st != "triggered") { id(voice_close).execute(); id(set_page).execute(1); }
+          }
+          id(g_grid_prev) = up;
+      - script.execute: render_status
+      - script.execute: render_energy
 
   # ================================================================ status bar
   - id: render_status
@@ -207,8 +202,15 @@ script:
           bool trig = alarm == "triggered";
           bool outage = id(bs_grid).has_state() && !id(bs_grid).state;
           bool crit = trig || outage;
-          show(id(chip_weather), !crit); show(id(chip_alarm), !crit); show(id(chip_notif), !crit);
+          bool vacation = !crit && id(bs_away).state;
+          show(id(chip_weather), !crit && !vacation); show(id(chip_alarm), !crit && !vacation); show(id(chip_notif), !crit && !vacation);
           show(id(pill_critical), crit);
+          show(id(pill_vacation), vacation);
+          // mode indicators (non-critical): guests · dinner · cleaners
+          show(id(sb_mode_guest), id(bs_guest).state);
+          show(id(sb_mode_dinner), id(bs_dinner).state);
+          show(id(sb_mode_cleaners), id(bs_cleaners).state);
+          show(id(mode_chips), id(bs_guest).state || id(bs_dinner).state || id(bs_cleaners).state);
           if (crit) {
             if (trig) { text(id(sb_crit_icon), utf8(0xF078F)); text(id(sb_crit_text), "Alarm Triggered!"); }
             else {
@@ -227,7 +229,7 @@ script:
           else if (alarm == "armed_home") { col = GOLD; icon = utf8(0xF068A); txt = "Home"; }
           else if (alarm == "armed_away") { col = GOLD; icon = utf8(0xF099D); txt = "Away"; }
           else if (alarm == "armed_night" || alarm == "armed_vacation" || alarm == "armed_custom_bypass") { col = GOLD; icon = utf8(0xF099D); txt = "Armed"; }
-          else if (alarm == "pending") { col = AMBER; icon = utf8(0xF11A2); txt = "Pending"; }
+          else if (alarm == "pending") { col = AMBER; icon = utf8(0xF0ECC); txt = "Pending"; }
           else if (trig) { col = RED; icon = utf8(0xF078F); txt = "Alarm"; }
           text(id(sb_alarm_icon), icon); text_color(id(sb_alarm_icon), col);
           text(id(sb_alarm_text), txt); text_color(id(sb_alarm_text), col);
@@ -279,8 +281,13 @@ script:
           lv_obj_t *dots[4] = {id(code_dot_0), id(code_dot_1), id(code_dot_2), id(code_dot_3)};
           for (int i = 0; i < 4; i++) bg(dots[i], i < (int) id(g_code).size() ? SLATE : HAIRLINE);
           if (!id(g_flash_hint)) {
-            text(id(code_hint), alarm == "disarmed" ? "" : "Enter code to disarm");
-            text_color(id(code_hint), TEXT3);
+            if (alarm == "pending") {
+              text(id(code_hint), "Enter code to disarm · " + std::to_string(id(g_pending_left)) + "s");
+              text_color(id(code_hint), AMBER);
+            } else {
+              text(id(code_hint), alarm == "disarmed" ? "" : "Enter code to disarm");
+              text_color(id(code_hint), TEXT3);
+            }
           }
 
   - id: flash_hint
@@ -360,6 +367,34 @@ script:
           int reserve = std::isnan(rs) ? 20 : (int) lroundf(rs);
           text(id(en_reserve_lbl), "· reserve " + std::to_string(reserve) + "%");
           lv_obj_set_x(id(en_reserve_marker), (656 * reserve) / 100 - 1);
+          // idle flows are drawn dim
+          auto idle = [](float v) { return std::isnan(v) || fabsf(v) < 0.05f; };
+          bg(id(en_bar_solar), idle(id(s_solar).state) ? 0x31363f : SLATE);
+          bg(id(en_bar_grid), idle(id(s_grid).state) ? 0x31363f : SLATE);
+          bg(id(en_bar_home), idle(id(s_load).state) ? 0x31363f : SLATE);
+          bg(id(en_bar_batt), idle(b) ? 0x31363f : SLATE);
+          // ---- outage layout
+          bool outage = id(bs_grid).has_state() && !id(bs_grid).state;
+          show(id(energy_flow), !outage); show(id(energy_reserve), !outage); show(id(energy_outage), outage);
+          if (outage) {
+            int c = std::isnan(ch) ? 0 : (int) lroundf(ch);
+            text(id(outage_pct), std::isnan(ch) ? "—" : std::to_string(c));
+            lv_arc_set_value(id(outage_arc), c);
+            lv_obj_set_style_arc_color(id(outage_arc), C(c <= 20 ? RED : c <= 40 ? AMBER : SLATE), LV_PART_INDICATOR);
+            float kwh = id(s_pw_remaining).state;
+            if (std::isnan(kwh) && !std::isnan(ch)) kwh = ch / 100.0f * ${powerwall_capacity_kwh};
+            float load = id(s_load).state;
+            std::string left = "";
+            if (!std::isnan(kwh) && !std::isnan(load) && load > 0.05f) {
+              int mins = (int) lroundf(kwh / load * 60.0f);
+              left = "≈ " + std::to_string(mins / 60) + " h " + std::to_string(mins % 60) + " m remaining";
+            }
+            text(id(outage_left), left);
+            text_color(id(outage_left), c <= 20 ? RED : TEXT2);
+            text(id(outage_load), val(id(s_load).state));
+            text(id(outage_solar), val(id(s_solar).state));
+            text(id(outage_batt), std::isnan(b) ? "—" : kw(b > 0 ? b : 0));
+          }
 
   - id: set_reserve
     parameters:
@@ -511,6 +546,15 @@ script:
           else if (closing) wh = "Closing…";
           else if (any) wh = hi <= 0 ? "Closed" : (lo == hi ? "Open · " + std::to_string(hi) + "%" : "Open · " + std::to_string(lo) + "–" + std::to_string(hi) + "%");
           text(id(sh_state_wh), wh);
+          // mode badges: ADAPTIVE (hairline) / MANUAL (amber) from the shades_manual_* booleans
+          auto badge = [](lv_obj_t *b, lv_obj_t *l, bool manual) {
+            show(b, true);
+            text(l, manual ? "MANUAL" : "ADAPTIVE");
+            if (manual) { bg(b, AMBER); border(b, AMBER); text_color(l, ON_SLATE); }
+            else { bg(b, BG, LV_OPA_TRANSP); border(b, HAIRLINE); text_color(l, TEXT3); }
+          };
+          badge(id(sh_mode_ff), id(sh_mode_lbl_ff), id(bs_s_m_ff).state);
+          badge(id(sh_mode_wh), id(sh_mode_lbl_wh), id(bs_s_m_ff).state || id(bs_s_m_pb).state || id(bs_s_m_of).state || id(bs_s_m_bg).state || id(bs_s_m_fg).state);
           text(id(sh_state_mr), "");
           show(id(sh_badge_mr), true);
 
@@ -1001,7 +1045,9 @@ script:
           pill(id(tile_guests), id(tile_icon_guests), id(tile_lbl_guests), id(bs_guest).state);
           pill(id(tile_cleaners), id(tile_icon_cleaners), id(tile_lbl_cleaners), id(bs_cleaners).state);
           pill(id(tile_dinner), id(tile_icon_dinner), id(tile_lbl_dinner), id(bs_dinner).state);
+          pill(id(tile_vacation), id(tile_icon_vacation), id(tile_lbl_vacation), id(bs_away).state);
           pill(id(tile_offgrid), id(tile_icon_offgrid), id(tile_lbl_offgrid), id(bs_offgrid).state);
+          if (!id(bs_away).state) text_color(id(tile_lbl_vacation), TEXT2);
           if (!id(bs_guest).state) text_color(id(tile_lbl_guests), TEXT2);
           if (!id(bs_cleaners).state) text_color(id(tile_lbl_cleaners), TEXT2);
           if (!id(bs_dinner).state) text_color(id(tile_lbl_dinner), TEXT2);
@@ -1036,6 +1082,7 @@ script:
           if (which == "guests") id(ha_toggle).execute("input_boolean.guest_mode", !id(bs_guest).state);
           else if (which == "cleaners") id(ha_toggle).execute("input_boolean.cleaners_mode", !id(bs_cleaners).state);
           else if (which == "dinner") id(ha_toggle).execute("input_boolean.dinner_party", !id(bs_dinner).state);
+          else if (which == "vacation") id(ha_toggle).execute("input_boolean.away_mode", !id(bs_away).state);
           else if (which == "offgrid") {
             if (id(bs_offgrid).state) id(ha_toggle).execute("switch.bayberry_off_grid_operation", false);
             else panel::show(id(confirm_offgrid), true);
@@ -1263,7 +1310,6 @@ script:
     then:
       - lambda: |-
           if (!lv_obj_has_flag(id(voice), LV_OBJ_FLAG_HIDDEN)) return;
-          id(close_menu).execute();
           panel::text(id(voice_transcript), "Listening…");
           panel::text(id(voice_response), "");
           panel::show(id(voice), true);
@@ -1319,6 +1365,49 @@ script:
                 lv_obj_set_style_border_opa(id(voice_ring), (t % 10) < 5 ? LV_OPA_COVER : LV_OPA_60, LV_PART_MAIN);
             - delay: 150ms
 
+  # ================================================================ cleaners lock
+  - id: render_lock
+    then:
+      - lambda: |-
+          using namespace panel;
+          std::string st = id(ts_alarm).state;
+          bool urgent = st == "pending" || st == "triggered";
+          bool locked = id(bs_cleaners).state && !urgent;
+          if (locked && lv_obj_has_flag(id(lock), LV_OBJ_FLAG_HIDDEN)) { id(close_all).execute(); id(g_lock_code).clear(); }
+          show(id(lock), locked);
+          lv_obj_t *dots[4] = {id(lock_dot_0), id(lock_dot_1), id(lock_dot_2), id(lock_dot_3)};
+          for (int i = 0; i < 4; i++) bg(dots[i], i < (int) id(g_lock_code).size() ? SLATE : HAIRLINE);
+          if (!id(g_lock_flash)) { text(id(lock_hint), "Enter code to unlock"); text_color(id(lock_hint), TEXT3); }
+
+  - id: lock_key_tap
+    parameters:
+      k: int
+    then:
+      - lambda: |-
+          if (k <= 9) { if (id(g_lock_code).size() < 4) id(g_lock_code) += (char) ('0' + k); }
+          else if (k == 10) { if (!id(g_lock_code).empty()) id(g_lock_code).pop_back(); }
+          else if (k == 11) {
+            if (id(g_lock_code) == "${cleaners_pin}") {
+              id(g_lock_code).clear();
+              id(ha_toggle).execute("input_boolean.cleaners_mode", false);
+            } else {
+              id(g_lock_code).clear();
+              id(lock_flash).execute();
+            }
+          }
+          id(render_lock).execute();
+
+  - id: lock_flash
+    mode: restart
+    then:
+      - lambda: |-
+          id(g_lock_flash) = true;
+          panel::text(id(lock_hint), "Incorrect code");
+          panel::text_color(id(lock_hint), panel::RED);
+      - delay: 1800ms
+      - lambda: "id(g_lock_flash) = false;"
+      - script.execute: render_lock
+
   # ================================================================ clock + boot
   - id: clock_tick
     then:
@@ -1350,8 +1439,9 @@ script:
           lv_anim_delete(lv_screen_active(), nullptr);
           lv_obj_scroll_to(lv_screen_active(), 0, 0, LV_ANIM_OFF);
       - script.execute:
-          id: render_dots
+          id: render_tabs
           p: 2
+      - script.execute: render_lock
       - script.execute: render_status
       - script.execute: render_alarm
       - script.execute: render_energy

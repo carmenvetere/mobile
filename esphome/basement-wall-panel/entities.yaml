@@ -19,8 +19,7 @@ text_sensor:
     id: ts_alarm
     entity_id: alarm_control_panel.alarmo
     on_value:
-      - script.execute: render_status
-      - script.execute: render_alarm
+      - script.execute: alarm_changed
   - platform: homeassistant
     id: ts_wx_now
     entity_id: sensor.basement_panel_weather
@@ -142,6 +141,14 @@ sensor:
   - platform: homeassistant
     id: s_battery
     entity_id: sensor.bayberry_battery_power
+    on_value: [script.execute: render_energy]
+  - platform: homeassistant
+    id: s_alarm_delay
+    entity_id: alarm_control_panel.alarmo
+    attribute: delay
+  - platform: homeassistant
+    id: s_pw_remaining
+    entity_id: ${powerwall_energy_remaining_entity}
     on_value: [script.execute: render_energy]
   - platform: homeassistant
     id: s_reserve
@@ -282,7 +289,14 @@ binary_sensor:
     trigger_on_initial_state: true
     id: bs_grid
     entity_id: binary_sensor.bayberry_grid_status
-    on_state: [script.execute: render_status]
+    on_state: [script.execute: grid_changed]
+  - platform: homeassistant
+    trigger_on_initial_state: true
+    id: bs_away
+    entity_id: input_boolean.away_mode
+    on_state:
+      - script.execute: render_status
+      - script.execute: render_hub
   # ---- alarm sensors ----
   - platform: homeassistant
     trigger_on_initial_state: true
@@ -370,12 +384,17 @@ binary_sensor:
     trigger_on_initial_state: true
     id: bs_guest
     entity_id: input_boolean.guest_mode
-    on_state: [script.execute: render_hub]
+    on_state:
+      - script.execute: render_hub
+      - script.execute: render_status
   - platform: homeassistant
     trigger_on_initial_state: true
     id: bs_cleaners
     entity_id: input_boolean.cleaners_mode
-    on_state: [script.execute: render_hub]
+    on_state:
+      - script.execute: render_hub
+      - script.execute: render_status
+      - script.execute: render_lock
   - platform: homeassistant
     trigger_on_initial_state: true
     id: bs_dinner
@@ -383,6 +402,7 @@ binary_sensor:
     on_state:
       - script.execute: render_hub
       - script.execute: render_scenes
+      - script.execute: render_status
   - platform: homeassistant
     trigger_on_initial_state: true
     id: bs_offgrid

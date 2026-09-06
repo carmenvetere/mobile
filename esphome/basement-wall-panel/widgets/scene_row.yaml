@@ -13,17 +13,24 @@ obj:
     flex_align_track: CENTER
     pad_column: 0
   widgets:
-    - label:
-        id: sc_icon_${n}
-        width: 32
-        text: ""
-        text_align: CENTER
-        text_font: mdi_26
-        text_color: ${c_slate}
+    - obj:
+        clickable: false
+        width: 44
+        height: 44
+        radius: 22
+        border_width: 1
+        border_color: ${c_hairline}
+        widgets:
+          - label:
+              id: sc_icon_${n}
+              align: CENTER
+              text: ""
+              text_font: mdi_24
+              text_color: ${c_slate}
     - label:
         id: sc_name_${n}
         flex_grow: 1
-        pad_left: 14
+        pad_left: 18
         text: ""
         text_font: b400_30
         long_mode: DOT
@@ -31,7 +38,7 @@ obj:
         id: sc_name_active_${n}
         hidden: true
         flex_grow: 1
-        pad_left: 14
+        pad_left: 18
         text: ""
         text_font: b600_30
         text_color: ${c_slate_bright}

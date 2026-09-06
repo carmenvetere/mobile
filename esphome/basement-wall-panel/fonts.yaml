@@ -20,7 +20,7 @@ font:
     bpp: 4
     glyphs: &text_glyphs
       - " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
-      - "°·—–‹›“”‘’…Ω"
+      - "°·—–‹›“”‘’…Ω≈"
   - file: { type: gfonts, family: Barlow, weight: 300 }
     id: b300_60
     size: 60
@@ -39,6 +39,16 @@ font:
   - file: { type: gfonts, family: Barlow, weight: 300 }
     id: b300_28
     size: 28
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 300 }
+    id: b300_84
+    size: 84
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 300 }
+    id: b300_36
+    size: 36
     bpp: 4
     glyphs: *text_glyphs
   - file: { type: gfonts, family: Barlow, weight: 400 }
@@ -89,6 +99,16 @@ font:
   - file: { type: gfonts, family: Barlow, weight: 500 }
     id: b500_28
     size: 28
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 500 }
+    id: b500_30
+    size: 30
+    bpp: 4
+    glyphs: *text_glyphs
+  - file: { type: gfonts, family: Barlow, weight: 500 }
+    id: b500_18
+    size: 18
     bpp: 4
     glyphs: *text_glyphs
   - file: { type: gfonts, family: Barlow, weight: 500 }
@@ -230,7 +250,7 @@ font:
       - "${i_weather_sunset_up}${i_desk_lamp}${i_spray_bottle}${i_human_greeting}${i_moon_waning_crescent}${i_party_popper}${i_movie_open_play}${i_hospital}${i_lightbulb_night}${i_coach_lamp}${i_lightbulb_off}${i_palette}${i_blinds}${i_blinds_horizontal}${i_music}"
       - "${i_arrow_up}${i_arrow_down}${i_stop}${i_music_box_multiple}${i_speaker_multiple}${i_speaker_wireless}${i_album}${i_play}${i_pause}${i_skip_previous}${i_skip_next}${i_volume_medium}${i_tune_vertical_variant}"
       - "${i_sofa}${i_sofa_outline}${i_pool}${i_coat_rack}${i_dumbbell}${i_countertop}${i_desk}${i_table_chair}${i_circle_outline}${i_play_box_outline}${i_playlist_music}${i_radio}${i_account_music}${i_heart}${i_music_note}${i_folder_music}"
-      - "${i_cog}${i_fire}${i_power}${i_minus}${i_plus}${i_pump}${i_bed}${i_broom}${i_silverware_fork_knife}${i_thermostat}${i_motion_sensor}${i_robot_vacuum}${i_tablet_dashboard}${i_wrench_clock}"
+      - "${i_cog}${i_fire}${i_power}${i_minus}${i_plus}${i_pump}${i_bed}${i_broom}${i_silverware_fork_knife}${i_thermostat}${i_motion_sensor}${i_robot_vacuum}${i_tablet_dashboard}${i_wrench_clock}${i_home}${i_lock_outline}${i_airplane}${i_battery_arrow_down}"
   - file: *mdi_file
     id: mdi_21
     size: 21
@@ -261,6 +281,26 @@ font:
     size: 52
     bpp: 4
     glyphs: *mdi_all
+  - file: *mdi_file
+    id: mdi_40
+    size: 40
+    bpp: 4
+    glyphs: ["${i_skip_previous}${i_skip_next}"]
+  - file: *mdi_file
+    id: mdi_42
+    size: 42
+    bpp: 4
+    glyphs: ["${i_play}${i_pause}"]
+  - file: *mdi_file
+    id: mdi_44
+    size: 44
+    bpp: 4
+    glyphs: ["${i_lock_outline}"]
+  - file: *mdi_file
+    id: mdi_96
+    size: 96
+    bpp: 4
+    glyphs: ["${i_album}"]
   - file: *mdi_file
     id: mdi_38
     size: 38

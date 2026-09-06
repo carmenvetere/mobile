@@ -3,9 +3,10 @@
 A 720×720 wall-mounted Home Assistant control panel for the basement, built
 from the Claude Design handoff (`Basement Wall Panel v2`) for the Waveshare
 **ESP32-P4-WIFI6-Touch-LCD-4C** (4″ IPS, GT911 touch, ES8311 codec with the
-on-board mic and speaker). Seven horizontally-swiped pages — Alarm, Energy,
-Scenes (home), Shades, Music, Pool, Settings — plus the swipe-down menu, the
-voice overlay and every full-screen sheet from the design.
+on-board mic and speaker). Seven pages — Scenes (home), Alarm, Energy,
+Shades, Music, Pool, Settings — reached from the bottom tab bar or by swiping,
+plus the voice overlay, the Cleaners lock screen and every full-screen sheet
+from the design.
 
 ```
 esphome/
@@ -20,7 +21,7 @@ esphome/
     ├── logic.yaml                  # panel state + the scripts that render and act
     ├── panel_helpers.h             # small C++ helpers used by the lambdas
     ├── pages/                      # one file per page (tileview tiles)
-    ├── overlays/                   # status bar, handle, dots, menu, voice, sheets
+    ├── overlays/                   # status bar, tab bar, lock screen, voice, sheets
     └── widgets/                    # include-with-vars templates (rows, buttons, chips)
 packages/basement_wall_panel.yaml   # HA side: summary sensors, cover group, scripts
 ```
@@ -101,26 +102,32 @@ it as a live control surface, not a mock.
 
 | Gesture / tap | Expected |
 |---|---|
-| Drag left/right anywhere on a page | strip slides between the 7 pages; dots follow |
-| Drag down > 70 px, or tap the top bar | menu grid; current page filled slate; drag up or tap footer to close |
+| Bottom tab bar | jumps to the page; the active tab is slate with a 3 px indicator; swiping left/right also works and the bar follows |
 | Weather chip · bell chip · alarm chip | weather sheet · notifications sheet · Alarm page |
-| Mic button (or menu → Voice) | voice overlay with a scripted demo (see below) |
+| Mode icons in the top bar | Guests (bed), Dinner (silverware) and Cleaners (broom) show as icons while active; tapping one opens Settings |
+| Mic button | voice overlay with a scripted demo (see below) |
 | Alarm: type 4 digits, tap ✓ or Disarm | `alarmo.disarm`; short code flashes the amber hint for 1.8 s |
 | Alarm: Home / Away | `alarmo.arm`; button fills #625a43 while Alarmo reports *arming* |
 | Alarm: readiness row | Not-ready sheet with the six sensors (Open amber / Closed slate) |
+| Alarm: entry delay | while Alarmo is `pending` the panel jumps to the Alarm page and the hint counts down "Enter code to disarm · NNs" in amber |
 | Energy: tap the bar | sets `number.bayberry_backup_reserve` in 5 % steps; amber marker moves |
+| Energy: grid outage | the flow diagram is replaced by the Powerwall ring (charge %, ≈ time remaining) and the Home / Solar / From battery columns; the panel jumps there when the grid drops |
 | Scenes: tap a row | `scene.turn_on`; row lights up 1.6 s, then follows `binary_sensor.scene_*` |
 | Shades: ▲ ■ ▼ | `cover.*` on `cover.first_floor_all`, or all six covers at once for Whole House; Media Room is disabled |
+| Shades: ADAPTIVE / MANUAL badge | follows the `input_boolean.shades_manual_*` helpers (Whole House is MANUAL if any group is); switch them in the Shades sheet |
 | Music: transport, volume | on the focused group; library / speaker group / per-speaker volume sheets |
 | Pool: − / + | `water_heater.set_temperature` 70–90 on the OmniLogic heater; pill toggles the heater |
 | Pool: pump toggle, slider, Low / Med / High | `switch`, `number` and the three OmniLogic speed buttons |
-| Settings: tiles | Guests / Cleaners / Dinner toggle immediately; Off Grid asks first |
+| Settings: tiles | Guests / Cleaners / Dinner / Vacation toggle immediately; Off Grid asks first |
+| Settings: Vacation | `input_boolean.away_mode`; while on, the top bar shows the amber "Vacation" pill |
+| Settings: Cleaners | `input_boolean.cleaners_mode`; while on, the panel is covered by the lock screen — enter the PIN (`cleaners_pin` in `common.yaml`) to end Cleaners mode; a wrong PIN flashes the dots red |
 | Settings: rows | each opens its sheet; Maintenance → RESET calls the repo's reset scripts |
 
 To simulate the critical states from the prototype's Tweaks panel, use HA's
-Developer Tools → States to set `alarm_control_panel.alarmo` to `triggered`
-or `binary_sensor.bayberry_grid_status` to `off`: the three chips collapse into
-the red pill.
+Developer Tools → States: set `alarm_control_panel.alarmo` to `triggered` or
+`pending`, `binary_sensor.bayberry_grid_status` to `off` (outage layout plus the
+red pill), `input_boolean.away_mode` to `on` (Vacation pill) or
+`input_boolean.cleaners_mode` to `on` (lock screen).
 
 ### What the simulator can't do
 
@@ -188,14 +195,20 @@ built-in ESPHome model, so no init sequence or timing is needed.
    `temperature` attribute back.
 6. **Scenes** — the prototype's sets per period (see Design fidelity notes).
 
-7. **Notifications** — wired to the Notification Center integration
+7. **Cleaners lock** — the design's lock screen needs a PIN the panel can
+   check on-device. It is the `cleaners_pin` substitution in
+   `basement-wall-panel/common.yaml` (default `1234` — change it). A correct
+   PIN turns `input_boolean.cleaners_mode` off, which is what unlocks the panel,
+   so switching Cleaners off from Home Assistant unlocks it too.
+8. **Notifications** — wired to the Notification Center integration
    (`carmenvetere/notifications`): rows come from `sensor.notification_center`'s
    `alerts` list, the ✕ calls `notification_center.dismiss` with the alert's
    tag and only shows for alerts whose rule allows dismissal, and Clear all
    dismisses every dismissable alert.
 
-Still open: Media Room shades (no entity yet) and the audio GPIOs on the
-hardware build.
+Still open: Media Room shades (no entity yet), the audio GPIOs on the
+hardware build, and whether the Cleaners PIN should instead come from an HA
+helper (`input_text`) so it can be changed without reflashing.
 
 ## Music Assistant
 

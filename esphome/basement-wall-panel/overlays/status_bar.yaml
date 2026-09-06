@@ -1,5 +1,6 @@
-# Status bar: weather chip → alarm chip → notification chip → mic. Replaced by a
-# single red pill when the alarm is triggered or the grid is down.
+# Status bar: [mode icons] weather chip → alarm chip → notification chip → mic.
+# The three chips are replaced by a red pill when the alarm is pending /
+# triggered or the grid is down, and by an amber pill in Vacation mode.
 obj:
   id: status_bar
   align: TOP_RIGHT
@@ -15,6 +16,23 @@ obj:
     flex_align_track: CENTER
     pad_column: 24
   widgets:
+    - obj:
+        id: mode_chips
+        styles: st_chip
+        layout:
+          type: FLEX
+          flex_flow: ROW
+          flex_align_cross: CENTER
+          flex_align_track: CENTER
+          pad_column: 16
+        widgets:
+          - label: { id: sb_mode_guest, hidden: true, text: "${i_bed}", text_font: mdi_24, text_color: "${c_slate}" }
+          - label: { id: sb_mode_dinner, hidden: true, text: "${i_silverware_fork_knife}", text_font: mdi_24, text_color: "${c_slate}" }
+          - label: { id: sb_mode_cleaners, hidden: true, text: "${i_broom}", text_font: mdi_24, text_color: "${c_slate}" }
+        on_click:
+          - script.execute:
+              id: set_page
+              n: 6
     - obj:
         id: chip_weather
         styles: st_chip
@@ -115,6 +133,29 @@ obj:
               text_color: ${c_on_slate}
         on_click:
           - script.execute: critical_tap
+    - obj:
+        id: pill_vacation
+        hidden: true
+        width: SIZE_CONTENT
+        height: 48
+        radius: 24
+        bg_color: ${c_amber}
+        bg_opa: COVER
+        pad_left: 18
+        pad_right: 20
+        layout:
+          type: FLEX
+          flex_flow: ROW
+          flex_align_cross: CENTER
+          flex_align_track: CENTER
+          pad_column: 10
+        widgets:
+          - label: { text: "${i_airplane}", text_font: mdi_24, text_color: "${c_on_slate}" }
+          - label: { text: "Vacation mode", text_font: b600_19, text_color: "${c_on_slate}" }
+        on_click:
+          - script.execute:
+              id: set_page
+              n: 6
     - button:
         id: btn_mic
         width: 56

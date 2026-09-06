@@ -15,7 +15,7 @@ widgets:
         - button:
             id: btn_library
             x: 32
-            y: 96
+            y: 104
             styles: st_icon_btn
             widgets:
               - label: { align: CENTER, text: "${i_music_box_multiple}", text_font: mdi_28, text_color: "${c_slate}" }
@@ -24,7 +24,7 @@ widgets:
         - button:
             id: btn_group
             x: 628
-            y: 96
+            y: 104
             styles: st_icon_btn
             widgets:
               - label: { align: CENTER, text: "${i_speaker_multiple}", text_font: mdi_28, text_color: "${c_slate}" }
@@ -32,15 +32,14 @@ widgets:
               - script.execute:
                   id: open_sheet
                   name: music_group
-        # now playing
+        # now playing: 250px art left, text column right
         - obj:
             id: np_art
-            align: TOP_MID
-            x: 0
-            y: 180
-            width: 140
-            height: 140
-            radius: 20
+            x: 32
+            y: 190
+            width: 250
+            height: 250
+            radius: 24
             clip_corner: true
             border_width: 1
             border_color: ${c_hairline}
@@ -52,86 +51,85 @@ widgets:
                   id: np_art_icon
                   align: CENTER
                   text: "${i_album}"
-                  text_font: mdi_60
+                  text_font: mdi_96
                   text_color: ${c_text4}
               - image:
                   id: np_art_img
                   align: CENTER
                   src: album_art
                   hidden: true
-        - label:
-            id: np_title
-            align: TOP_MID
-            x: 0
-            y: 334
-            width: 600
-            text: "Nothing playing"
-            text_align: CENTER
-            text_font: b500_28
-            long_mode: DOT
-        - label:
-            id: np_artist
-            align: TOP_MID
-            x: 0
-            y: 372
-            width: 600
-            text: ""
-            text_align: CENTER
-            text_font: b400_19
-            text_color: ${c_text2}
-            long_mode: DOT
         - obj:
-            align: TOP_MID
-            x: 0
-            y: 402
-            width: SIZE_CONTENT
-            height: 28
+            x: 310
+            y: 190
+            width: 378
+            height: 250
             clickable: false
-            layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 8 }
+            layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: CENTER, flex_align_cross: START, pad_row: 6 }
             widgets:
-              - label: { id: np_spk_icon, text: "${i_sofa}", text_font: mdi_21, text_color: "${c_slate}" }
-              - label: { id: np_spk_name, text: "Media Room", text_font: b600_18, text_color: "${c_slate}" }
-        # transport
+              - label:
+                  id: np_title
+                  width: 100%
+                  text: "Nothing playing"
+                  text_font: b500_30
+                  text_line_space: 4
+                  long_mode: WRAP
+              - label:
+                  id: np_artist
+                  width: 100%
+                  text: ""
+                  text_font: b400_20
+                  text_color: ${c_text2}
+                  long_mode: DOT
+              - obj:
+                  width: SIZE_CONTENT
+                  height: 28
+                  pad_top: 8
+                  clickable: false
+                  layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 8 }
+                  widgets:
+                    - label: { id: np_spk_icon, text: "${i_sofa}", text_font: mdi_21, text_color: "${c_slate}" }
+                    - label: { id: np_spk_name, text: "Media Room", text_font: b600_18, text_color: "${c_slate}" }
+        # transport: three equal 76px buttons, 22px gap
         - obj:
             align: TOP_MID
             x: 0
-            y: 446
+            y: 457
             width: SIZE_CONTENT
-            height: 88
+            height: 76
             clickable: false
-            layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 36 }
+            layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 22 }
             widgets:
               - button:
-                  width: 72
-                  height: 72
-                  radius: 36
+                  width: 76
+                  height: 76
+                  radius: 38
                   widgets:
-                    - label: { align: CENTER, text: "${i_skip_previous}", text_font: mdi_38, text_color: "${c_slate}" }
+                    - label: { align: CENTER, text: "${i_skip_previous}", text_font: mdi_40, text_color: "${c_text}" }
                   on_click:
                     - script.execute: { id: music_cmd, cmd: "media_previous_track" }
               - button:
                   id: btn_play
-                  width: 88
-                  height: 88
-                  radius: 44
+                  width: 76
+                  height: 76
+                  radius: 38
                   border_width: 2
                   border_color: ${c_slate}
                   widgets:
-                    - label: { id: np_play_icon, align: CENTER, text: "${i_play}", text_font: mdi_48, text_color: "${c_slate}" }
+                    - label: { id: np_play_icon, align: CENTER, text: "${i_play}", text_font: mdi_42, text_color: "${c_slate}" }
                   on_click:
                     - script.execute: { id: music_cmd, cmd: "media_play_pause" }
               - button:
-                  width: 72
-                  height: 72
-                  radius: 36
+                  width: 76
+                  height: 76
+                  radius: 38
                   widgets:
-                    - label: { align: CENTER, text: "${i_skip_next}", text_font: mdi_38, text_color: "${c_slate}" }
+                    - label: { align: CENTER, text: "${i_skip_next}", text_font: mdi_40, text_color: "${c_text}" }
                   on_click:
                     - script.execute: { id: music_cmd, cmd: "media_next_track" }
         # group volume
         - obj:
             x: 32
-            y: 566
+            y: 552
             width: 656
             height: 60
             clickable: false

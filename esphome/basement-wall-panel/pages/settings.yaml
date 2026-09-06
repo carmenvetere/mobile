@@ -23,6 +23,7 @@ widgets:
               - !include { file: ../widgets/mode_tile.yaml, vars: { id: guests, icon: "${i_bed}", name: "Guests" } }
               - !include { file: ../widgets/mode_tile.yaml, vars: { id: cleaners, icon: "${i_broom}", name: "Cleaners" } }
               - !include { file: ../widgets/mode_tile.yaml, vars: { id: dinner, icon: "${i_silverware_fork_knife}", name: "Dinner" } }
+              - !include { file: ../widgets/mode_tile.yaml, vars: { id: vacation, icon: "${i_airplane}", name: "Vacation" } }
               - !include { file: ../widgets/mode_tile.yaml, vars: { id: offgrid, icon: "${i_transmission_tower_off}", name: "Off Grid" } }
         - obj:
             x: 32

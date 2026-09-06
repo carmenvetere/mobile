@@ -30,11 +30,12 @@ widgets:
                   text_font: b600_16
                   text_letter_space: 2
                   text_color: ${c_text3}
+        - label: { x: 32, y: 128, text: "SCENES", styles: st_eyebrow }
         - obj:
             x: 32
-            y: 110
+            y: 152
             width: 656
-            height: 540
+            height: 496
             clickable: false
             layout:
               type: FLEX

@@ -106,16 +106,6 @@ touchscreen:
     i2c_id: bus_a
     display: panel_display
     interrupt_pin: 21   # VERIFY
-    on_touch:
-      - script.execute:
-          id: touch_down
-          x: !lambda "return touch.x;"
-          y: !lambda "return touch.y;"
-    on_update:
-      - lambda: |-
-          for (auto &t : touches) { id(g_tx1) = t.x; id(g_ty1) = t.y; }
-    on_release:
-      - script.execute: touch_up
 
 output:
   - platform: ledc

@@ -10,7 +10,7 @@ script:
           id(s_notif_count).publish_state(3);
           id(bs_grid).publish_state(true);
           id(s_pw_charge).publish_state(76);
-          id(s_solar).publish_state(4200); id(s_grid).publish_state(0); id(s_load).publish_state(1800); id(s_battery).publish_state(-2400);
+          id(s_solar).publish_state(4.2); id(s_grid).publish_state(0); id(s_load).publish_state(1.8); id(s_battery).publish_state(-2.4);
           id(s_reserve).publish_state(20);
           id(s_sun_elevation).publish_state(30);
           id(bs_door_front).publish_state(false); id(bs_door_kitchen).publish_state(false); id(bs_door_living).publish_state(false);
@@ -46,7 +46,8 @@ script:
           id(ts_wx_hours).publish_state("Now|72|partlycloudy;3 PM|76|partlycloudy;4 PM|78|sunny;5 PM|77|sunny;6 PM|73|cloudy;7 PM|69|rainy");
           id(ts_wx_days).publish_state("Today|79|61|40|partlycloudy;Mon|74|58|80|pouring;Tue|71|55|20|windy;Wed|77|57|0|sunny;Thu|82|63|10|sunny");
           id(ts_notifs).publish_state("filter|warn|Upper HVAC filter due|Changed 94 days ago — replace and reset in Settings.|Today, 8:02 AM;door|alert|Basement door left open|Open 22 minutes. Alarm cannot arm to Away.|18 minutes ago;grid|info|Peak rate window starts at 4 PM|Powerwall will hold reserve at 20% until 9 PM.|1 hour ago");
-          id(bs_guest).publish_state(true); id(bs_cleaners).publish_state(false); id(bs_offgrid).publish_state(false);
+          id(bs_guest).publish_state(true); id(bs_cleaners).publish_state(false); id(bs_offgrid).publish_state(false); id(bs_away).publish_state(false);
+          id(s_alarm_delay).publish_state(30); id(s_pw_remaining).publish_state(10.3);
           id(bs_z_lr).publish_state(true); id(bs_z_bs).publish_state(true); id(bs_z_of).publish_state(false); id(bs_z_bd).publish_state(true);
           id(bs_a_leave).publish_state(true); id(bs_a_11pm).publish_state(true); id(bs_a_7am).publish_state(true); id(bs_a_arrive).publish_state(false);
           id(bs_m_out).publish_state(true); id(bs_m_bath).publish_state(true); id(bs_m_gym).publish_state(true);
@@ -80,10 +81,18 @@ script:
       - script.execute: { id: set_page, n: 6 }
       - delay: 600ms
       - lambda: "paneltest::snap(\"07-settings\");"
-      - script.execute: open_menu
+      - lambda: "id(bs_cleaners).publish_state(true);"
       - delay: 300ms
-      - lambda: "paneltest::snap(\"08-menu\");"
-      - script.execute: close_menu
+      - lambda: "paneltest::snap(\"23-cleaners-lock\"); id(bs_cleaners).publish_state(false);"
+      - script.execute: { id: set_page, n: 2 }
+      - lambda: "id(bs_away).publish_state(true);"
+      - delay: 500ms
+      - lambda: "paneltest::snap(\"24-status-vacation\"); id(bs_away).publish_state(false);"
+      - lambda: "id(bs_grid).publish_state(false);"
+      - delay: 600ms
+      - lambda: "paneltest::snap(\"25-energy-outage\"); id(bs_grid).publish_state(true);"
+      - script.execute: { id: set_page, n: 6 }
+      - delay: 500ms
       - script.execute: voice_ui_open
       - delay: 300ms
       - lambda: "paneltest::snap(\"09-voice\");"
@@ -132,6 +141,9 @@ script:
       - delay: 300ms
       - lambda: "paneltest::snap(\"21-not-ready\");"
       - script.execute: close_sheets
+      - lambda: "id(ts_alarm).publish_state(\"pending\");"
+      - delay: 600ms
+      - lambda: "paneltest::snap(\"26-alarm-pending\");"
       - lambda: "id(ts_alarm).publish_state(\"triggered\");"
-      - delay: 300ms
+      - delay: 600ms
       - lambda: "paneltest::snap(\"22-critical\"); fflush(stderr); exit(0);"

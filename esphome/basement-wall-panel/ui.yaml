@@ -1,15 +1,16 @@
 # Basement Wall Panel — LVGL screen tree.
 #
 # One 720×720 screen. The seven pages live in a horizontally-swiped tileview;
-# the status bar, menu handle and page dots float above it, and every overlay
-# (menu, voice, sheets, confirm dialog) is a hidden full-screen object that is
-# shown on demand. Widget ids referenced from logic.yaml are declared here or
+# the bottom tab bar and the status bar float above it, and every overlay
+# (sheets, confirm dialog, cleaners lock, voice) is a hidden full-screen object
+# that is shown on demand. Z-order: pages → tab bar → status bar → sheets →
+# confirm → lock → voice. Widget ids referenced from logic.yaml are declared here or
 # in the included page/overlay/widget files.
 #
 # Layout constants (design handoff): page padding 40 top / 32 sides / 70
 # bottom; header row min 56px with 380px reserved on the right for the status
-# bar; status bar right 24 / top 40, 60 tall, 24 gap; handle 160×44 hit zone
-# with a 64×6 bar; page dots bottom 26, 8px dots, active 28 wide.
+# bar; status bar right 24 / top 40, 60 tall, 24 gap; tab bar bottom 0, 64
+# tall, hairline top rule, 24 side padding, 7 equal columns.
 
 lvgl:
   displays:
@@ -99,11 +100,16 @@ lvgl:
       height: 720
       bg_color: ${c_bg}
       bg_opa: COVER
-    - id: st_overlay       # hidden full-screen layer (menu, voice, sheet backdrop)
+    - id: st_overlay       # hidden full-screen opaque layer (voice, lock, not-ready)
       width: 720
       height: 720
       bg_color: ${c_bg}
       bg_opa: COVER
+    - id: st_sheet_backdrop  # sheets: the 96px strip above the body shows the page at 72%
+      width: 720
+      height: 720
+      bg_color: ${c_bg}
+      bg_opa: 72%
     - id: st_sheet         # sheet body: bg #17191d, top radius 28 (bottom corners are off-screen)
       width: 720
       height: 652
@@ -174,13 +180,10 @@ lvgl:
           - script.execute: on_tile_changed
 
     # ------------------------------------------------------------- floating chrome
+    - !include overlays/tabbar.yaml
     - !include overlays/status_bar.yaml
-    - !include overlays/handle.yaml
-    - !include overlays/dots.yaml
 
     # ------------------------------------------------------------- overlays (hidden)
-    - !include overlays/menu.yaml
-    - !include overlays/voice.yaml
     - !include overlays/sheet_weather.yaml
     - !include overlays/sheet_notifications.yaml
     - !include overlays/sheet_not_ready.yaml
@@ -198,3 +201,5 @@ lvgl:
     - !include overlays/sheet_maintenance.yaml
     - !include overlays/sheet_release_notes.yaml
     - !include overlays/confirm_offgrid.yaml
+    - !include overlays/lock.yaml
+    - !include overlays/voice.yaml

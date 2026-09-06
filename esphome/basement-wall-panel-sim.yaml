@@ -62,16 +62,6 @@ touchscreen:
   - platform: sdl
     id: panel_touch
     display: panel_display
-    on_touch:
-      - script.execute:
-          id: touch_down
-          x: !lambda "return touch.x;"
-          y: !lambda "return touch.y;"
-    on_update:
-      - lambda: |-
-          for (auto &t : touches) { id(g_tx1) = t.x; id(g_ty1) = t.y; }
-    on_release:
-      - script.execute: touch_up
 
 # ---- contract scripts: stubs + a scripted voice demo ----------------------------
 script:

@@ -1,0 +1,29 @@
+# Bottom tab bar: 64px, hairline top rule, 24px side padding, 7 equal columns.
+# Order Home · Alarm · Energy · Shades · Music · Pool · Settings; the page strip
+# keeps its own order (Alarm, Energy, Home, Shades, Music, Pool, Settings).
+obj:
+  id: tabbar
+  align: BOTTOM_MID
+  x: 0
+  y: 0
+  width: 720
+  height: 64
+  styles: st_hairline_top
+  bg_color: ${c_bg}
+  bg_opa: COVER
+  pad_left: 24
+  pad_right: 24
+  layout:
+    type: FLEX
+    flex_flow: ROW
+    flex_align_main: SPACE_BETWEEN
+    flex_align_cross: CENTER
+    flex_align_track: CENTER
+  widgets:
+    - !include { file: ../widgets/tab.yaml, vars: { n: 0, page: 2, icon: "${i_home}" } }
+    - !include { file: ../widgets/tab.yaml, vars: { n: 1, page: 0, icon: "${i_shield}" } }
+    - !include { file: ../widgets/tab.yaml, vars: { n: 2, page: 1, icon: "${i_lightning_bolt}" } }
+    - !include { file: ../widgets/tab.yaml, vars: { n: 3, page: 3, icon: "${i_blinds}" } }
+    - !include { file: ../widgets/tab.yaml, vars: { n: 4, page: 4, icon: "${i_music}" } }
+    - !include { file: ../widgets/tab.yaml, vars: { n: 5, page: 5, icon: "${i_pool}" } }
+    - !include { file: ../widgets/tab.yaml, vars: { n: 6, page: 6, icon: "${i_cog}" } }

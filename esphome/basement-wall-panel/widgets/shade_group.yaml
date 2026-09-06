@@ -10,12 +10,37 @@ obj:
   styles: st_hairline_top
   pad_top: 16
   widgets:
-    - label:
-        id: sh_name_${id}
+    - obj:
         x: 0
         y: 0
-        text: "${name}"
-        text_font: b500_20
+        width: SIZE_CONTENT
+        height: SIZE_CONTENT
+        clickable: false
+        layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 12 }
+        widgets:
+          - label:
+              id: sh_name_${id}
+              text: "${name}"
+              text_font: b500_20
+          - obj:
+              id: sh_mode_${id}
+              hidden: true
+              clickable: false
+              width: SIZE_CONTENT
+              height: 24
+              radius: 10
+              border_width: 1
+              border_color: ${c_hairline}
+              pad_left: 10
+              pad_right: 10
+              widgets:
+                - label:
+                    id: sh_mode_lbl_${id}
+                    align: CENTER
+                    text: "ADAPTIVE"
+                    text_font: b600_12
+                    text_letter_space: 1
+                    text_color: ${c_text3}
     - label:
         id: sh_state_${id}
         align: TOP_RIGHT

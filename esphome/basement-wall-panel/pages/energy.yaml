@@ -14,17 +14,18 @@ widgets:
             text_font: b300_34
         # power-flow diagram 656×430 at (32,104)
         - obj:
+            id: energy_flow
             x: 32
             y: 104
             width: 656
             height: 444
             clickable: false
             widgets:
-              # connecting bars (drawn first so the circles sit on top)
-              - obj: { x: 325, y: 122, width: 6, height: 80, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
-              - obj: { x: 325, y: 230, width: 6, height: 80, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
-              - obj: { x: 96, y: 212, width: 204, height: 6, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
-              - obj: { x: 356, y: 212, width: 204, height: 6, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
+              # connecting bars (drawn first so the circles sit on top); dimmed when idle
+              - obj: { id: en_bar_solar, x: 325, y: 122, width: 6, height: 80, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
+              - obj: { id: en_bar_batt, x: 325, y: 230, width: 6, height: 80, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
+              - obj: { id: en_bar_grid, x: 96, y: 212, width: 204, height: 6, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
+              - obj: { id: en_bar_home, x: 356, y: 212, width: 204, height: 6, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
               - obj: { x: 314, y: 201, width: 28, height: 28, radius: 14, border_width: 1, border_color: "${c_hairline}", bg_color: "${c_bg}", bg_opa: COVER, clickable: false }
               # Solar (top)
               - label: { x: 0, y: 0, width: 656, text: "Solar", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
@@ -76,6 +77,7 @@ widgets:
               - label: { id: en_batt_lbl, x: 0, y: 410, width: 656, text: "Charging", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
         # Powerwall reserve
         - obj:
+            id: energy_reserve
             x: 32
             y: 556
             width: 656
@@ -116,3 +118,84 @@ widgets:
                   bg_color: ${c_amber}
                   bg_opa: COVER
                   clickable: false
+        # ---- outage layout (binary_sensor.bayberry_grid_status off) ----
+        - obj:
+            id: energy_outage
+            hidden: true
+            x: 32
+            y: 104
+            width: 656
+            height: 548
+            clickable: false
+            widgets:
+              - arc:
+                  id: outage_arc
+                  align: TOP_MID
+                  x: 0
+                  y: 24
+                  width: 300
+                  height: 300
+                  start_angle: 0
+                  end_angle: 360
+                  rotation: 270
+                  min_value: 0
+                  max_value: 100
+                  value: 0
+                  arc_width: 12
+                  adjustable: false
+                  clickable: false
+                  indicator:
+                    arc_width: 12
+                  widgets:
+                    - label: { align: CENTER, y: -62, text: "POWERWALL", text_font: b700_13, text_letter_space: 2, text_color: "${c_text3}" }
+                    - obj:
+                        align: CENTER
+                        y: 0
+                        width: SIZE_CONTENT
+                        height: SIZE_CONTENT
+                        clickable: false
+                        layout: { type: FLEX, flex_flow: ROW, flex_align_cross: END, flex_align_track: END, pad_column: 2 }
+                        widgets:
+                          - label: { id: outage_pct, text: "—", text_font: b300_84 }
+                          - label: { text: "%", text_font: b300_36, text_color: "${c_text3}", pad_bottom: 8 }
+                    - label: { id: outage_left, align: CENTER, y: 62, text: "", text_font: b500_18, text_color: "${c_text2}" }
+              - obj:
+                  x: 0
+                  y: 396
+                  width: 656
+                  height: 132
+                  styles: st_hairline_top
+                  pad_top: 18
+                  clickable: false
+                  layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_EVENLY, flex_align_cross: START, flex_align_track: START }
+                  widgets:
+                    - obj:
+                        width: 218
+                        height: SIZE_CONTENT
+                        clickable: false
+                        layout: { type: FLEX, flex_flow: COLUMN, flex_align_cross: CENTER, flex_align_track: CENTER, pad_row: 4 }
+                        widgets:
+                          - label: { text: "${i_home_lightning_bolt}", text_font: mdi_28, text_color: "${c_slate}" }
+                          - label: { id: outage_load, text: "—", text_font: b500_30 }
+                          - label: { text: "Home load", text_font: b400_14, text_color: "${c_text3}" }
+                    - obj:
+                        width: 218
+                        height: SIZE_CONTENT
+                        clickable: false
+                        border_width: 1
+                        border_color: ${c_hairline}
+                        border_side: [LEFT, RIGHT]
+                        layout: { type: FLEX, flex_flow: COLUMN, flex_align_cross: CENTER, flex_align_track: CENTER, pad_row: 4 }
+                        widgets:
+                          - label: { text: "${i_solar_power_variant}", text_font: mdi_28, text_color: "${c_slate}" }
+                          - label: { id: outage_solar, text: "—", text_font: b500_30 }
+                          - label: { text: "Solar", text_font: b400_14, text_color: "${c_text3}" }
+                    - obj:
+                        width: 218
+                        height: SIZE_CONTENT
+                        clickable: false
+                        layout: { type: FLEX, flex_flow: COLUMN, flex_align_cross: CENTER, flex_align_track: CENTER, pad_row: 4 }
+                        widgets:
+                          - label: { text: "${i_battery_arrow_down}", text_font: mdi_28, text_color: "${c_slate}" }
+                          - label: { id: outage_batt, text: "—", text_font: b500_30 }
+                          - label: { text: "From battery", text_font: b400_14, text_color: "${c_text3}" }
