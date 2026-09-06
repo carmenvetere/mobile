@@ -144,8 +144,7 @@ sensor:
     on_value: [script.execute: render_energy]
   - platform: homeassistant
     id: s_alarm_delay
-    entity_id: alarm_control_panel.alarmo
-    attribute: delay
+    entity_id: sensor.basement_panel_alarm_delay   # Alarmo's delay attribute, 0 when none (HA package)
   - platform: homeassistant
     id: s_pw_remaining
     entity_id: ${powerwall_energy_remaining_entity}

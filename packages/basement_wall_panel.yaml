@@ -220,6 +220,15 @@ template:
             {% endfor %}
             {{ ns.out | join(';') }}
 
+  # Alarmo's entry/exit delay in seconds, 0 outside a delayed state. Read as
+  # a plain sensor so the panel never sees the attribute's None.
+  - sensor:
+      - name: Basement Panel Alarm Delay
+        unique_id: basement_panel_alarm_delay
+        icon: mdi:timer-outline
+        unit_of_measurement: s
+        state: "{{ state_attr('alarm_control_panel.alarmo', 'delay') | int(0) }}"
+
 script:
   basement_panel_notification_dismiss:
     alias: "Basement panel: dismiss notification"

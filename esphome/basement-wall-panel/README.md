@@ -52,17 +52,21 @@ Copy `esphome/secrets.yaml.example` to `esphome/secrets.yaml` and fill in
 `api_key_basement_wall_panel` (`openssl rand -base64 32`). The simulator only
 needs that one key; the Wi-Fi/OTA values can stay as placeholders.
 
-If Home Assistant is not reachable as `homeassistant.local:8123`, change
-`ha_base_url` at the top of `basement-wall-panel-sim.yaml` (it is only used to
-fetch album art).
+Set `ha_base_url` at the top of `basement-wall-panel-sim.yaml` to Home
+Assistant's IP address, e.g. `http://192.168.1.20:8123`. It is only used to
+fetch album art, but the host build's HTTP client cannot rely on
+`homeassistant.local` resolving on every machine, and a failed fetch stalls
+the simulator for the 10 s connection timeout ("HTTP Request failed … error
+code: 2" in the log).
 
 ### 2. Load the HA side and restart Home Assistant
 
 `configuration.yaml` now includes `packages/basement_wall_panel.yaml`, which
-adds the five summary sensors the panel reads
+adds the six summary sensors the panel reads
 (`sensor.basement_panel_weather`, `sensor.basement_panel_music`,
 `sensor.basement_panel_music_browse`, `sensor.basement_panel_music_recent`,
-`sensor.basement_panel_notifications`) and two notification scripts. Check the
+`sensor.basement_panel_notifications`, `sensor.basement_panel_alarm_delay`)
+and two notification scripts. Check the
 config and restart HA so those exist before the panel connects.
 
 ### 3. Run the simulator

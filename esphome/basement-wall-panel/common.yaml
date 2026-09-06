@@ -93,9 +93,15 @@ online_image:
           panel::show(id(np_art_icon), false);
     on_error:
       - lambda: |-
-          if (!id(g_art_src).empty()) {
+          // Not a JPEG: fetch the same URL again as PNG. A failed connection
+          // (http_request flags an error) would fail the same way, so skip it
+          // and keep the disc icon.
+          if (!id(g_art_src).empty() && !id(http_client).status_has_error()) {
             id(album_art_png).set_url(id(g_art_src).c_str());
             id(album_art_png).update();
+          } else {
+            panel::show(id(np_art_img), false);
+            panel::show(id(np_art_icon), true);
           }
   - id: album_art_png
     url: "${ha_base_url}/art.png"

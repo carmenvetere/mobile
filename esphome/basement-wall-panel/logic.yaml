@@ -1394,7 +1394,7 @@ script:
       - script.execute: voice_stop
       - if:
           condition:
-            lambda: "return lv_display_get_inactive_time(nullptr) >= (uint32_t) id(idle_return).state * 1000;"
+            lambda: "return !id(go_default).is_running() && lv_display_get_inactive_time(nullptr) >= (uint32_t) id(idle_return).state * 1000;"
           then:
             - script.execute: go_default
 
