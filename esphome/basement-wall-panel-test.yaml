@@ -16,11 +16,17 @@
 substitutions:
   name: basement-wall-panel-test
   friendly_name: Basement Wall Panel (simulator)
-  ha_base_url: "http://homeassistant.local:8123"
+  ha_base_url: "http://127.0.0.1:8123"   # python3 -m http.server 8123 -d basement-wall-panel/test/www
 
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
+  # JPEGDEC's desktop SIMD paths (x86_64 SSE, arm64 NEON) emit album art with
+  # red and blue swapped; the scalar path the ESP32-P4 uses is what ESPHome's
+  # decoder expects, so force it on the host build.
+  platformio_options:
+    build_flags:
+      - -DNO_SIMD
   includes:
     - basement-wall-panel/panel_helpers.h
     - basement-wall-panel/test/snap.h

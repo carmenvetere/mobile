@@ -24,11 +24,11 @@ script:
           id(ts_cv_0).publish_state(cv[0]); id(ts_cv_1).publish_state(cv[1]); id(ts_cv_2).publish_state(cv[2]); id(ts_cv_3).publish_state(cv[3]); id(ts_cv_4).publish_state(cv[4]); id(ts_cv_5).publish_state(cv[5]);
           id(s_cv_0).publish_state(100); id(s_cv_1).publish_state(100); id(s_cv_2).publish_state(100); id(s_cv_3).publish_state(100); id(s_cv_4).publish_state(0); id(s_cv_5).publish_state(100);
           id(ts_players).publish_state(
-            "media_player.media_room|playing|32|Ocean Floor|Bonobo · Fragments|media_player.media_room|media_player.media_room,media_player.pool|;"
-            "media_player.pool|playing|45|Ocean Floor|Bonobo · Fragments|media_player.media_room|media_player.media_room,media_player.pool|;"
+            "media_player.media_room|playing|32|Ocean Floor|Bonobo · Fragments|media_player.media_room|media_player.media_room,media_player.pool|/art.jpg;"
+            "media_player.pool|playing|45|Ocean Floor|Bonobo · Fragments|media_player.media_room|media_player.media_room,media_player.pool|/art.jpg;"
             "media_player.mud_room|idle|15||||media_player.mud_room|;media_player.gym|idle|20||||media_player.gym|;"
             "media_player.living_room|playing|28|Kind of Blue|Miles Davis|media_player.living_room|media_player.living_room|;"
-            "media_player.kitchen|playing|24|Dinner Jazz|Music Assistant playlist|media_player.kitchen|media_player.kitchen|;"
+            "media_player.kitchen|playing|24|Dinner Jazz|Music Assistant playlist|media_player.kitchen|media_player.kitchen|/art.jpg;"
             "media_player.office|idle|18||||media_player.office|;media_player.deck|idle|30||||media_player.deck|");
           id(ts_browse_title).publish_state("Library");
           id(ts_browse_items).publish_state("Playlists|18|playlist|library://playlists|1;Stations|9|radio|library://radios|1;Albums|867|album|library://albums|1;Artists|1,204|artist|library://artists|1;Favorites|All providers|favorite|library://favorites|1");

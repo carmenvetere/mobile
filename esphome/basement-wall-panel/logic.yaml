@@ -40,6 +40,8 @@ globals:
     type: std::vector<std::string>
   - id: g_art_url
     type: std::string
+  - id: g_art_src
+    type: std::string
   - id: g_alarm_prev
     type: std::string
   - id: g_pending_left
@@ -625,10 +627,10 @@ script:
           std::string pic = ap ? ap->picture : "";
           if (pic != id(g_art_url)) {
             id(g_art_url) = pic;
-            if (pic.empty()) { show(id(np_art_img), false); show(id(np_art_icon), true); }
+            if (pic.empty()) { id(g_art_src) = ""; show(id(np_art_img), false); show(id(np_art_icon), true); }
             else {
-              std::string url = pic.rfind("http", 0) == 0 ? pic : std::string("${ha_base_url}") + pic;
-              id(album_art).set_url(url.c_str());
+              id(g_art_src) = pic.rfind("http", 0) == 0 ? pic : std::string("${ha_base_url}") + pic;
+              id(album_art).set_url(id(g_art_src).c_str());
               id(album_art).update();
             }
           }

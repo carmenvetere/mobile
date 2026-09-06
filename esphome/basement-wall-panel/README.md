@@ -116,6 +116,7 @@ it as a live control surface, not a mock.
 | Shades: ▲ ■ ▼ | `cover.*` on `cover.first_floor_all`, or all six covers at once for Whole House; Media Room is disabled |
 | Shades: ADAPTIVE / MANUAL badge | follows the `input_boolean.shades_manual_*` helpers (Whole House is MANUAL if any group is); switch them in the Shades sheet |
 | Music: transport, volume | on the focused group; library / speaker group / per-speaker volume sheets |
+| Music: album art | fetched from the playing entity's `entity_picture` (through HA's media proxy) as JPEG, retried as PNG if it isn't one; the disc icon shows when there is none |
 | Pool: − / + | `water_heater.set_temperature` 70–90 on the OmniLogic heater; pill toggles the heater |
 | Pool: pump toggle, slider, Low / Med / High | `switch`, `number` and the three OmniLogic speed buttons |
 | Settings: tiles | Guests / Cleaners / Dinner / Vacation toggle immediately; Off Grid asks first |
@@ -137,6 +138,10 @@ red pill), `input_boolean.away_mode` to `on` (Vacation pill) or
   "Okay Nabu" wake word and Home Assistant Assist.
 * **Brightness / voice volume / wake-word toggle** — logged, not applied.
 * **Wi-Fi row** — shows "Simulator".
+* **Album art on Intel/Apple-silicon hosts** — the JPEG library's desktop SIMD
+  paths swap red and blue, so the host builds set `-DNO_SIMD` to use the same
+  scalar decoder the ESP32-P4 uses. If art ever looks colour-inverted in the
+  simulator, that flag has been lost.
 
 ## Screenshots
 
@@ -148,6 +153,7 @@ into `$SNAP_DIR`, and exits. Handy for checking a layout change without Home
 Assistant:
 
 ```bash
+python3 -m http.server 8123 -d esphome/basement-wall-panel/test/www &   # serves the demo album art
 SNAP_DIR=/tmp/panel-shots esphome run esphome/basement-wall-panel-test.yaml
 ```
 

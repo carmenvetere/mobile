@@ -53,16 +53,38 @@ http_request:
   verify_ssl: false
   timeout: 10s
 
-# Album art for the Music page (140px, hairline, 20px radius). The URL is set
-# at runtime from the focused player's entity_picture.
+# Album art for the Music page (250 px, hairline, 20 px radius). The URL is set
+# at runtime from the focused player's entity_picture. Sonos, Spotify and Music
+# Assistant art is JPEG, so that decoder goes first; if the bytes are not a JPEG
+# (radio-station logos are often PNG) the same URL is fetched again as PNG.
+# After each download the LVGL image has to be re-pointed at the descriptor,
+# otherwise the widget keeps the empty 0×0 header it was created with.
 online_image:
   - id: album_art
-    url: "${ha_base_url}/static/icons/favicon.png"
+    url: "${ha_base_url}/art.jpg"
+    type: RGB565
+    format: JPEG
+    resize: 250x250
+    update_interval: never
+    on_download_finished:
+      - lvgl.image.update: { id: np_art_img, src: album_art }
+      - lambda: |-
+          panel::show(id(np_art_img), true);
+          panel::show(id(np_art_icon), false);
+    on_error:
+      - lambda: |-
+          if (!id(g_art_src).empty()) {
+            id(album_art_png).set_url(id(g_art_src).c_str());
+            id(album_art_png).update();
+          }
+  - id: album_art_png
+    url: "${ha_base_url}/art.png"
     type: RGB565
     format: PNG
     resize: 250x250
     update_interval: never
     on_download_finished:
+      - lvgl.image.update: { id: np_art_img, src: album_art_png }
       - lambda: |-
           panel::show(id(np_art_img), true);
           panel::show(id(np_art_icon), false);
