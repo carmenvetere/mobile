@@ -118,7 +118,7 @@ sensor:
     on_value: [script.execute: render_status]
   - platform: homeassistant
     id: s_notif_count
-    entity_id: sensor.notification_alert_counter
+    entity_id: sensor.notification_center
     on_value: [script.execute: render_status]
   - platform: homeassistant
     id: s_pw_charge

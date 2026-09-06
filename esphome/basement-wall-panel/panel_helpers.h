@@ -128,8 +128,8 @@ inline std::string thousands(long v) {
   for (int i = (int) s.size() - 3; i > 0; i -= 3) s.insert(i, ",");
   return (v < 0 ? "-" : "") + s;
 }
-// Watts -> "4.2 kW" (or "320 W" under 1 kW)
-inline std::string kw(float w) { return fmt("%.1f kW", fabsf(w) / 1000.0f); }
+// Powerwall power sensors already report kilowatts -> "4.2 kW"
+inline std::string kw(float kw) { return fmt("%.1f kW", fabsf(kw)); }
 // Turn off scrollbars everywhere and scrolling on everything except `keep`
 // (the tileview and the sheet bodies). scrollbar_mode/scrollable are object
 // properties, not styles, so the YAML theme cannot set them.

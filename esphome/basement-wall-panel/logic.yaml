@@ -351,8 +351,9 @@ script:
           text(id(en_home), val(id(s_load).state));
           float b = id(s_battery).state, ch = id(s_pw_charge).state, rs = id(s_reserve).state;
           text(id(en_batt), val(b));
-          bool charging = !std::isnan(b) && b < -50;
-          text(id(en_batt_lbl), std::isnan(b) || fabsf(b) <= 50 ? "Idle" : (charging ? "Charging" : "Discharging"));
+          // battery_power is kW; negative = charging
+          bool charging = !std::isnan(b) && b < -0.05f;
+          text(id(en_batt_lbl), std::isnan(b) || fabsf(b) <= 0.05f ? "Idle" : (charging ? "Charging" : "Discharging"));
           text(id(en_batt_icon), battery_icon(std::isnan(ch) ? 100 : ch, charging));
           text(id(en_charge), std::isnan(ch) ? "—" : pct(ch));
           lv_slider_set_value(id(en_slider), std::isnan(ch) ? 0 : (int) lroundf(ch), LV_ANIM_ON);

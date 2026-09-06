@@ -84,6 +84,13 @@ not do mDNS on the host, so add it by hand once:
 your Mac's LAN IP, **Port** = `6053`, **Encryption key** = the
 `api_key_basement_wall_panel` value.
 
+**Then allow it to act.** By default Home Assistant only lets an ESPHome device
+*read* states. Open the device (Settings → Devices & services → ESPHome →
+Basement Wall Panel (simulator) → the gear / Configure) and turn on **Allow
+the device to perform Home Assistant actions**. Without it every tap is
+silently dropped on the HA side, and the Library sheet stays empty because
+its browse request is an event the device fires.
+
 As soon as HA connects, the window fills with live state: clock, weather chip,
 alarm chip, notification count, scene rows, energy flow, shades, music,
 pool, and the Settings hub counts. Everything you tap sends the real service
