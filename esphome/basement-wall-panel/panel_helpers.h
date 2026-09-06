@@ -260,6 +260,7 @@ inline const SpeakerDef *speakers(size_t &n) {
       {"media_player.mud_room", "Mud Room", 0xF109E},     {"media_player.gym", "Gym", 0xF01E6},
       {"media_player.living_room", "Living Room", 0xF156D}, {"media_player.kitchen", "Kitchen", 0xF181C},
       {"media_player.office", "Office", 0xF1239},         {"media_player.deck", "Deck", 0xF1061},
+      {"media_player.shop", "Shop", 0xF1323},
   };
   n = sizeof(S) / sizeof(S[0]);
   return S;

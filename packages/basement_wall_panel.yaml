@@ -88,6 +88,7 @@ template:
           - media_player.kitchen
           - media_player.office
           - media_player.deck
+          - media_player.shop
       - trigger: homeassistant
         event: start
     sensor:
@@ -96,13 +97,13 @@ template:
         icon: mdi:speaker-multiple
         state: >-
           {{ ['media_player.media_room', 'media_player.pool', 'media_player.mud_room', 'media_player.gym',
-              'media_player.living_room', 'media_player.kitchen', 'media_player.office', 'media_player.deck']
+              'media_player.living_room', 'media_player.kitchen', 'media_player.office', 'media_player.deck', 'media_player.shop']
              | map('states') | select('eq', 'playing') | list | count }}
         attributes:
           players: >-
             {% set ns = namespace(out=[]) %}
             {% for e in ['media_player.media_room', 'media_player.pool', 'media_player.mud_room', 'media_player.gym',
-                         'media_player.living_room', 'media_player.kitchen', 'media_player.office', 'media_player.deck'] %}
+                         'media_player.living_room', 'media_player.kitchen', 'media_player.office', 'media_player.deck', 'media_player.shop'] %}
               {% set s = states[e] %}
               {% if s is not none %}
                 {% set a = s.attributes %}
@@ -120,8 +121,11 @@ template:
 
   # ---- music: library browsing on request -----------------------------------
   # The panel fires esphome.basement_panel_browse {entity_id, media_content_id,
-  # media_content_type}; empty ids mean "root". Works with Sonos and Music
-  # Assistant alike since it goes through media_player.browse_media.
+  # media_content_type} with its Sonos entity; empty ids mean "root". Browsing
+  # goes to the Music Assistant player of the same name (found by friendly
+  # name among the music_assistant integration's entities), which exposes
+  # MA's full tree: artists, albums, tracks, playlists, radio and providers.
+  # Falls back to the Sonos entity itself when MA has no matching player.
   - trigger:
       - trigger: event
         event_type: esphome.basement_panel_browse
@@ -130,19 +134,28 @@ template:
           player: "{{ trigger.event.data.entity_id or 'media_player.media_room' }}"
           cid: "{{ trigger.event.data.media_content_id or '' }}"
           ctype: "{{ trigger.event.data.media_content_type or '' }}"
+          ma_player: >-
+            {% set want = state_attr(player, 'friendly_name') %}
+            {% set ns = namespace(found='') %}
+            {% for e in integration_entities('music_assistant') if e.startswith('media_player.') and e != player %}
+              {% if not ns.found and want and state_attr(e, 'friendly_name') == want %}{% set ns.found = e %}{% endif %}
+            {% endfor %}
+            {{ ns.found or player }}
       - action: media_player.browse_media
         target:
-          entity_id: "{{ player }}"
+          entity_id: "{{ ma_player }}"
         data: >-
           {% if cid %}{{ {'media_content_id': cid, 'media_content_type': ctype} }}{% else %}{{ {} }}{% endif %}
         response_variable: result
         continue_on_error: true
-      # Copy the response into plain variables: entity templates only see
+      # browse_media is an entity action, so its response is keyed by entity
+      # id. Copy what we need into plain variables: entity templates only see
       # variables, not response_variable results directly.
       - variables:
-          browse_title: "{{ result.title if result is defined and result.title is defined else 'Library' }}"
+          browse: "{{ result[ma_player] if result is defined and result is mapping and ma_player in result else {} }}"
+          browse_title: "{{ browse.title if browse is mapping and browse.title is defined else 'Library' }}"
           browse_items: >-
-            {% set children = result.children if result is defined and result.children is defined else [] %}
+            {% set children = browse.children if browse is mapping and browse.children is defined else [] %}
             {% set ns = namespace(out=[]) %}
             {% for c in children[:12] %}
               {% set sub = (c.media_content_type | default('')) | replace('_', ' ') | title %}
@@ -158,6 +171,7 @@ template:
         state: "{{ now().isoformat() }}"
         attributes:
           title: "{{ browse_title }}"
+          player: "{{ ma_player }}"
           items: "{{ browse_items }}"
 
   # ---- music: recently played (last 5 distinct items) ------------------------
@@ -172,6 +186,7 @@ template:
           - media_player.kitchen
           - media_player.office
           - media_player.deck
+          - media_player.shop
         attribute: media_content_id
     condition:
       - condition: template
@@ -254,3 +269,32 @@ script:
             - action: notification_center.dismiss
               data:
                 tag: "{{ repeat.item }}"
+
+# ---- music: play what the panel picked ---------------------------------------
+# esphome.basement_panel_play {entity_id, media_content_id, media_content_type,
+# source}. Library items carry Music Assistant ids and play on the MA player
+# of the same name; recents carry the Sonos entity's own ids and play there.
+automation:
+  - id: basement_panel_play
+    alias: "Basement panel: play media"
+    mode: queued
+    triggers:
+      - trigger: event
+        event_type: esphome.basement_panel_play
+    actions:
+      - variables:
+          player: "{{ trigger.event.data.entity_id or 'media_player.media_room' }}"
+          source: "{{ trigger.event.data.source or 'library' }}"
+          ma_player: >-
+            {% set want = state_attr(player, 'friendly_name') %}
+            {% set ns = namespace(found='') %}
+            {% for e in integration_entities('music_assistant') if e.startswith('media_player.') and e != player %}
+              {% if not ns.found and want and state_attr(e, 'friendly_name') == want %}{% set ns.found = e %}{% endif %}
+            {% endfor %}
+            {{ ns.found or player }}
+      - action: media_player.play_media
+        target:
+          entity_id: "{{ ma_player if source == 'library' else player }}"
+        data:
+          media_content_id: "{{ trigger.event.data.media_content_id }}"
+          media_content_type: "{{ trigger.event.data.media_content_type or 'music' }}"

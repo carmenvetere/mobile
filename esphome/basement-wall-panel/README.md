@@ -117,6 +117,7 @@ it as a live control surface, not a mock.
 | Energy: tap the bar | sets `number.bayberry_backup_reserve` in 5 % steps; amber marker moves |
 | Energy: grid outage | the flow diagram is replaced by the Powerwall ring (charge %, ≈ time remaining) and the Home / Solar / From battery columns; the panel jumps there when the grid drops |
 | Scenes: tap a row | `scene.turn_on`; row lights up 1.6 s, then follows `binary_sensor.scene_*` |
+| Scenes: Outdoor | a toggle: lit while `binary_sensor.outdoor_lights_on` is on; tap runs `scene.outdoor_off` then, `scene.outdoor_on` otherwise |
 | Shades: ▲ ■ ▼ | `cover.*` on `cover.first_floor_all`, or all six covers at once for Whole House; Media Room is disabled |
 | Shades: ADAPTIVE / MANUAL badge | follows the `input_boolean.shades_manual_*` helpers (Whole House is MANUAL if any group is); switch them in the Shades sheet |
 | Music: speaker chip (name + ⌄ under the title) | Speakers sheet: tap a row to make that speaker the one the page controls; it sticks through pause and stop until you pick another, it drops off the list, or the idle return clears it. With no pick the page follows Media Room, then whatever is playing |
@@ -145,8 +146,8 @@ and goes to the page the house state calls for, highest priority first:
 
 1. Alarm `pending` or `triggered` → **Alarm**
 2. Grid outage → **Energy**
-3. A basement speaker playing (`idle_music_players` in `common.yaml`: Media
-   Room, Pool, Gym, Mud Room) → **Music**
+3. A basement-floor speaker playing (`idle_music_players` in `common.yaml`:
+   Media Room, Mud Room, Pool, Gym, Shop) → **Music**
 4. Otherwise → **Home**
 
 Only the idle timer and the existing urgent transitions (alarm becoming
@@ -218,9 +219,8 @@ built-in ESPHome model, so no init sequence or timing is needed.
    the state line shows the min–max of their positions.
 2. **Music** — Sonos entities drive transport, grouping and volume so the
    panel and the mobile dashboard agree. Library browsing and playback go to
-   the "library player", which is the same Sonos entity until you set
-   `music_library_suffix` (e.g. `"_2"`) to the Music Assistant players. See
-   "Music Assistant" below.
+   the Music Assistant player with the same name, resolved on the HA side.
+   See "Music Assistant" below.
 3. **Super Chlorinate** — removed.
 4. **Well pump energy** — `sensor.well_pump_energy2`.
 5. **Pool setpoint** — ± calls `water_heater.set_temperature` on
@@ -245,24 +245,23 @@ helper (`input_text`) so it can be changed without reflashing.
 
 ## Music Assistant
 
-Keep the Home Assistant Sonos integration; add the speakers to Music Assistant
-as well. MA's Sonos provider talks to the speakers directly, so the two
-coexist, and the panel splits the work:
+The Home Assistant Sonos integration stays in charge of the speakers; Music
+Assistant is only used for the library. The two sides split like this:
 
 * **Sonos entities** (`media_player.media_room` …) — play/pause, next, volume,
-  join/unjoin, now-playing metadata. Everything the mobile dashboard,
-  `script.apply_sonos_group`, the announcement TTS targets and the automations
-  already depend on keeps working untouched.
-* **MA entities** (`media_player.media_room_2` … — HA appends `_2` because the
-  names collide) — only `browse_media` and `play_media` from the Library sheet,
-  which is where MA earns its keep: playlists, radio, albums, artists and
-  favorites across providers, exactly the tree in the design. Sonos'
-  own browse only exposes favorites and a local library.
+  join/unjoin, now-playing metadata and the "recently played" list. Everything
+  the mobile dashboard, `script.apply_sonos_group`, the announcement TTS
+  targets and the automations already depend on keeps working untouched.
+* **Music Assistant players** — browsing and playing from the Library sheet.
+  The panel always sends its Sonos entity id; the HA package looks up the MA
+  player with the same friendly name among the `music_assistant` integration's
+  entities (HA gives them ids like `media_player.media_room_2`) and browses
+  or plays there. `sensor.basement_panel_music_browse` shows which player it
+  picked in its `player` attribute. If no MA player matches, the Sonos entity's
+  own (much smaller) browse tree is used instead.
 
-To switch the Library sheet over: add the players in MA, confirm the entity
-ids HA created, set `music_library_suffix: "_2"` in
-`basement-wall-panel/common.yaml`, and change the `media_player.*` list in the
-"recently played" trigger of `packages/basement_wall_panel.yaml` to the MA
-entities so recents carry MA content ids. Do not remove the Sonos integration:
-MA does not provide TTS announcement targets or the Sonos-specific attributes
-the existing dashboard cards read.
+Playback is routed by `automation.basement_panel_play` in the package:
+library picks carry MA ids and go to the MA player, recents carry Sonos ids
+and go to the Sonos entity. Do not remove the Sonos integration: MA does not
+provide TTS announcement targets or the Sonos-specific attributes the
+existing dashboard cards read.

@@ -21,10 +21,9 @@ substitutions:
   # suffix HA gave the MA players (usually "_2", e.g. media_player.media_room_2)
   # so the Library sheet browses MA's library while transport, grouping and
   # volume stay on the Sonos entities the rest of the dashboard uses.
-  music_library_suffix: ""
-  # Speakers whose playback makes Music the panel's idle default view. Music
-  # elsewhere in the house never pulls the basement panel to the Music page.
-  idle_music_players: "media_player.media_room,media_player.pool,media_player.gym,media_player.mud_room"
+  # Speakers whose playback makes Music the panel's idle default view: the
+  # basement floor. Music elsewhere in the house never pulls the panel to Music.
+  idle_music_players: "media_player.media_room,media_player.mud_room,media_player.pool,media_player.gym,media_player.shop"
   # Cleaners-mode lock screen code. Prototype uses 1234; move it to
   # `!secret basement_panel_pin` once decided (handoff open item #7).
   cleaners_pin: "1234"

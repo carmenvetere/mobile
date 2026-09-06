@@ -18,7 +18,7 @@ script:
           id(bs_sc_good_morning).publish_state(false); id(bs_sc_basement_work).publish_state(false); id(bs_sc_basement_cleaning).publish_state(false);
           id(bs_sc_welcome).publish_state(false); id(bs_sc_basement_evening).publish_state(true); id(bs_sc_basement_entertaining).publish_state(false);
           id(bs_sc_movie).publish_state(false); id(bs_sc_emergency).publish_state(false); id(bs_sc_nightlight).publish_state(false);
-          id(bs_sc_good_night).publish_state(false); id(bs_outdoor_lights).publish_state(false); id(bs_dinner).publish_state(false);
+          id(bs_sc_good_night).publish_state(false); id(bs_outdoor_lights).publish_state(true); id(bs_dinner).publish_state(false);
           id(ts_ff_state).publish_state("open"); id(s_ff_pos).publish_state(100);
           const char *cv[6] = {"open","open","open","open","closed","open"};
           id(ts_cv_0).publish_state(cv[0]); id(ts_cv_1).publish_state(cv[1]); id(ts_cv_2).publish_state(cv[2]); id(ts_cv_3).publish_state(cv[3]); id(ts_cv_4).publish_state(cv[4]); id(ts_cv_5).publish_state(cv[5]);
@@ -29,7 +29,8 @@ script:
             "media_player.mud_room|idle|15||||media_player.mud_room|;media_player.gym|idle|20||||media_player.gym|;"
             "media_player.living_room|playing|28|Kind of Blue|Miles Davis|media_player.living_room|media_player.living_room|;"
             "media_player.kitchen|playing|24|Dinner Jazz|Music Assistant playlist|media_player.kitchen|media_player.kitchen|/art.jpg;"
-            "media_player.office|idle|18||||media_player.office|;media_player.deck|idle|30||||media_player.deck|");
+            "media_player.office|idle|18||||media_player.office|;media_player.deck|idle|30||||media_player.deck|;"
+            "media_player.shop|idle|25||||media_player.shop|");
           id(ts_browse_title).publish_state("Library");
           id(ts_browse_items).publish_state("Playlists|18|playlist|library://playlists|1;Stations|9|radio|library://radios|1;Albums|867|album|library://albums|1;Artists|1,204|artist|library://artists|1;Favorites|All providers|favorite|library://favorites|1");
           id(ts_recents).publish_state("Pool Mix — 2026|Playlist|playlist|a|0;Radio Paradise|Station|radio|b|0;Dinner Jazz|Playlist|playlist|c|0;Deep Focus|Playlist|playlist|d|0;WNYC|Station|radio|e|0");

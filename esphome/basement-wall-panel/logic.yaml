@@ -458,7 +458,7 @@ script:
               case 6: return {"Movie", 0xF1705, id(bs_sc_movie).state, SLATE};
               case 7: return {"Emergency", 0xF0FF6, id(bs_sc_emergency).state, RED};
               case 8: return {"Nightlight", 0xF1A4C, id(bs_sc_nightlight).state, SLATE};
-              case 9: return {outdoor_on ? "Outdoor Off" : "Outdoor", 0xF1020, false, SLATE};
+              case 9: return {"Outdoor", 0xF1020, outdoor_on, SLATE};   // toggles: on → scene.outdoor_off
               case 11: return {"Morning", 0xF0599, id(bs_sc_good_morning).state, SLATE};
               default: return {"All Off", 0xF0E4F, id(bs_sc_good_night).state, SLATE};
             }
@@ -716,7 +716,7 @@ script:
           if (n >= (int) id(g_grouped).size()) return;
           int t = ((v + 2) / 5) * 5;
           id(volume_set).execute(id(g_grouped)[n], t);
-          lv_obj_t *pcts[8] = {id(vol_pct_0), id(vol_pct_1), id(vol_pct_2), id(vol_pct_3), id(vol_pct_4), id(vol_pct_5), id(vol_pct_6), id(vol_pct_7)};
+          lv_obj_t *pcts[9] = {id(vol_pct_0), id(vol_pct_1), id(vol_pct_2), id(vol_pct_3), id(vol_pct_4), id(vol_pct_5), id(vol_pct_6), id(vol_pct_7), id(vol_pct_8)};
           panel::text(pcts[n], std::to_string(t) + "%");
 
   - id: render_group
@@ -724,14 +724,14 @@ script:
       - lambda: |-
           using namespace panel;
           size_t n; auto *S = speakers(n);
-          lv_obj_t *rows[8] = {id(grp_row_0), id(grp_row_1), id(grp_row_2), id(grp_row_3), id(grp_row_4), id(grp_row_5), id(grp_row_6), id(grp_row_7)};
-          lv_obj_t *icons[8] = {id(grp_icon_0), id(grp_icon_1), id(grp_icon_2), id(grp_icon_3), id(grp_icon_4), id(grp_icon_5), id(grp_icon_6), id(grp_icon_7)};
-          lv_obj_t *names[8] = {id(grp_name_0), id(grp_name_1), id(grp_name_2), id(grp_name_3), id(grp_name_4), id(grp_name_5), id(grp_name_6), id(grp_name_7)};
-          lv_obj_t *subs[8] = {id(grp_sub_0), id(grp_sub_1), id(grp_sub_2), id(grp_sub_3), id(grp_sub_4), id(grp_sub_5), id(grp_sub_6), id(grp_sub_7)};
-          lv_obj_t *marks[8] = {id(grp_mark_0), id(grp_mark_1), id(grp_mark_2), id(grp_mark_3), id(grp_mark_4), id(grp_mark_5), id(grp_mark_6), id(grp_mark_7)};
-          lv_obj_t *joins[8] = {id(grp_join_0), id(grp_join_1), id(grp_join_2), id(grp_join_3), id(grp_join_4), id(grp_join_5), id(grp_join_6), id(grp_join_7)};
-          lv_obj_t *jicons[8] = {id(grp_join_icon_0), id(grp_join_icon_1), id(grp_join_icon_2), id(grp_join_icon_3), id(grp_join_icon_4), id(grp_join_icon_5), id(grp_join_icon_6), id(grp_join_icon_7)};
-          for (size_t i = 0; i < 8 && i < n; i++) {
+          lv_obj_t *rows[9] = {id(grp_row_0), id(grp_row_1), id(grp_row_2), id(grp_row_3), id(grp_row_4), id(grp_row_5), id(grp_row_6), id(grp_row_7), id(grp_row_8)};
+          lv_obj_t *icons[9] = {id(grp_icon_0), id(grp_icon_1), id(grp_icon_2), id(grp_icon_3), id(grp_icon_4), id(grp_icon_5), id(grp_icon_6), id(grp_icon_7), id(grp_icon_8)};
+          lv_obj_t *names[9] = {id(grp_name_0), id(grp_name_1), id(grp_name_2), id(grp_name_3), id(grp_name_4), id(grp_name_5), id(grp_name_6), id(grp_name_7), id(grp_name_8)};
+          lv_obj_t *subs[9] = {id(grp_sub_0), id(grp_sub_1), id(grp_sub_2), id(grp_sub_3), id(grp_sub_4), id(grp_sub_5), id(grp_sub_6), id(grp_sub_7), id(grp_sub_8)};
+          lv_obj_t *marks[9] = {id(grp_mark_0), id(grp_mark_1), id(grp_mark_2), id(grp_mark_3), id(grp_mark_4), id(grp_mark_5), id(grp_mark_6), id(grp_mark_7), id(grp_mark_8)};
+          lv_obj_t *joins[9] = {id(grp_join_0), id(grp_join_1), id(grp_join_2), id(grp_join_3), id(grp_join_4), id(grp_join_5), id(grp_join_6), id(grp_join_7), id(grp_join_8)};
+          lv_obj_t *jicons[9] = {id(grp_join_icon_0), id(grp_join_icon_1), id(grp_join_icon_2), id(grp_join_icon_3), id(grp_join_icon_4), id(grp_join_icon_5), id(grp_join_icon_6), id(grp_join_icon_7), id(grp_join_icon_8)};
+          for (size_t i = 0; i < 9 && i < n; i++) {
             std::string sid = S[i].id;
             const Player *p = find_player(panel::state().players, sid);
             bool current = sid == id(g_active);
@@ -841,12 +841,12 @@ script:
     then:
       - lambda: |-
           using namespace panel;
-          lv_obj_t *rows[8] = {id(vol_row_0), id(vol_row_1), id(vol_row_2), id(vol_row_3), id(vol_row_4), id(vol_row_5), id(vol_row_6), id(vol_row_7)};
-          lv_obj_t *names[8] = {id(vol_name_0), id(vol_name_1), id(vol_name_2), id(vol_name_3), id(vol_name_4), id(vol_name_5), id(vol_name_6), id(vol_name_7)};
-          lv_obj_t *subs[8] = {id(vol_sub_0), id(vol_sub_1), id(vol_sub_2), id(vol_sub_3), id(vol_sub_4), id(vol_sub_5), id(vol_sub_6), id(vol_sub_7)};
-          lv_obj_t *sliders[8] = {id(vol_slider_0), id(vol_slider_1), id(vol_slider_2), id(vol_slider_3), id(vol_slider_4), id(vol_slider_5), id(vol_slider_6), id(vol_slider_7)};
-          lv_obj_t *pcts[8] = {id(vol_pct_0), id(vol_pct_1), id(vol_pct_2), id(vol_pct_3), id(vol_pct_4), id(vol_pct_5), id(vol_pct_6), id(vol_pct_7)};
-          for (int i = 0; i < 8; i++) {
+          lv_obj_t *rows[9] = {id(vol_row_0), id(vol_row_1), id(vol_row_2), id(vol_row_3), id(vol_row_4), id(vol_row_5), id(vol_row_6), id(vol_row_7), id(vol_row_8)};
+          lv_obj_t *names[9] = {id(vol_name_0), id(vol_name_1), id(vol_name_2), id(vol_name_3), id(vol_name_4), id(vol_name_5), id(vol_name_6), id(vol_name_7), id(vol_name_8)};
+          lv_obj_t *subs[9] = {id(vol_sub_0), id(vol_sub_1), id(vol_sub_2), id(vol_sub_3), id(vol_sub_4), id(vol_sub_5), id(vol_sub_6), id(vol_sub_7), id(vol_sub_8)};
+          lv_obj_t *sliders[9] = {id(vol_slider_0), id(vol_slider_1), id(vol_slider_2), id(vol_slider_3), id(vol_slider_4), id(vol_slider_5), id(vol_slider_6), id(vol_slider_7), id(vol_slider_8)};
+          lv_obj_t *pcts[9] = {id(vol_pct_0), id(vol_pct_1), id(vol_pct_2), id(vol_pct_3), id(vol_pct_4), id(vol_pct_5), id(vol_pct_6), id(vol_pct_7), id(vol_pct_8)};
+          for (int i = 0; i < 9; i++) {
             bool vis = i < (int) id(g_grouped).size();
             show(rows[i], vis);
             if (!vis) continue;
@@ -869,7 +869,7 @@ script:
       - homeassistant.event:
           event: esphome.basement_panel_browse
           data:
-            entity_id: !lambda "return id(g_active) + std::string(\"${music_library_suffix}\");"
+            entity_id: !lambda "return id(g_active);"
             media_content_id: !lambda "return cid;"
             media_content_type: !lambda "return ctype;"
 
@@ -906,7 +906,7 @@ script:
             id(browse_fetch).execute(it.id, it.type);
             id(render_browse).execute();
           } else {
-            id(play_media).execute(it.id, it.type);
+            id(play_media).execute(it.id, it.type, "library");
             id(close_sheets).execute();
           }
 
@@ -917,21 +917,26 @@ script:
       - lambda: |-
           if (n >= (int) panel::state().recents.size()) return;
           auto it = panel::state().recents[n];
-          id(play_media).execute(it.id, it.type);
+          id(play_media).execute(it.id, it.type, "recent");
           id(close_sheets).execute();
 
+  # The HA package's basement_panel_play automation routes this: library items
+  # (Music Assistant ids) to the MA player of the same name, recents (Sonos
+  # ids) to the Sonos entity itself.
   - id: play_media
     mode: queued
     parameters:
       cid: std::string
       ctype: std::string
+      source: std::string
     then:
-      - homeassistant.action:
-          action: media_player.play_media
+      - homeassistant.event:
+          event: esphome.basement_panel_play
           data:
-            entity_id: !lambda "return id(g_active) + std::string(\"${music_library_suffix}\");"
+            entity_id: !lambda "return id(g_active);"
             media_content_id: !lambda "return cid;"
             media_content_type: !lambda "return ctype;"
+            source: !lambda "return source;"
 
   - id: render_browse
     then:
