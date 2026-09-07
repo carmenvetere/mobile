@@ -47,6 +47,12 @@ globals:
   - id: g_pending_left
     type: int
     initial_value: "0"
+  - id: g_reserve_target      # reserve % we asked HA for, -1 once HA has echoed it
+    type: int
+    initial_value: "-1"
+  - id: g_browse_pending      # a browse request is out; ignore the stale items until it answers
+    type: bool
+    initial_value: "false"
   - id: g_grid_prev
     type: bool
     initial_value: "true"
@@ -123,7 +129,9 @@ script:
           for (auto *o : id(g_sheets)) if (o == s) return;
           id(g_sheets).push_back(s);
           panel::show(s, true);
-          lv_obj_scroll_to_y(s, 0, LV_ANIM_OFF);
+          // the scrollable part is the card's body, not the backdrop
+          lv_obj_t *card = lv_obj_get_child(s, 0);
+          if (card) for (uint32_t i = 0; i < lv_obj_get_child_count(card); i++) lv_obj_scroll_to_y(lv_obj_get_child(card, i), 0, LV_ANIM_OFF);
           id(g_overlay)++;
 
   # Close the top-most sheet (release notes → back to maintenance, etc.)
@@ -166,10 +174,23 @@ script:
             if (st == "pending") id(pending_tick).execute();
           }
           if (!urgent) id(pending_tick).stop();
+          if (st == "disarmed" || st.rfind("armed_", 0) == 0) id(g_arm_target).clear();
           id(g_alarm_prev) = st;
       - script.execute: render_status
       - script.execute: render_alarm
       - script.execute: render_lock
+
+  # The entry delay arrives as its own sensor, usually a moment after the
+  # alarm state itself: pick it up when it lands during a pending state.
+  - id: alarm_delay_changed
+    then:
+      - lambda: |-
+          float d = id(s_alarm_delay).state;
+          if (id(ts_alarm).state == "pending" && !std::isnan(d) && d > 0 && id(g_pending_left) <= 0) {
+            id(g_pending_left) = (int) lroundf(d);
+            id(pending_tick).execute();
+            id(render_alarm).execute();
+          }
 
   - id: pending_tick
     mode: restart
@@ -412,17 +433,24 @@ script:
               int r = ((v + 2) / 5) * 5;
               if (r < 5) r = 5; if (r > 100) r = 100;
               return std::to_string(r);
+      - lambda: |-
+          int r = ((v + 2) / 5) * 5;
+          if (r < 5) r = 5; if (r > 100) r = 100;
+          id(g_reserve_target) = r;
       - delay: 1500ms
+      - lambda: "id(g_reserve_target) = -1;"
       - script.execute: render_energy
 
+  # Quick repeated taps step from the value we just asked for, not from the
+  # value HA has not echoed back yet.
   - id: step_reserve
     parameters:
       delta: int
     then:
       - lambda: |-
           float rs = id(s_reserve).state;
-          int r = (std::isnan(rs) ? 20 : (int) lroundf(rs)) + delta * 5;
-          id(set_reserve).execute(r);
+          int base = id(g_reserve_target) >= 0 ? id(g_reserve_target) : (std::isnan(rs) ? 20 : (int) lroundf(rs));
+          id(set_reserve).execute(base + delta * 5);
 
   # ================================================================ scenes page
   # Scene codes: 0 Morning · 1 Working · 2 Cleaning · 3 Welcome · 4 Basement
@@ -736,6 +764,7 @@ script:
           for (size_t i = 0; i < 9 && i < n; i++) {
             std::string sid = S[i].id;
             const Player *p = find_player(panel::state().players, sid);
+            if (p && p->state == "unavailable") p = nullptr;
             bool current = sid == id(g_active);
             bool in_group = false; for (auto &m : id(g_grouped)) if (m == sid) in_group = true;
             bool playing = p && p->playing();
@@ -814,6 +843,7 @@ script:
           if (id(g_voice_phase) > 0 && !lv_obj_has_flag(id(voice), LV_OBJ_FLAG_HIDDEN)) return;
           id(voice_close).execute();
           id(g_focus) = "";
+          id(g_code).clear(); id(render_alarm).execute();
           int page = 2;
           std::string st = id(ts_alarm).has_state() ? id(ts_alarm).state : "";
           if (st == "pending" || st == "triggered") page = 0;
@@ -868,6 +898,7 @@ script:
       cid: std::string
       ctype: std::string
     then:
+      - lambda: "id(g_browse_pending) = true;"
       - homeassistant.event:
           event: esphome.basement_panel_browse
           data:
@@ -945,7 +976,7 @@ script:
       - lambda: |-
           using namespace panel;
           bool root = id(g_browse_ids).empty();
-          if (!root || valid(id(ts_browse_items).state)) panel::state().browse_items = parse_browse(id(ts_browse_items).state);
+          if (!id(g_browse_pending)) panel::state().browse_items = parse_browse(id(ts_browse_items).state);
           panel::state().recents = parse_browse(id(ts_recents).state);
           text(id(sheet_music_library_title), root ? "Library" : id(g_browse_titles).back());
           show(id(lib_back), !root);
@@ -1259,7 +1290,8 @@ script:
           if (valid(id(ts_wx_now).state) && f.size() >= 5) {
             text(id(wx_hdr_icon), wx_icon(f[1]));
             text(id(wx_temp), deg(to_f(f[0])));
-            text(id(wx_sub), wx_text(f[1]) + " · feels " + deg(to_f(f[2])) + " · H " + deg(to_f(f[3])) + " L " + deg(to_f(f[4])));
+            std::string hilo = (valid(f[3]) && valid(f[4])) ? " · H " + deg(to_f(f[3])) + " L " + deg(to_f(f[4])) : "";
+            text(id(wx_sub), wx_text(f[1]) + " · feels " + deg(to_f(f[2])) + hilo);
           }
           // hours: label|temp|condition;...
           lv_obj_t *ht[6] = {id(wxh_time_0), id(wxh_time_1), id(wxh_time_2), id(wxh_time_3), id(wxh_time_4), id(wxh_time_5)};

@@ -88,7 +88,9 @@ text_sensor:
     id: ts_browse_items
     entity_id: sensor.basement_panel_music_browse
     attribute: items
-    on_value: [script.execute: render_browse]
+    on_value:
+      - lambda: "id(g_browse_pending) = false;"
+      - script.execute: render_browse
   - platform: homeassistant
     id: ts_recents
     entity_id: sensor.basement_panel_music_recent
@@ -145,6 +147,7 @@ sensor:
   - platform: homeassistant
     id: s_alarm_delay
     entity_id: sensor.basement_panel_alarm_delay   # Alarmo's delay attribute, 0 when none (HA package)
+    on_value: [script.execute: alarm_delay_changed]
   - platform: homeassistant
     id: s_pw_remaining
     entity_id: ${powerwall_energy_remaining_entity}

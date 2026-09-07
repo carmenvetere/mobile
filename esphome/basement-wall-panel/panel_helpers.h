@@ -220,7 +220,7 @@ inline std::string short_date(const std::string &ymd) {
 
 // ---------------------------------------------------------------- music
 // Parsed from the HA-side `sensor.basement_panel_music` attribute `players`:
-//   id|state|volume|title|artist|leader|members;...
+//   id|state|volume|title|artist|leader|members,csv|entity_picture;...
 struct Player {
   std::string id, state, title, artist, leader, picture;
   int volume{0};

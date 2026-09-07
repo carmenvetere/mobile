@@ -351,9 +351,15 @@ script:
 
           begin("transitions");
           tap(id(tab_6));
+          id(s_alarm_delay).publish_state(0);           // HA's delay sensor lags the alarm state
           id(ts_alarm).publish_state("pending");
           expect_eq(id(g_page), 0, "alarm pending jumps to Alarm");
-          expect_text_has(id(code_hint), "Enter code to disarm · ", "pending shows the countdown");
+          id(s_alarm_delay).publish_state(30);
+          expect_eq(id(g_pending_left), 30, "a late-arriving entry delay still starts the countdown");
+          expect_text_has(id(code_hint), "Enter code to disarm · 30s", "pending shows the countdown");
+          id(g_arm_target) = "armed_away"; id(ts_alarm).publish_state("armed_home");
+          expect_eq(id(g_arm_target), "", "arming from elsewhere clears the panel's pending target");
+          id(ts_alarm).publish_state("pending");
           id(bs_grid).publish_state(false);
           expect_eq(id(g_page), 0, "an outage during a pending alarm stays on Alarm");
           id(bs_grid).publish_state(true);
@@ -375,6 +381,23 @@ script:
           id(bs_away).publish_state(false); expect_visible(id(pill_vacation), false, "vacation pill hides");
           id(bs_guest).publish_state(true); expect_visible(id(sb_mode_guest), true, "guest mode icon shows");
           id(bs_guest).publish_state(false); expect_visible(id(sb_mode_guest), false, "guest mode icon hides");
+
+          begin("idle hygiene");
+          tap(id(tab_1)); tap(id(key_1)); tap(id(key_2));
+          id(go_default).execute();
+          expect_eq(id(g_code), "", "idle return forgets a half-typed alarm code");
+          id(g_reserve_target) = -1; clear_calls(); id(step_reserve).execute(1); id(step_reserve).execute(1);
+          expect_call("number.set_value", {{"value", "25"}}, "first reserve tap steps 20 → 25");
+          expect_call("number.set_value", {{"value", "30"}}, "a second tap before HA echoes steps 25 → 30");
+          id(g_reserve_target) = -1;
+
+          begin("browse pending");
+          id(g_browse_pending) = false; id(ts_browse_items).publish_state("Dinner Jazz|Playlist|playlist|library://playlist/1|0");
+          tap(id(btn_library));
+          expect_eq((long) panel::state().browse_items.size(), 0, "opening Library never shows the previous answer while waiting");
+          id(ts_browse_items).publish_state("Playlists|Music Assistant|playlist|playlist|1");
+          expect_eq((long) panel::state().browse_items.size(), 1, "the answer renders when it lands");
+          id(close_sheets).execute();
 
           begin("edge cases");
           std::string saved = id(ts_players).state;

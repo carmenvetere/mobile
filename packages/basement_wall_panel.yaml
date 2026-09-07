@@ -142,7 +142,7 @@ template:
             {{ ns.found or player }}
           ma_entry: "{{ config_entry_id(ma_player) }}"
       - choose:
-          - conditions: "{{ cid in ['playlist', 'radio', 'album', 'artist', 'track'] }}"
+          - conditions: "{{ ma_player != player and cid in ['playlist', 'radio', 'album', 'artist', 'track'] }}"
             sequence:
               - action: music_assistant.get_library
                 data:
@@ -152,7 +152,7 @@ template:
                   order_by: "{{ 'last_played_desc' if cid == 'playlist' else 'name' }}"
                 response_variable: lib
                 continue_on_error: true
-          - conditions: "{{ cid == 'favorite' }}"
+          - conditions: "{{ ma_player != player and cid == 'favorite' }}"
             sequence:
               - action: music_assistant.get_library
                 data: { config_entry_id: "{{ ma_entry }}", media_type: playlist, favorite: true, limit: 4, order_by: name }
@@ -172,6 +172,8 @@ template:
           browse_items: >-
             {% if not cid %}
               Playlists|Music Assistant|playlist|playlist|1;Radio|Stations|radio|radio|1;Albums|Library|album|album|1;Artists|Library|artist|artist|1;Favorites|Playlists · albums · radio|favorite|favorite|1
+            {% elif ma_player == player %}
+              Music Assistant not connected|No MA player named like {{ state_attr(player, 'friendly_name') or player }}|info|none|0
             {% else %}
               {% set items = (lib['items'] if lib is defined and lib is mapping and lib['items'] is defined else [])
                            + (fav_p['items'] if fav_p is defined and fav_p is mapping and fav_p['items'] is defined else [])
@@ -224,7 +226,7 @@ template:
           items: >-
             {% set a = trigger.to_state.attributes %}
             {% set name = a.media_playlist or a.media_channel or a.media_title or 'Unknown' %}
-            {% set ctype = a.media_content_type | default('music') %}
+            {% set ctype = a.media_content_type or 'music' %}
             {% set cid = a.media_content_id | string | replace('|', '%7C') | replace(';', '%3B') %}
             {% set row = (name | string | replace('|', '/') | replace(';', ',')) ~ '|' ~ (ctype | replace('_', ' ') | title) ~ '|' ~ ctype ~ '|' ~ cid ~ '|0' %}
             {% set prev = this.attributes.items if this is defined and this.attributes.items is defined else '' %}
@@ -325,12 +327,12 @@ automation:
             target:
               entity_id: "{{ ma_player }}"
             data:
-              media_id: "{{ trigger.event.data.media_content_id }}"
+              media_id: "{{ trigger.event.data.media_content_id | replace('%7C', '|') | replace('%3B', ';') }}"
               media_type: "{{ trigger.event.data.media_content_type or 'playlist' }}"
         else:
           - action: media_player.play_media
             target:
               entity_id: "{{ player }}"
             data:
-              media_content_id: "{{ trigger.event.data.media_content_id }}"
+              media_content_id: "{{ trigger.event.data.media_content_id | replace('%7C', '|') | replace('%3B', ';') }}"
               media_content_type: "{{ trigger.event.data.media_content_type or 'music' }}"
