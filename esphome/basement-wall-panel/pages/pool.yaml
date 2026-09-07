@@ -58,6 +58,7 @@ widgets:
                   on_click:
                     - script.execute: pool_heater_toggle
         - button:
+            id: pool_minus
             x: 111
             y: 231
             width: 88
@@ -68,6 +69,7 @@ widgets:
             on_click:
               - script.execute: { id: pool_setpoint_step, delta: -1 }
         - button:
+            id: pool_plus
             x: 521
             y: 231
             width: 88

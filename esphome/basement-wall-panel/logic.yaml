@@ -398,7 +398,9 @@ script:
             text(id(outage_batt), std::isnan(b) ? "—" : kw(b > 0 ? b : 0));
           }
 
+  # restart: a second tap inside the 1.5 s settle window must still be sent
   - id: set_reserve
+    mode: restart
     parameters:
       v: int
     then:

@@ -167,4 +167,229 @@ script:
       - delay: 20s
       - lambda: |-
           ESP_LOGI("mock", "tick %u ms, inactive %u ms, idle_return %.0f", (unsigned) lv_tick_get(), (unsigned) lv_display_get_inactive_time(nullptr), id(idle_return).state);
-          paneltest::snap("28-idle-default"); fflush(stderr); exit(0);
+          paneltest::snap("28-idle-default");
+      - script.execute: qa
+
+  # ---- scripted QA: taps + state transitions, asserting on UI state and on
+  # the HA actions each tap emits (see test/qa.h). Exits 1 on any failure.
+  - id: qa
+    then:
+      - lambda: |-
+          using namespace paneltest;
+          id(idle_return).publish_state(600);   // keep the idle return out of the way
+          id(g_focus) = "";
+
+          begin("navigation");
+          tap(id(tab_1)); expect_eq(id(g_page), 0, "tab 2 opens Alarm");
+          tap(id(tab_6)); expect_eq(id(g_page), 6, "tab 7 opens Settings");
+          tap(id(tab_0)); expect_eq(id(g_page), 2, "tab 1 opens Home");
+          id(open_sheet).execute("weather"); expect_visible(id(sheet_weather), true, "weather sheet opens");
+          tap(id(tab_0)); expect_visible(id(sheet_weather), false, "tab tap closes the open sheet");
+
+          begin("scenes");
+          id(bs_outdoor_lights).publish_state(true); id(render_scenes).execute();
+          int slot_out = -1, slot_alloff = -1;
+          for (size_t i = 0; i < id(g_scene_codes).size(); i++) { if (id(g_scene_codes)[i] == 9) slot_out = i; if (id(g_scene_codes)[i] == 10) slot_alloff = i; }
+          lv_obj_t *rows[6] = {id(sc_row_0), id(sc_row_1), id(sc_row_2), id(sc_row_3), id(sc_row_4), id(sc_row_5)};
+          lv_obj_t *ons[6] = {id(sc_on_0), id(sc_on_1), id(sc_on_2), id(sc_on_3), id(sc_on_4), id(sc_on_5)};
+          check(slot_out >= 0 && slot_alloff >= 0, "Outdoor and All Off are in every period's set");
+          if (slot_out >= 0) {
+            expect_visible(ons[slot_out], true, "Outdoor row shows ON while the lights are on");
+            clear_calls(); tap(rows[slot_out]);
+            expect_call("scene.turn_on", {{"entity_id", "scene.outdoor_off"}}, "Outdoor tap while on runs scene.outdoor_off");
+            id(bs_outdoor_lights).publish_state(false); id(g_scene_flash) = -1; id(render_scenes).execute();
+            expect_visible(ons[slot_out], false, "Outdoor row is plain while the lights are off");
+            clear_calls(); tap(rows[slot_out]);
+            expect_call("scene.turn_on", {{"entity_id", "scene.outdoor_on"}}, "Outdoor tap while off runs scene.outdoor_on");
+          }
+          if (slot_alloff >= 0) { clear_calls(); tap(rows[slot_alloff]); expect_call("scene.turn_on", {{"entity_id", "scene.good_night"}}, "All Off runs scene.good_night"); }
+          id(g_scene_flash) = -1; id(render_scenes).execute();
+
+          begin("alarm");
+          tap(id(tab_1));
+          clear_calls(); tap(id(key_ok));
+          expect_no_call("alarmo.disarm", "OK with no code sends nothing");
+          expect_text(id(code_hint), "Enter your 4-digit code first", "OK with no code shows the hint");
+          tap(id(key_1)); tap(id(key_2)); tap(id(key_back)); tap(id(key_2)); tap(id(key_3)); tap(id(key_4));
+          expect_eq(id(g_code), "1234", "digits and backspace edit the code");
+          clear_calls(); tap(id(key_ok));
+          expect_call("alarmo.disarm", {{"entity_id", "alarm_control_panel.alarmo"}, {"code", "1234"}}, "OK with 4 digits disarms with the code");
+          expect_eq(id(g_code), "", "code is cleared after sending");
+          clear_calls(); tap(id(mode_away));
+          expect_call("alarmo.arm", {{"entity_id", "alarm_control_panel.alarmo"}, {"mode", "away"}}, "Away arms in away mode");
+          expect_eq(id(g_arm_target), "armed_away", "Away is remembered as the pending target");
+          clear_calls(); tap(id(mode_home));
+          expect_call("alarmo.arm", {{"mode", "home"}}, "Home arms in home mode");
+          clear_calls(); tap(id(mode_disarm));
+          expect_no_call("alarmo.disarm", "Disarm button without a code sends nothing");
+          id(g_flash_hint) = false; id(g_arm_target).clear();
+
+          begin("shades");
+          tap(id(tab_3));
+          clear_calls(); tap(id(sh_open_ff));
+          expect_call("cover.open_cover", {{"entity_id", "cover.first_floor_all"}}, "First floor up opens cover.first_floor_all");
+          clear_calls(); tap(id(sh_close_wh));
+          expect_call("cover.close_cover", {{"entity_id", "${whole_house_covers}"}}, "Whole House down closes all six covers in one call");
+          clear_calls(); tap(id(sh_stop_mr));
+          expect_no_call("cover.stop_cover", "Media Room (no entity yet) sends nothing");
+
+          begin("energy");
+          clear_calls(); id(step_reserve).execute(1);
+          expect_call("number.set_value", {{"entity_id", "number.bayberry_backup_reserve"}, {"value", "25"}}, "reserve + steps 20% to 25%");
+          clear_calls(); id(set_reserve).execute(2);
+          expect_call("number.set_value", {{"value", "5"}}, "reserve never goes below 5%");
+
+          begin("pool");
+          tap(id(tab_5));
+          clear_calls(); tap(id(pool_plus));
+          expect_call("water_heater.set_temperature", {{"entity_id", "water_heater.omnilogic_pool_heater"}, {"temperature", "89"}}, "+ asks for setpoint + 1");
+          id(s_pool_setpoint).publish_state(90);
+          clear_calls(); tap(id(pool_plus));
+          expect_call("water_heater.set_temperature", {{"temperature", "90"}}, "+ clamps at 90");
+          clear_calls(); tap(id(pool_minus));
+          expect_call("water_heater.set_temperature", {{"temperature", "89"}}, "- asks for setpoint - 1");
+          id(s_pool_setpoint).publish_state(88);
+          clear_calls(); tap(id(pool_heater_pill));
+          expect_call("water_heater.turn_off", {{"entity_id", "water_heater.omnilogic_pool_heater"}}, "heater pill turns the running heater off");
+          id(ts_heater).publish_state("off"); clear_calls(); tap(id(pool_heater_pill));
+          expect_call("water_heater.turn_on", {{"entity_id", "water_heater.omnilogic_pool_heater"}}, "heater pill turns the idle heater on");
+          id(ts_heater).publish_state("heat_pump");
+          clear_calls(); tap(id(chip_high));
+          expect_call("button.press", {{"entity_id", "button.omnilogic_pool_filter_pump_high_speed"}}, "High preset presses the high-speed button");
+          clear_calls(); id(pump_speed).execute(47);
+          expect_call("number.set_value", {{"entity_id", "number.omnilogic_pool_filter_pump_speed"}, {"value", "45"}}, "pump slider rounds to 5%");
+
+          begin("music");
+          tap(id(tab_4)); id(render_music).execute();
+          expect_eq(id(g_active), "media_player.media_room", "auto mode follows the playing Media Room");
+          clear_calls(); tap(id(btn_play));
+          expect_call("media_player.media_play_pause", {{"entity_id", "media_player.media_room"}}, "play/pause targets the active speaker");
+          tap(id(np_spk_chip)); expect_visible(id(sheet_music_group), true, "speaker chip opens the Speakers sheet");
+          tap(id(grp_row_1));
+          expect_eq(id(g_active), "media_player.pool", "picking Pool makes it the active speaker");
+          expect_visible(id(sheet_music_group), false, "picking a speaker closes the sheet");
+          expect_text_has(id(np_spk_name), "Pool", "chip names the picked speaker");
+          clear_calls(); tap(id(btn_play));
+          expect_call("media_player.media_play_pause", {{"entity_id", "media_player.pool"}}, "transport follows the pick");
+          tap(id(btn_group));
+          clear_calls(); tap(id(grp_join_7));
+          expect_call("media_player.join", {{"entity_id", "media_player.pool"}, {"group_members", "media_player.deck"}}, "+ joins Deck to the picked speaker's group");
+          clear_calls(); tap(id(grp_join_0));
+          expect_call("media_player.unjoin", {{"entity_id", "media_player.media_room"}}, "- removes a group member");
+          clear_calls(); tap(id(grp_row_1));
+          expect_no_call("media_player.join", "tapping a row never changes grouping");
+          clear_calls(); id(set_group_volume).execute(50);
+          expect_eq(count_calls("media_player.volume_set"), (long) id(g_grouped).size(), "group volume sets every member");
+          // group volume moves every member by the same delta (32 → 44, 45 → 57 for a 38 → 50 move), keeping their offsets
+          expect_call("media_player.volume_set", {{"entity_id", "media_player.media_room"}, {"volume_level", "0.44"}}, "group volume keeps the quieter speaker's offset");
+          expect_call("media_player.volume_set", {{"entity_id", "media_player.pool"}, {"volume_level", "0.57"}}, "group volume keeps the louder speaker's offset");
+          id(g_focus) = ""; id(render_music).execute();
+          expect_eq(id(g_active), "media_player.media_room", "clearing the pick returns to auto mode");
+
+          begin("library");
+          clear_calls(); tap(id(btn_library));
+          expect_visible(id(sheet_music_library), true, "Library button opens the sheet");
+          expect_call("esphome.basement_panel_browse", {{"entity_id", "media_player.media_room"}, {"media_content_id", ""}}, "opening asks HA for the root");
+          id(ts_browse_items).publish_state("Playlists|Music Assistant|playlist|playlist|1;Radio|Stations|radio|radio|1");
+          id(render_browse).execute();
+          expect_text(id(br_name_0), "Playlists", "root rows render");
+          clear_calls(); tap(id(br_row_0));
+          expect_call("esphome.basement_panel_browse", {{"media_content_id", "playlist"}, {"media_content_type", "playlist"}}, "expandable row asks HA for that category");
+          expect_text(id(sheet_music_library_title), "Playlists", "title follows the category");
+          id(ts_browse_items).publish_state("Dinner Jazz|Playlist|playlist|library://playlist/1|0");
+          id(render_browse).execute();
+          clear_calls(); tap(id(br_row_0));
+          expect_call("esphome.basement_panel_play", {{"entity_id", "media_player.media_room"}, {"media_content_id", "library://playlist/1"}, {"media_content_type", "playlist"}, {"source", "library"}}, "playable row plays via the panel play event");
+          expect_visible(id(sheet_music_library), false, "playing closes the sheet");
+          tap(id(btn_library)); tap(id(lib_back));
+          expect_eq((long) id(g_browse_ids).size(), 0, "back from a category returns to root");
+          clear_calls(); tap(id(rc_row_0));
+          expect_call("esphome.basement_panel_play", {{"source", "recent"}}, "recents play with source=recent");
+          id(close_sheets).execute();
+
+          begin("notifications");
+          tap(id(chip_notif)); expect_visible(id(sheet_notifications), true, "bell opens notifications");
+          clear_calls(); tap(id(nf_dismiss_1));
+          expect_call("script.basement_panel_notification_dismiss", {{"tag", "door"}}, "row dismiss sends the alert's tag");
+          clear_calls(); tap(id(nf_clear_all));
+          expect_call("script.basement_panel_notification_clear_all", {}, "Clear all runs the clear script");
+          id(close_sheets).execute();
+
+          begin("settings");
+          tap(id(tab_6));
+          clear_calls(); tap(id(tile_guests));
+          expect_call("homeassistant.turn_off", {{"entity_id", "input_boolean.guest_mode"}}, "Guests tile turns the active mode off");
+          clear_calls(); tap(id(tile_vacation));
+          expect_call("homeassistant.turn_on", {{"entity_id", "input_boolean.away_mode"}}, "Vacation tile turns away mode on");
+          clear_calls(); tap(id(tile_offgrid));
+          expect_visible(id(confirm_offgrid), true, "Off Grid asks first");
+          expect_no_call("homeassistant.turn_on", "Off Grid sends nothing before confirming");
+          tap(id(confirm_offgrid_cancel));
+          expect_visible(id(confirm_offgrid), false, "Cancel closes the confirm");
+          expect_no_call("homeassistant.turn_on", "Cancel sends nothing");
+          tap(id(tile_offgrid)); clear_calls(); tap(id(confirm_offgrid_go));
+          expect_call("homeassistant.turn_on", {{"entity_id", "switch.bayberry_off_grid_operation"}}, "Go off grid turns the switch on");
+          expect_visible(id(confirm_offgrid), false, "confirm closes after Go");
+          id(open_sheet).execute("maintenance");
+          clear_calls(); tap(id(mbtn_upper));
+          expect_call("script.reset_upper_floors_filter_runtime", {}, "Maintenance RESET runs the repo script");
+          id(close_sheets).execute();
+
+          begin("cleaners lock");
+          id(bs_cleaners).publish_state(true);
+          expect_visible(id(lock), true, "cleaners mode shows the lock");
+          tap(id(lock_key_9)); tap(id(lock_key_9)); tap(id(lock_key_9)); tap(id(lock_key_9));
+          clear_calls(); tap(id(lock_ok));
+          expect_no_call("homeassistant.turn_off", "wrong PIN sends nothing");
+          expect_text(id(lock_hint), "Incorrect code", "wrong PIN shows the error");
+          expect_eq(id(g_lock_code), "", "wrong PIN clears the entry");
+          tap(id(lock_key_1)); tap(id(lock_key_2)); tap(id(lock_key_3)); tap(id(lock_key_4));
+          clear_calls(); tap(id(lock_ok));
+          expect_call("homeassistant.turn_off", {{"entity_id", "input_boolean.cleaners_mode"}}, "right PIN turns cleaners mode off");
+          id(bs_cleaners).publish_state(false); id(g_lock_flash) = false; id(render_lock).execute();
+          expect_visible(id(lock), false, "lock hides when cleaners mode ends");
+
+          begin("transitions");
+          tap(id(tab_6));
+          id(ts_alarm).publish_state("pending");
+          expect_eq(id(g_page), 0, "alarm pending jumps to Alarm");
+          expect_text_has(id(code_hint), "Enter code to disarm · ", "pending shows the countdown");
+          id(bs_grid).publish_state(false);
+          expect_eq(id(g_page), 0, "an outage during a pending alarm stays on Alarm");
+          id(bs_grid).publish_state(true);
+          id(ts_alarm).publish_state("disarmed");
+          tap(id(tab_6));
+          id(bs_grid).publish_state(false);
+          expect_eq(id(g_page), 1, "grid drop jumps to Energy");
+          expect_visible(id(energy_outage), true, "outage layout shows");
+          expect_visible(id(pill_critical), true, "critical pill shows during an outage");
+          id(bs_grid).publish_state(true);
+          expect_visible(id(energy_outage), false, "outage layout hides when the grid returns");
+          tap(id(tab_6)); id(ts_alarm).publish_state("triggered");
+          expect_eq(id(g_page), 0, "triggered jumps to Alarm");
+          tap(id(tab_6)); tap(id(pill_critical));
+          expect_eq(id(g_page), 0, "critical pill opens Alarm while triggered");
+          id(ts_alarm).publish_state("disarmed");
+          expect_visible(id(pill_critical), false, "critical pill hides once calm");
+          id(bs_away).publish_state(true); expect_visible(id(pill_vacation), true, "vacation pill shows");
+          id(bs_away).publish_state(false); expect_visible(id(pill_vacation), false, "vacation pill hides");
+          id(bs_guest).publish_state(true); expect_visible(id(sb_mode_guest), true, "guest mode icon shows");
+          id(bs_guest).publish_state(false); expect_visible(id(sb_mode_guest), false, "guest mode icon hides");
+
+          begin("edge cases");
+          std::string saved = id(ts_players).state;
+          id(ts_players).publish_state(""); id(render_music).execute();
+          expect_text(id(np_title), "Nothing playing", "no players: Music shows Nothing playing");
+          id(ts_players).publish_state("media_player.media_room|unavailable|0||||media_player.media_room|"); id(render_music).execute();
+          expect_text(id(np_title), "Nothing playing", "unavailable player: no title");
+          id(g_focus) = "media_player.ghost"; id(ts_players).publish_state(saved); id(render_music).execute();
+          expect_eq(id(g_focus), "", "a pick that vanished from the list is forgotten");
+          id(ts_notifs).publish_state(""); id(render_notifs).execute();
+          expect_visible(id(nf_empty), true, "no notifications shows the empty state");
+          id(ts_browse_items).publish_state(""); id(browse_root).execute(); id(close_sheets).execute();
+          expect_visible(id(lib_empty), false, "root with recents but no items is not 'nothing here'");
+          id(ts_recents).publish_state(""); id(browse_root).execute(); id(close_sheets).execute();
+          expect_visible(id(lib_empty), true, "root with nothing at all shows 'nothing here'");
+          id(s_outdoor_temp).publish_state(NAN); id(render_status).execute();
+          expect_text(id(sb_wx_temp), "--°", "missing weather shows a placeholder, not garbage");
+          finish();

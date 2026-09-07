@@ -185,6 +185,15 @@ python3 -m http.server 8123 -d esphome/basement-wall-panel/test/www &   # serves
 SNAP_DIR=/tmp/panel-shots esphome run esphome/basement-wall-panel-test.yaml
 ```
 
+After the screenshots the same run executes the scripted QA in
+`test/mock.yaml`: it injects taps on every control, drives the alarm, grid,
+cleaners and vacation transitions, and checks the resulting UI state. With the
+action-capture hook described in `test/qa.h` it also asserts on the exact Home
+Assistant action each tap would send (nothing is ever sent: the harness has no
+HA connection). The process exits 1 on any failure and prints
+`QA ==== N passed, N failed`. `HARDWARE_CHECKLIST.md` covers what can only be
+verified on the real panel.
+
 ## Building the real panel
 
 ```bash

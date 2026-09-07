@@ -1,6 +1,7 @@
 # Lock-screen keypad digit key 112×76.
 # vars: k
 button:
+  id: lock_key_${k}
   width: 112
   height: 76
   radius: 18

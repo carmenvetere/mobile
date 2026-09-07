@@ -41,6 +41,7 @@ obj:
           - !include { file: ../widgets/lock_key.yaml, vars: { k: 8 } }
           - !include { file: ../widgets/lock_key.yaml, vars: { k: 9 } }
           - button:
+              id: lock_back
               width: 112
               height: 76
               radius: 18
@@ -50,6 +51,7 @@ obj:
                 - script.execute: { id: lock_key_tap, k: 10 }
           - !include { file: ../widgets/lock_key.yaml, vars: { k: 0 } }
           - button:
+              id: lock_ok
               width: 112
               height: 76
               radius: 18

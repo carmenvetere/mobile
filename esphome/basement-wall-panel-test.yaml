@@ -24,6 +24,7 @@ esphome:
   includes:
     - basement-wall-panel/panel_helpers.h
     - basement-wall-panel/test/snap.h
+    - basement-wall-panel/test/qa.h
   on_boot:
     - priority: -100
       then:
