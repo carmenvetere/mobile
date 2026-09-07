@@ -252,16 +252,18 @@ Assistant is only used for the library. The two sides split like this:
   join/unjoin, now-playing metadata and the "recently played" list. Everything
   the mobile dashboard, `script.apply_sonos_group`, the announcement TTS
   targets and the automations already depend on keeps working untouched.
-* **Music Assistant players** — browsing and playing from the Library sheet.
-  The panel always sends its Sonos entity id; the HA package looks up the MA
-  player with the same friendly name among the `music_assistant` integration's
-  entities (HA gives them ids like `media_player.media_room_2`) and browses
-  or plays there. `sensor.basement_panel_music_browse` shows which player it
-  picked in its `player` attribute. If no MA player matches, the Sonos entity's
-  own (much smaller) browse tree is used instead.
+* **Music Assistant** — the Library sheet. Its root is Playlists · Radio ·
+  Albums · Artists · Favorites; opening one calls `music_assistant.get_library`
+  for that media type (favorites = favourite playlists, albums and radio) on
+  the MA config entry that owns the MA player with the same friendly name as
+  the panel's Sonos entity (HA gives those ids like `media_player.media_room_2`).
+  The panel always sends its Sonos entity id; the lookup happens in the HA
+  package, and `sensor.basement_panel_music_browse` shows the chosen player in
+  its `player` attribute.
 
 Playback is routed by `automation.basement_panel_play` in the package:
-library picks carry MA ids and go to the MA player, recents carry Sonos ids
-and go to the Sonos entity. Do not remove the Sonos integration: MA does not
-provide TTS announcement targets or the Sonos-specific attributes the
-existing dashboard cards read.
+library picks carry MA uris and go through `music_assistant.play_media` on the
+MA player, recents carry Sonos ids and go through `media_player.play_media`
+on the Sonos entity. Do not remove the Sonos integration: MA does not provide
+TTS announcement targets or the Sonos-specific attributes the existing
+dashboard cards read.
