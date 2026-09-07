@@ -192,7 +192,9 @@ action-capture hook described in `test/qa.h` it also asserts on the exact Home
 Assistant action each tap would send (nothing is ever sent: the harness has no
 HA connection). The process exits 1 on any failure and prints
 `QA ==== N passed, N failed`. `HARDWARE_CHECKLIST.md` covers what can only be
-verified on the real panel.
+verified on the real panel, and `test/entity_check.jinja` pasted into
+Developer Tools → Template reports every entity the panel depends on that
+your Home Assistant does not have.
 
 ## Building the real panel
 
@@ -231,7 +233,9 @@ built-in ESPHome model, so no init sequence or timing is needed.
    the Music Assistant player with the same name, resolved on the HA side.
    See "Music Assistant" below.
 3. **Super Chlorinate** — removed.
-4. **Well pump energy** — `sensor.well_pump_energy2`.
+4. **Well pump energy** — `sensor.well_pump_energy2`, shown through its daily
+   utility meter `sensor.daily_well_pump` so the "Energy today" rows are really
+   today (pool pump and EV charger likewise; `daily_pool_pump` was added).
 5. **Pool setpoint** — ± calls `water_heater.set_temperature` on
    `water_heater.omnilogic_pool_heater`; the dial reads the heater's own
    `temperature` attribute back.

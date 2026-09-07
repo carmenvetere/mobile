@@ -12,7 +12,7 @@ substitutions:
   ha_base_url: "http://homeassistant.local:8123"
   # Daily well-pump kWh (the 7-day history's sensor; the mobile Settings view
   # still shows sensor.well_pump_energy).
-  well_pump_energy_entity: sensor.well_pump_energy2
+  well_pump_energy_entity: sensor.daily_well_pump   # daily utility_meter on sensor.well_pump_energy2
   # Whole House shades: the six covers the mobile Shades view closes, sent as
   # one multi-target service call (no cover group entity).
   whole_house_covers: "cover.first_floor_all, cover.bedroom_side_shades, cover.bedroom_back, cover.front_guest_bedroom_shades, cover.back_guest_bedroom_shades, cover.office_shades"

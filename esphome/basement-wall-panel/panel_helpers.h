@@ -252,7 +252,7 @@ inline const Player *find_player(const std::vector<Player> &v, const std::string
     if (p.id == id) return &p;
   return nullptr;
 }
-// Friendly name + icon for the eight speakers, in the design's priority order.
+// Friendly name + icon for the nine speakers, in the design's priority order.
 struct SpeakerDef { const char *id; const char *name; uint32_t icon; };
 inline const SpeakerDef *speakers(size_t &n) {
   static const SpeakerDef S[] = {

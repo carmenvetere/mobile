@@ -30,5 +30,5 @@ obj:
                 - !include { file: ../widgets/stepper_row.yaml, vars: { id: reserve, name: "Reserve", sub: "Backup floor", script: step_reserve } }
                 - !include { file: ../widgets/eyebrow.yaml, vars: { id: en_eyebrow_today, text: "ENERGY TODAY" } }
                 - !include { file: ../widgets/value_row.yaml, vars: { id: e_well, name: "Well pump", sub: "${well_pump_energy_entity}" } }
-                - !include { file: ../widgets/value_row.yaml, vars: { id: e_pool, name: "Pool pump", sub: "sensor.pool_pump_energy" } }
-                - !include { file: ../widgets/value_row.yaml, vars: { id: e_ev, name: "EV charger", sub: "sensor.wall_charger_energy" } }
+                - !include { file: ../widgets/value_row.yaml, vars: { id: e_pool, name: "Pool pump", sub: "sensor.daily_pool_pump" } }
+                - !include { file: ../widgets/value_row.yaml, vars: { id: e_ev, name: "EV charger", sub: "sensor.daily_ev_charger" } }
