@@ -215,8 +215,8 @@ built-in ESPHome model, so no init sequence or timing is needed.
   design tokens; every icon is the MDI glyph named in the spec.
 * Scene rows per period follow the prototype (Morning: Morning · Working ·
   Cleaning · Outdoor · All Off; Day: same with the sunny icon; Evening: Welcome ·
-  Basement Evening · Entertaining · Movie · Outdoor · All Off; Night: Emergency ·
-  Basement Evening · Movie · Nightlight · Outdoor · All Off). The period is
+  Evening (scene.basement_evening) · Entertaining · Movie · Outdoor · All Off; Night: Emergency ·
+  Evening · Movie · Nightlight · Outdoor · All Off). The period is
   picked with the repo's time and sun-elevation rules (night 22:00–05:00,
   morning until noon, evening once the sun is below 15° or after 17:00).
 * Two things LVGL can't do exactly as the prototype: letter-spacing tighter

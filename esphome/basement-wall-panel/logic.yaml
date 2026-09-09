@@ -483,7 +483,7 @@ script:
               case 1: return {"Working", 0xF095F, id(bs_sc_basement_work).state, SLATE};
               case 2: return {"Cleaning", 0xF0AE0, id(bs_sc_basement_cleaning).state, SLATE};
               case 3: return {"Welcome", 0xF17C4, id(bs_sc_welcome).state, SLATE};
-              case 4: return {"Basement Evening", 0xF0F65, id(bs_sc_basement_evening).state, SLATE};
+              case 4: return {"Evening", 0xF0F65, id(bs_sc_basement_evening).state, SLATE};   // scene.basement_evening
               case 5: return {"Entertaining", 0xF1056, id(bs_sc_basement_entertaining).state, SLATE};
               case 6: return {"Movie", 0xF1705, id(bs_sc_movie).state, SLATE};
               case 7: return {"Emergency", 0xF0FF6, id(bs_sc_emergency).state, RED};
