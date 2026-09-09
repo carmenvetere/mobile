@@ -101,7 +101,7 @@ series:
     show:
       legend_value: false
       in_header: false
-  - entity: sensor.pool_pump_energy
+  - entity: sensor.pool_pump_energy_2
     name: Pool Pump
     type: column
     color: "#9498AC"
@@ -170,7 +170,7 @@ series:
       legend_value: false
       in_header: true
       in_chart: false
-  - entity: sensor.pool_pump_energy
+  - entity: sensor.pool_pump_energy_2
     name: Pool Pump
     type: column
     color: "#9498AC"
