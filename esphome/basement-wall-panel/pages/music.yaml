@@ -1,0 +1,166 @@
+# Page 5 · Music
+id: tile_music
+row: 0
+column: 4
+dir: HOR
+widgets:
+  - obj:
+      styles: st_page
+      widgets:
+        - label:
+            x: 32
+            y: 40
+            text: "Music"
+            text_font: b300_34
+        - button:
+            id: btn_library
+            x: 32
+            y: 104
+            styles: st_icon_btn
+            widgets:
+              - label: { align: CENTER, text: "${i_music_box_multiple}", text_font: mdi_28, text_color: "${c_slate}" }
+            on_click:
+              - script.execute: browse_root
+        - button:
+            id: btn_group
+            x: 628
+            y: 104
+            styles: st_icon_btn
+            widgets:
+              - label: { align: CENTER, text: "${i_speaker_multiple}", text_font: mdi_28, text_color: "${c_slate}" }
+            on_click:
+              - script.execute:
+                  id: open_sheet
+                  name: music_group
+        # now playing: 250px art left, text column right
+        - obj:
+            id: np_art
+            x: 32
+            y: 190
+            width: 250
+            height: 250
+            radius: 24
+            clip_corner: true
+            border_width: 1
+            border_color: ${c_hairline}
+            bg_color: ${c_art_fallback}
+            bg_opa: COVER
+            clickable: false
+            widgets:
+              - label:
+                  id: np_art_icon
+                  align: CENTER
+                  text: "${i_album}"
+                  text_font: mdi_96
+                  text_color: ${c_text4}
+              - image:
+                  id: np_art_img
+                  align: CENTER
+                  src: album_art
+                  hidden: true
+        - obj:
+            x: 310
+            y: 190
+            width: 378
+            height: 250
+            clickable: false
+            layout: { type: FLEX, flex_flow: COLUMN, flex_align_main: CENTER, flex_align_cross: START, pad_row: 6 }
+            widgets:
+              - label:
+                  id: np_title
+                  width: 100%
+                  text: "Nothing playing"
+                  text_font: b500_30
+                  text_line_space: 4
+                  long_mode: WRAP
+              - label:
+                  id: np_artist
+                  width: 100%
+                  text: ""
+                  text_font: b400_20
+                  text_color: ${c_text2}
+                  long_mode: DOT
+              # speaker chip: tap to pick which speaker the page controls
+              - obj:
+                  id: np_spk_chip
+                  width: SIZE_CONTENT
+                  height: 36
+                  pad_top: 8
+                  ext_click_area: 12
+                  layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 8 }
+                  widgets:
+                    - label: { id: np_spk_icon, text: "${i_sofa}", text_font: mdi_21, text_color: "${c_slate}" }
+                    - label: { id: np_spk_name, text: "Media Room", text_font: b600_18, text_color: "${c_slate}" }
+                    - label: { text: "${i_chevron_down}", text_font: mdi_21, text_color: "${c_slate}" }
+                  on_click:
+                    - script.execute:
+                        id: open_sheet
+                        name: music_group
+        # transport: three equal 76px buttons, 22px gap
+        - obj:
+            align: TOP_MID
+            x: 0
+            y: 457
+            width: SIZE_CONTENT
+            height: 76
+            clickable: false
+            layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 22 }
+            widgets:
+              - button:
+                  width: 76
+                  height: 76
+                  radius: 38
+                  widgets:
+                    - label: { align: CENTER, text: "${i_skip_previous}", text_font: mdi_40, text_color: "${c_text}" }
+                  on_click:
+                    - script.execute: { id: music_cmd, cmd: "media_previous_track" }
+              - button:
+                  id: btn_play
+                  width: 76
+                  height: 76
+                  radius: 38
+                  border_width: 2
+                  border_color: ${c_slate}
+                  widgets:
+                    - label: { id: np_play_icon, align: CENTER, text: "${i_play}", text_font: mdi_42, text_color: "${c_slate}" }
+                  on_click:
+                    - script.execute: { id: music_cmd, cmd: "media_play_pause" }
+              - button:
+                  width: 76
+                  height: 76
+                  radius: 38
+                  widgets:
+                    - label: { align: CENTER, text: "${i_skip_next}", text_font: mdi_40, text_color: "${c_text}" }
+                  on_click:
+                    - script.execute: { id: music_cmd, cmd: "media_next_track" }
+        # group volume
+        - obj:
+            x: 32
+            y: 552
+            width: 656
+            height: 60
+            clickable: false
+            layout: { type: FLEX, flex_flow: ROW, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 14 }
+            widgets:
+              - label: { text: "${i_volume_medium}", text_font: mdi_28, text_color: "${c_text2}" }
+              - slider:
+                  id: np_volume
+                  width: 430
+                  height: 14
+                  min_value: 0
+                  max_value: 100
+                  value: 0
+                  ext_click_area: 21
+                  on_release:
+                    - script.execute:
+                        id: set_group_volume
+                        v: !lambda "return (int) lv_slider_get_value(id(np_volume));"
+              - label: { id: np_vol_pct, width: 56, text: "0%", text_align: RIGHT, text_font: b600_20, text_color: "${c_slate}" }
+              - button:
+                  styles: st_icon_btn
+                  widgets:
+                    - label: { align: CENTER, text: "${i_tune_vertical_variant}", text_font: mdi_28, text_color: "${c_slate}" }
+                  on_click:
+                    - script.execute:
+                        id: open_sheet
+                        name: music_volumes

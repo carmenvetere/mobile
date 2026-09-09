@@ -1,0 +1,16 @@
+# Lock-screen keypad digit key 112×76.
+# vars: k
+button:
+  id: lock_key_${k}
+  width: 112
+  height: 76
+  radius: 18
+  widgets:
+    - label:
+        align: CENTER
+        text: "${k}"
+        text_font: b400_30
+  on_click:
+    - script.execute:
+        id: lock_key_tap
+        k: ${k}

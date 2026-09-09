@@ -1,0 +1,16 @@
+# Standard icon button (default 60×60, radius 18, 1px hairline, slate glyph).
+# vars: id, icon, size, radius, font, script
+button:
+  id: ${id}
+  width: ${size}
+  height: ${size}
+  radius: ${radius}
+  widgets:
+    - label:
+        id: ${id}_icon
+        align: CENTER
+        text: "${icon}"
+        text_font: ${font}
+        text_color: ${c_slate}
+  on_click:
+    - script.execute: ${script}

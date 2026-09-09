@@ -1,0 +1,1564 @@
+# Basement Wall Panel — panel-local state and the scripts that drive the UI.
+#
+# State model (design handoff → "State model"): page · overlays (menu / voice /
+# sheet stack) · code · armTarget · focus player · browse path · scene flash.
+# Everything else is read straight from the Home Assistant imports in
+# entities.yaml at render time.
+
+globals:
+  - id: g_page
+    type: int
+    initial_value: "2"
+  - id: g_overlay
+    type: int
+    initial_value: "0"
+  - id: g_sheets
+    type: std::vector<lv_obj_t *>
+  - id: g_code
+    type: std::string
+  - id: g_arm_target
+    type: std::string
+  - id: g_flash_hint
+    type: bool
+    initial_value: "false"
+  - id: g_scene_codes
+    type: std::vector<int>
+  - id: g_scene_flash
+    type: int
+    initial_value: "-1"
+  - id: g_focus
+    type: std::string
+  - id: g_active
+    type: std::string
+  - id: g_grouped
+    type: std::vector<std::string>
+  - id: g_browse_ids
+    type: std::vector<std::string>
+  - id: g_browse_types
+    type: std::vector<std::string>
+  - id: g_browse_titles
+    type: std::vector<std::string>
+  - id: g_art_url
+    type: std::string
+  - id: g_art_src
+    type: std::string
+  - id: g_alarm_prev
+    type: std::string
+  - id: g_pending_left
+    type: int
+    initial_value: "0"
+  - id: g_reserve_target      # reserve % we asked HA for, -1 once HA has echoed it
+    type: int
+    initial_value: "-1"
+  - id: g_browse_pending      # a browse request is out; ignore the stale items until it answers
+    type: bool
+    initial_value: "false"
+  - id: g_grid_prev
+    type: bool
+    initial_value: "true"
+  - id: g_lock_code
+    type: std::string
+  - id: g_lock_flash
+    type: bool
+    initial_value: "false"
+  - id: g_voice_phase
+    type: int
+    initial_value: "0"
+  - id: g_voice_tick
+    type: int
+    initial_value: "0"
+
+script:
+  # ================================================================ navigation
+  # Tab order (Home Alarm Energy Shades Music Pool Settings) → page index.
+  - id: render_tabs
+    parameters:
+      p: int
+    then:
+      - lambda: |-
+          static const int PAGE_OF_TAB[7] = {2, 0, 1, 3, 4, 5, 6};
+          lv_obj_t *icons[7] = {id(tab_icon_0), id(tab_icon_1), id(tab_icon_2), id(tab_icon_3), id(tab_icon_4), id(tab_icon_5), id(tab_icon_6)};
+          lv_obj_t *inds[7] = {id(tab_ind_0), id(tab_ind_1), id(tab_ind_2), id(tab_ind_3), id(tab_ind_4), id(tab_ind_5), id(tab_ind_6)};
+          for (int i = 0; i < 7; i++) {
+            bool on = PAGE_OF_TAB[i] == p;
+            panel::text_color(icons[i], on ? panel::SLATE : panel::TEXT4);
+            lv_obj_set_style_bg_opa(inds[i], on ? LV_OPA_COVER : LV_OPA_TRANSP, LV_PART_MAIN);
+          }
+
+  - id: on_tile_changed
+    then:
+      - lambda: |-
+          lv_obj_t *t = lv_tileview_get_tile_active(id(tv));
+          lv_obj_t *tiles[7] = {id(tile_alarm), id(tile_energy), id(tile_scenes), id(tile_shades), id(tile_music), id(tile_pool), id(tile_settings)};
+          for (int i = 0; i < 7; i++) if (tiles[i] == t) id(g_page) = i;
+          id(render_tabs).execute(id(g_page));
+
+  - id: set_page
+    parameters:
+      n: int
+    then:
+      - script.execute: close_all
+      - lambda: |-
+          id(g_page) = n;
+          lv_tileview_set_tile_by_index(id(tv), n, 0, LV_ANIM_ON);
+          id(render_tabs).execute(n);
+
+  - id: open_sheet
+    parameters:
+      name: std::string
+    then:
+      - lambda: |-
+          lv_obj_t *s = nullptr;
+          if (name == "weather") s = id(sheet_weather);
+          else if (name == "notifications") s = id(sheet_notifications);
+          else if (name == "not_ready") s = id(sheet_not_ready);
+          else if (name == "music_library") s = id(sheet_music_library);
+          else if (name == "music_group") s = id(sheet_music_group);
+          else if (name == "music_volumes") s = id(sheet_music_volumes);
+          else if (name == "pool_settings") s = id(sheet_pool_settings);
+          else if (name == "climate") s = id(sheet_climate);
+          else if (name == "alarm") s = id(sheet_alarm);
+          else if (name == "motion") s = id(sheet_motion);
+          else if (name == "energy") s = id(sheet_energy);
+          else if (name == "shades") s = id(sheet_shades);
+          else if (name == "vacuum") s = id(sheet_vacuum);
+          else if (name == "panel") s = id(sheet_panel);
+          else if (name == "maintenance") s = id(sheet_maintenance);
+          else if (name == "release_notes") s = id(sheet_release_notes);
+          if (s == nullptr) return;
+          for (auto *o : id(g_sheets)) if (o == s) return;
+          id(g_sheets).push_back(s);
+          panel::show(s, true);
+          // the scrollable part is the card's body, not the backdrop
+          lv_obj_t *card = lv_obj_get_child(s, 0);
+          if (card) for (uint32_t i = 0; i < lv_obj_get_child_count(card); i++) lv_obj_scroll_to_y(lv_obj_get_child(card, i), 0, LV_ANIM_OFF);
+          id(g_overlay)++;
+
+  # Close the top-most sheet (release notes → back to maintenance, etc.)
+  - id: close_sheets
+    then:
+      - lambda: |-
+          if (id(g_sheets).empty()) return;
+          lv_obj_t *s = id(g_sheets).back();
+          id(g_sheets).pop_back();
+          panel::show(s, false);
+          id(g_overlay)--;
+
+  - id: close_all
+    then:
+      - lambda: |-
+          while (!id(g_sheets).empty()) {
+            panel::show(id(g_sheets).back(), false);
+            id(g_sheets).pop_back();
+            id(g_overlay)--;
+          }
+          panel::show(id(confirm_offgrid), false);
+
+  - id: critical_tap
+    then:
+      - lambda: |-
+          if (id(ts_alarm).state == "triggered" || id(ts_alarm).state == "pending") id(set_page).execute(0); else id(set_page).execute(1);
+
+  # Alarm state transitions: pending/triggered take over the panel.
+  - id: alarm_changed
+    then:
+      - lambda: |-
+          std::string st = id(ts_alarm).state;
+          bool urgent = st == "pending" || st == "triggered";
+          bool was_urgent = id(g_alarm_prev) == "pending" || id(g_alarm_prev) == "triggered";
+          if (urgent && !was_urgent) {
+            id(voice_close).execute();
+            id(set_page).execute(0);
+            float d = id(s_alarm_delay).state;
+            id(g_pending_left) = std::isnan(d) ? 30 : (int) lroundf(d);
+            if (st == "pending") id(pending_tick).execute();
+          }
+          if (!urgent) id(pending_tick).stop();
+          if (st == "disarmed" || st.rfind("armed_", 0) == 0) id(g_arm_target).clear();
+          id(g_alarm_prev) = st;
+      - script.execute: render_status
+      - script.execute: render_alarm
+      - script.execute: render_lock
+
+  # The entry delay arrives as its own sensor, usually a moment after the
+  # alarm state itself: pick it up when it lands during a pending state.
+  - id: alarm_delay_changed
+    then:
+      - lambda: |-
+          float d = id(s_alarm_delay).state;
+          if (id(ts_alarm).state == "pending" && !std::isnan(d) && d > 0 && id(g_pending_left) <= 0) {
+            id(g_pending_left) = (int) lroundf(d);
+            id(pending_tick).execute();
+            id(render_alarm).execute();
+          }
+
+  - id: pending_tick
+    mode: restart
+    then:
+      - while:
+          condition:
+            lambda: "return id(ts_alarm).state == \"pending\" && id(g_pending_left) > 0;"
+          then:
+            - delay: 1s
+            - lambda: "id(g_pending_left)--;"
+            - script.execute: render_alarm
+
+  # Grid transitions: an outage takes over the Energy page (alarm wins).
+  - id: grid_changed
+    then:
+      - lambda: |-
+          bool up = id(bs_grid).state;
+          if (!up && id(g_grid_prev)) {
+            std::string st = id(ts_alarm).state;
+            if (st != "pending" && st != "triggered") { id(voice_close).execute(); id(set_page).execute(1); }
+          }
+          id(g_grid_prev) = up;
+      - script.execute: render_status
+      - script.execute: render_energy
+
+  # ================================================================ status bar
+  - id: render_status
+    then:
+      - lambda: |-
+          using namespace panel;
+          std::string alarm = id(ts_alarm).has_state() ? id(ts_alarm).state : "disarmed";
+          bool trig = alarm == "triggered";
+          bool outage = id(bs_grid).has_state() && !id(bs_grid).state;
+          bool crit = trig || outage;
+          bool vacation = !crit && id(bs_away).state;
+          show(id(chip_weather), !crit && !vacation); show(id(chip_alarm), !crit && !vacation); show(id(chip_notif), !crit && !vacation);
+          show(id(pill_critical), crit);
+          show(id(pill_vacation), vacation);
+          // mode indicators (non-critical): guests · dinner · cleaners
+          show(id(sb_mode_guest), id(bs_guest).state);
+          show(id(sb_mode_dinner), id(bs_dinner).state);
+          show(id(sb_mode_cleaners), id(bs_cleaners).state);
+          show(id(mode_chips), id(bs_guest).state || id(bs_dinner).state || id(bs_cleaners).state);
+          if (crit) {
+            if (trig) { text(id(sb_crit_icon), utf8(0xF078F)); text(id(sb_crit_text), "Alarm Triggered!"); }
+            else {
+              float ch = id(s_pw_charge).state;
+              text(id(sb_crit_icon), utf8(0xF06A6));
+              text(id(sb_crit_text), std::isnan(ch) ? "Power Outage!" : "Power Outage! Powerwall " + pct(ch));
+            }
+          }
+          // weather chip
+          text(id(sb_wx_icon), wx_icon(id(ts_weather_cond).state));
+          float t = id(s_outdoor_temp).state;
+          text(id(sb_wx_temp), std::isnan(t) ? "--°" : deg(t));
+          // alarm chip
+          uint32_t col = SAGE; std::string icon = utf8(0xF099C), txt = "Off";
+          if (alarm == "arming") { col = AMBER; icon = utf8(0xF11A2); txt = "Arming"; }
+          else if (alarm == "armed_home") { col = GOLD; icon = utf8(0xF068A); txt = "Home"; }
+          else if (alarm == "armed_away") { col = GOLD; icon = utf8(0xF099D); txt = "Away"; }
+          else if (alarm == "armed_night" || alarm == "armed_vacation" || alarm == "armed_custom_bypass") { col = GOLD; icon = utf8(0xF099D); txt = "Armed"; }
+          else if (alarm == "pending") { col = AMBER; icon = utf8(0xF0ECC); txt = "Pending"; }
+          else if (trig) { col = RED; icon = utf8(0xF078F); txt = "Alarm"; }
+          text(id(sb_alarm_icon), icon); text_color(id(sb_alarm_icon), col);
+          text(id(sb_alarm_text), txt); text_color(id(sb_alarm_text), col);
+          // notifications chip
+          float n = id(s_notif_count).state;
+          int count = std::isnan(n) ? 0 : (int) lroundf(n);
+          text(id(sb_bell_count), std::to_string(count));
+          text_color(id(sb_bell_icon), count > 0 ? AMBER : TEXT3);
+          text_color(id(sb_bell_count), count > 0 ? AMBER : TEXT3);
+
+  # ================================================================ alarm page
+  - id: render_alarm
+    then:
+      - lambda: |-
+          using namespace panel;
+          std::string alarm = id(ts_alarm).has_state() ? id(ts_alarm).state : "disarmed";
+          bool trig = alarm == "triggered";
+          bool open[6] = {
+            id(bs_door_front).state, id(bs_door_kitchen).state, id(bs_door_living).state,
+            id(bs_door_mudroom).state, id(bs_door_garage_entry).state,
+            valid(id(ts_garage_door).state) && id(ts_garage_door).state != "closed"};
+          int n_open = 0;
+          std::string names[6] = {"Front Door", "Kitchen French Doors", "Living Room French Doors", "Mudroom Entry Door", "Garage Entry", "Garage Door"};
+          lv_obj_t *icons[6] = {id(door_icon_0), id(door_icon_1), id(door_icon_2), id(door_icon_3), id(door_icon_4), id(door_icon_5)};
+          lv_obj_t *states[6] = {id(door_state_0), id(door_state_1), id(door_state_2), id(door_state_3), id(door_state_4), id(door_state_5)};
+          std::string open_names;
+          for (int i = 0; i < 6; i++) {
+            if (open[i]) { n_open++; open_names += (open_names.empty() ? "" : ", ") + names[i]; }
+            text(states[i], open[i] ? "Open" : "Closed");
+            text_color(states[i], open[i] ? AMBER : SLATE);
+            text_color(icons[i], open[i] ? AMBER : SLATE);
+          }
+          if (trig) { text(id(ready_icon), utf8(0xF078F)); text(id(ready_text), "Triggered"); text_color(id(ready_icon), RED); text_color(id(ready_text), RED); }
+          else if (n_open) { text(id(ready_icon), utf8(0xF05D6)); text(id(ready_text), "Not ready to arm"); text_color(id(ready_icon), AMBER); text_color(id(ready_text), AMBER); }
+          else { text(id(ready_icon), utf8(0xF05E1)); text(id(ready_text), "Ready to arm"); text_color(id(ready_icon), SAGE); text_color(id(ready_text), SAGE); }
+          text(id(not_ready_sub), n_open ? open_names + " open" : "All 6 sensors closed");
+          // mode buttons
+          struct { lv_obj_t *b, *i, *l; const char *mode; } modes[3] = {
+            {id(mode_home), id(mode_home_icon), id(mode_home_lbl), "armed_home"},
+            {id(mode_away), id(mode_away_icon), id(mode_away_lbl), "armed_away"},
+            {id(mode_disarm), id(mode_disarm_icon), id(mode_disarm_lbl), "disarmed"}};
+          for (auto &m : modes) {
+            bool on = alarm == m.mode;
+            bool pending = (alarm == "arming" || alarm == "pending") && id(g_arm_target) == m.mode;
+            if (pending) { bg(m.b, PENDING); border(m.b, PENDING); text_color(m.i, SLATE); text_color(m.l, TEXT); }
+            else pill(m.b, m.i, m.l, on);
+          }
+          // code dots + hint
+          lv_obj_t *dots[4] = {id(code_dot_0), id(code_dot_1), id(code_dot_2), id(code_dot_3)};
+          for (int i = 0; i < 4; i++) bg(dots[i], i < (int) id(g_code).size() ? SLATE : HAIRLINE);
+          if (!id(g_flash_hint)) {
+            if (alarm == "pending") {
+              text(id(code_hint), "Enter code to disarm · " + std::to_string(id(g_pending_left)) + "s");
+              text_color(id(code_hint), AMBER);
+            } else {
+              text(id(code_hint), alarm == "disarmed" ? "" : "Enter code to disarm");
+              text_color(id(code_hint), TEXT3);
+            }
+          }
+
+  - id: flash_hint
+    mode: restart
+    then:
+      - lambda: |-
+          id(g_flash_hint) = true;
+          panel::text(id(code_hint), "Enter your 4-digit code first");
+          panel::text_color(id(code_hint), panel::AMBER);
+      - delay: 1800ms
+      - lambda: "id(g_flash_hint) = false;"
+      - script.execute: render_alarm
+
+  - id: key_tap
+    parameters:
+      k: int
+    then:
+      - lambda: |-
+          if (k <= 9) { if (id(g_code).size() < 4) id(g_code) += (char) ('0' + k); }
+          else if (k == 10) { if (!id(g_code).empty()) id(g_code).pop_back(); }
+          else if (k == 11) {
+            if (id(g_code).size() == 4) id(alarm_disarm).execute(); else id(flash_hint).execute();
+          }
+          id(render_alarm).execute();
+
+  - id: alarm_disarm
+    then:
+      - homeassistant.action:
+          action: alarmo.disarm
+          data:
+            entity_id: alarm_control_panel.alarmo
+            code: !lambda "return id(g_code);"
+      - lambda: "id(g_code).clear(); id(g_arm_target).clear();"
+      - script.execute: render_alarm
+
+  - id: alarm_mode
+    parameters:
+      mode: std::string
+    then:
+      - if:
+          condition:
+            lambda: "return mode == \"disarmed\";"
+          then:
+            - if:
+                condition:
+                  lambda: "return id(g_code).size() == 4;"
+                then:
+                  - script.execute: alarm_disarm
+                else:
+                  - script.execute: flash_hint
+          else:
+            - lambda: "id(g_arm_target) = mode;"
+            - homeassistant.action:
+                action: alarmo.arm
+                data:
+                  entity_id: alarm_control_panel.alarmo
+                  mode: !lambda "return mode == \"armed_home\" ? std::string(\"home\") : std::string(\"away\");"
+            - script.execute: render_alarm
+
+  # ================================================================ energy page
+  - id: render_energy
+    then:
+      - lambda: |-
+          using namespace panel;
+          auto val = [](float v) { return std::isnan(v) ? std::string("—") : kw(v); };
+          text(id(en_solar), val(id(s_solar).state));
+          text(id(en_grid), val(id(s_grid).state));
+          text(id(en_home), val(id(s_load).state));
+          float b = id(s_battery).state, ch = id(s_pw_charge).state, rs = id(s_reserve).state;
+          text(id(en_batt), val(b));
+          // battery_power is kW; negative = charging
+          bool charging = !std::isnan(b) && b < -0.05f;
+          text(id(en_batt_lbl), std::isnan(b) || fabsf(b) <= 0.05f ? "Idle" : (charging ? "Charging" : "Discharging"));
+          text(id(en_batt_icon), battery_icon(std::isnan(ch) ? 100 : ch, charging));
+          text(id(en_charge), std::isnan(ch) ? "—" : pct(ch));
+          lv_slider_set_value(id(en_slider), std::isnan(ch) ? 0 : (int) lroundf(ch), LV_ANIM_ON);
+          int reserve = std::isnan(rs) ? 20 : (int) lroundf(rs);
+          text(id(en_reserve_lbl), "· reserve " + std::to_string(reserve) + "%");
+          lv_obj_set_x(id(en_reserve_marker), (656 * reserve) / 100 - 1);
+          // idle flows are drawn dim
+          auto idle = [](float v) { return std::isnan(v) || fabsf(v) < 0.05f; };
+          bg(id(en_bar_solar), idle(id(s_solar).state) ? 0x31363f : SLATE);
+          bg(id(en_bar_grid), idle(id(s_grid).state) ? 0x31363f : SLATE);
+          bg(id(en_bar_home), idle(id(s_load).state) ? 0x31363f : SLATE);
+          bg(id(en_bar_batt), idle(b) ? 0x31363f : SLATE);
+          // ---- outage layout
+          bool outage = id(bs_grid).has_state() && !id(bs_grid).state;
+          show(id(energy_flow), !outage); show(id(energy_reserve), !outage); show(id(energy_outage), outage);
+          if (outage) {
+            int c = std::isnan(ch) ? 0 : (int) lroundf(ch);
+            text(id(outage_pct), std::isnan(ch) ? "—" : std::to_string(c));
+            lv_arc_set_value(id(outage_arc), c);
+            lv_obj_set_style_arc_color(id(outage_arc), C(c <= 20 ? RED : c <= 40 ? AMBER : SLATE), LV_PART_INDICATOR);
+            float kwh = id(s_pw_remaining).state;
+            if (std::isnan(kwh) && !std::isnan(ch)) kwh = ch / 100.0f * ${powerwall_capacity_kwh};
+            float load = id(s_load).state;
+            std::string left = "";
+            if (!std::isnan(kwh) && !std::isnan(load) && load > 0.05f) {
+              int mins = (int) lroundf(kwh / load * 60.0f);
+              left = "≈ " + std::to_string(mins / 60) + " h " + std::to_string(mins % 60) + " m remaining";
+            }
+            text(id(outage_left), left);
+            text_color(id(outage_left), c <= 20 ? RED : TEXT2);
+            text(id(outage_load), val(id(s_load).state));
+            text(id(outage_solar), val(id(s_solar).state));
+            text(id(outage_batt), std::isnan(b) ? "—" : kw(b > 0 ? b : 0));
+          }
+
+  # restart: a second tap inside the 1.5 s settle window must still be sent
+  - id: set_reserve
+    mode: restart
+    parameters:
+      v: int
+    then:
+      - homeassistant.action:
+          action: number.set_value
+          data:
+            entity_id: number.bayberry_backup_reserve
+            value: !lambda |-
+              int r = ((v + 2) / 5) * 5;
+              if (r < 5) r = 5; if (r > 100) r = 100;
+              return std::to_string(r);
+      - lambda: |-
+          int r = ((v + 2) / 5) * 5;
+          if (r < 5) r = 5; if (r > 100) r = 100;
+          id(g_reserve_target) = r;
+      - delay: 1500ms
+      - lambda: "id(g_reserve_target) = -1;"
+      - script.execute: render_energy
+
+  # Quick repeated taps step from the value we just asked for, not from the
+  # value HA has not echoed back yet.
+  - id: step_reserve
+    parameters:
+      delta: int
+    then:
+      - lambda: |-
+          float rs = id(s_reserve).state;
+          int base = id(g_reserve_target) >= 0 ? id(g_reserve_target) : (std::isnan(rs) ? 20 : (int) lroundf(rs));
+          id(set_reserve).execute(base + delta * 5);
+
+  # ================================================================ scenes page
+  # Scene codes: 0 Morning · 1 Working · 2 Cleaning · 3 Welcome · 4 Basement
+  # Evening · 5 Entertaining · 6 Movie · 7 Emergency · 8 Nightlight · 9 Outdoor ·
+  # 10 All Off · 11 Morning (daytime icon). The sets per period follow the
+  # design prototype (Morning · Day · Evening · Night); the period itself is
+  # picked with the repo's time / sun-elevation rules.
+  - id: render_scenes
+    then:
+      - lambda: |-
+          using namespace panel;
+          auto now = id(ha_time).now();
+          int mins = now.is_valid() ? now.hour * 60 + now.minute : 19 * 60;
+          float el = id(s_sun_elevation).state;
+          bool has_el = !std::isnan(el);
+          bool night = mins >= 1320 || mins < 300;
+          bool morning = !night && mins < 720;
+          bool evening = !night && !morning && ((has_el && el < 15) || mins >= 17 * 60 || !has_el);
+          std::vector<int> codes;
+          if (night) codes = {7, 4, 6, 8, 9, 10};
+          else if (morning) codes = {0, 1, 2, 9, 10};
+          else if (evening) codes = {3, 4, 5, 6, 9, 10};
+          else codes = {11, 1, 2, 9, 10};
+          id(g_scene_codes) = codes;
+          bool outdoor_on = id(bs_outdoor_lights).state;
+          struct Def { const char *name; uint32_t icon; bool active; uint32_t icon_color; };
+          auto def = [&](int c) -> Def {
+            switch (c) {
+              case 0: return {"Morning", 0xF059C, id(bs_sc_good_morning).state, SLATE};
+              case 1: return {"Working", 0xF095F, id(bs_sc_basement_work).state, SLATE};
+              case 2: return {"Cleaning", 0xF0AE0, id(bs_sc_basement_cleaning).state, SLATE};
+              case 3: return {"Welcome", 0xF17C4, id(bs_sc_welcome).state, SLATE};
+              case 4: return {"Evening", 0xF0F65, id(bs_sc_basement_evening).state, SLATE};   // scene.basement_evening
+              case 5: return {"Entertaining", 0xF1056, id(bs_sc_basement_entertaining).state, SLATE};
+              case 6: return {"Movie", 0xF1705, id(bs_sc_movie).state, SLATE};
+              case 7: return {"Emergency", 0xF0FF6, id(bs_sc_emergency).state, RED};
+              case 8: return {"Nightlight", 0xF1A4C, id(bs_sc_nightlight).state, SLATE};
+              case 9: return {"Outdoor", 0xF1020, outdoor_on, SLATE};   // toggles: on → scene.outdoor_off
+              case 11: return {"Morning", 0xF0599, id(bs_sc_good_morning).state, SLATE};
+              default: return {"All Off", 0xF0E4F, id(bs_sc_good_night).state, SLATE};
+            }
+          };
+          lv_obj_t *rows[6] = {id(sc_row_0), id(sc_row_1), id(sc_row_2), id(sc_row_3), id(sc_row_4), id(sc_row_5)};
+          lv_obj_t *icons[6] = {id(sc_icon_0), id(sc_icon_1), id(sc_icon_2), id(sc_icon_3), id(sc_icon_4), id(sc_icon_5)};
+          lv_obj_t *names[6] = {id(sc_name_0), id(sc_name_1), id(sc_name_2), id(sc_name_3), id(sc_name_4), id(sc_name_5)};
+          lv_obj_t *actives[6] = {id(sc_name_active_0), id(sc_name_active_1), id(sc_name_active_2), id(sc_name_active_3), id(sc_name_active_4), id(sc_name_active_5)};
+          lv_obj_t *ons[6] = {id(sc_on_0), id(sc_on_1), id(sc_on_2), id(sc_on_3), id(sc_on_4), id(sc_on_5)};
+          lv_obj_t *glows[6] = {id(sc_glow_0), id(sc_glow_1), id(sc_glow_2), id(sc_glow_3), id(sc_glow_4), id(sc_glow_5)};
+          lv_obj_t *chevs[6] = {id(sc_chev_0), id(sc_chev_1), id(sc_chev_2), id(sc_chev_3), id(sc_chev_4), id(sc_chev_5)};
+          for (int i = 0; i < 6; i++) {
+            bool vis = i < (int) codes.size();
+            show(rows[i], vis);
+            if (!vis) continue;
+            Def d = def(codes[i]);
+            bool active = d.active || id(g_scene_flash) == i;
+            text(icons[i], utf8(d.icon)); text_color(icons[i], d.icon_color);
+            text(names[i], d.name); text(actives[i], d.name);
+            text_color(names[i], codes[i] == 10 ? TEXT2 : TEXT);
+            show(names[i], !active); show(actives[i], active);
+            show(ons[i], active); show(glows[i], active); show(chevs[i], !active);
+            lv_obj_set_style_border_opa(rows[i], i == (int) codes.size() - 1 ? LV_OPA_TRANSP : LV_OPA_COVER, LV_PART_MAIN);
+          }
+
+  - id: scene_tap
+    parameters:
+      slot: int
+    then:
+      - lambda: |-
+          if (slot >= (int) id(g_scene_codes).size()) return;
+          static const char *ENT[12] = {"scene.good_morning_2", "scene.basement_work", "scene.basement_cleaning", "scene.welcome",
+                                        "scene.basement_evening", "scene.basement_entertaining", "scene.movie", "scene.emergency",
+                                        "scene.nightlight", "scene.outdoor_on", "scene.good_night", "scene.good_morning_2"};
+          int c = id(g_scene_codes)[slot];
+          std::string ent = ENT[c];
+          if (c == 9 && id(bs_outdoor_lights).state) ent = "scene.outdoor_off";
+          id(scene_turn_on).execute(ent);
+          id(g_scene_flash) = slot;
+          id(render_scenes).execute();
+          id(scene_flash_end).execute();
+
+  - id: scene_flash_end
+    mode: restart
+    then:
+      - delay: 1600ms
+      - lambda: "id(g_scene_flash) = -1;"
+      - script.execute: render_scenes
+
+  - id: scene_turn_on
+    mode: queued
+    parameters:
+      entity: std::string
+    then:
+      - homeassistant.action:
+          action: scene.turn_on
+          data:
+            entity_id: !lambda "return entity;"
+
+  # ================================================================ shades page
+  - id: render_shades
+    then:
+      - lambda: |-
+          using namespace panel;
+          auto label = [](const std::string &st, float pos) -> std::string {
+            if (st == "opening") return "Opening…";
+            if (st == "closing") return "Closing…";
+            if (!valid(st)) return "—";
+            int p = std::isnan(pos) ? (st == "closed" ? 0 : 100) : (int) lroundf(pos);
+            if (p <= 0 || st == "closed") return "Closed";
+            return "Open · " + std::to_string(p) + "%";
+          };
+          text(id(sh_state_ff), label(id(ts_ff_state).state, id(s_ff_pos).state));
+          // Whole House = min/max over the six covers (no group entity)
+          std::string st[6] = {id(ts_cv_0).state, id(ts_cv_1).state, id(ts_cv_2).state, id(ts_cv_3).state, id(ts_cv_4).state, id(ts_cv_5).state};
+          float ps[6] = {id(s_cv_0).state, id(s_cv_1).state, id(s_cv_2).state, id(s_cv_3).state, id(s_cv_4).state, id(s_cv_5).state};
+          bool opening = false, closing = false, any = false; int lo = 100, hi = 0;
+          for (int i = 0; i < 6; i++) {
+            if (st[i] == "opening") opening = true;
+            if (st[i] == "closing") closing = true;
+            if (!valid(st[i])) continue;
+            int p = std::isnan(ps[i]) ? (st[i] == "closed" ? 0 : 100) : (int) lroundf(ps[i]);
+            any = true; if (p < lo) lo = p; if (p > hi) hi = p;
+          }
+          std::string wh = "—";
+          if (opening) wh = "Opening…";
+          else if (closing) wh = "Closing…";
+          else if (any) wh = hi <= 0 ? "Closed" : (lo == hi ? "Open · " + std::to_string(hi) + "%" : "Open · " + std::to_string(lo) + "–" + std::to_string(hi) + "%");
+          text(id(sh_state_wh), wh);
+          // mode badges: ADAPTIVE (hairline) / MANUAL (amber) from the shades_manual_* booleans
+          auto badge = [](lv_obj_t *b, lv_obj_t *l, bool manual) {
+            show(b, true);
+            text(l, manual ? "MANUAL" : "ADAPTIVE");
+            if (manual) { bg(b, AMBER); border(b, AMBER); text_color(l, ON_SLATE); }
+            else { bg(b, BG, LV_OPA_TRANSP); border(b, HAIRLINE); text_color(l, TEXT3); }
+          };
+          badge(id(sh_mode_ff), id(sh_mode_lbl_ff), id(bs_s_m_ff).state);
+          badge(id(sh_mode_wh), id(sh_mode_lbl_wh), id(bs_s_m_ff).state || id(bs_s_m_pb).state || id(bs_s_m_of).state || id(bs_s_m_bg).state || id(bs_s_m_fg).state);
+          text(id(sh_state_mr), "");
+          show(id(sh_badge_mr), true);
+
+  - id: shade_cmd
+    mode: queued
+    parameters:
+      entity: std::string
+      cmd: std::string
+    then:
+      - if:
+          condition:
+            lambda: "return !entity.empty() && cmd == \"open_cover\";"
+          then:
+            - homeassistant.action:
+                action: cover.open_cover
+                data:
+                  entity_id: !lambda "return entity;"
+      - if:
+          condition:
+            lambda: "return !entity.empty() && cmd == \"stop_cover\";"
+          then:
+            - homeassistant.action:
+                action: cover.stop_cover
+                data:
+                  entity_id: !lambda "return entity;"
+      - if:
+          condition:
+            lambda: "return !entity.empty() && cmd == \"close_cover\";"
+          then:
+            - homeassistant.action:
+                action: cover.close_cover
+                data:
+                  entity_id: !lambda "return entity;"
+
+  # ================================================================ music page
+  - id: render_music
+    then:
+      - lambda: |-
+          using namespace panel;
+          panel::state().players = parse_players(id(ts_players).state);
+          size_t n; auto *S = speakers(n);
+          // active player: focused (if playing) → first playing in priority order → media room
+          // Which speaker the page controls: a speaker picked in the Speakers
+          // sheet sticks (paused or not) until another is picked, it drops off
+          // the list, or the idle return clears it. With no pick, follow what
+          // is playing: Media Room first, then the first playing speaker.
+          std::string active;
+          if (!id(g_focus).empty()) {
+            if (find_player(panel::state().players, id(g_focus))) active = id(g_focus);
+            else id(g_focus) = "";
+          }
+          if (active.empty()) {
+            const Player *mr = find_player(panel::state().players, S[0].id);
+            if (mr && mr->playing()) active = S[0].id;
+          }
+          if (active.empty()) for (size_t i = 0; i < n; i++) { const Player *p = find_player(panel::state().players, S[i].id); if (p && p->playing()) { active = S[i].id; break; } }
+          if (active.empty()) active = S[0].id;
+          id(g_active) = active;
+          const Player *ap = find_player(panel::state().players, active);
+          std::vector<std::string> grouped;
+          if (ap) for (auto &m : ap->members) grouped.push_back(m);
+          bool contains = false; for (auto &m : grouped) if (m == active) contains = true;
+          if (!contains) grouped = {active};
+          id(g_grouped) = grouped;
+          // now playing
+          bool has = ap && valid(ap->title) && !ap->title.empty();
+          text(id(np_title), has ? ap->title : "Nothing playing");
+          text(id(np_artist), has ? ap->artist : "");
+          text(id(np_spk_name), grouped.size() > 1 ? speaker_name(active) + " + " + std::to_string(grouped.size() - 1) : speaker_name(active));
+          text(id(np_spk_icon), grouped.size() > 1 ? utf8(0xF0D38) : speaker_icon(active));
+          text(id(np_play_icon), ap && ap->playing() ? utf8(0xF03E4) : utf8(0xF040A));
+          int sum = 0, cnt = 0;
+          for (auto &m : grouped) { const Player *p = find_player(panel::state().players, m); if (p) { sum += p->volume; cnt++; } }
+          int avg = cnt ? sum / cnt : 0;
+          lv_slider_set_value(id(np_volume), avg, LV_ANIM_ON);
+          text(id(np_vol_pct), std::to_string(avg) + "%");
+          // album art
+          std::string pic = ap ? ap->picture : "";
+          if (pic != id(g_art_url)) {
+            id(g_art_url) = pic;
+            if (pic.empty()) { id(g_art_src) = ""; show(id(np_art_img), false); show(id(np_art_icon), true); }
+            else {
+              id(g_art_src) = pic.rfind("http", 0) == 0 ? pic : std::string("${ha_base_url}") + pic;
+              id(album_art).set_url(id(g_art_src).c_str());
+              id(album_art).update();
+            }
+          }
+          id(render_group).execute();
+          id(render_vols).execute();
+
+  - id: music_cmd
+    mode: queued
+    parameters:
+      cmd: std::string
+    then:
+      - if:
+          condition:
+            lambda: "return cmd == \"media_play_pause\";"
+          then:
+            - homeassistant.action:
+                action: media_player.media_play_pause
+                data:
+                  entity_id: !lambda "return id(g_active);"
+      - if:
+          condition:
+            lambda: "return cmd == \"media_next_track\";"
+          then:
+            - homeassistant.action:
+                action: media_player.media_next_track
+                data:
+                  entity_id: !lambda "return id(g_active);"
+      - if:
+          condition:
+            lambda: "return cmd == \"media_previous_track\";"
+          then:
+            - homeassistant.action:
+                action: media_player.media_previous_track
+                data:
+                  entity_id: !lambda "return id(g_active);"
+
+  - id: volume_set
+    mode: queued
+    parameters:
+      entity: std::string
+      level: int
+    then:
+      - homeassistant.action:
+          action: media_player.volume_set
+          data:
+            entity_id: !lambda "return entity;"
+            volume_level: !lambda "return panel::fmt(\"%.2f\", level / 100.0);"
+
+  - id: set_group_volume
+    parameters:
+      v: int
+    then:
+      - lambda: |-
+          using namespace panel;
+          int target = ((v + 2) / 5) * 5;
+          int sum = 0, cnt = 0;
+          for (auto &m : id(g_grouped)) { const Player *p = find_player(panel::state().players, m); if (p) { sum += p->volume; cnt++; } }
+          int avg = cnt ? sum / cnt : 0, delta = target - avg;
+          for (auto &m : id(g_grouped)) {
+            const Player *p = find_player(panel::state().players, m);
+            int nv = (p ? p->volume : avg) + delta;
+            if (nv < 0) nv = 0; if (nv > 100) nv = 100;
+            id(volume_set).execute(m, nv);
+          }
+          text(id(np_vol_pct), std::to_string(target) + "%");
+
+  - id: vol_set
+    parameters:
+      n: int
+      v: int
+    then:
+      - lambda: |-
+          if (n >= (int) id(g_grouped).size()) return;
+          int t = ((v + 2) / 5) * 5;
+          id(volume_set).execute(id(g_grouped)[n], t);
+          lv_obj_t *pcts[9] = {id(vol_pct_0), id(vol_pct_1), id(vol_pct_2), id(vol_pct_3), id(vol_pct_4), id(vol_pct_5), id(vol_pct_6), id(vol_pct_7), id(vol_pct_8)};
+          panel::text(pcts[n], std::to_string(t) + "%");
+
+  - id: render_group
+    then:
+      - lambda: |-
+          using namespace panel;
+          size_t n; auto *S = speakers(n);
+          lv_obj_t *rows[9] = {id(grp_row_0), id(grp_row_1), id(grp_row_2), id(grp_row_3), id(grp_row_4), id(grp_row_5), id(grp_row_6), id(grp_row_7), id(grp_row_8)};
+          lv_obj_t *icons[9] = {id(grp_icon_0), id(grp_icon_1), id(grp_icon_2), id(grp_icon_3), id(grp_icon_4), id(grp_icon_5), id(grp_icon_6), id(grp_icon_7), id(grp_icon_8)};
+          lv_obj_t *names[9] = {id(grp_name_0), id(grp_name_1), id(grp_name_2), id(grp_name_3), id(grp_name_4), id(grp_name_5), id(grp_name_6), id(grp_name_7), id(grp_name_8)};
+          lv_obj_t *subs[9] = {id(grp_sub_0), id(grp_sub_1), id(grp_sub_2), id(grp_sub_3), id(grp_sub_4), id(grp_sub_5), id(grp_sub_6), id(grp_sub_7), id(grp_sub_8)};
+          lv_obj_t *marks[9] = {id(grp_mark_0), id(grp_mark_1), id(grp_mark_2), id(grp_mark_3), id(grp_mark_4), id(grp_mark_5), id(grp_mark_6), id(grp_mark_7), id(grp_mark_8)};
+          lv_obj_t *joins[9] = {id(grp_join_0), id(grp_join_1), id(grp_join_2), id(grp_join_3), id(grp_join_4), id(grp_join_5), id(grp_join_6), id(grp_join_7), id(grp_join_8)};
+          lv_obj_t *jicons[9] = {id(grp_join_icon_0), id(grp_join_icon_1), id(grp_join_icon_2), id(grp_join_icon_3), id(grp_join_icon_4), id(grp_join_icon_5), id(grp_join_icon_6), id(grp_join_icon_7), id(grp_join_icon_8)};
+          for (size_t i = 0; i < 9 && i < n; i++) {
+            std::string sid = S[i].id;
+            const Player *p = find_player(panel::state().players, sid);
+            if (p && p->state == "unavailable") p = nullptr;
+            bool current = sid == id(g_active);
+            bool in_group = false; for (auto &m : id(g_grouped)) if (m == sid) in_group = true;
+            bool playing = p && p->playing();
+            std::string st = !p ? "Unavailable" : playing ? "Playing" : p->state == "paused" ? "Paused" : "Idle";
+            if (p && p->members.size() > 1) {
+              if (!p->leader.empty() && p->leader != sid) st += " · with " + speaker_name(p->leader);
+              else st += " · leading " + std::to_string(p->members.size() - 1);
+            }
+            text(icons[i], utf8(S[i].icon)); text(names[i], S[i].name);
+            text(subs[i], st);
+            bg(rows[i], ROW_SELECTED, current ? LV_OPA_COVER : LV_OPA_TRANSP);
+            text_color(icons[i], current || in_group ? SLATE : TEXT3);
+            text_color(names[i], current || in_group ? TEXT : TEXT2);
+            show(marks[i], current);
+            show(joins[i], !current && p);
+            text(jicons[i], in_group ? utf8(0xF0374) : utf8(0xF0415));
+            text_color(jicons[i], in_group ? AMBER : SLATE);
+          }
+
+  - id: group_toggle
+    mode: queued
+    parameters:
+      n: int
+    then:
+      - lambda: |-
+          size_t cnt; auto *S = panel::speakers(cnt);
+          if (n >= (int) cnt) return;
+          std::string sid = S[n].id;
+          if (sid == id(g_active)) return;
+          bool in_group = false; for (auto &m : id(g_grouped)) if (m == sid) in_group = true;
+          if (in_group) id(group_unjoin).execute(sid); else id(group_join).execute(sid);
+
+  - id: group_join
+    mode: queued
+    parameters:
+      entity: std::string
+    then:
+      - homeassistant.action:
+          action: media_player.join
+          data:
+            entity_id: !lambda "return id(g_active);"
+            group_members: !lambda "return entity;"
+
+  - id: group_unjoin
+    mode: queued
+    parameters:
+      entity: std::string
+    then:
+      - homeassistant.action:
+          action: media_player.unjoin
+          data:
+            entity_id: !lambda "return entity;"
+
+  - id: group_focus
+    parameters:
+      n: int
+    then:
+      - lambda: |-
+          size_t cnt; auto *S = panel::speakers(cnt);
+          if (n < (int) cnt) id(g_focus) = S[n].id;
+      - script.execute: render_music
+      - script.execute: close_sheets
+
+  # ================================================================ idle return
+  # The page the house state calls for, highest priority first:
+  #   alarm pending/triggered → Alarm · grid outage → Energy ·
+  #   a basement speaker playing → Music · otherwise Home.
+  # Only the idle timer (and the urgent alarm/grid transitions above) move the
+  # page on their own; music starting somewhere never interrupts what someone
+  # is doing on the panel. A manual speaker pick expires here too.
+  - id: go_default
+    then:
+      - lambda: |-
+          using namespace panel;
+          // a voice session in progress keeps the screen; voice_close re-checks
+          if (id(g_voice_phase) > 0 && !lv_obj_has_flag(id(voice), LV_OBJ_FLAG_HIDDEN)) return;
+          id(voice_close).execute();
+          id(g_focus) = "";
+          id(g_code).clear(); id(render_alarm).execute();
+          int page = 2;
+          std::string st = id(ts_alarm).has_state() ? id(ts_alarm).state : "";
+          if (st == "pending" || st == "triggered") page = 0;
+          else if (id(bs_grid).has_state() && !id(bs_grid).state) page = 1;
+          else {
+            for (auto &m : split("${idle_music_players}", ',')) {
+              const Player *p = find_player(panel::state().players, m);
+              if (p && p->playing()) { page = 4; break; }
+            }
+          }
+          ESP_LOGI("panel", "idle for %us: returning to page %d", (unsigned) (lv_display_get_inactive_time(nullptr) / 1000), page);
+          id(set_page).execute(page);
+          id(render_music).execute();
+
+  - id: step_idle_return
+    parameters:
+      delta: int
+    then:
+      - number.set:
+          id: idle_return
+          value: !lambda |-
+            float v = id(idle_return).state + delta * 30;
+            if (v < 30) v = 30; if (v > 600) v = 600;
+            return v;
+
+  - id: render_vols
+    then:
+      - lambda: |-
+          using namespace panel;
+          lv_obj_t *rows[9] = {id(vol_row_0), id(vol_row_1), id(vol_row_2), id(vol_row_3), id(vol_row_4), id(vol_row_5), id(vol_row_6), id(vol_row_7), id(vol_row_8)};
+          lv_obj_t *names[9] = {id(vol_name_0), id(vol_name_1), id(vol_name_2), id(vol_name_3), id(vol_name_4), id(vol_name_5), id(vol_name_6), id(vol_name_7), id(vol_name_8)};
+          lv_obj_t *subs[9] = {id(vol_sub_0), id(vol_sub_1), id(vol_sub_2), id(vol_sub_3), id(vol_sub_4), id(vol_sub_5), id(vol_sub_6), id(vol_sub_7), id(vol_sub_8)};
+          lv_obj_t *sliders[9] = {id(vol_slider_0), id(vol_slider_1), id(vol_slider_2), id(vol_slider_3), id(vol_slider_4), id(vol_slider_5), id(vol_slider_6), id(vol_slider_7), id(vol_slider_8)};
+          lv_obj_t *pcts[9] = {id(vol_pct_0), id(vol_pct_1), id(vol_pct_2), id(vol_pct_3), id(vol_pct_4), id(vol_pct_5), id(vol_pct_6), id(vol_pct_7), id(vol_pct_8)};
+          for (int i = 0; i < 9; i++) {
+            bool vis = i < (int) id(g_grouped).size();
+            show(rows[i], vis);
+            if (!vis) continue;
+            std::string sid = id(g_grouped)[i];
+            const Player *p = find_player(panel::state().players, sid);
+            int vol = p ? p->volume : 0;
+            text(names[i], speaker_name(sid));
+            text(subs[i], sid == id(g_active) ? "Group leader" : "In group");
+            lv_slider_set_value(sliders[i], vol, LV_ANIM_OFF);
+            text(pcts[i], std::to_string(vol) + "%");
+          }
+
+  # ---- library browsing (media_player.browse_media via the HA-side helper) ----
+  - id: browse_fetch
+    mode: queued
+    parameters:
+      cid: std::string
+      ctype: std::string
+    then:
+      - lambda: "id(g_browse_pending) = true;"
+      - homeassistant.event:
+          event: esphome.basement_panel_browse
+          data:
+            entity_id: !lambda "return id(g_active);"
+            media_content_id: !lambda "return cid;"
+            media_content_type: !lambda "return ctype;"
+
+  - id: browse_root
+    then:
+      - lambda: |-
+          id(g_browse_ids).clear(); id(g_browse_types).clear(); id(g_browse_titles).clear();
+          panel::state().browse_items.clear();
+          id(browse_fetch).execute("", "");
+      - script.execute: render_browse
+      - script.execute:
+          id: open_sheet
+          name: music_library
+
+  - id: browse_back
+    then:
+      - lambda: |-
+          if (!id(g_browse_ids).empty()) { id(g_browse_ids).pop_back(); id(g_browse_types).pop_back(); id(g_browse_titles).pop_back(); }
+          panel::state().browse_items.clear();
+          if (id(g_browse_ids).empty()) id(browse_fetch).execute("", "");
+          else id(browse_fetch).execute(id(g_browse_ids).back(), id(g_browse_types).back());
+      - script.execute: render_browse
+
+  - id: browse_tap
+    parameters:
+      n: int
+    then:
+      - lambda: |-
+          if (n >= (int) panel::state().browse_items.size()) return;
+          auto it = panel::state().browse_items[n];
+          if (it.expandable) {
+            id(g_browse_ids).push_back(it.id); id(g_browse_types).push_back(it.type); id(g_browse_titles).push_back(it.name);
+            panel::state().browse_items.clear();
+            id(browse_fetch).execute(it.id, it.type);
+            id(render_browse).execute();
+          } else {
+            id(play_media).execute(it.id, it.type, "library");
+            id(close_sheets).execute();
+          }
+
+  - id: recent_tap
+    parameters:
+      n: int
+    then:
+      - lambda: |-
+          if (n >= (int) panel::state().recents.size()) return;
+          auto it = panel::state().recents[n];
+          id(play_media).execute(it.id, it.type, "recent");
+          id(close_sheets).execute();
+
+  # The HA package's basement_panel_play automation routes this: library items
+  # (Music Assistant ids) to the MA player of the same name, recents (Sonos
+  # ids) to the Sonos entity itself.
+  - id: play_media
+    mode: queued
+    parameters:
+      cid: std::string
+      ctype: std::string
+      source: std::string
+    then:
+      - homeassistant.event:
+          event: esphome.basement_panel_play
+          data:
+            entity_id: !lambda "return id(g_active);"
+            media_content_id: !lambda "return cid;"
+            media_content_type: !lambda "return ctype;"
+            source: !lambda "return source;"
+
+  - id: render_browse
+    then:
+      - lambda: |-
+          using namespace panel;
+          bool root = id(g_browse_ids).empty();
+          if (!id(g_browse_pending)) panel::state().browse_items = parse_browse(id(ts_browse_items).state);
+          panel::state().recents = parse_browse(id(ts_recents).state);
+          text(id(sheet_music_library_title), root ? "Library" : id(g_browse_titles).back());
+          show(id(lib_back), !root);
+          text(id(lib_back_lbl), id(g_browse_ids).size() > 1 ? id(g_browse_titles)[id(g_browse_titles).size() - 2] : "Library");
+          show(id(lib_eyebrow_recent), root && !panel::state().recents.empty());
+          lv_obj_t *rrows[5] = {id(rc_row_0), id(rc_row_1), id(rc_row_2), id(rc_row_3), id(rc_row_4)};
+          lv_obj_t *ricons[5] = {id(rc_icon_0), id(rc_icon_1), id(rc_icon_2), id(rc_icon_3), id(rc_icon_4)};
+          lv_obj_t *rnames[5] = {id(rc_name_0), id(rc_name_1), id(rc_name_2), id(rc_name_3), id(rc_name_4)};
+          lv_obj_t *rsubs[5] = {id(rc_sub_0), id(rc_sub_1), id(rc_sub_2), id(rc_sub_3), id(rc_sub_4)};
+          for (int i = 0; i < 5; i++) {
+            bool vis = root && i < (int) panel::state().recents.size();
+            show(rrows[i], vis);
+            if (!vis) continue;
+            auto &it = panel::state().recents[i];
+            text(ricons[i], browse_icon(it.type)); text(rnames[i], it.name); text(rsubs[i], it.sub);
+          }
+          text(id(lib_eyebrow_library), root ? "LIBRARY" : "");
+          show(id(lib_eyebrow_library), root);
+          lv_obj_t *rows[12] = {id(br_row_0), id(br_row_1), id(br_row_2), id(br_row_3), id(br_row_4), id(br_row_5), id(br_row_6), id(br_row_7), id(br_row_8), id(br_row_9), id(br_row_10), id(br_row_11)};
+          lv_obj_t *icons[12] = {id(br_icon_0), id(br_icon_1), id(br_icon_2), id(br_icon_3), id(br_icon_4), id(br_icon_5), id(br_icon_6), id(br_icon_7), id(br_icon_8), id(br_icon_9), id(br_icon_10), id(br_icon_11)};
+          lv_obj_t *names[12] = {id(br_name_0), id(br_name_1), id(br_name_2), id(br_name_3), id(br_name_4), id(br_name_5), id(br_name_6), id(br_name_7), id(br_name_8), id(br_name_9), id(br_name_10), id(br_name_11)};
+          lv_obj_t *subs[12] = {id(br_sub_0), id(br_sub_1), id(br_sub_2), id(br_sub_3), id(br_sub_4), id(br_sub_5), id(br_sub_6), id(br_sub_7), id(br_sub_8), id(br_sub_9), id(br_sub_10), id(br_sub_11)};
+          lv_obj_t *trails[12] = {id(br_trail_0), id(br_trail_1), id(br_trail_2), id(br_trail_3), id(br_trail_4), id(br_trail_5), id(br_trail_6), id(br_trail_7), id(br_trail_8), id(br_trail_9), id(br_trail_10), id(br_trail_11)};
+          for (int i = 0; i < 12; i++) {
+            bool vis = i < (int) panel::state().browse_items.size();
+            show(rows[i], vis);
+            if (!vis) continue;
+            auto &it = panel::state().browse_items[i];
+            text(icons[i], browse_icon(it.type)); text(names[i], it.name); text(subs[i], it.sub);
+            text(trails[i], it.expandable ? utf8(0xF0142) : utf8(0xF040A));
+            text_color(trails[i], it.expandable ? HANDLE : SLATE);
+          }
+          show(id(lib_empty), panel::state().browse_items.empty() && (!root || panel::state().recents.empty()));
+          lv_obj_scroll_to_y(id(sheet_music_library_body), 0, LV_ANIM_OFF);
+
+  # ================================================================ pool page
+  - id: render_pool
+    then:
+      - lambda: |-
+          using namespace panel;
+          float sp = id(s_pool_setpoint).state, wt = id(s_water_temp).state, speed = id(s_pump_speed).state;
+          bool heater_on = valid(id(ts_heater).state) && id(ts_heater).state != "off";
+          int spi = std::isnan(sp) ? 80 : (int) lroundf(sp);
+          text(id(pool_setpoint), std::isnan(sp) ? "—" : deg(sp));
+          text_color(id(pool_setpoint), heater_on ? TEXT : TEXT3);
+          lv_arc_set_value(id(pool_arc), spi);
+          lv_obj_set_style_arc_color(id(pool_arc), C(heater_on ? SLATE : TEXT4), LV_PART_INDICATOR);
+          text(id(pool_water), std::isnan(wt) ? "Water —" : "Water " + deg(wt));
+          if (heater_on) { bg(id(pool_heater_pill), SLATE); text(id(pool_heater_icon), utf8(0xF0238)); text(id(pool_heater_lbl), "On"); text_color(id(pool_heater_icon), ON_SLATE); text_color(id(pool_heater_lbl), ON_SLATE); }
+          else { bg(id(pool_heater_pill), ROW_SELECTED); text(id(pool_heater_icon), utf8(0xF0425)); text(id(pool_heater_lbl), "Off"); text_color(id(pool_heater_icon), TEXT2); text_color(id(pool_heater_lbl), TEXT2); }
+          // filter pump
+          bool on = id(bs_pump).state;
+          int pctv = std::isnan(speed) ? 0 : (int) lroundf(speed);
+          set_checked(id(pump_switch), on);
+          text(id(pump_pct), on ? std::to_string(pctv) + "%" : "Off");
+          text_color(id(pump_icon), on ? SLATE : TEXT4);
+          lv_slider_set_value(id(pump_slider), on ? pctv : 0, LV_ANIM_ON);
+          slider_fill(id(pump_slider), on ? SLATE : TEXT4);
+          std::string cur = pctv <= 45 ? "low" : pctv <= 80 ? "medium" : "high";
+          pill(id(chip_low), nullptr, id(chip_low_lbl), on && cur == "low");
+          pill(id(chip_med), nullptr, id(chip_med_lbl), on && cur == "medium");
+          pill(id(chip_high), nullptr, id(chip_high_lbl), on && cur == "high");
+          text_color(id(chip_low_pct), on && cur == "low" ? ON_SLATE : TEXT3);
+          text_color(id(chip_med_pct), on && cur == "medium" ? ON_SLATE : TEXT3);
+          text_color(id(chip_high_pct), on && cur == "high" ? ON_SLATE : TEXT3);
+          // pool settings sheet
+          float salt = id(s_salt).state, cp = id(s_chlor_pct).state;
+          text(id(val_salt), std::isnan(salt) ? "—" : thousands((long) lroundf(salt)) + " ppm");
+          text(id(val_watertemp), std::isnan(wt) ? "—" : deg(wt));
+          lv_slider_set_value(id(chlor_slider), std::isnan(cp) ? 0 : (int) lroundf(cp), LV_ANIM_OFF);
+          text(id(chlor_pct), std::isnan(cp) ? "—" : pct(cp));
+
+  - id: pool_setpoint_step
+    parameters:
+      delta: int
+    then:
+      - homeassistant.action:
+          action: water_heater.set_temperature
+          data:
+            entity_id: water_heater.omnilogic_pool_heater
+            temperature: !lambda |-
+              float sp = id(s_pool_setpoint).state;
+              int v = (std::isnan(sp) ? 80 : (int) lroundf(sp)) + delta;
+              if (v < 70) v = 70; if (v > 90) v = 90;
+              return std::to_string(v);
+
+  - id: pool_heater_toggle
+    then:
+      - if:
+          condition:
+            lambda: "return panel::valid(id(ts_heater).state) && id(ts_heater).state != \"off\";"
+          then:
+            - homeassistant.action:
+                action: water_heater.turn_off
+                data:
+                  entity_id: water_heater.omnilogic_pool_heater
+          else:
+            - homeassistant.action:
+                action: water_heater.turn_on
+                data:
+                  entity_id: water_heater.omnilogic_pool_heater
+
+  - id: pump_toggle
+    then:
+      - if:
+          condition:
+            lambda: "return panel::is_checked(id(pump_switch));"
+          then:
+            - homeassistant.action:
+                action: switch.turn_on
+                data:
+                  entity_id: switch.omnilogic_pool_filter_pump
+          else:
+            - homeassistant.action:
+                action: switch.turn_off
+                data:
+                  entity_id: switch.omnilogic_pool_filter_pump
+
+  - id: pump_speed
+    parameters:
+      pct: int
+    then:
+      - homeassistant.action:
+          action: number.set_value
+          data:
+            entity_id: number.omnilogic_pool_filter_pump_speed
+            value: !lambda "int v = ((pct + 2) / 5) * 5; if (v > 100) v = 100; if (v < 0) v = 0; return std::to_string(v);"
+
+  - id: pump_preset
+    mode: queued
+    parameters:
+      which: std::string
+    then:
+      - homeassistant.action:
+          action: button.press
+          data:
+            entity_id: !lambda "return \"button.omnilogic_pool_filter_pump_\" + which + \"_speed\";"
+
+  - id: chlor_set
+    parameters:
+      pct: int
+    then:
+      - homeassistant.action:
+          action: number.set_value
+          data:
+            entity_id: number.omnilogic_pool_chlorinator_timed_percent
+            value: !lambda "int v = ((pct + 2) / 5) * 5; if (v > 100) v = 100; if (v < 0) v = 0; return std::to_string(v);"
+
+  # ================================================================ settings hub + sheets
+  - id: render_hub
+    then:
+      - lambda: |-
+          using namespace panel;
+          auto cnt = [](std::initializer_list<bool> l) { int c = 0; for (bool b : l) if (b) c++; return c; };
+          text(id(hub_val_climate), std::to_string(cnt({id(bs_z_lr).state, id(bs_z_bs).state, id(bs_z_of).state, id(bs_z_bd).state})) + " of 4 zones");
+          text(id(hub_val_alarm), std::to_string(cnt({id(bs_a_leave).state, id(bs_a_11pm).state, id(bs_a_7am).state, id(bs_a_arrive).state})) + " of 4 rules");
+          text(id(hub_val_motion), std::to_string(cnt({id(bs_m_out).state, id(bs_m_bath).state, id(bs_m_gym).state, id(bs_l_eve).state, id(bs_l_morn).state, id(bs_l_night).state, id(bs_l_sunset).state, id(bs_l_mid).state, id(bs_l_spot).state})) + " of 9 on");
+          float rs = id(s_reserve).state;
+          text(id(hub_val_energy), std::isnan(rs) ? "Reserve —" : "Reserve " + pct(rs));
+          text(id(hub_val_shades), id(bs_s_sched).state ? "Scheduler on" : "Scheduler off");
+          text(id(hub_val_vacuum), id(bs_v_night).state ? "Nightly 12am" : "Off");
+          text(id(hub_val_panel), pct(id(panel_brightness).state) + " · " + (id(wake_word_enabled).state ? "wake on" : "wake off"));
+          pill(id(tile_guests), id(tile_icon_guests), id(tile_lbl_guests), id(bs_guest).state);
+          pill(id(tile_cleaners), id(tile_icon_cleaners), id(tile_lbl_cleaners), id(bs_cleaners).state);
+          pill(id(tile_dinner), id(tile_icon_dinner), id(tile_lbl_dinner), id(bs_dinner).state);
+          pill(id(tile_vacation), id(tile_icon_vacation), id(tile_lbl_vacation), id(bs_away).state);
+          pill(id(tile_offgrid), id(tile_icon_offgrid), id(tile_lbl_offgrid), id(bs_offgrid).state);
+          if (!id(bs_away).state) text_color(id(tile_lbl_vacation), TEXT2);
+          if (!id(bs_guest).state) text_color(id(tile_lbl_guests), TEXT2);
+          if (!id(bs_cleaners).state) text_color(id(tile_lbl_cleaners), TEXT2);
+          if (!id(bs_dinner).state) text_color(id(tile_lbl_dinner), TEXT2);
+          if (!id(bs_offgrid).state) text_color(id(tile_lbl_offgrid), TEXT2);
+          text(id(val_reserve), std::isnan(rs) ? "—" : pct(rs));
+
+  - id: ha_toggle
+    mode: queued
+    parameters:
+      entity: std::string
+      turn_on: bool
+    then:
+      - if:
+          condition:
+            lambda: "return turn_on;"
+          then:
+            - homeassistant.action:
+                action: homeassistant.turn_on
+                data:
+                  entity_id: !lambda "return entity;"
+          else:
+            - homeassistant.action:
+                action: homeassistant.turn_off
+                data:
+                  entity_id: !lambda "return entity;"
+
+  - id: mode_tap
+    parameters:
+      which: std::string
+    then:
+      - lambda: |-
+          if (which == "guests") id(ha_toggle).execute("input_boolean.guest_mode", !id(bs_guest).state);
+          else if (which == "cleaners") id(ha_toggle).execute("input_boolean.cleaners_mode", !id(bs_cleaners).state);
+          else if (which == "dinner") id(ha_toggle).execute("input_boolean.dinner_party", !id(bs_dinner).state);
+          else if (which == "vacation") id(ha_toggle).execute("input_boolean.away_mode", !id(bs_away).state);
+          else if (which == "offgrid") {
+            if (id(bs_offgrid).state) id(ha_toggle).execute("switch.bayberry_off_grid_operation", false);
+            else panel::show(id(confirm_offgrid), true);
+          }
+
+  - id: render_climate
+    then:
+      - lambda: |-
+          using namespace panel;
+          auto d = [](float v) { return std::isnan(v) ? std::string("—") : deg(v); };
+          text(id(val_fa_lr), d(id(s_fa_lr).state));
+          text(id(val_fa_bs), d(id(s_fa_bs).state));
+          text(id(val_co2_ceiling), std::isnan(id(s_co2_ceiling).state) ? "—" : fmt_int("%d ppm", (int) lroundf(id(s_co2_ceiling).state)));
+          text(id(val_co2_recover), std::isnan(id(s_co2_recover).state) ? "—" : fmt_int("%d ppm", (int) lroundf(id(s_co2_recover).state)));
+          text(id(val_vent_range), std::isnan(id(s_vent_min).state) || std::isnan(id(s_vent_max).state) ? "—" : fmt_int("%d", (int) lroundf(id(s_vent_min).state)) + "–" + deg(id(s_vent_max).state));
+          text(id(val_freecool), d(id(s_freecool).state));
+          text(id(val_minvent), std::isnan(id(s_minvent).state) ? "—" : fmt_int("%d min", (int) lroundf(id(s_minvent).state)));
+          text(id(val_away_heat), d(id(s_away_heat).state));
+          text(id(val_away_cool), d(id(s_away_cool).state));
+
+  - id: render_energy_sheet
+    then:
+      - lambda: |-
+          using namespace panel;
+          auto k = [](float v) { return std::isnan(v) ? std::string("—") : fmt("%.1f kWh", v); };
+          text(id(val_e_well), k(id(s_e_well).state));
+          text(id(val_e_pool), k(id(s_e_pool).state));
+          text(id(val_e_ev), k(id(s_e_ev).state));
+
+  - id: render_maint
+    then:
+      - lambda: |-
+          using namespace panel;
+          auto now = id(ha_time).now();
+          struct Row { lv_obj_t *name, *val, *btn, *lbl; };
+          Row rows[4] = {{id(mname_upper), id(mval_upper), id(mbtn_upper), id(mbtn_lbl_upper)},
+                         {id(mname_lower), id(mval_lower), id(mbtn_lower), id(mbtn_lbl_lower)},
+                         {id(mname_wh), id(mval_wh), id(mbtn_wh), id(mbtn_lbl_wh)},
+                         {id(mname_dryer), id(mval_dryer), id(mbtn_dryer), id(mbtn_lbl_dryer)}};
+          std::string vals[4]; uint32_t cols[4]; bool due[4];
+          float up = id(s_upper_filter).state, lo = id(s_lower_filter).state;
+          auto hours = [](float h, std::string &v, uint32_t &c, bool &d) {
+            if (std::isnan(h)) { v = "—"; c = TEXT3; d = false; return; }
+            v = thousands((long) lroundf(h)) + " h";
+            c = h < 1800 ? SAGE : h <= 2000 ? GOLD : RED; d = h > 2000;
+          };
+          hours(up, vals[0], cols[0], due[0]);
+          hours(lo, vals[1], cols[1], due[1]);
+          auto months = [&](const std::string &ymd, float warn, float over, std::string &v, uint32_t &c, bool &d) {
+            if (!valid(ymd)) { v = "—"; c = TEXT3; d = false; return; }
+            float m = months_since(ymd, now);
+            v = short_date(ymd);
+            c = m < warn ? SAGE : m <= over ? GOLD : RED; d = m > over;
+          };
+          months(id(ts_wh_flushed).state, 5, 6, vals[2], cols[2], due[2]);
+          months(id(ts_dryer_cleaned).state, 11, 12, vals[3], cols[3], due[3]);
+          std::string worst;
+          for (int i = 0; i < 4; i++) {
+            text(rows[i].val, vals[i]); text_color(rows[i].val, cols[i]);
+            text_color(rows[i].name, due[i] ? AMBER : TEXT);
+            border(rows[i].btn, due[i] ? AMBER : HAIRLINE);
+            text_color(rows[i].lbl, due[i] ? AMBER : TEXT2);
+          }
+          if (due[0]) worst = "Upper filter " + vals[0];
+          else if (due[1]) worst = "Lower filter " + vals[1];
+          else if (due[2]) worst = "Water heater " + vals[2];
+          else if (due[3]) worst = "Dryer vent " + vals[3];
+          else if (cols[0] == GOLD) worst = "Upper filter " + vals[0];
+          else if (cols[1] == GOLD) worst = "Lower filter " + vals[1];
+          bool any = !worst.empty();
+          text(id(hub_val_maint), any ? worst : "All good");
+          text_color(id(hub_val_maint), any ? AMBER : TEXT3);
+          text_color(id(hub_icon_maint), any ? AMBER : SLATE);
+
+  - id: maint_reset
+    mode: queued
+    parameters:
+      which: std::string
+    then:
+      - if:
+          condition:
+            lambda: "return which == \"upper\";"
+          then:
+            - homeassistant.action: { action: script.reset_upper_floors_filter_runtime }
+      - if:
+          condition:
+            lambda: "return which == \"lower\";"
+          then:
+            - homeassistant.action: { action: script.reset_lower_floors_filter_runtime }
+      - if:
+          condition:
+            lambda: "return which == \"wh\";"
+          then:
+            - homeassistant.action: { action: script.reset_hot_water_last_flushed_date }
+      - if:
+          condition:
+            lambda: "return which == \"dryer\";"
+          then:
+            - homeassistant.action: { action: script.reset_dryer_vent_last_cleaned_date }
+
+  # ================================================================ weather sheet
+  - id: render_weather
+    then:
+      - lambda: |-
+          using namespace panel;
+          // now: temp|condition|feels|hi|lo
+          auto f = split(id(ts_wx_now).state, '|');
+          if (valid(id(ts_wx_now).state) && f.size() >= 5) {
+            text(id(wx_hdr_icon), wx_icon(f[1]));
+            text(id(wx_temp), deg(to_f(f[0])));
+            std::string hilo = (valid(f[3]) && valid(f[4])) ? " · H " + deg(to_f(f[3])) + " L " + deg(to_f(f[4])) : "";
+            text(id(wx_sub), wx_text(f[1]) + " · feels " + deg(to_f(f[2])) + hilo);
+          }
+          // hours: label|temp|condition;...
+          lv_obj_t *ht[6] = {id(wxh_time_0), id(wxh_time_1), id(wxh_time_2), id(wxh_time_3), id(wxh_time_4), id(wxh_time_5)};
+          lv_obj_t *hi[6] = {id(wxh_icon_0), id(wxh_icon_1), id(wxh_icon_2), id(wxh_icon_3), id(wxh_icon_4), id(wxh_icon_5)};
+          lv_obj_t *hp[6] = {id(wxh_temp_0), id(wxh_temp_1), id(wxh_temp_2), id(wxh_temp_3), id(wxh_temp_4), id(wxh_temp_5)};
+          auto hours = split(id(ts_wx_hours).state, ';');
+          for (int i = 0; i < 6; i++) {
+            if (!valid(id(ts_wx_hours).state) || i >= (int) hours.size()) { text(ht[i], "—"); text(hp[i], "—"); continue; }
+            auto c = split(hours[i], '|');
+            text(ht[i], field(c, 0)); text(hp[i], deg(to_f(field(c, 1)))); text(hi[i], wx_icon(field(c, 2)));
+          }
+          // days: day|hi|lo|pop|condition;...
+          lv_obj_t *dd[5] = {id(wxd_day_0), id(wxd_day_1), id(wxd_day_2), id(wxd_day_3), id(wxd_day_4)};
+          lv_obj_t *di[5] = {id(wxd_icon_0), id(wxd_icon_1), id(wxd_icon_2), id(wxd_icon_3), id(wxd_icon_4)};
+          lv_obj_t *de[5] = {id(wxd_desc_0), id(wxd_desc_1), id(wxd_desc_2), id(wxd_desc_3), id(wxd_desc_4)};
+          lv_obj_t *dp[5] = {id(wxd_pop_0), id(wxd_pop_1), id(wxd_pop_2), id(wxd_pop_3), id(wxd_pop_4)};
+          lv_obj_t *dh[5] = {id(wxd_hi_0), id(wxd_hi_1), id(wxd_hi_2), id(wxd_hi_3), id(wxd_hi_4)};
+          lv_obj_t *dl[5] = {id(wxd_lo_0), id(wxd_lo_1), id(wxd_lo_2), id(wxd_lo_3), id(wxd_lo_4)};
+          auto days = split(id(ts_wx_days).state, ';');
+          for (int i = 0; i < 5; i++) {
+            if (!valid(id(ts_wx_days).state) || i >= (int) days.size()) { text(dd[i], "—"); text(de[i], ""); text(dp[i], ""); text(dh[i], ""); text(dl[i], ""); continue; }
+            auto c = split(days[i], '|');
+            text(dd[i], field(c, 0)); text(dh[i], deg(to_f(field(c, 1)))); text(dl[i], deg(to_f(field(c, 2))));
+            text(dp[i], pct(to_f(field(c, 3)))); text(di[i], wx_icon(field(c, 4))); text(de[i], wx_text(field(c, 4)));
+          }
+
+  # ================================================================ notifications sheet
+  - id: render_notifs
+    then:
+      - lambda: |-
+          using namespace panel;
+          panel::state().notifs = parse_notifs(id(ts_notifs).state);
+          lv_obj_t *rows[6] = {id(nf_row_0), id(nf_row_1), id(nf_row_2), id(nf_row_3), id(nf_row_4), id(nf_row_5)};
+          lv_obj_t *icons[6] = {id(nf_icon_0), id(nf_icon_1), id(nf_icon_2), id(nf_icon_3), id(nf_icon_4), id(nf_icon_5)};
+          lv_obj_t *titles[6] = {id(nf_title_0), id(nf_title_1), id(nf_title_2), id(nf_title_3), id(nf_title_4), id(nf_title_5)};
+          lv_obj_t *bodies[6] = {id(nf_body_0), id(nf_body_1), id(nf_body_2), id(nf_body_3), id(nf_body_4), id(nf_body_5)};
+          lv_obj_t *times[6] = {id(nf_time_0), id(nf_time_1), id(nf_time_2), id(nf_time_3), id(nf_time_4), id(nf_time_5)};
+          lv_obj_t *dismiss[6] = {id(nf_dismiss_0), id(nf_dismiss_1), id(nf_dismiss_2), id(nf_dismiss_3), id(nf_dismiss_4), id(nf_dismiss_5)};
+          bool any_dismissable = false;
+          for (int i = 0; i < 6; i++) {
+            bool vis = i < (int) panel::state().notifs.size();
+            show(rows[i], vis);
+            if (!vis) continue;
+            auto &n = panel::state().notifs[i];
+            bool alert = n.level == "alert" || n.level == "critical" || n.level == "error";
+            bool warn = n.level == "warn" || n.level == "warning";
+            uint32_t col = alert ? RED : warn ? AMBER : TEXT3;
+            text(icons[i], alert ? utf8(0xF0028) : warn ? utf8(0xF002A) : utf8(0xF02FD));
+            text_color(icons[i], col);
+            text(titles[i], n.title); text_color(titles[i], alert ? RED : warn ? AMBER : TEXT);
+            text(bodies[i], n.body); text(times[i], n.time);
+            show(dismiss[i], n.dismissable);
+            if (n.dismissable) any_dismissable = true;
+          }
+          show(id(nf_empty), panel::state().notifs.empty());
+          show(id(nf_clear_all), any_dismissable);
+
+  - id: notif_dismiss
+    parameters:
+      n: int
+    then:
+      - if:
+          condition:
+            lambda: "return n < (int) panel::state().notifs.size();"
+          then:
+            - homeassistant.action:
+                action: script.basement_panel_notification_dismiss
+                data:
+                  tag: !lambda "return panel::state().notifs[n].id;"
+
+  - id: notif_clear
+    then:
+      - homeassistant.action:
+          action: script.basement_panel_notification_clear_all
+
+  # ================================================================ panel & voice sheet
+  - id: render_panel
+    then:
+      - lambda: |-
+          using namespace panel;
+          text(id(val_brightness), pct(id(panel_brightness).state));
+          { int sec = (int) lroundf(id(idle_return).state);
+            text(id(val_idle), sec % 60 == 0 ? std::to_string(sec / 60) + " min" : std::to_string(sec) + " s"); }
+          text(id(val_voicevol), pct(id(voice_volume).state));
+          set_checked(id(sw_wake), id(wake_word_enabled).state);
+          text(id(val_wifi), id(panel_wifi_text).has_state() ? id(panel_wifi_text).state : "—");
+          text(id(vsub_wifi), id(panel_wifi_sub).has_state() ? id(panel_wifi_sub).state : "—");
+          text(id(val_fw), id(panel_fw_text).has_state() ? id(panel_fw_text).state : "—");
+      - script.execute: render_hub
+
+  - id: step_brightness
+    parameters:
+      delta: int
+    then:
+      - number.set:
+          id: panel_brightness
+          value: !lambda |-
+            float v = id(panel_brightness).state + delta * 10;
+            if (v < 10) v = 10; if (v > 100) v = 100;
+            return v;
+
+  - id: step_voice_volume
+    parameters:
+      delta: int
+    then:
+      - number.set:
+          id: voice_volume
+          value: !lambda |-
+            float v = id(voice_volume).state + delta * 5;
+            if (v < 0) v = 0; if (v > 100) v = 100;
+            return v;
+
+  # ================================================================ voice overlay
+  # Show the overlay (wake word path: the assistant is already running).
+  - id: voice_ui_open
+    then:
+      - lambda: |-
+          if (!lv_obj_has_flag(id(voice), LV_OBJ_FLAG_HIDDEN)) return;
+          panel::text(id(voice_transcript), "Listening…");
+          panel::text(id(voice_response), "");
+          panel::show(id(voice), true);
+          id(g_overlay)++;
+          id(g_voice_phase) = 1;
+      - script.execute: voice_anim
+
+  # Mic button / menu path: show the overlay and start a session.
+  - id: voice_open
+    then:
+      - script.execute: voice_ui_open
+      - script.execute: voice_start
+
+  - id: voice_close
+    then:
+      - lambda: |-
+          if (lv_obj_has_flag(id(voice), LV_OBJ_FLAG_HIDDEN)) return;
+          panel::show(id(voice), false);
+          id(g_overlay)--;
+          id(g_voice_phase) = 0;
+      - script.execute: voice_stop
+      - if:
+          condition:
+            lambda: "return !id(go_default).is_running() && lv_display_get_inactive_time(nullptr) >= (uint32_t) id(idle_return).state * 1000;"
+          then:
+            - script.execute: go_default
+
+  # transcript / response text pushed in by the voice assistant triggers
+  - id: voice_show
+    parameters:
+      transcript: std::string
+      response: std::string
+    then:
+      - lambda: |-
+          if (!transcript.empty()) panel::text(id(voice_transcript), "“" + transcript + "”");
+          if (!response.empty()) panel::text(id(voice_response), response);
+
+  - id: voice_set_phase
+    parameters:
+      phase: int
+    then:
+      - lambda: "id(g_voice_phase) = phase;"
+
+  # Lightweight level-bar / ring animation while the overlay is up
+  # (LVGL animations are not exposed in YAML; a 150 ms tick is close enough).
+  - id: voice_anim
+    mode: restart
+    then:
+      - while:
+          condition:
+            lambda: "return id(g_voice_phase) > 0 && !lv_obj_has_flag(id(voice), LV_OBJ_FLAG_HIDDEN);"
+          then:
+            - lambda: |-
+                static const int H[6][5] = {{14, 34, 56, 34, 14}, {34, 56, 34, 14, 34}, {56, 34, 14, 34, 56}, {34, 14, 34, 56, 34}, {14, 34, 56, 34, 14}, {24, 44, 24, 44, 24}};
+                lv_obj_t *bars[5] = {id(voice_bar_0), id(voice_bar_1), id(voice_bar_2), id(voice_bar_3), id(voice_bar_4)};
+                int t = id(g_voice_tick)++;
+                for (int i = 0; i < 5; i++) lv_obj_set_height(bars[i], id(g_voice_phase) == 1 ? H[t % 6][i] : (id(g_voice_phase) == 3 ? H[(t + i) % 6][i] : 14));
+                lv_obj_set_style_border_opa(id(voice_ring), (t % 10) < 5 ? LV_OPA_COVER : LV_OPA_60, LV_PART_MAIN);
+            - delay: 150ms
+
+  # ================================================================ cleaners lock
+  - id: render_lock
+    then:
+      - lambda: |-
+          using namespace panel;
+          std::string st = id(ts_alarm).state;
+          bool urgent = st == "pending" || st == "triggered";
+          bool locked = id(bs_cleaners).state && !urgent;
+          if (locked && lv_obj_has_flag(id(lock), LV_OBJ_FLAG_HIDDEN)) { id(close_all).execute(); id(g_lock_code).clear(); }
+          show(id(lock), locked);
+          lv_obj_t *dots[4] = {id(lock_dot_0), id(lock_dot_1), id(lock_dot_2), id(lock_dot_3)};
+          for (int i = 0; i < 4; i++) bg(dots[i], i < (int) id(g_lock_code).size() ? SLATE : HAIRLINE);
+          if (!id(g_lock_flash)) { text(id(lock_hint), "Enter code to unlock"); text_color(id(lock_hint), TEXT3); }
+
+  - id: lock_key_tap
+    parameters:
+      k: int
+    then:
+      - lambda: |-
+          if (k <= 9) { if (id(g_lock_code).size() < 4) id(g_lock_code) += (char) ('0' + k); }
+          else if (k == 10) { if (!id(g_lock_code).empty()) id(g_lock_code).pop_back(); }
+          else if (k == 11) {
+            if (id(g_lock_code) == "${cleaners_pin}") {
+              id(g_lock_code).clear();
+              id(ha_toggle).execute("input_boolean.cleaners_mode", false);
+            } else {
+              id(g_lock_code).clear();
+              id(lock_flash).execute();
+            }
+          }
+          id(render_lock).execute();
+
+  - id: lock_flash
+    mode: restart
+    then:
+      - lambda: |-
+          id(g_lock_flash) = true;
+          panel::text(id(lock_hint), "Incorrect code");
+          panel::text_color(id(lock_hint), panel::RED);
+      - delay: 1800ms
+      - lambda: "id(g_lock_flash) = false;"
+      - script.execute: render_lock
+
+  # ================================================================ clock + boot
+  - id: clock_tick
+    then:
+      - lambda: |-
+          auto now = id(ha_time).now();
+          if (!now.is_valid()) return;
+          int h12 = now.hour % 12; if (h12 == 0) h12 = 12;
+          static const char *DOW[7] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+          panel::text(id(clock_time), panel::fmt_int("%d", h12) + ":" + panel::fmt_int("%02d", now.minute));
+          panel::text(id(clock_ampm), std::string(now.hour < 12 ? "AM" : "PM") + " · " + DOW[(now.day_of_week - 1) % 7]);
+      - script.execute: render_scenes
+
+  - id: panel_init
+    then:
+      - lambda: |-
+          lv_obj_add_state(id(sh_open_mr), LV_STATE_DISABLED);
+          lv_obj_add_state(id(sh_stop_mr), LV_STATE_DISABLED);
+          lv_obj_add_state(id(sh_close_mr), LV_STATE_DISABLED);
+          lv_tileview_set_tile_by_index(id(tv), 2, 0, LV_ANIM_OFF);
+          std::vector<lv_obj_t *> keep = {id(tv), id(sheet_notifications_body), id(sheet_not_ready_body), id(sheet_music_library_body),
+            id(sheet_music_group_body), id(sheet_music_volumes_body), id(sheet_pool_settings_body), id(sheet_climate_body), id(sheet_alarm_body),
+            id(sheet_motion_body), id(sheet_energy_body), id(sheet_shades_body), id(sheet_vacuum_body), id(sheet_panel_body),
+            id(sheet_maintenance_body), id(sheet_release_notes_body)};
+          panel::tidy(lv_screen_active(), keep);
+          // LVGL's default group focuses the first button it is handed, and
+          // that focus scrolls the screen to "reveal" it. Nothing here uses
+          // encoder/keypad navigation, so empty the group and undo any scroll.
+          if (lv_group_t *g = lv_group_get_default()) lv_group_remove_all_objs(g);
+          lv_anim_delete(lv_screen_active(), nullptr);
+          lv_obj_scroll_to(lv_screen_active(), 0, 0, LV_ANIM_OFF);
+      - script.execute:
+          id: render_tabs
+          p: 2
+      - script.execute: render_lock
+      - script.execute: render_status
+      - script.execute: render_alarm
+      - script.execute: render_energy
+      - script.execute: render_scenes
+      - script.execute: render_shades
+      - script.execute: render_music
+      - script.execute: render_pool
+      - script.execute: render_hub
+      - script.execute: render_climate
+      - script.execute: render_energy_sheet
+      - script.execute: render_maint
+      - script.execute: render_weather
+      - script.execute: render_notifs
+      - script.execute: render_panel
+      - script.execute: clock_tick

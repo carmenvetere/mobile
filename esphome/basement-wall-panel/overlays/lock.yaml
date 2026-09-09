@@ -1,0 +1,63 @@
+# Cleaners Mode lock screen: opaque, swallows every gesture, unlocked with the
+# panel code (turns input_boolean.cleaners_mode off).
+obj:
+  id: lock
+  hidden: true
+  styles: st_overlay
+  widgets:
+    - label: { align: TOP_MID, x: 0, y: 66, text: "${i_lock_outline}", text_font: mdi_44, text_color: "${c_slate}" }
+    - label: { align: TOP_MID, x: 0, y: 132, text: "Screen Locked", text_font: b300_34 }
+    - label: { align: TOP_MID, x: 0, y: 178, text: "Cleaners Mode", text_font: b500_18, text_color: "${c_text3}" }
+    - obj:
+        align: TOP_MID
+        x: 0
+        y: 224
+        width: SIZE_CONTENT
+        height: 18
+        clickable: false
+        layout: { type: FLEX, flex_flow: ROW, flex_align_cross: CENTER, flex_align_track: CENTER, pad_column: 16 }
+        widgets:
+          - obj: { id: lock_dot_0, width: 18, height: 18, radius: 9, bg_color: "${c_hairline}", bg_opa: COVER, clickable: false }
+          - obj: { id: lock_dot_1, width: 18, height: 18, radius: 9, bg_color: "${c_hairline}", bg_opa: COVER, clickable: false }
+          - obj: { id: lock_dot_2, width: 18, height: 18, radius: 9, bg_color: "${c_hairline}", bg_opa: COVER, clickable: false }
+          - obj: { id: lock_dot_3, width: 18, height: 18, radius: 9, bg_color: "${c_hairline}", bg_opa: COVER, clickable: false }
+    - label: { id: lock_hint, align: TOP_MID, x: 0, y: 258, text: "Enter code to unlock", text_font: b600_15, text_color: "${c_text3}" }
+    - obj:
+        align: TOP_MID
+        x: 0
+        y: 290
+        width: 360
+        height: 340
+        clickable: false
+        layout: { type: FLEX, flex_flow: ROW_WRAP, flex_align_main: SPACE_BETWEEN, flex_align_cross: CENTER, flex_align_track: CENTER, pad_row: 12, pad_column: 12 }
+        widgets:
+          - !include { file: ../widgets/lock_key.yaml, vars: { k: 1 } }
+          - !include { file: ../widgets/lock_key.yaml, vars: { k: 2 } }
+          - !include { file: ../widgets/lock_key.yaml, vars: { k: 3 } }
+          - !include { file: ../widgets/lock_key.yaml, vars: { k: 4 } }
+          - !include { file: ../widgets/lock_key.yaml, vars: { k: 5 } }
+          - !include { file: ../widgets/lock_key.yaml, vars: { k: 6 } }
+          - !include { file: ../widgets/lock_key.yaml, vars: { k: 7 } }
+          - !include { file: ../widgets/lock_key.yaml, vars: { k: 8 } }
+          - !include { file: ../widgets/lock_key.yaml, vars: { k: 9 } }
+          - button:
+              id: lock_back
+              width: 112
+              height: 76
+              radius: 18
+              widgets:
+                - label: { align: CENTER, text: "${i_backspace_outline}", text_font: mdi_28 }
+              on_click:
+                - script.execute: { id: lock_key_tap, k: 10 }
+          - !include { file: ../widgets/lock_key.yaml, vars: { k: 0 } }
+          - button:
+              id: lock_ok
+              width: 112
+              height: 76
+              radius: 18
+              border_color: ${c_slate}
+              widgets:
+                - label: { align: CENTER, text: "${i_check}", text_font: mdi_28, text_color: "${c_slate}" }
+              on_click:
+                - script.execute: { id: lock_key_tap, k: 11 }
+    - label: { align: TOP_MID, x: 0, y: 655, text: "Unlocking turns Cleaners Mode off", text_font: b600_15, text_color: "${c_text3}" }

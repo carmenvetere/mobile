@@ -1,0 +1,33 @@
+# One tab: 96×64 hit target, 26px icon, 20×3 indicator bar 5px below it.
+# vars: n (tab index), page (page index it opens), icon
+button:
+  id: tab_${n}
+  width: 96
+  height: 64
+  radius: 0
+  border_width: 0
+  layout:
+    type: FLEX
+    flex_flow: COLUMN
+    flex_align_main: CENTER
+    flex_align_cross: CENTER
+    flex_align_track: CENTER
+    pad_row: 5
+  widgets:
+    - label:
+        id: tab_icon_${n}
+        text: "${icon}"
+        text_font: mdi_26
+        text_color: ${c_text4}
+    - obj:
+        id: tab_ind_${n}
+        clickable: false
+        width: 20
+        height: 3
+        radius: 2
+        bg_color: ${c_slate}
+        bg_opa: TRANSP
+  on_click:
+    - script.execute:
+        id: set_page
+        n: ${page}

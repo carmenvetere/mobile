@@ -1,0 +1,197 @@
+# Basement Wall Panel — pieces shared by the hardware build and the simulator.
+#
+# Both device files (basement-wall-panel.yaml, basement-wall-panel-sim.yaml)
+# pull this in via `packages:`. Device-specific things — display, touch, audio,
+# Wi-Fi, backlight — live in the device file and satisfy the small "contract"
+# below by defining these scripts: apply_brightness, apply_voice_volume,
+# apply_wake_word, voice_start, voice_stop.
+
+substitutions:
+  # Home Assistant base URL used to fetch album art (entity_picture is a
+  # relative path). Override in the device file if HA lives elsewhere.
+  ha_base_url: "http://homeassistant.local:8123"
+  # Daily well-pump kWh (the 7-day history's sensor; the mobile Settings view
+  # still shows sensor.well_pump_energy).
+  well_pump_energy_entity: sensor.daily_well_pump   # daily utility_meter on sensor.well_pump_energy2
+  # Whole House shades: the six covers the mobile Shades view closes, sent as
+  # one multi-target service call (no cover group entity).
+  whole_house_covers: "cover.first_floor_all, cover.bedroom_side_shades, cover.bedroom_back, cover.front_guest_bedroom_shades, cover.back_guest_bedroom_shades, cover.office_shades"
+  # Music library browsing / playback target. Empty = use the Sonos player
+  # itself. Once the speakers are added to Music Assistant, set this to the
+  # suffix HA gave the MA players (usually "_2", e.g. media_player.media_room_2)
+  # so the Library sheet browses MA's library while transport, grouping and
+  # volume stay on the Sonos entities the rest of the dashboard uses.
+  # Speakers whose playback makes Music the panel's idle default view: the
+  # basement floor. Music elsewhere in the house never pulls the panel to Music.
+  idle_music_players: "media_player.media_room,media_player.mud_room,media_player.pool,media_player.gym,media_player.shop"
+  # Cleaners-mode lock screen code. Prototype uses 1234; move it to
+  # `!secret basement_panel_pin` once decided (handoff open item #7).
+  cleaners_pin: "1234"
+  # Outage screen "≈ N h remaining": energy-remaining sensor if the Powerwall
+  # integration exposes one, else charge % × capacity. 13.5 kWh per Powerwall 2.
+  powerwall_energy_remaining_entity: sensor.bayberry_energy_remaining
+  powerwall_capacity_kwh: "13.5"
+
+logger:
+  level: INFO
+  logs:
+    lvgl: WARN
+    homeassistant.text_sensor: WARN
+    homeassistant.sensor: WARN
+    homeassistant.binary_sensor: WARN
+
+time:
+  - platform: homeassistant
+    id: ha_time
+    on_time_sync:
+      - script.execute: clock_tick
+    on_time:
+      - seconds: 0
+        then:
+          - script.execute: clock_tick
+
+http_request:
+  id: http_client
+  verify_ssl: false
+  timeout: 10s
+
+# Album art for the Music page (250 px, hairline, 20 px radius). The URL is set
+# at runtime from the focused player's entity_picture. Sonos, Spotify and Music
+# Assistant art is JPEG, so that decoder goes first; if the bytes are not a JPEG
+# (radio-station logos are often PNG) the same URL is fetched again as PNG.
+# After each download the LVGL image has to be re-pointed at the descriptor,
+# otherwise the widget keeps the empty 0×0 header it was created with.
+online_image:
+  - id: album_art
+    url: "${ha_base_url}/art.jpg"
+    type: RGB565
+    format: JPEG
+    resize: 250x250
+    update_interval: never
+    on_download_finished:
+      - lambda: |-
+          #ifdef USE_HOST
+          // JPEGDEC's desktop SIMD paths (SSE on x86_64, NEON on Apple silicon)
+          // hand back B,G,R,A where the scalar path the ESP32-P4 uses gives
+          // R,G,B,A, and ESPHome's decoder assumes the latter. Put red and
+          // blue back in the decoded RGB565 buffer. Simulator only; skipped
+          // when the server answered 304 and the buffer was left as it was.
+          if (!cached) {
+            auto *px = const_cast<uint8_t *>(id(album_art).get_data_start());
+            size_t n = (size_t) id(album_art).get_width() * id(album_art).get_height();
+            for (size_t i = 0; px && i < n; i++) {
+              uint16_t v = px[2 * i] | (px[2 * i + 1] << 8);
+              v = (v & 0x07E0) | ((v & 0xF800) >> 11) | ((v & 0x001F) << 11);
+              px[2 * i] = v & 0xFF; px[2 * i + 1] = v >> 8;
+            }
+          }
+          #endif
+      - lvgl.image.update: { id: np_art_img, src: album_art }
+      - lambda: |-
+          panel::show(id(np_art_img), true);
+          panel::show(id(np_art_icon), false);
+    on_error:
+      - lambda: |-
+          // Not a JPEG: fetch the same URL again as PNG. A failed connection
+          // (http_request flags an error) would fail the same way, so skip it
+          // and keep the disc icon.
+          if (!id(g_art_src).empty() && !id(http_client).status_has_error()) {
+            id(album_art_png).set_url(id(g_art_src).c_str());
+            id(album_art_png).update();
+          } else {
+            panel::show(id(np_art_img), false);
+            panel::show(id(np_art_icon), true);
+          }
+  - id: album_art_png
+    url: "${ha_base_url}/art.png"
+    type: RGB565
+    format: PNG
+    resize: 250x250
+    update_interval: never
+    on_download_finished:
+      - lvgl.image.update: { id: np_art_img, src: album_art_png }
+      - lambda: |-
+          panel::show(id(np_art_img), true);
+          panel::show(id(np_art_icon), false);
+    on_error:
+      - lambda: |-
+          panel::show(id(np_art_img), false);
+          panel::show(id(np_art_icon), true);
+
+# ---- Panel & Voice settings (exposed to HA too) -------------------------------
+number:
+  - platform: template
+    id: panel_brightness
+    name: "Brightness"
+    icon: mdi:brightness-6
+    unit_of_measurement: "%"
+    min_value: 10
+    max_value: 100
+    step: 10
+    initial_value: 80
+    optimistic: true
+    restore_value: true
+    entity_category: config
+    set_action:
+      - script.execute: apply_brightness
+    on_value:
+      - script.execute: render_panel
+  - platform: template
+    id: idle_return
+    name: "Return to default after"
+    icon: mdi:timer-sand
+    unit_of_measurement: "s"
+    min_value: 30
+    max_value: 600
+    step: 30
+    initial_value: 120
+    optimistic: true
+    restore_value: true
+    entity_category: config
+    on_value:
+      - script.execute: render_panel
+  - platform: template
+    id: voice_volume
+    name: "Voice volume"
+    icon: mdi:volume-high
+    unit_of_measurement: "%"
+    min_value: 0
+    max_value: 100
+    step: 5
+    initial_value: 55
+    optimistic: true
+    restore_value: true
+    entity_category: config
+    set_action:
+      - script.execute: apply_voice_volume
+    on_value:
+      - script.execute: render_panel
+
+switch:
+  - platform: template
+    id: wake_word_enabled
+    name: "Wake word"
+    icon: mdi:ear-hearing
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    entity_category: config
+    on_turn_on:
+      - script.execute: apply_wake_word
+      - script.execute: render_panel
+    on_turn_off:
+      - script.execute: apply_wake_word
+      - script.execute: render_panel
+
+text_sensor:
+  - platform: template
+    id: panel_wifi_text
+    internal: true
+    on_value: [script.execute: render_panel]
+  - platform: template
+    id: panel_wifi_sub
+    internal: true
+    on_value: [script.execute: render_panel]
+  - platform: template
+    id: panel_fw_text
+    internal: true
+    on_value: [script.execute: render_panel]

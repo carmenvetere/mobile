@@ -619,6 +619,39 @@
         {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
       icon: mdi:desk-lamp
 
+    # Basement Entertaining / Movie: the basement wall panel's scene rows read
+    # these; same ±10 brightness window as the sensors above.
+    - name: "Scene Basement Entertaining"
+      unique_id: scene_basement_entertaining
+      state: >
+        {% set checks = [
+          is_state('light.media_room_main_lights', 'off'),
+          is_state('light.media_room_table_lamp', 'on') and state_attr('light.media_room_table_lamp', 'brightness') | int(0) in range(66, 87),
+          is_state('light.basement_hallway_main_lights', 'on') and state_attr('light.basement_hallway_main_lights', 'brightness') | int(0) in range(41, 62),
+          is_state('light.stairs_main_lights', 'on') and state_attr('light.stairs_main_lights', 'brightness') | int(0) in range(15, 36),
+          is_state('light.gym_main_lights', 'on') and state_attr('light.gym_main_lights', 'brightness') | int(0) in range(66, 87),
+          is_state('light.laundry_room_main_lights', 'on') and state_attr('light.laundry_room_main_lights', 'brightness') | int(0) in range(41, 62)
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
+      icon: mdi:party-popper
+
+    - name: "Scene Movie"
+      unique_id: scene_movie
+      state: >
+        {% set checks = [
+          is_state('light.gym_main_lights', 'off'),
+          is_state('light.media_room_main_lights', 'off'),
+          is_state('light.media_room_table_lamp', 'on') and state_attr('light.media_room_table_lamp', 'brightness') | int(0) in range(41, 62),
+          is_state('light.laundry_room_main_lights', 'off'),
+          is_state('light.basement_hallway_main_lights', 'off'),
+          is_state('light.stairs_main_lights', 'off'),
+          is_state('light.stairs_spot_lights', 'on') and state_attr('light.stairs_spot_lights', 'brightness') | int(0) in range(15, 36),
+          is_state('switch.driveway_zone_1_2', 'off'),
+          is_state('switch.driveway_zone_2_2', 'off')
+        ] %}
+        {{ checks | select('equalto', true) | list | count >= (checks | count * 0.95) }}
+      icon: mdi:movie-open
+
     - name: "Scene Office Work"
       unique_id: scene_office_work
       state: >

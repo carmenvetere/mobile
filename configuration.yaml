@@ -602,6 +602,9 @@ utility_meter:
   daily_ev_charger:
     source: sensor.wall_charger_energy
     cycle: daily
+  daily_pool_pump:
+    source: sensor.pool_pump_energy
+    cycle: daily
   # Rain today: meters the Tempest precipitation accumulation (state_class
   # total, inches) into a local-midnight daily bucket for the rain gauge (#155).
   daily_rain:
@@ -894,13 +897,12 @@ sensor:
     round: 3
     unit_prefix: k
     unit_time: h
-  # Pool filter pump cumulative energy, integrated from the OmniLogic
-  # filter pump power sensor (W). Feeds the 7-day usage history chart (#165).
-  - platform: integration
-    name: "Pool Pump Energy"
-    unique_id: pool_pump_energy
-    source: sensor.omnilogic_pool_filter_pump_power
-    method: left
-    round: 3
-    unit_prefix: k
-    unit_time: h
+  # Pool pump energy is the UI integration helper "Omnilogic Pool Pool Pump
+  # Energy" (sensor.pool_pump_energy); the YAML duplicate that used to live
+  # here became sensor.pool_pump_energy_2 and was removed.
+
+# v2.6: Basement wall panel (ESPHome/LVGL) helper sensors, cover group and
+# scripts — see packages/basement_wall_panel.yaml and esphome/basement-wall-panel/.
+homeassistant:
+  packages:
+    basement_wall_panel: !include packages/basement_wall_panel.yaml

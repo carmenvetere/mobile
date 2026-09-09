@@ -1,0 +1,18 @@
+# Release-notes bullet: 6px text-4 dot + 17/400 text-2 wrapped text.
+# vars: text
+obj:
+  width: 100%
+  height: SIZE_CONTENT
+  clickable: false
+  pad_top: 8
+  pad_bottom: 4
+  layout: { type: FLEX, flex_flow: ROW, flex_align_cross: START, pad_column: 12 }
+  widgets:
+    - obj: { width: 6, height: 6, radius: 3, bg_color: "${c_text4}", bg_opa: COVER, clickable: false, margin_top: 9 }
+    - label:
+        width: 640
+        text: "${text}"
+        text_font: b400_17
+        text_color: ${c_text2}
+        text_line_space: 5
+        long_mode: WRAP

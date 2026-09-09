@@ -6,6 +6,10 @@
 #   - Uses corrected sensor.home_other_usage (with total_increasing state_class)
 #   - Pool pump uses transform to handle unavailable state
 #   - Consistent use of 'diff' for all cumulative energy sensors
+#   - Pool pump reads long-term statistics (`change` per day) instead of
+#     diffing raw recorder history: the Riemann helper updates sparsely and
+#     its raw history has carried level jumps, which 'diff' turned into
+#     day-sized spikes. LTS 'change' is what HA itself uses for energy.
 #
 # Note: If hot water sensor resets or has gaps, you may need 'delta' instead
 # of 'diff' for that one sensor (delta sums positive changes, ignoring resets)
@@ -105,9 +109,10 @@ series:
     name: Pool Pump
     type: column
     color: "#9498AC"
-    group_by:
-      func: diff
-      duration: 1d
+    statistics:
+      type: change
+      period: day
+      align: start
     transform: "return (x == null || isNaN(x)) ? 0 : Math.max(x, 0);"
     show:
       legend_value: false
@@ -174,8 +179,12 @@ series:
     name: Pool Pump
     type: column
     color: "#9498AC"
+    statistics:
+      type: change
+      period: day
+      align: start
     group_by:
-      func: diff
+      func: sum
       duration: 7d
     transform: "return (x == null || isNaN(x)) ? 0 : Math.max(x, 0);"
     show:
