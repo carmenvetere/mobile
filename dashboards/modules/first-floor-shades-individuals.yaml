@@ -3,18 +3,8 @@
   name: Living Room
   icon: mdi:sofa
   rows: 0.75
-  styles: |
-    .bubble-name {
-      font-size: 16px !important;  /* title */
-      font-weight: bold !important;
-    }
-    .bubble-line {
-      background: var(--primary-text-color);
-      opacity: 0.1;
-    }
-    .card-content {
-      padding-top: 7px !important;
-    }
+  modules:
+    - mobile_separator_small
 - type: custom:bubble-card
   card_type: button
   button_type: state
@@ -386,18 +376,8 @@
   name: Dining Room
   icon: mdi:food-fork-drink
   rows: 0.75
-  styles: |
-    .bubble-name {
-      font-size: 16px !important;  /* title */
-      font-weight: bold !important;
-    }
-    .bubble-line {
-      background: var(--primary-text-color);
-      opacity: 0.1;
-    }
-    .card-content {
-      padding-top: 7px !important;
-    }
+  modules:
+    - mobile_separator_small
 - type: custom:bubble-card
   card_type: button
   button_type: state

@@ -1,22 +1,21 @@
-mobile_separator:
-  name: Mobile Separator
-  version: '2.0'
+mobile_separator_small:
+  name: Mobile Separator (small)
+  version: '1.0'
   creator: ''
   supported:
     - separator
   description: >-
-    Section header for the mobile dashboard (v2.7): 20px bold title, 16px
-    sub-buttons, hairline rule. Every card_type: separator on the mobile
-    views references this module instead of carrying its own styles. Use
-    mobile_separator_small for room-level sub-sections inside an expander.
+    Room-level sub-section header (v2.7): 16px title, 14px sub-buttons,
+    same hairline rule as mobile_separator. Used inside expanders where the
+    expander's own title is already the 20px section header.
   code: |-
     .bubble-name {
-      font-size: 20px !important;
+      font-size: 16px !important;
       font-weight: 700 !important;
       color: var(--primary-text-color) !important;
     }
     .bubble-sub-button {
-      font-size: 16px !important;
+      font-size: 14px !important;
       font-weight: 700 !important;
       color: var(--primary-text-color) !important;
       background: transparent !important;

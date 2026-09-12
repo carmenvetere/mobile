@@ -270,19 +270,8 @@ cards:
             name: Cameras
             icon: mdi:cctv
             rows: 0.75
-            styles: |
-              .bubble-name {
-              font-size: 20px !important;  /* title */
-              font-weight: bold !important;
-              }
-              .bubble-line {
-              background: var(--primary-text-color);
-              opacity: 0.1;
-              }
-              .card-content {
-              padding-top: 10px !important;
-              padding-left: 10px !important;
-              }
+            modules:
+              - mobile_separator
           - type: grid
             columns: 2
             square: false
@@ -360,19 +349,8 @@ cards:
               name: Recent Events
               icon: mdi:motion-sensor
               rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
+              modules:
+                - mobile_separator
             - type: custom:llmvision-card
               entity: calendar.llm_vision_timeline_2
               number_of_hours: 168

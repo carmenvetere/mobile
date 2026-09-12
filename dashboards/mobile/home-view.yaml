@@ -341,18 +341,8 @@ cards:
               name: Scenes
               icon: mdi:lamps
               rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator
             - !include 
                 - /config/dashboards/modules/dynamic-scenes.yaml
                 - module_name: mobile_lights_scenes
@@ -362,18 +352,8 @@ cards:
               name: Menu
               icon: mdi:menu-open
               rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }     
+              modules:
+                - mobile_separator
             # Shared nav menu (single source of truth for destinations;
             # also consumed by mobile-nav-sheet.yaml on every sub-view).
             - !include

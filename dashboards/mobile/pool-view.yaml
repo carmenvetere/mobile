@@ -193,12 +193,8 @@ cards:
           name: Filter Pump
           icon: mdi:pump
           rows: 0.75
-          styles: |
-            .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-              text-transform: uppercase; letter-spacing: 0.06em;
-              color: rgba(255,255,255,0.6) !important; }
-            .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-            .card-content { padding-top: 7px !important; }
+          modules:
+            - mobile_separator
         - type: custom:bubble-card
           card_type: button
           entity: switch.omnilogic_pool_filter_pump
@@ -268,12 +264,8 @@ cards:
           name: Heater
           icon: mdi:water-boiler
           rows: 0.75
-          styles: |
-            .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-              text-transform: uppercase; letter-spacing: 0.06em;
-              color: rgba(255,255,255,0.6) !important; }
-            .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-            .card-content { padding-top: 7px !important; }
+          modules:
+            - mobile_separator
         # Thermostat-styled row: setpoint slider with the climate-view heat
         # glow (amber ring while the heater is on), current setpoint of the
         # heater itself + on/off toggle as sub-buttons.
@@ -317,12 +309,8 @@ cards:
           name: Chlorinator
           icon: mdi:toggle-switch-variant
           rows: 0.75
-          styles: |
-            .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-              text-transform: uppercase; letter-spacing: 0.06em;
-              color: rgba(255,255,255,0.6) !important; }
-            .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-            .card-content { padding-top: 7px !important; }
+          modules:
+            - mobile_separator
         - type: custom:bubble-card
           card_type: button
           entity: switch.omnilogic_pool_chlorinator

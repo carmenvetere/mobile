@@ -108,38 +108,16 @@ cards:
               name: Today's Solar Forecast
               icon: mdi:flash
               rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }            
+              modules:
+                - mobile_separator
             - !include /config/dashboards/modules/solar-forecast-today.yaml
             - type: custom:bubble-card
               card_type: separator
               name: 7-Day Solar Forecast
               icon: mdi:flash
               rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }  
+              modules:
+                - mobile_separator
             - !include /config/dashboards/modules/7-day-solar-forecast.yaml
             # Wide chart: tablet/desktop only (R10-b)
             - type: conditional
@@ -154,19 +132,8 @@ cards:
                     name: 12 Month Solar History
                     icon: mdi:flash
                     rows: 0.75
-                    styles: |
-                      .bubble-name {
-                      font-size: 20px !important;  /* title */
-                      font-weight: bold !important;
-                      }
-                      .bubble-line {
-                      background: var(--primary-text-color);
-                      opacity: 0.1;
-                      }
-                      .card-content {
-                      padding-top: 10px !important;
-                      padding-left: 10px !important;
-                      }
+                    modules:
+                      - mobile_separator
                   - !include /config/dashboards/modules/12-month-solar-history.yaml
             # Wide chart: tablet/desktop only (R10-b)
             - type: conditional
@@ -181,38 +148,16 @@ cards:
                     name: Last 24 Hours Power Flow
                     icon: mdi:flash
                     rows: 0.75
-                    styles: |
-                      .bubble-name {
-                      font-size: 20px !important;  /* title */
-                      font-weight: bold !important;
-                      }
-                      .bubble-line {
-                      background: var(--primary-text-color);
-                      opacity: 0.1;
-                      }
-                      .card-content {
-                      padding-top: 10px !important;
-                      padding-left: 10px !important;
-                      }
+                    modules:
+                      - mobile_separator
                   - !include /config/dashboards/modules/24-hour-power-flow.yaml
             - type: custom:bubble-card
               card_type: separator
               name: Last 7 Days Home Energy Usage
               icon: mdi:flash
               rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }  
+              modules:
+                - mobile_separator
             - !include /config/dashboards/modules/7-day-usage-history.yaml
       power_flow:
         card: 
@@ -223,17 +168,6 @@ cards:
               name: Live Power Flow
               icon: mdi:flash
               rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
+              modules:
+                - mobile_separator
             - !include /config/dashboards/modules/power-flow-card.yaml

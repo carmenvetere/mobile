@@ -110,23 +110,8 @@ cards:
               name: Scenes
               icon: mdi:lightbulb-auto
               rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-sub-button
-                {
-                  font-size: 20px !important;
-                  font-weight: 700 !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator
             - !include
                 - /config/dashboards/modules/dynamic-scenes.yaml
                 - module_name: mobile_lights_scenes
@@ -136,23 +121,8 @@ cards:
               name: Individual Lights
               icon: mdi:lightbulb-auto
               rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-sub-button
-                {
-                  font-size: 20px !important;
-                  font-weight: 700 !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator
             - type: custom:expander-card
               expanded: false
               title-card-clickable: true
@@ -179,23 +149,8 @@ cards:
                 name: First Floor
                 icon: mdi:home-floor-1
                 rows: 0.75
-                styles: |
-                  .bubble-name {
-                    font-size: 20px !important;  /* title */
-                    font-weight: bold !important;
-                  }
-                  .bubble-sub-button
-                  {
-                    font-size: 20px !important;
-                    font-weight: 700 !important;
-                  }
-                  .bubble-line {
-                    background: var(--primary-text-color);
-                    opacity: 0.1;
-                  }
-                  .card-content {
-                    padding-top: 7px !important;
-                  }
+                modules:
+                  - mobile_separator
               cards: !include [/config/dashboards/modules/first-floor-lights-individual.yaml, {module_name: mobile_lights, dashboard: mobile}]
             - type: custom:expander-card
               expanded: false
@@ -206,14 +161,8 @@ cards:
                 name: Basement
                 icon: mdi:home-floor-b
                 rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 20px !important; font-weight: bold
-                  !important; }
-                  .bubble-sub-button { font-size: 20px !important; font-weight:
-                  700 !important; }
-                  .bubble-line { background: var(--primary-text-color); opacity:
-                  0.1; }
-                  .card-content { padding-top: 7px !important; }
+                modules:
+                  - mobile_separator
               card_mod:
                 style: |
                   ha-card {
@@ -241,14 +190,8 @@ cards:
                 name: Second Floor
                 icon: mdi:home-floor-2
                 rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 20px !important; font-weight: bold
-                  !important; }
-                  .bubble-sub-button { font-size: 20px !important; font-weight:
-                  700 !important; }
-                  .bubble-line { background: var(--primary-text-color); opacity:
-                  0.1; }
-                  .card-content { padding-top: 7px !important; }
+                modules:
+                  - mobile_separator
               card_mod:
                 style: |
                   ha-card {
@@ -276,14 +219,8 @@ cards:
                 name: Outdoor
                 icon: mdi:outdoor-lamp
                 rows: 0.75
-                styles: >
-                  .bubble-name { font-size: 20px !important; font-weight: bold
-                  !important; }
-                  .bubble-sub-button { font-size: 20px !important; font-weight:
-                  700 !important; }
-                  .bubble-line { background: var(--primary-text-color); opacity:
-                  0.1; }
-                  .card-content { padding-top: 7px !important; }
+                modules:
+                  - mobile_separator
               card_mod:
                 style: |
                   ha-card {

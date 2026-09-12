@@ -98,12 +98,8 @@ cards:
           name: Quick Toggles
           icon: mdi:gesture-tap-button
           rows: 0.75
-          styles: |
-            .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-              text-transform: uppercase; letter-spacing: 0.06em;
-              color: rgba(255,255,255,0.6) !important; }
-            .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-            .card-content { padding-top: 7px !important; }
+          modules:
+            - mobile_separator
         - type: vertical-stack
           card_mod:
             style: |
@@ -461,12 +457,8 @@ cards:
           name: Sections
           icon: mdi:format-list-bulleted
           rows: 0.75
-          styles: |
-            .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-              text-transform: uppercase; letter-spacing: 0.06em;
-              color: rgba(255,255,255,0.6) !important; }
-            .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-            .card-content { padding-top: 7px !important; }
+          modules:
+            - mobile_separator
         - type: vertical-stack
           card_mod:
             style: |
@@ -788,12 +780,8 @@ cards:
           name: Values
           icon: mdi:gauge
           rows: 0.75
-          styles: |
-            .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-              text-transform: uppercase; letter-spacing: 0.06em;
-              color: rgba(255,255,255,0.6) !important; }
-            .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-            .card-content { padding-top: 7px !important; }
+          modules:
+            - mobile_separator
         - type: vertical-stack
           card_mod:
             style: |
@@ -1094,12 +1082,8 @@ cards:
           name: Release Notes
           icon: mdi:tag-outline
           rows: 0.75
-          styles: |
-            .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-              text-transform: uppercase; letter-spacing: 0.06em;
-              color: rgba(255,255,255,0.6) !important; }
-            .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-            .card-content { padding-top: 7px !important; }
+          modules:
+            - mobile_separator
         - type: custom:expander-card
           expanded: false
           title-card-clickable: true
@@ -1590,12 +1574,8 @@ cards:
     name: Zone Schedules
     icon: mdi:fan-clock
     rows: 0.75
-    styles: |
-      .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-        text-transform: uppercase; letter-spacing: 0.06em;
-        color: rgba(255,255,255,0.6) !important; }
-      .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-      .card-content { padding-top: 7px !important; }
+    modules:
+      - mobile_separator
   - type: custom:button-card
     entity: automation.living_room_hvac_schedule_v3
     name: Living Room Schedule
@@ -1869,12 +1849,8 @@ cards:
     name: Fresh Air
     icon: mdi:tailwind
     rows: 0.75
-    styles: |
-      .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-        text-transform: uppercase; letter-spacing: 0.06em;
-        color: rgba(255,255,255,0.6) !important; }
-      .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-      .card-content { padding-top: 7px !important; }
+    modules:
+      - mobile_separator
   - type: custom:bubble-card
     card_type: button
     button_type: slider
@@ -1918,12 +1894,8 @@ cards:
     name: Ventilation Thresholds
     icon: mdi:fan-auto
     rows: 0.75
-    styles: |
-      .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-        text-transform: uppercase; letter-spacing: 0.06em;
-        color: rgba(255,255,255,0.6) !important; }
-      .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-      .card-content { padding-top: 7px !important; }
+    modules:
+      - mobile_separator
   - type: custom:bubble-card
     card_type: button
     button_type: slider
@@ -2043,12 +2015,8 @@ cards:
     name: Away Setpoints
     icon: mdi:home-export-outline
     rows: 0.75
-    styles: |
-      .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-        text-transform: uppercase; letter-spacing: 0.06em;
-        color: rgba(255,255,255,0.6) !important; }
-      .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-      .card-content { padding-top: 7px !important; }
+    modules:
+      - mobile_separator
   - type: custom:bubble-card
     card_type: button
     button_type: slider
@@ -2396,12 +2364,8 @@ cards:
     name: Motion
     icon: mdi:motion
     rows: 0.75
-    styles: |
-      .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-        text-transform: uppercase; letter-spacing: 0.06em;
-        color: rgba(255,255,255,0.6) !important; }
-      .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-      .card-content { padding-top: 7px !important; }
+    modules:
+      - mobile_separator
   - type: custom:button-card
     entity: automation.outdoor_motion_after_11pm_before_sunrise
     name: Outdoor Motion 11pm–Sunrise
@@ -2608,12 +2572,8 @@ cards:
     name: Lights
     icon: mdi:lightbulb-auto
     rows: 0.75
-    styles: |
-      .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-        text-transform: uppercase; letter-spacing: 0.06em;
-        color: rgba(255,255,255,0.6) !important; }
-      .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-      .card-content { padding-top: 7px !important; }
+    modules:
+      - mobile_separator
   - type: custom:button-card
     entity: automation.evening_lights_on_lux
     name: Evening Lights On
@@ -3058,12 +3018,8 @@ cards:
     name: Energy Consumption
     icon: mdi:lightning-bolt
     rows: 0.75
-    styles: |
-      .bubble-name { font-size: 14px !important; font-weight: 700 !important;
-        text-transform: uppercase; letter-spacing: 0.06em;
-        color: rgba(255,255,255,0.6) !important; }
-      .bubble-line { background: var(--primary-text-color); opacity: 0.1; }
-      .card-content { padding-top: 7px !important; }
+    modules:
+      - mobile_separator
   - type: custom:bubble-card
     card_type: button
     button_type: name

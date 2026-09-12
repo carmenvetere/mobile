@@ -177,18 +177,8 @@ cards:
               name: Vacuum
               icon: mdi:menu-open
               rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator
             - type: custom:bubble-card
               card_type: button
               button_type: switch
@@ -297,18 +287,8 @@ cards:
               name: Basement
               icon: mdi:menu-open
               rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator
             - type: entities
               entities:
                 - entity: input_boolean.vacuum_mudroom
@@ -335,18 +315,8 @@ cards:
               name: First Floor
               icon: mdi:menu-open
               rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator
             - type: entities
               entities:
                 - entity: input_boolean.vacuum_kitchen
@@ -373,18 +343,8 @@ cards:
               name: Second Floor
               icon: mdi:menu-open
               rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator
             - type: entities
               entities:
                 - entity: input_boolean.vacuum_second_floor_hallway

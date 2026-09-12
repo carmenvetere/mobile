@@ -156,23 +156,8 @@ cards:
               name: Groups
               icon: mdi:roller-shade
               rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 20px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-sub-button 
-                {
-                  font-size: 20px !important;
-                  font-weight: 700 !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator
             - type: custom:bubble-card
               card_type: separator
               name: First Floor
@@ -191,24 +176,15 @@ cards:
                     target:
                       entity_id: input_boolean.shades_manual_first_floor
               styles: |
-                .bubble-sub-button-1 {
+                .bubble-sub-button.bubble-sub-button-1 {
                   display: ${hass.states['input_boolean.shades_manual_first_floor']?.state === 'on' ? 'flex' : 'none'} !important;
                   background: var(--card-background-color) !important;
                   color: var(--slate-bright) !important;
-                  font-size: 13px !important;
+                  font-size: 14px !important;
                   font-weight: 600 !important;
                 }
-                .bubble-name {
-                  font-size: 16px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator_small
             - type: vertical-stack
               cards: !include /config/dashboards/modules/first-floor-shades-groups.yaml
             - type: custom:bubble-card
@@ -229,24 +205,15 @@ cards:
                     target:
                       entity_id: input_boolean.shades_manual_primary_bedroom
               styles: |
-                .bubble-sub-button-1 {
+                .bubble-sub-button.bubble-sub-button-1 {
                   display: ${hass.states['input_boolean.shades_manual_primary_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
                   background: var(--card-background-color) !important;
                   color: var(--slate-bright) !important;
-                  font-size: 13px !important;
+                  font-size: 14px !important;
                   font-weight: 600 !important;
                 }
-                .bubble-name {
-                  font-size: 16px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator_small
             - type: vertical-stack
               cards: !include /config/dashboards/modules/primary-bedroom-shades-groups.yaml
             - type: custom:bubble-card
@@ -267,24 +234,15 @@ cards:
                     target:
                       entity_id: input_boolean.shades_manual_office
               styles: |
-                .bubble-sub-button-1 {
+                .bubble-sub-button.bubble-sub-button-1 {
                   display: ${hass.states['input_boolean.shades_manual_office']?.state === 'on' ? 'flex' : 'none'} !important;
                   background: var(--card-background-color) !important;
                   color: var(--slate-bright) !important;
-                  font-size: 13px !important;
+                  font-size: 14px !important;
                   font-weight: 600 !important;
                 }
-                .bubble-name {
-                  font-size: 16px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator_small
             - type: vertical-stack
               cards: !include /config/dashboards/modules/office-shades-group.yaml
             - type: custom:bubble-card
@@ -305,24 +263,15 @@ cards:
                     target:
                       entity_id: input_boolean.shades_manual_back_guest_bedroom
               styles: |
-                .bubble-sub-button-1 {
+                .bubble-sub-button.bubble-sub-button-1 {
                   display: ${hass.states['input_boolean.shades_manual_back_guest_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
                   background: var(--card-background-color) !important;
                   color: var(--slate-bright) !important;
-                  font-size: 13px !important;
+                  font-size: 14px !important;
                   font-weight: 600 !important;
                 }
-                .bubble-name {
-                  font-size: 16px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator_small
             - type: vertical-stack
               cards: !include /config/dashboards/modules/back-guest-bedroom-shades-group.yaml
             - type: custom:bubble-card
@@ -343,24 +292,15 @@ cards:
                     target:
                       entity_id: input_boolean.shades_manual_front_guest_bedroom
               styles: |
-                .bubble-sub-button-1 {
+                .bubble-sub-button.bubble-sub-button-1 {
                   display: ${hass.states['input_boolean.shades_manual_front_guest_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
                   background: var(--card-background-color) !important;
                   color: var(--slate-bright) !important;
-                  font-size: 13px !important;
+                  font-size: 14px !important;
                   font-weight: 600 !important;
                 }
-                .bubble-name {
-                  font-size: 16px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator_small
             - type: vertical-stack
               cards: !include /config/dashboards/modules/front-guest-bedroom-shades-group.yaml
             - type: custom:bubble-card
@@ -368,18 +308,8 @@ cards:
               name: By Room
               icon: mdi:format-list-bulleted
               rows: 0.75
-              styles: |
-                .bubble-name {
-                  font-size: 16px !important;  /* title */
-                  font-weight: bold !important;
-                }
-                .bubble-line {
-                  background: var(--primary-text-color);
-                  opacity: 0.1;
-                }
-                .card-content {
-                  padding-top: 7px !important;
-                }
+              modules:
+                - mobile_separator_small
       first:
         card:
           type: custom:expander-card
@@ -408,23 +338,8 @@ cards:
             name: First Floor
             icon: mdi:home-floor-1
             rows: 0.75
-            styles: |
-              .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-              }
-              .bubble-sub-button 
-              {
-                font-size: 20px !important;
-                font-weight: 700 !important;
-              }
-              .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-              }
-              .card-content {
-                padding-top: 7px !important;
-              }
+            modules:
+              - mobile_separator
           cards:
             - type: vertical-stack
               cards: !include /config/dashboards/modules/first-floor-shades-individuals.yaml
@@ -456,23 +371,8 @@ cards:
             name: Primary Bedroom
             icon: mdi:bed-king
             rows: 0.75
-            styles: |
-              .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-              }
-              .bubble-sub-button 
-              {
-                font-size: 20px !important;
-                font-weight: 700 !important;
-              }
-              .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-              }
-              .card-content {
-                padding-top: 7px !important;
-              }
+            modules:
+              - mobile_separator
           cards:
             - type: vertical-stack
               cards: !include /config/dashboards/modules/primary-bedroom-shades-individuals.yaml
@@ -504,23 +404,8 @@ cards:
             name: Office
             icon: mdi:desk-lamp
             rows: 0.75
-            styles: |
-              .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-              }
-              .bubble-sub-button 
-              {
-                font-size: 20px !important;
-                font-weight: 700 !important;
-              }
-              .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-              }
-              .card-content {
-                padding-top: 7px !important;
-              }
+            modules:
+              - mobile_separator
           cards:
             - type: vertical-stack
               cards: !include /config/dashboards/modules/office-shades-individuals.yaml
@@ -552,23 +437,8 @@ cards:
             name: Front Guest Bedroom
             icon: mdi:bed-king
             rows: 0.75
-            styles: |
-              .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-              }
-              .bubble-sub-button 
-              {
-                font-size: 20px !important;
-                font-weight: 700 !important;
-              }
-              .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-              }
-              .card-content {
-                padding-top: 7px !important;
-              }
+            modules:
+              - mobile_separator
           cards:
             - type: vertical-stack
               cards: !include /config/dashboards/modules/front-guest-bedroom-shades-individuals.yaml
@@ -600,23 +470,8 @@ cards:
             name: Back Guest Bedroom
             icon: mdi:bed-king
             rows: 0.75
-            styles: |
-              .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-              }
-              .bubble-sub-button 
-              {
-                font-size: 20px !important;
-                font-weight: 700 !important;
-              }
-              .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-              }
-              .card-content {
-                padding-top: 7px !important;
-              }
+            modules:
+              - mobile_separator
           cards:
             - type: vertical-stack
               cards: !include /config/dashboards/modules/back-guest-bedroom-shades-individuals.yaml

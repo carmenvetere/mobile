@@ -139,19 +139,8 @@ cards:
               name: Active Weather Alerts
               icon: mdi:alert
               rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 7px !important;
-                padding-left: 10px !important;
-                }
+              modules:
+                - mobile_separator
             cards:
               - type: markdown
                 content: |                    
@@ -200,19 +189,8 @@ cards:
               name: Forecast
               icon: mdi:calendar-week
               rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
+              modules:
+                - mobile_separator
             - type: weather-forecast
               entity: weather.bayberry
               forecast_type: daily
@@ -242,19 +220,8 @@ cards:
               name: Live Weather
               icon: mdi:weather-partly-cloudy
               rows: 0.75
-              styles: |
-                .bubble-name {
-                font-size: 20px !important;  /* title */
-                font-weight: bold !important;
-                }
-                .bubble-line {
-                background: var(--primary-text-color);
-                opacity: 0.1;
-                }
-                .card-content {
-                padding-top: 10px !important;
-                padding-left: 10px !important;
-                }
+              modules:
+                - mobile_separator
             - type: grid
               columns: 2
               square: false
