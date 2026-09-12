@@ -404,13 +404,14 @@ script:
           float f_grid_home = fminf(imp, home - f_solar_home);
           float f_grid_batt = fminf(imp - f_grid_home, chg - f_solar_batt);
           float f_batt_home = fminf(dis, home - f_solar_home - f_grid_home);
-          const float kw[flow::COUNT] = {f_solar_batt, f_solar_home, f_batt_home, f_grid_batt, f_solar_grid, f_grid_home};
-          lv_obj_t *const lines[flow::COUNT] = {id(en_line_solar_batt), id(en_line_solar_home), id(en_line_batt_home),
-                                                id(en_line_grid_batt), id(en_line_solar_grid), id(en_line_grid_home)};
+          const float flow_kw[flow::COUNT] = {f_solar_batt, f_solar_home, f_batt_home, f_grid_batt, f_solar_grid, f_grid_home};
+          // ESPHome wraps `line` widgets in a compound type; the LVGL object is ->obj
+          lv_obj_t *const lines[flow::COUNT] = {id(en_line_solar_batt)->obj, id(en_line_solar_home)->obj, id(en_line_batt_home)->obj,
+                                                id(en_line_grid_batt)->obj, id(en_line_solar_grid)->obj, id(en_line_grid_home)->obj};
           lv_obj_t *const dots[flow::COUNT * flow::DOTS_PER_FLOW] = {id(en_dot_0), id(en_dot_1), id(en_dot_2), id(en_dot_3),
                                                                       id(en_dot_4), id(en_dot_5), id(en_dot_6), id(en_dot_7),
                                                                       id(en_dot_8), id(en_dot_9), id(en_dot_10), id(en_dot_11)};
-          flow::update(kw, lines, dots);
+          flow::update(flow_kw, lines, dots);
           // grid node greys out while nothing crosses the meter
           bool grid_idle = std::isnan(id(s_grid).state) || fabsf(id(s_grid).state) < flow::ACTIVE_KW;
           text_color(id(en_grid_icon), grid_idle ? TEXT4 : SLATE);
