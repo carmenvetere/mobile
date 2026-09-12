@@ -193,7 +193,19 @@ cards:
               media_content_id: spotify:playlist:5lfFrs1X6A1HDxt2WEFr9u
               media_content_type: playlist
               art: "linear-gradient(135deg, #b31942 0%, #0a3161 100%)"
-          favorites_source: config
+          # Favorites come from Music Assistant; ma_entities maps each Sonos
+          # player (transport / grouping / volume) to its MA player (browsing /
+          # playback). HA suffixes the MA players with _2.
+          favorites_source: music_assistant
+          ma_entities:
+            media_player.living_room: media_player.living_room_2
+            media_player.kitchen: media_player.kitchen_2
+            media_player.office: media_player.office_2
+            media_player.gym: media_player.gym_2
+            media_player.deck: media_player.deck_2
+            media_player.pool: media_player.pool_2
+            media_player.mud_room: media_player.mud_room_2
+            media_player.media_room: media_player.media_room_2
           groups:
             - id: group_1
               label: Outdoor
