@@ -7,25 +7,31 @@ cards:
 # Hamburger nav sheet (standalone pop-up; keep as its own top-level card)
 - !include [/config/dashboards/modules/mobile-nav-sheet.yaml, {current: settings}]
 - type: custom:button-card
+  # grid-layout item: let the card shrink below its content width so wide
+  # charts/pop-ups never push the header off narrow screens.
+  card_mod:
+    style: |
+      :host { min-width: 0 !important; }
   styles:
     card:
-    - border-radius: 15px
-    - padding-bottom: 24px
-    - padding-left: 5px
-    - padding-right: 10px
-    - padding-top: 2px
-    - height: auto
-    - box-shadow: none
-    - background: var(--primary-background-color)
+      - border-radius: 0
+      - box-shadow: none
+      - background: var(--primary-background-color)
+      - padding: 2px 5px 24px 5px
+      - margin: 0
+      - height: auto
+      - box-sizing: border-box
+      - max-width: 100%
+      - min-width: 0
     grid:
-    - grid-template-areas: |
-        "header"
-        "main"
-    - grid-template-columns: auto
-    - grid-template-rows: 60px auto
-    - row-gap: 0px
-    - align-items: start
-    - column-gap: 2px
+      - grid-template-areas: |
+          "header"
+          "main"
+      - grid-template-columns: minmax(0, 1fr)
+      - grid-template-rows: 60px auto
+      - row-gap: 0px
+      - column-gap: 2px
+      - align-items: start
   custom_fields:
     header:
       card:

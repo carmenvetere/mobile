@@ -6,27 +6,31 @@ path: mobile-home
 type: custom:grid-layout
 cards:
   - type: custom:button-card
+    # grid-layout item: let the card shrink below its content width so wide
+    # charts/pop-ups never push the header off narrow screens.
+    card_mod:
+      style: |
+        :host { min-width: 0 !important; }
     styles:
       card:
-        - border-radius: 0px
+        - border-radius: 0
         - box-shadow: none
-        - padding-bottom: 24px
-        - padding-left: 5px
-        - padding-right: 5px
-        - padding-top: 2px
+        - background: var(--primary-background-color)
+        - padding: 2px 5px 24px 5px
         - margin: 0
         - height: auto
-#       - width: 398px
-        - background: var(--primary-background-color)
+        - box-sizing: border-box
+        - max-width: 100%
+        - min-width: 0
       grid:
         - grid-template-areas: |
             "header"
             "menu"
-        - grid-template-columns: auto
+        - grid-template-columns: minmax(0, 1fr)
         - grid-template-rows: 60px auto
         - row-gap: 0px
-        - align-items: start
         - column-gap: 2px
+        - align-items: start
     custom_fields:
       header:
         card:
@@ -332,51 +336,49 @@ cards:
         card:
           type: vertical-stack
           cards:
-            - type: vertical-stack
-              cards:
-                - type: custom:bubble-card
-                  card_type: separator
-                  name: Scenes
-                  icon: mdi:lamps
-                  rows: 0.75
-                  styles: |
-                    .bubble-name {
-                      font-size: 20px !important;  /* title */
-                      font-weight: bold !important;
-                    }
-                    .bubble-line {
-                      background: var(--primary-text-color);
-                      opacity: 0.1;
-                    }
-                    .card-content {
-                      padding-top: 7px !important;
-                    }
-                - !include 
-                    - /config/dashboards/modules/dynamic-scenes.yaml
-                    - module_name: mobile_lights_scenes
-                      dashboard: mobile
-                - type: custom:bubble-card
-                  card_type: separator
-                  name: Menu
-                  icon: mdi:menu-open
-                  rows: 0.75
-                  styles: |
-                    .bubble-name {
-                      font-size: 20px !important;  /* title */
-                      font-weight: bold !important;
-                    }
-                    .bubble-line {
-                      background: var(--primary-text-color);
-                      opacity: 0.1;
-                    }
-                    .card-content {
-                      padding-top: 7px !important;
-                    }     
-                # Shared nav menu (single source of truth for destinations;
-                # also consumed by mobile-nav-sheet.yaml on every sub-view).
-                - !include
-                    - /config/dashboards/modules/mobile-nav-menu.yaml
-                    - current: home
+            - type: custom:bubble-card
+              card_type: separator
+              name: Scenes
+              icon: mdi:lamps
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                  font-size: 20px !important;  /* title */
+                  font-weight: bold !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }
+            - !include 
+                - /config/dashboards/modules/dynamic-scenes.yaml
+                - module_name: mobile_lights_scenes
+                  dashboard: mobile
+            - type: custom:bubble-card
+              card_type: separator
+              name: Menu
+              icon: mdi:menu-open
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                  font-size: 20px !important;  /* title */
+                  font-weight: bold !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }     
+            # Shared nav menu (single source of truth for destinations;
+            # also consumed by mobile-nav-sheet.yaml on every sub-view).
+            - !include
+                - /config/dashboards/modules/mobile-nav-menu.yaml
+                - current: home
 #Notifications Pop-up (standalone format)
   - type: custom:bubble-card
     card_type: pop-up

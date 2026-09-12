@@ -7,26 +7,33 @@ cards:
   # Hamburger nav sheet (standalone pop-up; keep as its own top-level card)
   - !include [/config/dashboards/modules/mobile-nav-sheet.yaml, {current: security}]
   - type: custom:button-card
+    # grid-layout item: let the card shrink below its content width so wide
+    # charts/pop-ups never push the header off narrow screens.
+    card_mod:
+      style: |
+        :host { min-width: 0 !important; }
     styles:
       card:
-        - border-radius: 15px
-        - padding-bottom: 24px
-        - padding-left: 5px
-        - padding-top: 2px
-        - height: auto
-        - background: var(--primary-background-color)
+        - border-radius: 0
         - box-shadow: none
+        - background: var(--primary-background-color)
+        - padding: 2px 5px 24px 5px
+        - margin: 0
+        - height: auto
+        - box-sizing: border-box
+        - max-width: 100%
+        - min-width: 0
       grid:
         - grid-template-areas: |
             "header"
             "alarm"
             "cameras"
             "recent"
-        - grid-template-columns: auto
+        - grid-template-columns: minmax(0, 1fr)
         - grid-template-rows: 60px auto auto auto
-        - row-gap: 5px
-        - align-items: start
+        - row-gap: 0px
         - column-gap: 2px
+        - align-items: start
     custom_fields:
       header:
         card:
@@ -141,6 +148,7 @@ cards:
             card:
               - background: var(--background-color-2)
               - border-radius: 15px
+              - margin-top: 5px
               - padding: 4px
               - box-shadow: none
               - transition: none
@@ -345,14 +353,7 @@ cards:
             card_mod: *cam_style
       recent:
         card:
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background: var(--ha-card-background);
-                border-radius: 20px;
-              }
+          type: vertical-stack
           cards:
             - type: custom:bubble-card
               card_type: separator

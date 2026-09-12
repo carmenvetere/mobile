@@ -7,18 +7,22 @@ cards:
   # Hamburger nav sheet (standalone pop-up; keep as its own top-level card)
   - !include [/config/dashboards/modules/mobile-nav-sheet.yaml, {current: shades}]
   - type: custom:button-card
+    # grid-layout item: let the card shrink below its content width so wide
+    # charts/pop-ups never push the header off narrow screens.
+    card_mod:
+      style: |
+        :host { min-width: 0 !important; }
     styles:
       card:
-        - border-radius: 15px
-        - padding-bottom: 24px
-        - padding-left: 5px
-        - padding-right: 10px
-        - padding-top: 2px
-#        - margin: -8px
-        - height: auto
-#        - width: 398px
-        - background: var(--primary-background-color)
+        - border-radius: 0
         - box-shadow: none
+        - background: var(--primary-background-color)
+        - padding: 2px 5px 24px 5px
+        - margin: 0
+        - height: auto
+        - box-sizing: border-box
+        - max-width: 100%
+        - min-width: 0
       grid:
         - grid-template-areas: |
             "header"
@@ -28,11 +32,11 @@ cards:
             "office"
             "front_guest"
             "back_guest"
-        - grid-template-columns: auto
+        - grid-template-columns: minmax(0, 1fr)
         - grid-template-rows: 60px auto auto auto auto auto auto
         - row-gap: 0px
-        - align-items: start
         - column-gap: 2px
+        - align-items: start
     custom_fields:
       header:
         card:
@@ -147,237 +151,235 @@ cards:
         card:
           type: vertical-stack
           cards:
+            - type: custom:bubble-card
+              card_type: separator
+              name: Groups
+              icon: mdi:roller-shade
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                  font-size: 20px !important;  /* title */
+                  font-weight: bold !important;
+                }
+                .bubble-sub-button 
+                {
+                  font-size: 20px !important;
+                  font-weight: 700 !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }
+            - type: custom:bubble-card
+              card_type: separator
+              name: First Floor
+              icon: mdi:sofa
+              rows: 0.75
+              sub_button:
+                - entity: input_boolean.shades_manual_first_floor
+                  name: Manual
+                  icon: mdi:hand-back-right
+                  show_name: true
+                  show_icon: true
+                  show_background: true
+                  tap_action:
+                    action: perform-action
+                    perform_action: input_boolean.turn_off
+                    target:
+                      entity_id: input_boolean.shades_manual_first_floor
+              styles: |
+                .bubble-sub-button-1 {
+                  display: ${hass.states['input_boolean.shades_manual_first_floor']?.state === 'on' ? 'flex' : 'none'} !important;
+                  background: var(--card-background-color) !important;
+                  color: var(--slate-bright) !important;
+                  font-size: 13px !important;
+                  font-weight: 600 !important;
+                }
+                .bubble-name {
+                  font-size: 16px !important;  /* title */
+                  font-weight: bold !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }
             - type: vertical-stack
-              cards: 
-                - type: custom:bubble-card
-                  card_type: separator
-                  name: Groups
-                  icon: mdi:roller-shade
-                  rows: 0.75
-                  styles: |
-                    .bubble-name {
-                      font-size: 20px !important;  /* title */
-                      font-weight: bold !important;
-                    }
-                    .bubble-sub-button 
-                    {
-                      font-size: 20px !important;
-                      font-weight: 700 !important;
-                    }
-                    .bubble-line {
-                      background: var(--primary-text-color);
-                      opacity: 0.1;
-                    }
-                    .card-content {
-                      padding-top: 7px !important;
-                    }
-                - type: custom:bubble-card
-                  card_type: separator
-                  name: First Floor
-                  icon: mdi:sofa
-                  rows: 0.75
-                  sub_button:
-                    - entity: input_boolean.shades_manual_first_floor
-                      name: Manual
-                      icon: mdi:hand-back-right
-                      show_name: true
-                      show_icon: true
-                      show_background: true
-                      tap_action:
-                        action: perform-action
-                        perform_action: input_boolean.turn_off
-                        target:
-                          entity_id: input_boolean.shades_manual_first_floor
-                  styles: |
-                    .bubble-sub-button-1 {
-                      display: ${hass.states['input_boolean.shades_manual_first_floor']?.state === 'on' ? 'flex' : 'none'} !important;
-                      background: var(--card-background-color) !important;
-                      color: var(--slate-bright) !important;
-                      font-size: 13px !important;
-                      font-weight: 600 !important;
-                    }
-                    .bubble-name {
-                      font-size: 16px !important;  /* title */
-                      font-weight: bold !important;
-                    }
-                    .bubble-line {
-                      background: var(--primary-text-color);
-                      opacity: 0.1;
-                    }
-                    .card-content {
-                      padding-top: 7px !important;
-                    }
-                - type: vertical-stack
-                  cards: !include /config/dashboards/modules/first-floor-shades-groups.yaml
-                - type: custom:bubble-card
-                  card_type: separator
-                  name: Primary Bedroom
-                  icon: mdi:bed-king
-                  rows: 0.75
-                  sub_button:
-                    - entity: input_boolean.shades_manual_primary_bedroom
-                      name: Manual
-                      icon: mdi:hand-back-right
-                      show_name: true
-                      show_icon: true
-                      show_background: true
-                      tap_action:
-                        action: perform-action
-                        perform_action: input_boolean.turn_off
-                        target:
-                          entity_id: input_boolean.shades_manual_primary_bedroom
-                  styles: |
-                    .bubble-sub-button-1 {
-                      display: ${hass.states['input_boolean.shades_manual_primary_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
-                      background: var(--card-background-color) !important;
-                      color: var(--slate-bright) !important;
-                      font-size: 13px !important;
-                      font-weight: 600 !important;
-                    }
-                    .bubble-name {
-                      font-size: 16px !important;  /* title */
-                      font-weight: bold !important;
-                    }
-                    .bubble-line {
-                      background: var(--primary-text-color);
-                      opacity: 0.1;
-                    }
-                    .card-content {
-                      padding-top: 7px !important;
-                    }
-                - type: vertical-stack
-                  cards: !include /config/dashboards/modules/primary-bedroom-shades-groups.yaml
-                - type: custom:bubble-card
-                  card_type: separator
-                  name: Office
-                  icon: mdi:desk-lamp
-                  rows: 0.75
-                  sub_button:
-                    - entity: input_boolean.shades_manual_office
-                      name: Manual
-                      icon: mdi:hand-back-right
-                      show_name: true
-                      show_icon: true
-                      show_background: true
-                      tap_action:
-                        action: perform-action
-                        perform_action: input_boolean.turn_off
-                        target:
-                          entity_id: input_boolean.shades_manual_office
-                  styles: |
-                    .bubble-sub-button-1 {
-                      display: ${hass.states['input_boolean.shades_manual_office']?.state === 'on' ? 'flex' : 'none'} !important;
-                      background: var(--card-background-color) !important;
-                      color: var(--slate-bright) !important;
-                      font-size: 13px !important;
-                      font-weight: 600 !important;
-                    }
-                    .bubble-name {
-                      font-size: 16px !important;  /* title */
-                      font-weight: bold !important;
-                    }
-                    .bubble-line {
-                      background: var(--primary-text-color);
-                      opacity: 0.1;
-                    }
-                    .card-content {
-                      padding-top: 7px !important;
-                    }
-                - type: vertical-stack
-                  cards: !include /config/dashboards/modules/office-shades-group.yaml
-                - type: custom:bubble-card
-                  card_type: separator
-                  name: Back Guest Bedroom
-                  icon: mdi:bed-king
-                  rows: 0.75
-                  sub_button:
-                    - entity: input_boolean.shades_manual_back_guest_bedroom
-                      name: Manual
-                      icon: mdi:hand-back-right
-                      show_name: true
-                      show_icon: true
-                      show_background: true
-                      tap_action:
-                        action: perform-action
-                        perform_action: input_boolean.turn_off
-                        target:
-                          entity_id: input_boolean.shades_manual_back_guest_bedroom
-                  styles: |
-                    .bubble-sub-button-1 {
-                      display: ${hass.states['input_boolean.shades_manual_back_guest_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
-                      background: var(--card-background-color) !important;
-                      color: var(--slate-bright) !important;
-                      font-size: 13px !important;
-                      font-weight: 600 !important;
-                    }
-                    .bubble-name {
-                      font-size: 16px !important;  /* title */
-                      font-weight: bold !important;
-                    }
-                    .bubble-line {
-                      background: var(--primary-text-color);
-                      opacity: 0.1;
-                    }
-                    .card-content {
-                      padding-top: 7px !important;
-                    }
-                - type: vertical-stack
-                  cards: !include /config/dashboards/modules/back-guest-bedroom-shades-group.yaml
-                - type: custom:bubble-card
-                  card_type: separator
-                  name: Front Guest Bedroom
-                  icon: mdi:bed-king
-                  rows: 0.75
-                  sub_button:
-                    - entity: input_boolean.shades_manual_front_guest_bedroom
-                      name: Manual
-                      icon: mdi:hand-back-right
-                      show_name: true
-                      show_icon: true
-                      show_background: true
-                      tap_action:
-                        action: perform-action
-                        perform_action: input_boolean.turn_off
-                        target:
-                          entity_id: input_boolean.shades_manual_front_guest_bedroom
-                  styles: |
-                    .bubble-sub-button-1 {
-                      display: ${hass.states['input_boolean.shades_manual_front_guest_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
-                      background: var(--card-background-color) !important;
-                      color: var(--slate-bright) !important;
-                      font-size: 13px !important;
-                      font-weight: 600 !important;
-                    }
-                    .bubble-name {
-                      font-size: 16px !important;  /* title */
-                      font-weight: bold !important;
-                    }
-                    .bubble-line {
-                      background: var(--primary-text-color);
-                      opacity: 0.1;
-                    }
-                    .card-content {
-                      padding-top: 7px !important;
-                    }
-                - type: vertical-stack
-                  cards: !include /config/dashboards/modules/front-guest-bedroom-shades-group.yaml
-                - type: custom:bubble-card
-                  card_type: separator
-                  name: By Room
-                  icon: mdi:format-list-bulleted
-                  rows: 0.75
-                  styles: |
-                    .bubble-name {
-                      font-size: 16px !important;  /* title */
-                      font-weight: bold !important;
-                    }
-                    .bubble-line {
-                      background: var(--primary-text-color);
-                      opacity: 0.1;
-                    }
-                    .card-content {
-                      padding-top: 7px !important;
-                    }
+              cards: !include /config/dashboards/modules/first-floor-shades-groups.yaml
+            - type: custom:bubble-card
+              card_type: separator
+              name: Primary Bedroom
+              icon: mdi:bed-king
+              rows: 0.75
+              sub_button:
+                - entity: input_boolean.shades_manual_primary_bedroom
+                  name: Manual
+                  icon: mdi:hand-back-right
+                  show_name: true
+                  show_icon: true
+                  show_background: true
+                  tap_action:
+                    action: perform-action
+                    perform_action: input_boolean.turn_off
+                    target:
+                      entity_id: input_boolean.shades_manual_primary_bedroom
+              styles: |
+                .bubble-sub-button-1 {
+                  display: ${hass.states['input_boolean.shades_manual_primary_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
+                  background: var(--card-background-color) !important;
+                  color: var(--slate-bright) !important;
+                  font-size: 13px !important;
+                  font-weight: 600 !important;
+                }
+                .bubble-name {
+                  font-size: 16px !important;  /* title */
+                  font-weight: bold !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }
+            - type: vertical-stack
+              cards: !include /config/dashboards/modules/primary-bedroom-shades-groups.yaml
+            - type: custom:bubble-card
+              card_type: separator
+              name: Office
+              icon: mdi:desk-lamp
+              rows: 0.75
+              sub_button:
+                - entity: input_boolean.shades_manual_office
+                  name: Manual
+                  icon: mdi:hand-back-right
+                  show_name: true
+                  show_icon: true
+                  show_background: true
+                  tap_action:
+                    action: perform-action
+                    perform_action: input_boolean.turn_off
+                    target:
+                      entity_id: input_boolean.shades_manual_office
+              styles: |
+                .bubble-sub-button-1 {
+                  display: ${hass.states['input_boolean.shades_manual_office']?.state === 'on' ? 'flex' : 'none'} !important;
+                  background: var(--card-background-color) !important;
+                  color: var(--slate-bright) !important;
+                  font-size: 13px !important;
+                  font-weight: 600 !important;
+                }
+                .bubble-name {
+                  font-size: 16px !important;  /* title */
+                  font-weight: bold !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }
+            - type: vertical-stack
+              cards: !include /config/dashboards/modules/office-shades-group.yaml
+            - type: custom:bubble-card
+              card_type: separator
+              name: Back Guest Bedroom
+              icon: mdi:bed-king
+              rows: 0.75
+              sub_button:
+                - entity: input_boolean.shades_manual_back_guest_bedroom
+                  name: Manual
+                  icon: mdi:hand-back-right
+                  show_name: true
+                  show_icon: true
+                  show_background: true
+                  tap_action:
+                    action: perform-action
+                    perform_action: input_boolean.turn_off
+                    target:
+                      entity_id: input_boolean.shades_manual_back_guest_bedroom
+              styles: |
+                .bubble-sub-button-1 {
+                  display: ${hass.states['input_boolean.shades_manual_back_guest_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
+                  background: var(--card-background-color) !important;
+                  color: var(--slate-bright) !important;
+                  font-size: 13px !important;
+                  font-weight: 600 !important;
+                }
+                .bubble-name {
+                  font-size: 16px !important;  /* title */
+                  font-weight: bold !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }
+            - type: vertical-stack
+              cards: !include /config/dashboards/modules/back-guest-bedroom-shades-group.yaml
+            - type: custom:bubble-card
+              card_type: separator
+              name: Front Guest Bedroom
+              icon: mdi:bed-king
+              rows: 0.75
+              sub_button:
+                - entity: input_boolean.shades_manual_front_guest_bedroom
+                  name: Manual
+                  icon: mdi:hand-back-right
+                  show_name: true
+                  show_icon: true
+                  show_background: true
+                  tap_action:
+                    action: perform-action
+                    perform_action: input_boolean.turn_off
+                    target:
+                      entity_id: input_boolean.shades_manual_front_guest_bedroom
+              styles: |
+                .bubble-sub-button-1 {
+                  display: ${hass.states['input_boolean.shades_manual_front_guest_bedroom']?.state === 'on' ? 'flex' : 'none'} !important;
+                  background: var(--card-background-color) !important;
+                  color: var(--slate-bright) !important;
+                  font-size: 13px !important;
+                  font-weight: 600 !important;
+                }
+                .bubble-name {
+                  font-size: 16px !important;  /* title */
+                  font-weight: bold !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }
+            - type: vertical-stack
+              cards: !include /config/dashboards/modules/front-guest-bedroom-shades-group.yaml
+            - type: custom:bubble-card
+              card_type: separator
+              name: By Room
+              icon: mdi:format-list-bulleted
+              rows: 0.75
+              styles: |
+                .bubble-name {
+                  font-size: 16px !important;  /* title */
+                  font-weight: bold !important;
+                }
+                .bubble-line {
+                  background: var(--primary-text-color);
+                  opacity: 0.1;
+                }
+                .card-content {
+                  padding-top: 7px !important;
+                }
       first:
         card:
           type: custom:expander-card

@@ -15,32 +15,28 @@ cards:
         :host { min-width: 0 !important; }
     styles:
       card:
-        - border-radius: 15px
-        - padding-bottom: 24px
-        - padding-left: 5px
-        - padding-right: 10px
-        - padding-top: 2px
-#        - margin: -8px
-        - height: auto
-#        - width: 398px
-        - box-sizing: border-box
-        - background: var(--primary-background-color)
+        - border-radius: 0
         - box-shadow: none
-        # vw clamp is parent-independent, unlike the old max-width: 96%
-        - max-width: calc(100vw - 10px)
+        - background: var(--primary-background-color)
+        - padding: 2px 5px 24px 5px
+        - margin: 0
+        - height: auto
+        - box-sizing: border-box
+        - max-width: 100%
+        - min-width: 0
+        # energy only: the power-flow chart can still overflow its box on
+        # first paint; clip so it never scrolls the page sideways.
         - overflow-x: clip
       grid:
         - grid-template-areas: |
             "header"
             "power_flow"
             "solar_forecast"
-        # minmax(0,1fr) stops the wide charts from stretching the column
-        # (and the header/hamburger with it) past the viewport.
         - grid-template-columns: minmax(0, 1fr)
         - grid-template-rows: 60px auto auto
-        - row-gap: 5px
-        - align-items: start
+        - row-gap: 0px
         - column-gap: 2px
+        - align-items: start
     custom_fields:
       header:
         card:
@@ -105,15 +101,7 @@ cards:
               card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
       solar_forecast:
         card: 
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background-color: var(--background-color) !important;
-                border-radius: 20px;
-                max-width: 95% !important;
-              }
+          type: vertical-stack
           cards:
             - type: custom:bubble-card
               card_type: separator
@@ -228,15 +216,7 @@ cards:
             - !include /config/dashboards/modules/7-day-usage-history.yaml
       power_flow:
         card: 
-          type: custom:stack-in-card
-          mode: vertical
-          card_mod:
-            style: |
-              ha-card {
-                background-color: var(--background-color) !important;
-                border-radius: 20px;
-                max-width: 95% !important;
-              }
+          type: vertical-stack
           cards:
             - type: custom:bubble-card
               card_type: separator

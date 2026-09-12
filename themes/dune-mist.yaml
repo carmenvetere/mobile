@@ -19,6 +19,18 @@ Dune Mist:
   gold-color: "#E2C168"
   amber-color: "#E0A75E"
 
+  # translucent accents + muted text (v2.7 audit §5c) — use these instead of
+  # rgba(142,177,191,…) / rgba(255,255,255,…) literals in card_mod
+  slate-alpha-55: "rgba(142,177,191,0.55)"   # active toggle track / selected segment
+  slate-alpha-18: "rgba(142,177,191,0.18)"   # icon tile tint
+  sage-alpha-18: "rgba(139,166,128,0.18)"
+  gold-alpha-45: "rgba(226,193,104,0.45)"    # arming / pending segment
+  error-alpha-65: "rgba(224,105,91,0.65)"    # destructive toggle on-state
+  error-alpha-85: "rgba(224,105,91,0.85)"    # live badge
+  muted-label-color: "rgba(255,255,255,0.6)" # eyebrow / section sub-labels
+  row-divider-color: "rgba(255,255,255,0.06)" # hairline between list rows
+  toggle-knob-color: "#ffffff"
+
   # ---- backgrounds ----------------------------------------------------------
   primary-background-color: "#41454b"    # app background (behind cards, dialogs)
   secondary-background-color: "#3a3e44"  # sidebar, menu surfaces, table stripes
@@ -27,7 +39,7 @@ Dune Mist:
   # ---- cards: the key fix — ha-card defaults to the surface token -----------
   card-background-color: "#4f545b"
   ha-card-background: "#4f545b"
-  ha-card-border-radius: "20px"
+  ha-card-border-radius: "15px"          # dashboard standard (v2.7 audit §3)
   ha-card-border-width: "0px"
   ha-card-border-color: "rgba(255,255,255,0.07)"
   ha-card-box-shadow: "0 2px 6px rgba(0,0,0,0.28)"
