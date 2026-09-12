@@ -123,10 +123,26 @@
     icon: mdi:weather-hurricane
     items_template: ""
     message_template: |-
-      {{ state_attr('sensor.nws_alerts_alerts', 'event')
-         or state_attr('sensor.nws_alerts_alerts', 'title')
-         or state_attr('sensor.nws_alerts_alerts', 'spoken_desc')
-         or 'Active weather alert in your area.' }}
+      {#- NWS Alerts exposes the active alerts as the `Alerts` list attribute
+          (Event / Headline / Severity / Expires ...), not as top-level
+          event/title attributes. Show the alert type(s); for a single alert
+          add when it expires. -#}
+      {% set alerts = state_attr('sensor.nws_alerts_alerts', 'Alerts') or [] %}
+      {% set events = alerts | map(attribute='Event') | select('string') | unique | list %}
+      {% if events | length == 1 %}
+        {%- set exp = alerts[0].Expires | default(none) -%}
+        {%- if exp and (exp | as_timestamp(none)) -%}
+          {{ events[0] }} until {{ exp | as_timestamp | timestamp_custom('%a %-I:%M %p') }}
+        {%- else -%}
+          {{ events[0] }}
+        {%- endif -%}
+      {% elif events | length > 1 %}
+        {{- events | join(' · ') -}}
+      {% else %}
+        {{- state_attr('sensor.nws_alerts_alerts', 'event')
+            or state_attr('sensor.nws_alerts_alerts', 'title')
+            or 'Active weather alert in your area.' -}}
+      {% endif %}
     name: Active Weather Alert
     navigation_target: /mobile-dash/weather
     operator: ">"
