@@ -1,21 +1,20 @@
 mobile_lights:
   name: Mobile Lights
-  version: '1.3'
+  version: '1.4'
   creator: ''
   description: ''
   code: |2-
         .bubble-button-card-container {
           border-radius: 15px !important;
-          margin: 2px 20px 2px 10px !important;
+          margin: 2px 5px 2px 5px !important;
           background-color: var(--background-color-3) !important;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
           }
 
         .bubble-button-background {
-          background-color: var(--background-color-3) !important;
           border-radius: 15px !important;
           opacity: 0 !important;
-          } 
+          }
 
         .bubble-name {
           font-size: 16px !important;
@@ -24,14 +23,14 @@ mobile_lights:
           padding-left: 10px;
             }
        
-        .bubble-sub-button { 
-          font-size: 16px !important;
-          font-weight: bold; 
-          color: var(--primary-text-color) !important;
+        .bubble-sub-button {
+          font-size: 14px !important;
+          font-weight: 700 !important;
+          color: ${state === 'on' ? 'var(--primary-text-color)' : 'var(--secondary-text-color)'} !important;
           }
         
         .bubble-state {
-          font-size: 16px !important;
+          font-size: 14px !important;
           font-weight: bold !important;
           text-align: left !important;
             }
@@ -50,7 +49,7 @@ mobile_lights:
           }
 
         .bubble-range-value {
-          font-size: 0px !important;
+          display: none !important;
           }
 
         .bubble-range-slider {

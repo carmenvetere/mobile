@@ -1,6 +1,6 @@
 mobile_lights_scenes:
   name: Mobile Lights Scenes Module
-  version: '1.0'
+  version: '1.1'
   creator: ''
   supported:
     - button
@@ -36,7 +36,7 @@ mobile_lights_scenes:
             
     .bubble-sub-button {
       font-size: 14px !important;
-      font-weight: bold;
+      font-weight: 700 !important;
       background: transparent !important;
       color: ${state === 'on' ? 'var(--primary-background-color)' : 'var(--secondary-text-color)'} !important;
       }

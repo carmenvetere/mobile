@@ -1,6 +1,6 @@
 pop-up-module:
   name: Pop Up Module
-  version: '1.0'
+  version: '1.1'
   creator: ''
   description: ''
   code: |-
@@ -18,14 +18,12 @@ pop-up-module:
       mask-image: none !important;
     }
     .bubble-pop-up-background{
-      border-radius: 20px !important;
+      border-radius: 15px !important;
       background-color: var(--background-color) !important;
       opacity: 1 !important;
     }
     .bubble-backdrop{
-      transition-delay: 0 !important;
       transition: opacity 0.2s !important;
-      background-color: null !important;
     }
     .is-popup-closed { 
       opacity: 0;

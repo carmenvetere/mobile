@@ -1,6 +1,6 @@
 mobile_climate:
   name: Mobile Climate Module
-  version: '1.1'
+  version: '1.2'
   creator: ''
   description: ''
   code: |2-
@@ -52,7 +52,7 @@ mobile_climate:
           ? 'var(--primary-text-color)'
           : state === 'cool'
           ? 'var(--primary-text-color)'
-          : '#f2f3f5'} !important;
+          : 'var(--primary-text-color)'} !important;
       }
 
       /* Off-state overlay */
@@ -66,7 +66,8 @@ mobile_climate:
         font-size: 40px;
         font-weight: 700;
         line-height: 1;
-        color: rgba(242,243,245,0.78);
+        color: var(--primary-text-color);
+        opacity: 0.78;
       }
 
       /* + button — anchored just ABOVE the container's vertical center */
@@ -82,9 +83,9 @@ mobile_climate:
         width: 40px !important;
         height: 40px !important;
         min-height: 26px !important;
-        border-radius: 8px !important;
-        background: rgba(255,255,255,0.16) !important;
-        color: #f2f3f5 !important;
+        border-radius: 999px !important;
+        background: color-mix(in srgb, var(--primary-text-color) 16%, transparent) !important;
+        color: var(--primary-text-color) !important;
         cursor: pointer !important;
       }
 
@@ -101,20 +102,20 @@ mobile_climate:
         width: 40px !important;
         height: 40px !important;
         min-height: 26px !important;
-        border-radius: 8px !important;
-        background: rgba(255,255,255,0.16) !important;
-        color: #f2f3f5 !important;
+        border-radius: 999px !important;
+        background: color-mix(in srgb, var(--primary-text-color) 16%, transparent) !important;
+        color: var(--primary-text-color) !important;
         cursor: pointer !important;
       }
 
       .bubble-climate-plus-button:hover,
       .bubble-climate-minus-button:hover {
-        background: rgba(255,255,255,0.26) !important;
+        background: color-mix(in srgb, var(--primary-text-color) 26%, transparent) !important;
       }
       .bubble-climate-plus-button ha-icon,
       .bubble-climate-minus-button ha-icon {
         --mdc-icon-size: 26px !important;
-        color: #f2f3f5 !important;
+        color: var(--primary-text-color) !important;
       }
 
 
@@ -135,15 +136,15 @@ mobile_climate:
          so pin the mode/fan pills one rung darker to keep them recessed. */
       .bubble-sub-button {
         background: var(--primary-background-color) !important;
-        border: 1px solid rgba(255,255,255,0.04) !important;
+        border: 1px solid color-mix(in srgb, var(--primary-text-color) 4%, transparent) !important;
         border-radius: 999px !important;
-        color: #f2f3f5 !important;
-        font-size: 16px !important;
+        color: var(--primary-text-color) !important;
+        font-size: 14px !important;
         font-weight: 600 !important;
         min-height: 36px !important;
         min-width: 120px !important;
       }
       .bubble-sub-button:hover {
-        background: rgba(255,255,255,0.22) !important;
+        background: color-mix(in srgb, var(--primary-text-color) 22%, transparent) !important;
       }
   editor: ''

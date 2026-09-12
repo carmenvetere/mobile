@@ -1,6 +1,6 @@
 mobile_settings_slider:
   name: Mobile Settings Slider
-  version: '1.1'
+  version: '1.2'
   creator: ''
   supported:
     - button
@@ -45,9 +45,13 @@ mobile_settings_slider:
       }
 
       .bubble-range-value {
-        font-size: 0px !important;
+        display: none !important;
       }
 
+      /* Deliberate: name / state / icon sit over the slate fill at the left of
+         the track, so they use the dark text-on-accent colour in every state;
+         the value sub-button on the right stays over the grey track and keeps
+         primary text (PRD v2.1 test-cycle decision). */
       .bubble-name {
         font-size: 16px !important;
         text-align: left !important;
@@ -71,7 +75,7 @@ mobile_settings_slider:
 
       .bubble-sub-button {
         font-size: 14px !important;
-        font-weight: bold;
+        font-weight: 700 !important;
         margin-right: 10px;
         background: transparent !important;
         color: var(--primary-text-color) !important;

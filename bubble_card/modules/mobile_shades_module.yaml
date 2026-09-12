@@ -1,6 +1,6 @@
 mobile_shades_module:
   name: Mobile Shades Module
-  version: '1.9'
+  version: '2.0'
   creator: ''
   supported:
     - button
@@ -60,18 +60,13 @@ mobile_shades_module:
           return '';
         })()}
 
+        /* Rows sit inside a --background-color-2 expander, so the card is one
+           rung lighter (--background-color-3), same ladder as the lights. */
         .bubble-button-card-container {
           border-radius: 15px !important;
-          background-color: var(--background-color-2) !important;
+          margin: 2px 5px 2px 5px !important;
+          background-color: var(--background-color-3) !important;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
-          /* Bubble Card tints button text when the entity reads as active.
-             Pin its text tokens so nothing flips as a shade opens. */
-          --bubble-button-text-color: var(--primary-text-color);
-          --bubble-button-name-color: var(--primary-text-color);
-          --bubble-button-state-color: var(--primary-text-color);
-          --bubble-sub-button-text-color: var(--primary-text-color);
-          --bubble-state-color: var(--primary-text-color);
-          --bubble-name-color: var(--primary-text-color);
           color: var(--primary-text-color) !important;
           }
 
@@ -88,15 +83,13 @@ mobile_shades_module:
         .bubble-sub-button-state,
         .bubble-button-name-container,
         .bubble-button-content,
-        .bubble-content-container,
-        .bubble-range-value {
+        .bubble-content-container {
           color: var(--primary-text-color) !important;
           }
 
         /* Bubble Card's state-tinted layer stays fully transparent, so an open
            shade never lightens the card. */
         .bubble-button-background {
-          background-color: var(--background-color-2) !important;
           opacity: 0 !important;
           }
 
@@ -106,9 +99,11 @@ mobile_shades_module:
           color: var(--primary-text-color) !important;
             }
 
+        /* Deliberate exception to the secondary-at-rest rule: the up / stop /
+           down arrows are the row's only controls and stay primary. */
         .bubble-sub-button {
           font-size: 14px !important;
-          font-weight: bold;
+          font-weight: 700 !important;
           color: var(--primary-text-color) !important;
           }
 
@@ -118,26 +113,6 @@ mobile_shades_module:
           text-align: left !important;
           color: var(--primary-text-color) !important;
             }
-
-        /* Shade rows are arrow-driven (button_type: state), so no range control
-           should render. These rules only matter as a fallback - they keep any
-           stray slider fill the same grey as the card so the background can
-           never appear to change with state. */
-        .bubble-range-fill {
-          background: var(--background-color-2) !important;
-          border-radius: 15px !important;
-          opacity: 1 !important;
-          }
-
-        .bubble-range-value {
-          font-size: 0px !important;
-          }
-
-        .bubble-range-slider {
-          background: var(--background-color-2) !important;
-          border-radius: 15px !important;
-          opacity: 1 !important;
-          }
 
         .bubble-icon {
           opacity: 1 !important;
