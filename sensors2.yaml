@@ -62,7 +62,11 @@
     - name: "Notification Alert Counter"
       unique_id: notification_alert_counter
       state: >
-        {# ─── 1) Boolean rules (each evaluates to True/False) ─── #}
+        {# ─── 1) Boolean rules (each evaluates to True/False) ───
+           The dryer-vent rule is the same 12-month line the Notification
+           Center rules use, so the badge counts it once across both the
+           info and critical windows. (Comments cannot sit inside the
+           {% set %} list itself — Jinja rejects them there.) #}
         {% set rules = [
           is_state('binary_sensor.bayberry_grid_status', 'off'),
           is_state('binary_sensor.bayberry_storm_watch_active', 'on'),
@@ -78,8 +82,6 @@
           (states('sensor.nws_alerts_alerts') not in ['unknown','unavailable'] and states('sensor.nws_alerts_alerts')|int(0) > 0),
           states('sensor.front_load_washer_tub_clean_counter')|int(0) > 30,
           states('sensor.months_since_last_hot_water_flush')|float(0) > 5.9,
-          {# dryer vent: same 12-month line the Notification Center rules use, so
-             the badge counts it once across both the info and critical windows #}
           (state_attr('input_datetime.dryer_vent_last_cleaned','timestamp') is not none
             and (now().timestamp()
                  - state_attr('input_datetime.dryer_vent_last_cleaned','timestamp')|float(0))

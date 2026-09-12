@@ -186,7 +186,7 @@ cards:
             - type: custom:bubble-card
               card_type: separator
               name: Vacuum
-              icon: mdi:menu-open
+              icon: mdi:robot-vacuum
               rows: 0.75
               modules:
                 - mobile_separator
@@ -203,30 +203,24 @@ cards:
                   show_attribute: false
                   state_background: false
                   show_icon: false
-              styles: |
-                .bubble-name {
-                  font-size: 16px !important;
-                  }
               modules:
                 - mobile_settings_module
+            # Map switching stays here (not inside the clean action): the robot
+            # reloads the map when this changes, which takes ~40s.
             - type: custom:bubble-card
-              name: Suction Level
-              icon: mdi:fan
+              name: Map
+              icon: mdi:floor-plan
               card_type: button
               card_layout: large
               button_type: state
-              entity: input_select.vacuum_suction_mode
+              entity: select.roborock_s8_selected_map
               show_state: false
               sub_button:
-                - entity: input_select.vacuum_suction_mode
+                - entity: select.roborock_s8_selected_map
                   show_background: true
                   show_attribute: false
                   show_state: true
-                  show_icon: false                   
-              styles: |
-                .bubble-name {
-                  font-size: 16px !important;
-                  }
+                  show_icon: false
               modules:
                 - mobile_settings_module
             - type: custom:bubble-card
@@ -242,11 +236,7 @@ cards:
                   show_background: true
                   show_attribute: false
                   show_state: true
-                  show_icon: false                   
-              styles: |
-                .bubble-name {
-                  font-size: 16px !important;
-                  }
+                  show_icon: false
               modules:
                 - mobile_settings_module
             - type: custom:bubble-card
@@ -262,120 +252,187 @@ cards:
                   show_background: true
                   show_attribute: false
                   show_state: true
-                  show_icon: false                   
-              styles: |
-                .bubble-name {
-                  font-size: 16px !important;
-                  }
-              modules:
-                - mobile_settings_module
-            - type: custom:bubble-card
-              card_type: button
-              card_layout: large
-              button_type: state
-              entity: script.1750692869441
-              show_state: false
-              icon: mdi:play
-              tap_action:
-                action: perform-action
-                perform_action: script.1750692869441
-                target: {}
-              button_action:
-                tap_action:
-                  action: perform-action
-                  perform_action: script.1750692869441
-                  target: {}
-              styles: |
-                .bubble-name {
-                  font-size: 16px !important;
-                  }
+                  show_icon: false
               modules:
                 - mobile_settings_module
             - type: custom:bubble-card
               card_type: separator
-              name: Basement
-              icon: mdi:menu-open
+              name: Rooms
+              icon: mdi:vector-square
               rows: 0.75
               modules:
                 - mobile_separator
-            - type: entities
-              entities:
-                - entity: input_boolean.vacuum_mudroom
-                  name: Mudroom
-                - entity: input_boolean.vacuum_basement_bathroom
-                  name: Bathroom
-                - entity: input_boolean.vacuum_gym
-                  name: Gym
-                - entity: input_boolean.vacuum_media_room
-                  name: Media Room
-                - entity: input_boolean.vacuum_basement_hallway
-                  name: Hallway
-              state_color: true
-              card_mod:
-                style: |
-                  ha-card {
-                    font-size: 16px;
-                    font-weight: bold;
-                    background: var(--background-color-2);
-                    border-radius: 15px;
+            # One map card per Roborock map (custom:xiaomi-vacuum-map-card, HACS).
+            # Tap rooms to select them, then the card's own play button sends
+            # app_segment_clean with the selected segment ids. Suction is set
+            # from the card's fan-speed tile. Segment ids come from the old
+            # clean_* scripts; ids marked TODO and the label x/y positions are
+            # filled in after `roborock.get_maps` / the card editor's point picker.
+            # Verify the map option names and image entity ids against
+            # select.roborock_s8_selected_map and the Roborock device page.
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: select.roborock_s8_selected_map
+                  state: Basement
+              card:
+                type: custom:xiaomi-vacuum-map-card
+                entity: vacuum.roborock_s8
+                vacuum_platform: roborock
+                title: Basement
+                map_source:
+                  camera: image.roborock_s8_basement
+                calibration_source:
+                  camera: true
+                map_locked: true
+                two_finger_pan: false
+                map_modes:
+                  - template: vacuum_clean_segment
+                    predefined_selections:
+                  - id: 16
+                    label:
+                      text: Mudroom
+                      x: 120
+                      y: 120
+                  - id: 20
+                    label:
+                      text: Bathroom
+                      x: 340
+                      y: 120
+                  - id: 17
+                    label:
+                      text: Media Room
+                      x: 560
+                      y: 120
+                  - id: 21
+                    label:
+                      text: Gym
+                      x: 120
+                      y: 240
+                  - id: 18
+                    label:
+                      text: Hallway
+                      x: 340
+                      y: 240
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: var(--background-color-2) !important;
+                      border-radius: 15px !important;
+                      margin: 2px 5px !important;
+                      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
                     }
-            - type: custom:bubble-card
-              card_type: separator
-              name: First Floor
-              icon: mdi:menu-open
-              rows: 0.75
-              modules:
-                - mobile_separator
-            - type: entities
-              entities:
-                - entity: input_boolean.vacuum_kitchen
-                  name: Kitchen
-                - entity: input_boolean.vacuum_living_room
-                  name: Living Room
-                - entity: input_boolean.vacuum_first_floor_bathroom
-                  name: Bathroom
-                - entity: input_boolean.vacuum_dining_room
-                  name: Dining Room
-                - entity: input_boolean.vacuum_entry
-                  name: Entry
-              state_color: true
-              card_mod:
-                style: |
-                  ha-card {
-                    font-size: 16px;
-                    font-weight: bold;
-                    background: var(--background-color-2);
-                    border-radius: 15px;
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: select.roborock_s8_selected_map
+                  state: First Floor
+              card:
+                type: custom:xiaomi-vacuum-map-card
+                entity: vacuum.roborock_s8
+                vacuum_platform: roborock
+                title: First Floor
+                map_source:
+                  camera: image.roborock_s8_first_floor
+                calibration_source:
+                  camera: true
+                map_locked: true
+                two_finger_pan: false
+                map_modes:
+                  - template: vacuum_clean_segment
+                    predefined_selections:
+                  - id: 20
+                    label:
+                      text: Kitchen
+                      x: 120
+                      y: 120
+                  - id: TODO
+                    label:
+                      text: Living Room
+                      x: 340
+                      y: 120
+                  - id: TODO
+                    label:
+                      text: Dining Room
+                      x: 560
+                      y: 120
+                  - id: TODO
+                    label:
+                      text: Bathroom
+                      x: 120
+                      y: 240
+                  - id: TODO
+                    label:
+                      text: Entry
+                      x: 340
+                      y: 240
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: var(--background-color-2) !important;
+                      border-radius: 15px !important;
+                      margin: 2px 5px !important;
+                      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
                     }
-            - type: custom:bubble-card
-              card_type: separator
-              name: Second Floor
-              icon: mdi:menu-open
-              rows: 0.75
-              modules:
-                - mobile_separator
-            - type: entities
-              entities:
-                - entity: input_boolean.vacuum_second_floor_hallway
-                  name: Hallway
-                - entity: input_boolean.vacuum_guest_bathroom
-                  name: Guest Bathroom
-                - entity: input_boolean.vacuum_office
-                  name: Office
-                - entity: input_boolean.vacuum_front_guest_bedroom
-                  name: Front Guest Bedroom
-                - entity: input_boolean.vacuum_back_guest_bedroom
-                  name: Back Guest Bedroom
-                - entity: input_boolean.vacuum_primary_bedroom
-                  name: Primary Bedroom
-                - entity: input_boolean.vacuum_primary_bathroom
-                  name: Primary Bathroom
-              state_color: true
-              card_mod:
-                style: |
-                  ha-card {
-                    font-size: 16px;
-                    font-weight: bold;
-                    background: var(--background-color-2);
-                    border-radius: 15px;
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: select.roborock_s8_selected_map
+                  state: Second Floor
+              card:
+                type: custom:xiaomi-vacuum-map-card
+                entity: vacuum.roborock_s8
+                vacuum_platform: roborock
+                title: Second Floor
+                map_source:
+                  camera: image.roborock_s8_second_floor
+                calibration_source:
+                  camera: true
+                map_locked: true
+                two_finger_pan: false
+                map_modes:
+                  - template: vacuum_clean_segment
+                    predefined_selections:
+                  - id: 16
+                    label:
+                      text: Primary Bedroom
+                      x: 120
+                      y: 120
+                  - id: 17
+                    label:
+                      text: Primary Bathroom
+                      x: 340
+                      y: 120
+                  - id: TODO
+                    label:
+                      text: Hallway
+                      x: 560
+                      y: 120
+                  - id: TODO
+                    label:
+                      text: Guest Bathroom
+                      x: 120
+                      y: 240
+                  - id: TODO
+                    label:
+                      text: Office
+                      x: 340
+                      y: 240
+                  - id: TODO
+                    label:
+                      text: Front Guest Bedroom
+                      x: 560
+                      y: 240
+                  - id: TODO
+                    label:
+                      text: Back Guest Bedroom
+                      x: 120
+                      y: 360
+                card_mod:
+                  style: |
+                    ha-card {
+                      background: var(--background-color-2) !important;
+                      border-radius: 15px !important;
+                      margin: 2px 5px !important;
+                      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
                     }
