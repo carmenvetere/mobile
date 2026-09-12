@@ -199,13 +199,13 @@
         action: toggle
     - type: custom:bubble-card
       card_type: button
-      entity: switch.driveway_zone_2_2
+      entity: switch.landscape_driveway_and_pool_path_lights
       name: Driveway Path
       icon: mdi:lamp
       button_type: switch
       sub_button:
         main:
-          - entity: switch.driveway_zone_2_2
+          - entity: switch.landscape_driveway_and_pool_path_lights
             show_state: true
             show_icon: false
             state_background: false
@@ -225,13 +225,13 @@
         action: toggle
     - type: custom:bubble-card
       card_type: button
-      entity: switch.driveway_zone_1_2
+      entity: switch.driveway_landscape_spotlights
       name: Driveway Tree Spotlights
       icon: mdi:light-flood-up
       button_type: switch
       sub_button:
         main:
-          - entity: switch.driveway_zone_1_2
+          - entity: switch.driveway_landscape_spotlights
             show_state: true
             show_icon: false
             state_background: false
@@ -251,13 +251,13 @@
         action: toggle
     - type: custom:bubble-card
       card_type: button
-      entity: switch.driveway_zone_3_2
+      entity: switch.landscape_firepit_path_lights
       name: Firepit Path
       icon: mdi:lamp
       button_type: switch
       sub_button:
         main:
-          - entity: switch.driveway_zone_3_2
+          - entity: switch.landscape_firepit_path_lights
             show_state: true
             show_icon: false
             state_background: false
