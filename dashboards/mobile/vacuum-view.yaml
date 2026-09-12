@@ -1,6 +1,6 @@
 title: Vacuum
 icon: mdi:robot-vacuum
-theme: Bubble
+theme: Dune Mist
 path: vacuum
 type: custom:grid-layout
 cards:
@@ -37,21 +37,54 @@ cards:
       header:
         card:
           type: custom:button-card
+          entity: vacuum.roborock_s8
+          icon: mdi:robot-vacuum
+          name: Vacuum
           show_state: false
-          show_name: false
-          show_icon: false
+          show_label: true
+          tap_action:
+            action: none
+          label: |
+            [[[
+              var v = states['vacuum.roborock_s8'];
+              var b = states['sensor.roborock_s8_battery'];
+              var st = (v && v.state !== 'unknown' && v.state !== 'unavailable')
+                ? v.state.charAt(0).toUpperCase() + v.state.slice(1) : 'Unavailable';
+              var bat = (b && b.state !== 'unknown' && b.state !== 'unavailable')
+                ? ' · ' + Math.round(b.state) + '%' : '';
+              return st + bat;
+            ]]]
           styles:
             card:
-              - background-color: transparent
-              - padding-bottom: 5px
-              - padding-top: 0px
+              - background: transparent !important
+              - --ha-card-background: transparent
+              - box-shadow: none
+              - transition: none
+              - padding: 4px 2px 6px
             grid:
-              - grid-template-areas: |
-                  "back name gap menu"
-              - grid-template-columns: 24px 150px 1fr 40px
-              - grid-template-rows: 60px
-              - column-gap: 0px
-            main:
+              - grid-template-areas: '"back i n menu" "back i l menu"'
+              - grid-template-columns: 24px 40px 1fr 40px
+              - grid-template-rows: auto auto
+              - align-items: center
+              - column-gap: 8px
+            img_cell:
+              - grid-area: i
+              - width: 40px
+              - height: 40px
+            icon:
+              - width: 24px
+              - color: var(--primary-text-color)
+            name:
+              - grid-area: n
+              - justify-self: start
+              - font-size: 22px
+              - font-weight: 700
+              - color: var(--primary-text-color)
+            label:
+              - grid-area: l
+              - justify-self: start
+              - font-size: 14px
+              - color: var(--secondary-text-color)
             custom_fields:
               back:
                 - grid-area: back
@@ -67,28 +100,6 @@ cards:
               card: !include /config/dashboards/modules/mobile-header-back.yaml
             menu:
               card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
-            name:
-              card:
-                type: custom:button-card
-                show_state: false
-                show_name: true
-                show_icon: true
-                show_label: false
-                layout: icon_name
-                icon: mdi:robot-vacuum
-                name: Vacuum
-                size: 60%
-                icon_color: var(--primary-text-color)
-                styles: 
-                  name: 
-                    - font-size: 22px
-                    - font-weight: bold
-                  card:
-                    - align-items: start
-                    - justify-content: flex-start 
-                    - text-align: left
-                    - padding-left: 8px
-                    - background-color: transparent
       chips:
         card:
           type: custom:mushroom-chips-card
@@ -144,7 +155,7 @@ cards:
                 style: |
                   :host {
                     zoom: 1.25 !important;
-                    --chip-background: var(--ha-card-background-2);
+                    --chip-background: var(--background-color-2);
                   }
             - type: entity
               entity: sensor.roborock_s8_battery
@@ -155,7 +166,7 @@ cards:
               card_mod:
                 style: |
                   ha-card { zoom: 1.25 !important;
-                  --chip-background: var(--ha-card-background-2);
+                  --chip-background: var(--background-color-2);
                   }                     
             - type: entity
               entity: sensor.roborock_s8_cleaning_progress
@@ -166,7 +177,7 @@ cards:
               card_mod:
                 style: |
                   ha-card { zoom: 1.25 !important; 
-                  --chip-background: var(--ha-card-background-2);
+                  --chip-background: var(--background-color-2);
                   }
       vacuum:
         card:
@@ -196,8 +207,8 @@ cards:
                 .bubble-name {
                   font-size: 16px !important;
                   }
-              Modules:
-                - Mobile Module Theme
+              modules:
+                - mobile_settings_module
             - type: custom:bubble-card
               name: Suction Level
               icon: mdi:fan
@@ -216,8 +227,8 @@ cards:
                 .bubble-name {
                   font-size: 16px !important;
                   }
-              Modules:
-                - Mobile Module Theme
+              modules:
+                - mobile_settings_module
             - type: custom:bubble-card
               name: Mop Intensity
               icon: mdi:water
@@ -236,8 +247,8 @@ cards:
                 .bubble-name {
                   font-size: 16px !important;
                   }
-              Modules:
-                - Mobile Module Theme
+              modules:
+                - mobile_settings_module
             - type: custom:bubble-card
               name: Mop Mode
               icon: mdi:heating-coil
@@ -256,14 +267,12 @@ cards:
                 .bubble-name {
                   font-size: 16px !important;
                   }
-              Modules:
-                - Mobile Module Theme
+              modules:
+                - mobile_settings_module
             - type: custom:bubble-card
               card_type: button
               card_layout: large
               button_type: state
-              modules:
-                - default
               entity: script.1750692869441
               show_state: false
               icon: mdi:play
@@ -280,8 +289,8 @@ cards:
                 .bubble-name {
                   font-size: 16px !important;
                   }
-              Modules:
-                - Mobile Module Theme
+              modules:
+                - mobile_settings_module
             - type: custom:bubble-card
               card_type: separator
               name: Basement
@@ -307,8 +316,8 @@ cards:
                   ha-card {
                     font-size: 16px;
                     font-weight: bold;
-                    background: var(--background-color-2)
-                    border-radius: 10px;
+                    background: var(--background-color-2);
+                    border-radius: 15px;
                     }
             - type: custom:bubble-card
               card_type: separator
@@ -335,8 +344,8 @@ cards:
                   ha-card {
                     font-size: 16px;
                     font-weight: bold;
-                    background: var(--background-color-2)
-                    border-radius: 10px;
+                    background: var(--background-color-2);
+                    border-radius: 15px;
                     }
             - type: custom:bubble-card
               card_type: separator
@@ -367,6 +376,6 @@ cards:
                   ha-card {
                     font-size: 16px;
                     font-weight: bold;
-                    background: var(--background-color-2)
-                    border-radius: 10px;
+                    background: var(--background-color-2);
+                    border-radius: 15px;
                     }

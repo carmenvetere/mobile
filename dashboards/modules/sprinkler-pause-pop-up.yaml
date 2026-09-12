@@ -28,10 +28,10 @@ styles: |
     to   { transform: translateY(0);    opacity: 1; }
   }
   .bubble-pop-up {
-    --bubble-pop-up-background-color: #3a3e44 !important;
-    --bubble-pop-up-main-background-color: #3a3e44 !important;
-    --bubble-pop-up-border-radius: 22px 22px 0 0 !important;
-    --bubble-pop-up-content-border-radius: 22px 22px 0 0 !important;
+    --bubble-pop-up-background-color: var(--secondary-background-color) !important;
+    --bubble-pop-up-main-background-color: var(--secondary-background-color) !important;
+    --bubble-pop-up-border-radius: 15px 15px 0 0 !important;
+    --bubble-pop-up-content-border-radius: 15px 15px 0 0 !important;
     --mdc-dialog-scrim-color: rgba(0,0,0,0.6) !important;
     box-shadow: 0 -16px 44px rgba(0,0,0,0.55) !important;
     animation: sprinkler-sheet-up 0.25s ease-out !important;
@@ -71,9 +71,9 @@ cards:
     styles:
       card:
         - padding: 18px
-        - border-radius: 18px
-        - background: rgba(142,177,191,.10)
-        - border: 1px solid rgba(142,177,191,.3)
+        - border-radius: 15px
+        - background: color-mix(in srgb, var(--slate-color) 10%, transparent)
+        - border: 1px solid color-mix(in srgb, var(--slate-color) 30%, transparent)
         - box-shadow: none
         - transition: none
         - margin-bottom: 14px
@@ -99,12 +99,12 @@ cards:
           if (paused && t.attributes.finishes_at) {
             const mins = Math.max(0, Math.ceil((new Date(t.attributes.finishes_at) - new Date()) / 60000));
             remain = `<div style="text-align:right;flex:none;">
-              <div style="font:900 24px Roboto;color:#ffffff;font-variant-numeric:tabular-nums;">${mins} min</div>
+              <div style="font:900 24px Roboto;color:var(--primary-text-color);font-variant-numeric:tabular-nums;">${mins} min</div>
               <div style="font:500 12px Roboto;color:var(--secondary-text-color);">left</div>
             </div>`;
           }
           return `<div style="display:flex;align-items:center;gap:12px;width:100%;">
-            <div style="width:44px;height:44px;border-radius:13px;background:rgba(142,177,191,.2);display:flex;align-items:center;justify-content:center;flex:none;">
+            <div style="width:44px;height:44px;border-radius:11px;background:var(--slate-alpha-18);display:flex;align-items:center;justify-content:center;flex:none;">
               <ha-icon icon="mdi:sprinkler-variant" style="color:var(--slate-color);--mdc-icon-size:24px;"></ha-icon>
             </div>
             <div style="flex:1;min-width:0;text-align:left;">
@@ -234,8 +234,8 @@ cards:
       card:
         - height: 52px
         - border-radius: 15px
-        - background: rgba(224,105,91,.14)
-        - border: 1px solid rgba(224,105,91,.4)
+        - background: color-mix(in srgb, var(--error-color) 14%, transparent)
+        - border: 1px solid color-mix(in srgb, var(--error-color) 40%, transparent)
         - box-shadow: none
         - transition: none
         - margin-top: 10px
@@ -268,7 +268,7 @@ cards:
         - margin-top: 14px
         - padding: 0
       name:
-        - font-size: 12px
+        - font-size: 14px
         - font-weight: 500
-        - color: '#9aa0a8'
+        - color: var(--secondary-text-color)
         - justify-self: center

@@ -177,10 +177,10 @@ cards:
                           var a = e.attributes || {};
                           if (e.state === 'armed_away') return 'var(--gold-color)';
                           if ((e.state === 'arming' || e.state === 'pending') &&
-                              (a.arm_mode === 'armed_away' || a.next_state === 'armed_away')) return 'rgba(226,193,104,0.45)';
+                              (a.arm_mode === 'armed_away' || a.next_state === 'armed_away')) return 'var(--gold-alpha-45)';
                           return 'transparent';
                         ]]]
-                    - border-radius: 12px
+                    - border-radius: 15px
                     - box-shadow: none
                     - transition: none
                     - padding: 13px 0
@@ -211,10 +211,10 @@ cards:
                           var a = e.attributes || {};
                           if (e.state === 'armed_home') return 'var(--gold-color)';
                           if ((e.state === 'arming' || e.state === 'pending') &&
-                              (a.arm_mode === 'armed_home' || a.next_state === 'armed_home')) return 'rgba(226,193,104,0.45)';
+                              (a.arm_mode === 'armed_home' || a.next_state === 'armed_home')) return 'var(--gold-alpha-45)';
                           return 'transparent';
                         ]]]
-                    - border-radius: 12px
+                    - border-radius: 15px
                     - box-shadow: none
                     - transition: none
                     - padding: 13px 0
@@ -244,7 +244,7 @@ cards:
                           var e = states['alarm_control_panel.alarmo'] || {};
                           return e.state === 'disarmed' ? 'var(--sage-color)' : 'transparent';
                         ]]]
-                    - border-radius: 12px
+                    - border-radius: 15px
                     - box-shadow: none
                     - transition: none
                     - padding: 13px 0
@@ -288,7 +288,7 @@ cards:
                 card_mod: &cam_style
                   style: |
                     ha-card {
-                      border-radius: 16px; overflow: hidden;
+                      border-radius: 15px; overflow: hidden;
                       background: transparent !important;
                       --ha-card-background: transparent;
                       box-shadow: none !important;
@@ -296,8 +296,8 @@ cards:
                     ha-card::before {
                       content: "● LIVE";
                       position: absolute; top: 8px; left: 8px; z-index: 2;
-                      font-size: 9px; font-weight: 700; color: #fff;
-                      background: rgba(224,105,91,0.85);
+                      font-size: 14px; font-weight: 700; color: var(--primary-text-color);
+                      background: var(--error-alpha-85);
                       padding: 2px 7px; border-radius: 999px; letter-spacing: 0.04em;
                     }
               - type: picture-entity
@@ -359,7 +359,7 @@ cards:
               card_mod:
                 style: |
                   ha-card {
-                    border-radius: 5px;
+                    border-radius: 15px;
                     padding: 5px;
                     text-align: left;
                   }

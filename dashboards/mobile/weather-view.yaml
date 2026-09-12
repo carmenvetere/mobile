@@ -202,7 +202,7 @@ cards:
                   ha-card {
                     background: var(--card-background-color) !important;
                     --ha-card-background: var(--card-background-color);
-                    border-radius: 18px !important;
+                    border-radius: 15px !important;
                     box-shadow: none !important;
                     padding: 6px 10px 10px;
                   }
@@ -235,7 +235,7 @@ cards:
                     style: |
                       ha-card {
                         background: var(--ha-card-background);
-                        border-radius: 18px;
+                        border-radius: 15px;
                       }
                 - graph: line
                   type: sensor
@@ -246,7 +246,7 @@ cards:
                     style: |
                       ha-card {
                         background: var(--ha-card-background);
-                        border-radius: 18px;
+                        border-radius: 15px;
                       }
                 - graph: line
                   type: sensor
@@ -257,7 +257,7 @@ cards:
                     style: |
                       ha-card {
                         background: var(--ha-card-background);
-                        border-radius: 18px;
+                        border-radius: 15px;
                       }
                 - graph: line
                   type: sensor
@@ -268,7 +268,7 @@ cards:
                     style: |
                       ha-card {
                         background: var(--ha-card-background);
-                        border-radius: 18px;
+                        border-radius: 15px;
                       }
                 - type: custom:rain-gauge-card
                   entity: sensor.daily_rain
@@ -293,7 +293,7 @@ cards:
                       .: |
                         ha-card {
                           background: var(--ha-card-background);
-                          border-radius: 18px;
+                          border-radius: 15px;
                           height: 270px;
                           box-sizing: border-box;
                         }
@@ -314,5 +314,5 @@ cards:
                     style: |
                       ha-card {
                         background: var(--ha-card-background);
-                        border-radius: 18px;
+                        border-radius: 15px;
                       }

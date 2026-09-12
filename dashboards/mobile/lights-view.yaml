@@ -49,7 +49,7 @@ cards:
               if (!e || e.state === 'unknown' || e.state === 'unavailable') return '';
               return e.state === 'All Off' ? 'All Off' : e.state + ' on';
             ]]]
-          label: "36 fixtures ·"
+          label: "Whole house ·"
           styles:
             card:
               - background: transparent !important
@@ -80,7 +80,7 @@ cards:
               - justify-self: start
               - font-size: 14px
               - font-weight: 700
-              - color: var(--gold-color)
+              - color: var(--slate-bright)
             label:
               - grid-area: l
               - justify-self: start

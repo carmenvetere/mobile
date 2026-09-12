@@ -30,12 +30,12 @@ styles: |
     to   { transform: translateY(0);     opacity: 1; }
   }
   .bubble-pop-up {
-    --bubble-pop-up-background-color: #3a3e44 !important;
-    --bubble-pop-up-main-background-color: #3a3e44 !important;
+    --bubble-pop-up-background-color: var(--secondary-background-color) !important;
+    --bubble-pop-up-main-background-color: var(--secondary-background-color) !important;
     /* Top drawer: rounded top corners only; the sheet meets the bottom
        of the screen with square corners. */
-    --bubble-pop-up-border-radius: 22px 22px 0 0 !important;
-    --bubble-pop-up-content-border-radius: 22px 22px 0 0 !important;
+    --bubble-pop-up-border-radius: 15px 15px 0 0 !important;
+    --bubble-pop-up-content-border-radius: 15px 15px 0 0 !important;
     box-shadow: 0 16px 44px rgba(0,0,0,0.55) !important;
     animation: nav-sheet-drop 0.25s ease-out !important;
   }

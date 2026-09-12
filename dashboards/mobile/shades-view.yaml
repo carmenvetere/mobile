@@ -128,8 +128,8 @@ cards:
                       - cover.office_shades
                 styles:
                   card:
-                    - background: var(--card-background-color) !important
-                    - "--ha-card-background": var(--card-background-color)
+                    - background: var(--background-color-2) !important
+                    - "--ha-card-background": var(--background-color-2)
                     - box-shadow: none
                     - transition: none
                     - height: 40px

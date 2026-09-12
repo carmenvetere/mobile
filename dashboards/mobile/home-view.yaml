@@ -69,7 +69,8 @@ cards:
                             return (c && parseInt(c.state) > 0) ? 'flex' : 'none'; ]]]
                     - background: |
                         [[[ var p = states['sensor.notification_center_priority'];
-                            var c = (p && p.attributes.color) || '#7295B2';
+                            var c = p && p.attributes.color;
+                            if (!c) return 'var(--slate-alpha-18)';
                             var h = c.replace('#','');
                             var r = parseInt(h.substr(0,2),16), g = parseInt(h.substr(2,2),16), b = parseInt(h.substr(4,2),16);
                             return 'rgba(' + r + ',' + g + ',' + b + ',0.18)'; ]]]
@@ -88,13 +89,13 @@ cards:
                     - height: 30px
                     - color: |
                         [[[ var p = states['sensor.notification_center_priority'];
-                            return (p && p.attributes.color) || '#7295B2'; ]]]
+                            return (p && p.attributes.color) || 'var(--slate-color)'; ]]]
                   name:
                     - font-size: 14px
                     - font-weight: 700
                     - color: |
                         [[[ var p = states['sensor.notification_center_priority'];
-                            return (p && p.attributes.color) || '#7295B2'; ]]]
+                            return (p && p.attributes.color) || 'var(--slate-color)'; ]]]
             # --- Alarm state -> Security view ---
             alarm:
               card:
@@ -122,7 +123,7 @@ cards:
                     - color: |
                         [[[ var a = states['alarm_control_panel.alarmo'];
                             var s = a ? a.state : 'disarmed';
-                            return s === 'disarmed' ? '#9aa0a8'
+                            return s === 'disarmed' ? 'var(--secondary-text-color)'
                               : (s === 'triggered' ? 'var(--error-color)' : 'var(--amber-color)'); ]]]
             # --- Overnight Guests -> Settings (hidden when off) ---
             guests:
@@ -147,7 +148,7 @@ cards:
                   icon:
                     - width: 26px
                     - height: 26px
-                    - color: '#7295B2'
+                    - color: var(--slate-color)
             # --- Dinner Party -> Settings (hidden when off) ---
             dinner:
               card:
@@ -171,7 +172,7 @@ cards:
                   icon:
                     - width: 26px
                     - height: 26px
-                    - color: 'var(--amber-color)'
+                    - color: var(--amber-color)
             # --- Sprinklers watering -> pause pop-up (hidden when idle) ---
             # Also shown while timer.sprinkler_pause is active: pausing stops the
             # zones, so a zones-only test would hide the chip for the whole pause

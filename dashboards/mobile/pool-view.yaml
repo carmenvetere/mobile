@@ -121,7 +121,7 @@ cards:
             styles:
               card:
               - padding: 14px
-              - border-radius: 16px
+              - border-radius: 15px
               - background: var(--background-color-2) !important
               - --ha-card-background: var(--background-color-2)
               - box-shadow: none
@@ -135,7 +135,7 @@ cards:
               - width: 40px
               - height: 40px
               - border-radius: 11px
-              - background-color: rgba(142,177,191,0.18)
+              - background-color: var(--slate-alpha-18)
               icon:
               - width: 20px
               - color: var(--slate-bright)
@@ -162,7 +162,7 @@ cards:
             styles:
               card:
               - padding: 14px
-              - border-radius: 16px
+              - border-radius: 15px
               - background: var(--background-color-2) !important
               - --ha-card-background: var(--background-color-2)
               - box-shadow: none
@@ -176,7 +176,7 @@ cards:
               - width: 40px
               - height: 40px
               - border-radius: 11px
-              - background-color: rgba(139,166,128,0.18)
+              - background-color: var(--sage-alpha-18)
               icon:
               - width: 20px
               - color: var(--sage-color)
