@@ -234,6 +234,17 @@ script:
           expect_no_call("cover.stop_cover", "Media Room (no entity yet) sends nothing");
 
           begin("energy");
+          // mock: solar 4.2, home 1.8, battery charging 2.4, grid 0 → amber solar→home + solar→battery, grid rails idle
+          expect_visible(id(en_line_solar_home), true, "solar→home flow line shown");
+          expect_visible(id(en_line_solar_batt), true, "solar→battery flow line shown");
+          expect_visible(id(en_line_grid_home), false, "grid→home stays idle");
+          expect_visible(id(en_line_batt_home), false, "battery→home stays idle while charging");
+          expect_visible(id(en_dot_2), true, "solar→home dots animate");
+          expect_visible(id(en_dot_10), false, "grid→home dots hidden");
+          id(s_solar).publish_state(0.3); id(s_grid).publish_state(1.5); id(s_battery).publish_state(0);
+          expect_visible(id(en_line_grid_home), true, "grid import → grid→home flow line shown");
+          expect_visible(id(en_line_solar_batt), false, "no surplus → solar→battery hidden");
+          id(s_solar).publish_state(4.2); id(s_grid).publish_state(0); id(s_battery).publish_state(-2.4);
           clear_calls(); id(step_reserve).execute(1);
           expect_call("number.set_value", {{"entity_id", "number.bayberry_backup_reserve"}, {"value", "25"}}, "reserve + steps 20% to 25%");
           clear_calls(); id(set_reserve).execute(2);

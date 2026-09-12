@@ -12,7 +12,9 @@ widgets:
             y: 40
             text: "Energy"
             text_font: b300_34
-        # power-flow diagram 656×430 at (32,104)
+        # power-flow diagram 656×430 at (32,104). Draw order matters: idle rails,
+        # then the six source-coloured flow lines (shown by render_energy), then the
+        # travelling dots, and the four node circles last so lines end under them.
         - obj:
             id: energy_flow
             x: 32
@@ -21,13 +23,250 @@ widgets:
             height: 444
             clickable: false
             widgets:
-              # connecting bars (drawn first so the circles sit on top); dimmed when idle
-              - obj: { id: en_bar_solar, x: 325, y: 122, width: 6, height: 80, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
-              - obj: { id: en_bar_batt, x: 325, y: 230, width: 6, height: 80, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
-              - obj: { id: en_bar_grid, x: 96, y: 212, width: 204, height: 6, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
-              - obj: { id: en_bar_home, x: 356, y: 212, width: 204, height: 6, bg_color: "${c_slate}", bg_opa: COVER, clickable: false }
-              - obj: { x: 314, y: 201, width: 28, height: 28, radius: 14, border_width: 1, border_color: "${c_hairline}", bg_color: "${c_bg}", bg_opa: COVER, clickable: false }
-              # Solar (top)
+              # idle rails (hairline): solar→battery, solar→home, grid→battery, grid→home
+              - line:
+                  id: en_rail_solar_batt
+                  line_width: 6
+                  line_rounded: true
+                  line_color: ${c_hairline}
+                  clickable: false
+                  points:
+                    - 328, 122
+                    - 328, 308
+              - line:
+                  id: en_rail_solar_home
+                  line_width: 6
+                  line_rounded: true
+                  line_color: ${c_hairline}
+                  clickable: false
+                  points:
+                    - 328, 122
+                    - 328, 133
+                    - 330, 143
+                    - 331, 153
+                    - 334, 161
+                    - 337, 169
+                    - 342, 176
+                    - 346, 182
+                    - 352, 187
+                    - 358, 192
+                    - 365, 197
+                    - 373, 200
+                    - 382, 203
+                    - 391, 206
+                    - 402, 208
+                    - 412, 210
+                    - 424, 212
+                    - 436, 213
+                    - 450, 214
+                    - 463, 214
+                    - 478, 215
+                    - 493, 215
+                    - 510, 215
+                    - 526, 215
+                    - 544, 215
+              - line:
+                  id: en_rail_grid_batt
+                  line_width: 6
+                  line_rounded: true
+                  line_color: ${c_hairline}
+                  clickable: false
+                  points:
+                    - 112, 215
+                    - 130, 215
+                    - 146, 215
+                    - 163, 215
+                    - 178, 215
+                    - 193, 216
+                    - 206, 216
+                    - 220, 217
+                    - 232, 218
+                    - 244, 220
+                    - 254, 222
+                    - 265, 224
+                    - 274, 227
+                    - 283, 230
+                    - 290, 233
+                    - 298, 238
+                    - 304, 243
+                    - 310, 248
+                    - 314, 254
+                    - 319, 261
+                    - 322, 269
+                    - 325, 277
+                    - 326, 287
+                    - 328, 297
+                    - 328, 308
+              - line:
+                  id: en_rail_grid_home
+                  line_width: 6
+                  line_rounded: true
+                  line_color: ${c_hairline}
+                  clickable: false
+                  points:
+                    - 112, 215
+                    - 544, 215
+              # active flows (colour set at runtime by the source: solar amber, grid slate, battery green)
+              - line:
+                  id: en_line_solar_batt
+                  line_width: 6
+                  line_rounded: true
+                  line_color: ${c_amber}
+                  hidden: true
+                  points:
+                    - 328, 122
+                    - 328, 308
+              - line:
+                  id: en_line_solar_home
+                  line_width: 6
+                  line_rounded: true
+                  line_color: ${c_amber}
+                  hidden: true
+                  points:
+                    - 328, 122
+                    - 328, 133
+                    - 330, 143
+                    - 331, 153
+                    - 334, 161
+                    - 337, 169
+                    - 342, 176
+                    - 346, 182
+                    - 352, 187
+                    - 358, 192
+                    - 365, 197
+                    - 373, 200
+                    - 382, 203
+                    - 391, 206
+                    - 402, 208
+                    - 412, 210
+                    - 424, 212
+                    - 436, 213
+                    - 450, 214
+                    - 463, 214
+                    - 478, 215
+                    - 493, 215
+                    - 510, 215
+                    - 526, 215
+                    - 544, 215
+              - line:
+                  id: en_line_batt_home
+                  line_width: 6
+                  line_rounded: true
+                  line_color: ${c_green}
+                  hidden: true
+                  points:
+                    - 328, 308
+                    - 328, 297
+                    - 330, 287
+                    - 331, 277
+                    - 334, 269
+                    - 337, 261
+                    - 342, 254
+                    - 346, 248
+                    - 352, 243
+                    - 358, 238
+                    - 365, 233
+                    - 373, 230
+                    - 382, 227
+                    - 391, 224
+                    - 402, 222
+                    - 412, 220
+                    - 424, 218
+                    - 436, 217
+                    - 450, 216
+                    - 463, 216
+                    - 478, 215
+                    - 493, 215
+                    - 510, 215
+                    - 526, 215
+                    - 544, 215
+              - line:
+                  id: en_line_grid_batt
+                  line_width: 6
+                  line_rounded: true
+                  line_color: ${c_slate}
+                  hidden: true
+                  points:
+                    - 112, 215
+                    - 130, 215
+                    - 146, 215
+                    - 163, 215
+                    - 178, 215
+                    - 193, 216
+                    - 206, 216
+                    - 220, 217
+                    - 232, 218
+                    - 244, 220
+                    - 254, 222
+                    - 265, 224
+                    - 274, 227
+                    - 283, 230
+                    - 290, 233
+                    - 298, 238
+                    - 304, 243
+                    - 310, 248
+                    - 314, 254
+                    - 319, 261
+                    - 322, 269
+                    - 325, 277
+                    - 326, 287
+                    - 328, 297
+                    - 328, 308
+              - line:
+                  id: en_line_solar_grid
+                  line_width: 6
+                  line_rounded: true
+                  line_color: ${c_amber}
+                  hidden: true
+                  points:
+                    - 328, 122
+                    - 328, 133
+                    - 326, 143
+                    - 325, 153
+                    - 322, 161
+                    - 319, 169
+                    - 314, 176
+                    - 310, 182
+                    - 304, 187
+                    - 298, 192
+                    - 291, 197
+                    - 283, 200
+                    - 274, 203
+                    - 265, 206
+                    - 254, 208
+                    - 244, 210
+                    - 232, 212
+                    - 220, 213
+                    - 206, 214
+                    - 193, 214
+                    - 178, 215
+                    - 163, 215
+                    - 146, 215
+                    - 130, 215
+                    - 112, 215
+              - line:
+                  id: en_line_grid_home
+                  line_width: 6
+                  line_rounded: true
+                  line_color: ${c_slate}
+                  hidden: true
+                  points:
+                    - 112, 215
+                    - 544, 215
+              # travelling dots, two per flow, animated from panel_helpers.h (flow::update)
+              - obj: { id: en_dot_0, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              - obj: { id: en_dot_1, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              - obj: { id: en_dot_2, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              - obj: { id: en_dot_3, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              - obj: { id: en_dot_4, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              - obj: { id: en_dot_5, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              - obj: { id: en_dot_6, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              - obj: { id: en_dot_7, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              - obj: { id: en_dot_8, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              - obj: { id: en_dot_9, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              - obj: { id: en_dot_10, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              - obj: { id: en_dot_11, hidden: true, x: 0, y: 0, width: 14, height: 14, radius: 7, bg_color: "${c_slate}", bg_opa: COVER, shadow_width: 10, shadow_opa: 60%, shadow_color: "${c_slate}", clickable: false }
+              # Solar (top) — icon amber
               - label: { x: 0, y: 0, width: 656, text: "Solar", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
               - obj:
                   x: 280
@@ -37,23 +276,23 @@ widgets:
                   bg_opa: COVER
                   clickable: false
                   widgets:
-                    - label: { align: TOP_MID, y: 16, text: "${i_solar_power_variant}", text_font: mdi_30, text_color: "${c_slate}" }
+                    - label: { align: TOP_MID, y: 16, text: "${i_solar_power_variant}", text_font: mdi_30, text_color: "${c_amber}" }
                     - label: { id: en_solar, align: BOTTOM_MID, y: -16, text: "—", text_font: b600_17 }
-              # Grid (left)
+              # Grid (left) — slate; text-4 icon / text-3 value while idle
               - obj:
-                  x: 0
+                  x: 16
                   y: 167
                   styles: st_circle_96
                   bg_color: ${c_bg}
                   bg_opa: COVER
                   clickable: false
                   widgets:
-                    - label: { align: TOP_MID, y: 16, text: "${i_transmission_tower}", text_font: mdi_30, text_color: "${c_slate}" }
+                    - label: { id: en_grid_icon, align: TOP_MID, y: 16, text: "${i_transmission_tower}", text_font: mdi_30, text_color: "${c_slate}" }
                     - label: { id: en_grid, align: BOTTOM_MID, y: -16, text: "—", text_font: b600_17 }
-              - label: { x: 0, y: 270, width: 96, text: "Grid", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
-              # Home (right)
+              - label: { x: 16, y: 270, width: 96, text: "Grid", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
+              # Home (right) — slate
               - obj:
-                  x: 560
+                  x: 544
                   y: 167
                   styles: st_circle_96
                   bg_color: ${c_bg}
@@ -62,17 +301,17 @@ widgets:
                   widgets:
                     - label: { align: TOP_MID, y: 16, text: "${i_home_lightning_bolt}", text_font: mdi_30, text_color: "${c_slate}" }
                     - label: { id: en_home, align: BOTTOM_MID, y: -16, text: "—", text_font: b600_17 }
-              - label: { x: 560, y: 270, width: 96, text: "Home", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
-              # Battery (bottom)
+              - label: { x: 544, y: 270, width: 96, text: "Home", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
+              # Battery (bottom) — icon green
               - obj:
                   x: 280
-                  y: 310
+                  y: 308
                   styles: st_circle_96
                   bg_color: ${c_bg}
                   bg_opa: COVER
                   clickable: false
                   widgets:
-                    - label: { id: en_batt_icon, align: TOP_MID, y: 16, text: "${i_battery_charging_80}", text_font: mdi_30, text_color: "${c_slate}" }
+                    - label: { id: en_batt_icon, align: TOP_MID, y: 16, text: "${i_battery_charging_80}", text_font: mdi_30, text_color: "${c_green}" }
                     - label: { id: en_batt, align: BOTTOM_MID, y: -16, text: "—", text_font: b600_17 }
               - label: { id: en_batt_lbl, x: 0, y: 410, width: 656, text: "Charging", text_align: CENTER, text_font: b400_19, text_color: "${c_text2}" }
         # Powerwall reserve

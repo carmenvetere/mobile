@@ -115,6 +115,7 @@ it as a live control surface, not a mock.
 | Alarm: readiness row | Not-ready sheet with the six sensors (Open amber / Closed slate) |
 | Alarm: entry delay | while Alarmo is `pending` the panel jumps to the Alarm page and the hint counts down "Enter code to disarm · NNs" in amber |
 | Energy: tap the bar | sets `number.bayberry_backup_reserve` in 5 % steps; amber marker moves |
+| Energy: flow diagram | four hairline rails; each active flow (>0.05 kW) is redrawn in its source colour (solar amber, grid slate, battery green) with two dots travelling source→sink, speed ∝ kW (`flow::update` in panel_helpers.h) |
 | Energy: grid outage | the flow diagram is replaced by the Powerwall ring (charge %, ≈ time remaining) and the Home / Solar / From battery columns; the panel jumps there when the grid drops |
 | Scenes: tap a row | `scene.turn_on`; row lights up 1.6 s, then follows `binary_sensor.scene_*` |
 | Scenes: Outdoor | a toggle: lit while `binary_sensor.outdoor_lights_on` is on; tap runs `scene.outdoor_off` then, `scene.outdoor_on` otherwise |
