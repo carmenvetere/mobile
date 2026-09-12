@@ -104,7 +104,7 @@ cards:
           card_mod:
             style: |
               :host { display: block; background: var(--card-background-color);
-                border: 1px solid var(--row-divider-color); border-radius: 15px;
+                border: 1px solid var(--row-divider-color, rgba(255,255,255,0.06)); border-radius: 15px;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
                 overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
           cards:
@@ -139,7 +139,7 @@ cards:
               - entity: switch.bayberry_off_grid_operation
                 name: Go Off Grid
                 icon: mdi:transmission-tower-off
-                on_color: var(--error-alpha-65)
+                on_color: var(--error-alpha-65, rgba(224,105,91,0.65))
                 confirm: Are you sure you want to go off grid?
         - type: custom:bubble-card
           card_type: separator
@@ -152,7 +152,7 @@ cards:
           card_mod:
             style: |
               :host { display: block; background: var(--card-background-color);
-                border: 1px solid var(--row-divider-color); border-radius: 15px;
+                border: 1px solid var(--row-divider-color, rgba(255,255,255,0.06)); border-radius: 15px;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
                 overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
           cards:
@@ -202,7 +202,7 @@ cards:
           card_mod:
             style: |
               :host { display: block; background: var(--card-background-color);
-                border: 1px solid var(--row-divider-color); border-radius: 15px;
+                border: 1px solid var(--row-divider-color, rgba(255,255,255,0.06)); border-radius: 15px;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
                 overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
           cards:
@@ -453,7 +453,7 @@ cards:
     card_mod:
       style: |
         :host { display: block; background: var(--card-background-color);
-          border: 1px solid var(--row-divider-color); border-radius: 15px;
+          border: 1px solid var(--row-divider-color, rgba(255,255,255,0.06)); border-radius: 15px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
           overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
     cards:
@@ -506,7 +506,7 @@ cards:
     card_mod:
       style: |
         :host { display: block; background: var(--card-background-color);
-          border: 1px solid var(--row-divider-color); border-radius: 15px;
+          border: 1px solid var(--row-divider-color, rgba(255,255,255,0.06)); border-radius: 15px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
           overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
     cards:
@@ -623,7 +623,7 @@ cards:
     card_mod:
       style: |
         :host { display: block; background: var(--card-background-color);
-          border: 1px solid var(--row-divider-color); border-radius: 15px;
+          border: 1px solid var(--row-divider-color, rgba(255,255,255,0.06)); border-radius: 15px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
           overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
     cards:
@@ -676,7 +676,7 @@ cards:
     card_mod:
       style: |
         :host { display: block; background: var(--card-background-color);
-          border: 1px solid var(--row-divider-color); border-radius: 15px;
+          border: 1px solid var(--row-divider-color, rgba(255,255,255,0.06)); border-radius: 15px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
           overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
     cards:
@@ -707,7 +707,7 @@ cards:
     card_mod:
       style: |
         :host { display: block; background: var(--card-background-color);
-          border: 1px solid var(--row-divider-color); border-radius: 15px;
+          border: 1px solid var(--row-divider-color, rgba(255,255,255,0.06)); border-radius: 15px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
           overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
     cards:
@@ -871,7 +871,7 @@ cards:
     card_mod:
       style: |
         :host { display: block; background: var(--card-background-color);
-          border: 1px solid var(--row-divider-color); border-radius: 15px;
+          border: 1px solid var(--row-divider-color, rgba(255,255,255,0.06)); border-radius: 15px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
           overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
     cards:
@@ -911,7 +911,7 @@ cards:
     card_mod:
       style: |
         :host { display: block; background: var(--card-background-color);
-          border: 1px solid var(--row-divider-color); border-radius: 15px;
+          border: 1px solid var(--row-divider-color, rgba(255,255,255,0.06)); border-radius: 15px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
           overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
     cards:
@@ -972,7 +972,7 @@ cards:
     card_mod:
       style: |
         :host { display: block; background: var(--card-background-color);
-          border: 1px solid var(--row-divider-color); border-radius: 15px;
+          border: 1px solid var(--row-divider-color, rgba(255,255,255,0.06)); border-radius: 15px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
           overflow: hidden; padding: 0 12px; margin: 2px 2px 12px; }
     cards:

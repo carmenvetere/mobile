@@ -135,7 +135,7 @@ cards:
               - width: 40px
               - height: 40px
               - border-radius: 11px
-              - background-color: var(--slate-alpha-18)
+              - background-color: var(--slate-alpha-18, rgba(142,177,191,0.18))
               icon:
               - width: 20px
               - color: var(--slate-bright)
@@ -176,7 +176,7 @@ cards:
               - width: 40px
               - height: 40px
               - border-radius: 11px
-              - background-color: var(--sage-alpha-18)
+              - background-color: var(--sage-alpha-18, rgba(139,166,128,0.18))
               icon:
               - width: 20px
               - color: var(--sage-color)

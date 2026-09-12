@@ -34,7 +34,7 @@ styles:
   - --ha-card-background: transparent
   - box-shadow: none
   - border-radius: 0
-  - border-top: 1px solid var(--row-divider-color)
+  - border-top: 1px solid var(--row-divider-color, rgba(255,255,255,0.06))
   - padding: 13px 4px
   - transition: none
   - cursor: pointer
@@ -49,7 +49,7 @@ styles:
   - width: 38px
   - height: 38px
   - border-radius: 11px
-  - background-color: var(--slate-alpha-18)
+  - background-color: var(--slate-alpha-18, rgba(142,177,191,0.18))
   icon:
   - width: 20px
   - color: var(--slate-bright)

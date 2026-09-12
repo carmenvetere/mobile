@@ -6,8 +6,8 @@
 # Required vars: entity, name, icon
 # Optional vars:
 #   on_label / off_label  state text (default On / Off)
-#   on_color              switch track colour while on (default var(--slate-alpha-55));
-#                         destructive toggles pass var(--error-alpha-65)
+#   on_color              switch track colour while on (default var(--slate-alpha-55, rgba(142,177,191,0.55)));
+#                         destructive toggles pass var(--error-alpha-65, rgba(224,105,91,0.65))
 #   confirm               confirmation text shown before the toggle fires
 type: custom:button-card
 entity: {{ entity }}
@@ -30,7 +30,7 @@ styles:
   - --ha-card-background: transparent
   - box-shadow: none
   - border-radius: 0
-  - border-top: 1px solid var(--row-divider-color)
+  - border-top: 1px solid var(--row-divider-color, rgba(255,255,255,0.06))
   - padding: 11px 2px
   - transition: none
   - cursor: pointer
@@ -74,9 +74,9 @@ custom_fields:
     [[[
       var on = (states['{{ entity }}'] || {}).state === 'on';
       return '<div style="width:38px;height:22px;border-radius:999px;background:'
-        + (on ? '{{ on_color | default('var(--slate-alpha-55)') }}' : 'var(--switch-unchecked-track-color)')
+        + (on ? '{{ on_color | default('var(--slate-alpha-55, rgba(142,177,191,0.55))') }}' : 'var(--switch-unchecked-track-color)')
         + ';position:relative;transition:background .2s ease;">'
         + '<div style="position:absolute;top:2px;left:' + (on ? '18px' : '2px')
-        + ';width:18px;height:18px;border-radius:50%;background:var(--toggle-knob-color);'
+        + ';width:18px;height:18px;border-radius:50%;background:var(--toggle-knob-color, #ffffff);'
         + 'box-shadow:0 1px 2px rgba(0, 0, 0, 0.25);transition:left .2s ease;"></div></div>';
     ]]]

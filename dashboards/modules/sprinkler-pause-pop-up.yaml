@@ -105,7 +105,7 @@ cards:
             </div>`;
           }
           return `<div style="display:flex;align-items:center;gap:12px;width:100%;">
-            <div style="width:44px;height:44px;border-radius:11px;background:var(--slate-alpha-18);display:flex;align-items:center;justify-content:center;flex:none;">
+            <div style="width:44px;height:44px;border-radius:11px;background:var(--slate-alpha-18, rgba(142,177,191,0.18));display:flex;align-items:center;justify-content:center;flex:none;">
               <ha-icon icon="mdi:sprinkler-variant" style="color:var(--slate-color);--mdc-icon-size:24px;"></ha-icon>
             </div>
             <div style="flex:1;min-width:0;text-align:left;">

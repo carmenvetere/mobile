@@ -70,7 +70,7 @@ cards:
                     - background: |
                         [[[ var p = states['sensor.notification_center_priority'];
                             var c = p && p.attributes.color;
-                            if (!c) return 'var(--slate-alpha-18)';
+                            if (!c) return 'var(--slate-alpha-18, rgba(142,177,191,0.18))';
                             var h = c.replace('#','');
                             var r = parseInt(h.substr(0,2),16), g = parseInt(h.substr(2,2),16), b = parseInt(h.substr(4,2),16);
                             return 'rgba(' + r + ',' + g + ',' + b + ',0.18)'; ]]]
