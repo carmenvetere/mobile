@@ -8,12 +8,9 @@ my:
 frontend:
   themes: !include_dir_merge_named themes
 
-# Harden the HTTP frontend: enable brute-force protection (auto-bans an IP
-# after repeated failed logins). If HA sits behind a reverse proxy, also set
-# use_x_forwarded_for: true and list the proxy under trusted_proxies.
-http:
-  ip_ban_enabled: true
-  login_attempts_threshold: 5
+# HTTP settings (IP ban / login-attempt threshold, reverse-proxy options) were
+# migrated to the UI and the YAML block is ignored (removed in HA 2027.2.0).
+# Manage them under Settings > System > Network.
 
 automation: !include automations.yaml
 script: !include scripts.yaml
