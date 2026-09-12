@@ -1,6 +1,6 @@
 # Mobile Dashboard Design Audit (v2.7)
 
-**Status:** Findings + recommendations, nothing implemented yet · **Branch:** `v2.7` ·
+**Status:** Implemented on `v2.7` (see §11 for what was deliberately left) · **Branch:** `v2.7` ·
 **Scope:** `dashboards/mobile/*`, the `dashboards/modules/*` they include,
 `bubble_card/modules/mobile_*`, `themes/dune-mist.yaml` · **Date:** 2026-09-12
 
@@ -353,3 +353,42 @@ Each step is independently shippable and testable on-device.
 7. **Colour literal sweep.** Replace the §5c literals with tokens; unify the Home header chip colours; pick one header live-label format and state accent.
 8. **Delete orphans** (§8) after confirming the wall panel does not need `notifications.yaml`; remove the four commented-out blocks; fix the PRD conventions (§9).
 9. **Small fonts.** Raise the 13 px Manual sub-buttons and the power-flow 12 px override to 14 px; decide whether the 9 px LIVE badge is a deliberate exception and document it.
+
+---
+
+## 11. Implementation notes (v2.7)
+
+Everything in §10 was applied on the `v2.7` branch. Decisions taken where
+the audit left a choice, and items deliberately not changed:
+
+- **Separators:** the 14px uppercase eyebrow style (Settings, Pool) was
+  retired; every section header is the 20px `mobile_separator`, room-level
+  headers inside expanders are `mobile_separator_small` (16px).
+- **Radius:** theme token 15px; pills/chips 999px; small icon tiles 11px; the
+  nav sheet and sprinkler sheet keep rounded *top* corners at 15px.
+- **Row gap:** all root grids are `row-gap: 0`; Security's alarm control and
+  Weather's alerts expander carry a 5px top margin instead.
+- **Settings slider text** stays dark over the slate fill in every state (the
+  v2.1 test-cycle decision); documented as an exception in the module.
+- **Shade arrows** stay primary-text at rest (they are the row's only control).
+- **Lights individual modules** keep their per-card `ha-card`
+  (`--background-color-2`, blends into the expander) and, on switch rows, the
+  slate-when-on `.bubble-button-background` — those are state tints, not the
+  ladder inconsistency the audit suspected. The files are shared with the
+  wall panel, so they were not restructured.
+- **`entity.state` in `24-hour-power-flow.yaml`** is inside an apexcharts
+  `transform:`, where `entity` is that card's own API; left as is.
+- **`# lovelace_gen` markers** were not added to the views that lack them:
+  weather-view carries HA `{{ }}` templates that lovelace_gen would consume.
+- **`mobile-nav-menu.yaml`** still repeats its active-highlight block per row
+  (jinja-guarded); functional, not visual, so left for a later pass.
+- **Automation ids** `gym_motion_sensor`, `sunset_outdoor_off`,
+  `outdoor_off_at_11pm` are kept with a comment; verify in Developer Tools.
+- **`notifications.yaml`** stays (the ESPHome wall panel includes it); its
+  commented-out Dryer card and the other three large commented blocks were
+  removed.
+- **7-day usage chart** keeps its one literal series colour (`#9498AC`);
+  ApexCharts needs a real colour value there, not a CSS variable.
+- Validation was a full lovelace_gen-style render (jinja + includes + strict
+  duplicate-key YAML) of every view; on-device screenshots are still the
+  final check.

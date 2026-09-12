@@ -365,47 +365,6 @@ cards:
                   }
 
 
-    # - type: custom:expander-card
-    #   expanded: false
-    #   title-card-clickable: true
-    #   title-card:
-    #     type: custom:bubble-card
-    #     card_type: separator
-    #     name: Door Status
-    #     icon: mdi:lock
-    #     rows: 0.75
-    #     styles: |
-    #       .bubble-name {
-    #         font-size: 20px !important;  /* title */
-    #         font-weight: bold !important;
-    #       }
-    #       .bubble-sub-button 
-    #       {
-    #         font-size: 20px !important;
-    #         font-weight: 700 !important;
-    #       }
-    #       .bubble-line {
-    #         background: var(--primary-text-color);
-    #         opacity: 0.1;
-    #       }
-    #       .card-content {
-    #         padding-top: 7px !important;
-    #       }
-    #   cards:
-    #     - type: entities
-    #       card_mod:
-    #         style: |
-    #           ha-card {
-    #             font-size: 16px;
-    #             font-weight: bold;
-    #           }
-    #       entities:
-    #         - entity: binary_sensor.front_door
-    #         - entity: binary_sensor.living_room_french_doors
-    #         - entity: binary_sensor.kitchen_french_doors
-    #         - entity: binary_sensor.mudroom_entry_door
-    #         - entity: binary_sensor.mudroom_garage_door
-    #         - entity: cover.garage_door_garage
 
 
 

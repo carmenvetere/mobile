@@ -16,23 +16,50 @@ off as they land.
 
 ## Conventions (carried forward, non-negotiable)
 
-- Theme **Dune Mist**; view background `var(--primary-background-color)`.
-- Standard view skeleton: `grid-layout` → sticky bottom-nav include → one
-  `custom:button-card` with `header` + `main` custom fields; 90px bottom
-  clearance so the last row clears the nav.
-- Headers: icon tile + name + live label (14px); no back buttons — the bottom
-  nav owns navigation.
-- Flat, editable YAML — no jinja macros or YAML anchors in view files; the only
-  include is the shared one-line bottom nav (plus deliberately shared modules).
+> Rewritten in v2.7 (see `docs/mobile-v2.7-design-audit.md`); the original
+> v2.1 wording described a bottom nav and a 90px clearance that no longer
+> exist.
+
+- Theme **Dune Mist**; view background `var(--primary-background-color)`;
+  theme `ha-card-border-radius` is **15px**, the dashboard standard. Pills and
+  chips are 999px; small icon tiles inside rows are 11px; nothing else.
+- Standard view skeleton: `grid-layout` → nav-sheet include → one
+  `custom:button-card` root with `padding: 2px 5px 24px 5px`, `margin: 0`,
+  `border-radius: 0`, `row-gap: 0`, `grid-template-columns: minmax(0, 1fr)`,
+  `min-width: 0`, and `header` + section custom fields. Sections space
+  themselves (separator `padding-top: 7px`, expander `margin-top: 5px`).
+- Navigation: hamburger header (`mobile-header-hamburger.yaml`) opening the
+  nav sheet (`mobile-nav-sheet.yaml` → `mobile-nav-menu.yaml`), plus a back
+  header (`mobile-header-back.yaml`) on sub-views. Both glyphs 26px in 40px
+  tiles. There is no bottom nav.
+- Headers: icon tile + 22px name + 14px live label; live-state accent
+  `var(--slate-bright)`; `tap_action: none`.
+- Section headers are `card_type: separator` with `modules: [mobile_separator]`
+  (20px) or `mobile_separator_small` (16px, room-level inside an expander).
+  No inline separator styles.
+- Colour ladder: page `--primary-background-color` → rows / expander shells
+  `--background-color-2` → cards inside an expander `--background-color-3`.
+  `--card-background-color` is the *darker* base surface, not the lighter step.
+- No hardcoded colours: use the theme tokens (`--slate-color`, `--slate-bright`,
+  `--sage-color`, `--gold-color`, `--amber-color`, `--error-color`, the
+  `*-alpha-*` translucent tokens, `--muted-label-color`, `--row-divider-color`,
+  `--toggle-knob-color`) or `color-mix()` on a token.
+- Flat, editable YAML — no jinja macros or YAML anchors in view files; shared
+  rows and modules live in `dashboards/modules/` and are included with
+  variables. Files that carry HA `{{ }}` templates (weather markdown) must
+  **not** start with `# lovelace_gen`.
 - All button-card JS templates use the guarded `states['<id>']` pattern — never
   `entity.state` (nested custom_fields cards don't populate `entity`).
-- Single-row button-card grids declare `grid-template-rows: 1fr` (button-card's
-  `no-icon` default rows otherwise pin content to the top).
-- No fonts below 14px. Bubble rows: name 16px, sub-buttons/state 14px.
-- `vertical-stack`, not `custom:stack-in-card`, for stacked content (stack-in-card
-  causes unequal insets).
-- Bubble cards use repo-managed modules (`bubble_card/modules/*`), not
-  `.storage`-only ones.
+  (`entity.state` inside an apexcharts `transform:` is that card's own API and
+  is fine.)
+- Single-row button-card grids declare `grid-template-rows: 1fr`.
+- No fonts below 14px. Bubble rows: name 16px, sub-buttons/state 14px;
+  pop-up titles 26px.
+- `vertical-stack`, not `custom:stack-in-card`.
+- Bubble cards use repo-managed modules (`bubble_card/modules/*`). Icons are
+  plain `--primary-text-color`; sub-buttons are `--secondary-text-color` at
+  rest, with two documented exceptions (shade arrows; the settings slider's
+  dark-over-fill text).
 
 ## Requirements
 
@@ -378,11 +405,8 @@ v1.2 (undefined `var(--text-color)` → `--primary-text-color`; `--background-3`
   `automation.gym_motion_sensor` (aliases today: "Gym Motion Sensor - Day"),
   `automation.outdoor_off_at_11pm`, `automation.pool_heater_schedule`,
   `automation.sunset_outdoor_off`, `automation.3_00pm_bedroom_back_shading`.
-- **`vacuum-view.yaml`** (deferred view, untouched this cycle):
-  `var(--ha-card-background-2)` is undefined under Dune Mist (→
-  `--background-color-2`); `theme: Bubble` while the file uses Dune-Mist tokens;
-  three `background: …` declarations missing a trailing `;` so the rule is
-  dropped. Fix when the vacuum view is picked up.
+- **`vacuum-view.yaml`** — fixed in v2.7 (Dune Mist theme, `--background-color-2`,
+  semicolons, `modules:` key, standard header).
 - **Low nits (cosmetic, not fixed):** redundant identical on/off ternaries in
   `mobile_lights`/`mobile_shades_module`/`mobile-priority-row`; several hardcoded
   hexes in `home-view` templates that duplicate theme tokens; a 9px "LIVE"
@@ -391,12 +415,9 @@ v1.2 (undefined `var(--text-color)` → `--primary-text-color`; `--background-3`
 
 ## Backlog / future candidates
 
-- Retire or fold in the now-orphaned v2-only modules (`mobile-toggle-row.yaml`,
-  `mobile-nav-row.yaml` — still referenced only by `mobile-settings-module.yaml`,
-  itself no longer included by any view).
-- Bubble module hygiene: fix `mobile_lights_scenes` (stray `t;`, missing `--`
-  prefixes, identical on/off ternaries) and the same missing `--` prefix in
-  `mobile_settings_module`.
+- (v2.1 backlog items — orphaned v2-only modules, `mobile_lights_scenes` /
+  `mobile_settings_module` hygiene — were done before v2.7; the v2.7 audit
+  removed the remaining orphans and swept the modules.)
 
 ## Acceptance criteria (per requirement)
 

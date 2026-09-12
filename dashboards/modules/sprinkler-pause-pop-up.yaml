@@ -79,6 +79,7 @@ cards:
         - margin-bottom: 14px
       grid:
         - grid-template-areas: '"info"'
+        - grid-template-rows: 1fr
         - grid-template-columns: 1fr
     custom_fields:
       info: |
@@ -140,6 +141,7 @@ cards:
           - transition: none
         grid:
           - grid-template-areas: '"i n"'
+          - grid-template-rows: 1fr
           - grid-template-columns: auto auto
           - justify-content: center
           - align-items: center
@@ -177,6 +179,7 @@ cards:
           - transition: none
         grid:
           - grid-template-areas: '"i n"'
+          - grid-template-rows: 1fr
           - grid-template-columns: auto auto
           - justify-content: center
           - align-items: center
@@ -241,6 +244,7 @@ cards:
         - margin-top: 10px
       grid:
         - grid-template-areas: '"i n"'
+        - grid-template-rows: 1fr
         - grid-template-columns: auto auto
         - justify-content: center
         - align-items: center

@@ -1,41 +1,13 @@
 type: custom:power-flow-card-plus
 clickable_entities: true
+# Text floor is 14px (dashboard rule). The card renders its labels inside its
+# own shadow DOM, so only the inherited font-size/weight on ha-card reaches
+# them; per-class selectors here never match.
 card_mod:
   style: |
     ha-card {
-      /* Override all text in the card to be smaller */
       font-size: 14px !important;
-    }
-
-    /* Try multiple selectors to catch all text elements */
-    ha-card * {
-      font-size: 12px !important;
-      font-weight: bold !important;
-    }
-    /* Main entity values */
-    ha-card .value,
-    ha-card [class*="value"],
-    ha-card .power-value {
-      font-size: 12px !important;
-      font-weight: bold !important;
-    }
-    /* Entity labels */
-    ha-card .label,
-    ha-card [class*="label"],
-    ha-card .entity-name {
-      font-size: 16px !important;
-      font-weight: bold !important;
-    }
-    /* Individual device text (smaller) */
-    ha-card .individual *,
-    ha-card [class*="individual"] * {
-      font-size: 12px !important;
-    }
-    /* Secondary info text */
-    ha-card .secondary,
-    ha-card [class*="secondary"] {
-      font-size: 12px !important;
-      opacity: 0.8;
+      font-weight: 700 !important;
     }
 entities:
   battery:
