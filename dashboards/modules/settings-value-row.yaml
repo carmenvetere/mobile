@@ -1,0 +1,92 @@
+# lovelace_gen
+# Settings value row (v2.7 mobile): tinted icon tile · name · formatted state
+# with threshold colouring; tap opens more-info.
+# Required vars: entity, name, icon
+# Optional vars:
+#   kind    'number' (default) rounds the state and appends `unit`
+#           'date'   shows the date part of an input_datetime state and
+#                    measures warn/crit in months since that date
+#   unit    suffix for number values, e.g. ' h' or '%' (default none)
+#   warn / crit   threshold pair for the state colour (omit both for a plain
+#           primary-text state)
+#   bad     'high' (default): v < warn sage · v <= crit gold · above crit error
+#           'low'           : v < warn error · v <= crit gold · above crit sage
+type: custom:button-card
+entity: {{ entity }}
+name: {{ name }}
+icon: {{ icon }}
+show_state: true
+tap_action:
+  action: more-info
+state_display: |
+  [[[
+    var e = states['{{ entity }}'];
+    if (!e || e.state === 'unknown' || e.state === 'unavailable') return '—';
+{% if kind is defined and kind == 'date' %}
+    return e.state.split(' ')[0];
+{% else %}
+    return Math.round(Number(e.state)) + '{{ unit | default('') }}';
+{% endif %}
+  ]]]
+styles:
+  card:
+  - background: transparent !important
+  - --ha-card-background: transparent
+  - box-shadow: none
+  - border-radius: 0
+  - border-top: 1px solid var(--row-divider-color)
+  - padding: 13px 4px
+  - transition: none
+  - cursor: pointer
+  grid:
+  - grid-template-areas: '"i n v"'
+  - grid-template-columns: 44px 1fr auto
+  - grid-template-rows: 1fr
+  - align-items: center
+  - column-gap: 11px
+  img_cell:
+  - grid-area: i
+  - width: 38px
+  - height: 38px
+  - border-radius: 11px
+  - background-color: var(--slate-alpha-18)
+  icon:
+  - width: 20px
+  - color: var(--slate-bright)
+  name:
+  - grid-area: n
+  - justify-self: start
+  - font-size: 16px
+  - font-weight: 600
+  - color: var(--primary-text-color)
+  state:
+  - grid-area: v
+  - justify-self: end
+  - font-size: 14px
+  - font-weight: 700
+  - color: |
+      [[[
+        var e = states['{{ entity }}'];
+        if (!e || e.state === 'unknown' || e.state === 'unavailable') return 'var(--secondary-text-color)';
+{% if warn is defined and crit is defined %}
+{% if kind is defined and kind == 'date' %}
+        var d = new Date(e.state.replace(' ', 'T'));
+        if (isNaN(d.getTime())) return 'var(--secondary-text-color)';
+        var v = (Date.now() - d.getTime()) / (1000 * 60 * 60 * 24 * 30.44);
+{% else %}
+        var v = Number(e.state);
+        if (isNaN(v)) return 'var(--secondary-text-color)';
+{% endif %}
+{% if bad is defined and bad == 'low' %}
+        if (v < {{ warn }}) return 'var(--error-color)';
+        if (v <= {{ crit }}) return 'var(--gold-color)';
+        return 'var(--sage-color)';
+{% else %}
+        if (v < {{ warn }}) return 'var(--sage-color)';
+        if (v <= {{ crit }}) return 'var(--gold-color)';
+        return 'var(--error-color)';
+{% endif %}
+{% else %}
+        return 'var(--primary-text-color)';
+{% endif %}
+      ]]]

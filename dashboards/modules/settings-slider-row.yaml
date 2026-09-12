@@ -1,0 +1,31 @@
+# lovelace_gen
+# Settings slider row (v2.7 mobile): bubble-card slider for an input_number /
+# number entity, value shown in the right-hand sub-button. All styling comes
+# from the mobile_settings_slider module — do not add per-card styles here.
+# Required vars: entity, name, icon
+# Optional vars: min, max, step (slider range overrides; entity defaults otherwise)
+type: custom:bubble-card
+card_type: button
+button_type: slider
+entity: {{ entity }}
+name: {{ name }}
+icon: {{ icon }}
+show_state: false
+scrolling_effect: false
+card_layout: large
+{% if min is defined %}
+min_value: {{ min }}
+{% endif %}
+{% if max is defined %}
+max_value: {{ max }}
+{% endif %}
+{% if step is defined %}
+step: {{ step }}
+{% endif %}
+sub_button:
+- entity: {{ entity }}
+  show_state: true
+  show_icon: false
+  show_background: false
+modules:
+- mobile_settings_slider

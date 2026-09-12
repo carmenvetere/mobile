@@ -1,0 +1,48 @@
+# lovelace_gen
+# Settings navigation row (v2.7 mobile): tinted icon tile · name · chevron.
+# Tapping navigates to a pop-up hash (or any navigation path).
+# Required vars: name, icon, navigation_path
+type: custom:button-card
+name: {{ name }}
+icon: {{ icon }}
+tap_action:
+  action: navigate
+  navigation_path: "{{ navigation_path }}"
+styles:
+  card:
+  - background: transparent !important
+  - --ha-card-background: transparent
+  - box-shadow: none
+  - border-radius: 0
+  - border-top: 1px solid var(--row-divider-color)
+  - padding: 13px 4px
+  - transition: none
+  - cursor: pointer
+  grid:
+  - grid-template-areas: '"i n chev"'
+  - grid-template-columns: 44px 1fr auto
+  - grid-template-rows: 1fr
+  - align-items: center
+  - column-gap: 11px
+  img_cell:
+  - grid-area: i
+  - width: 38px
+  - height: 38px
+  - border-radius: 11px
+  - background-color: var(--slate-alpha-18)
+  icon:
+  - width: 20px
+  - color: var(--slate-bright)
+  name:
+  - grid-area: n
+  - justify-self: start
+  - font-size: 16px
+  - font-weight: 600
+  - color: var(--primary-text-color)
+  custom_fields:
+    chev:
+    - grid-area: chev
+    - justify-self: end
+custom_fields:
+  chev: |-
+    [[[ return '<ha-icon icon="mdi:chevron-right" style="--mdc-icon-size:20px;color:var(--secondary-text-color);"></ha-icon>'; ]]]
