@@ -99,121 +99,62 @@ cards:
               card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
       music:
         card:
-          type: custom:wall-panel-sonos-card
-          entities:
-            - media_player.living_room
-            - media_player.kitchen
-            - media_player.office
-            - media_player.gym
-            - media_player.deck
-            - media_player.pool
-            - media_player.mud_room
-            - media_player.media_room
-          default_view: player
-          max_volume: 40
-          layout: wall
-          favorites:
-            - id: ms_now
-              name: MS NOW
-              type: station
-              media_content_id: >-
-                x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8200&sn=5
-              media_content_type: music
-              art: "linear-gradient(135deg, #c8102e 0%, #1a1c1f 100%)"
-            - id: pool_2026
-              name: Pool Mix - 2026
-              type: playlist
-              media_content_id: spotify:playlist:0KkRPLBW2cciKaSkNIdyO3
-              media_content_type: playlist
-              art: "linear-gradient(135deg, #00b3a4 0%, #f4d35e 100%)"
-            - id: one_hotel_south_beach
-              name: 1 Hotel South Beach Poolside Playlist
-              type: playlist
-              media_content_id: spotify:playlist:7z1cddbJ1L62FZpTVZBj2i
-              media_content_type: playlist
-              art: "linear-gradient(135deg, #00b3a4 0%, #f4d35e 100%)"
-            - id: top_50_uk
-              name: Top 50 - United Kingdom
-              type: playlist
-              media_content_id: spotify:playlist:1QM1qz09ZzsAPiXphF1l4S
-              media_content_type: playlist
-              art: "linear-gradient(135deg, #012169 0%, #c8102e 100%)"
-            - id: top_50_au
-              name: Top 50 - Australia
-              type: playlist
-              media_content_id: spotify:playlist:37i9dQZEVXbJPcfkRz0wJ0
-              media_content_type: playlist
-              art: "linear-gradient(135deg, #00843d 0%, #ffcd00 100%)"
-            - id: pool_mix_2025
-              name: Pool Mix - 2025
-              type: playlist
-              media_content_id: spotify:playlist:2rA0wj0dnIyj1A5Uaoogaa
-              media_content_type: playlist
-              art: "linear-gradient(135deg, #4fb6e6 0%, #f7d774 100%)"
-            - id: favorite_11
-              name: French Riviera Summer Vibes
-              type: playlist
-              media_content_id: spotify:playlist:0bBQoJtfEIEtOkqv8e4JZJ
-              media_content_type: playlist
-              art: "linear-gradient(135deg, #0055a4 0%, #f4d35e 100%)"
-            - id: hotel_costes_radio
-              name: Hotel Costes Radio
-              type: playlist
-              media_content_id: spotify:playlist:37i9dQZF1E4mWbHqaowOUP
-              media_content_type: playlist
-              art: "linear-gradient(135deg, #1a1a1a 0%, #6a4a2c 100%)"
-            - id: pop_dance_mix
-              name: Pop & Dance Mix
-              type: station
-              media_content_id: >-
-                x-sonosapi-hls-static:channel-xtra%3adc93524a-aa6d-b0c4-0d53-caabac97500c%3a15ebc9ab-82ba-0dd1-0276-d408113397df?sid=37&flags=32768&sn=5
-              media_content_type: music
-              art: "linear-gradient(135deg, #ff006e 0%, #8338ec 100%)"
-            - id: chill_mix
-              name: Chill Mix
-              type: playlist
-              media_content_id: spotify:playlist:37i9dQZF1EVHGWrwldPRtj
-              media_content_type: playlist
-              art: "linear-gradient(135deg, #2a3540 0%, #6a4ec8 100%)"
-            - id: bridgerton_playlist
-              name: Bridgerton Playlist
-              type: playlist
-              media_content_id: spotify:playlist:37i9dQZF1DX5Hl0iWtr5b3
-              media_content_type: playlist
-              art: "linear-gradient(135deg, #d8a7b1 0%, #6e3a5b 100%)"
-            - id: ella_and_louis
-              name: The Best of Ella & Louis
-              type: playlist
-              media_content_id: spotify:playlist:502ADPBCxITjzQZOlnAjQQ
-              media_content_type: playlist
-              art: "linear-gradient(135deg, #3d2914 0%, #d4a574 100%)"
-            - id: favorite_12
-              name: 4th of July Pool Party
-              type: playlist
-              media_content_id: spotify:playlist:5lfFrs1X6A1HDxt2WEFr9u
-              media_content_type: playlist
-              art: "linear-gradient(135deg, #b31942 0%, #0a3161 100%)"
-          # Favorites come from Music Assistant; ma_entities maps each Sonos
-          # player (transport / grouping / volume) to its MA player (browsing /
-          # playback). HA suffixes the MA players with _2.
-          favorites_source: music_assistant
-          ma_entities:
-            media_player.living_room: media_player.living_room_2
-            media_player.kitchen: media_player.kitchen_2
-            media_player.office: media_player.office_2
-            media_player.gym: media_player.gym_2
-            media_player.deck: media_player.deck_2
-            media_player.pool: media_player.pool_2
-            media_player.mud_room: media_player.mud_room_2
-            media_player.media_room: media_player.media_room_2
-          groups:
-            - id: group_1
-              label: Outdoor
-              entities:
-                - media_player.pool
-                - media_player.deck
-            - id: group_2
-              label: First Floor
-              entities:
-                - media_player.living_room
-                - media_player.kitchen
+          # Mediocre Massive Media Player Card (HACS: mediocre-hass-media-player-cards).
+          # One massive player bound to Living Room; the card's speaker-group panel
+          # adds/removes the other rooms (media_player.join/unjoin on the Sonos
+          # entities). Favorites and search come from Music Assistant through the
+          # MA twin of the main speaker. The old card's 40% volume cap has no
+          # equivalent here.
+          type: custom:mediocre-massive-media-player-card
+          entity_id: media_player.living_room
+          ma_entity_id: media_player.living_room_2
+          mode: card
+          use_art_colors: false
+          speaker_group:
+            entity_id: media_player.living_room
+            entities:
+              - media_player.living_room
+              - media_player.kitchen
+              - media_player.office
+              - media_player.gym
+              - media_player.deck
+              - media_player.pool
+              - media_player.mud_room
+              - media_player.media_room
+          search:
+            enabled: true
+            show_favorites: true
+            entity_id: media_player.living_room_2
+          # Group presets from the old card, as one-tap buttons.
+          custom_buttons:
+            - icon: mdi:pool
+              name: Outdoor
+              tap_action:
+                action: perform-action
+                perform_action: media_player.join
+                target:
+                  entity_id: media_player.pool
+                data:
+                  group_members:
+                    - media_player.deck
+            - icon: mdi:sofa
+              name: First Floor
+              tap_action:
+                action: perform-action
+                perform_action: media_player.join
+                target:
+                  entity_id: media_player.living_room
+                data:
+                  group_members:
+                    - media_player.kitchen
+          options:
+            always_show_power_button: false
+            always_show_custom_buttons: true
+          card_mod:
+            style: |
+              ha-card {
+                border-radius: 15px !important;
+                margin: 2px 5px !important;
+                background: var(--background-color-2) !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+              }

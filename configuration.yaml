@@ -366,36 +366,6 @@ input_number:
     icon: mdi:home-export-outline
 
 input_boolean:
-  sonos_group_select_living_room:
-    name: Group Living Room
-    icon: mdi:sofa
-  sonos_group_select_kitchen:
-    name: Group Kitchen
-    icon: mdi:countertop
-  sonos_group_select_office:
-    name: Group Office
-    icon: mdi:desk
-  sonos_group_select_deck:
-    name: Group Deck
-    icon: mdi:table-chair
-  sonos_group_select_pool:
-    name: Group Pool
-    icon: mdi:pool
-  sonos_group_select_primary_bedroom:
-    name: Group Primary Bedroom
-    icon: mdi:bed
-  sonos_group_select_primary_bathroom:
-    name: Group Primary Bathroom
-    icon: mdi:shower
-  sonos_group_select_gym:
-    name: Group Gym
-    icon: mdi:dumbbell
-  sonos_group_select_mud_room:
-    name: Group Mud Room
-    icon: mdi:door
-  sonos_group_select_media_room:
-    name: Group Media Room
-    icon: mdi:television
   # --- Basement Working scene: motion auto-off guard (#188) -----------------
   # On while the basement Working scene is active. When on, the basement motion
   # automation must NOT turn the lights off on no-motion (so sitting still at
@@ -491,45 +461,6 @@ input_boolean:
     icon: mdi:hand-back-right
 
 input_select:
-  sonos_speaker_select:
-    name: Sonos Speaker
-    options:
-      - Living Room
-      - Kitchen
-      - Office
-      - Deck
-      - Pool
-      - Primary Bedroom
-      - Primary Bathroom
-      - Gym
-      - Mud Room
-      - Media Room
-    initial: Living Room
-    icon: mdi:speaker
-  sonos_group_coordinator:
-    name: Sonos Group Coordinator
-    options:
-      - living_room
-      - kitchen
-      - office
-      - deck
-      - pool
-      - primary_bedroom
-      - primary_bathroom
-      - gym
-      - mud_room
-      - media_room
-    initial: living_room
-    icon: mdi:speaker-multiple
-  sonos_favorites_filter:
-    name: Sonos Favorites Filter
-    options:
-      - All
-      - Playlists
-      - Stations
-      - Albums
-    initial: All
-    icon: mdi:filter-variant
   # --- Climate overhaul Phase 4: HVAC fan-mode ownership -------------------
   # Which automation currently owns each zone's fan_mode. Priority high->low:
   # economizer > air_filter > air_quality > schedule (none loses to all).
@@ -575,11 +506,6 @@ input_select:
     icon: mdi:fan-alert
 
 input_text:
-  sonos_favorites_search:
-    name: Sonos Favorites Search
-    initial: ""
-    max: 60
-    icon: mdi:magnify
   # Alarm disarm code for Alarmo, referenced by the Alarm automations via
   # {{ states('input_text.alarm_code') }}. Kept as a helper (not !secret)
   # because the UI automation editor cannot read !secret from automations.yaml
@@ -685,8 +611,6 @@ recorder:
 
 lovelace_gen:
 
-wall_panel_sonos:
-
 lovelace:
   resource_mode: yaml
   dashboards:
@@ -729,9 +653,7 @@ lovelace:
       type: module
     - url: /hacsfiles/config-template-card/config-template-card.js
       type: module
-    - url: /hacsfiles/custom-sonos-card-v2/custom-sonos-card-v2.js
-      type: module
-    - url: /hacsfiles/custom-media-card/wall-panel-sonos-card.js
+    - url: /hacsfiles/mediocre-hass-media-player-cards/mediocre-hass-media-player-cards.js
       type: module
     # Notification Center card (Mobile Dash v2 home pop-up). resource_mode is
     # "yaml", so the card JS must be listed here manually even though the
