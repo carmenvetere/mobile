@@ -100,16 +100,254 @@ cards:
               card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
       player:
         card:
-          # Which player the card below controls. Auto = whatever is playing.
-          type: custom:bubble-card
-          card_type: select
-          entity: input_select.music_player
-          name: Player
-          icon: mdi:speaker
-          show_state: true
-          card_layout: large
-          modules:
-            - mobile_settings_module
+          # Which player the card below controls. Auto follows whatever is
+          # playing (its chip names the resolved room); tap a room to pin it.
+          # Highlighted chip = the pinned choice; volume icon = room is playing.
+          type: custom:mushroom-chips-card
+          alignment: start
+          card_mod:
+            style: |
+              ha-card { overflow: hidden !important; margin: 2px 5px 6px !important; }
+              ha-card > * {
+                display: flex !important; flex-wrap: nowrap !important;
+                overflow-x: auto !important; overflow-y: hidden !important; gap: 8px !important;
+                scrollbar-width: none;
+              }
+              ha-card > *::-webkit-scrollbar { display: none; }
+              ha-card > * > * { flex-shrink: 0 !important; }
+          chips:
+            - type: template
+              entity: input_select.music_player
+              icon: mdi:autorenew
+              content: >-
+                {% set rooms = {'media_player.living_room': 'Living Room', 'media_player.kitchen': 'Kitchen', 'media_player.office': 'Office', 'media_player.gym': 'Gym', 'media_player.deck': 'Deck', 'media_player.pool': 'Pool', 'media_player.mud_room': 'Mud Room', 'media_player.media_room': 'Media Room'} %}
+                {% set playing = rooms.keys() | select('is_state', 'playing') | list %}
+                {% set ns = namespace(c=none) %}
+                {% for e in playing %}{% set g = state_attr(e, 'group_members') or [] %}
+                  {% if ns.c is none and (g | length == 0 or g[0] == e) %}{% set ns.c = e %}{% endif %}
+                {% endfor %}
+                {% set cur = ns.c or (playing[0] if playing else 'media_player.living_room') %}
+                Auto{% if is_state('input_select.music_player', 'Auto') %} · {{ rooms[cur] }}{% endif %}
+              tap_action:
+                action: perform-action
+                perform_action: input_select.select_option
+                target:
+                  entity_id: input_select.music_player
+                data:
+                  option: Auto
+              card_mod:
+                style: |
+                  ha-card {
+                    --chip-background: {{ 'var(--slate-alpha-55, rgba(142,177,191,0.55))' if is_state('input_select.music_player', 'Auto') else 'var(--background-color-2)' }};
+                    --chip-height: 40px;
+                    --chip-font-size: 14px;
+                    --chip-font-weight: 600;
+                    --chip-border-radius: 999px;
+                    --chip-padding: 0 14px;
+                    --chip-icon-size: 18px;
+                    --chip-text-color: var(--primary-text-color);
+                    --chip-icon-color: var(--primary-text-color);
+                  }
+            - type: template
+              entity: input_select.music_player
+              icon: "{{ 'mdi:volume-high' if is_state('media_player.living_room', 'playing') else 'mdi:speaker' }}"
+              content: >-
+                Living Room
+              tap_action:
+                action: perform-action
+                perform_action: input_select.select_option
+                target:
+                  entity_id: input_select.music_player
+                data:
+                  option: Living Room
+              card_mod:
+                style: |
+                  ha-card {
+                    --chip-background: {{ 'var(--slate-alpha-55, rgba(142,177,191,0.55))' if is_state('input_select.music_player', 'Living Room') else 'var(--background-color-2)' }};
+                    --chip-height: 40px;
+                    --chip-font-size: 14px;
+                    --chip-font-weight: 600;
+                    --chip-border-radius: 999px;
+                    --chip-padding: 0 14px;
+                    --chip-icon-size: 18px;
+                    --chip-text-color: var(--primary-text-color);
+                    --chip-icon-color: var(--primary-text-color);
+                  }
+            - type: template
+              entity: input_select.music_player
+              icon: "{{ 'mdi:volume-high' if is_state('media_player.kitchen', 'playing') else 'mdi:speaker' }}"
+              content: >-
+                Kitchen
+              tap_action:
+                action: perform-action
+                perform_action: input_select.select_option
+                target:
+                  entity_id: input_select.music_player
+                data:
+                  option: Kitchen
+              card_mod:
+                style: |
+                  ha-card {
+                    --chip-background: {{ 'var(--slate-alpha-55, rgba(142,177,191,0.55))' if is_state('input_select.music_player', 'Kitchen') else 'var(--background-color-2)' }};
+                    --chip-height: 40px;
+                    --chip-font-size: 14px;
+                    --chip-font-weight: 600;
+                    --chip-border-radius: 999px;
+                    --chip-padding: 0 14px;
+                    --chip-icon-size: 18px;
+                    --chip-text-color: var(--primary-text-color);
+                    --chip-icon-color: var(--primary-text-color);
+                  }
+            - type: template
+              entity: input_select.music_player
+              icon: "{{ 'mdi:volume-high' if is_state('media_player.office', 'playing') else 'mdi:speaker' }}"
+              content: >-
+                Office
+              tap_action:
+                action: perform-action
+                perform_action: input_select.select_option
+                target:
+                  entity_id: input_select.music_player
+                data:
+                  option: Office
+              card_mod:
+                style: |
+                  ha-card {
+                    --chip-background: {{ 'var(--slate-alpha-55, rgba(142,177,191,0.55))' if is_state('input_select.music_player', 'Office') else 'var(--background-color-2)' }};
+                    --chip-height: 40px;
+                    --chip-font-size: 14px;
+                    --chip-font-weight: 600;
+                    --chip-border-radius: 999px;
+                    --chip-padding: 0 14px;
+                    --chip-icon-size: 18px;
+                    --chip-text-color: var(--primary-text-color);
+                    --chip-icon-color: var(--primary-text-color);
+                  }
+            - type: template
+              entity: input_select.music_player
+              icon: "{{ 'mdi:volume-high' if is_state('media_player.gym', 'playing') else 'mdi:speaker' }}"
+              content: >-
+                Gym
+              tap_action:
+                action: perform-action
+                perform_action: input_select.select_option
+                target:
+                  entity_id: input_select.music_player
+                data:
+                  option: Gym
+              card_mod:
+                style: |
+                  ha-card {
+                    --chip-background: {{ 'var(--slate-alpha-55, rgba(142,177,191,0.55))' if is_state('input_select.music_player', 'Gym') else 'var(--background-color-2)' }};
+                    --chip-height: 40px;
+                    --chip-font-size: 14px;
+                    --chip-font-weight: 600;
+                    --chip-border-radius: 999px;
+                    --chip-padding: 0 14px;
+                    --chip-icon-size: 18px;
+                    --chip-text-color: var(--primary-text-color);
+                    --chip-icon-color: var(--primary-text-color);
+                  }
+            - type: template
+              entity: input_select.music_player
+              icon: "{{ 'mdi:volume-high' if is_state('media_player.deck', 'playing') else 'mdi:speaker' }}"
+              content: >-
+                Deck
+              tap_action:
+                action: perform-action
+                perform_action: input_select.select_option
+                target:
+                  entity_id: input_select.music_player
+                data:
+                  option: Deck
+              card_mod:
+                style: |
+                  ha-card {
+                    --chip-background: {{ 'var(--slate-alpha-55, rgba(142,177,191,0.55))' if is_state('input_select.music_player', 'Deck') else 'var(--background-color-2)' }};
+                    --chip-height: 40px;
+                    --chip-font-size: 14px;
+                    --chip-font-weight: 600;
+                    --chip-border-radius: 999px;
+                    --chip-padding: 0 14px;
+                    --chip-icon-size: 18px;
+                    --chip-text-color: var(--primary-text-color);
+                    --chip-icon-color: var(--primary-text-color);
+                  }
+            - type: template
+              entity: input_select.music_player
+              icon: "{{ 'mdi:volume-high' if is_state('media_player.pool', 'playing') else 'mdi:speaker' }}"
+              content: >-
+                Pool
+              tap_action:
+                action: perform-action
+                perform_action: input_select.select_option
+                target:
+                  entity_id: input_select.music_player
+                data:
+                  option: Pool
+              card_mod:
+                style: |
+                  ha-card {
+                    --chip-background: {{ 'var(--slate-alpha-55, rgba(142,177,191,0.55))' if is_state('input_select.music_player', 'Pool') else 'var(--background-color-2)' }};
+                    --chip-height: 40px;
+                    --chip-font-size: 14px;
+                    --chip-font-weight: 600;
+                    --chip-border-radius: 999px;
+                    --chip-padding: 0 14px;
+                    --chip-icon-size: 18px;
+                    --chip-text-color: var(--primary-text-color);
+                    --chip-icon-color: var(--primary-text-color);
+                  }
+            - type: template
+              entity: input_select.music_player
+              icon: "{{ 'mdi:volume-high' if is_state('media_player.mud_room', 'playing') else 'mdi:speaker' }}"
+              content: >-
+                Mud Room
+              tap_action:
+                action: perform-action
+                perform_action: input_select.select_option
+                target:
+                  entity_id: input_select.music_player
+                data:
+                  option: Mud Room
+              card_mod:
+                style: |
+                  ha-card {
+                    --chip-background: {{ 'var(--slate-alpha-55, rgba(142,177,191,0.55))' if is_state('input_select.music_player', 'Mud Room') else 'var(--background-color-2)' }};
+                    --chip-height: 40px;
+                    --chip-font-size: 14px;
+                    --chip-font-weight: 600;
+                    --chip-border-radius: 999px;
+                    --chip-padding: 0 14px;
+                    --chip-icon-size: 18px;
+                    --chip-text-color: var(--primary-text-color);
+                    --chip-icon-color: var(--primary-text-color);
+                  }
+            - type: template
+              entity: input_select.music_player
+              icon: "{{ 'mdi:volume-high' if is_state('media_player.media_room', 'playing') else 'mdi:speaker' }}"
+              content: >-
+                Media Room
+              tap_action:
+                action: perform-action
+                perform_action: input_select.select_option
+                target:
+                  entity_id: input_select.music_player
+                data:
+                  option: Media Room
+              card_mod:
+                style: |
+                  ha-card {
+                    --chip-background: {{ 'var(--slate-alpha-55, rgba(142,177,191,0.55))' if is_state('input_select.music_player', 'Media Room') else 'var(--background-color-2)' }};
+                    --chip-height: 40px;
+                    --chip-font-size: 14px;
+                    --chip-font-weight: 600;
+                    --chip-border-radius: 999px;
+                    --chip-padding: 0 14px;
+                    --chip-icon-size: 18px;
+                    --chip-text-color: var(--primary-text-color);
+                    --chip-icon-color: var(--primary-text-color);
+                  }
       music:
         card:
           # config-template-card resolves the player once per state change:
