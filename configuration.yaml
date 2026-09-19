@@ -655,13 +655,9 @@ lovelace:
       type: module
     - url: /hacsfiles/mediocre-hass-media-player-cards/mediocre-hass-media-player-cards.js
       type: module
-    # Notification Center card (Mobile Dash v2 home pop-up). resource_mode is
-    # "yaml", so the card JS must be listed here manually even though the
-    # integration is installed. If your install serves it elsewhere, change
-    # this URL to match (check Settings > Dashboards > Resources or the
-    # integration docs) — e.g. a custom_components path like
-    # /notification_center/notification-center-card.js
     - url: /hacsfiles/notifications/notification-center-card.js
+      type: module
+    - url: /hacsfiles/mediocre-hass-media-player-cards/mediocre-hass-media-player-cards.js
       type: module
 
 # Climate overhaul Phase 1: first-floor exterior door group. Default
