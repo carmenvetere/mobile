@@ -26,9 +26,10 @@ cards:
       grid:
         - grid-template-areas: |
             "header"
+            "player"
             "music"
         - grid-template-columns: minmax(0, 1fr)
-        - grid-template-rows: 60px auto
+        - grid-template-rows: 60px auto auto
         - row-gap: 0px
         - column-gap: 2px
         - align-items: start
@@ -97,64 +98,107 @@ cards:
               card: !include /config/dashboards/modules/mobile-header-back.yaml
             menu:
               card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
+      player:
+        card:
+          # Which player the card below controls. Auto = whatever is playing.
+          type: custom:bubble-card
+          card_type: select
+          entity: input_select.music_player
+          name: Player
+          icon: mdi:speaker
+          show_state: true
+          card_layout: large
+          modules:
+            - mobile_settings_module
       music:
         card:
-          # Mediocre Massive Media Player Card (HACS: mediocre-hass-media-player-cards).
-          # One massive player bound to Living Room; the card's speaker-group panel
-          # adds/removes the other rooms (media_player.join/unjoin on the Sonos
-          # entities). Favorites and search come from Music Assistant through the
-          # MA twin of the main speaker. The old card's 40% volume cap has no
-          # equivalent here.
-          type: custom:mediocre-massive-media-player-card
-          entity_id: media_player.living_room
-          ma_entity_id: media_player.living_room_2
-          mode: card
-          use_art_colors: false
-          speaker_group:
-            entity_id: media_player.living_room
-            entities:
-              - media_player.living_room
-              - media_player.kitchen
-              - media_player.office
-              - media_player.gym
-              - media_player.deck
-              - media_player.pool
-              - media_player.mud_room
-              - media_player.media_room
-          search:
-            enabled: true
-            show_favorites: true
-            entity_id: media_player.living_room_2
-          # Group presets from the old card, as one-tap buttons.
-          custom_buttons:
-            - icon: mdi:pool
-              name: Outdoor
-              tap_action:
-                action: perform-action
-                perform_action: media_player.join
-                target:
-                  entity_id: media_player.pool
-                data:
-                  group_members:
-                    - media_player.deck
-            - icon: mdi:sofa
-              name: First Floor
-              tap_action:
-                action: perform-action
-                perform_action: media_player.join
-                target:
-                  entity_id: media_player.living_room
-                data:
-                  group_members:
-                    - media_player.kitchen
-          options:
-            always_show_power_button: false
-            always_show_custom_buttons: true
-          card_mod:
-            style: |
-              ha-card {
-                border-radius: 15px !important;
-                margin: 2px 5px !important;
-                background: var(--background-color-2) !important;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
-              }
+          # config-template-card resolves the player once per state change:
+          # the pinned room from input_select.music_player, or in Auto the
+          # first playing speaker (a group coordinator if there is one), else
+          # Living Room. Everything below that names a player uses ${player}.
+          type: custom:config-template-card
+          variables:
+            rooms: |
+              ({ 'Living Room': 'media_player.living_room', 'Kitchen': 'media_player.kitchen',
+                 'Office': 'media_player.office', 'Gym': 'media_player.gym', 'Deck': 'media_player.deck',
+                 'Pool': 'media_player.pool', 'Mud Room': 'media_player.mud_room', 'Media Room': 'media_player.media_room' })
+            player: |
+              (() => {
+                const sel = (states['input_select.music_player'] || {}).state;
+                if (sel && sel !== 'Auto' && vars.rooms[sel]) return vars.rooms[sel];
+                const ids = Object.values(vars.rooms);
+                const playing = ids.filter(e => states[e] && states[e].state === 'playing');
+                const coord = playing.find(e => {
+                  const g = states[e].attributes.group_members || [];
+                  return g.length === 0 || g[0] === e;
+                });
+                return coord || playing[0] || 'media_player.living_room';
+              })()
+          entities:
+            - input_select.music_player
+            - media_player.living_room
+            - media_player.kitchen
+            - media_player.office
+            - media_player.gym
+            - media_player.deck
+            - media_player.pool
+            - media_player.mud_room
+            - media_player.media_room
+          card:
+            # Mediocre Massive Media Player Card (HACS: mediocre-hass-media-player-cards).
+            # Favorites and search come from Music Assistant through the MA twin
+            # (_2) of the resolved player. The old card's 40% volume cap has no
+            # equivalent here.
+            type: custom:mediocre-massive-media-player-card
+            entity_id: ${player}
+            ma_entity_id: ${player + '_2'}
+            mode: card
+            use_art_colors: false
+            speaker_group:
+              entity_id: ${player}
+              entities:
+                - media_player.living_room
+                - media_player.kitchen
+                - media_player.office
+                - media_player.gym
+                - media_player.deck
+                - media_player.pool
+                - media_player.mud_room
+                - media_player.media_room
+            search:
+              enabled: true
+              show_favorites: true
+              entity_id: ${player + '_2'}
+            # Group presets from the old card, as one-tap buttons.
+            custom_buttons:
+              - icon: mdi:pool
+                name: Outdoor
+                tap_action:
+                  action: perform-action
+                  perform_action: media_player.join
+                  target:
+                    entity_id: media_player.pool
+                  data:
+                    group_members:
+                      - media_player.deck
+              - icon: mdi:sofa
+                name: First Floor
+                tap_action:
+                  action: perform-action
+                  perform_action: media_player.join
+                  target:
+                    entity_id: media_player.living_room
+                  data:
+                    group_members:
+                      - media_player.kitchen
+            options:
+              always_show_power_button: false
+              always_show_custom_buttons: true
+            card_mod:
+              style: |
+                ha-card {
+                  border-radius: 15px !important;
+                  margin: 2px 5px !important;
+                  background: var(--background-color-2) !important;
+                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+                }
