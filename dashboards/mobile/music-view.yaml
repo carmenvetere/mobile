@@ -137,8 +137,10 @@ cards:
                 art: |
                   [[[
                     var c = states['sensor.music_controlled_player']; var p = c && c.attributes.picture;
-                    if (p) return '<img src="' + p + '" style="display:block;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:11px;background:var(--background-color-3);">';
-                    return '<div style="width:100%;aspect-ratio:1/1;border-radius:11px;background:var(--background-color-3);display:flex;align-items:center;justify-content:center;"><ha-icon icon="mdi:album" style="--mdc-icon-size:72px;color:var(--secondary-text-color);"></ha-icon></div>';
+                    // full width on a phone, capped at 320px (and centred) on wider screens
+                    var box = 'width:100%;max-width:320px;margin:0 auto;aspect-ratio:1/1;border-radius:11px;background:var(--background-color-3);';
+                    if (p) return '<img src="' + p + '" style="display:block;' + box + 'object-fit:cover;">';
+                    return '<div style="' + box + 'display:flex;align-items:center;justify-content:center;"><ha-icon icon="mdi:album" style="--mdc-icon-size:72px;color:var(--secondary-text-color);"></ha-icon></div>';
                   ]]]
                 # title / artist · album on the left, speaker chip on the right
                 title:
