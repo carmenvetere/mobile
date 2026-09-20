@@ -1288,6 +1288,8 @@
       minutes: "/10"
     - trigger: homeassistant
       event: start
+    - trigger: event
+      event_type: music_library_refresh
     - trigger: state
       entity_id:
         - media_player.media_room
@@ -1302,6 +1304,13 @@
         - media_player.primary_bathroom
       attribute: media_content_id
   action:
+    # Music Assistant is usually still starting when HA fires `start`; give it
+    # a moment so the first library pull does not come back empty.
+    - if:
+        - condition: template
+          value_template: "{{ trigger.platform == 'homeassistant' }}"
+      then:
+        - delay: "00:01:30"
     - variables:
         ma_player: >-
           {% set ns = namespace(e='') %}
@@ -1363,6 +1372,11 @@
               ~ (it.image | default('') | string | replace('|', '%7C') | replace(';', '%3B'))] %}
           {% endfor %}
           {{ ns.out | join(';') }}
+        status: >-
+          {% if not ma_player %}no Music Assistant media_player found
+          {% elif fav_p is not defined or fav_p is not mapping %}music_assistant.get_library failed (entry {{ ma_entry or 'none' }})
+          {% elif not fav_items %}Music Assistant has no favourites yet
+          {% else %}ok{% endif %}
   sensor:
     - name: "Music Favorites"
       unique_id: music_favorites
@@ -1370,6 +1384,8 @@
       state: "{{ fav_items.split(';') | reject('eq', '') | list | length if fav_items else 0 }}"
       attributes:
         player: "{{ ma_player }}"
+        status: "{{ status | trim }}"
+        updated: "{{ now().isoformat() }}"
         items: "{{ fav_items | trim }}"
     - name: "Music Recent"
       unique_id: music_recent

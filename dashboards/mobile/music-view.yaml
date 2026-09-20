@@ -465,6 +465,13 @@ cards:
               name: Favorites
               icon: mdi:heart
               rows: 0.75
+              # refresh pulls favourites / recents from Music Assistant again
+              sub_button:
+                - icon: mdi:refresh
+                  show_background: false
+                  tap_action:
+                    action: perform-action
+                    perform_action: script.music_refresh_library
               modules:
                 - mobile_separator
             # horizontally scrolling strip of 104px tiles from Music Assistant

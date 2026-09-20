@@ -542,3 +542,9 @@ music_browse:
         entity_id: "{{ states('sensor.music_controlled_player') }}"
         media_content_id: "{{ media_content_id }}"
         media_content_type: "{{ media_content_id }}"
+music_refresh_library:
+  alias: "Music: refresh favorites and recently played from Music Assistant"
+  icon: mdi:refresh
+  mode: single
+  sequence:
+    - event: music_library_refresh
