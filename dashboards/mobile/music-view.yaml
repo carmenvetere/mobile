@@ -96,6 +96,7 @@ cards:
             back:
               card: !include /config/dashboards/modules/mobile-header-back.yaml
             menu:
+              card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
       main:
         card:
           type: vertical-stack
