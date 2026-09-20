@@ -105,8 +105,14 @@ cards:
             # stack with no gap and no child margins keeps them seamless whichever
             # way HA spaces stack children (flex gap or per-child margins).
             - type: vertical-stack
+              # The wrapper owns the surface: radius, shadow and side margins live
+              # here so the two cards inside are flat and show no seam.
               card_mod:
                 style: |
+                  :host {
+                    display: block; margin: 2px 5px; border-radius: 15px; overflow: hidden;
+                    background: var(--background-color-2); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+                  }
                   #root { gap: 0 !important; row-gap: 0 !important; }
                   #root > * { margin: 0 !important; }
               cards:
@@ -125,8 +131,8 @@ cards:
                     card:
                       - background: var(--background-color-2) !important
                       - --ha-card-background: var(--background-color-2)
-                      - border-radius: 15px 15px 0 0
-                      - margin: 2px 5px 0
+                      - border-radius: 0
+                      - margin: 0
                       - padding: 14px 14px 0
                       - box-shadow: none
                       - transition: none
@@ -360,8 +366,8 @@ cards:
                     - mobile_settings_slider
                   styles: |
                     ha-card {
-                      margin: 0 5px 2px !important; padding: 14px !important; border-radius: 0 0 15px 15px !important;
-                      background: var(--background-color-2) !important; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+                      margin: 0 !important; padding: 14px !important; border-radius: 0 !important;
+                      background: var(--background-color-2) !important; box-shadow: none !important;
                     }
                     .bubble-button-card-container.bubble-button-card-container { margin: 0 !important; min-height: 44px !important; }
                     .bubble-sub-button-1.bubble-sub-button-1 { font-size: 14px !important; font-weight: 700 !important; color: var(--primary-text-color) !important; }
