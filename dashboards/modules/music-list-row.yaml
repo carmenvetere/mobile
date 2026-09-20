@@ -29,14 +29,14 @@ custom_fields:
         return '<ha-icon icon="' + (f[4] === '1' ? 'mdi:chevron-right' : 'mdi:play') + '" style="--mdc-icon-size: 22px; color: var(--slate-bright);"></ha-icon>'; ]]]
 tap_action:
   action: perform-action
-  perform_action: |
-    [[[ var s = states['{{ sensor }}']; var rows = (s && s.attributes.items) ? String(s.attributes.items).split(';') : [];
-        var f = (rows[{{ index }}] || '').split('|'); return f[4] === '1' ? 'script.music_browse' : 'script.music_play_item'; ]]]
+  perform_action: script.music_play_item
   data:
     media_content_id: |
       [[[ var s = states['{{ sensor }}']; var rows = (s && s.attributes.items) ? String(s.attributes.items).split(';') : []; return (rows[{{ index }}] || '').split('|')[3] || ''; ]]]
     media_content_type: |
       [[[ var s = states['{{ sensor }}']; var rows = (s && s.attributes.items) ? String(s.attributes.items).split(';') : []; return (rows[{{ index }}] || '').split('|')[2] || 'music'; ]]]
+    expandable: |
+      [[[ var s = states['{{ sensor }}']; var rows = (s && s.attributes.items) ? String(s.attributes.items).split(';') : []; return (rows[{{ index }}] || '').split('|')[4] === '1'; ]]]
     source: {{ source }}
 styles:
   card:

@@ -115,15 +115,15 @@ cards:
                 card:
                   - background: var(--background-color-2) !important
                   - --ha-card-background: var(--background-color-2)
-                  - border-radius: 15px
-                  - margin: 2px 5px
-                  - padding: 14px
-                  - box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25)
+                  - border-radius: 15px 15px 0 0
+                  - margin: 2px 5px 0
+                  - padding: 14px 14px 0
+                  - box-shadow: none
                   - transition: none
                 grid:
-                  - grid-template-areas: '"art" "title" "transport" "volume"'
+                  - grid-template-areas: '"art" "title" "transport"'
                   - grid-template-columns: minmax(0, 1fr)
-                  - grid-template-rows: auto auto auto auto
+                  - grid-template-rows: auto auto auto
                   - row-gap: 14px
                 custom_fields:
                   art:
@@ -132,8 +132,6 @@ cards:
                     - width: 100%
                   transport:
                     - justify-self: center
-                  volume:
-                    - width: 100%
               custom_fields:
                 # album art, or an mdi:album placeholder on the raised surface
                 art: |
@@ -323,40 +321,43 @@ cards:
                           icon:
                             - width: 30px
                             - color: var(--primary-text-color)
-                # group volume (0-40) — input_number.music_group_volume; the
-                # music_group_volume_* automations push it to every member and
-                # keep it in step with the leader. Tune button -> per-speaker sheet.
-                volume:
-                  card:
-                    type: custom:bubble-card
-                    card_type: button
-                    button_type: slider
-                    entity: input_number.music_group_volume
-                    name: Volume
-                    icon: mdi:volume-medium
-                    card_layout: large
-                    scrolling_effect: false
-                    slider_live_update: false
-                    sub_button:
-                      - entity: input_number.music_group_volume
-                        show_state: true
-                        show_background: false
-                      - icon: mdi:tune-vertical-variant
-                        show_background: true
-                        tap_action:
-                          action: navigate
-                          navigation_path: "#music-volumes"
-                    modules:
-                      - mobile_settings_slider
-                    styles: |
-                      ha-card { margin: 0 !important; }
-                      .bubble-button-card-container.bubble-button-card-container { margin: 0 !important; min-height: 44px !important; }
-                      .bubble-sub-button-1.bubble-sub-button-1 { font-size: 14px !important; font-weight: 700 !important; color: var(--primary-text-color) !important; }
-                      .bubble-sub-button-2.bubble-sub-button-2 {
-                        width: 44px !important; height: 44px !important; border-radius: 15px !important;
-                        background: var(--background-color-3) !important;
-                      }
-                      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; --mdc-icon-size: 22px !important; }
+            # group volume (0-40) — input_number.music_group_volume; the
+            # music_group_volume_* automations push it to every member and keep
+            # it in step with the leader. Sits flush under the player card as
+            # its bottom edge (a Bubble slider can't live inside button-card).
+            # Tune button -> per-speaker sheet.
+            - type: custom:bubble-card
+              card_type: button
+              button_type: slider
+              entity: input_number.music_group_volume
+              name: Volume
+              icon: mdi:volume-medium
+              card_layout: large
+              scrolling_effect: false
+              slider_live_update: false
+              sub_button:
+                - entity: input_number.music_group_volume
+                  show_state: true
+                  show_background: false
+                - icon: mdi:tune-vertical-variant
+                  show_background: true
+                  tap_action:
+                    action: navigate
+                    navigation_path: "#music-volumes"
+              modules:
+                - mobile_settings_slider
+              styles: |
+                ha-card {
+                  margin: 0 5px 2px !important; padding: 14px !important; border-radius: 0 0 15px 15px !important;
+                  background: var(--background-color-2) !important; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+                }
+                .bubble-button-card-container.bubble-button-card-container { margin: 0 !important; min-height: 44px !important; }
+                .bubble-sub-button-1.bubble-sub-button-1 { font-size: 14px !important; font-weight: 700 !important; color: var(--primary-text-color) !important; }
+                .bubble-sub-button-2.bubble-sub-button-2 {
+                  width: 44px !important; height: 44px !important; border-radius: 15px !important;
+                  background: var(--background-color-3) !important;
+                }
+                .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; --mdc-icon-size: 22px !important; }
             # ---------------------------------------------------- 2-up tiles
             - type: grid
               columns: 2
@@ -600,13 +601,16 @@ cards:
         background: var(--background-color-2) !important;
       }
     cards:
-      - type: custom:bubble-card
-        card_type: button
-        button_type: name
+      - type: custom:button-card
+        entity: input_select.music_player
         name: Auto
         icon: mdi:autorenew
-        card_layout: normal
-        scrolling_effect: false
+        show_icon: true
+        show_name: true
+        show_label: true
+        triggers_update:
+          - sensor.music_controlled_player
+          - input_select.music_player
         tap_action:
           action: perform-action
           perform_action: input_select.select_option
@@ -614,31 +618,49 @@ cards:
             entity_id: input_select.music_player
           data:
             option: Auto
-        button_action:
-          tap_action:
-            action: perform-action
-            perform_action: input_select.select_option
-            target:
-              entity_id: input_select.music_player
-            data:
-              option: Auto
-        sub_button:
-          - name: "${(() => { const c = hass.states['sensor.music_controlled_player']; return 'Follows playback' + (c && String(c.attributes.auto) === 'True' || (c && c.attributes.auto === true) ? ' · ' + c.attributes.name : ''); })()}"
-            show_name: true
-            show_background: false
-          - icon: "${hass.states['input_select.music_player'] && hass.states['input_select.music_player'].state === 'Auto' ? 'mdi:check-circle' : 'mdi:chevron-right'}"
-            show_background: false
-        modules:
-          - mobile_lights_scenes
-        styles: |
-          ha-card { margin: 1px 5px !important; }
-          .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
-          .bubble-sub-button-1.bubble-sub-button-1 { font-size: 14px !important; font-weight: 700 !important; }
-          ${hass.states['input_select.music_player'] && hass.states['input_select.music_player'].state === 'Auto' ? `
-          .bubble-button-card-container.bubble-button-card-container,
-          .bubble-button-background.bubble-button-background { background-color: var(--slate-color) !important; }
-          .bubble-name.bubble-name, .bubble-icon.bubble-icon,
-          .bubble-sub-button.bubble-sub-button, .bubble-sub-button.bubble-sub-button ha-icon { color: var(--primary-background-color) !important; }` : ''}
+        label: "[[[ var c = states['sensor.music_controlled_player']; var on = states['input_select.music_player'] && states['input_select.music_player'].state === 'Auto'; return 'Follows playback' + (on && c ? ' · ' + c.attributes.name : ''); ]]]"
+        custom_fields:
+          act: "[[[ var on = states['input_select.music_player'] && states['input_select.music_player'].state === 'Auto'; return '<ha-icon icon=\"' + (on ? 'mdi:check-circle' : 'mdi:chevron-right') + '\" style=\"--mdc-icon-size: 24px; color: ' + (on ? 'var(--primary-background-color)' : 'var(--secondary-text-color)') + ';\"></ha-icon>'; ]]]"
+        styles:
+          card:
+            - background: "[[[ var on = states['input_select.music_player'] && states['input_select.music_player'].state === 'Auto'; return on ? 'var(--slate-color)' : 'var(--background-color-2)'; ]]]"
+            - --ha-card-background: transparent
+            - border-radius: 15px
+            - margin: 1px 5px
+            - padding: 8px 12px
+            - min-height: 56px
+            - box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25)
+            - transition: none
+            - cursor: pointer
+          grid:
+            - grid-template-areas: '"i n act" "i l act"'
+            - grid-template-columns: 40px 1fr 40px
+            - grid-template-rows: auto auto
+            - align-items: center
+            - column-gap: 10px
+          img_cell:
+            - grid-area: i
+            - width: 40px
+            - height: 40px
+          icon:
+            - width: 22px
+            - color: "[[[ var on = states['input_select.music_player'] && states['input_select.music_player'].state === 'Auto'; return on ? 'var(--primary-background-color)' : 'var(--primary-text-color)'; ]]]"
+          name:
+            - grid-area: n
+            - justify-self: start
+            - font-size: 16px
+            - color: "[[[ var on = states['input_select.music_player'] && states['input_select.music_player'].state === 'Auto'; return on ? 'var(--primary-background-color)' : 'var(--primary-text-color)'; ]]]"
+          label:
+            - grid-area: l
+            - justify-self: start
+            - font-size: 14px
+            - font-weight: 700
+            - color: "[[[ var on = states['input_select.music_player'] && states['input_select.music_player'].state === 'Auto'; return on ? 'var(--primary-background-color)' : 'var(--secondary-text-color)'; ]]]"
+          custom_fields:
+            act:
+              - grid-area: act
+              - display: flex
+              - justify-content: center
       - !include
           - /config/dashboards/modules/music-speaker-row.yaml
           -
@@ -744,17 +766,32 @@ cards:
         scrolling_effect: false
         slider_live_update: false
         sub_button:
-          - name: "${(() => { const c = hass.states['sensor.music_controlled_player']; return c ? c.attributes.member_names : ''; })()}"
-            show_name: true
-            show_background: false
           - entity: input_number.music_group_volume
             show_state: true
             show_background: false
         modules:
           - mobile_settings_slider
         styles: |
-          .bubble-sub-button-1.bubble-sub-button-1 { font-size: 14px !important; color: var(--primary-background-color) !important; }
-          .bubble-sub-button-2.bubble-sub-button-2 { font-size: 14px !important; font-weight: 700 !important; }
+          .bubble-sub-button-1.bubble-sub-button-1 { font-size: 14px !important; font-weight: 700 !important; color: var(--primary-text-color) !important; }
+      - type: custom:button-card
+        entity: sensor.music_controlled_player
+        show_icon: false
+        show_name: true
+        triggers_update:
+          - sensor.music_controlled_player
+        tap_action: { action: none }
+        name: "[[[ var c = states['sensor.music_controlled_player']; return c ? c.attributes.member_names : ''; ]]]"
+        styles:
+          card:
+            - background: transparent !important
+            - --ha-card-background: transparent
+            - box-shadow: none
+            - transition: none
+            - padding: 2px 17px 6px
+          name:
+            - justify-self: start
+            - font-size: 14px
+            - color: var(--secondary-text-color)
       - type: custom:bubble-card
         card_type: separator
         name: Individual
@@ -1034,7 +1071,7 @@ cards:
       # results of the last browse (sensor.basement_panel_music_browse); tap plays via Music Assistant
       - type: custom:bubble-card
         card_type: separator
-        name: "${(() => { const s = hass.states['sensor.basement_panel_music_browse']; return (s && s.attributes.title) || 'Results'; })()}"
+        name: Results
         icon: mdi:folder-music
         rows: 0.75
         modules:

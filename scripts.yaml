@@ -481,21 +481,54 @@ music_toggle_group:
             group_members:
               - "{{ entity }}"
 music_play_item:
-  alias: "Music: play an item on the controlled speaker"
+  alias: "Music: play (or browse into) an item on the controlled speaker"
   icon: mdi:play
   mode: queued
   fields:
     media_content_id: { description: Sonos id or Music Assistant uri }
-    media_content_type: { description: playlist / music / radio / album }
-    source: { description: "library (MA uri) or recent (Sonos id)", example: library }
+    media_content_type: { description: playlist / music / radio / album / artist }
+    source: { description: "library (Music Assistant uri) or recent (Sonos id)", example: library }
+    expandable: { description: "true for a browse category, false for a playable item", example: false }
   sequence:
-    # Same routing the wall panel uses (automation.basement_panel_play)
-    - event: esphome.basement_panel_play
-      event_data:
-        entity_id: "{{ states('sensor.music_controlled_player') }}"
-        media_content_id: "{{ media_content_id }}"
-        media_content_type: "{{ media_content_type }}"
-        source: "{{ source | default('recent') }}"
+    - variables:
+        player: "{{ states('sensor.music_controlled_player') }}"
+        # Music Assistant twins of the Sonos players carry the _2 suffix (see the
+        # ma_entities note in music-view.yaml). Fall back to a friendly-name match.
+        ma_player: >-
+          {% set twin = player ~ '_2' %}
+          {% if states(twin) not in ['unknown', 'unavailable'] %}{{ twin }}
+          {% else %}
+            {% set want = state_attr(player, 'friendly_name') %}
+            {% set ns = namespace(found='') %}
+            {% for e in integration_entities('music_assistant') if e.startswith('media_player.') %}
+              {% if not ns.found and want and (state_attr(e, 'friendly_name') | replace(' 2', '')) == want %}{% set ns.found = e %}{% endif %}
+            {% endfor %}
+            {{ ns.found or player }}
+          {% endif %}
+        cid: "{{ media_content_id | replace('%7C', '|') | replace('%3B', ';') }}"
+    - choose:
+        - conditions: "{{ expandable in [true, 'true', 'True', '1'] }}"
+          sequence:
+            - event: esphome.basement_panel_browse
+              event_data:
+                entity_id: "{{ player }}"
+                media_content_id: "{{ media_content_id }}"
+                media_content_type: "{{ media_content_type }}"
+        - conditions: "{{ source == 'library' }}"
+          sequence:
+            - action: music_assistant.play_media
+              target:
+                entity_id: "{{ ma_player }}"
+              data:
+                media_id: "{{ cid }}"
+                media_type: "{{ media_content_type if media_content_type in ['playlist', 'radio', 'album', 'artist', 'track'] else 'playlist' }}"
+      default:
+        - action: media_player.play_media
+          target:
+            entity_id: "{{ player }}"
+          data:
+            media_content_id: "{{ cid }}"
+            media_content_type: "{{ media_content_type or 'music' }}"
 music_browse:
   alias: "Music: browse the Music Assistant library"
   icon: mdi:music-box-multiple

@@ -1,7 +1,8 @@
 # lovelace_gen
-# Music view · Speaker volumes sheet row: one slider per Sonos room, capped at
-# the dashboard's 40 %. Only rendered while the room is in the controlled
-# speaker's group. Vars: name, entity, icon
+# Music view · Speaker volumes sheet row: one Bubble slider per Sonos room,
+# capped at the dashboard's 40 %. Bubble's own value readout shows the level.
+# Rendered only while the room is in the controlled speaker's group (the
+# styles block is the one place Bubble evaluates JS). Vars: name, entity, icon
 type: custom:bubble-card
 card_type: button
 button_type: slider
@@ -14,20 +15,6 @@ min_value: 0
 max_value: 40
 step: 1
 slider_live_update: false
-sub_button:
-  - name: >-
-      ${(() => {
-        const c = hass.states['sensor.music_controlled_player'];
-        const g = (c && c.attributes.group_members) || [];
-        return (g.length > 1 && g[0] === '{{ entity }}') ? 'Group leader' : 'In group';
-      })()}
-    show_name: true
-    show_background: false
-  - entity: {{ entity }}
-    name: "${Math.round(((hass.states['{{ entity }}'] || {attributes:{}}).attributes.volume_level || 0) * 100)}%"
-    show_name: true
-    show_state: false
-    show_background: false
 modules:
   - mobile_settings_slider
 styles: |
@@ -36,5 +23,7 @@ styles: |
     const g = (c && c.attributes.group_members) || [c && c.state];
     return g.includes('{{ entity }}') ? '' : 'ha-card { display: none !important; }';
   })()}
-  .bubble-sub-button-1.bubble-sub-button-1 { font-size: 14px !important; color: var(--primary-background-color) !important; }
-  .bubble-sub-button-2.bubble-sub-button-2 { font-size: 14px !important; font-weight: 700 !important; }
+  .bubble-range-value.bubble-range-value {
+    display: block !important; font-size: 14px !important; font-weight: 700 !important;
+    color: var(--primary-text-color) !important; margin-right: 12px !important;
+  }
