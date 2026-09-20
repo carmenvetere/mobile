@@ -69,6 +69,16 @@ input_datetime:
     has_time: true
 
 input_number:
+  # Music view: group volume for the controlled speaker's Sonos group (0-40,
+  # the dashboard's volume cap). automations music_group_volume_* keep it in
+  # step with the group leader and push changes to every member.
+  music_group_volume:
+    name: Music Group Volume
+    min: 0
+    max: 40
+    step: 1
+    unit_of_measurement: "%"
+    icon: mdi:volume-medium
   sonos_favorites_index:
     name: Sonos Favorites Index
     initial: 1
@@ -467,14 +477,16 @@ input_select:
     name: Music Player
     options:
       - Auto
+      - Media Room
+      - Pool
+      - Mud Room
+      - Gym
       - Living Room
       - Kitchen
       - Office
-      - Gym
       - Deck
-      - Pool
-      - Mud Room
-      - Media Room
+      - Primary Bedroom
+      - Primary Bathroom
     initial: Auto
     icon: mdi:speaker
   # --- Climate overhaul Phase 4: HVAC fan-mode ownership -------------------

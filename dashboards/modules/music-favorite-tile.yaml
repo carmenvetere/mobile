@@ -1,0 +1,50 @@
+# lovelace_gen
+# Music view · Favorites strip tile (104x104, gradient art). Plays the favorite on
+# the controlled speaker. Vars: name, kind (Playlist/Station), media_content_id,
+# media_content_type, art (CSS gradient)
+type: custom:button-card
+name: {{ name }}
+label: {{ kind }}
+show_name: true
+show_label: true
+show_icon: false
+triggers_update:
+  - sensor.music_controlled_player
+tap_action:
+  action: perform-action
+  perform_action: media_player.play_media
+  target:
+    entity_id: "[[[ var c = states['sensor.music_controlled_player']; return c ? c.state : 'media_player.media_room'; ]]]"
+  data:
+    media_content_id: "{{ media_content_id }}"
+    media_content_type: {{ media_content_type }}
+styles:
+  card:
+    - width: 104px
+    - height: 104px
+    - border-radius: 15px
+    - background: "{{ art }}"
+    - --ha-card-background: transparent
+    - box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25)
+    - padding: 10px
+    - transition: none
+  grid:
+    - grid-template-areas: '"n" "l"'
+    - grid-template-rows: 1fr auto
+    - align-items: end
+    - justify-items: start
+  name:
+    - font-size: 14px
+    - font-weight: 700
+    - text-align: left
+    - color: var(--primary-text-color)
+    - white-space: normal
+    - display: -webkit-box
+    - -webkit-line-clamp: 2
+    - -webkit-box-orient: vertical
+    - overflow: hidden
+    - text-shadow: 0 1px 2px rgba(0,0,0,0.5)
+  label:
+    - font-size: 14px
+    - color: var(--secondary-text-color)
+    - text-shadow: 0 1px 2px rgba(0,0,0,0.5)

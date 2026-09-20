@@ -1,0 +1,91 @@
+# lovelace_gen
+# Music view · Speakers sheet row (one per Sonos room).
+# Vars: name, entity, icon
+# Tap the row body -> pin this room (input_select.music_player). The trailing
+# button joins/leaves the controlled speaker's group (script.music_toggle_group).
+# The controlled row is slate with dark text and a check, like the active row in
+# mobile-nav-menu.yaml.
+type: custom:bubble-card
+card_type: button
+button_type: name
+entity: {{ entity }}
+name: {{ name }}
+icon: {{ icon }}
+card_layout: normal
+scrolling_effect: false
+tap_action:
+  action: perform-action
+  perform_action: input_select.select_option
+  target:
+    entity_id: input_select.music_player
+  data:
+    option: {{ name }}
+button_action:
+  tap_action:
+    action: perform-action
+    perform_action: input_select.select_option
+    target:
+      entity_id: input_select.music_player
+    data:
+      option: {{ name }}
+sub_button:
+  - name: >-
+      ${(() => {
+        const s = hass.states['{{ entity }}'];
+        const c = hass.states['sensor.music_controlled_player'];
+        if (!s) return 'Unavailable';
+        const st = s.state === 'playing' ? 'Playing' : s.state === 'paused' ? 'Paused' : 'Idle';
+        const g = s.attributes.group_members || [];
+        if (g.length > 1 && g[0] === '{{ entity }}') return st + ' · leading ' + (g.length - 1);
+        if (g.length > 1) { const lead = c && c.attributes.name && g[0] === c.state ? c.attributes.name : 'group'; return st + ' · with ' + lead; }
+        return st;
+      })()}
+    show_name: true
+    show_state: false
+    show_background: false
+    tap_action:
+      action: perform-action
+      perform_action: input_select.select_option
+      target:
+        entity_id: input_select.music_player
+      data:
+        option: {{ name }}
+  - icon: >-
+      ${(() => {
+        const c = hass.states['sensor.music_controlled_player'];
+        if (c && c.state === '{{ entity }}') return 'mdi:check-circle';
+        const g = (c && c.attributes.group_members) || [];
+        return g.includes('{{ entity }}') ? 'mdi:minus' : 'mdi:plus';
+      })()}
+    show_background: true
+    tap_action:
+      action: perform-action
+      perform_action: script.music_toggle_group
+      data:
+        entity: {{ entity }}
+modules:
+  - mobile_lights_scenes
+styles: |
+  ha-card { margin: 1px 5px !important; }
+  .bubble-button-card-container.bubble-button-card-container { margin: 1px 5px !important; }
+  .bubble-sub-button-1.bubble-sub-button-1 { font-size: 14px !important; font-weight: 700 !important; }
+  .bubble-sub-button-2.bubble-sub-button-2 {
+    width: 40px !important; height: 40px !important; border-radius: 999px !important;
+    background: var(--background-color-3) !important;
+  }
+  .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; --mdc-icon-size: 22px !important; }
+  ${(() => {
+    const c = hass.states['sensor.music_controlled_player'];
+    const s = hass.states['{{ entity }}'];
+    const active = c && c.state === '{{ entity }}';
+    const playing = s && s.state === 'playing';
+    if (active) return `
+      .bubble-button-card-container.bubble-button-card-container,
+      .bubble-button-background.bubble-button-background { background-color: var(--slate-color) !important; }
+      .bubble-name.bubble-name, .bubble-icon.bubble-icon,
+      .bubble-sub-button.bubble-sub-button, .bubble-sub-button.bubble-sub-button ha-icon { color: var(--primary-background-color) !important; }
+      .bubble-sub-button-2.bubble-sub-button-2 { background: transparent !important; }
+      .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--primary-background-color) !important; --mdc-icon-size: 24px !important; }
+    `;
+    return `.bubble-sub-button-1.bubble-sub-button-1 { color: ${playing ? 'var(--slate-bright)' : 'var(--secondary-text-color)'} !important; }`;
+  })()}

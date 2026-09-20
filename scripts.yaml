@@ -454,3 +454,58 @@ sprinkler_stop_all:
   - action: timer.cancel
     target:
       entity_id: timer.sprinkler_pause
+music_toggle_group:
+  alias: "Music: join or leave the controlled speaker's group"
+  icon: mdi:speaker-multiple
+  mode: queued
+  fields:
+    entity:
+      description: Sonos media_player to add to / remove from the controlled group
+      example: media_player.pool
+  sequence:
+    - variables:
+        leader: "{{ states('sensor.music_controlled_player') }}"
+        members: "{{ state_attr('sensor.music_controlled_player', 'group_members') or [leader] }}"
+    - if:
+        - condition: template
+          value_template: "{{ entity in members }}"
+      then:
+        - action: media_player.unjoin
+          target:
+            entity_id: "{{ entity }}"
+      else:
+        - action: media_player.join
+          target:
+            entity_id: "{{ leader }}"
+          data:
+            group_members:
+              - "{{ entity }}"
+music_play_item:
+  alias: "Music: play an item on the controlled speaker"
+  icon: mdi:play
+  mode: queued
+  fields:
+    media_content_id: { description: Sonos id or Music Assistant uri }
+    media_content_type: { description: playlist / music / radio / album }
+    source: { description: "library (MA uri) or recent (Sonos id)", example: library }
+  sequence:
+    # Same routing the wall panel uses (automation.basement_panel_play)
+    - event: esphome.basement_panel_play
+      event_data:
+        entity_id: "{{ states('sensor.music_controlled_player') }}"
+        media_content_id: "{{ media_content_id }}"
+        media_content_type: "{{ media_content_type }}"
+        source: "{{ source | default('recent') }}"
+music_browse:
+  alias: "Music: browse the Music Assistant library"
+  icon: mdi:music-box-multiple
+  mode: restart
+  fields:
+    media_content_id: { description: "playlist / radio / album / artist / favorite", example: playlist }
+  sequence:
+    # The wall panel package answers into sensor.basement_panel_music_browse
+    - event: esphome.basement_panel_browse
+      event_data:
+        entity_id: "{{ states('sensor.music_controlled_player') }}"
+        media_content_id: "{{ media_content_id }}"
+        media_content_type: "{{ media_content_id }}"

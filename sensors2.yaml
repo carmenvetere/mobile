@@ -1232,3 +1232,49 @@
         {% if is_state('input_boolean.dinner_party','on') %}Dinner Party
         {% elif is_state('input_boolean.guest_mode','on') %}Overnight Guests
         {% endif %}
+
+# ---- Music view: the speaker the mobile Music view controls ------------------
+# State = the Sonos entity id. input_select.music_player pins a room; Auto
+# follows playback (first playing group coordinator, else Media Room). The
+# attributes carry everything the view's cards render so one entity drives
+# their updates.
+- sensor:
+    - name: "Music Controlled Player"
+      unique_id: music_controlled_player
+      icon: mdi:speaker-multiple
+      state: >
+        {% set names = {'media_player.media_room': 'Media Room', 'media_player.pool': 'Pool', 'media_player.mud_room': 'Mud Room', 'media_player.gym': 'Gym', 'media_player.living_room': 'Living Room', 'media_player.kitchen': 'Kitchen', 'media_player.office': 'Office', 'media_player.deck': 'Deck', 'media_player.primary_bedroom': 'Primary Bedroom', 'media_player.primary_bathroom': 'Primary Bathroom'} %}
+        {% set opts = {'Media Room': 'media_player.media_room', 'Pool': 'media_player.pool', 'Mud Room': 'media_player.mud_room', 'Gym': 'media_player.gym', 'Living Room': 'media_player.living_room', 'Kitchen': 'media_player.kitchen', 'Office': 'media_player.office', 'Deck': 'media_player.deck', 'Primary Bedroom': 'media_player.primary_bedroom', 'Primary Bathroom': 'media_player.primary_bathroom'} %}
+        {% set sel = states('input_select.music_player') %}
+        {% if sel in opts %}{{ opts[sel] }}
+        {% else %}
+          {% set playing = names.keys() | select('is_state', 'playing') | list %}
+          {% set ns = namespace(c=none) %}
+          {% for e in playing %}{% set g = state_attr(e, 'group_members') or [] %}
+            {% if ns.c is none and (g | length == 0 or g[0] == e) %}{% set ns.c = e %}{% endif %}
+          {% endfor %}
+          {{ ns.c or (playing[0] if playing else 'media_player.media_room') }}
+        {% endif %}
+      attributes:
+        name: >
+          {% set names = {'media_player.media_room': 'Media Room', 'media_player.pool': 'Pool', 'media_player.mud_room': 'Mud Room', 'media_player.gym': 'Gym', 'media_player.living_room': 'Living Room', 'media_player.kitchen': 'Kitchen', 'media_player.office': 'Office', 'media_player.deck': 'Deck', 'media_player.primary_bedroom': 'Primary Bedroom', 'media_player.primary_bathroom': 'Primary Bathroom'} %}
+          {{ names.get(this.state, 'Media Room') }}
+        auto: "{{ is_state('input_select.music_player', 'Auto') }}"
+        group_members: "{{ state_attr(this.state, 'group_members') or [this.state] }}"
+        group_count: "{{ (state_attr(this.state, 'group_members') or [this.state]) | length }}"
+        member_names: >
+          {% set names = {'media_player.media_room': 'Media Room', 'media_player.pool': 'Pool', 'media_player.mud_room': 'Mud Room', 'media_player.gym': 'Gym', 'media_player.living_room': 'Living Room', 'media_player.kitchen': 'Kitchen', 'media_player.office': 'Office', 'media_player.deck': 'Deck', 'media_player.primary_bedroom': 'Primary Bedroom', 'media_player.primary_bathroom': 'Primary Bathroom'} %}
+          {% set ns = namespace(out=[]) %}
+          {% for e in (state_attr(this.state, 'group_members') or [this.state]) if e in names %}{% set ns.out = ns.out + [names[e]] %}{% endfor %}
+          {{ ns.out | join(' + ') }}
+        player_state: "{{ states(this.state) }}"
+        title: "{{ state_attr(this.state, 'media_title') or '' }}"
+        subtitle: >
+          {% set a = states[this.state].attributes if states[this.state] is not none else {} %}
+          {% set artist = a.media_artist or '' %}{% set album = a.media_album_name or '' %}
+          {{ (artist ~ (' · ' ~ album if album and artist else album)) or a.media_channel or a.media_playlist or '' }}
+        picture: "{{ state_attr(this.state, 'entity_picture') or '' }}"
+        volume: "{{ ((state_attr(this.state, 'volume_level') or 0) | float * 100) | round(0) | int }}"
+        playing_count: >
+          {% set names = {'media_player.media_room': 'Media Room', 'media_player.pool': 'Pool', 'media_player.mud_room': 'Mud Room', 'media_player.gym': 'Gym', 'media_player.living_room': 'Living Room', 'media_player.kitchen': 'Kitchen', 'media_player.office': 'Office', 'media_player.deck': 'Deck', 'media_player.primary_bedroom': 'Primary Bedroom', 'media_player.primary_bathroom': 'Primary Bathroom'} %}
+          {{ names.keys() | select('is_state', 'playing') | list | length }}
