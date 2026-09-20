@@ -467,9 +467,10 @@ cards:
               rows: 0.75
               modules:
                 - mobile_separator
-            # horizontally scrolling strip of 104px tiles (grid card turned into a flex row)
+            # horizontally scrolling strip of 104px tiles from Music Assistant
+            # favourites (sensor.music_favorites); empty slots stay hidden
             - type: grid
-              columns: 13
+              columns: 12
               square: false
               card_mod:
                 style: |
@@ -483,107 +484,51 @@ cards:
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "MS NOW"
-                      kind: Station
-                      media_content_id: "x-sonosapi-hls:channel-linear%3a95bffee3-e903-ca28-6332-1b94f41a8962?sid=37&flags=8200&sn=5"
-                      media_content_type: music
-                      art: "linear-gradient(135deg, #c8102e 0%, #1a1c1f 100%)"
+                      index: 0
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "Pool Mix - 2026"
-                      kind: Playlist
-                      media_content_id: "spotify:playlist:0KkRPLBW2cciKaSkNIdyO3"
-                      media_content_type: playlist
-                      art: "linear-gradient(135deg, #00b3a4 0%, #f4d35e 100%)"
+                      index: 1
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "1 Hotel South Beach Poolside Playlist"
-                      kind: Playlist
-                      media_content_id: "spotify:playlist:7z1cddbJ1L62FZpTVZBj2i"
-                      media_content_type: playlist
-                      art: "linear-gradient(135deg, #00b3a4 0%, #f4d35e 100%)"
+                      index: 2
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "Top 50 - United Kingdom"
-                      kind: Playlist
-                      media_content_id: "spotify:playlist:1QM1qz09ZzsAPiXphF1l4S"
-                      media_content_type: playlist
-                      art: "linear-gradient(135deg, #012169 0%, #c8102e 100%)"
+                      index: 3
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "Top 50 - Australia"
-                      kind: Playlist
-                      media_content_id: "spotify:playlist:37i9dQZEVXbJPcfkRz0wJ0"
-                      media_content_type: playlist
-                      art: "linear-gradient(135deg, #00843d 0%, #ffcd00 100%)"
+                      index: 4
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "Pool Mix - 2025"
-                      kind: Playlist
-                      media_content_id: "spotify:playlist:2rA0wj0dnIyj1A5Uaoogaa"
-                      media_content_type: playlist
-                      art: "linear-gradient(135deg, #4fb6e6 0%, #f7d774 100%)"
+                      index: 5
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "French Riviera Summer Vibes"
-                      kind: Playlist
-                      media_content_id: "spotify:playlist:0bBQoJtfEIEtOkqv8e4JZJ"
-                      media_content_type: playlist
-                      art: "linear-gradient(135deg, #0055a4 0%, #f4d35e 100%)"
+                      index: 6
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "Hotel Costes Radio"
-                      kind: Playlist
-                      media_content_id: "spotify:playlist:37i9dQZF1E4mWbHqaowOUP"
-                      media_content_type: playlist
-                      art: "linear-gradient(135deg, #1a1a1a 0%, #6a4a2c 100%)"
+                      index: 7
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "Pop & Dance Mix"
-                      kind: Station
-                      media_content_id: "x-sonosapi-hls-static:channel-xtra%3adc93524a-aa6d-b0c4-0d53-caabac97500c%3a15ebc9ab-82ba-0dd1-0276-d408113397df?sid=37&flags=32768&sn=5"
-                      media_content_type: music
-                      art: "linear-gradient(135deg, #ff006e 0%, #8338ec 100%)"
+                      index: 8
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "Chill Mix"
-                      kind: Playlist
-                      media_content_id: "spotify:playlist:37i9dQZF1EVHGWrwldPRtj"
-                      media_content_type: playlist
-                      art: "linear-gradient(135deg, #2a3540 0%, #6a4ec8 100%)"
+                      index: 9
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "Bridgerton Playlist"
-                      kind: Playlist
-                      media_content_id: "spotify:playlist:37i9dQZF1DX5Hl0iWtr5b3"
-                      media_content_type: playlist
-                      art: "linear-gradient(135deg, #d8a7b1 0%, #6e3a5b 100%)"
+                      index: 10
                 - !include
                     - /config/dashboards/modules/music-favorite-tile.yaml
                     -
-                      name: "The Best of Ella & Louis"
-                      kind: Playlist
-                      media_content_id: "spotify:playlist:502ADPBCxITjzQZOlnAjQQ"
-                      media_content_type: playlist
-                      art: "linear-gradient(135deg, #3d2914 0%, #d4a574 100%)"
-                - !include
-                    - /config/dashboards/modules/music-favorite-tile.yaml
-                    -
-                      name: "4th of July Pool Party"
-                      kind: Playlist
-                      media_content_id: "spotify:playlist:5lfFrs1X6A1HDxt2WEFr9u"
-                      media_content_type: playlist
-                      art: "linear-gradient(135deg, #b31942 0%, #0a3161 100%)"
+                      index: 11
   # ---- Speakers sheet (#music-speakers) — top drawer like the nav sheet
   - type: custom:bubble-card
     card_type: pop-up
@@ -922,33 +867,33 @@ cards:
       - !include
           - /config/dashboards/modules/music-list-row.yaml
           -
-            sensor: sensor.basement_panel_music_recent
+            sensor: sensor.music_recent
             index: 0
-            source: recent
+            source: library
       - !include
           - /config/dashboards/modules/music-list-row.yaml
           -
-            sensor: sensor.basement_panel_music_recent
+            sensor: sensor.music_recent
             index: 1
-            source: recent
+            source: library
       - !include
           - /config/dashboards/modules/music-list-row.yaml
           -
-            sensor: sensor.basement_panel_music_recent
+            sensor: sensor.music_recent
             index: 2
-            source: recent
+            source: library
       - !include
           - /config/dashboards/modules/music-list-row.yaml
           -
-            sensor: sensor.basement_panel_music_recent
+            sensor: sensor.music_recent
             index: 3
-            source: recent
+            source: library
       - !include
           - /config/dashboards/modules/music-list-row.yaml
           -
-            sensor: sensor.basement_panel_music_recent
+            sensor: sensor.music_recent
             index: 4
-            source: recent
+            source: library
       - type: custom:bubble-card
         card_type: separator
         name: Library

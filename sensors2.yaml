@@ -1278,3 +1278,102 @@
         playing_count: >
           {% set names = {'media_player.media_room': 'Media Room', 'media_player.pool': 'Pool', 'media_player.mud_room': 'Mud Room', 'media_player.gym': 'Gym', 'media_player.living_room': 'Living Room', 'media_player.kitchen': 'Kitchen', 'media_player.office': 'Office', 'media_player.deck': 'Deck', 'media_player.primary_bedroom': 'Primary Bedroom', 'media_player.primary_bathroom': 'Primary Bathroom'} %}
           {{ names.keys() | select('is_state', 'playing') | list | length }}
+
+# ---- Music view: Music Assistant favorites and recently played --------------
+# Refreshed every 10 minutes, at start-up, and whenever a Sonos player changes
+# what it is playing. Rows use the wall-panel row format
+# name|sub|type|uri|expandable|image so the same list/tile modules render them.
+- trigger:
+    - trigger: time_pattern
+      minutes: "/10"
+    - trigger: homeassistant
+      event: start
+    - trigger: state
+      entity_id:
+        - media_player.media_room
+        - media_player.pool
+        - media_player.mud_room
+        - media_player.gym
+        - media_player.living_room
+        - media_player.kitchen
+        - media_player.office
+        - media_player.deck
+        - media_player.primary_bedroom
+        - media_player.primary_bathroom
+      attribute: media_content_id
+  action:
+    - variables:
+        ma_player: >-
+          {% set ns = namespace(e='') %}
+          {% for e in integration_entities('music_assistant') if e.startswith('media_player.') %}{% if not ns.e %}{% set ns.e = e %}{% endif %}{% endfor %}
+          {{ ns.e }}
+        ma_entry: "{{ config_entry_id(ma_player) if ma_player else '' }}"
+    - action: music_assistant.get_library
+      data: { config_entry_id: "{{ ma_entry }}", media_type: playlist, favorite: true, limit: 12, order_by: name }
+      response_variable: fav_p
+      continue_on_error: true
+    - action: music_assistant.get_library
+      data: { config_entry_id: "{{ ma_entry }}", media_type: radio, favorite: true, limit: 8, order_by: name }
+      response_variable: fav_r
+      continue_on_error: true
+    - action: music_assistant.get_library
+      data: { config_entry_id: "{{ ma_entry }}", media_type: album, favorite: true, limit: 8, order_by: name }
+      response_variable: fav_a
+      continue_on_error: true
+    - action: music_assistant.get_library
+      data: { config_entry_id: "{{ ma_entry }}", media_type: playlist, limit: 5, order_by: last_played_desc }
+      response_variable: rec_p
+      continue_on_error: true
+    - action: music_assistant.get_library
+      data: { config_entry_id: "{{ ma_entry }}", media_type: radio, limit: 3, order_by: last_played_desc }
+      response_variable: rec_r
+      continue_on_error: true
+    - action: music_assistant.get_library
+      data: { config_entry_id: "{{ ma_entry }}", media_type: album, limit: 3, order_by: last_played_desc }
+      response_variable: rec_a
+      continue_on_error: true
+    - variables:
+        fav_items: >-
+          {% set items = (fav_p['items'] if fav_p is defined and fav_p is mapping and fav_p['items'] is defined else [])
+                       + (fav_r['items'] if fav_r is defined and fav_r is mapping and fav_r['items'] is defined else [])
+                       + (fav_a['items'] if fav_a is defined and fav_a is mapping and fav_a['items'] is defined else []) %}
+          {% set ns = namespace(out=[]) %}
+          {% for it in items[:20] %}
+            {% set artists = it.artists | map(attribute='name') | join(', ') if it.artists is defined and it.artists else '' %}
+            {% set sub = artists if artists else (it.media_type | default('') | replace('_', ' ') | title) %}
+            {% set ns.out = ns.out + [
+              (it.name | default('') | string | replace('|', '/') | replace(';', ',')) ~ '|'
+              ~ (sub | string | replace('|', '/') | replace(';', ',')) ~ '|' ~ (it.media_type | default('playlist')) ~ '|'
+              ~ (it.uri | default('') | string | replace('|', '%7C') | replace(';', '%3B')) ~ '|0|'
+              ~ (it.image | default('') | string | replace('|', '%7C') | replace(';', '%3B'))] %}
+          {% endfor %}
+          {{ ns.out | join(';') }}
+        rec_items: >-
+          {% set items = (rec_p['items'] if rec_p is defined and rec_p is mapping and rec_p['items'] is defined else [])
+                       + (rec_r['items'] if rec_r is defined and rec_r is mapping and rec_r['items'] is defined else [])
+                       + (rec_a['items'] if rec_a is defined and rec_a is mapping and rec_a['items'] is defined else []) %}
+          {% set ns = namespace(out=[]) %}
+          {% for it in items[:8] %}
+            {% set artists = it.artists | map(attribute='name') | join(', ') if it.artists is defined and it.artists else '' %}
+            {% set sub = artists if artists else (it.media_type | default('') | replace('_', ' ') | title) %}
+            {% set ns.out = ns.out + [
+              (it.name | default('') | string | replace('|', '/') | replace(';', ',')) ~ '|'
+              ~ (sub | string | replace('|', '/') | replace(';', ',')) ~ '|' ~ (it.media_type | default('playlist')) ~ '|'
+              ~ (it.uri | default('') | string | replace('|', '%7C') | replace(';', '%3B')) ~ '|0|'
+              ~ (it.image | default('') | string | replace('|', '%7C') | replace(';', '%3B'))] %}
+          {% endfor %}
+          {{ ns.out | join(';') }}
+  sensor:
+    - name: "Music Favorites"
+      unique_id: music_favorites
+      icon: mdi:heart
+      state: "{{ fav_items.split(';') | reject('eq', '') | list | length if fav_items else 0 }}"
+      attributes:
+        player: "{{ ma_player }}"
+        items: "{{ fav_items | trim }}"
+    - name: "Music Recent"
+      unique_id: music_recent
+      icon: mdi:history
+      state: "{{ rec_items.split(';') | reject('eq', '') | list | length if rec_items else 0 }}"
+      attributes:
+        items: "{{ rec_items | trim }}"
