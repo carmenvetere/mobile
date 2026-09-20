@@ -100,273 +100,276 @@ cards:
       main:
         card:
           type: vertical-stack
-          # The player card and the volume slider are one visual card: strip the
-          # stack's own gap between them (HA gives each child 4px top/bottom).
-          card_mod:
-            style: |
-              #root > :nth-child(1) { margin-bottom: 0 !important; }
-              #root > :nth-child(2) { margin-top: 0 !important; }
           cards:
-            # ---------------------------------------------------- Player card
-            # Everything reads sensor.music_controlled_player (the room pinned
-            # in input_select.music_player, or whatever is playing on Auto).
-            - type: custom:button-card
-              entity: sensor.music_controlled_player
-              show_icon: false
-              show_name: false
-              show_state: false
-              triggers_update:
-                - sensor.music_controlled_player
-              tap_action: { action: none }
-              styles:
-                card:
-                  - background: var(--background-color-2) !important
-                  - --ha-card-background: var(--background-color-2)
-                  - border-radius: 15px 15px 0 0
-                  - margin: 2px 5px 0
-                  - padding: 14px 14px 0
-                  - box-shadow: none
-                  - transition: none
-                grid:
-                  - grid-template-areas: '"art" "title" "transport"'
-                  - grid-template-columns: minmax(0, 1fr)
-                  - grid-template-rows: auto auto auto
-                  - row-gap: 14px
-                custom_fields:
-                  art:
-                    - width: 100%
-                  title:
-                    - width: 100%
-                  transport:
-                    - justify-self: center
-              custom_fields:
-                # album art, or an mdi:album placeholder on the raised surface
-                art: |
-                  [[[
-                    var c = states['sensor.music_controlled_player']; var p = c && c.attributes.picture;
-                    // full width on a phone, capped at 320px (and centred) on wider screens
-                    var box = 'width:100%;max-width:320px;margin:0 auto;aspect-ratio:1/1;border-radius:11px;background:var(--background-color-3);';
-                    if (p) return '<img src="' + p + '" style="display:block;' + box + 'object-fit:cover;">';
-                    return '<div style="' + box + 'display:flex;align-items:center;justify-content:center;"><ha-icon icon="mdi:album" style="--mdc-icon-size:72px;color:var(--secondary-text-color);"></ha-icon></div>';
-                  ]]]
-                # title / artist · album on the left, speaker chip on the right
-                title:
-                  card:
-                    type: custom:button-card
-                    entity: sensor.music_controlled_player
-                    show_icon: false
-                    show_name: true
-                    show_label: true
-                    triggers_update:
-                      - sensor.music_controlled_player
-                    tap_action: { action: none }
-                    name: "[[[ var c = states['sensor.music_controlled_player']; var t = c && c.attributes.title; return t || (c && c.attributes.player_state === 'playing' ? 'Playing' : 'Nothing playing'); ]]]"
-                    label: "[[[ var c = states['sensor.music_controlled_player']; return (c && c.attributes.subtitle) || ''; ]]]"
-                    styles:
-                      card:
-                        - background: transparent !important
-                        - --ha-card-background: transparent
-                        - box-shadow: none
-                        - transition: none
-                        - padding: 0
-                      grid:
-                        - grid-template-areas: '"n chip" "l chip"'
-                        - grid-template-columns: minmax(0, 1fr) auto
-                        - grid-template-rows: auto auto
-                        - column-gap: 12px
-                        - align-items: center
-                      name:
-                        - grid-area: n
-                        - justify-self: start
-                        - text-align: left
-                        - font-size: 20px
-                        - font-weight: 700
-                        - line-height: 1.2
-                        - color: var(--primary-text-color)
-                        - white-space: normal
-                        - overflow: hidden
-                        - display: -webkit-box
-                        - -webkit-line-clamp: 2
-                        - -webkit-box-orient: vertical
-                      label:
-                        - grid-area: l
-                        - justify-self: start
-                        - text-align: left
-                        - font-size: 14px
-                        - color: var(--secondary-text-color)
-                        - white-space: nowrap
-                        - overflow: hidden
-                        - text-overflow: ellipsis
-                        - max-width: 100%
-                      custom_fields:
-                        chip:
-                          - grid-area: chip
-                          - align-self: center
+            # The player card and the volume slider are one visual card: an inner
+            # stack with no gap and no child margins keeps them seamless whichever
+            # way HA spaces stack children (flex gap or per-child margins).
+            - type: vertical-stack
+              card_mod:
+                style: |
+                  #root { gap: 0 !important; row-gap: 0 !important; }
+                  #root > * { margin: 0 !important; }
+              cards:
+                # ---------------------------------------------------- Player card
+                # Everything reads sensor.music_controlled_player (the room pinned
+                # in input_select.music_player, or whatever is playing on Auto).
+                - type: custom:button-card
+                  entity: sensor.music_controlled_player
+                  show_icon: false
+                  show_name: false
+                  show_state: false
+                  triggers_update:
+                    - sensor.music_controlled_player
+                  tap_action: { action: none }
+                  styles:
+                    card:
+                      - background: var(--background-color-2) !important
+                      - --ha-card-background: var(--background-color-2)
+                      - border-radius: 15px 15px 0 0
+                      - margin: 2px 5px 0
+                      - padding: 14px 14px 0
+                      - box-shadow: none
+                      - transition: none
+                    grid:
+                      - grid-template-areas: '"art" "title" "transport"'
+                      - grid-template-columns: minmax(0, 1fr)
+                      - grid-template-rows: auto auto auto
+                      - row-gap: 14px
                     custom_fields:
-                      chip:
-                        card:
-                          type: custom:button-card
-                          entity: sensor.music_controlled_player
-                          show_icon: true
-                          show_name: true
-                          icon: mdi:speaker-multiple
-                          triggers_update:
-                            - sensor.music_controlled_player
-                          name: "[[[ var c = states['sensor.music_controlled_player']; if (!c) return 'Speaker'; var n = parseInt(c.attributes.group_count || 1); return c.attributes.name + (n > 1 ? ' +' + (n - 1) : ''); ]]]"
+                      art:
+                        - width: 100%
+                      title:
+                        - width: 100%
+                      transport:
+                        - justify-self: center
+                  custom_fields:
+                    # album art, or an mdi:album placeholder on the raised surface
+                    art: |
+                      [[[
+                        var c = states['sensor.music_controlled_player']; var p = c && c.attributes.picture;
+                        // full width on a phone, capped at 320px (and centred) on wider screens
+                        var box = 'width:100%;max-width:320px;margin:0 auto;aspect-ratio:1/1;border-radius:11px;background:var(--background-color-3);';
+                        if (p) return '<img src="' + p + '" style="display:block;' + box + 'object-fit:cover;">';
+                        return '<div style="' + box + 'display:flex;align-items:center;justify-content:center;"><ha-icon icon="mdi:album" style="--mdc-icon-size:72px;color:var(--secondary-text-color);"></ha-icon></div>';
+                      ]]]
+                    # title / artist · album on the left, speaker chip on the right
+                    title:
+                      card:
+                        type: custom:button-card
+                        entity: sensor.music_controlled_player
+                        show_icon: false
+                        show_name: true
+                        show_label: true
+                        triggers_update:
+                          - sensor.music_controlled_player
+                        tap_action: { action: none }
+                        name: "[[[ var c = states['sensor.music_controlled_player']; var t = c && c.attributes.title; return t || (c && c.attributes.player_state === 'playing' ? 'Playing' : 'Nothing playing'); ]]]"
+                        label: "[[[ var c = states['sensor.music_controlled_player']; return (c && c.attributes.subtitle) || ''; ]]]"
+                        styles:
+                          card:
+                            - background: transparent !important
+                            - --ha-card-background: transparent
+                            - box-shadow: none
+                            - transition: none
+                            - padding: 0
+                          grid:
+                            - grid-template-areas: '"n chip" "l chip"'
+                            - grid-template-columns: minmax(0, 1fr) auto
+                            - grid-template-rows: auto auto
+                            - column-gap: 12px
+                            - align-items: center
+                          name:
+                            - grid-area: n
+                            - justify-self: start
+                            - text-align: left
+                            - font-size: 20px
+                            - font-weight: 700
+                            - line-height: 1.2
+                            - color: var(--primary-text-color)
+                            - white-space: normal
+                            - overflow: hidden
+                            - display: -webkit-box
+                            - -webkit-line-clamp: 2
+                            - -webkit-box-orient: vertical
+                          label:
+                            - grid-area: l
+                            - justify-self: start
+                            - text-align: left
+                            - font-size: 14px
+                            - color: var(--secondary-text-color)
+                            - white-space: nowrap
+                            - overflow: hidden
+                            - text-overflow: ellipsis
+                            - max-width: 100%
                           custom_fields:
-                            chev: '<ha-icon icon="mdi:chevron-down" style="--mdc-icon-size: 18px; color: var(--secondary-text-color);"></ha-icon>'
-                          tap_action:
-                            action: navigate
-                            navigation_path: "#music-speakers"
-                          styles:
+                            chip:
+                              - grid-area: chip
+                              - align-self: center
+                        custom_fields:
+                          chip:
                             card:
-                              - height: 36px
-                              - border-radius: 18px
-                              - padding: 0 12px 0 10px
-                              - background: var(--background-color-3) !important
-                              - --ha-card-background: var(--background-color-3)
-                              - box-shadow: none
-                              - transition: none
-                              - cursor: pointer
-                            grid:
-                              - grid-template-areas: '"i n chev"'
-                              - grid-template-columns: auto auto auto
-                              - grid-template-rows: 1fr
-                              - align-items: center
-                              - column-gap: 6px
-                            img_cell:
-                              - width: 18px
-                              - height: 18px
-                            icon:
-                              - width: 18px
-                              - color: var(--slate-bright)
-                            name:
-                              - font-size: 14px
-                              - font-weight: 700
-                              - color: var(--primary-text-color)
-                              - white-space: nowrap
-                            custom_fields:
-                              chev:
-                                - display: flex
-                # prev / play-pause / next on the controlled speaker (the group
-                # leader carries the group)
-                transport:
-                  card:
-                    type: horizontal-stack
-                    card_mod:
-                      style: |
-                        #root { justify-content: center !important; column-gap: 22px !important; }
-                        #root > * { flex: 0 0 auto !important; }
-                    cards:
-                      - type: custom:button-card
-                        show_name: false
-                        show_icon: true
-                        icon: mdi:skip-previous
-                        triggers_update:
-                          - sensor.music_controlled_player
-                        tap_action:
-                          action: perform-action
-                          perform_action: media_player.media_previous_track
-                          target:
-                            entity_id: "[[[ var c = states['sensor.music_controlled_player']; return c ? c.state : 'media_player.media_room'; ]]]"
-                        styles:
-                          card:
-                            - width: 60px
-                            - height: 60px
-                            - border-radius: 999px
-                            - background: var(--background-color-3) !important
-                            - --ha-card-background: var(--background-color-3)
-                            - box-shadow: none
-                            - transition: none
-                            - padding: 0
-                          icon:
-                            - width: 30px
-                            - color: var(--primary-text-color)
-                      - type: custom:button-card
-                        show_name: false
-                        show_icon: true
-                        icon: "[[[ var c = states['sensor.music_controlled_player']; return (c && c.attributes.player_state === 'playing') ? 'mdi:pause' : 'mdi:play'; ]]]"
-                        triggers_update:
-                          - sensor.music_controlled_player
-                        tap_action:
-                          action: perform-action
-                          perform_action: media_player.media_play_pause
-                          target:
-                            entity_id: "[[[ var c = states['sensor.music_controlled_player']; return c ? c.state : 'media_player.media_room'; ]]]"
-                        styles:
-                          card:
-                            - width: 68px
-                            - height: 68px
-                            - border-radius: 999px
-                            - background: var(--slate-color) !important
-                            - --ha-card-background: var(--slate-color)
-                            - box-shadow: none
-                            - transition: none
-                            - padding: 0
-                          icon:
-                            - width: 36px
-                            - color: var(--text-primary-color)
-                      - type: custom:button-card
-                        show_name: false
-                        show_icon: true
-                        icon: mdi:skip-next
-                        triggers_update:
-                          - sensor.music_controlled_player
-                        tap_action:
-                          action: perform-action
-                          perform_action: media_player.media_next_track
-                          target:
-                            entity_id: "[[[ var c = states['sensor.music_controlled_player']; return c ? c.state : 'media_player.media_room'; ]]]"
-                        styles:
-                          card:
-                            - width: 60px
-                            - height: 60px
-                            - border-radius: 999px
-                            - background: var(--background-color-3) !important
-                            - --ha-card-background: var(--background-color-3)
-                            - box-shadow: none
-                            - transition: none
-                            - padding: 0
-                          icon:
-                            - width: 30px
-                            - color: var(--primary-text-color)
-            # group volume (0-40) — input_number.music_group_volume; the
-            # music_group_volume_* automations push it to every member and keep
-            # it in step with the leader. Sits flush under the player card as
-            # its bottom edge (a Bubble slider can't live inside button-card).
-            # Tune button -> per-speaker sheet.
-            - type: custom:bubble-card
-              card_type: button
-              button_type: slider
-              entity: input_number.music_group_volume
-              name: Volume
-              icon: mdi:volume-medium
-              card_layout: large
-              scrolling_effect: false
-              slider_live_update: false
-              sub_button:
-                - entity: input_number.music_group_volume
-                  show_state: true
-                  show_background: false
-                - icon: mdi:tune-vertical-variant
-                  show_background: true
-                  tap_action:
-                    action: navigate
-                    navigation_path: "#music-volumes"
-              modules:
-                - mobile_settings_slider
-              styles: |
-                ha-card {
-                  margin: 0 5px 2px !important; padding: 14px !important; border-radius: 0 0 15px 15px !important;
-                  background: var(--background-color-2) !important; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
-                }
-                .bubble-button-card-container.bubble-button-card-container { margin: 0 !important; min-height: 44px !important; }
-                .bubble-sub-button-1.bubble-sub-button-1 { font-size: 14px !important; font-weight: 700 !important; color: var(--primary-text-color) !important; }
-                .bubble-sub-button-2.bubble-sub-button-2 {
-                  width: 44px !important; height: 44px !important; border-radius: 15px !important;
-                  background: var(--background-color-3) !important;
-                }
-                .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; --mdc-icon-size: 22px !important; }
+                              type: custom:button-card
+                              entity: sensor.music_controlled_player
+                              show_icon: true
+                              show_name: true
+                              icon: mdi:speaker-multiple
+                              triggers_update:
+                                - sensor.music_controlled_player
+                              name: "[[[ var c = states['sensor.music_controlled_player']; if (!c) return 'Speaker'; var n = parseInt(c.attributes.group_count || 1); return c.attributes.name + (n > 1 ? ' +' + (n - 1) : ''); ]]]"
+                              custom_fields:
+                                chev: '<ha-icon icon="mdi:chevron-down" style="--mdc-icon-size: 18px; color: var(--secondary-text-color);"></ha-icon>'
+                              tap_action:
+                                action: navigate
+                                navigation_path: "#music-speakers"
+                              styles:
+                                card:
+                                  - height: 36px
+                                  - border-radius: 18px
+                                  - padding: 0 12px 0 10px
+                                  - background: var(--background-color-3) !important
+                                  - --ha-card-background: var(--background-color-3)
+                                  - box-shadow: none
+                                  - transition: none
+                                  - cursor: pointer
+                                grid:
+                                  - grid-template-areas: '"i n chev"'
+                                  - grid-template-columns: auto auto auto
+                                  - grid-template-rows: 1fr
+                                  - align-items: center
+                                  - column-gap: 6px
+                                img_cell:
+                                  - width: 18px
+                                  - height: 18px
+                                icon:
+                                  - width: 18px
+                                  - color: var(--slate-bright)
+                                name:
+                                  - font-size: 14px
+                                  - font-weight: 700
+                                  - color: var(--primary-text-color)
+                                  - white-space: nowrap
+                                custom_fields:
+                                  chev:
+                                    - display: flex
+                    # prev / play-pause / next on the controlled speaker (the group
+                    # leader carries the group)
+                    transport:
+                      card:
+                        type: horizontal-stack
+                        card_mod:
+                          style: |
+                            #root { justify-content: center !important; column-gap: 22px !important; }
+                            #root > * { flex: 0 0 auto !important; }
+                        cards:
+                          - type: custom:button-card
+                            show_name: false
+                            show_icon: true
+                            icon: mdi:skip-previous
+                            triggers_update:
+                              - sensor.music_controlled_player
+                            tap_action:
+                              action: perform-action
+                              perform_action: media_player.media_previous_track
+                              target:
+                                entity_id: "[[[ var c = states['sensor.music_controlled_player']; return c ? c.state : 'media_player.media_room'; ]]]"
+                            styles:
+                              card:
+                                - width: 60px
+                                - height: 60px
+                                - border-radius: 999px
+                                - background: var(--background-color-3) !important
+                                - --ha-card-background: var(--background-color-3)
+                                - box-shadow: none
+                                - transition: none
+                                - padding: 0
+                              icon:
+                                - width: 30px
+                                - color: var(--primary-text-color)
+                          - type: custom:button-card
+                            show_name: false
+                            show_icon: true
+                            icon: "[[[ var c = states['sensor.music_controlled_player']; return (c && c.attributes.player_state === 'playing') ? 'mdi:pause' : 'mdi:play'; ]]]"
+                            triggers_update:
+                              - sensor.music_controlled_player
+                            tap_action:
+                              action: perform-action
+                              perform_action: media_player.media_play_pause
+                              target:
+                                entity_id: "[[[ var c = states['sensor.music_controlled_player']; return c ? c.state : 'media_player.media_room'; ]]]"
+                            styles:
+                              card:
+                                - width: 68px
+                                - height: 68px
+                                - border-radius: 999px
+                                - background: var(--slate-color) !important
+                                - --ha-card-background: var(--slate-color)
+                                - box-shadow: none
+                                - transition: none
+                                - padding: 0
+                              icon:
+                                - width: 36px
+                                - color: var(--text-primary-color)
+                          - type: custom:button-card
+                            show_name: false
+                            show_icon: true
+                            icon: mdi:skip-next
+                            triggers_update:
+                              - sensor.music_controlled_player
+                            tap_action:
+                              action: perform-action
+                              perform_action: media_player.media_next_track
+                              target:
+                                entity_id: "[[[ var c = states['sensor.music_controlled_player']; return c ? c.state : 'media_player.media_room'; ]]]"
+                            styles:
+                              card:
+                                - width: 60px
+                                - height: 60px
+                                - border-radius: 999px
+                                - background: var(--background-color-3) !important
+                                - --ha-card-background: var(--background-color-3)
+                                - box-shadow: none
+                                - transition: none
+                                - padding: 0
+                              icon:
+                                - width: 30px
+                                - color: var(--primary-text-color)
+                # group volume (0-40) — input_number.music_group_volume; the
+                # music_group_volume_* automations push it to every member and keep
+                # it in step with the leader. Sits flush under the player card as
+                # its bottom edge (a Bubble slider can't live inside button-card).
+                # Tune button -> per-speaker sheet.
+                - type: custom:bubble-card
+                  card_type: button
+                  button_type: slider
+                  entity: input_number.music_group_volume
+                  name: Volume
+                  icon: mdi:volume-medium
+                  card_layout: large
+                  scrolling_effect: false
+                  slider_live_update: false
+                  sub_button:
+                    - entity: input_number.music_group_volume
+                      show_state: true
+                      show_background: false
+                    - icon: mdi:tune-vertical-variant
+                      show_background: true
+                      tap_action:
+                        action: navigate
+                        navigation_path: "#music-volumes"
+                  modules:
+                    - mobile_settings_slider
+                  styles: |
+                    ha-card {
+                      margin: 0 5px 2px !important; padding: 14px !important; border-radius: 0 0 15px 15px !important;
+                      background: var(--background-color-2) !important; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+                    }
+                    .bubble-button-card-container.bubble-button-card-container { margin: 0 !important; min-height: 44px !important; }
+                    .bubble-sub-button-1.bubble-sub-button-1 { font-size: 14px !important; font-weight: 700 !important; color: var(--primary-text-color) !important; }
+                    .bubble-sub-button-2.bubble-sub-button-2 {
+                      width: 44px !important; height: 44px !important; border-radius: 15px !important;
+                      background: var(--background-color-3) !important;
+                    }
+                    .bubble-sub-button-2.bubble-sub-button-2 ha-icon { color: var(--slate-bright) !important; --mdc-icon-size: 22px !important; }
             # ---------------------------------------------------- 2-up tiles
             - type: grid
               columns: 2
