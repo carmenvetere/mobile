@@ -100,6 +100,12 @@ cards:
       main:
         card:
           type: vertical-stack
+          # The player card and the volume slider are one visual card: strip the
+          # stack's own gap between them (HA gives each child 4px top/bottom).
+          card_mod:
+            style: |
+              #root > :nth-child(1) { margin-bottom: 0 !important; }
+              #root > :nth-child(2) { margin-top: 0 !important; }
           cards:
             # ---------------------------------------------------- Player card
             # Everything reads sensor.music_controlled_player (the room pinned
