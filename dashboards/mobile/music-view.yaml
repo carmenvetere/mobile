@@ -98,45 +98,36 @@ cards:
             menu:
               card: !include /config/dashboards/modules/mobile-header-hamburger.yaml
       main:
-        # The whole Music view body is one custom card: player, speaker chip,
-        # transport, group volume, Speakers / Library tiles, Favorites strip and
-        # the Speakers, Speaker volumes and Library sheets. Source lives in
-        # cards/mobile-music-card (built into www/mobile-music-card/, served at
-        # /local/). It reads sensor.music_controlled_player, input_select.music_player,
-        # sensor.music_favorites / sensor.music_recent and plays through
-        # script.music_play_item. Room names must match input_select.music_player.
         card:
-          type: custom:mobile-music-card
+          # wall-panel-sonos-card, built from cards/wall-panel-sonos-card into
+          # www/wall-panel-sonos-card/ (served at /local/, no HACS).
+          type: custom:wall-panel-sonos-card
+          entities:
+            - media_player.living_room
+            - media_player.kitchen
+            - media_player.office
+            - media_player.gym
+            - media_player.deck
+            - media_player.pool
+            - media_player.mud_room
+            - media_player.media_room
+          default_view: player
           max_volume: 40
-          art_max: 320
-          rooms:
-            - entity: media_player.media_room
-              name: Media Room
-              icon: mdi:sofa
-            - entity: media_player.pool
-              name: Pool
-              icon: mdi:pool
-            - entity: media_player.mud_room
-              name: Mud Room
-              icon: mdi:coat-rack
-            - entity: media_player.gym
-              name: Gym
-              icon: mdi:dumbbell
-            - entity: media_player.living_room
-              name: Living Room
-              icon: mdi:sofa-outline
-            - entity: media_player.kitchen
-              name: Kitchen
-              icon: mdi:countertop
-            - entity: media_player.office
-              name: Office
-              icon: mdi:desk
-            - entity: media_player.deck
-              name: Deck
-              icon: mdi:table-chair
-            - entity: media_player.primary_bedroom
-              name: Primary Bedroom
-              icon: mdi:bed
-            - entity: media_player.primary_bathroom
-              name: Primary Bathroom
-              icon: mdi:shower
+          layout: wall
+          # Favorites are the Music Assistant favourites, matched like the
+          # basement wall panel: each room plays through the music_assistant
+          # media_player with the same friendly name, and the list is the
+          # hearted playlists, albums and radio. Add ma_entities only to
+          # override a room whose MA player is named differently.
+          favorites_source: music_assistant
+          groups:
+            - id: group_1
+              label: Outdoor
+              entities:
+                - media_player.pool
+                - media_player.deck
+            - id: group_2
+              label: First Floor
+              entities:
+                - media_player.living_room
+                - media_player.kitchen

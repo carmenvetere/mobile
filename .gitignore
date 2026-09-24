@@ -27,10 +27,10 @@ home-assistant.log*
 # Intentionally TRACKED (so not listed): esphome/ and blueprints/ hold
 # sanitized configs (device secrets live in git-ignored esphome/secrets.yaml);
 # config/www/ holds media referenced by automations.
-# www/ is ignored except the built Music view card (cards/mobile-music-card
-# builds into www/mobile-music-card/; HA serves it at /local/).
+# www/ is ignored except the built Music view card (cards/wall-panel-sonos-card
+# builds into www/wall-panel-sonos-card/; HA serves it at /local/).
 /www/*
-!/www/mobile-music-card/
+!/www/wall-panel-sonos-card/
 /cards/*/node_modules/
 /custom_components/
 /config/llmvision/

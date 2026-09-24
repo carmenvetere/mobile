@@ -44,8 +44,9 @@ Groups to create, taken from how this config groups the speakers today:
 | Living Room + Kitchen | Living Room, Kitchen | The join in the **Living Room Pico Audio** automations |
 
 Add any other combination you group often, such as Pool + Deck. The Music
-view's Speakers sheet still does ad-hoc grouping through Sonos, and a group
-started from Music Assistant shows up there as a normal Sonos group.
+card's Speakers view and its Outdoor and First Floor buttons still group
+through Sonos. A group started from Music Assistant shows up there as a
+normal Sonos group.
 
 The alarm and Pico automations keep grouping with Sonos `media_player.join`.
 That still works with Music Assistant installed. The Pico buttons also play
@@ -108,8 +109,8 @@ overlays the voice on the music instead of stopping it.
 
 ## 4. Quick checks after the move
 
-- The Music view's Favorites strip and Library still play. They go through
-  `script.music_play_item`, which finds the MA player by room name.
+- The Music card's Favorites still play. They go through the MA player with
+  the room's name.
 - The basement wall panel still browses and plays, using the same name match.
 - Trigger a Notification Center test for one of the rules above, or wait for
   the next storm watch, and confirm the speakers announce.

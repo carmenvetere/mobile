@@ -671,10 +671,10 @@ lovelace:
       type: module
     - url: /hacsfiles/config-template-card/config-template-card.js
       type: module
-    # Music view card, built from cards/mobile-music-card and committed under
-    # www/ (served at /local/). Bump ?v= with the card version so phones
-    # fetch the new build instead of a cached one.
-    - url: /local/mobile-music-card/mobile-music-card.js?v=1.0.0
+    # Music view card, built from cards/wall-panel-sonos-card and committed
+    # under www/ (served at /local/). Bump ?v= with the card version so
+    # phones fetch the new build instead of a cached one.
+    - url: /local/wall-panel-sonos-card/wall-panel-sonos-card.js?v=0.3.0
       type: module
     - url: /hacsfiles/notifications/notification-center-card.js
       type: module

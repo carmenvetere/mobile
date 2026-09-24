@@ -1,0 +1,27 @@
+{
+  "name": "wall-panel-sonos-card",
+  "version": "0.3.0",
+  "description": "A Sonos multi-room control card for Home Assistant, designed for wall-mounted tablets.",
+  "private": true,
+  "main": "dist/wall-panel-sonos-card.js",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "lint": "eslint \"src/**/*.ts\""
+  },
+  "keywords": ["home-assistant", "lovelace", "sonos", "custom-card", "wall-panel"],
+  "license": "MIT",
+  "dependencies": {
+    "lit": "^3.1.0",
+    "custom-card-helpers": "^1.9.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.12.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.0"
+  }
+}
