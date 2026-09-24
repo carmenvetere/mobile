@@ -69,16 +69,6 @@ input_datetime:
     has_time: true
 
 input_number:
-  # Music view: group volume for the controlled speaker's Sonos group (0-40,
-  # the dashboard's volume cap). automations music_group_volume_* keep it in
-  # step with the group leader and push changes to every member.
-  music_group_volume:
-    name: Music Group Volume
-    min: 0
-    max: 40
-    step: 1
-    unit_of_measurement: "%"
-    icon: mdi:volume-medium
   sonos_favorites_index:
     name: Sonos Favorites Index
     initial: 1
@@ -681,7 +671,10 @@ lovelace:
       type: module
     - url: /hacsfiles/config-template-card/config-template-card.js
       type: module
-    - url: /hacsfiles/mediocre-hass-media-player-cards/mediocre-hass-media-player-cards.js
+    # Music view card, built from cards/mobile-music-card and committed under
+    # www/ (served at /local/). Bump ?v= with the card version so phones
+    # fetch the new build instead of a cached one.
+    - url: /local/mobile-music-card/mobile-music-card.js?v=1.0.0
       type: module
     - url: /hacsfiles/notifications/notification-center-card.js
       type: module

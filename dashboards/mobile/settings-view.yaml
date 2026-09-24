@@ -308,8 +308,10 @@ cards:
                 - Design cleanup: one root skeleton and separator module for every view, 15px radius standard, theme tokens instead of hardcoded colours, settings rows de-duplicated (see docs/mobile-v2.7-design-audit.md)
                 - Vacuum: map card with tap-to-select rooms per Roborock map replaces the room toggle lists, the Clean Selected Rooms script and the suction input_select
                 - Outdoor scenes point at the renamed landscape switches
-                - Music: Dune Mist player card (art, transport, group volume) with Speakers, Speaker volumes and Library sheets, built from the wall-panel Music design; follows the playing speaker or a pinned room. Legacy Sonos helpers and grouping scripts removed
-                - Music: favorites strip and Recently played come from Music Assistant (favourite playlists, stations and albums with their artwork), refreshed every 10 minutes, after start-up, when a speaker changes track, or from the refresh button next to Favorites
+                - "Music: the whole view is now one custom card (mobile-music-card), folded in from the wall-panel Sonos card and kept in this repo, so updates come with a git pull instead of HACS. Same Dune Mist layout, plus a progress bar, mute, instant taps, and sheets that close with the phone's Back gesture. Follows the playing speaker or a pinned room"
+                - "Music: group volume now moves every grouped room by the same amount, so per-room balance set in Speaker volumes is kept (the old slider flattened all rooms to one level). Capped at 40%"
+                - "Music: Library sheet shows the whole Music Assistant library with search and filters for favorites, playlists, stations, albums, artists and service"
+                - "Music: favorites strip and Recently played come from Music Assistant with artwork, refreshed every 10 minutes, after start-up, when a speaker changes track, or from the refresh button. Favorites match the basement wall panel: the Music Assistant player named like the room, hearted playlists, then albums, then radio"
                 - Wall panel: animated, source-coloured energy flow diagram (solar amber, grid slate, battery green) with dots moving at a speed proportional to kW
                 - Notification Center: the weather alert names the alert type and, for a single alert, when it expires
 

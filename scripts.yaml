@@ -492,19 +492,18 @@ music_play_item:
   sequence:
     - variables:
         player: "{{ states('sensor.music_controlled_player') }}"
-        # Music Assistant twins of the Sonos players carry the _2 suffix (see the
-        # ma_entities note in music-view.yaml). Fall back to a friendly-name match.
+        # Same match as the basement wall panel (packages/basement_wall_panel.yaml):
+        # the music_assistant media_player whose friendly name equals the Sonos
+        # player's. The _2 twin is only a fallback if no name matches.
         ma_player: >-
-          {% set twin = player ~ '_2' %}
-          {% if states(twin) not in ['unknown', 'unavailable'] %}{{ twin }}
-          {% else %}
-            {% set want = state_attr(player, 'friendly_name') %}
-            {% set ns = namespace(found='') %}
-            {% for e in integration_entities('music_assistant') if e.startswith('media_player.') %}
-              {% if not ns.found and want and (state_attr(e, 'friendly_name') | replace(' 2', '')) == want %}{% set ns.found = e %}{% endif %}
-            {% endfor %}
-            {{ ns.found or player }}
-          {% endif %}
+          {% set want = state_attr(player, 'friendly_name') %}
+          {% set ns = namespace(found='') %}
+          {% for e in integration_entities('music_assistant') if e.startswith('media_player.') and e != player %}
+            {% if not ns.found and want and state_attr(e, 'friendly_name') == want %}{% set ns.found = e %}{% endif %}
+          {% endfor %}
+          {% if ns.found %}{{ ns.found }}
+          {% elif states(player ~ '_2') not in ['unknown', 'unavailable'] %}{{ player ~ '_2' }}
+          {% else %}{{ player }}{% endif %}
         cid: "{{ media_content_id | replace('%7C', '|') | replace('%3B', ';') }}"
     - choose:
         - conditions: "{{ expandable in [true, 'true', 'True', '1'] }}"
@@ -529,19 +528,6 @@ music_play_item:
           data:
             media_content_id: "{{ cid }}"
             media_content_type: "{{ media_content_type or 'music' }}"
-music_browse:
-  alias: "Music: browse the Music Assistant library"
-  icon: mdi:music-box-multiple
-  mode: restart
-  fields:
-    media_content_id: { description: "playlist / radio / album / artist / favorite", example: playlist }
-  sequence:
-    # The wall panel package answers into sensor.basement_panel_music_browse
-    - event: esphome.basement_panel_browse
-      event_data:
-        entity_id: "{{ states('sensor.music_controlled_player') }}"
-        media_content_id: "{{ media_content_id }}"
-        media_content_type: "{{ media_content_id }}"
 music_refresh_library:
   alias: "Music: refresh favorites and recently played from Music Assistant"
   icon: mdi:refresh

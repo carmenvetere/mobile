@@ -1311,23 +1311,32 @@
           value_template: "{{ trigger.platform == 'homeassistant' }}"
       then:
         - delay: "00:01:30"
+    # Favourites are matched to Music Assistant exactly like the basement wall
+    # panel's Favorites (packages/basement_wall_panel.yaml): the MA player is the
+    # music_assistant media_player named like the controlled Sonos room, and the
+    # list is its hearted playlists, then albums, then radio, 4 of each by name.
     - variables:
+        sonos: "{{ states('sensor.music_controlled_player') if states('sensor.music_controlled_player').startswith('media_player.') else 'media_player.media_room' }}"
         ma_player: >-
-          {% set ns = namespace(e='') %}
-          {% for e in integration_entities('music_assistant') if e.startswith('media_player.') %}{% if not ns.e %}{% set ns.e = e %}{% endif %}{% endfor %}
-          {{ ns.e }}
+          {% set want = state_attr(sonos, 'friendly_name') %}
+          {% set ns = namespace(found='', first='') %}
+          {% for e in integration_entities('music_assistant') if e.startswith('media_player.') and e != sonos %}
+            {% if not ns.first %}{% set ns.first = e %}{% endif %}
+            {% if not ns.found and want and state_attr(e, 'friendly_name') == want %}{% set ns.found = e %}{% endif %}
+          {% endfor %}
+          {{ ns.found or ns.first }}
         ma_entry: "{{ config_entry_id(ma_player) if ma_player else '' }}"
     - action: music_assistant.get_library
-      data: { config_entry_id: "{{ ma_entry }}", media_type: playlist, favorite: true, limit: 12, order_by: name }
+      data: { config_entry_id: "{{ ma_entry }}", media_type: playlist, favorite: true, limit: 4, order_by: name }
       response_variable: fav_p
       continue_on_error: true
     - action: music_assistant.get_library
-      data: { config_entry_id: "{{ ma_entry }}", media_type: radio, favorite: true, limit: 8, order_by: name }
-      response_variable: fav_r
+      data: { config_entry_id: "{{ ma_entry }}", media_type: album, favorite: true, limit: 4, order_by: name }
+      response_variable: fav_a
       continue_on_error: true
     - action: music_assistant.get_library
-      data: { config_entry_id: "{{ ma_entry }}", media_type: album, favorite: true, limit: 8, order_by: name }
-      response_variable: fav_a
+      data: { config_entry_id: "{{ ma_entry }}", media_type: radio, favorite: true, limit: 4, order_by: name }
+      response_variable: fav_r
       continue_on_error: true
     - action: music_assistant.get_library
       data: { config_entry_id: "{{ ma_entry }}", media_type: playlist, limit: 5, order_by: last_played_desc }
@@ -1344,10 +1353,10 @@
     - variables:
         fav_items: >-
           {% set items = (fav_p['items'] if fav_p is defined and fav_p is mapping and fav_p['items'] is defined else [])
-                       + (fav_r['items'] if fav_r is defined and fav_r is mapping and fav_r['items'] is defined else [])
-                       + (fav_a['items'] if fav_a is defined and fav_a is mapping and fav_a['items'] is defined else []) %}
+                       + (fav_a['items'] if fav_a is defined and fav_a is mapping and fav_a['items'] is defined else [])
+                       + (fav_r['items'] if fav_r is defined and fav_r is mapping and fav_r['items'] is defined else []) %}
           {% set ns = namespace(out=[]) %}
-          {% for it in items[:20] %}
+          {% for it in items[:12] %}
             {% set artists = it.artists | map(attribute='name') | join(', ') if it.artists is defined and it.artists else '' %}
             {% set sub = artists if artists else (it.media_type | default('') | replace('_', ' ') | title) %}
             {% set ns.out = ns.out + [
