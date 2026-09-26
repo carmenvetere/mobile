@@ -653,23 +653,13 @@ lovelace:
       type: module
     - url: /hacsfiles/lovelace-card-mod/card-mod.js
       type: module
-    - url: /browser_mod.js
-      type: module      
     - url: /hacsfiles/lovelace-expander-card/expander-card.js
-      type: module
-    - url: /hacsfiles/stack-in-card/stack-in-card.js 
       type: module
     - url: /hacsfiles/llmvision-card/llmvision-card.js 
       type: module
     - url: /hacsfiles/apexcharts-card/apexcharts-card.js
       type: module
     - url: /hacsfiles/rain-gauge-card/rain-gauge-card.js
-      type: module
-    - url: /hacsfiles/xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js
-      type: module
-    - url: /hacsfiles/energy-sankey/energy-sankey.js
-      type: module
-    - url: /hacsfiles/config-template-card/config-template-card.js
       type: module
     # Music view card, built from cards/wall-panel-sonos-card and committed
     # under www/ (served at /local/). Bump ?v= with the card version so

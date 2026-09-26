@@ -306,7 +306,7 @@ cards:
                 **v2.7.0** — 2026-09-12
 
                 - Design cleanup: one root skeleton and separator module for every view, 15px radius standard, theme tokens instead of hardcoded colours, settings rows de-duplicated (see docs/mobile-v2.7-design-audit.md)
-                - Vacuum: map card with tap-to-select rooms per Roborock map replaces the room toggle lists, the Clean Selected Rooms script and the suction input_select
+                - "Vacuum: the room toggle lists, the Clean Selected Rooms script and the suction input_select are removed; the view keeps status, map and mop settings"
                 - Outdoor scenes point at the renamed landscape switches
                 - "Music: the Music view uses the wall-panel Sonos card again (the original design), now kept in this repo so updates come with a git pull instead of HACS. It replaces the Mediocre card and the YAML player"
                 - "Music: Music Assistant favorites match the basement wall panel: each room plays through the Music Assistant player with the same name, and the list is the hearted playlists, albums and radio"
