@@ -54,7 +54,7 @@ script:
           id(bs_a_leave).publish_state(true); id(bs_a_11pm).publish_state(true); id(bs_a_7am).publish_state(true); id(bs_a_arrive).publish_state(false);
           id(bs_m_out).publish_state(true); id(bs_m_bath).publish_state(true); id(bs_m_gym).publish_state(true);
           id(bs_l_eve).publish_state(true); id(bs_l_morn).publish_state(true); id(bs_l_night).publish_state(true); id(bs_l_sunset).publish_state(true); id(bs_l_mid).publish_state(true); id(bs_l_spot).publish_state(true);
-          id(bs_s_sched).publish_state(true); id(bs_s_sunset).publish_state(true); id(bs_s_bed).publish_state(true); id(bs_s_bg).publish_state(true); id(bs_s_fg).publish_state(true);
+          id(bs_s_sched).publish_state(true);
           id(bs_s_m_ff).publish_state(false); id(bs_s_m_pb).publish_state(false); id(bs_s_m_of).publish_state(false); id(bs_s_m_bg).publish_state(false); id(bs_s_m_fg).publish_state(false);
           id(bs_v_night).publish_state(true);
           panel::text(id(clock_time), "5:48"); panel::text(id(clock_ampm), "AM · FRI");

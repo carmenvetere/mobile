@@ -307,6 +307,7 @@ cards:
 
                 - Design cleanup: one root skeleton and separator module for every view, 15px radius standard, theme tokens instead of hardcoded colours, settings rows de-duplicated (see docs/mobile-v2.7-design-audit.md)
                 - "Vacuum: the room toggle lists, the Clean Selected Rooms script and the suction input_select are removed; the view keeps status, map and mop settings"
+                - "Cleanup: unused HACS cards and resources removed; 19 old shade schedules (superseded by the Shade Scheduler) and their Close at Sunset switches, Daily Restart, 10 unused scripts, the old Music view sensors and helpers, 4 unused themes, the wall-panel Bubble modules and stray files removed"
                 - Outdoor scenes point at the renamed landscape switches
                 - "Music: the Music view uses the wall-panel Sonos card again (the original design), now kept in this repo so updates come with a git pull instead of HACS. It replaces the Mediocre card and the YAML player"
                 - "Music: Music Assistant favorites match the basement wall panel: each room plays through the Music Assistant player with the same name, and the list is the hearted playlists, albums and radio"
@@ -886,26 +887,6 @@ cards:
         - entity: automation.shade_scheduler_whole_house
           name: Shade Scheduler – Whole House
           icon: mdi:roller-shade
-    - !include
-        - /config/dashboards/modules/settings-toggle-row.yaml
-        - entity: automation.sunset_30_or_8_00_pm_close_shades
-          name: Close Shades – Sunset +30 / 8PM
-          icon: mdi:weather-sunset-down
-    - !include
-        - /config/dashboards/modules/settings-toggle-row.yaml
-        - entity: automation.bedroom_close_shades_at_sunset_30min_or_8_00pm
-          name: Bedroom – Close at Sunset
-          icon: mdi:weather-sunset-down
-    - !include
-        - /config/dashboards/modules/settings-toggle-row.yaml
-        - entity: automation.back_guest_bedroom_close_shades_30_min_before_sunset_or_8pm
-          name: Back Guest Bedroom – Close at Sunset
-          icon: mdi:weather-sunset-down
-    - !include
-        - /config/dashboards/modules/settings-toggle-row.yaml
-        - entity: automation.front_guest_bedroom_shades_30_min_from_sunset_or_8pm
-          name: Front Guest Bedroom – Close at Sunset
-          icon: mdi:weather-sunset-down
   - type: custom:bubble-card
     card_type: separator
     name: Manual Today

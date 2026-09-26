@@ -25,8 +25,7 @@ home-assistant.log*
 # something listed here shows up tracked, it was committed before the rule
 # existed — untrack it with `git rm --cached <path>`.
 # Intentionally TRACKED (so not listed): esphome/ and blueprints/ hold
-# sanitized configs (device secrets live in git-ignored esphome/secrets.yaml);
-# config/www/ holds media referenced by automations.
+# sanitized configs (device secrets live in git-ignored esphome/secrets.yaml).
 # www/ is ignored except the built Music view card (cards/wall-panel-sonos-card
 # builds into www/wall-panel-sonos-card/; HA serves it at /local/).
 /www/*

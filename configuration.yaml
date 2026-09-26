@@ -461,24 +461,6 @@ input_boolean:
     icon: mdi:hand-back-right
 
 input_select:
-  # Music view: which Sonos player the Mediocre card controls. Auto follows
-  # whatever is playing (group coordinator first); a room pins the card to it.
-  music_player:
-    name: Music Player
-    options:
-      - Auto
-      - Media Room
-      - Pool
-      - Mud Room
-      - Gym
-      - Living Room
-      - Kitchen
-      - Office
-      - Deck
-      - Primary Bedroom
-      - Primary Bathroom
-    initial: Auto
-    icon: mdi:speaker
   # --- Climate overhaul Phase 4: HVAC fan-mode ownership -------------------
   # Which automation currently owns each zone's fan_mode. Priority high->low:
   # economizer > air_filter > air_quality > schedule (none loses to all).
@@ -497,15 +479,6 @@ input_select:
     icon: mdi:fan-alert
   basement_fan_owner:
     name: Basement Fan Owner
-    options:
-      - none
-      - schedule
-      - economizer
-      - air_filter
-      - air_quality
-    icon: mdi:fan-alert
-  office_fan_owner:
-    name: Office Fan Owner
     options:
       - none
       - schedule
